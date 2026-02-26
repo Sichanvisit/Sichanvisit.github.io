@@ -114,7 +114,7 @@ analytics:
 # Site Author
 author:
   name             : "Sichan"
-  avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
+  avatar           : "/assets/images/profile.png"
   bio              : "AI 엔지니어 지망생 | 세상 탐험중"
   location         : "South Korea"
   email            :
