@@ -3,14 +3,14 @@ layout: splash
 author_profile: false
 classes: wide
 title: "Sichan Portfolio"
-excerpt: "Build projects, review papers, and turn ideas into working demos"
+excerpt: "프로젝트를 만들고 논문을 해석해 직접 구현까지 기록하는 포트폴리오"
 header:
   overlay_color: "#0b1220"
   overlay_filter: 0.35
   actions:
-    - label: "View Lead Project"
+    - label: "대표 프로젝트 보기"
       url: "/portfolio/ai5-advanced/"
-    - label: "Open Notion Workspace"
+    - label: "노션 작업공간"
       url: "https://www.notion.so/"
 ---
 
@@ -18,30 +18,30 @@ header:
 {% assign recent_research = site.research | sort: "date" | reverse %}
 
 <section class="landing-block">
-  <h2>Lead Project</h2>
-  <p>A single project is highlighted with README-style depth: problem, design, implementation, and outcomes.</p>
+  <h2>대표 프로젝트</h2>
+  <p>하나의 프로젝트를 README처럼 깊게 정리해 문제 정의, 설계, 구현, 결과까지 한 번에 보이도록 구성했습니다.</p>
   {% if lead_project %}
   <article class="spotlight-card">
     <h3>{{ lead_project.title }}</h3>
     <p>{{ lead_project.excerpt }}</p>
-    <a class="btn btn--primary" href="{{ lead_project.url | relative_url }}">Project Details</a>
+    <a class="btn btn--primary" href="{{ lead_project.url | relative_url }}">프로젝트 상세</a>
     {% if lead_project.github_url %}<a class="btn btn--inverse" href="{{ lead_project.github_url }}">GitHub</a>{% endif %}
-    {% if lead_project.notion_url %}<a class="btn btn--light-outline" href="{{ lead_project.notion_url }}">Notion Notes</a>{% endif %}
+    {% if lead_project.notion_url %}<a class="btn btn--light-outline" href="{{ lead_project.notion_url }}">노션 문서</a>{% endif %}
   </article>
   {% endif %}
 </section>
 
 <section class="landing-block">
-  <h2>Paper to Project Logs</h2>
-  <p>Research notes are separated into a dedicated archive: paper summary, key ideas, and a small reproduction project.</p>
+  <h2>논문 기반 학습 기록</h2>
+  <p>논문 요약, 핵심 아이디어 정리, 미니 재현 프로젝트를 연구 아카이브로 분리해 관리합니다.</p>
   <div class="landing-grid">
     {% for item in recent_research limit:2 %}
     <article class="landing-grid-card">
       <h3><a href="{{ item.url | relative_url }}">{{ item.title }}</a></h3>
       <p>{{ item.excerpt }}</p>
-      {% if item.paper_url %}<a href="{{ item.paper_url }}">Paper Link</a>{% endif %}
+      {% if item.paper_url %}<a href="{{ item.paper_url }}">논문 링크</a>{% endif %}
     </article>
     {% endfor %}
   </div>
-  <p><a class="btn btn--primary" href="/research/">Browse All Research Notes</a></p>
+  <p><a class="btn btn--primary" href="/research/">연구 기록 전체 보기</a></p>
 </section>
