@@ -325,3 +325,19 @@ defaults:
       comments: true
       share: true
       related: true
+
+# 1. 포트폴리오 폴더 활성화
+collections:
+  portfolio:
+    output: true
+    permalink: /:collection/:path/
+
+# 2. 포트폴리오 글들이 화면에 나오게 하는 설정
+defaults:
+  - scope:
+      path: ""
+      type: portfolio
+    values:
+      layout: single
+      author_profile: true
+      share: true
