@@ -1,5 +1,6 @@
 ---
 title: "고급 프로젝트: [AI5_advanced]"
+date: 2026-02-27
 layout: single
 excerpt: "소상공인을 위한 마케팅용 콘텐츠 생성 서비스"
 header:
