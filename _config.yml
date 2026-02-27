@@ -17,10 +17,10 @@ minimal_mistakes_skin    : "dark" # "air", "aqua", "contrast", "dark", "dirt", "
 # Site Settings
 locale                   : "ko-KR"
 rtl                      : # true, false (default) # turns direction of the page into right to left for RTL languages
-title                    : "Sichan Portfolio"
+title                    : "Sichan visit"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
-name                     : "Sichan"
+name                     : "Sichan visit"
 description              : "AI portfolio blog for projects, paper reviews, and study notes"
 url                      : # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
@@ -113,7 +113,7 @@ analytics:
 
 # Site Author
 author:
-  name             : "Sichan"
+  name             : "Sichan visit"
   avatar           : "/assets/images/profile.png"
   bio              : "Aspiring AI engineer | Project-driven learning log"
   location         : "South Korea"

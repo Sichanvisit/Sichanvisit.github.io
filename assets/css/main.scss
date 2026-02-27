@@ -17,6 +17,10 @@ search: false
   background: linear-gradient(130deg, rgba(19, 29, 49, 0.9), rgba(11, 18, 32, 0.85));
 }
 
+.page__content .landing-block:first-child {
+  margin-top: 0.8rem;
+}
+
 .landing-block h2 {
   font-size: 1.65rem;
 }

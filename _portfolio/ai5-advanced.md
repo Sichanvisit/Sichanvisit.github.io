@@ -5,7 +5,6 @@ excerpt: "Automated AI content pipeline to reduce repetitive production work"
 header:
   teaser: /assets/images/profile.png
 github_url: "https://github.com/Sichanvisit/AI5_advanced"
-notion_url: "https://www.notion.so/"
 ---
 
 ## 1) Background
@@ -31,4 +30,3 @@ Repeated content drafting and revision cycles consumed too much time, so an auto
 
 ## 6) Links
 - GitHub: [Sichanvisit/AI5_advanced](https://github.com/Sichanvisit/AI5_advanced)
-- Notion: [Project workspace](https://www.notion.so/)
