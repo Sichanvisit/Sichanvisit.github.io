@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Paper to Project Template"
 date: 2026-02-27
 excerpt: "A reusable workflow from paper reading to a small implementation"

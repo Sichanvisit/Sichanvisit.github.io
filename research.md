@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Research Notes"
 layout: collection
 permalink: /research/

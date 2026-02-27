@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Lead Project: AI5 Advanced"
 date: 2026-02-27
 excerpt: "Automated AI content pipeline to reduce repetitive production work"

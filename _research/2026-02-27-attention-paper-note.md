@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Paper Review: Attention Is All You Need"
 date: 2026-02-27
 excerpt: "Key Transformer ideas and practical implementation notes"
