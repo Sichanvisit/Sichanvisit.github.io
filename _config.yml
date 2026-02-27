@@ -1,4 +1,4 @@
-# Welcome to Jekyll!
+﻿# Welcome to Jekyll!
 #
 # This config file is meant for settings that affect your entire site, values
 # which you are expected to set up once and rarely need to edit after that.
@@ -17,11 +17,11 @@ minimal_mistakes_skin    : "dark" # "air", "aqua", "contrast", "dark", "dirt", "
 # Site Settings
 locale                   : "ko-KR"
 rtl                      : # true, false (default) # turns direction of the page into right to left for RTL languages
-title                    : "Site Title"
+title                    : "Sichan Portfolio"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
-name                     : "Your Name"
-description              : "An amazing website."
+name                     : "Sichan"
+description              : "AI portfolio blog for projects, paper reviews, and study notes"
 url                      : # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
@@ -115,7 +115,7 @@ analytics:
 author:
   name             : "Sichan"
   avatar           : "/assets/images/profile.png"
-  bio              : "AI 엔지니어 지망생 | 세상 탐험중"
+  bio              : "Aspiring AI engineer | Project-driven learning log"
   location         : "South Korea"
   email            :
   links:
@@ -312,9 +312,18 @@ compress_html:
     envs: development
 
 
+
+# Collections
+collections:
+  portfolio:
+    output: true
+    permalink: /:collection/:path/
+  research:
+    output: true
+    permalink: /:collection/:path/
+
 # Defaults
 defaults:
-  # _posts
   - scope:
       path: ""
       type: posts
@@ -325,15 +334,6 @@ defaults:
       comments: true
       share: true
       related: true
-
-# 1. 포트폴리오 폴더 활성화
-collections:
-  portfolio:
-    output: true
-    permalink: /:collection/:path/
-
-# 2. 포트폴리오 글들이 화면에 나오게 하는 설정
-defaults:
   - scope:
       path: ""
       type: portfolio
@@ -341,3 +341,10 @@ defaults:
       layout: single
       author_profile: true
       share: true
+  - scope:
+      path: ""
+      type: research
+    values:
+      layout: single
+      author_profile: true
+      share: false

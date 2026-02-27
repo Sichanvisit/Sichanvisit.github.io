@@ -1,4 +1,47 @@
+﻿---
+layout: splash
+author_profile: false
+classes: wide
+title: "Sichan Portfolio"
+excerpt: "Build projects, review papers, and turn ideas into working demos"
+header:
+  overlay_color: "#0b1220"
+  overlay_filter: 0.35
+  actions:
+    - label: "View Lead Project"
+      url: "/portfolio/ai5-advanced/"
+    - label: "Open Notion Workspace"
+      url: "https://www.notion.so/"
 ---
-layout: home
-author_profile: true
----
+
+{% assign lead_project = site.portfolio | sort: "date" | reverse | first %}
+{% assign recent_research = site.research | sort: "date" | reverse %}
+
+<section class="landing-block">
+  <h2>Lead Project</h2>
+  <p>A single project is highlighted with README-style depth: problem, design, implementation, and outcomes.</p>
+  {% if lead_project %}
+  <article class="spotlight-card">
+    <h3>{{ lead_project.title }}</h3>
+    <p>{{ lead_project.excerpt }}</p>
+    <a class="btn btn--primary" href="{{ lead_project.url | relative_url }}">Project Details</a>
+    {% if lead_project.github_url %}<a class="btn btn--inverse" href="{{ lead_project.github_url }}">GitHub</a>{% endif %}
+    {% if lead_project.notion_url %}<a class="btn btn--light-outline" href="{{ lead_project.notion_url }}">Notion Notes</a>{% endif %}
+  </article>
+  {% endif %}
+</section>
+
+<section class="landing-block">
+  <h2>Paper to Project Logs</h2>
+  <p>Research notes are separated into a dedicated archive: paper summary, key ideas, and a small reproduction project.</p>
+  <div class="landing-grid">
+    {% for item in recent_research limit:2 %}
+    <article class="landing-grid-card">
+      <h3><a href="{{ item.url | relative_url }}">{{ item.title }}</a></h3>
+      <p>{{ item.excerpt }}</p>
+      {% if item.paper_url %}<a href="{{ item.paper_url }}">Paper Link</a>{% endif %}
+    </article>
+    {% endfor %}
+  </div>
+  <p><a class="btn btn--primary" href="/research/">Browse All Research Notes</a></p>
+</section>
