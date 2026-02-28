@@ -127,9 +127,9 @@ body {
   margin: 0 0 0.45rem;
   font-size: 0.92rem;
   font-family: "Fraunces", serif;
-  border: 0 !important;
+  border-bottom: 1px solid var(--photo-line) !important;
   box-shadow: none !important;
-  padding-bottom: 0;
+  padding-bottom: 0.36rem;
 }
 
 .feature-panel-section ul {
