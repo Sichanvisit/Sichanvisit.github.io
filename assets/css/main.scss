@@ -112,8 +112,9 @@ body {
 }
 
 .feature-right {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   gap: 0.7rem;
   align-items: stretch;
   border: 1px solid var(--photo-line);
@@ -157,15 +158,14 @@ body {
 }
 
 .feature-panel-section {
-  border: 1px solid var(--photo-line);
-  border-radius: 10px;
-  padding: 0.72rem;
+  border: 0;
+  border-radius: 0;
+  padding: 0.2rem 0;
 }
 
 .feature-panel-research {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
+  border-top: 1px solid var(--photo-line);
+  padding-top: 0.72rem;
 }
 
 .masthead__menu-item a {
@@ -272,7 +272,6 @@ body {
   }
 
   .feature-right {
-    grid-template-columns: 1fr;
     min-height: auto;
   }
 }
