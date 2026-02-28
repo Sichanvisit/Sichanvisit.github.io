@@ -3,10 +3,10 @@ layout: splash
 author_profile: false
 classes: wide
 title: "Sichan visit"
-excerpt: "프로젝트를 만들고 논문을 읽으며, 구현과 실험 과정을 기록하는 AI 포트폴리오 아카이브"
+excerpt: "프로젝트를 만들고 실험하며, 배운 내용을 구조적으로 기록하는 AI 포트폴리오"
 header:
-  overlay_color: "#0b1220"
-  overlay_filter: 0.35
+  overlay_color: "#0f172a"
+  overlay_filter: 0.42
   actions:
     - label: "포트폴리오 전체 보기"
       url: "/portfolio/"
@@ -14,34 +14,76 @@ header:
       url: "/research/"
 ---
 
-{% assign lead_project = site.portfolio | sort: "date" | reverse | first %}
+{% assign portfolio_sorted = site.portfolio | sort: "date" | reverse %}
+{% assign lead_project = portfolio_sorted | first %}
 {% assign recent_research = site.research | sort: "date" | reverse %}
 
-<section class="landing-block">
-  <h2>대표 프로젝트</h2>
-  <p>문제 정의부터 구현, 트러블슈팅, 결과까지 한 번에 확인할 수 있도록 포트폴리오를 정리했습니다.</p>
+<section class="mix-feature">
   {% if lead_project %}
-  <article class="spotlight-card">
-    <h3>{{ lead_project.title }}</h3>
-    <p>{{ lead_project.excerpt }}</p>
-    <a class="btn btn--primary" href="{{ lead_project.url | relative_url }}">프로젝트 상세</a>
-    <a class="btn btn--inverse" href="/portfolio/">포트폴리오 목록</a>
-    {% if lead_project.github_url %}<a class="btn" href="{{ lead_project.github_url }}">GitHub</a>{% endif %}
+  <article class="mix-feature-card reveal">
+    <div class="mix-feature-media">
+      {% if lead_project.header.teaser %}
+      <img src="{{ lead_project.header.teaser | relative_url }}" alt="{{ lead_project.title }} teaser" loading="lazy">
+      {% else %}
+      <div class="mix-media-fallback">Featured</div>
+      {% endif %}
+    </div>
+    <div class="mix-feature-copy">
+      <p class="mix-meta">대표 프로젝트 · {{ lead_project.date | date: "%Y.%m.%d" }}</p>
+      <h2>{{ lead_project.title }}</h2>
+      <p>{{ lead_project.excerpt }}</p>
+      <div class="mix-actions">
+        <a class="btn btn--primary" href="{{ lead_project.url | relative_url }}">프로젝트 상세</a>
+        <a class="btn btn--inverse" href="/portfolio/">포트폴리오 목록</a>
+        {% if lead_project.github_url %}<a class="btn" href="{{ lead_project.github_url }}">GitHub</a>{% endif %}
+      </div>
+    </div>
   </article>
   {% endif %}
 </section>
 
-<section class="landing-block">
-  <h2>논문 기반 학습 기록</h2>
-  <p>논문 요약, 핵심 아이디어 정리, 미니 구현 프로젝트를 리서치 섹션에서 관리합니다.</p>
-  <div class="landing-grid">
-    {% for item in recent_research limit:2 %}
-    <article class="landing-grid-card">
-      <h3><a href="{{ item.url | relative_url }}">{{ item.title }}</a></h3>
-      <p>{{ item.excerpt }}</p>
-      {% if item.paper_url %}<a href="{{ item.paper_url }}">논문 링크</a>{% endif %}
+<section class="mix-rail">
+  <div class="mix-section-head">
+    <h2>Project Cases</h2>
+    <a href="/portfolio/">전체 보기</a>
+  </div>
+  <div class="mix-rail-list">
+    {% for item in portfolio_sorted limit:4 offset:1 %}
+    <article class="mix-rail-item reveal {% cycle 'is-left', 'is-right' %}">
+      <div class="mix-rail-media">
+        {% if item.header.teaser %}
+        <img src="{{ item.header.teaser | relative_url }}" alt="{{ item.title }} teaser" loading="lazy">
+        {% else %}
+        <div class="mix-media-fallback">{{ item.title }}</div>
+        {% endif %}
+      </div>
+      <div class="mix-rail-body">
+        <p class="mix-meta">Portfolio · {{ item.date | date: "%Y.%m.%d" }}</p>
+        <h3><a href="{{ item.url | relative_url }}">{{ item.title }}</a></h3>
+        <p>{{ item.excerpt }}</p>
+        <div class="mix-links">
+          <a href="{{ item.url | relative_url }}">Read Case</a>
+          {% if item.github_url %}<a href="{{ item.github_url }}">GitHub</a>{% endif %}
+        </div>
+      </div>
     </article>
     {% endfor %}
   </div>
-  <p><a class="btn btn--primary" href="/research/">리서치 전체 보기</a></p>
+</section>
+
+<section class="mix-research">
+  <div class="mix-section-head">
+    <h2>Research Notes</h2>
+    <a href="/research/">전체 보기</a>
+  </div>
+  <div class="mix-research-grid">
+    {% for item in recent_research limit:2 %}
+    <article class="mix-research-card reveal">
+      <p class="mix-meta">Research · {{ item.date | date: "%Y.%m.%d" }}</p>
+      <h3><a href="{{ item.url | relative_url }}">{{ item.title }}</a></h3>
+      <p>{{ item.excerpt }}</p>
+      {% if item.paper_url %}<a class="mix-paper-link" href="{{ item.paper_url }}">논문 링크</a>{% endif %}
+    </article>
+    {% endfor %}
+  </div>
 </section>
