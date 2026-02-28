@@ -3,86 +3,57 @@ layout: splash
 author_profile: false
 classes: wide
 title: "Sichan visit"
-excerpt: "프로젝트를 만들고 실험하며, 배운 내용을 구조적으로 기록하는 AI 포트폴리오"
+excerpt: "핵심 프로젝트를 사진형 카드로 정리한 AI 포트폴리오"
 header:
   overlay_color: "#0f172a"
   overlay_filter: 0.42
   actions:
     - label: "포트폴리오 전체 보기"
       url: "/portfolio/"
-    - label: "리서치 기록 보기"
-      url: "/research/"
 ---
 
-{% assign portfolio_sorted = site.portfolio | sort: "date" | reverse %}
-{% assign lead_project = portfolio_sorted | first %}
-{% assign recent_research = site.research | sort: "date" | reverse %}
+{% assign projects = site.portfolio | sort: "date" | reverse | slice: 0, 3 %}
+{% assign hero = projects | first %}
 
-<section class="mix-feature">
-  {% if lead_project %}
-  <article class="mix-feature-card reveal">
-    <div class="mix-feature-media">
-      {% if lead_project.header.teaser %}
-      <img src="{{ lead_project.header.teaser | relative_url }}" alt="{{ lead_project.title }} teaser" loading="lazy">
-      {% else %}
-      <div class="mix-media-fallback">Featured</div>
+{% if hero %}
+<section class="photo-hero">
+  <article class="photo-hero-card">
+    <div class="photo-hero-image">
+      {% if hero.header.teaser %}
+      <img src="{{ hero.header.teaser | relative_url }}" alt="{{ hero.title }}">
       {% endif %}
     </div>
-    <div class="mix-feature-copy">
-      <p class="mix-meta">대표 프로젝트 · {{ lead_project.date | date: "%Y.%m.%d" }}</p>
-      <h2>{{ lead_project.title }}</h2>
-      <p>{{ lead_project.excerpt }}</p>
-      <div class="mix-actions">
-        <a class="btn btn--primary" href="{{ lead_project.url | relative_url }}">프로젝트 상세</a>
-        <a class="btn btn--inverse" href="/portfolio/">포트폴리오 목록</a>
-        {% if lead_project.github_url %}<a class="btn" href="{{ lead_project.github_url }}">GitHub</a>{% endif %}
+    <div class="photo-hero-content">
+      <p class="photo-meta">Portfolio · {{ hero.date | date: "%Y.%m.%d" }}</p>
+      <h2><a href="{{ hero.url | relative_url }}">{{ hero.title }}</a></h2>
+      <p>{{ hero.excerpt }}</p>
+      <div class="photo-links">
+        <a href="{{ hero.url | relative_url }}">프로젝트 상세</a>
+        {% if hero.github_url %}<a href="{{ hero.github_url }}">GitHub</a>{% endif %}
       </div>
     </div>
   </article>
-  {% endif %}
 </section>
+{% endif %}
 
-<section class="mix-rail">
-  <div class="mix-section-head">
-    <h2>Project Cases</h2>
-    <a href="/portfolio/">전체 보기</a>
-  </div>
-  <div class="mix-rail-list">
-    {% for item in portfolio_sorted limit:4 offset:1 %}
-    <article class="mix-rail-item reveal {% cycle 'is-left', 'is-right' %}">
-      <div class="mix-rail-media">
+<section class="photo-grid-wrap">
+  <div class="photo-grid">
+    {% for item in projects offset:1 %}
+    <article class="photo-card">
+      <a class="photo-card-image" href="{{ item.url | relative_url }}">
         {% if item.header.teaser %}
-        <img src="{{ item.header.teaser | relative_url }}" alt="{{ item.title }} teaser" loading="lazy">
-        {% else %}
-        <div class="mix-media-fallback">{{ item.title }}</div>
+        <img src="{{ item.header.teaser | relative_url }}" alt="{{ item.title }}">
         {% endif %}
-      </div>
-      <div class="mix-rail-body">
-        <p class="mix-meta">Portfolio · {{ item.date | date: "%Y.%m.%d" }}</p>
+      </a>
+      <div class="photo-card-content">
+        <p class="photo-meta">Portfolio · {{ item.date | date: "%Y.%m.%d" }}</p>
         <h3><a href="{{ item.url | relative_url }}">{{ item.title }}</a></h3>
         <p>{{ item.excerpt }}</p>
-        <div class="mix-links">
+        <div class="photo-links">
           <a href="{{ item.url | relative_url }}">Read Case</a>
           {% if item.github_url %}<a href="{{ item.github_url }}">GitHub</a>{% endif %}
         </div>
       </div>
-    </article>
-    {% endfor %}
-  </div>
-</section>
-
-<section class="mix-research">
-  <div class="mix-section-head">
-    <h2>Research Notes</h2>
-    <a href="/research/">전체 보기</a>
-  </div>
-  <div class="mix-research-grid">
-    {% for item in recent_research limit:2 %}
-    <article class="mix-research-card reveal">
-      <p class="mix-meta">Research · {{ item.date | date: "%Y.%m.%d" }}</p>
-      <h3><a href="{{ item.url | relative_url }}">{{ item.title }}</a></h3>
-      <p>{{ item.excerpt }}</p>
-      {% if item.paper_url %}<a class="mix-paper-link" href="{{ item.paper_url }}">논문 링크</a>{% endif %}
     </article>
     {% endfor %}
   </div>
