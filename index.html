@@ -3,16 +3,16 @@ layout: splash
 author_profile: false
 classes: wide
 title: "Sichan visit"
-excerpt: "핵심 프로젝트를 사진형 카드로 정리한 AI 포트폴리오"
+excerpt: "Photo-style AI portfolio"
 header:
   overlay_color: "#0f172a"
   overlay_filter: 0.42
   actions:
-    - label: "포트폴리오 전체 보기"
+    - label: "Portfolio"
       url: "/portfolio/"
 ---
 
-{% assign projects = site.portfolio | sort: "date" | reverse | slice: 0, 3 %}
+{% assign projects = site.portfolio | sort: "priority" | slice: 0, 4 %}
 {% assign hero = projects | first %}
 
 {% if hero %}
@@ -24,12 +24,21 @@ header:
       {% endif %}
     </div>
     <div class="photo-hero-content">
-      <p class="photo-meta">Portfolio · {{ hero.date | date: "%Y.%m.%d" }}</p>
+      <p class="photo-meta">Portfolio 쨌 {{ hero.date | date: "%Y.%m.%d" }}</p>
       <h2><a href="{{ hero.url | relative_url }}">{{ hero.title }}</a></h2>
       <p>{{ hero.excerpt }}</p>
       <div class="photo-links">
-        <a href="{{ hero.url | relative_url }}">프로젝트 상세</a>
+        <a href="{{ hero.url | relative_url }}">Detail</a>
         {% if hero.github_url %}<a href="{{ hero.github_url }}">GitHub</a>{% endif %}
+      </div>
+
+      <div class="hero-portfolio-list">
+        <p>Portfolio</p>
+        <ul>
+          {% for item in projects %}
+          <li><a href="{{ item.url | relative_url }}">{{ item.title }}</a></li>
+          {% endfor %}
+        </ul>
       </div>
     </div>
   </article>
@@ -46,7 +55,7 @@ header:
         {% endif %}
       </a>
       <div class="photo-card-content">
-        <p class="photo-meta">Portfolio · {{ item.date | date: "%Y.%m.%d" }}</p>
+        <p class="photo-meta">Portfolio 쨌 {{ item.date | date: "%Y.%m.%d" }}</p>
         <h3><a href="{{ item.url | relative_url }}">{{ item.title }}</a></h3>
         <p>{{ item.excerpt }}</p>
         <div class="photo-links">

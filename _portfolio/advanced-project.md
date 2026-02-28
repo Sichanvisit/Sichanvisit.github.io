@@ -1,6 +1,7 @@
 ---
 title: "Advanced Project"
 date: 2026-02-28
+priority: 1
 excerpt: "제품 이미지와 텍스트 입력으로 광고 크리에이티브를 자동 생성하는 End-to-End AI 파이프라인"
 header:
   teaser: /assets/images/profile.png

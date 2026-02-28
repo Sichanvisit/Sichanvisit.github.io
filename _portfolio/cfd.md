@@ -1,6 +1,7 @@
 ---
 title: "CFD"
 date: 2026-02-26
+priority: 2
 excerpt: "CFD 관련 학습 및 구현 실험 프로젝트"
 header:
   teaser: /assets/images/profile.png

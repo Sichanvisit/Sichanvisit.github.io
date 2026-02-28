@@ -48,7 +48,6 @@ body {
   display: grid;
   grid-template-columns: 1.1fr 1fr;
   gap: 1rem;
-  padding: 0;
   border: 1px solid var(--photo-line);
   border-radius: 16px;
   overflow: hidden;
@@ -109,6 +108,32 @@ body {
   margin-right: 0.75rem;
   color: var(--photo-link);
   font-weight: 700;
+}
+
+.hero-portfolio-list {
+  margin-top: 1rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--photo-line);
+}
+
+.hero-portfolio-list p {
+  margin: 0 0 0.3rem;
+  font-weight: 700;
+}
+
+.hero-portfolio-list ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hero-portfolio-list li {
+  margin: 0.2rem 0;
+}
+
+.hero-portfolio-list li::before {
+  content: "- ";
+  color: var(--photo-muted);
 }
 
 .photo-grid {
