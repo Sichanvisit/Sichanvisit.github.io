@@ -112,9 +112,8 @@ body {
 }
 
 .feature-right {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 0.7rem;
   align-items: stretch;
   border: 1px solid var(--photo-line);
@@ -158,14 +157,13 @@ body {
 }
 
 .feature-panel-section {
-  border: 0;
-  border-radius: 0;
-  padding: 0.2rem 0;
+  border: 1px solid var(--photo-line);
+  border-radius: 10px;
+  padding: 0.72rem;
 }
 
 .feature-panel-research {
   border-top: 1px solid var(--photo-line);
-  padding-top: 0.72rem;
 }
 
 .masthead__menu-item a {
@@ -272,6 +270,7 @@ body {
   }
 
   .feature-right {
+    grid-template-columns: 1fr;
     min-height: auto;
   }
 }
