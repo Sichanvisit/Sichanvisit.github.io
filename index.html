@@ -3,7 +3,7 @@ layout: splash
 author_profile: false
 classes: wide
 title: "Sichan visit"
-excerpt: "핵심 프로젝트를 사진형 카드로 정리한 AI 포트폴리오"
+excerpt: "Photo-style AI portfolio"
 header:
   overlay_color: "#0f172a"
   overlay_filter: 0.42
@@ -14,8 +14,27 @@ header:
 
 {% assign projects = site.portfolio | sort: "priority" | slice: 0, 4 %}
 
+<section class="feature-row">
+  <article class="feature-left">
+    <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1400&q=80" alt="Sofa workspace">
+    <div class="feature-overlay">
+      <h1>Sichan visit</h1>
+      <p>Build, test, and document AI projects.</p>
+    </div>
+  </article>
+
+  <aside class="feature-right">
+    <h2>포트폴리오 제목</h2>
+    <ul>
+      {% for item in projects %}
+      <li><a href="{{ item.url | relative_url }}">{{ item.title }}</a></li>
+      {% endfor %}
+    </ul>
+    <a class="btn btn--primary" href="/portfolio/">포트폴리오 전체 보기</a>
+  </aside>
+</section>
+
 <section class="photo-grid-wrap">
-  <h2 class="photo-grid-title">포트폴리오 제목</h2>
   <div class="photo-grid">
     {% for item in projects %}
     <article class="photo-card">

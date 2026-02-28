@@ -27,7 +27,7 @@ body {
 }
 
 .page__content {
-  max-width: 1100px;
+  max-width: 1120px;
 }
 
 .page__content p,
@@ -39,106 +39,87 @@ body {
   color: var(--photo-text);
 }
 
-.photo-hero,
-.photo-grid-wrap {
+.feature-row {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 1rem;
   margin-top: 1.1rem;
 }
 
-.photo-grid-title {
-  margin: 0 0 0.7rem;
-  font-size: 1.35rem;
-}
-
-.photo-hero-card {
-  display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  gap: 1rem;
-  border: 1px solid var(--photo-line);
+.feature-left {
+  position: relative;
   border-radius: 16px;
   overflow: hidden;
-  background: var(--photo-card);
+  min-height: 330px;
+  border: 1px solid var(--photo-line);
 }
 
-.photo-hero-image {
-  aspect-ratio: 16 / 10;
-  background: var(--photo-surface);
-}
-
-.photo-hero-image img,
-.photo-card-image img {
+.feature-left img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
-.photo-hero-content {
-  padding: 1rem 1rem 1rem 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+.feature-overlay {
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  bottom: 1rem;
+  padding: 0.9rem 1rem;
+  border-radius: 12px;
+  background: linear-gradient(145deg, rgba(8, 14, 23, 0.75), rgba(12, 24, 41, 0.58));
+  backdrop-filter: blur(2px);
 }
 
-.photo-meta {
+.feature-overlay h1 {
   margin: 0;
-  color: var(--photo-muted);
-  font-size: 0.78rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-}
-
-.photo-hero-content h2,
-.photo-card-content h3 {
-  margin: 0.45rem 0 0.5rem;
+  color: #f4f8ff;
   font-family: "Fraunces", serif;
-  line-height: 1.2;
+  font-size: clamp(2.1rem, 5vw, 3.2rem);
+  line-height: 1.04;
 }
 
-.photo-hero-content h2 {
-  font-size: clamp(1.55rem, 2.8vw, 2.3rem);
+.feature-overlay p {
+  margin: 0.4rem 0 0;
+  color: #d4deea;
+  font-size: 0.95rem;
 }
 
-.photo-hero-content p,
-.photo-card-content p {
-  margin: 0;
-  line-height: 1.65;
+.feature-right {
+  border: 1px solid var(--photo-line);
+  border-radius: 16px;
+  background: var(--photo-card);
+  padding: 1rem;
 }
 
-.photo-links {
-  margin-top: 0.8rem;
+.feature-right h2 {
+  margin: 0 0 0.6rem;
+  font-size: 1.25rem;
+  font-family: "Fraunces", serif;
 }
 
-.photo-links a {
-  margin-right: 0.75rem;
-  color: var(--photo-link);
-  font-weight: 700;
-}
-
-.hero-portfolio-list {
-  margin-top: 1rem;
-  padding-top: 0.7rem;
-  border-top: 1px solid var(--photo-line);
-}
-
-.hero-portfolio-list p {
-  margin: 0 0 0.3rem;
-  font-weight: 700;
-}
-
-.hero-portfolio-list ul {
+.feature-right ul {
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.hero-portfolio-list li {
-  margin: 0.2rem 0;
+.feature-right li {
+  margin: 0.35rem 0;
 }
 
-.hero-portfolio-list li::before {
+.feature-right li::before {
   content: "- ";
   color: var(--photo-muted);
+}
+
+.feature-right .btn {
+  margin-top: 0.75rem;
+}
+
+.photo-grid-wrap {
+  margin-top: 1rem;
 }
 
 .photo-grid {
@@ -160,38 +141,62 @@ body {
   background: var(--photo-surface);
 }
 
+.photo-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
 .photo-card-content {
   padding: 0.72rem 0.82rem 0.84rem;
 }
 
+.photo-meta {
+  margin: 0;
+  color: var(--photo-muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
 .photo-card-content h3 {
   margin: 0.34rem 0 0.32rem;
-  font-size: 1.24rem;
+  font-size: 1.08rem;
   line-height: 1.18;
   letter-spacing: -0.01em;
+  font-family: "Fraunces", serif;
 }
 
 .photo-card-content p {
-  font-size: 0.96rem;
-  line-height: 1.52;
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.5;
 }
 
-.photo-card-content .photo-meta {
-  font-size: 0.72rem;
-  letter-spacing: 0.05em;
+.photo-links {
+  margin-top: 0.58rem;
+}
+
+.photo-links a {
+  margin-right: 0.65rem;
+  color: var(--photo-link);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 1100px) {
+  .photo-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 900px) {
-  .photo-hero-card {
+  .feature-row {
     grid-template-columns: 1fr;
   }
 
-  .photo-hero-content {
-    padding: 0.9rem;
-  }
-}
-
-@media (max-width: 980px) {
   .photo-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
