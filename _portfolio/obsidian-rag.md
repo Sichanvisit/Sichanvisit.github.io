@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Obsidian RAG"
 date: 2026-02-28
 excerpt: "Obsidian 노트를 검색증강생성(RAG) 파이프라인으로 연결한 개인 지식 검색 프로젝트"

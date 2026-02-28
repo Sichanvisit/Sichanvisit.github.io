@@ -1,4 +1,4 @@
-﻿---
+---
 title: "PythonProject"
 date: 2026-02-25
 excerpt: "Python 기반 기능 실험과 학습 기록을 묶은 프로젝트"
