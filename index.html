@@ -13,41 +13,11 @@ header:
 ---
 
 {% assign projects = site.portfolio | sort: "priority" | slice: 0, 4 %}
-{% assign hero = projects | first %}
-
-{% if hero %}
-<section class="photo-hero">
-  <article class="photo-hero-card">
-    <div class="photo-hero-image">
-      {% if hero.header.teaser %}
-      <img src="{{ hero.header.teaser | relative_url }}" alt="{{ hero.title }}">
-      {% endif %}
-    </div>
-    <div class="photo-hero-content">
-      <p class="photo-meta">{{ hero.date | date: "%Y.%m.%d" }}</p>
-      <h2><a href="{{ hero.url | relative_url }}">{{ hero.title }}</a></h2>
-      <p>{{ hero.excerpt }}</p>
-      <div class="photo-links">
-        <a href="{{ hero.url | relative_url }}">프로젝트 상세</a>
-        {% if hero.github_url %}<a href="{{ hero.github_url }}">GitHub</a>{% endif %}
-      </div>
-
-      <div class="hero-portfolio-list">
-        <p>포트폴리오 제목</p>
-        <ul>
-          {% for item in projects %}
-          <li><a href="{{ item.url | relative_url }}">{{ item.title }}</a></li>
-          {% endfor %}
-        </ul>
-      </div>
-    </div>
-  </article>
-</section>
-{% endif %}
 
 <section class="photo-grid-wrap">
+  <h2 class="photo-grid-title">포트폴리오 제목</h2>
   <div class="photo-grid">
-    {% for item in projects offset:1 %}
+    {% for item in projects %}
     <article class="photo-card">
       <a class="photo-card-image" href="{{ item.url | relative_url }}">
         {% if item.header.teaser %}
