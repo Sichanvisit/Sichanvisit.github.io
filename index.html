@@ -6,6 +6,7 @@ title: ""
 ---
 
 {% assign projects = site.portfolio | sort: "priority" | slice: 0, 4 %}
+{% assign research_items = site.research | sort: "date" | reverse | slice: 0, 4 %}
 
 <section class="feature-row">
   <article class="feature-left">
@@ -17,13 +18,27 @@ title: ""
   </article>
 
   <aside class="feature-right">
-    <h2>포트폴리오 제목</h2>
-    <ul>
-      {% for item in projects %}
-      <li><a href="{{ item.url | relative_url }}">{{ item.title }}</a></li>
-      {% endfor %}
-    </ul>
-    <a class="btn btn--primary" href="/portfolio/">포트폴리오 전체 보기</a>
+    <section class="feature-panel-section">
+      <h2>PORTFOLIO</h2>
+      <ul>
+        {% for item in projects %}
+        <li><a href="{{ item.url | relative_url }}">{{ item.title }}</a></li>
+        {% endfor %}
+      </ul>
+      <a class="btn btn--primary" href="/portfolio/">View Portfolio</a>
+    </section>
+
+    <div class="feature-divider"></div>
+
+    <section class="feature-panel-section">
+      <h2>RESEARCH</h2>
+      <ul>
+        {% for item in research_items %}
+        <li><a href="{{ item.url | relative_url }}">{{ item.title }}</a></li>
+        {% endfor %}
+      </ul>
+      <a class="btn btn--primary" href="/research/">View Research</a>
+    </section>
   </aside>
 </section>
 
