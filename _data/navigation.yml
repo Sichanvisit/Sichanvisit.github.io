@@ -1,8 +1,8 @@
-# main links
+﻿# main links
 main:
-  - title: "Home"
+  - title: "홈"
     url: /
-  - title: "Portfolio"
+  - title: "포트폴리오"
     url: /portfolio/
-  - title: "Research"
+  - title: "리서치"
     url: /research/
