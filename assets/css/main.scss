@@ -157,14 +157,14 @@ body {
 }
 
 .feature-panel-section {
-  border: 1px solid var(--photo-line);
+  border: 1px solid transparent;
   border-radius: 10px;
   padding: 0.72rem;
 }
 
 .feature-panel-research {
   border-top: 0;
-  border-left: 1px solid var(--photo-line);
+  border-left: 1px solid transparent;
 }
 
 .masthead__menu-item a {
