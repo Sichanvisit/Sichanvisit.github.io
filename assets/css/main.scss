@@ -505,7 +505,8 @@ a {
   bottom: 1rem;
   z-index: 1400;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 0.45rem;
   padding-inline: 0.8rem;
   pointer-events: none;
 }
@@ -635,13 +636,11 @@ a {
     display: block !important;
   }
 
-  .collection-doc-left.drawer-panel,
-  .collection-doc-page .sidebar__right.drawer-panel {
+  #collection-left-drawer-mobile,
+  #toc-right-drawer-mobile {
     position: fixed !important;
     top: 0;
     bottom: 0;
-    width: min(82vw, 320px);
-    max-width: 320px;
     height: 100dvh;
     overflow-y: auto;
     margin: 0 !important;
@@ -650,34 +649,40 @@ a {
     background: var(--photo-card);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
     transition: transform 0.22s ease;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
   }
 
-  .collection-doc-left.drawer-panel {
+  #collection-left-drawer-mobile {
     inset-inline-start: 0;
-    transform: translateX(-104%);
     width: min(78vw, 300px);
     max-width: 300px;
+    transform: translateX(-104%);
   }
 
-  .collection-doc-page .sidebar__right.drawer-panel {
-    inset-inline-end: 0;
-    transform: translateX(104%);
+  #toc-right-drawer-mobile {
+    inset-inline-start: 0;
     width: min(82vw, 320px);
     max-width: 320px;
+    transform: translateX(-104%);
     padding: 0.8rem;
   }
 
-  .collection-doc-left.drawer-panel.is-open,
-  .collection-doc-page .sidebar__right.drawer-panel.is-open {
+  #collection-left-drawer-mobile.is-open,
+  #toc-right-drawer-mobile.is-open {
     transform: translateX(0);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
   }
 
-  .collection-doc-left__list {
+  #collection-left-drawer-mobile .collection-doc-left__list {
     max-height: none;
     overflow-y: visible;
   }
 
-  .collection-doc-page .sidebar__right.drawer-panel .toc__menu {
+  #toc-right-drawer-mobile .toc__menu {
     margin-top: 0.35rem;
     padding-inline-start: 0.2rem;
   }
