@@ -516,6 +516,8 @@ a {
 }
 
 .collection-doc-page .page__content {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
   clear: none !important;
 }
 
@@ -531,6 +533,14 @@ a {
 
 .collection-doc-page .page__meta {
   margin-top: 0.1rem;
+}
+
+.collection-doc-page .page__content h2:first-of-type,
+.collection-doc-page .page__content h3:first-of-type,
+.collection-doc-page .page__content p:first-of-type,
+.collection-doc-page .page__content ul:first-of-type,
+.collection-doc-page .page__content ol:first-of-type {
+  margin-top: 0 !important;
 }
 
 @media (min-width: 1280px) {
