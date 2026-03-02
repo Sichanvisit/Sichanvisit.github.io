@@ -31,10 +31,16 @@ search: false
   }
 }
 
+html,
 body {
   font-family: "Noto Sans KR", sans-serif;
   background-color: var(--page-bg);
   color: var(--photo-text);
+}
+
+.initial-content,
+#main {
+  background-color: var(--page-bg);
 }
 
 a {
@@ -54,6 +60,17 @@ a {
 .greedy-nav .hidden-links {
   background: var(--photo-card);
   border: 1px solid var(--photo-line);
+}
+
+.page__footer {
+  background-color: var(--page-bg);
+  border-top: 1px solid var(--photo-line);
+}
+
+.page__footer,
+.page__footer p,
+.page__footer a {
+  color: var(--photo-text);
 }
 
 .page__hero--overlay {
