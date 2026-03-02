@@ -1,4 +1,7 @@
 {% capture logo_path %}{{ site.logo }}{% endcapture %}
+{% assign locale_full = site.locale | default: "en" %}
+{% assign locale_short = locale_full | split: "-" | first %}
+{% assign main_nav = site.data.navigation[locale_full] | default: site.data.navigation[locale_short] | default: site.data.navigation.main %}
 
 <div class="masthead">
   <div class="masthead__inner-wrap">
@@ -12,7 +15,7 @@
           {% if site.subtitle %}<span class="site-subtitle">{{ site.subtitle | escape_once | strip }}</span>{% endif %}
         </a>
         <ul class="visible-links">
-          {%- for link in site.data.navigation.main -%}
+          {%- for link in main_nav -%}
             <li class="masthead__menu-item">
               <a
                 href="{{ link.url | relative_url }}"

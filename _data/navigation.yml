@@ -1,5 +1,21 @@
 # main links
 main:
+  - title: "Home"
+    url: /
+  - title: "Portfolio"
+    url: /portfolio/
+  - title: "Research"
+    url: /research/
+
+en:
+  - title: "Home"
+    url: /
+  - title: "Portfolio"
+    url: /portfolio/
+  - title: "Research"
+    url: /research/
+
+ko:
   - title: "홈"
     url: /
   - title: "포트폴리오"
