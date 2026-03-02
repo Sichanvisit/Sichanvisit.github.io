@@ -32,7 +32,7 @@ layout: default
     {% else %}
       {% assign collection_items = collection_items | sort: "date" | reverse %}
     {% endif %}
-    <aside class="sidebar sticky collection-doc-left">
+    <aside class="sidebar sticky collection-doc-left desktop-only">
       <h3 class="collection-doc-left__title">{% if page.collection == "portfolio" %}Portfolio{% else %}Research{% endif %}</h3>
       <ul class="collection-doc-left__list">
         {% for item in collection_items %}
@@ -63,9 +63,27 @@ layout: default
       {% endunless %}
 
       <section class="page__content" itemprop="text">
+        {% if show_collection_menu %}
+          <details class="mobile-only mobile-panel">
+            <summary>{% if page.collection == "portfolio" %}Portfolio Menu{% else %}Research Menu{% endif %}</summary>
+            <ul class="mobile-panel-list">
+              {% for item in collection_items %}
+                <li{% if item.url == page.url %} class="is-active"{% endif %}>
+                  <a href="{{ item.url | relative_url }}">{{ item.title }}</a>
+                </li>
+              {% endfor %}
+            </ul>
+          </details>
+        {% endif %}
+        {% if page.toc %}
+          <details class="mobile-only mobile-panel">
+            <summary>{{ page.toc_label | default: "Contents" }}</summary>
+            {% include toc.html sanitize=true html=content h_min=1 h_max=6 class="toc__menu" skip_no_ids=true %}
+          </details>
+        {% endif %}
         {{ content }}
         {% if page.toc %}
-          <aside class="sidebar__right {% if page.toc_sticky %}sticky{% endif %}">
+          <aside class="sidebar__right {% if page.toc_sticky %}sticky{% endif %} desktop-only">
             <nav class="toc">
               <header><h4 class="nav__title"><i class="fas fa-{{ page.toc_icon | default: 'file-alt' }}"></i> {{ page.toc_label | default: site.data.ui-text[site.locale].toc_label | default: "On this page" }}</h4></header>
               {% include toc.html sanitize=true html=content h_min=1 h_max=6 class="toc__menu" skip_no_ids=true %}

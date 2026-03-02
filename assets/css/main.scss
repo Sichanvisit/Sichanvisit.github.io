@@ -491,6 +491,50 @@ a {
   text-decoration: underline;
 }
 
+.desktop-only {
+  display: block;
+}
+
+.mobile-only {
+  display: none;
+}
+
+.mobile-panel {
+  margin: 0 0 0.6rem;
+  border: 1px solid var(--photo-line);
+  border-radius: 10px;
+  background: var(--photo-card);
+  padding: 0.45rem 0.65rem;
+}
+
+.mobile-panel summary {
+  cursor: pointer;
+  color: var(--photo-text);
+  font-weight: 700;
+  font-size: 0.9rem;
+  list-style: none;
+}
+
+.mobile-panel-list {
+  margin: 0.55rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mobile-panel-list li {
+  margin: 0.28rem 0;
+}
+
+.mobile-panel-list a {
+  color: var(--photo-link);
+  text-decoration: none;
+}
+
+.mobile-panel-list li.is-active a {
+  color: var(--photo-text);
+  font-weight: 700;
+}
+
 /* Collection detail right TOC: remove boxed border look */
 .collection-doc-page .toc {
   border: 0 !important;
@@ -590,6 +634,19 @@ a {
     position: static;
     width: 100%;
     max-width: 100%;
+  }
+
+  .desktop-only {
+    display: none !important;
+  }
+
+  .mobile-only {
+    display: block !important;
+  }
+
+  .mobile-panel .toc__menu {
+    margin-top: 0.45rem;
+    padding-left: 0.5rem;
   }
 }
 
