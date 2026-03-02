@@ -1,7 +1,5 @@
 {% capture logo_path %}{{ site.logo }}{% endcapture %}
-{% assign locale_full = site.locale | default: "en" %}
-{% assign locale_short = locale_full | split: "-" | first %}
-{% assign main_nav = site.data.navigation[locale_full] | default: site.data.navigation[locale_short] | default: site.data.navigation.main %}
+{% assign main_nav = site.data.navigation.en | default: site.data.navigation.main %}
 
 <div class="masthead">
   <div class="masthead__inner-wrap">
