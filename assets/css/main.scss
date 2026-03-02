@@ -462,6 +462,20 @@ a {
   text-decoration: underline;
 }
 
+@media (min-width: 1280px) {
+  #main.collection-doc-layout {
+    max-width: 1700px;
+    padding-inline: 0.6rem;
+  }
+}
+
+@media (min-width: 1600px) {
+  #main.collection-doc-layout {
+    max-width: 1820px;
+    padding-inline: 0.4rem;
+  }
+}
+
 @media (max-width: 900px) {
   .feature-row {
     grid-template-columns: 1fr;

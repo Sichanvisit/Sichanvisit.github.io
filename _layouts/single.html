@@ -23,7 +23,7 @@ layout: default
   {% assign show_collection_menu = true %}
 {% endif %}
 
-<div id="main" role="main">
+<div id="main"{% if show_collection_menu %} class="collection-doc-layout"{% endif %} role="main">
   {% include sidebar.html %}
   {% if show_collection_menu %}
     {% assign collection_items = site[page.collection] %}
@@ -44,7 +44,7 @@ layout: default
     </aside>
   {% endif %}
 
-  <article class="page" itemscope itemtype="https://schema.org/CreativeWork"{% if page.locale %} lang="{{ page.locale }}"{% endif %}>
+  <article class="page{% if show_collection_menu %} collection-doc-page{% endif %}" itemscope itemtype="https://schema.org/CreativeWork"{% if page.locale %} lang="{{ page.locale }}"{% endif %}>
     {% if page.title %}<meta itemprop="headline" content="{{ page.title | replace: '|', '&#124;' | markdownify | strip_html | strip_newlines | escape_once }}">{% endif %}
     {% if page.excerpt %}<meta itemprop="description" content="{{ page.excerpt | markdownify | strip_html | strip_newlines | escape_once }}">{% endif %}
     {% if page.date %}<meta itemprop="datePublished" content="{{ page.date | date_to_xmlschema }}">{% endif %}
