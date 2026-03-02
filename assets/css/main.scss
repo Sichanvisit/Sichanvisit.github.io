@@ -377,6 +377,7 @@ a {
   grid-template-columns: 250px minmax(0, 1fr);
   gap: 1rem;
   align-items: start;
+  text-align: left;
 }
 
 .collection-menu {
@@ -419,6 +420,23 @@ a {
 
 .collection-grid-area {
   margin-top: 0;
+  width: 100%;
+}
+
+.collection-grid-area .photo-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  justify-items: stretch;
+}
+
+/* Collection (portfolio/research) list page layout normalization */
+.layout--collection .archive {
+  float: none;
+  width: 100%;
+  padding-inline-end: 0;
+}
+
+.layout--collection .collection-with-menu {
+  max-width: none;
 }
 
 .collection-doc-left {
@@ -426,6 +444,11 @@ a {
   border-radius: 12px;
   background: var(--photo-card);
   padding: 0.8rem 0.9rem;
+  box-sizing: border-box;
+  width: 220px;
+  max-width: 220px;
+  overflow: hidden;
+  opacity: 1;
 }
 
 .collection-doc-left__title {
@@ -440,6 +463,8 @@ a {
   margin: 0;
   padding: 0;
   list-style: none;
+  max-height: calc(100vh - 13rem);
+  overflow-y: auto;
 }
 
 .collection-doc-left__item {
@@ -451,6 +476,9 @@ a {
   color: var(--photo-link);
   font-size: 0.82rem;
   text-decoration: none;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  display: block;
 }
 
 .collection-doc-left__item.is-active a {
@@ -460,6 +488,24 @@ a {
 
 .collection-doc-left__item a:hover {
   text-decoration: underline;
+}
+
+/* Collection detail right TOC: remove boxed border look */
+.collection-doc-page .toc {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.collection-doc-page .toc .nav__title {
+  border: 0 !important;
+  background: transparent !important;
+  padding-inline: 0 !important;
+}
+
+.collection-doc-page .toc .toc__menu {
+  border-top: 0 !important;
 }
 
 @media (min-width: 1280px) {
@@ -500,8 +546,14 @@ a {
     position: static;
   }
 
+  .collection-grid-area .photo-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .collection-doc-left {
     position: static;
+    width: 100%;
+    max-width: 100%;
   }
 }
 
