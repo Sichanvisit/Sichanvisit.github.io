@@ -372,6 +372,96 @@ a {
   color: var(--photo-text);
 }
 
+.collection-with-menu {
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.collection-menu {
+  position: sticky;
+  top: 5.5rem;
+  border: 1px solid var(--photo-line);
+  border-radius: 12px;
+  background: var(--photo-card);
+  padding: 0.8rem 0.9rem;
+}
+
+.collection-menu h2 {
+  margin: 0 0 0.6rem;
+  font-size: 0.92rem;
+  color: var(--photo-text);
+  border-bottom: 1px solid var(--photo-line);
+  padding-bottom: 0.45rem;
+}
+
+.collection-menu ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.collection-menu li {
+  margin: 0.34rem 0;
+  line-height: 1.25;
+}
+
+.collection-menu a {
+  color: var(--photo-link);
+  font-size: 0.82rem;
+  text-decoration: none;
+}
+
+.collection-menu a:hover {
+  text-decoration: underline;
+}
+
+.collection-grid-area {
+  margin-top: 0;
+}
+
+.collection-doc-left {
+  border: 1px solid var(--photo-line);
+  border-radius: 12px;
+  background: var(--photo-card);
+  padding: 0.8rem 0.9rem;
+}
+
+.collection-doc-left__title {
+  margin: 0 0 0.6rem;
+  font-size: 0.92rem;
+  color: var(--photo-text);
+  border-bottom: 1px solid var(--photo-line);
+  padding-bottom: 0.45rem;
+}
+
+.collection-doc-left__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.collection-doc-left__item {
+  margin: 0.35rem 0;
+  line-height: 1.25;
+}
+
+.collection-doc-left__item a {
+  color: var(--photo-link);
+  font-size: 0.82rem;
+  text-decoration: none;
+}
+
+.collection-doc-left__item.is-active a {
+  color: var(--photo-text);
+  font-weight: 700;
+}
+
+.collection-doc-left__item a:hover {
+  text-decoration: underline;
+}
+
 @media (max-width: 900px) {
   .feature-row {
     grid-template-columns: 1fr;
@@ -386,6 +476,18 @@ a {
 
   .photo-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .collection-with-menu {
+    grid-template-columns: 1fr;
+  }
+
+  .collection-menu {
+    position: static;
+  }
+
+  .collection-doc-left {
+    position: static;
   }
 }
 

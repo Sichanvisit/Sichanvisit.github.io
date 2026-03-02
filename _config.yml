@@ -340,6 +340,9 @@ defaults:
     values:
       layout: single
       author_profile: false
+      toc: true
+      toc_sticky: true
+      toc_label: "Contents"
       share: true
   - scope:
       path: ""
@@ -347,5 +350,8 @@ defaults:
     values:
       layout: single
       author_profile: false
+      toc: true
+      toc_sticky: true
+      toc_label: "Contents"
       share: false
 
