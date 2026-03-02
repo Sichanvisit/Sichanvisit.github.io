@@ -44,6 +44,40 @@ layout: default
     </aside>
   {% endif %}
 
+  {% if show_collection_menu or page.toc %}
+    <div class="drawer-toggle-wrap mobile-only">
+      {% if show_collection_menu %}
+        <button type="button" class="drawer-toggle-btn drawer-toggle-left" data-open-drawer="collection-left-drawer-mobile">Menu</button>
+      {% endif %}
+      {% if page.toc %}
+        <button type="button" class="drawer-toggle-btn drawer-toggle-right" data-open-drawer="toc-right-drawer-mobile">Contents</button>
+      {% endif %}
+    </div>
+    <button type="button" id="drawer-backdrop" class="drawer-backdrop mobile-only" aria-label="Close panels"></button>
+    {% if show_collection_menu %}
+      <aside id="collection-left-drawer-mobile" class="mobile-only collection-doc-left drawer-panel drawer-left">
+        <button type="button" class="drawer-close" data-close-drawer="collection-left-drawer-mobile" aria-label="Close menu">Close</button>
+        <h3 class="collection-doc-left__title">{% if page.collection == "portfolio" %}Portfolio{% else %}Research{% endif %}</h3>
+        <ul class="collection-doc-left__list">
+          {% for item in collection_items %}
+            <li class="collection-doc-left__item{% if item.url == page.url %} is-active{% endif %}">
+              <a href="{{ item.url | relative_url }}">{{ item.title }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      </aside>
+    {% endif %}
+    {% if page.toc %}
+      <aside id="toc-right-drawer-mobile" class="mobile-only sidebar__right drawer-panel drawer-right">
+        <button type="button" class="drawer-close" data-close-drawer="toc-right-drawer-mobile" aria-label="Close contents">Close</button>
+        <nav class="toc">
+          <header><h4 class="nav__title"><i class="fas fa-{{ page.toc_icon | default: 'file-alt' }}"></i> {{ page.toc_label | default: site.data.ui-text[site.locale].toc_label | default: "On this page" }}</h4></header>
+          {% include toc.html sanitize=true html=content h_min=1 h_max=6 class="toc__menu" skip_no_ids=true %}
+        </nav>
+      </aside>
+    {% endif %}
+  {% endif %}
+
   <article class="page{% if show_collection_menu %} collection-doc-page{% endif %}" itemscope itemtype="https://schema.org/CreativeWork"{% if page.locale %} lang="{{ page.locale }}"{% endif %}>
     {% if page.title %}<meta itemprop="headline" content="{{ page.title | replace: '|', '&#124;' | markdownify | strip_html | strip_newlines | escape_once }}">{% endif %}
     {% if page.excerpt %}<meta itemprop="description" content="{{ page.excerpt | markdownify | strip_html | strip_newlines | escape_once }}">{% endif %}
@@ -63,25 +97,6 @@ layout: default
       {% endunless %}
 
       <section class="page__content" itemprop="text">
-        {% if show_collection_menu %}
-          <details class="mobile-only mobile-panel">
-            <summary>{% if page.collection == "portfolio" %}Portfolio Menu{% else %}Research Menu{% endif %}</summary>
-            <ul class="mobile-panel-list">
-              {% for item in collection_items %}
-                <li{% if item.url == page.url %} class="is-active"{% endif %}>
-                  <a href="{{ item.url | relative_url }}">{{ item.title }}</a>
-                </li>
-              {% endfor %}
-            </ul>
-          </details>
-        {% endif %}
-        {% if page.toc %}
-          <details class="mobile-only mobile-panel">
-            <summary>{{ page.toc_label | default: "Contents" }}</summary>
-            {% include toc.html sanitize=true html=content h_min=1 h_max=6 class="toc__menu" skip_no_ids=true %}
-          </details>
-        {% endif %}
-        {{ content }}
         {% if page.toc %}
           <aside class="sidebar__right {% if page.toc_sticky %}sticky{% endif %} desktop-only">
             <nav class="toc">
@@ -90,6 +105,7 @@ layout: default
             </nav>
           </aside>
         {% endif %}
+        {{ content }}
         {% if page.link %}<div><a href="{{ page.link }}" class="btn btn--primary">{{ site.data.ui-text[site.locale].ext_link_label | default: "Direct Link" }}</a></div>{% endif %}
       </section>
 
@@ -126,3 +142,49 @@ layout: default
     {% include page__related.html posts=site.posts %}
   {% endif %}
 </div>
+
+{% if show_collection_menu or page.toc %}
+  <script>
+    (function () {
+      var openButtons = document.querySelectorAll("[data-open-drawer]");
+      var closeButtons = document.querySelectorAll("[data-close-drawer]");
+      var backdrop = document.getElementById("drawer-backdrop");
+      var body = document.body;
+
+      function closeAll() {
+        document.querySelectorAll(".drawer-panel.is-open").forEach(function (el) {
+          el.classList.remove("is-open");
+        });
+        if (backdrop) backdrop.classList.remove("is-open");
+        body.classList.remove("drawer-open");
+      }
+
+      openButtons.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var id = btn.getAttribute("data-open-drawer");
+          var target = document.getElementById(id);
+          if (!target) return;
+          var willOpen = !target.classList.contains("is-open");
+          closeAll();
+          if (willOpen) {
+            target.classList.add("is-open");
+            if (backdrop) backdrop.classList.add("is-open");
+            body.classList.add("drawer-open");
+          }
+        });
+      });
+
+      closeButtons.forEach(function (btn) {
+        btn.addEventListener("click", closeAll);
+      });
+
+      if (backdrop) {
+        backdrop.addEventListener("click", closeAll);
+      }
+
+      window.addEventListener("resize", function () {
+        if (window.innerWidth > 1024) closeAll();
+      });
+    })();
+  </script>
+{% endif %}
