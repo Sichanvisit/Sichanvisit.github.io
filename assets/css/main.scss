@@ -347,6 +347,12 @@ a {
   padding: 0.8rem 0.9rem;
 }
 
+.archive .archive__item.photo-card {
+  padding: 0;
+  border: 1px solid var(--photo-line);
+  overflow: hidden;
+}
+
 .archive .archive__item-title a,
 .archive .archive__item-title,
 .archive .page__meta,
