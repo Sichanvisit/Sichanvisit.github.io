@@ -511,12 +511,22 @@ a {
 
 /* Collection detail page: tighten top spacing of center content */
 .collection-doc-page .page__inner-wrap {
-  margin-top: 0.25rem;
+  margin-top: 0 !important;
+  clear: none !important;
 }
 
 .collection-doc-page .page__title {
+  margin-top: 0 !important;
+  margin-bottom: 0.4rem;
+}
+
+.collection-doc-page header {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+.collection-doc-page .page__meta {
   margin-top: 0.1rem;
-  margin-bottom: 0.55rem;
 }
 
 @media (min-width: 1280px) {
