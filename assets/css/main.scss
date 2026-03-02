@@ -449,6 +449,7 @@ a {
   max-width: 220px;
   overflow: hidden;
   opacity: 1;
+  margin-top: 0.45rem;
 }
 
 .collection-doc-left__title {
@@ -508,10 +509,21 @@ a {
   border-top: 0 !important;
 }
 
+/* Collection detail page: tighten top spacing of center content */
+.collection-doc-page .page__inner-wrap {
+  margin-top: 0.25rem;
+}
+
+.collection-doc-page .page__title {
+  margin-top: 0.1rem;
+  margin-bottom: 0.55rem;
+}
+
 @media (min-width: 1280px) {
   #main.collection-doc-layout {
     max-width: 1700px;
     padding-inline: 0.6rem;
+    margin-top: 0.15rem;
   }
 }
 
