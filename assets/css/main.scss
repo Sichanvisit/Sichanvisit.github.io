@@ -17,6 +17,7 @@ search: false
   --photo-muted: #5d6775;
   --photo-line: #dce1e8;
   --photo-link: #0f3f70;
+  --masthead-height: 3.7rem;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -633,7 +634,7 @@ a {
   }
 }
 
-@media (max-width: 2000px) {
+@media (max-width: 1700px) {
   body.drawer-open {
     overflow: hidden;
   }
@@ -654,9 +655,9 @@ a {
   #toc-right-drawer-mobile {
     display: block !important;
     position: fixed !important;
-    top: 0;
+    top: var(--masthead-height);
     bottom: 0;
-    height: 100dvh;
+    height: calc(100dvh - var(--masthead-height));
     overflow-y: auto;
     margin: 0 !important;
     border-radius: 0;
@@ -799,5 +800,6 @@ a {
     grid-template-columns: 1fr;
   }
 }
+
 
 
