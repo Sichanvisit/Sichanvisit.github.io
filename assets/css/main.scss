@@ -499,6 +499,16 @@ a {
   display: none;
 }
 
+.left-desktop,
+.toc-desktop {
+  display: block;
+}
+
+.left-mobile,
+.toc-mobile {
+  display: none;
+}
+
 .drawer-toggle-wrap {
   position: fixed;
   inset-inline: 0;
@@ -623,21 +633,26 @@ a {
   }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
   body.drawer-open {
     overflow: hidden;
-  }
-
-  .desktop-only {
-    display: none !important;
   }
 
   .mobile-only {
     display: block !important;
   }
 
+  .left-desktop {
+    display: none !important;
+  }
+
+  .left-mobile {
+    display: block !important;
+  }
+
   #collection-left-drawer-mobile,
   #toc-right-drawer-mobile {
+    display: block !important;
     position: fixed !important;
     top: 0;
     bottom: 0;
@@ -666,7 +681,7 @@ a {
     width: min(82vw, 320px);
     max-width: 320px;
     transform: translateX(-104%);
-    padding: 0.8rem;
+    padding: 1rem 0.8rem 0.8rem;
   }
 
   #collection-left-drawer-mobile.is-open,
@@ -685,6 +700,62 @@ a {
   #toc-right-drawer-mobile .toc__menu {
     margin-top: 0.35rem;
     padding-inline-start: 0.2rem;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+
+  /* Make contents drawer look/behave like menu drawer (no default TOC box style). */
+  #toc-right-drawer-mobile .toc {
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  #toc-right-drawer-mobile .toc .nav__title {
+    margin: 0.25rem 0 0.6rem;
+    padding: 0 0 0.45rem !important;
+    border: 0 !important;
+    border-bottom: 1px solid var(--photo-line) !important;
+    background: transparent !important;
+    color: var(--photo-text) !important;
+    font-size: 0.92rem;
+  }
+
+  #toc-right-drawer-mobile .toc__menu {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0.1rem;
+  }
+
+  #toc-right-drawer-mobile .toc__menu li {
+    margin: 0.32rem 0;
+    line-height: 1.24;
+    border: 0 !important;
+    border-bottom: 1px solid var(--photo-line);
+    padding-bottom: 0.28rem;
+  }
+
+  #toc-right-drawer-mobile .toc__menu a {
+    color: var(--photo-link);
+    text-decoration: none;
+    font-size: 0.82rem;
+  }
+
+  #toc-right-drawer-mobile .toc__menu a:hover {
+    text-decoration: underline;
+  }
+}
+
+@media (max-width: 1024px) {
+  .toc-desktop {
+    display: none !important;
+  }
+
+  .toc-mobile {
+    display: block !important;
   }
 }
 
