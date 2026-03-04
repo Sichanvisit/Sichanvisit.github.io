@@ -583,14 +583,18 @@ a {
 /* Keep scrolling behavior but hide visible scrollbars in TOC/menu panes. */
 .collection-doc-left__list,
 .collection-doc-page .toc .toc__menu,
-#toc-right-drawer-mobile .toc__menu {
+#toc-right-drawer-mobile .toc__menu,
+#collection-left-drawer-mobile,
+#toc-right-drawer-mobile {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
 
 .collection-doc-left__list::-webkit-scrollbar,
 .collection-doc-page .toc .toc__menu::-webkit-scrollbar,
-#toc-right-drawer-mobile .toc__menu::-webkit-scrollbar {
+#toc-right-drawer-mobile .toc__menu::-webkit-scrollbar,
+#collection-left-drawer-mobile::-webkit-scrollbar,
+#toc-right-drawer-mobile::-webkit-scrollbar {
   width: 0;
   height: 0;
   display: none;
@@ -707,6 +711,9 @@ a {
 
 .collection-doc-page .toc .toc__menu li.toc-has-children {
   position: relative;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
 }
 
 .collection-doc-page .toc .toc__menu li.toc-has-children > .toc-fold-toggle {
@@ -715,9 +722,24 @@ a {
   color: var(--photo-link);
   font-size: 0.78rem;
   line-height: 1;
-  padding: 0.12rem 0.28rem 0.12rem 0.08rem;
-  margin-inline-end: 0.1rem;
+  padding: 0.15rem 0.2rem;
+  margin-inline-start: auto;
+  margin-inline-end: 0;
   cursor: pointer;
+  order: 2;
+  align-self: center;
+}
+
+.collection-doc-page .toc .toc__menu li.toc-has-children > a {
+  flex: 1 1 auto;
+  min-width: 0;
+  order: 1;
+}
+
+.collection-doc-page .toc .toc__menu li.toc-has-children > ul,
+.collection-doc-page .toc .toc__menu li.toc-has-children > ol {
+  flex-basis: 100%;
+  order: 3;
 }
 
 .collection-doc-page .toc .toc__menu li.toc-has-children > .toc-fold-toggle > span {
@@ -769,6 +791,40 @@ a {
 
 .collection-doc-page .page__content > *:first-child {
   margin-top: 1rem !important;
+}
+
+/* Collection detail readability: stronger heading-body separation + body indentation */
+.collection-doc-page .page__content h2 {
+  margin-top: 2rem !important;
+  margin-bottom: 0.95rem !important;
+  padding-bottom: 0.34rem;
+  border-bottom: 1px solid var(--photo-line);
+}
+
+.collection-doc-page .page__content h3 {
+  margin-top: 1.5rem !important;
+  margin-bottom: 0.72rem !important;
+  padding-inline-start: 0.58rem;
+  border-inline-start: 3px solid var(--photo-link);
+  line-height: 1.34;
+}
+
+.collection-doc-page .page__content h2 + *,
+.collection-doc-page .page__content h3 + * {
+  margin-top: 0.5rem !important;
+}
+
+.collection-doc-page .page__content p,
+.collection-doc-page .page__content ul,
+.collection-doc-page .page__content ol,
+.collection-doc-page .page__content blockquote,
+.collection-doc-page .page__content pre,
+.collection-doc-page .page__content table {
+  margin-inline-start: 0.78rem;
+}
+
+.collection-doc-page .page__content p {
+  line-height: 1.9;
 }
 
 @media (min-width: 1280px) {
@@ -913,6 +969,20 @@ a {
 }
 
 @media (max-width: 900px) {
+  .collection-doc-page .page__content p,
+  .collection-doc-page .page__content ul,
+  .collection-doc-page .page__content ol,
+  .collection-doc-page .page__content blockquote,
+  .collection-doc-page .page__content pre,
+  .collection-doc-page .page__content table {
+    margin-inline-start: 0.42rem;
+  }
+
+  .collection-doc-page .page__content h3 {
+    padding-inline-start: 0.44rem;
+    border-inline-start-width: 2px;
+  }
+
   .page__content {
     font-size: 0.99rem;
     line-height: 1.76;

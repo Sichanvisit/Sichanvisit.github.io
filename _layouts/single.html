@@ -203,7 +203,7 @@ layout: default
           toggle.setAttribute("aria-expanded", "true");
           toggle.setAttribute("aria-label", "Toggle subheadings");
           toggle.innerHTML = "<span aria-hidden=\"true\">▾</span>";
-          directLink.parentNode.insertBefore(toggle, directLink);
+          directLink.parentNode.insertBefore(toggle, directLink.nextSibling);
 
           toggle.addEventListener("click", function () {
             var collapsed = item.classList.toggle("is-collapsed");
