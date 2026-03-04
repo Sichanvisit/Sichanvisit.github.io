@@ -969,6 +969,17 @@ a {
 }
 
 @media (max-width: 900px) {
+  .layout--single .page__content {
+    width: 100%;
+    max-width: 100%;
+    padding-inline: 0.2rem;
+  }
+
+  .collection-doc-page .page__title {
+    margin-top: 0.55rem !important;
+    margin-bottom: 1rem !important;
+  }
+
   .collection-doc-page .page__content p,
   .collection-doc-page .page__content ul,
   .collection-doc-page .page__content ol,
@@ -984,25 +995,55 @@ a {
   }
 
   .page__content {
-    font-size: 0.94rem;
-    line-height: 1.68;
+    font-size: 0.96rem;
+    line-height: 1.7;
   }
 
   .page__content h1 {
-    font-size: 1.3rem;
+    font-size: 1.24rem;
   }
 
   .page__content h2 {
-    font-size: 1.16rem;
+    font-size: 1.12rem;
   }
 
   .page__content h3 {
-    font-size: 1.05rem;
+    font-size: 1.01rem;
+  }
+
+  .page__content h2 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.72rem;
+  }
+
+  .page__content h3 {
+    margin-top: 1.15rem;
+    margin-bottom: 0.58rem;
   }
 
   .page__content ul,
   .page__content ol {
     padding-inline-start: 1.25rem;
+  }
+
+  .page__content pre {
+    font-size: 0.84rem;
+    line-height: 1.5;
+    overflow-x: auto;
+  }
+
+  .page__content table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .page__content img,
+  .page__content video {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
   }
 
   .feature-row {
@@ -1044,6 +1085,10 @@ a {
 }
 
 @media (max-width: 700px) {
+  .layout--single .page__content {
+    padding-inline: 0.12rem;
+  }
+
   .photo-grid {
     grid-template-columns: 1fr;
   }
