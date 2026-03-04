@@ -691,6 +691,18 @@ a {
   margin-bottom: 0.55rem;
 }
 
+.drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+
+.drawer-header .drawer-close {
+  margin-bottom: 0;
+  flex: 0 0 auto;
+}
+
 /* Collection detail right TOC: remove boxed border look */
 .collection-doc-page .toc {
   border: 0 !important;
@@ -713,7 +725,26 @@ a {
   position: relative;
 }
 
+#toc-right-drawer-mobile .toc__menu li.toc-has-children {
+  position: relative;
+}
+
 .collection-doc-page .toc .toc__menu li.toc-has-children > .toc-fold-toggle {
+  border: 0;
+  background: transparent;
+  color: var(--photo-link);
+  font-size: 0.78rem;
+  line-height: 1;
+  padding: 0.15rem 0.2rem 0.15rem 0.3rem;
+  margin: 0;
+  cursor: pointer;
+  position: absolute;
+  top: 0.12rem;
+  inset-inline-end: 0;
+  z-index: 2;
+}
+
+#toc-right-drawer-mobile .toc__menu li.toc-has-children > .toc-fold-toggle {
   border: 0;
   background: transparent;
   color: var(--photo-link);
@@ -733,13 +764,28 @@ a {
   padding-inline-end: 1.55rem;
 }
 
+#toc-right-drawer-mobile .toc__menu li.toc-has-children > a {
+  display: block;
+  padding-inline-end: 1.55rem;
+}
+
 .collection-doc-page .toc .toc__menu li.toc-has-children > .toc-fold-toggle > span {
   display: inline-block;
   transform: rotate(0deg);
   transition: transform 0.16s ease;
 }
 
+#toc-right-drawer-mobile .toc__menu li.toc-has-children > .toc-fold-toggle > span {
+  display: inline-block;
+  transform: rotate(0deg);
+  transition: transform 0.16s ease;
+}
+
 .collection-doc-page .toc .toc__menu li.toc-has-children.is-collapsed > .toc-fold-toggle > span {
+  transform: rotate(-90deg);
+}
+
+#toc-right-drawer-mobile .toc__menu li.toc-has-children.is-collapsed > .toc-fold-toggle > span {
   transform: rotate(-90deg);
 }
 
@@ -948,6 +994,25 @@ a {
     background: transparent !important;
     color: var(--photo-text) !important;
     font-size: 0.92rem;
+    flex: 1 1 auto;
+  }
+
+  #toc-right-drawer-mobile .toc .drawer-header {
+    margin: 0 0 0.2rem;
+  }
+
+  #toc-right-drawer-mobile .toc .drawer-header .drawer-close {
+    margin-top: 0.15rem;
+  }
+
+  #collection-left-drawer-mobile .drawer-header {
+    margin-bottom: 0.2rem;
+  }
+
+  #collection-left-drawer-mobile .drawer-header .collection-doc-left__title {
+    margin: 0;
+    border-bottom: 0;
+    padding-bottom: 0;
   }
 
   #toc-right-drawer-mobile .toc__menu {
