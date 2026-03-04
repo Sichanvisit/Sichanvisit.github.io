@@ -711,9 +711,6 @@ a {
 
 .collection-doc-page .toc .toc__menu li.toc-has-children {
   position: relative;
-  display: flex;
-  align-items: flex-start;
-  flex-wrap: wrap;
 }
 
 .collection-doc-page .toc .toc__menu li.toc-has-children > .toc-fold-toggle {
@@ -722,24 +719,18 @@ a {
   color: var(--photo-link);
   font-size: 0.78rem;
   line-height: 1;
-  padding: 0.15rem 0.2rem;
-  margin-inline-start: auto;
-  margin-inline-end: 0;
+  padding: 0.15rem 0.2rem 0.15rem 0.3rem;
+  margin: 0;
   cursor: pointer;
-  order: 2;
-  align-self: center;
+  position: absolute;
+  top: 0.12rem;
+  inset-inline-end: 0;
+  z-index: 2;
 }
 
 .collection-doc-page .toc .toc__menu li.toc-has-children > a {
-  flex: 1 1 auto;
-  min-width: 0;
-  order: 1;
-}
-
-.collection-doc-page .toc .toc__menu li.toc-has-children > ul,
-.collection-doc-page .toc .toc__menu li.toc-has-children > ol {
-  flex-basis: 100%;
-  order: 3;
+  display: block;
+  padding-inline-end: 1.55rem;
 }
 
 .collection-doc-page .toc .toc__menu li.toc-has-children > .toc-fold-toggle > span {
@@ -750,6 +741,29 @@ a {
 
 .collection-doc-page .toc .toc__menu li.toc-has-children.is-collapsed > .toc-fold-toggle > span {
   transform: rotate(-90deg);
+}
+
+/* Strong hide for mobile drawer scrollbars */
+#collection-left-drawer-mobile,
+#toc-right-drawer-mobile,
+#collection-left-drawer-mobile .collection-doc-left__list,
+#toc-right-drawer-mobile .toc__menu {
+  scrollbar-color: transparent transparent;
+}
+
+#collection-left-drawer-mobile::-webkit-scrollbar,
+#toc-right-drawer-mobile::-webkit-scrollbar,
+#collection-left-drawer-mobile .collection-doc-left__list::-webkit-scrollbar,
+#toc-right-drawer-mobile .toc__menu::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+}
+
+#collection-left-drawer-mobile::-webkit-scrollbar-thumb,
+#toc-right-drawer-mobile::-webkit-scrollbar-thumb,
+#collection-left-drawer-mobile .collection-doc-left__list::-webkit-scrollbar-thumb,
+#toc-right-drawer-mobile .toc__menu::-webkit-scrollbar-thumb {
+  background: transparent !important;
 }
 
 @media (min-width: 1024px) {
@@ -795,23 +809,23 @@ a {
 
 /* Collection detail readability: stronger heading-body separation + body indentation */
 .collection-doc-page .page__content h2 {
-  margin-top: 2rem !important;
-  margin-bottom: 0.95rem !important;
-  padding-bottom: 0.34rem;
+  margin-top: 1.55rem !important;
+  margin-bottom: 0.72rem !important;
+  padding-bottom: 0.28rem;
   border-bottom: 1px solid var(--photo-line);
 }
 
 .collection-doc-page .page__content h3 {
-  margin-top: 1.5rem !important;
-  margin-bottom: 0.72rem !important;
-  padding-inline-start: 0.58rem;
-  border-inline-start: 3px solid var(--photo-link);
+  margin-top: 1.15rem !important;
+  margin-bottom: 0.56rem !important;
+  padding-inline-start: 0.46rem;
+  border-inline-start: 2px solid var(--photo-link);
   line-height: 1.34;
 }
 
 .collection-doc-page .page__content h2 + *,
 .collection-doc-page .page__content h3 + * {
-  margin-top: 0.5rem !important;
+  margin-top: 0.24rem !important;
 }
 
 .collection-doc-page .page__content p,
@@ -820,11 +834,14 @@ a {
 .collection-doc-page .page__content blockquote,
 .collection-doc-page .page__content pre,
 .collection-doc-page .page__content table {
-  margin-inline-start: 0.78rem;
+  margin-inline-start: 0.38rem;
 }
 
 .collection-doc-page .page__content p {
-  line-height: 1.78;
+  margin-top: 0.52rem;
+  margin-bottom: 0.52rem;
+  line-height: 1.72;
+  text-indent: 0.5em;
 }
 
 @media (min-width: 1280px) {
@@ -966,6 +983,58 @@ a {
   .toc-mobile {
     display: block !important;
   }
+
+  .layout--single .page__content {
+    width: 100%;
+    max-width: 100%;
+    padding-inline: 0.22rem;
+  }
+
+  .page__content {
+    font-size: 0.96rem;
+    line-height: 1.7;
+  }
+
+  .page__content h1 {
+    font-size: 1.24rem;
+  }
+
+  .page__content h2 {
+    font-size: 1.12rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.72rem;
+  }
+
+  .page__content h3 {
+    font-size: 1.01rem;
+    margin-top: 1.15rem;
+    margin-bottom: 0.58rem;
+  }
+
+  .page__content ul,
+  .page__content ol {
+    padding-inline-start: 1.25rem;
+  }
+
+  .page__content pre {
+    font-size: 0.84rem;
+    line-height: 1.5;
+    overflow-x: auto;
+  }
+
+  .page__content table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .page__content img,
+  .page__content video {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
 }
 
 @media (max-width: 900px) {
@@ -992,6 +1061,10 @@ a {
   .collection-doc-page .page__content h3 {
     padding-inline-start: 0.44rem;
     border-inline-start-width: 2px;
+  }
+
+  .collection-doc-page .page__content p {
+    text-indent: 0;
   }
 
   .page__content {
