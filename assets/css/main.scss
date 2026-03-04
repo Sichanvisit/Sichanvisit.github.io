@@ -721,6 +721,12 @@ a {
   border-top: 0 !important;
 }
 
+.collection-doc-page .toc .toc__menu ul,
+.collection-doc-page .toc .toc__menu ol {
+  margin: 0.22rem 0 0.16rem 0.5rem;
+  padding-inline-start: 0.46rem;
+}
+
 .collection-doc-page .toc .toc__menu li.toc-has-children {
   position: relative;
 }
@@ -783,6 +789,11 @@ a {
 
 .collection-doc-page .toc .toc__menu li.toc-has-children.is-collapsed > .toc-fold-toggle > span {
   transform: rotate(-90deg);
+}
+
+.collection-doc-page .toc .toc__menu li li {
+  margin: 0.17rem 0;
+  padding-bottom: 0.16rem;
 }
 
 #toc-right-drawer-mobile .toc__menu li.toc-has-children.is-collapsed > .toc-fold-toggle > span {
