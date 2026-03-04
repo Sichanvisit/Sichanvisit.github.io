@@ -20,7 +20,12 @@
 <div class="{{ include.type | default: 'list' }}__item">
   {% if use_photo_card %}
     <article class="archive__item photo-card" itemscope itemtype="https://schema.org/CreativeWork"{% if post.locale %} lang="{{ post.locale }}"{% endif %}>
-      <a class="photo-card-image" href="{{ post.url | relative_url }}" rel="permalink">
+      {% assign card_primary_url = post.frontend_url | default: post.demo_url | default: post.url %}
+      {% assign card_is_external = false %}
+      {% if card_primary_url contains '://' %}
+        {% assign card_is_external = true %}
+      {% endif %}
+      <a class="photo-card-image" href="{% if card_is_external %}{{ card_primary_url }}{% else %}{{ card_primary_url | relative_url }}{% endif %}" {% if card_is_external %}target="_blank" rel="noopener noreferrer"{% else %}rel="permalink"{% endif %}>
         {% if teaser %}
           <img src="{{ teaser | relative_url }}" alt="{{ title }}">
         {% endif %}
@@ -33,6 +38,8 @@
         {% if post.excerpt %}<p itemprop="description">{{ post.excerpt | markdownify | strip_html | truncate: 160 }}</p>{% endif %}
         <div class="photo-links">
           <a href="{{ post.url | relative_url }}" rel="permalink">Read</a>
+          {% if post.frontend_url %}<a href="{{ post.frontend_url }}" target="_blank" rel="noopener noreferrer">Frontend</a>{% endif %}
+          {% if post.demo_url %}<a href="{{ post.demo_url }}" target="_blank" rel="noopener noreferrer">Demo</a>{% endif %}
           {% if post.github_url %}<a href="{{ post.github_url }}" target="_blank" rel="noopener noreferrer">GitHub</a>{% endif %}
           {% if post.paper_url %}<a href="{{ post.paper_url }}" target="_blank" rel="noopener noreferrer">Paper</a>{% endif %}
         </div>

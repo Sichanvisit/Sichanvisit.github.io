@@ -34,7 +34,12 @@ layout: archive
       <div class="photo-grid">
         {% for item in items %}
           <article class="photo-card">
-            <a class="photo-card-image" href="{{ item.url | relative_url }}">
+            {% assign card_primary_url = item.frontend_url | default: item.demo_url | default: item.url %}
+            {% assign card_is_external = false %}
+            {% if card_primary_url contains '://' %}
+              {% assign card_is_external = true %}
+            {% endif %}
+            <a class="photo-card-image" href="{% if card_is_external %}{{ card_primary_url }}{% else %}{{ card_primary_url | relative_url }}{% endif %}"{% if card_is_external %} target="_blank" rel="noopener noreferrer"{% endif %}>
               {% if item.header.teaser %}
                 <img src="{{ item.header.teaser | relative_url }}" alt="{{ item.title }}">
               {% endif %}
@@ -47,6 +52,8 @@ layout: archive
               {% if item.excerpt %}<p>{{ item.excerpt }}</p>{% endif %}
               <div class="photo-links">
                 <a href="{{ item.url | relative_url }}">Read</a>
+                {% if item.frontend_url %}<a href="{{ item.frontend_url }}" target="_blank" rel="noopener noreferrer">Frontend</a>{% endif %}
+                {% if item.demo_url %}<a href="{{ item.demo_url }}" target="_blank" rel="noopener noreferrer">Demo</a>{% endif %}
                 {% if item.github_url %}<a href="{{ item.github_url }}" target="_blank" rel="noopener noreferrer">GitHub</a>{% endif %}
                 {% if item.paper_url %}<a href="{{ item.paper_url }}" target="_blank" rel="noopener noreferrer">Paper</a>{% endif %}
               </div>

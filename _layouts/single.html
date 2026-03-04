@@ -186,6 +186,35 @@ layout: default
         link.addEventListener("click", closeAll);
       });
 
+      function initCollapsibleToc(menu) {
+        if (!menu || menu.dataset.foldReady === "1") return;
+        menu.dataset.foldReady = "1";
+
+        menu.querySelectorAll("li").forEach(function (item) {
+          var directLink = item.querySelector(":scope > a");
+          var childList = item.querySelector(":scope > ul, :scope > ol");
+          if (!directLink || !childList) return;
+
+          item.classList.add("toc-has-children");
+
+          var toggle = document.createElement("button");
+          toggle.type = "button";
+          toggle.className = "toc-fold-toggle";
+          toggle.setAttribute("aria-expanded", "true");
+          toggle.setAttribute("aria-label", "Toggle subheadings");
+          toggle.innerHTML = "<span aria-hidden=\"true\">▾</span>";
+          directLink.parentNode.insertBefore(toggle, directLink);
+
+          toggle.addEventListener("click", function () {
+            var collapsed = item.classList.toggle("is-collapsed");
+            childList.hidden = collapsed;
+            toggle.setAttribute("aria-expanded", collapsed ? "false" : "true");
+          });
+        });
+      }
+
+      document.querySelectorAll(".toc .toc__menu").forEach(initCollapsibleToc);
+
       window.addEventListener("resize", function () {
         if (window.innerWidth > 1800) closeAll();
       });
