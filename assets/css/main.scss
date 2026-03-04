@@ -141,20 +141,20 @@ a {
 }
 
 .page__content h1 {
-  font-size: clamp(1.42rem, 2.15vw, 1.82rem);
+  font-size: clamp(1.56rem, 2.35vw, 1.98rem);
   font-weight: 700;
 }
 
 .page__content h2 {
-  font-size: clamp(1.26rem, 1.72vw, 1.56rem);
+  font-size: clamp(1.34rem, 1.92vw, 1.68rem);
   font-weight: 700;
   border-bottom: 1px solid var(--photo-line);
   padding-bottom: 0.24rem;
 }
 
 .page__content h3 {
-  font-size: clamp(1.12rem, 1.28vw, 1.28rem);
-  font-weight: 700;
+  font-size: clamp(1.14rem, 1.38vw, 1.36rem);
+  font-weight: 600;
 }
 
 .page__content h4 {
@@ -1083,17 +1083,17 @@ a {
   }
 
   .page__content h1 {
-    font-size: 1.24rem;
+    font-size: 1.34rem;
   }
 
   .page__content h2 {
-    font-size: 1.12rem;
+    font-size: 1.2rem;
     margin-top: 1.5rem;
     margin-bottom: 0.72rem;
   }
 
   .page__content h3 {
-    font-size: 1.01rem;
+    font-size: 1.06rem;
     margin-top: 1.15rem;
     margin-bottom: 0.58rem;
   }
