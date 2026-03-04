@@ -1021,12 +1021,23 @@ a {
     padding: 0 0 0.1rem;
   }
 
+  #toc-right-drawer-mobile .toc__menu ul,
+  #toc-right-drawer-mobile .toc__menu ol {
+    margin: 0.2rem 0 0.15rem 0.52rem;
+    padding-inline-start: 0.48rem;
+  }
+
   #toc-right-drawer-mobile .toc__menu li {
     margin: 0.32rem 0;
     line-height: 1.24;
     border: 0 !important;
     border-bottom: 1px solid var(--photo-line);
     padding-bottom: 0.28rem;
+  }
+
+  #toc-right-drawer-mobile .toc__menu li li {
+    margin: 0.18rem 0;
+    padding-bottom: 0.18rem;
   }
 
   #toc-right-drawer-mobile .toc__menu a {
