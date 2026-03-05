@@ -517,6 +517,21 @@ a {
   overflow-x: hidden;
 }
 
+.collection-menu,
+.collection-menu ul,
+.collection-menu .study-folder-list {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.collection-menu::-webkit-scrollbar,
+.collection-menu ul::-webkit-scrollbar,
+.collection-menu .study-folder-list::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
 .collection-menu h2 {
   margin: 0 0 0.6rem;
   font-size: 0.92rem;
@@ -661,29 +676,6 @@ a {
   gap: 0.32rem;
 }
 
-.collection-filter-bar--tags {
-  width: 100%;
-  max-height: none;
-  overflow: visible;
-  transition: max-height 0.2s ease;
-}
-
-.collection-filter-group.is-collapsed .collection-filter-bar--tags {
-  max-height: 5.5rem;
-  overflow: hidden;
-}
-
-.collection-filter-toggle {
-  border: 1px solid var(--photo-line);
-  background: transparent;
-  color: var(--photo-link);
-  border-radius: 999px;
-  padding: 0.18rem 0.5rem;
-  font-size: 0.68rem;
-  line-height: 1.2;
-  cursor: pointer;
-}
-
 .collection-filter-btn {
   border: 1px solid var(--photo-line);
   background: transparent;
@@ -697,6 +689,28 @@ a {
 
 .collection-filter-btn.is-active {
   color: var(--photo-text);
+  border-color: var(--photo-link);
+}
+
+.collection-filter-search {
+  min-width: 160px;
+  max-width: 260px;
+  width: 100%;
+  border: 1px solid var(--photo-line);
+  background: transparent;
+  color: var(--photo-text);
+  border-radius: 999px;
+  padding: 0.24rem 0.62rem;
+  font-size: 0.72rem;
+  line-height: 1.2;
+  outline: none;
+}
+
+.collection-filter-search::placeholder {
+  color: var(--photo-muted);
+}
+
+.collection-filter-search:focus {
   border-color: var(--photo-link);
 }
 

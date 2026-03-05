@@ -18,13 +18,6 @@ layout: archive
   {% if page.collection == "study" %}
     {% capture study_tabs_raw %}{% for item in items %}{{ item.study_tab | default: "General" }}|{% endfor %}{% endcapture %}
     {% assign study_tabs = study_tabs_raw | split: "|" | uniq | sort %}
-    {% assign study_tags = "" | split: "" %}
-    {% for item in items %}
-      {% if item.tags %}
-        {% assign study_tags = study_tags | concat: item.tags %}
-      {% endif %}
-    {% endfor %}
-    {% assign study_tags = study_tags | uniq | sort %}
   {% endif %}
 
   <div class="collection-with-menu">
@@ -110,20 +103,20 @@ layout: archive
           {% endfor %}
         </div>
       {% endif %}
-      {% if page.collection == "study" and study_tags.size > 0 %}
-        <div class="collection-filter-group is-collapsed" data-filter-group="tags">
-          <div class="collection-filter-bar collection-filter-bar--tags" aria-label="Study tag filters" data-filter-content="tags">
-            <button type="button" class="collection-filter-btn is-active" data-study-tag-filter="all">All Tags</button>
-            {% for tag in study_tags %}
-              <button type="button" class="collection-filter-btn" data-study-tag-filter="{{ tag | downcase | escape }}">{{ tag }}</button>
-            {% endfor %}
-          </div>
-          <button type="button" class="collection-filter-toggle" data-filter-toggle="tags" aria-expanded="false">Show tags</button>
+      {% if page.collection == "study" and study_tabs.size > 0 %}
+        <div class="collection-filter-bar" aria-label="Study search filter">
+          <input
+            type="search"
+            class="collection-filter-search"
+            data-study-search-input
+            placeholder="검색"
+            aria-label="Search study cards"
+          >
         </div>
       {% endif %}
       <div class="photo-grid">
         {% for item in items %}
-          <article class="photo-card{% if page.collection == "study" %} study-filter-item{% endif %}"{% if page.collection == "study" %} data-study-tags="{% if item.tags %}{{ item.tags | join: ',' | downcase | escape }}{% endif %}" data-study-tab="{{ item.study_tab | default: 'General' | downcase | escape }}"{% endif %}>
+          <article class="photo-card{% if page.collection == "study" %} study-filter-item{% endif %}"{% if page.collection == "study" %} data-study-tags="{% if item.tags %}{{ item.tags | join: ',' | downcase | escape }}{% endif %}" data-study-tab="{{ item.study_tab | default: 'General' | downcase | escape }}" data-study-search="{{ item.title | default: '' | downcase | escape }} {% if item.excerpt %}{{ item.excerpt | markdownify | strip_html | strip_newlines | downcase | escape }}{% endif %} {% if item.tags %}{{ item.tags | join: ' ' | downcase | escape }}{% endif %}"{% endif %}>
             {% assign card_primary_url = item.frontend_url | default: item.demo_url | default: item.url %}
             {% assign card_is_external = false %}
             {% if card_primary_url contains '://' %}
@@ -154,27 +147,21 @@ layout: archive
     <script>
       (function() {
         var tabButtons = document.querySelectorAll(".collection-filter-btn[data-study-tab-filter]");
-        var tagButtons = document.querySelectorAll(".collection-filter-btn[data-study-tag-filter]");
+        var searchInput = document.querySelector("[data-study-search-input]");
         var cards = document.querySelectorAll(".study-filter-item");
-        var tagGroup = document.querySelector('.collection-filter-group[data-filter-group="tags"]');
-        var tagContent = document.querySelector('.collection-filter-bar[data-filter-content="tags"]');
-        var tagToggleBtn = document.querySelector('.collection-filter-toggle[data-filter-toggle="tags"]');
         var folderToggles = document.querySelectorAll(".study-folder-toggle");
 
         var activeTab = "all";
-        var activeTag = "all";
+        var activeQuery = "";
 
         function applyFilters() {
           cards.forEach(function(card) {
             var tab = (card.getAttribute("data-study-tab") || "").trim();
-            var tags = (card.getAttribute("data-study-tags") || "")
-              .split(",")
-              .map(function(v) { return v.trim(); })
-              .filter(Boolean);
+            var searchText = (card.getAttribute("data-study-search") || "").toLowerCase();
 
             var tabMatch = activeTab === "all" || tab === activeTab;
-            var tagMatch = activeTag === "all" || tags.indexOf(activeTag) !== -1;
-            var visible = tabMatch && tagMatch;
+            var queryMatch = !activeQuery || searchText.indexOf(activeQuery) !== -1;
+            var visible = tabMatch && queryMatch;
             card.classList.toggle("is-filter-hidden", !visible);
           });
         }
@@ -189,39 +176,12 @@ layout: archive
           });
         });
 
-        tagButtons.forEach(function(btn) {
-          btn.addEventListener("click", function() {
-            activeTag = btn.getAttribute("data-study-tag-filter");
-            tagButtons.forEach(function(el) {
-              el.classList.toggle("is-active", el.getAttribute("data-study-tag-filter") === activeTag);
-            });
+        if (searchInput) {
+          searchInput.addEventListener("input", function() {
+            activeQuery = (searchInput.value || "").trim().toLowerCase();
             applyFilters();
           });
-        });
-
-        function updateTagToggleVisibility() {
-          if (!tagGroup || !tagContent || !tagToggleBtn) return;
-          var shouldShowToggle = tagContent.scrollHeight > tagContent.clientHeight + 6;
-          tagToggleBtn.hidden = !shouldShowToggle;
-          if (!shouldShowToggle) {
-            tagGroup.classList.remove("is-collapsed");
-            tagGroup.classList.add("is-expanded");
-            tagToggleBtn.setAttribute("aria-expanded", "true");
-            tagToggleBtn.textContent = "Hide tags";
-          }
         }
-
-        if (tagToggleBtn && tagGroup) {
-          tagToggleBtn.addEventListener("click", function() {
-            var collapsed = tagGroup.classList.toggle("is-collapsed");
-            tagGroup.classList.toggle("is-expanded", !collapsed);
-            tagToggleBtn.setAttribute("aria-expanded", String(!collapsed));
-            tagToggleBtn.textContent = collapsed ? "Show tags" : "Hide tags";
-          });
-        }
-
-        updateTagToggleVisibility();
-        window.addEventListener("resize", updateTagToggleVisibility);
 
         folderToggles.forEach(function(btn) {
           btn.addEventListener("click", function() {
