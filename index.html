@@ -7,7 +7,10 @@ title: ""
 
 {% assign projects = site.portfolio | sort: "priority" | slice: 0, 4 %}
 {% assign researches = site.research | sort: "date" | reverse | slice: 0, 4 %}
-{% assign studies = site.study | sort: "date" | reverse | slice: 0, 4 %}
+{% assign studies = site.study | sort: "date" | reverse %}
+{% assign studies_ml = studies | where: "study_tab", "ML" | slice: 0, 4 %}
+{% assign studies_dl = studies | where: "study_tab", "DL" | slice: 0, 4 %}
+{% assign studies_llm = studies | where: "study_tab", "LLM" | slice: 0, 4 %}
 
 <section class="feature-row">
   <article class="feature-left">
@@ -36,16 +39,38 @@ title: ""
         {% endfor %}
       </ul>
     </section>
+  </aside>
+</section>
 
-    <section class="feature-panel-section feature-panel-study">
-      <h2>STUDY</h2>
+<section class="home-study-wrap">
+  <div class="home-study-grid">
+    <section class="feature-panel-section">
+      <h2>ML</h2>
       <ul>
-        {% for item in studies %}
+        {% for item in studies_ml %}
         <li><a href="{{ item.url | relative_url }}">{{ item.title }}</a></li>
         {% endfor %}
       </ul>
     </section>
-  </aside>
+
+    <section class="feature-panel-section">
+      <h2>DL</h2>
+      <ul>
+        {% for item in studies_dl %}
+        <li><a href="{{ item.url | relative_url }}">{{ item.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <section class="feature-panel-section">
+      <h2>LLM</h2>
+      <ul>
+        {% for item in studies_llm %}
+        <li><a href="{{ item.url | relative_url }}">{{ item.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </section>
+  </div>
 </section>
 
 <section class="photo-grid-wrap">
