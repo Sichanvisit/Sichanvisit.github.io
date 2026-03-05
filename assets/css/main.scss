@@ -391,7 +391,7 @@ a {
 .photo-card-overlay-title {
   margin: 0;
   color: #ffffff !important;
-  font-size: 0.9rem;
+  font-size: 0.82rem;
   line-height: 1.16;
   font-family: "Fraunces", serif;
 }
@@ -415,7 +415,20 @@ a {
 
 .photo-card-content h3 {
   margin: 0.16rem 0 0.18rem;
-  font-size: 0.94rem;
+  font-size: 0.82rem;
+  line-height: 1.16;
+  letter-spacing: -0.01em;
+  font-family: "Fraunces", serif;
+  color: var(--photo-text);
+}
+
+.photo-card-content h1,
+.photo-card-content h2,
+.photo-card-content h4,
+.photo-card-content h5,
+.photo-card-content h6 {
+  margin: 0.16rem 0 0.18rem;
+  font-size: 0.82rem;
   line-height: 1.16;
   letter-spacing: -0.01em;
   font-family: "Fraunces", serif;
@@ -723,8 +736,8 @@ a {
 
 .collection-doc-page .toc .toc__menu ul,
 .collection-doc-page .toc .toc__menu ol {
-  margin: 0.22rem 0 0.16rem 0.5rem;
-  padding-inline-start: 0.46rem;
+  margin: 0.2rem 0 0.14rem 0.32rem;
+  padding-inline-start: 0.28rem;
 }
 
 .collection-doc-page .toc .toc__menu li.toc-has-children {
@@ -794,6 +807,10 @@ a {
 .collection-doc-page .toc .toc__menu li li {
   margin: 0.17rem 0;
   padding-bottom: 0.16rem;
+}
+
+.collection-doc-page .toc .toc__menu li li > a {
+  font-size: 0.76rem;
 }
 
 #toc-right-drawer-mobile .toc__menu li.toc-has-children.is-collapsed > .toc-fold-toggle > span {
@@ -1034,8 +1051,8 @@ a {
 
   #toc-right-drawer-mobile .toc__menu ul,
   #toc-right-drawer-mobile .toc__menu ol {
-    margin: 0.2rem 0 0.15rem 0.52rem;
-    padding-inline-start: 0.48rem;
+    margin: 0.18rem 0 0.14rem 0.3rem;
+    padding-inline-start: 0.26rem;
   }
 
   #toc-right-drawer-mobile .toc__menu li {
@@ -1049,6 +1066,10 @@ a {
   #toc-right-drawer-mobile .toc__menu li li {
     margin: 0.18rem 0;
     padding-bottom: 0.18rem;
+  }
+
+  #toc-right-drawer-mobile .toc__menu li li > a {
+    font-size: 0.76rem;
   }
 
   #toc-right-drawer-mobile .toc__menu a {
