@@ -14,11 +14,7 @@ layout: archive
 
 {% if use_home_cards %}
   {% assign items = site[page.collection] %}
-  {% if page.collection == "portfolio" %}
-    {% assign items = items | sort: "priority" %}
-  {% else %}
-    {% assign items = items | sort: "date" | reverse %}
-  {% endif %}
+  {% assign items = items | sort: "date" | reverse %}
   {% if page.collection == "study" %}
     {% capture study_tabs_raw %}{% for item in items %}{{ item.study_tab | default: "General" }}|{% endfor %}{% endcapture %}
     {% assign study_tabs = study_tabs_raw | split: "|" | uniq | sort %}
@@ -42,8 +38,8 @@ layout: archive
             {% assign tab_items = items | where: "study_tab", current_tab %}
             {% if tab_items.size > 0 %}
               {% assign folder_id = tab | downcase | replace: ' ', '-' | replace: '/', '-' %}
-              <section class="study-folder-group{% if tab == "ML" %} is-open{% endif %}" data-folder="{{ tab }}">
-                <button type="button" class="study-folder-toggle" aria-expanded="{% if tab == "ML" %}true{% else %}false{% endif %}" aria-controls="study-folder-{{ folder_id }}">
+              <section class="study-folder-group" data-folder="{{ tab }}">
+                <button type="button" class="study-folder-toggle" aria-expanded="false" aria-controls="study-folder-{{ folder_id }}">
                   <span>{{ tab }}</span>
                 </button>
                 <ul id="study-folder-{{ folder_id }}" class="study-folder-items">
