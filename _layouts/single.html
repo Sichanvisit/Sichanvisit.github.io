@@ -1,4 +1,4 @@
----
+﻿---
 layout: default
 ---
 
@@ -222,7 +222,7 @@ layout: default
           toggle.className = "toc-fold-toggle";
           toggle.setAttribute("aria-expanded", "true");
           toggle.setAttribute("aria-label", "Toggle subheadings");
-          toggle.innerHTML = "<span aria-hidden=\"true\">▾</span>";
+          toggle.innerHTML = "<span aria-hidden=\"true\">+</span>";
           directLink.parentNode.insertBefore(toggle, directLink.nextSibling);
 
           toggle.addEventListener("click", function () {
@@ -241,6 +241,7 @@ layout: default
     })();
   </script>
 {% endif %}
+
 
 
 

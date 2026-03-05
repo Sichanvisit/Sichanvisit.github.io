@@ -1,4 +1,4 @@
----
+﻿---
 # Only the main Sass file needs front matter (the dashes are enough)
 search: false
 ---
@@ -573,13 +573,13 @@ a {
 }
 
 .study-folder-toggle::after {
-  content: "▸";
+  content: ">";
   color: var(--photo-muted);
   font-size: 0.74rem;
 }
 
 .study-folder-group.is-open .study-folder-toggle::after {
-  content: "▾";
+  content: "v";
 }
 
 .study-folder-items {
@@ -1428,6 +1428,7 @@ a {
     grid-template-columns: 1fr;
   }
 }
+
 
 
 
