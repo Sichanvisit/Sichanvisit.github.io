@@ -7,7 +7,7 @@ layout: archive
 {% assign entries_layout = page.entries_layout | default: 'list' %}
 {% assign use_home_cards = false %}
 {% if entries_layout == "grid" and page.collection %}
-  {% if page.collection == "portfolio" or page.collection == "research" %}
+  {% if page.collection == "portfolio" or page.collection == "research" or page.collection == "study" %}
     {% assign use_home_cards = true %}
   {% endif %}
 {% endif %}

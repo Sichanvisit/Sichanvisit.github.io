@@ -45,7 +45,7 @@ title: ""
         </div>
       </a>
       <div class="photo-card-content">
-        <p>{{ item.excerpt }}</p>
+        <p>{{ item.excerpt | strip_html | strip_newlines | truncate: 64 }}</p>
         <div class="photo-links">
           <a href="{{ item.url | relative_url }}">Read Case</a>
           {% if item.github_url %}<a href="{{ item.github_url }}">GitHub</a>{% endif %}

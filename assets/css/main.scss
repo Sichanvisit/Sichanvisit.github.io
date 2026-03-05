@@ -307,6 +307,16 @@ a {
   font-size: 0.84rem;
 }
 
+.feature-panel-section > ul > li,
+.feature-panel-section > ul > li > a {
+  font-size: 0.72rem;
+}
+
+.feature-panel-section ul ul > li,
+.feature-panel-section ul ul > li > a {
+  font-size: 0.66rem;
+}
+
 .feature-panel-section li::before {
   content: "- ";
   color: var(--photo-muted);
@@ -810,7 +820,11 @@ a {
 }
 
 .collection-doc-page .toc .toc__menu li li > a {
-  font-size: 0.76rem;
+  font-size: 0.68rem;
+}
+
+.collection-doc-page .toc .toc__menu > li > a {
+  font-size: 0.74rem;
 }
 
 #toc-right-drawer-mobile .toc__menu li.toc-has-children.is-collapsed > .toc-fold-toggle > span {
@@ -1069,7 +1083,11 @@ a {
   }
 
   #toc-right-drawer-mobile .toc__menu li li > a {
-    font-size: 0.76rem;
+    font-size: 0.68rem;
+  }
+
+  #toc-right-drawer-mobile .toc__menu > li > a {
+    font-size: 0.74rem;
   }
 
   #toc-right-drawer-mobile .toc__menu a {

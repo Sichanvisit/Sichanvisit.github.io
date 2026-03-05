@@ -19,8 +19,14 @@ layout: default
 {% endif %}
 
 {% assign show_collection_menu = false %}
-{% if page.collection == "portfolio" or page.collection == "research" %}
+{% if page.collection == "portfolio" or page.collection == "research" or page.collection == "study" %}
   {% assign show_collection_menu = true %}
+{% endif %}
+{% assign collection_label = "Research" %}
+{% if page.collection == "portfolio" %}
+  {% assign collection_label = "Portfolio" %}
+{% elsif page.collection == "study" %}
+  {% assign collection_label = "Study" %}
 {% endif %}
 
 <div id="main"{% if show_collection_menu %} class="collection-doc-layout"{% endif %} role="main">
@@ -33,7 +39,7 @@ layout: default
       {% assign collection_items = collection_items | sort: "date" | reverse %}
     {% endif %}
     <aside class="sidebar sticky collection-doc-left left-desktop">
-      <h3 class="collection-doc-left__title">{% if page.collection == "portfolio" %}Portfolio{% else %}Research{% endif %}</h3>
+      <h3 class="collection-doc-left__title">{{ collection_label }}</h3>
       <ul class="collection-doc-left__list">
         {% for item in collection_items %}
           <li class="collection-doc-left__item{% if item.url == page.url %} is-active{% endif %}">
@@ -57,7 +63,7 @@ layout: default
     {% if show_collection_menu %}
       <aside id="collection-left-drawer-mobile" class="mobile-only left-mobile collection-doc-left drawer-panel drawer-left">
         <div class="drawer-header">
-          <h3 class="collection-doc-left__title">{% if page.collection == "portfolio" %}Portfolio{% else %}Research{% endif %}</h3>
+          <h3 class="collection-doc-left__title">{{ collection_label }}</h3>
           <button type="button" class="drawer-close" data-close-drawer="collection-left-drawer-mobile" aria-label="Close menu">Close</button>
         </div>
         <ul class="collection-doc-left__list">

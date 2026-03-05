@@ -321,6 +321,9 @@ collections:
   research:
     output: true
     permalink: /:collection/:path/
+  study:
+    output: true
+    permalink: /:collection/:path/
 
 # Defaults
 defaults:
@@ -347,6 +350,16 @@ defaults:
   - scope:
       path: ""
       type: research
+    values:
+      layout: single
+      author_profile: false
+      toc: true
+      toc_sticky: true
+      toc_label: "Contents"
+      share: false
+  - scope:
+      path: ""
+      type: study
     values:
       layout: single
       author_profile: false

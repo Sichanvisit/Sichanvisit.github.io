@@ -6,6 +6,8 @@ main:
     url: /portfolio/
   - title: "Research"
     url: /research/
+  - title: "Study"
+    url: /study/
 
 en:
   - title: "Home"
@@ -14,6 +16,8 @@ en:
     url: /portfolio/
   - title: "Research"
     url: /research/
+  - title: "Study"
+    url: /study/
 
 ko:
   - title: "Home"
@@ -22,3 +26,5 @@ ko:
     url: /portfolio/
   - title: "Research"
     url: /research/
+  - title: "Study"
+    url: /study/
