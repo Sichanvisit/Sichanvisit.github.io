@@ -512,6 +512,8 @@ a {
   border-radius: 12px;
   background: var(--photo-card);
   padding: 0.8rem 0.9rem;
+  max-height: calc(100vh - 6.6rem);
+  overflow: hidden;
 }
 
 .collection-menu h2 {
@@ -526,6 +528,14 @@ a {
   margin: 0;
   padding: 0;
   list-style: none;
+  overflow-y: auto;
+  max-height: calc(100vh - 11.2rem);
+}
+
+.collection-menu .study-folder-list {
+  overflow-y: auto;
+  max-height: calc(100vh - 11.2rem);
+  padding-right: 0.1rem;
 }
 
 .collection-menu li {
