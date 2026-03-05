@@ -399,12 +399,14 @@ a {
   backdrop-filter: blur(2px);
 }
 
-.photo-card-overlay-title {
-  margin: 0;
+.photo-card-overlay .photo-card-overlay-title {
+  margin: 0 !important;
   color: #ffffff !important;
-  font-size: 0.82rem;
-  line-height: 1.16;
-  font-family: "Fraunces", serif;
+  font-size: 0.82rem !important;
+  line-height: 1.16 !important;
+  font-family: "Fraunces", serif !important;
+  font-weight: 700 !important;
+  letter-spacing: 0 !important;
 }
 
 .photo-card-content {
@@ -765,8 +767,14 @@ a {
   overflow-y: auto;
 }
 
+.collection-doc-left .study-folder-list {
+  max-height: calc(100vh - 13rem);
+  overflow-y: auto;
+}
+
 /* Keep scrolling behavior but hide visible scrollbars in TOC/menu panes. */
 .collection-doc-left__list,
+.collection-doc-left .study-folder-list,
 .collection-doc-page .toc .toc__menu,
 #toc-right-drawer-mobile .toc__menu,
 #collection-left-drawer-mobile,
@@ -776,6 +784,7 @@ a {
 }
 
 .collection-doc-left__list::-webkit-scrollbar,
+.collection-doc-left .study-folder-list::-webkit-scrollbar,
 .collection-doc-page .toc .toc__menu::-webkit-scrollbar,
 #toc-right-drawer-mobile .toc__menu::-webkit-scrollbar,
 #collection-left-drawer-mobile::-webkit-scrollbar,
@@ -1169,6 +1178,11 @@ a {
   }
 
   #collection-left-drawer-mobile .collection-doc-left__list {
+    max-height: none;
+    overflow-y: visible;
+  }
+
+  #collection-left-drawer-mobile .study-folder-list {
     max-height: none;
     overflow-y: visible;
   }

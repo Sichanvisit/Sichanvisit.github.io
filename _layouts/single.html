@@ -38,20 +38,78 @@ layout: default
     {% else %}
       {% assign collection_items = collection_items | sort: "date" | reverse %}
     {% endif %}
+    {% if page.collection == "study" %}
+      {% capture study_tabs_raw %}{% for item in collection_items %}{{ item.study_tab | default: "General" }}|{% endfor %}{% endcapture %}
+      {% assign study_tabs = study_tabs_raw | split: "|" | uniq | sort %}
+      {% assign preferred_tabs = "ML|DL|LLM" | split: "|" %}
+    {% endif %}
     <aside class="sidebar sticky collection-doc-left left-desktop">
       <h3 class="collection-doc-left__title">{{ collection_label }}</h3>
-      <ul class="collection-doc-left__list">
-        {% for item in collection_items %}
-          <li class="collection-doc-left__item{% if item.url == page.url %} is-active{% endif %}">
-            <a class="{% if page.collection == "study" %}study-item-link{% endif %}" href="{{ item.url | relative_url }}">
-              {% if page.collection == "study" %}
-                <span class="study-item-topic">- [{{ item.study_tab | default: "General" }}]</span>
+      {% if page.collection == "study" and study_tabs.size > 0 %}
+        <div class="study-folder-list" aria-label="Study folders">
+          {% for tab in preferred_tabs %}
+            {% assign current_tab = tab %}
+            {% assign tab_items = collection_items | where: "study_tab", current_tab %}
+            {% if tab_items.size > 0 %}
+              {% assign folder_id = tab | downcase | replace: ' ', '-' | replace: '/', '-' %}
+              <section class="study-folder-group" data-folder="{{ tab }}">
+                <button type="button" class="study-folder-toggle" aria-expanded="false" aria-controls="single-study-folder-{{ folder_id }}">
+                  <span>{{ tab }}</span>
+                </button>
+                <ul id="single-study-folder-{{ folder_id }}" class="study-folder-items">
+                  {% for item in tab_items %}
+                    <li class="collection-doc-left__item{% if item.url == page.url %} is-active{% endif %}">
+                      <a class="study-item-link" href="{{ item.url | relative_url }}">
+                        <span class="study-item-topic">- [{{ item.study_tab | default: "General" }}]</span>
+                        <span class="study-item-title">{{ item.title }}</span>
+                      </a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </section>
+            {% endif %}
+          {% endfor %}
+          {% for tab in study_tabs %}
+            {% unless preferred_tabs contains tab %}
+              {% if tab != "" %}
+                {% assign current_tab = tab %}
+                {% assign tab_items = collection_items | where: "study_tab", current_tab %}
+                {% if tab_items.size > 0 %}
+                  {% assign folder_id = tab | downcase | replace: ' ', '-' | replace: '/', '-' %}
+                  <section class="study-folder-group" data-folder="{{ tab }}">
+                    <button type="button" class="study-folder-toggle" aria-expanded="false" aria-controls="single-study-folder-{{ folder_id }}">
+                      <span>{{ tab }}</span>
+                    </button>
+                    <ul id="single-study-folder-{{ folder_id }}" class="study-folder-items">
+                      {% for item in tab_items %}
+                        <li class="collection-doc-left__item{% if item.url == page.url %} is-active{% endif %}">
+                          <a class="study-item-link" href="{{ item.url | relative_url }}">
+                            <span class="study-item-topic">- [{{ item.study_tab | default: "General" }}]</span>
+                            <span class="study-item-title">{{ item.title }}</span>
+                          </a>
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  </section>
+                {% endif %}
               {% endif %}
-              <span class="study-item-title">{{ item.title }}</span>
-            </a>
-          </li>
-        {% endfor %}
-      </ul>
+            {% endunless %}
+          {% endfor %}
+        </div>
+      {% else %}
+        <ul class="collection-doc-left__list">
+          {% for item in collection_items %}
+            <li class="collection-doc-left__item{% if item.url == page.url %} is-active{% endif %}">
+              <a class="{% if page.collection == "study" %}study-item-link{% endif %}" href="{{ item.url | relative_url }}">
+                {% if page.collection == "study" %}
+                  <span class="study-item-topic">- [{{ item.study_tab | default: "General" }}]</span>
+                {% endif %}
+                <span class="study-item-title">{{ item.title }}</span>
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
     </aside>
   {% endif %}
 
@@ -71,18 +129,71 @@ layout: default
           <h3 class="collection-doc-left__title">{{ collection_label }}</h3>
           <button type="button" class="drawer-close" data-close-drawer="collection-left-drawer-mobile" aria-label="Close menu">Close</button>
         </div>
-        <ul class="collection-doc-left__list">
-          {% for item in collection_items %}
-            <li class="collection-doc-left__item{% if item.url == page.url %} is-active{% endif %}">
-              <a class="{% if page.collection == "study" %}study-item-link{% endif %}" href="{{ item.url | relative_url }}">
-                {% if page.collection == "study" %}
-                  <span class="study-item-topic">- [{{ item.study_tab | default: "General" }}]</span>
+        {% if page.collection == "study" and study_tabs.size > 0 %}
+          <div class="study-folder-list" aria-label="Study folders">
+            {% for tab in preferred_tabs %}
+              {% assign current_tab = tab %}
+              {% assign tab_items = collection_items | where: "study_tab", current_tab %}
+              {% if tab_items.size > 0 %}
+                {% assign folder_id = tab | downcase | replace: ' ', '-' | replace: '/', '-' %}
+                <section class="study-folder-group" data-folder="{{ tab }}">
+                  <button type="button" class="study-folder-toggle" aria-expanded="false" aria-controls="single-mobile-study-folder-{{ folder_id }}">
+                    <span>{{ tab }}</span>
+                  </button>
+                  <ul id="single-mobile-study-folder-{{ folder_id }}" class="study-folder-items">
+                    {% for item in tab_items %}
+                      <li class="collection-doc-left__item{% if item.url == page.url %} is-active{% endif %}">
+                        <a class="study-item-link" href="{{ item.url | relative_url }}">
+                          <span class="study-item-topic">- [{{ item.study_tab | default: "General" }}]</span>
+                          <span class="study-item-title">{{ item.title }}</span>
+                        </a>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </section>
+              {% endif %}
+            {% endfor %}
+            {% for tab in study_tabs %}
+              {% unless preferred_tabs contains tab %}
+                {% if tab != "" %}
+                  {% assign current_tab = tab %}
+                  {% assign tab_items = collection_items | where: "study_tab", current_tab %}
+                  {% if tab_items.size > 0 %}
+                    {% assign folder_id = tab | downcase | replace: ' ', '-' | replace: '/', '-' %}
+                    <section class="study-folder-group" data-folder="{{ tab }}">
+                      <button type="button" class="study-folder-toggle" aria-expanded="false" aria-controls="single-mobile-study-folder-{{ folder_id }}">
+                        <span>{{ tab }}</span>
+                      </button>
+                      <ul id="single-mobile-study-folder-{{ folder_id }}" class="study-folder-items">
+                        {% for item in tab_items %}
+                          <li class="collection-doc-left__item{% if item.url == page.url %} is-active{% endif %}">
+                            <a class="study-item-link" href="{{ item.url | relative_url }}">
+                              <span class="study-item-topic">- [{{ item.study_tab | default: "General" }}]</span>
+                              <span class="study-item-title">{{ item.title }}</span>
+                            </a>
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    </section>
+                  {% endif %}
                 {% endif %}
-                <span class="study-item-title">{{ item.title }}</span>
-              </a>
-            </li>
-          {% endfor %}
-        </ul>
+              {% endunless %}
+            {% endfor %}
+          </div>
+        {% else %}
+          <ul class="collection-doc-left__list">
+            {% for item in collection_items %}
+              <li class="collection-doc-left__item{% if item.url == page.url %} is-active{% endif %}">
+                <a class="{% if page.collection == "study" %}study-item-link{% endif %}" href="{{ item.url | relative_url }}">
+                  {% if page.collection == "study" %}
+                    <span class="study-item-topic">- [{{ item.study_tab | default: "General" }}]</span>
+                  {% endif %}
+                  <span class="study-item-title">{{ item.title }}</span>
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
       </aside>
     {% endif %}
     {% if page.toc %}
@@ -204,6 +315,15 @@ layout: default
 
       document.querySelectorAll(".drawer-panel a").forEach(function (link) {
         link.addEventListener("click", closeAll);
+      });
+
+      document.querySelectorAll(".study-folder-toggle").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var group = btn.closest(".study-folder-group");
+          if (!group) return;
+          var isOpen = group.classList.toggle("is-open");
+          btn.setAttribute("aria-expanded", String(isOpen));
+        });
       });
 
       function initCollapsibleToc(menu) {
