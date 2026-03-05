@@ -19,6 +19,17 @@ layout: archive
   {% else %}
     {% assign items = items | sort: "date" | reverse %}
   {% endif %}
+  {% if page.collection == "study" %}
+    {% capture study_tabs_raw %}{% for item in items %}{{ item.study_tab | default: "General" }}|{% endfor %}{% endcapture %}
+    {% assign study_tabs = study_tabs_raw | split: "|" | uniq | sort %}
+    {% assign study_tags = "" | split: "" %}
+    {% for item in items %}
+      {% if item.tags %}
+        {% assign study_tags = study_tags | concat: item.tags %}
+      {% endif %}
+    {% endfor %}
+    {% assign study_tags = study_tags | uniq | sort %}
+  {% endif %}
 
   <div class="collection-with-menu">
     <aside class="collection-menu">
@@ -31,9 +42,27 @@ layout: archive
     </aside>
 
     <section class="photo-grid-wrap collection-grid-area">
+      {% if page.collection == "study" and study_tabs.size > 0 %}
+        <div class="collection-filter-bar" aria-label="Study tab filters">
+          <button type="button" class="collection-filter-btn is-active" data-study-tab-filter="all">All Tabs</button>
+          {% for tab in study_tabs %}
+            {% if tab != "" %}
+              <button type="button" class="collection-filter-btn" data-study-tab-filter="{{ tab | downcase | escape }}">{{ tab }}</button>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+      {% if page.collection == "study" and study_tags.size > 0 %}
+        <div class="collection-filter-bar" aria-label="Study tag filters">
+          <button type="button" class="collection-filter-btn is-active" data-study-tag-filter="all">All Tags</button>
+          {% for tag in study_tags %}
+            <button type="button" class="collection-filter-btn" data-study-tag-filter="{{ tag | downcase | escape }}">{{ tag }}</button>
+          {% endfor %}
+        </div>
+      {% endif %}
       <div class="photo-grid">
         {% for item in items %}
-          <article class="photo-card">
+          <article class="photo-card{% if page.collection == "study" %} study-filter-item{% endif %}"{% if page.collection == "study" %} data-study-tags="{% if item.tags %}{{ item.tags | join: ',' | downcase | escape }}{% endif %}" data-study-tab="{{ item.study_tab | default: 'General' | downcase | escape }}"{% endif %}>
             {% assign card_primary_url = item.frontend_url | default: item.demo_url | default: item.url %}
             {% assign card_is_external = false %}
             {% if card_primary_url contains '://' %}
@@ -49,7 +78,7 @@ layout: archive
             </a>
             <div class="photo-card-content">
               {% if item.date %}<p class="photo-meta">{{ item.date | date: "%Y-%m-%d" }}</p>{% endif %}
-              {% if item.excerpt %}<p>{{ item.excerpt }}</p>{% endif %}
+              {% if item.excerpt %}<p>{{ item.excerpt | markdownify | strip_html | strip_newlines | truncate: 160 }}</p>{% endif %}
               <div class="photo-links">
                 <a href="{{ item.url | relative_url }}">Read</a>
                 {% if item.frontend_url %}<a href="{{ item.frontend_url }}" target="_blank" rel="noopener noreferrer">Frontend</a>{% endif %}
@@ -63,6 +92,54 @@ layout: archive
       </div>
     </div>
   </div>
+  {% if page.collection == "study" and study_tabs.size > 0 %}
+    <script>
+      (function() {
+        var tabButtons = document.querySelectorAll(".collection-filter-btn[data-study-tab-filter]");
+        var tagButtons = document.querySelectorAll(".collection-filter-btn[data-study-tag-filter]");
+        var cards = document.querySelectorAll(".study-filter-item");
+        if (!cards.length) return;
+
+        var activeTab = "all";
+        var activeTag = "all";
+
+        function applyFilters() {
+          cards.forEach(function(card) {
+            var tab = (card.getAttribute("data-study-tab") || "").trim();
+            var tags = (card.getAttribute("data-study-tags") || "")
+              .split(",")
+              .map(function(v) { return v.trim(); })
+              .filter(Boolean);
+
+            var tabMatch = activeTab === "all" || tab === activeTab;
+            var tagMatch = activeTag === "all" || tags.indexOf(activeTag) !== -1;
+            var visible = tabMatch && tagMatch;
+            card.classList.toggle("is-filter-hidden", !visible);
+          });
+        }
+
+        tabButtons.forEach(function(btn) {
+          btn.addEventListener("click", function() {
+            activeTab = btn.getAttribute("data-study-tab-filter");
+            tabButtons.forEach(function(el) {
+              el.classList.toggle("is-active", el.getAttribute("data-study-tab-filter") === activeTab);
+            });
+            applyFilters();
+          });
+        });
+
+        tagButtons.forEach(function(btn) {
+          btn.addEventListener("click", function() {
+            activeTag = btn.getAttribute("data-study-tag-filter");
+            tagButtons.forEach(function(el) {
+              el.classList.toggle("is-active", el.getAttribute("data-study-tag-filter") === activeTag);
+            });
+            applyFilters();
+          });
+        });
+      })();
+    </script>
+  {% endif %}
 {% else %}
   <div class="entries-{{ entries_layout }}">
     {% include documents-collection.html collection=page.collection sort_by=page.sort_by sort_order=page.sort_order type=entries_layout %}

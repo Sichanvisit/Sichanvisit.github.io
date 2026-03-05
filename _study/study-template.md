@@ -2,6 +2,11 @@
 title: "Study Note Template"
 date: 2026-03-05
 excerpt: "Short summary of what I studied and why it matters."
+study_tab: "LLM"
+tags:
+  - RAG
+  - Prompt
+  - Retrieval
 header:
   teaser: /assets/images/profile.png
 ---

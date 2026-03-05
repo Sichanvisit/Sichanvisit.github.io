@@ -12,7 +12,7 @@
 
 {% assign use_photo_card = false %}
 {% if include.type == "grid" and page.collection %}
-  {% if page.collection == "portfolio" or page.collection == "research" %}
+  {% if page.collection == "portfolio" or page.collection == "research" or page.collection == "study" %}
     {% assign use_photo_card = true %}
   {% endif %}
 {% endif %}

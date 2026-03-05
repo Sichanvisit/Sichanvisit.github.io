@@ -6,6 +6,8 @@ title: ""
 ---
 
 {% assign projects = site.portfolio | sort: "priority" | slice: 0, 4 %}
+{% assign researches = site.research | sort: "date" | reverse | slice: 0, 4 %}
+{% assign studies = site.study | sort: "date" | reverse | slice: 0, 4 %}
 
 <section class="feature-row">
   <article class="feature-left">
@@ -28,6 +30,20 @@ title: ""
 
     <section class="feature-panel-section feature-panel-research">
       <h2>RESEARCH</h2>
+      <ul>
+        {% for item in researches %}
+        <li><a href="{{ item.url | relative_url }}">{{ item.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <section class="feature-panel-section feature-panel-study">
+      <h2>STUDY</h2>
+      <ul>
+        {% for item in studies %}
+        <li><a href="{{ item.url | relative_url }}">{{ item.title }}</a></li>
+        {% endfor %}
+      </ul>
     </section>
   </aside>
 </section>

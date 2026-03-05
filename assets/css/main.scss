@@ -259,8 +259,8 @@ a {
   margin: 0;
   color: #f4f8ff;
   font-family: "Fraunces", serif;
-  font-size: clamp(1.7rem, 4vw, 2.45rem);
-  line-height: 1.02;
+  font-size: 0.82rem;
+  line-height: 1.16;
 }
 
 .feature-overlay p {
@@ -271,7 +271,7 @@ a {
 
 .feature-right {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.7rem;
   align-items: stretch;
   border: 1px solid transparent;
@@ -554,7 +554,35 @@ a {
   margin-top: 0;
   width: 100%;
   display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
   justify-content: center;
+}
+
+.collection-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.collection-filter-btn {
+  border: 1px solid var(--photo-line);
+  background: transparent;
+  color: var(--photo-link);
+  border-radius: 999px;
+  padding: 0.22rem 0.52rem;
+  font-size: 0.72rem;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.collection-filter-btn.is-active {
+  color: var(--photo-text);
+  border-color: var(--photo-link);
+}
+
+.study-filter-item.is-filter-hidden {
+  display: none !important;
 }
 
 .collection-grid-area .photo-grid {
