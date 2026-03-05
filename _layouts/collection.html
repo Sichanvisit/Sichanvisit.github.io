@@ -34,11 +34,73 @@ layout: archive
   <div class="collection-with-menu">
     <aside class="collection-menu">
       <h2>{{ page.title }} Topics</h2>
-      <ul>
-        {% for item in items %}
-          <li><a href="{{ item.url | relative_url }}">{{ item.title }}</a></li>
-        {% endfor %}
-      </ul>
+      {% if page.collection == "study" and study_tabs.size > 0 %}
+        <div class="study-folder-list" aria-label="Study folders">
+          {% assign preferred_tabs = "ML|DL|LLM" | split: "|" %}
+          {% for tab in preferred_tabs %}
+            {% assign current_tab = tab %}
+            {% assign tab_items = items | where_exp: "item", "(item.study_tab | default: 'General') == current_tab" %}
+            {% if tab_items.size > 0 %}
+              {% assign folder_id = tab | downcase | replace: ' ', '-' | replace: '/', '-' %}
+              <section class="study-folder-group{% if tab == "ML" %} is-open{% endif %}" data-folder="{{ tab }}">
+                <button type="button" class="study-folder-toggle" aria-expanded="{% if tab == "ML" %}true{% else %}false{% endif %}" aria-controls="study-folder-{{ folder_id }}">
+                  <span>{{ tab }}</span>
+                </button>
+                <ul id="study-folder-{{ folder_id }}" class="study-folder-items">
+                  {% for item in tab_items %}
+                    <li>
+                      <a class="study-item-link" href="{{ item.url | relative_url }}">
+                        <span class="study-item-topic">- [{{ item.study_tab | default: "General" }}]</span>
+                        <span class="study-item-title">{{ item.title }}</span>
+                      </a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </section>
+            {% endif %}
+          {% endfor %}
+
+          {% for tab in study_tabs %}
+            {% unless preferred_tabs contains tab %}
+              {% if tab != "" %}
+                {% assign current_tab = tab %}
+                {% assign tab_items = items | where_exp: "item", "(item.study_tab | default: 'General') == current_tab" %}
+                {% if tab_items.size > 0 %}
+                  {% assign folder_id = tab | downcase | replace: ' ', '-' | replace: '/', '-' %}
+                  <section class="study-folder-group" data-folder="{{ tab }}">
+                    <button type="button" class="study-folder-toggle" aria-expanded="false" aria-controls="study-folder-{{ folder_id }}">
+                      <span>{{ tab }}</span>
+                    </button>
+                    <ul id="study-folder-{{ folder_id }}" class="study-folder-items">
+                      {% for item in tab_items %}
+                        <li>
+                          <a class="study-item-link" href="{{ item.url | relative_url }}">
+                            <span class="study-item-topic">- [{{ item.study_tab | default: "General" }}]</span>
+                            <span class="study-item-title">{{ item.title }}</span>
+                          </a>
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  </section>
+                {% endif %}
+              {% endif %}
+            {% endunless %}
+          {% endfor %}
+        </div>
+      {% else %}
+        <ul>
+          {% for item in items %}
+            <li>
+              <a{% if page.collection == "study" %} class="study-item-link"{% endif %} href="{{ item.url | relative_url }}">
+                {% if page.collection == "study" %}
+                  <span class="study-item-topic">- [{{ item.study_tab | default: "General" }}]</span>
+                {% endif %}
+                <span class="study-item-title">{{ item.title }}</span>
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
     </aside>
 
     <section class="photo-grid-wrap collection-grid-area">
@@ -53,11 +115,14 @@ layout: archive
         </div>
       {% endif %}
       {% if page.collection == "study" and study_tags.size > 0 %}
-        <div class="collection-filter-bar" aria-label="Study tag filters">
-          <button type="button" class="collection-filter-btn is-active" data-study-tag-filter="all">All Tags</button>
-          {% for tag in study_tags %}
-            <button type="button" class="collection-filter-btn" data-study-tag-filter="{{ tag | downcase | escape }}">{{ tag }}</button>
-          {% endfor %}
+        <div class="collection-filter-group is-collapsed" data-filter-group="tags">
+          <div class="collection-filter-bar collection-filter-bar--tags" aria-label="Study tag filters" data-filter-content="tags">
+            <button type="button" class="collection-filter-btn is-active" data-study-tag-filter="all">All Tags</button>
+            {% for tag in study_tags %}
+              <button type="button" class="collection-filter-btn" data-study-tag-filter="{{ tag | downcase | escape }}">{{ tag }}</button>
+            {% endfor %}
+          </div>
+          <button type="button" class="collection-filter-toggle" data-filter-toggle="tags" aria-expanded="false">태그 더보기</button>
         </div>
       {% endif %}
       <div class="photo-grid">
@@ -70,11 +135,8 @@ layout: archive
             {% endif %}
             <a class="photo-card-image" href="{% if card_is_external %}{{ card_primary_url }}{% else %}{{ card_primary_url | relative_url }}{% endif %}"{% if card_is_external %} target="_blank" rel="noopener noreferrer"{% endif %}>
               {% if item.header.teaser %}
-                <img src="{{ item.header.teaser | relative_url }}" alt="{{ item.title }}">
+                <img src="{{ item.header.teaser | relative_url }}" alt="" loading="lazy" onerror="this.remove();">
               {% endif %}
-              <div class="photo-card-overlay">
-                <h3 class="photo-card-overlay-title">{{ item.title }}</h3>
-              </div>
             </a>
             <div class="photo-card-content">
               {% if item.date %}<p class="photo-meta">{{ item.date | date: "%Y-%m-%d" }}</p>{% endif %}
@@ -98,7 +160,10 @@ layout: archive
         var tabButtons = document.querySelectorAll(".collection-filter-btn[data-study-tab-filter]");
         var tagButtons = document.querySelectorAll(".collection-filter-btn[data-study-tag-filter]");
         var cards = document.querySelectorAll(".study-filter-item");
-        if (!cards.length) return;
+        var tagGroup = document.querySelector('.collection-filter-group[data-filter-group="tags"]');
+        var tagContent = document.querySelector('.collection-filter-bar[data-filter-content="tags"]');
+        var tagToggleBtn = document.querySelector('.collection-filter-toggle[data-filter-toggle="tags"]');
+        var folderToggles = document.querySelectorAll(".study-folder-toggle");
 
         var activeTab = "all";
         var activeTag = "all";
@@ -135,6 +200,39 @@ layout: archive
               el.classList.toggle("is-active", el.getAttribute("data-study-tag-filter") === activeTag);
             });
             applyFilters();
+          });
+        });
+
+        function updateTagToggleVisibility() {
+          if (!tagGroup || !tagContent || !tagToggleBtn) return;
+          var shouldShowToggle = tagContent.scrollHeight > tagContent.clientHeight + 6;
+          tagToggleBtn.hidden = !shouldShowToggle;
+          if (!shouldShowToggle) {
+            tagGroup.classList.remove("is-collapsed");
+            tagGroup.classList.add("is-expanded");
+            tagToggleBtn.setAttribute("aria-expanded", "true");
+            tagToggleBtn.textContent = "태그 접기";
+          }
+        }
+
+        if (tagToggleBtn && tagGroup) {
+          tagToggleBtn.addEventListener("click", function() {
+            var collapsed = tagGroup.classList.toggle("is-collapsed");
+            tagGroup.classList.toggle("is-expanded", !collapsed);
+            tagToggleBtn.setAttribute("aria-expanded", String(!collapsed));
+            tagToggleBtn.textContent = collapsed ? "태그 더보기" : "태그 접기";
+          });
+        }
+
+        updateTagToggleVisibility();
+        window.addEventListener("resize", updateTagToggleVisibility);
+
+        folderToggles.forEach(function(btn) {
+          btn.addEventListener("click", function() {
+            var group = btn.closest(".study-folder-group");
+            if (!group) return;
+            var isOpen = group.classList.toggle("is-open");
+            btn.setAttribute("aria-expanded", String(isOpen));
           });
         });
       })();

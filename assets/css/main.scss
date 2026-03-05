@@ -535,12 +535,97 @@ a {
 
 .collection-menu a {
   color: var(--photo-link);
-  font-size: 0.82rem;
+  font-size: 0.74rem;
   text-decoration: none;
 }
 
 .collection-menu a:hover {
   text-decoration: underline;
+}
+
+.study-folder-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.36rem;
+}
+
+.study-folder-group {
+  border: 1px solid var(--photo-line);
+  border-radius: 10px;
+  background: transparent;
+  overflow: hidden;
+}
+
+.study-folder-toggle {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: var(--photo-link);
+  padding: 0.42rem 0.56rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.study-folder-toggle::after {
+  content: "▸";
+  color: var(--photo-muted);
+  font-size: 0.74rem;
+}
+
+.study-folder-group.is-open .study-folder-toggle::after {
+  content: "▾";
+}
+
+.study-folder-items {
+  display: none;
+  margin: 0;
+  padding: 0 0.56rem 0.5rem;
+  list-style: none;
+}
+
+.study-folder-group.is-open .study-folder-items {
+  display: block;
+}
+
+.study-folder-items li {
+  margin: 0.28rem 0;
+  line-height: 1.22;
+}
+
+.study-folder-items a {
+  color: var(--photo-link);
+  font-size: 0.7rem;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.study-folder-items a:hover {
+  text-decoration: underline;
+}
+
+.study-item-link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.24rem;
+  line-height: 1.28;
+}
+
+.study-item-topic {
+  color: var(--photo-muted);
+  font-size: 0.64rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.study-item-title {
+  font-size: 0.72rem;
 }
 
 .collection-grid-area {
@@ -556,6 +641,36 @@ a {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
+}
+
+.collection-filter-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.32rem;
+}
+
+.collection-filter-bar--tags {
+  width: 100%;
+  max-height: none;
+  overflow: visible;
+  transition: max-height 0.2s ease;
+}
+
+.collection-filter-group.is-collapsed .collection-filter-bar--tags {
+  max-height: 5.5rem;
+  overflow: hidden;
+}
+
+.collection-filter-toggle {
+  border: 1px solid var(--photo-line);
+  background: transparent;
+  color: var(--photo-link);
+  border-radius: 999px;
+  padding: 0.18rem 0.5rem;
+  font-size: 0.68rem;
+  line-height: 1.2;
+  cursor: pointer;
 }
 
 .collection-filter-btn {
@@ -651,7 +766,7 @@ a {
 
 .collection-doc-left__item a {
   color: var(--photo-link);
-  font-size: 0.82rem;
+  font-size: 0.74rem;
   text-decoration: none;
   overflow-wrap: anywhere;
   word-break: break-word;
