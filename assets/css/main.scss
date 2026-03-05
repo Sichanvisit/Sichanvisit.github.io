@@ -341,21 +341,10 @@ a {
   border-left: 1px solid transparent;
 }
 
-.home-study-wrap {
-  max-width: 1260px;
-  margin: 0.65rem auto 0;
-  padding-top: 0.72rem;
+.feature-panel-study {
+  grid-column: 1 / -1;
   border-top: 1px solid var(--photo-line);
-}
-
-.home-study-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.7rem;
-  border: 1px solid transparent;
-  border-radius: 16px;
-  background: var(--photo-card);
-  padding: 0.72rem;
+  padding-top: 0.72rem;
 }
 
 .masthead__menu-item a {
@@ -372,6 +361,19 @@ a {
   max-width: 1260px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.home-study-tabs {
+  max-width: 1260px;
+  margin: 0.55rem auto 0.2rem;
+  padding-top: 0.62rem;
+  border-top: 1px solid var(--photo-line);
+}
+
+.home-study-tabs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.7rem;
 }
 
 .photo-grid {
@@ -1449,10 +1451,6 @@ a {
     min-height: auto;
   }
 
-  .home-study-grid {
-    grid-template-columns: 1fr;
-  }
-
   .photo-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1477,6 +1475,10 @@ a {
     position: static;
     width: 100%;
     max-width: 100%;
+  }
+
+  .home-study-tabs-grid {
+    grid-template-columns: 1fr;
   }
 }
 

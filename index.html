@@ -7,10 +7,11 @@ title: ""
 
 {% assign projects = site.portfolio | sort: "priority" | slice: 0, 4 %}
 {% assign researches = site.research | sort: "date" | reverse | slice: 0, 4 %}
-{% assign studies = site.study | sort: "date" | reverse %}
-{% assign studies_ml = studies | where: "study_tab", "ML" | slice: 0, 4 %}
-{% assign studies_dl = studies | where: "study_tab", "DL" | slice: 0, 4 %}
-{% assign studies_llm = studies | where: "study_tab", "LLM" | slice: 0, 4 %}
+{% assign studies = site.study | sort: "date" | reverse | slice: 0, 4 %}
+{% assign studies_all = site.study | sort: "date" | reverse %}
+{% assign studies_ml = studies_all | where: "study_tab", "ML" | slice: 0, 4 %}
+{% assign studies_dl = studies_all | where: "study_tab", "DL" | slice: 0, 4 %}
+{% assign studies_llm = studies_all | where: "study_tab", "LLM" | slice: 0, 4 %}
 
 <section class="feature-row">
   <article class="feature-left">
@@ -39,11 +40,44 @@ title: ""
         {% endfor %}
       </ul>
     </section>
+
+    <section class="feature-panel-section feature-panel-study">
+      <h2>STUDY</h2>
+      <ul>
+        {% for item in studies %}
+        <li><a href="{{ item.url | relative_url }}">{{ item.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </section>
   </aside>
 </section>
 
-<section class="home-study-wrap">
-  <div class="home-study-grid">
+<section class="photo-grid-wrap">
+  <div class="photo-grid">
+    {% for item in projects %}
+    <article class="photo-card">
+      <a class="photo-card-image" href="{{ item.url | relative_url }}">
+        {% if item.header.teaser %}
+        <img src="{{ item.header.teaser | relative_url }}" alt="" loading="lazy" onerror="this.remove();">
+        {% endif %}
+        <div class="photo-card-overlay">
+          <h3 class="photo-card-overlay-title">{{ item.title }}</h3>
+        </div>
+      </a>
+      <div class="photo-card-content">
+        <p>{{ item.excerpt | strip_html | strip_newlines | truncate: 64 }}</p>
+        <div class="photo-links">
+          <a href="{{ item.url | relative_url }}">Read Case</a>
+          {% if item.github_url %}<a href="{{ item.github_url }}">GitHub</a>{% endif %}
+        </div>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="home-study-tabs">
+  <div class="home-study-tabs-grid">
     <section class="feature-panel-section">
       <h2>ML</h2>
       <ul>
@@ -70,29 +104,5 @@ title: ""
         {% endfor %}
       </ul>
     </section>
-  </div>
-</section>
-
-<section class="photo-grid-wrap">
-  <div class="photo-grid">
-    {% for item in projects %}
-    <article class="photo-card">
-      <a class="photo-card-image" href="{{ item.url | relative_url }}">
-        {% if item.header.teaser %}
-        <img src="{{ item.header.teaser | relative_url }}" alt="" loading="lazy" onerror="this.remove();">
-        {% endif %}
-        <div class="photo-card-overlay">
-          <h3 class="photo-card-overlay-title">{{ item.title }}</h3>
-        </div>
-      </a>
-      <div class="photo-card-content">
-        <p>{{ item.excerpt | strip_html | strip_newlines | truncate: 64 }}</p>
-        <div class="photo-links">
-          <a href="{{ item.url | relative_url }}">Read Case</a>
-          {% if item.github_url %}<a href="{{ item.github_url }}">GitHub</a>{% endif %}
-        </div>
-      </div>
-    </article>
-    {% endfor %}
   </div>
 </section>
