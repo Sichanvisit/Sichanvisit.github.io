@@ -126,6 +126,9 @@ layout: archive
               {% if item.header.teaser %}
                 <img src="{{ item.header.teaser | relative_url }}" alt="" loading="lazy" onerror="this.remove();">
               {% endif %}
+              <div class="photo-card-overlay">
+                <h3 class="photo-card-overlay-title">{{ item.title }}</h3>
+              </div>
             </a>
             <div class="photo-card-content">
               {% if item.date %}<p class="photo-meta">{{ item.date | date: "%Y-%m-%d" }}</p>{% endif %}
