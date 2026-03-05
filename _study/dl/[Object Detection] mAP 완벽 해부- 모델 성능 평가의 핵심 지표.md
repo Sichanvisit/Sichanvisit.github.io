@@ -1,6 +1,6 @@
 ---
 title: "[Object Detection] mAP 완벽 해부: 모델 성능 평가의 핵심 지표"
-date: 2026-03-05
+date: 2025-10-12
 study_tab: "DL"
 tags:
   - DL

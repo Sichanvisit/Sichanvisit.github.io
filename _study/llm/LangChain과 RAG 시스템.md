@@ -1,6 +1,6 @@
 ---
 title: "LangChain 기반 고성능 RAG 시스템 엔지니어링 총괄 가이드"
-date: 2026-03-05
+date: 2026-01-15
 study_tab: "LLM"
 tags:
   - LLM

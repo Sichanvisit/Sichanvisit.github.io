@@ -1,6 +1,6 @@
 ---
 title: "초보자를 위한 PyTorch 기반 오토인코더 가이드"
-date: 2026-03-05
+date: 2025-09-11
 study_tab: "DL"
 tags:
   - DL

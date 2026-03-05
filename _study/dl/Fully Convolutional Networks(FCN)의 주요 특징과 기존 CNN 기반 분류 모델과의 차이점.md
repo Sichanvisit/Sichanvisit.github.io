@@ -1,6 +1,6 @@
 ---
 title: "딥러닝 기반 이미지 이해의 핵심: Semantic Segmentation 완벽 분석"
-date: 2026-03-05
+date: 2025-10-20
 study_tab: "DL"
 tags:
   - DL

@@ -1,6 +1,6 @@
 ---
 title: "ResNet 계열 네트워크의 진화: ResNet부터 ConvNeXt까지"
-date: 2026-03-05
+date: 2025-09-28
 study_tab: "DL"
 tags:
   - DL

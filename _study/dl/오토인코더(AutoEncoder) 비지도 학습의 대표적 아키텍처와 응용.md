@@ -1,6 +1,6 @@
 ---
 title: "오토인코더(AutoEncoder): 비지도 학습의 대표적 아키텍처와 응용"
-date: 2026-03-05
+date: 2025-09-22
 study_tab: "DL"
 tags:
   - DL

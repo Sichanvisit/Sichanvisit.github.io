@@ -1,6 +1,6 @@
 ---
 title: "RAGAS 완벽 가이드: RAG 성능 평가의 표준"
-date: 2026-03-05
+date: 2026-01-15
 study_tab: "LLM"
 tags:
   - LLM

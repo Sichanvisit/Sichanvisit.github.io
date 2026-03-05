@@ -1,6 +1,6 @@
 ---
 title: "AI의 '창조적 거짓말', 할루시네이션 완벽 가이드"
-date: 2026-03-05
+date: 2026-01-12
 study_tab: "LLM"
 tags:
   - LLM

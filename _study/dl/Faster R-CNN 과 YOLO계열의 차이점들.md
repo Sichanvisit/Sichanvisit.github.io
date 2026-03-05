@@ -1,6 +1,6 @@
 ---
 title: "Faster R-CNN에서 YOLO로: 헤드·넥·출력 구조의 진화"
-date: 2026-03-05
+date: 2025-10-12
 study_tab: "DL"
 tags:
   - DL

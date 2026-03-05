@@ -1,6 +1,6 @@
 ---
 title: "CSPNet과 YOLO 백본 진화: CSPDarknet에서 NAS 기반 구조까지"
-date: 2026-03-05
+date: 2025-10-12
 study_tab: "DL"
 tags:
   - DL

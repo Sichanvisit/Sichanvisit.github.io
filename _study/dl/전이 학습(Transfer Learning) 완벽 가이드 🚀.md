@@ -1,6 +1,6 @@
 ---
 title: "전이 학습(Transfer Learning) 완벽 가이드"
-date: 2026-03-05
+date: 2025-09-30
 study_tab: "DL"
 tags:
   - DL

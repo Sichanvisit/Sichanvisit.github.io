@@ -1,6 +1,6 @@
 ---
 title: "주성분 분석(PCA)와 요인 분석: 차원 축소와 잠재 요인 발견"
-date: 2026-03-05
+date: 2025-09-03
 study_tab: "ML"
 tags:
   - ML

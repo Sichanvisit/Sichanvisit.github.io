@@ -1,6 +1,6 @@
 ---
 title: "K-Fold 교차 검증과 K 값 선택 기준"
-date: 2026-03-05
+date: 2025-08-25
 study_tab: "ML"
 tags:
   - ML

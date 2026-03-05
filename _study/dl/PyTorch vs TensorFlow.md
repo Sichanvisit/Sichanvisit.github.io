@@ -1,6 +1,6 @@
 ---
 title: "PyTorch vs TensorFlow: 연구부터 서비스까지 딥러닝 프레임워크 심층 비교"
-date: 2026-03-05
+date: 2025-09-15
 study_tab: "DL"
 tags:
   - DL

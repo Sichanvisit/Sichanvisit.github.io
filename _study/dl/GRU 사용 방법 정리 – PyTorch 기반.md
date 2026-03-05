@@ -1,6 +1,6 @@
 ---
 title: "GRU 모델 예제 (PyTorch)"
-date: 2026-03-05
+date: 2025-09-11
 study_tab: "DL"
 tags:
   - DL

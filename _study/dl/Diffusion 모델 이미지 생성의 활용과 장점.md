@@ -1,6 +1,6 @@
 ---
 title: "생성 AI의 새 지평: Diffusion Model(확산 모델) 심층 분석"
-date: 2026-03-05
+date: 2025-10-20
 study_tab: "DL"
 tags:
   - DL

@@ -1,6 +1,6 @@
 ---
 title: "인공지능(AI), 머신러닝(ML), 딥러닝(DL)의 포함관계 완전 정리"
-date: 2026-03-05
+date: 2025-09-03
 study_tab: "ML"
 tags:
   - AI

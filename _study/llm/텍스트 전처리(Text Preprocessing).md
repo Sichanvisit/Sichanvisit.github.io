@@ -1,6 +1,6 @@
 ---
 title: "모델 성능을 극대화하는 텍스트 전처리(Text Preprocessing)의 모든 것"
-date: 2026-03-05
+date: 2025-11-17
 study_tab: "LLM"
 tags:
   - LLM

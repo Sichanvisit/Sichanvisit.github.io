@@ -1,6 +1,6 @@
 ---
 title: "결정 트리 맥락에서의 CART 알고리즘"
-date: 2026-03-05
+date: 2025-08-31
 study_tab: "ML"
 tags:
   - ML

@@ -1,6 +1,6 @@
 ---
 title: "편향(Bias)과 분산(Variance): 의미, 중요성, 활용법"
-date: 2026-03-05
+date: 2025-08-25
 study_tab: "ML"
 tags:
   - ML

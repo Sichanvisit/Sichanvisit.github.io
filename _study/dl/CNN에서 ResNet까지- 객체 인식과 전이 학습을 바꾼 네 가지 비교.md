@@ -1,6 +1,6 @@
 ---
 title: "CNN에서 ResNet까지: 객체 인식과 전이 학습을 바꾼 네 가지 혁신"
-date: 2026-03-05
+date: 2025-09-30
 study_tab: "DL"
 tags:
   - DL

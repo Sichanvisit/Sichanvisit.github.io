@@ -1,6 +1,6 @@
 ---
 title: "트랜스포머는 어떻게 Seq2Seq의 시대를 끝냈는가"
-date: 2026-03-05
+date: 2025-11-17
 study_tab: "LLM"
 tags:
   - LLM

@@ -1,6 +1,6 @@
 ---
 title: "AI 엔지니어링과 선형대수학의 관계"
-date: 2026-03-05
+date: 2025-08-18
 study_tab: "ML"
 tags:
   - ML

@@ -1,6 +1,6 @@
 ---
 title: "[The Attention Revolution] 기계는 어떻게 '집중'하는 법을 배웠는가?"
-date: 2026-03-05
+date: 2025-11-17
 study_tab: "LLM"
 tags:
   - LLM

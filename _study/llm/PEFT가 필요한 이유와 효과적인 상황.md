@@ -1,6 +1,6 @@
 ---
 title: "PEFT 완벽 가이드: 초거대 LLM 시대의 파라미터 효율 튜닝 전략"
-date: 2026-03-05
+date: 2026-01-15
 study_tab: "LLM"
 tags:
   - LLM

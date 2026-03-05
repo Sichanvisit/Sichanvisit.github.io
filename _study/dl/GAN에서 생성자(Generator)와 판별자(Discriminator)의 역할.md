@@ -1,6 +1,6 @@
 ---
 title: "인공지능의 창의성을 깨우다: GAN(Generative Adversarial Network) 심층 분석"
-date: 2026-03-05
+date: 2025-10-20
 study_tab: "DL"
 tags:
   - DL

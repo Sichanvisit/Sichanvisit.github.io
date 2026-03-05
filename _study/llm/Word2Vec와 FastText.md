@@ -1,6 +1,6 @@
 ---
 title: "Word2Vec을 넘어: FastText가 단어 임베딩의 판도를 바꾼 이유"
-date: 2026-03-05
+date: 2025-11-17
 study_tab: "LLM"
 tags:
   - LLM

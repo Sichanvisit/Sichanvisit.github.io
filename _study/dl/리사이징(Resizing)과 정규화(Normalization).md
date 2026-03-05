@@ -1,6 +1,6 @@
 ---
 title: "딥러닝 모델 전처리의 핵심: 왜 리사이징(Resizing)과 정규화(Normalization)이 필요한가?"
-date: 2026-03-05
+date: 2025-09-28
 study_tab: "DL"
 tags:
   - DL

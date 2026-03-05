@@ -1,6 +1,6 @@
 ---
 title: "torch.nn.Module 정리"
-date: 2026-03-05
+date: 2025-09-12
 study_tab: "DL"
 tags:
   - DL

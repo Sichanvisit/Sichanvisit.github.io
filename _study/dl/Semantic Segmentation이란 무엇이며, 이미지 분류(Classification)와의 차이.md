@@ -1,6 +1,6 @@
 ---
 title: "픽셀의 의미를 해독하다: Semantic Segmentation 완벽 가이드"
-date: 2026-03-05
+date: 2025-10-20
 study_tab: "DL"
 tags:
   - DL

@@ -1,6 +1,6 @@
 ---
 title: "탐색적 데이터 분석 (Exploratory Data Analysis, EDA)"
-date: 2026-03-05
+date: 2025-08-24
 study_tab: "ML"
 tags:
   - ML

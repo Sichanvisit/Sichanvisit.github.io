@@ -1,6 +1,6 @@
 ---
 title: "YOLO: 객체 검출을 단일 회귀 문제로 재정의한 혁신적 패러다임"
-date: 2026-03-05
+date: 2025-10-12
 study_tab: "DL"
 tags:
   - DL

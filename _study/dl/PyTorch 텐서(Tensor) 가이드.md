@@ -1,6 +1,6 @@
 ---
 title: "PyTorch 텐서(Tensor) 완벽 가이드: NumPy와의 차이부터 실무 활용까지"
-date: 2026-03-05
+date: 2025-09-15
 study_tab: "DL"
 tags:
   - DL

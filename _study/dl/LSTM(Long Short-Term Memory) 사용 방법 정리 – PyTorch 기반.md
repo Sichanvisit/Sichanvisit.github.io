@@ -1,6 +1,6 @@
 ---
 title: "LSTM(Long Short-Term Memory) 사용 방법 정리 – PyTorch 기반"
-date: 2026-03-05
+date: 2025-09-11
 study_tab: "DL"
 tags:
   - DL

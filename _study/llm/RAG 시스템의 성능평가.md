@@ -1,6 +1,6 @@
 ---
 title: "RAG 성능 평가 완벽 가이드: 독립 평가 vs 종단간 평가"
-date: 2026-03-05
+date: 2026-01-15
 study_tab: "LLM"
 tags:
   - LLM

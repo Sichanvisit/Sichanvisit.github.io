@@ -1,6 +1,6 @@
 ---
 title: "BERT vs GPT: 구조, 학습 방식, 활용 분야 심층 비교"
-date: 2026-03-05
+date: 2026-01-12
 study_tab: "LLM"
 tags:
   - LLM
