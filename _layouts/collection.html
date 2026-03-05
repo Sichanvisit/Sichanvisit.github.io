@@ -1,4 +1,4 @@
----
+﻿---
 layout: archive
 ---
 
@@ -39,7 +39,7 @@ layout: archive
           {% assign preferred_tabs = "ML|DL|LLM" | split: "|" %}
           {% for tab in preferred_tabs %}
             {% assign current_tab = tab %}
-            {% assign tab_items = items | where_exp: "item", "(item.study_tab | default: 'General') == current_tab" %}
+            {% assign tab_items = items | where: "study_tab", current_tab %}
             {% if tab_items.size > 0 %}
               {% assign folder_id = tab | downcase | replace: ' ', '-' | replace: '/', '-' %}
               <section class="study-folder-group{% if tab == "ML" %} is-open{% endif %}" data-folder="{{ tab }}">
@@ -64,7 +64,7 @@ layout: archive
             {% unless preferred_tabs contains tab %}
               {% if tab != "" %}
                 {% assign current_tab = tab %}
-                {% assign tab_items = items | where_exp: "item", "(item.study_tab | default: 'General') == current_tab" %}
+                {% assign tab_items = items | where: "study_tab", current_tab %}
                 {% if tab_items.size > 0 %}
                   {% assign folder_id = tab | downcase | replace: ' ', '-' | replace: '/', '-' %}
                   <section class="study-folder-group" data-folder="{{ tab }}">
@@ -122,7 +122,7 @@ layout: archive
               <button type="button" class="collection-filter-btn" data-study-tag-filter="{{ tag | downcase | escape }}">{{ tag }}</button>
             {% endfor %}
           </div>
-          <button type="button" class="collection-filter-toggle" data-filter-toggle="tags" aria-expanded="false">태그 더보기</button>
+          <button type="button" class="collection-filter-toggle" data-filter-toggle="tags" aria-expanded="false">Show tags</button>
         </div>
       {% endif %}
       <div class="photo-grid">
@@ -211,7 +211,7 @@ layout: archive
             tagGroup.classList.remove("is-collapsed");
             tagGroup.classList.add("is-expanded");
             tagToggleBtn.setAttribute("aria-expanded", "true");
-            tagToggleBtn.textContent = "태그 접기";
+            tagToggleBtn.textContent = "Hide tags";
           }
         }
 
@@ -220,7 +220,7 @@ layout: archive
             var collapsed = tagGroup.classList.toggle("is-collapsed");
             tagGroup.classList.toggle("is-expanded", !collapsed);
             tagToggleBtn.setAttribute("aria-expanded", String(!collapsed));
-            tagToggleBtn.textContent = collapsed ? "태그 더보기" : "태그 접기";
+            tagToggleBtn.textContent = collapsed ? "Show tags" : "Hide tags";
           });
         }
 
@@ -243,3 +243,4 @@ layout: archive
     {% include documents-collection.html collection=page.collection sort_by=page.sort_by sort_order=page.sort_order type=entries_layout %}
   </div>
 {% endif %}
+
