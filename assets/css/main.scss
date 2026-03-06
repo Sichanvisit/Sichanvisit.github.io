@@ -247,9 +247,9 @@ a {
 .feature-overlay {
   position: absolute;
   left: 1rem;
-  right: 1rem;
+  right: 1.55rem;
   bottom: 1rem;
-  padding: 0.72rem 0.82rem;
+  padding: 0.62rem 0.72rem;
   border-radius: 12px;
   background: linear-gradient(145deg, rgba(8, 14, 23, 0.75), rgba(12, 24, 41, 0.58));
   backdrop-filter: blur(2px);
@@ -259,14 +259,15 @@ a {
   margin: 0;
   color: #f4f8ff;
   font-family: "Fraunces", serif;
-  font-size: 0.82rem;
-  line-height: 1.16;
+  font-size: 0.74rem;
+  line-height: 1.12;
 }
 
 .feature-overlay p {
-  margin: 0.28rem 0 0;
+  margin: 0.22rem 0 0;
   color: #d4deea;
-  font-size: 0.82rem;
+  font-size: 0.72rem;
+  line-height: 1.44;
 }
 
 .feature-right {
