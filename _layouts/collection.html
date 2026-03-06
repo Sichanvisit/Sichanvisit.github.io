@@ -37,9 +37,10 @@ layout: archive
                 </button>
                 <ul id="study-folder-{{ folder_id }}" class="study-folder-items">
                   {% for item in tab_items %}
-                    {% assign item_tab_label = item.study_tab | default: "General" %}
-                    {% capture item_tab_prefix %}[{{ item_tab_label }}] {% endcapture %}
-                    {% assign menu_title = item.title | remove_first: item_tab_prefix %}
+                    {% assign menu_title = item.title %}
+                    {% if item.title contains ']' %}
+                      {% assign menu_title = item.title | split: ']' | last | strip %}
+                    {% endif %}
                     <li>
                       <a class="study-item-link" href="{{ item.url | relative_url }}">
                         <span class="study-item-title">{{ menu_title }}</span>
@@ -64,9 +65,10 @@ layout: archive
                     </button>
                     <ul id="study-folder-{{ folder_id }}" class="study-folder-items">
                       {% for item in tab_items %}
-                        {% assign item_tab_label = item.study_tab | default: "General" %}
-                        {% capture item_tab_prefix %}[{{ item_tab_label }}] {% endcapture %}
-                        {% assign menu_title = item.title | remove_first: item_tab_prefix %}
+                        {% assign menu_title = item.title %}
+                        {% if item.title contains ']' %}
+                          {% assign menu_title = item.title | split: ']' | last | strip %}
+                        {% endif %}
                         <li>
                           <a class="study-item-link" href="{{ item.url | relative_url }}">
                             <span class="study-item-title">{{ menu_title }}</span>
@@ -83,9 +85,10 @@ layout: archive
       {% else %}
         <ul>
           {% for item in items %}
-            {% assign item_tab_label = item.study_tab | default: "General" %}
-            {% capture item_tab_prefix %}[{{ item_tab_label }}] {% endcapture %}
-            {% assign menu_title = item.title | remove_first: item_tab_prefix %}
+            {% assign menu_title = item.title %}
+            {% if item.title contains ']' %}
+              {% assign menu_title = item.title | split: ']' | last | strip %}
+            {% endif %}
             <li>
               <a{% if page.collection == "study" %} class="study-item-link"{% endif %} href="{{ item.url | relative_url }}">
                 <span class="study-item-title">{{ menu_title }}</span>
