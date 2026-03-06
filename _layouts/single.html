@@ -58,10 +58,13 @@ layout: default
                 </button>
                 <ul id="single-study-folder-{{ folder_id }}" class="study-folder-items">
                   {% for item in tab_items %}
+                    {% assign menu_title = item.title %}
+                    {% if item.title contains ']' %}
+                      {% assign menu_title = item.title | split: ']' | last | strip %}
+                    {% endif %}
                     <li class="collection-doc-left__item{% if item.url == page.url %} is-active{% endif %}">
                       <a class="study-item-link" href="{{ item.url | relative_url }}">
-                        <span class="study-item-topic">- [{{ item.study_tab | default: "General" }}]</span>
-                        <span class="study-item-title">{{ item.title }}</span>
+                        <span class="study-item-title">{{ menu_title }}</span>
                       </a>
                     </li>
                   {% endfor %}
@@ -82,10 +85,13 @@ layout: default
                     </button>
                     <ul id="single-study-folder-{{ folder_id }}" class="study-folder-items">
                       {% for item in tab_items %}
+                        {% assign menu_title = item.title %}
+                        {% if item.title contains ']' %}
+                          {% assign menu_title = item.title | split: ']' | last | strip %}
+                        {% endif %}
                         <li class="collection-doc-left__item{% if item.url == page.url %} is-active{% endif %}">
                           <a class="study-item-link" href="{{ item.url | relative_url }}">
-                            <span class="study-item-topic">- [{{ item.study_tab | default: "General" }}]</span>
-                            <span class="study-item-title">{{ item.title }}</span>
+                            <span class="study-item-title">{{ menu_title }}</span>
                           </a>
                         </li>
                       {% endfor %}
@@ -99,12 +105,13 @@ layout: default
       {% else %}
         <ul class="collection-doc-left__list">
           {% for item in collection_items %}
+            {% assign menu_title = item.title %}
+            {% if item.title contains ']' %}
+              {% assign menu_title = item.title | split: ']' | last | strip %}
+            {% endif %}
             <li class="collection-doc-left__item{% if item.url == page.url %} is-active{% endif %}">
               <a class="{% if page.collection == "study" %}study-item-link{% endif %}" href="{{ item.url | relative_url }}">
-                {% if page.collection == "study" %}
-                  <span class="study-item-topic">- [{{ item.study_tab | default: "General" }}]</span>
-                {% endif %}
-                <span class="study-item-title">{{ item.title }}</span>
+                <span class="study-item-title">{{ menu_title }}</span>
               </a>
             </li>
           {% endfor %}
@@ -142,10 +149,13 @@ layout: default
                   </button>
                   <ul id="single-mobile-study-folder-{{ folder_id }}" class="study-folder-items">
                     {% for item in tab_items %}
+                      {% assign menu_title = item.title %}
+                      {% if item.title contains ']' %}
+                        {% assign menu_title = item.title | split: ']' | last | strip %}
+                      {% endif %}
                       <li class="collection-doc-left__item{% if item.url == page.url %} is-active{% endif %}">
                         <a class="study-item-link" href="{{ item.url | relative_url }}">
-                          <span class="study-item-topic">- [{{ item.study_tab | default: "General" }}]</span>
-                          <span class="study-item-title">{{ item.title }}</span>
+                          <span class="study-item-title">{{ menu_title }}</span>
                         </a>
                       </li>
                     {% endfor %}
@@ -166,10 +176,13 @@ layout: default
                       </button>
                       <ul id="single-mobile-study-folder-{{ folder_id }}" class="study-folder-items">
                         {% for item in tab_items %}
+                          {% assign menu_title = item.title %}
+                          {% if item.title contains ']' %}
+                            {% assign menu_title = item.title | split: ']' | last | strip %}
+                          {% endif %}
                           <li class="collection-doc-left__item{% if item.url == page.url %} is-active{% endif %}">
                             <a class="study-item-link" href="{{ item.url | relative_url }}">
-                              <span class="study-item-topic">- [{{ item.study_tab | default: "General" }}]</span>
-                              <span class="study-item-title">{{ item.title }}</span>
+                              <span class="study-item-title">{{ menu_title }}</span>
                             </a>
                           </li>
                         {% endfor %}
@@ -183,12 +196,13 @@ layout: default
         {% else %}
           <ul class="collection-doc-left__list">
             {% for item in collection_items %}
+              {% assign menu_title = item.title %}
+              {% if item.title contains ']' %}
+                {% assign menu_title = item.title | split: ']' | last | strip %}
+              {% endif %}
               <li class="collection-doc-left__item{% if item.url == page.url %} is-active{% endif %}">
                 <a class="{% if page.collection == "study" %}study-item-link{% endif %}" href="{{ item.url | relative_url }}">
-                  {% if page.collection == "study" %}
-                    <span class="study-item-topic">- [{{ item.study_tab | default: "General" }}]</span>
-                  {% endif %}
-                  <span class="study-item-title">{{ item.title }}</span>
+                  <span class="study-item-title">{{ menu_title }}</span>
                 </a>
               </li>
             {% endfor %}
