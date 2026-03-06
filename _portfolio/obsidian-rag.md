@@ -15,6 +15,33 @@ tech_stack:
   - RAG
   - BM25
 ---
+
+## Project Snapshot
+
+| Item | Summary |
+|------|---------|
+| Problem | 로컬 Obsidian 지식베이스를 대상으로, 근거가 추적되고 재검색/재작성 루프를 제어할 수 있는 실무형 RAG 시스템이 필요했습니다. |
+| Role | FastAPI + Streamlit 구조, AgenticFlow 검색/재작성 흐름, summary/raw 이중 저장소, BM25 + 벡터 + RRF 하이브리드 검색 구조를 기준으로 파이프라인을 설계하고 정리했습니다. |
+| Stack | Python, FastAPI, Streamlit, ChromaDB, sentence-transformers, BM25, RRF, Ollama, OpenAI |
+| Flow | User Query -> FastAPI /api/chat/stream -> AgenticFlow(Think/Search/Grade/Rewrite/Generate/Review) -> RagEngine(summary/raw 검색) -> LLM -> NDJSON Streaming -> Streamlit UI |
+| Outcome | 다중 질의 검색, 품질 게이트, 반복 응답 차단, 출처 보강, 로컬 실행 스택까지 포함한 Agentic RAG 구조를 일관된 서비스 형태로 정리했습니다. |
+
+## Architecture
+
+```mermaid
+flowchart LR
+    User["User Query"] --> API["FastAPI Backend"]
+    API --> Flow["AgenticFlow"]
+    Flow --> MQ["Multi Query Rewrite"]
+    MQ --> Search["RagEngine<br/>Embedding + BM25 + RRF"]
+    Search --> Summary["Summary Vector Store"]
+    Search --> Raw["Raw Vector Store"]
+    Search --> Grade["Retrieval Grade / Rewrite Gate"]
+    Grade --> LLM["Ollama / OpenAI"]
+    LLM --> Stream["NDJSON Streaming Response"]
+    Stream --> UI["Streamlit UI"]
+```
+
 ## 1. 프로젝트 한 줄 정의
 Obsidian 지식 저장소의 검색 누락과 근거 약화를 줄인 로컬 RAG 시스템
 
