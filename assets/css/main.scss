@@ -233,7 +233,7 @@ a {
   position: relative;
   border-radius: 16px;
   overflow: hidden;
-  min-height: 286px;
+  aspect-ratio: 6 / 5;
   border: 1px solid var(--photo-line);
 }
 
@@ -950,8 +950,8 @@ a {
   background: var(--photo-card);
   padding: 0.8rem 0.9rem;
   box-sizing: border-box;
-  width: 220px;
-  max-width: 220px;
+  width: 250px;
+  max-width: 250px;
   overflow: hidden;
   opacity: 1;
   margin-top: 0.45rem;
@@ -974,6 +974,9 @@ a {
 }
 
 .collection-doc-left .study-folder-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.44rem;
   max-height: calc(100vh - 13rem);
   overflow-y: auto;
 }
@@ -1001,16 +1004,16 @@ a {
 }
 
 .collection-doc-left__item {
-  margin: 0.35rem 0;
-  line-height: 1.25;
+  margin: 0.18rem 0;
+  line-height: 1.18;
 }
 
 .collection-doc-left__item a {
   color: var(--photo-link);
-  font-size: 0.74rem;
+  font-size: 0.58rem;
   text-decoration: none;
-  overflow-wrap: anywhere;
-  word-break: break-word;
+  overflow-wrap: break-word;
+  word-break: keep-all;
   display: block;
 }
 
@@ -1641,7 +1644,7 @@ a {
   }
 
   .feature-left {
-    min-height: 320px;
+    aspect-ratio: 6 / 5;
   }
 
   .feature-overlay {
@@ -1752,15 +1755,18 @@ a {
   }
 
   .feature-left {
-    min-height: 286px;
+    aspect-ratio: 6 / 5;
+    max-width: 420px;
+    width: 100%;
+    margin-inline: auto;
     border-radius: 14px;
   }
 
   .feature-overlay {
-    left: 0.46rem;
-    right: 0.46rem;
-    bottom: 0.46rem;
-    padding: 0.46rem 0.52rem;
+    left: 0.52rem;
+    right: 0.52rem;
+    bottom: 0.52rem;
+    padding: 0.44rem 0.5rem;
     border-radius: 10px;
   }
 
