@@ -759,7 +759,7 @@ a {
 
 .collection-menu a {
   color: var(--photo-link);
-  font-size: 0.74rem;
+  font-size: 0.68rem;
   text-decoration: none;
 }
 
@@ -786,7 +786,7 @@ a {
   background: transparent;
   color: var(--photo-link);
   padding: 0.42rem 0.56rem;
-  font-size: 0.8rem;
+  font-size: 0.74rem;
   font-weight: 700;
   line-height: 1.2;
   text-align: left;
@@ -824,7 +824,7 @@ a {
 
 .study-folder-items a {
   color: var(--photo-link);
-  font-size: 0.7rem;
+  font-size: 0.62rem;
   text-decoration: none;
   overflow-wrap: anywhere;
   word-break: break-word;
@@ -835,10 +835,8 @@ a {
 }
 
 .study-item-link {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 0.24rem;
-  line-height: 1.28;
+  display: block;
+  line-height: 1.32;
 }
 
 .study-item-topic {
@@ -849,7 +847,7 @@ a {
 }
 
 .study-item-title {
-  font-size: 0.72rem;
+  font-size: 0.66rem;
 }
 
 .collection-grid-area {
