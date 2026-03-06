@@ -62,7 +62,7 @@ layout: default
                     {% if item.title contains ']' %}
                       {% assign menu_title = item.title | split: ']' | last | strip %}
                     {% endif %}
-                    <li class="collection-doc-left__item{% if item.url == page.url %} is-active{% endif %}">
+                    <li class="study-folder-item{% if item.url == page.url %} is-active{% endif %}">
                       <a class="study-item-link" href="{{ item.url | relative_url }}">
                         <span class="study-item-title">{{ menu_title }}</span>
                       </a>
@@ -89,7 +89,7 @@ layout: default
                         {% if item.title contains ']' %}
                           {% assign menu_title = item.title | split: ']' | last | strip %}
                         {% endif %}
-                        <li class="collection-doc-left__item{% if item.url == page.url %} is-active{% endif %}">
+                        <li class="study-folder-item{% if item.url == page.url %} is-active{% endif %}">
                           <a class="study-item-link" href="{{ item.url | relative_url }}">
                             <span class="study-item-title">{{ menu_title }}</span>
                           </a>
@@ -153,7 +153,7 @@ layout: default
                       {% if item.title contains ']' %}
                         {% assign menu_title = item.title | split: ']' | last | strip %}
                       {% endif %}
-                      <li class="collection-doc-left__item{% if item.url == page.url %} is-active{% endif %}">
+                      <li class="study-folder-item{% if item.url == page.url %} is-active{% endif %}">
                         <a class="study-item-link" href="{{ item.url | relative_url }}">
                           <span class="study-item-title">{{ menu_title }}</span>
                         </a>
@@ -180,7 +180,7 @@ layout: default
                           {% if item.title contains ']' %}
                             {% assign menu_title = item.title | split: ']' | last | strip %}
                           {% endif %}
-                          <li class="collection-doc-left__item{% if item.url == page.url %} is-active{% endif %}">
+                          <li class="study-folder-item{% if item.url == page.url %} is-active{% endif %}">
                             <a class="study-item-link" href="{{ item.url | relative_url }}">
                               <span class="study-item-title">{{ menu_title }}</span>
                             </a>

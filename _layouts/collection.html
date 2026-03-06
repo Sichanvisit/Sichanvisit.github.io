@@ -41,7 +41,7 @@ layout: archive
                     {% if item.title contains ']' %}
                       {% assign menu_title = item.title | split: ']' | last | strip %}
                     {% endif %}
-                    <li>
+                    <li class="study-folder-item">
                       <a class="study-item-link" href="{{ item.url | relative_url }}">
                         <span class="study-item-title">{{ menu_title }}</span>
                       </a>
@@ -69,7 +69,7 @@ layout: archive
                         {% if item.title contains ']' %}
                           {% assign menu_title = item.title | split: ']' | last | strip %}
                         {% endif %}
-                        <li>
+                        <li class="study-folder-item">
                           <a class="study-item-link" href="{{ item.url | relative_url }}">
                             <span class="study-item-title">{{ menu_title }}</span>
                           </a>

@@ -829,12 +829,24 @@ a {
   display: block;
 }
 
-.study-folder-items li {
+.study-folder-item {
+  position: relative;
+  padding-left: 1rem;
   margin: 0.18rem 0;
-  line-height: 1.18;
+  line-height: 1.22;
 }
 
-.study-folder-items a {
+.study-folder-item::before {
+  content: "-";
+  color: var(--photo-muted);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0.7rem;
+  text-align: left;
+}
+
+.study-folder-item a {
   color: var(--photo-link);
   font-size: 0.58rem;
   text-decoration: none;
@@ -842,7 +854,12 @@ a {
   word-break: keep-all;
 }
 
-.study-folder-items a:hover {
+.study-folder-item.is-active a {
+  color: var(--photo-text);
+  font-weight: 700;
+}
+
+.study-folder-item a:hover {
   text-decoration: underline;
 }
 
@@ -952,7 +969,9 @@ a {
   box-sizing: border-box;
   width: 250px;
   max-width: 250px;
-  overflow: hidden;
+  max-height: calc(100vh - 6rem);
+  overflow-x: hidden;
+  overflow-y: auto;
   opacity: 1;
   margin-top: 0.45rem;
 }
@@ -977,8 +996,8 @@ a {
   display: flex;
   flex-direction: column;
   gap: 0.44rem;
-  max-height: calc(100vh - 13rem);
-  overflow-y: auto;
+  max-height: none;
+  overflow-y: visible;
 }
 
 /* Keep scrolling behavior but hide visible scrollbars in TOC/menu panes. */
@@ -1003,12 +1022,24 @@ a {
   display: none;
 }
 
-.collection-doc-left__item {
+.collection-doc-left__list .collection-doc-left__item {
+  position: relative;
+  padding-left: 1rem;
   margin: 0.18rem 0;
   line-height: 1.18;
 }
 
-.collection-doc-left__item a {
+.collection-doc-left__list .collection-doc-left__item::before {
+  content: "-";
+  color: var(--photo-muted);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0.7rem;
+  text-align: left;
+}
+
+.collection-doc-left__list .collection-doc-left__item a {
   color: var(--photo-link);
   font-size: 0.58rem;
   text-decoration: none;
@@ -1017,12 +1048,12 @@ a {
   display: block;
 }
 
-.collection-doc-left__item.is-active a {
+.collection-doc-left__list .collection-doc-left__item.is-active a {
   color: var(--photo-text);
   font-weight: 700;
 }
 
-.collection-doc-left__item a:hover {
+.collection-doc-left__list .collection-doc-left__item a:hover {
   text-decoration: underline;
 }
 
@@ -1835,10 +1866,6 @@ a {
   .study-folder-toggle {
     min-height: 1.82rem;
     font-size: 0.7rem;
-  }
-
-  .study-folder-items li {
-    margin: 0.18rem 0;
   }
 
   .study-folder-items a,
