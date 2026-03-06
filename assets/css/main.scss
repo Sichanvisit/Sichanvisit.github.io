@@ -972,8 +972,16 @@ a {
   max-height: calc(100vh - 6rem);
   overflow-x: hidden;
   overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
   opacity: 1;
   margin-top: 0.45rem;
+}
+
+.collection-doc-left::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
 }
 
 .collection-doc-left__title {
@@ -1776,6 +1784,32 @@ a {
 }
 
 @media (max-width: 700px) {
+  .masthead__inner-wrap {
+    padding-inline: 0.35rem;
+  }
+
+  .greedy-nav {
+    min-height: 3.15rem;
+  }
+
+  .site-title {
+    font-size: 0.94rem;
+    margin-right: 0.28rem;
+    white-space: nowrap;
+  }
+
+  .greedy-nav .visible-links {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.08rem;
+  }
+
+  .masthead__menu-item a {
+    font-size: 0.66rem;
+    padding: 0.28rem 0.24rem;
+    letter-spacing: 0;
+  }
+
   .layout--single .page__content {
     padding-inline: 0.12rem;
   }
@@ -1826,7 +1860,7 @@ a {
   }
 
   .collection-grid-area .photo-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .photo-card-image {
@@ -1871,6 +1905,26 @@ a {
   .study-folder-items a,
   .study-item-title {
     font-size: 0.6rem;
+  }
+}
+
+@media (max-width: 540px) {
+  .masthead__inner-wrap {
+    padding-inline: 0.28rem;
+  }
+
+  .site-title {
+    font-size: 0.88rem;
+    margin-right: 0.2rem;
+  }
+
+  .greedy-nav .visible-links {
+    gap: 0.02rem;
+  }
+
+  .masthead__menu-item a {
+    font-size: 0.61rem;
+    padding: 0.24rem 0.18rem;
   }
 }
 
