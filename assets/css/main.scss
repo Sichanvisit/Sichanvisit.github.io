@@ -447,12 +447,125 @@ a {
   text-decoration: none;
 }
 
+.study-card .photo-card-image {
+  overflow: hidden;
+  background:
+    radial-gradient(circle at top right, rgba(95, 140, 255, 0.16), transparent 34%),
+    linear-gradient(180deg, rgba(9, 20, 37, 0.94), rgba(5, 13, 25, 0.98));
+}
+
+.study-card .study-card-art {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(125deg, rgba(255, 255, 255, 0.05) 0%, transparent 34%),
+    radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.12), transparent 18%),
+    linear-gradient(180deg, transparent 0 68%, rgba(0, 0, 0, 0.18) 100%);
+  opacity: 0.95;
+}
+
+.study-card .study-card-art::before,
+.study-card .study-card-art::after {
+  content: "";
+  position: absolute;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.study-card .study-card-art::before {
+  width: 62%;
+  height: 1px;
+  left: 12%;
+  top: 30%;
+  box-shadow: 0 18px 0 rgba(255, 255, 255, 0.06), 0 36px 0 rgba(255, 255, 255, 0.04);
+}
+
+.study-card .study-card-art::after {
+  width: 24%;
+  height: 24%;
+  right: 12%;
+  top: 14%;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: transparent;
+}
+
+.study-card .study-card-tab {
+  position: absolute;
+  top: 0.48rem;
+  left: 0.52rem;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  min-width: 2.2rem;
+  padding: 0.14rem 0.34rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  background: rgba(8, 16, 30, 0.72);
+  color: #dce8fb;
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.study-card.study-tab-ml .photo-card-image {
+  background:
+    radial-gradient(circle at top right, rgba(76, 193, 173, 0.18), transparent 34%),
+    linear-gradient(180deg, rgba(8, 22, 28, 0.96), rgba(5, 14, 22, 0.98));
+}
+
+.study-card.study-tab-ml .study-card-art::before {
+  box-shadow: 0 18px 0 rgba(94, 224, 198, 0.14), 0 36px 0 rgba(94, 224, 198, 0.08);
+}
+
+.study-card.study-tab-ml .study-card-tab {
+  color: #d9fff8;
+  border-color: rgba(94, 224, 198, 0.18);
+  background: rgba(9, 33, 36, 0.76);
+}
+
+.study-card.study-tab-dl .photo-card-image {
+  background:
+    radial-gradient(circle at top right, rgba(80, 116, 255, 0.2), transparent 36%),
+    linear-gradient(180deg, rgba(10, 18, 44, 0.96), rgba(6, 12, 28, 0.98));
+}
+
+.study-card.study-tab-dl .study-card-art::before {
+  box-shadow: 0 18px 0 rgba(108, 135, 255, 0.14), 0 36px 0 rgba(108, 135, 255, 0.08);
+}
+
+.study-card.study-tab-dl .study-card-tab {
+  color: #e3e9ff;
+  border-color: rgba(108, 135, 255, 0.18);
+  background: rgba(12, 20, 47, 0.76);
+}
+
+.study-card.study-tab-llm .photo-card-image {
+  background:
+    radial-gradient(circle at top right, rgba(92, 168, 255, 0.18), transparent 34%),
+    linear-gradient(180deg, rgba(9, 19, 38, 0.96), rgba(4, 11, 24, 0.98));
+}
+
+.study-card.study-tab-llm .study-card-art::before {
+  box-shadow: 0 18px 0 rgba(132, 198, 255, 0.14), 0 36px 0 rgba(132, 198, 255, 0.08);
+}
+
+.study-card.study-tab-llm .study-card-tab {
+  color: #deefff;
+  border-color: rgba(132, 198, 255, 0.18);
+  background: rgba(10, 24, 41, 0.76);
+}
+
 .photo-card-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center 18%;
   display: block;
+  position: relative;
+  z-index: 1;
 }
 
 .photo-card-overlay {
@@ -460,6 +573,7 @@ a {
   left: 0.48rem;
   right: 0.48rem;
   bottom: 0.42rem;
+  z-index: 2;
   padding: 0.34rem 0.44rem;
   border-radius: 8px;
   background: rgba(7, 15, 27, 0.56);

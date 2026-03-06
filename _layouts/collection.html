@@ -116,13 +116,17 @@ layout: archive
       {% endif %}
       <div class="photo-grid">
         {% for item in items %}
-          <article class="photo-card{% if page.collection == "study" %} study-filter-item{% endif %}"{% if page.collection == "study" %} data-study-tags="{% if item.tags %}{{ item.tags | join: ',' | downcase | escape }}{% endif %}" data-study-tab="{{ item.study_tab | default: 'General' | downcase | escape }}" data-study-search="{{ item.title | default: '' | downcase | escape }} {% if item.excerpt %}{{ item.excerpt | markdownify | strip_html | strip_newlines | downcase | escape }}{% endif %} {% if item.tags %}{{ item.tags | join: ' ' | downcase | escape }}{% endif %}"{% endif %}>
+          <article class="photo-card{% if page.collection == "study" %} study-card study-filter-item study-tab-{{ item.study_tab | default: 'general' | downcase | replace: ' ', '-' | replace: '/', '-' }}{% endif %}"{% if page.collection == "study" %} data-study-tags="{% if item.tags %}{{ item.tags | join: ',' | downcase | escape }}{% endif %}" data-study-tab="{{ item.study_tab | default: 'General' | downcase | escape }}" data-study-search="{{ item.title | default: '' | downcase | escape }} {% if item.excerpt %}{{ item.excerpt | markdownify | strip_html | strip_newlines | downcase | escape }}{% endif %} {% if item.tags %}{{ item.tags | join: ' ' | downcase | escape }}{% endif %}"{% endif %}>
             {% assign card_primary_url = item.frontend_url | default: item.demo_url | default: item.url %}
             {% assign card_is_external = false %}
             {% if card_primary_url contains '://' %}
               {% assign card_is_external = true %}
             {% endif %}
             <a class="photo-card-image" href="{% if card_is_external %}{{ card_primary_url }}{% else %}{{ card_primary_url | relative_url }}{% endif %}"{% if card_is_external %} target="_blank" rel="noopener noreferrer"{% endif %}>
+              {% if page.collection == "study" %}
+                <div class="study-card-art" aria-hidden="true"></div>
+                <span class="study-card-tab">{{ item.study_tab | default: "General" }}</span>
+              {% endif %}
               {% if item.header.teaser %}
                 <img src="{{ item.header.teaser | relative_url }}" alt="" loading="lazy" onerror="this.remove();">
               {% endif %}
