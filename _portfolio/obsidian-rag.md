@@ -4,7 +4,7 @@ date: 2026-02-28
 priority: 3
 excerpt: "Obsidian 노트를 Summary+Raw 2계층 RAG와 하이브리드 검색으로 연결해, 질문-근거-답변 흐름을 만든 개인 지식 검색 프로젝트"
 header:
-  teaser: /assets/images/profile.png
+  teaser: /assets/images/portfolio/obsidian-rag-thumb.svg
 github_url: "https://github.com/Sichanvisit/Obsidian_RAG"
 project_dir: "C:/Users/bhs33/Desktop/project/Obsidian_RAG"
 tech_stack:

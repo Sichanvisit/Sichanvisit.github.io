@@ -485,6 +485,20 @@ a {
   font-size: 0.7rem;
 }
 
+.project-media-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin: 0.8rem 0 1.1rem;
+}
+
+.project-media-grid video {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--photo-line);
+  background: #000;
+}
+
 .archive .archive__item {
   background: var(--photo-card);
   border: 1px solid var(--photo-line);
@@ -1453,6 +1467,10 @@ a {
 
   .photo-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .project-media-grid {
+    grid-template-columns: 1fr;
   }
 
   .collection-with-menu {

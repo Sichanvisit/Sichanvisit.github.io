@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">Obsidian RAG project thumbnail</title>
+  <desc id="desc">Dark knowledge retrieval themed card for Obsidian RAG.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a1220" />
+      <stop offset="100%" stop-color="#2e3d6c" />
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="720" fill="url(#bg)" />
+  <g opacity="0.3">
+    <rect x="760" y="112" width="270" height="118" rx="22" fill="#101b2f" stroke="#6c8fff"/>
+    <rect x="860" y="278" width="274" height="118" rx="22" fill="#101b2f" stroke="#6c8fff"/>
+    <rect x="660" y="444" width="274" height="118" rx="22" fill="#101b2f" stroke="#6c8fff"/>
+    <path d="M894 230 L998 278" stroke="#8aa8ff" stroke-width="6" fill="none"/>
+    <path d="M946 444 L860 396" stroke="#8aa8ff" stroke-width="6" fill="none"/>
+  </g>
+  <rect x="78" y="88" width="332" height="48" rx="24" fill="#131d34" stroke="#5066a8" />
+  <text x="110" y="120" fill="#9fb5ff" font-family="Noto Sans KR, Arial, sans-serif" font-size="22" letter-spacing="3">KNOWLEDGE RETRIEVAL</text>
+  <text x="76" y="274" fill="#f5f8ff" font-family="Fraunces, Georgia, serif" font-size="92" font-weight="700">Obsidian</text>
+  <text x="78" y="364" fill="#f5f8ff" font-family="Fraunces, Georgia, serif" font-size="92" font-weight="700">RAG</text>
+  <text x="82" y="434" fill="#cbd6f2" font-family="Noto Sans KR, Arial, sans-serif" font-size="32">Hybrid retrieval pipeline for local knowledge bases.</text>
+</svg>

@@ -4,7 +4,7 @@ date: 2026-02-28
 priority: 1
 excerpt: "제품 이미지와 텍스트 입력으로 광고 크리에이티브를 자동 생성하는 End-to-End AI 파이프라인"
 header:
-  teaser: /assets/images/profile.png
+  teaser: /assets/images/portfolio/advanced-project-thumb.jpg
 github_url: "https://github.com/codeitTeam5/SMB_GenMarketingContents"
 project_dir: "C:/Users/bhs33/Desktop/project/Advanced_Project"
 tech_stack:
@@ -13,6 +13,20 @@ tech_stack:
   - LLM
   - Prompt Engineering
 ---
+
+## Demo Preview
+
+<div class="project-media-grid">
+  <video controls autoplay loop muted playsinline preload="metadata" style="width:100%; border-radius:12px;">
+    <source src="/assets/videos/New121-web.mp4" type="video/mp4">
+  </video>
+  <video controls autoplay loop muted playsinline preload="metadata" style="width:100%; border-radius:12px;">
+    <source src="/assets/videos/New131-web.mp4" type="video/mp4">
+  </video>
+  <video controls autoplay loop muted playsinline preload="metadata" style="width:100%; border-radius:12px;">
+    <source src="/assets/videos/New151-web.mp4" type="video/mp4">
+  </video>
+</div>
 
 ## 1. 프로젝트 한 줄 정의
 제품 사진 한 장으로 판매용 광고 이미지를 자동 기획·생성·수정한 시스템

@@ -4,7 +4,7 @@ date: 2026-02-26
 priority: 2
 excerpt: "CFD 관련 학습 및 구현 실험 프로젝트"
 header:
-  teaser: /assets/images/profile.png
+  teaser: /assets/images/portfolio/cfd-thumb.svg
 project_dir: "C:/Users/bhs33/Desktop/project/cfd"
 status: "정리중"
 ---

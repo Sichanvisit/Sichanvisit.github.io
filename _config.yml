@@ -113,15 +113,15 @@ analytics:
 
 # Site Author
 author:
-  name             : "Sichan visit"
+  name             : "Sichan Park"
   avatar           : "/assets/images/profile.png"
-  bio              : "Aspiring AI engineer | Project-driven learning log"
+  bio              : "현장을 이해하고, 실무에 연결하는 AI 엔지니어. RAG, LLM, 자동화 파이프라인을 실제 문제 해결에 연결합니다."
   location         : "South Korea"
-  email            :
+  email            : "bhs3518@naver.com"
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
-      # url: "mailto:your.name@email.com"
+      url: "mailto:bhs3518@naver.com"
     - label: "Website"
       icon: "fas fa-fw fa-link"
       # url: "https://your-website.com"
@@ -133,7 +133,7 @@ author:
       # url: "https://facebook.com/"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      # url: "https://github.com/Sichanvisit"
+      url: "https://github.com/Sichanvisit"
     - label: "Instagram"
       icon: "fab fa-fw fa-instagram"
       # url: "https://instagram.com/"
@@ -149,7 +149,7 @@ footer:
       # url:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      # url:
+      url: "https://github.com/Sichanvisit"
     - label: "GitLab"
       icon: "fab fa-fw fa-gitlab"
       # url:

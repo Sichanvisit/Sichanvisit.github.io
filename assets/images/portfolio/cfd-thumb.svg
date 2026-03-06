@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">CFD project thumbnail</title>
+  <desc id="desc">Dark technical card with CFD project label.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#07111d" />
+      <stop offset="100%" stop-color="#13385f" />
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="720" fill="url(#bg)" />
+  <g opacity="0.28" stroke="#8cc8ff" fill="none">
+    <path d="M60 510 C200 470, 340 560, 470 510 S760 450, 920 510 S1140 560, 1220 520" stroke-width="6"/>
+    <path d="M60 450 C200 410, 340 500, 470 450 S760 390, 920 450 S1140 500, 1220 460" stroke-width="3"/>
+    <path d="M60 570 C200 530, 340 620, 470 570 S760 510, 920 570 S1140 620, 1220 580" stroke-width="3"/>
+  </g>
+  <rect x="76" y="84" width="268" height="46" rx="23" fill="#0f2238" stroke="#436a96" />
+  <text x="110" y="116" fill="#9ac4ff" font-family="Noto Sans KR, Arial, sans-serif" font-size="22" letter-spacing="3">SIMULATION</text>
+  <text x="78" y="278" fill="#f5f8ff" font-family="Fraunces, Georgia, serif" font-size="108" font-weight="700">CFD</text>
+  <text x="82" y="354" fill="#c7d7ea" font-family="Noto Sans KR, Arial, sans-serif" font-size="34">Computational flow study and implementation notes.</text>
+</svg>
