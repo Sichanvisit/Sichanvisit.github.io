@@ -22,7 +22,7 @@ layout: default
 {% if page.collection == "portfolio" or page.collection == "research" or page.collection == "study" %}
   {% assign show_collection_menu = true %}
 {% endif %}
-{% assign collection_label = "Research" %}
+{% assign collection_label = "Research Tracks" %}
 {% if page.collection == "portfolio" %}
   {% assign collection_label = "Portfolio" %}
 {% elsif page.collection == "study" %}
@@ -42,6 +42,10 @@ layout: default
       {% capture study_tabs_raw %}{% for item in collection_items %}{{ item.study_tab | default: "General" }}|{% endfor %}{% endcapture %}
       {% assign study_tabs = study_tabs_raw | split: "|" | uniq | sort %}
       {% assign preferred_tabs = "ML|DL|LLM" | split: "|" %}
+    {% elsif page.collection == "research" %}
+      {% capture research_tabs_raw %}{% for item in collection_items %}{{ item.research_tab | default: "General" }}|{% endfor %}{% endcapture %}
+      {% assign research_tabs = research_tabs_raw | split: "|" | uniq | sort %}
+      {% assign preferred_tabs = "Overview|ML|DL|LLM" | split: "|" %}
     {% endif %}
     <aside class="sidebar sticky collection-doc-left left-desktop">
       <h3 class="collection-doc-left__title">{{ collection_label }}</h3>
@@ -102,6 +106,71 @@ layout: default
             {% endunless %}
           {% endfor %}
         </div>
+      {% elsif page.collection == "research" and research_tabs.size > 0 %}
+        <div class="study-folder-list" aria-label="Research folders">
+          {% for tab in preferred_tabs %}
+            {% assign current_tab = tab %}
+            {% assign tab_items = collection_items | where: "research_tab", current_tab %}
+            {% if tab_items.size > 0 %}
+              {% assign active_items = tab_items | where: "url", page.url %}
+              {% assign folder_id = tab | downcase | replace: ' ', '-' | replace: '/', '-' %}
+              <section class="study-folder-group{% if active_items.size > 0 %} is-open{% endif %}" data-folder="{{ tab }}">
+                <button type="button" class="study-folder-toggle" aria-expanded="{% if active_items.size > 0 %}true{% else %}false{% endif %}" aria-controls="single-research-folder-{{ folder_id }}">
+                  <span>{{ tab }}</span>
+                </button>
+                <ul id="single-research-folder-{{ folder_id }}" class="study-folder-items">
+                  {% for item in tab_items %}
+                    {% assign menu_title = item.title %}
+                    {% if item.title contains ']' %}
+                      {% assign menu_title = item.title | split: ']' | last | strip %}
+                    {% endif %}
+                    <li class="study-folder-item{% if item.url == page.url %} is-active{% endif %}">
+                      <a class="study-item-link" href="{{ item.url | relative_url }}">
+                        {% if item.research_kind %}
+                          <span class="study-item-topic">{{ item.research_kind }}</span>
+                        {% endif %}
+                        <span class="study-item-title">{{ menu_title }}</span>
+                      </a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </section>
+            {% endif %}
+          {% endfor %}
+          {% for tab in research_tabs %}
+            {% unless preferred_tabs contains tab %}
+              {% if tab != "" %}
+                {% assign current_tab = tab %}
+                {% assign tab_items = collection_items | where: "research_tab", current_tab %}
+                {% if tab_items.size > 0 %}
+                  {% assign active_items = tab_items | where: "url", page.url %}
+                  {% assign folder_id = tab | downcase | replace: ' ', '-' | replace: '/', '-' %}
+                  <section class="study-folder-group{% if active_items.size > 0 %} is-open{% endif %}" data-folder="{{ tab }}">
+                    <button type="button" class="study-folder-toggle" aria-expanded="{% if active_items.size > 0 %}true{% else %}false{% endif %}" aria-controls="single-research-folder-{{ folder_id }}">
+                      <span>{{ tab }}</span>
+                    </button>
+                    <ul id="single-research-folder-{{ folder_id }}" class="study-folder-items">
+                      {% for item in tab_items %}
+                        {% assign menu_title = item.title %}
+                        {% if item.title contains ']' %}
+                          {% assign menu_title = item.title | split: ']' | last | strip %}
+                        {% endif %}
+                        <li class="study-folder-item{% if item.url == page.url %} is-active{% endif %}">
+                          <a class="study-item-link" href="{{ item.url | relative_url }}">
+                            {% if item.research_kind %}
+                              <span class="study-item-topic">{{ item.research_kind }}</span>
+                            {% endif %}
+                            <span class="study-item-title">{{ menu_title }}</span>
+                          </a>
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  </section>
+                {% endif %}
+              {% endif %}
+            {% endunless %}
+          {% endfor %}
+        </div>
       {% else %}
         <ul class="collection-doc-left__list">
           {% for item in collection_items %}
@@ -110,7 +179,10 @@ layout: default
               {% assign menu_title = item.title | split: ']' | last | strip %}
             {% endif %}
             <li class="collection-doc-left__item{% if item.url == page.url %} is-active{% endif %}">
-              <a class="{% if page.collection == "study" %}study-item-link{% endif %}" href="{{ item.url | relative_url }}">
+              <a class="{% if page.collection == "study" or page.collection == "research" %}study-item-link{% endif %}" href="{{ item.url | relative_url }}">
+                {% if page.collection == "research" and item.research_kind %}
+                  <span class="study-item-topic">{{ item.research_kind }}</span>
+                {% endif %}
                 <span class="study-item-title">{{ menu_title }}</span>
               </a>
             </li>
@@ -193,6 +265,71 @@ layout: default
               {% endunless %}
             {% endfor %}
           </div>
+        {% elsif page.collection == "research" and research_tabs.size > 0 %}
+          <div class="study-folder-list" aria-label="Research folders">
+            {% for tab in preferred_tabs %}
+              {% assign current_tab = tab %}
+              {% assign tab_items = collection_items | where: "research_tab", current_tab %}
+              {% if tab_items.size > 0 %}
+                {% assign active_items = tab_items | where: "url", page.url %}
+                {% assign folder_id = tab | downcase | replace: ' ', '-' | replace: '/', '-' %}
+                <section class="study-folder-group{% if active_items.size > 0 %} is-open{% endif %}" data-folder="{{ tab }}">
+                  <button type="button" class="study-folder-toggle" aria-expanded="{% if active_items.size > 0 %}true{% else %}false{% endif %}" aria-controls="single-mobile-research-folder-{{ folder_id }}">
+                    <span>{{ tab }}</span>
+                  </button>
+                  <ul id="single-mobile-research-folder-{{ folder_id }}" class="study-folder-items">
+                    {% for item in tab_items %}
+                      {% assign menu_title = item.title %}
+                      {% if item.title contains ']' %}
+                        {% assign menu_title = item.title | split: ']' | last | strip %}
+                      {% endif %}
+                      <li class="study-folder-item{% if item.url == page.url %} is-active{% endif %}">
+                        <a class="study-item-link" href="{{ item.url | relative_url }}">
+                          {% if item.research_kind %}
+                            <span class="study-item-topic">{{ item.research_kind }}</span>
+                          {% endif %}
+                          <span class="study-item-title">{{ menu_title }}</span>
+                        </a>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </section>
+              {% endif %}
+            {% endfor %}
+            {% for tab in research_tabs %}
+              {% unless preferred_tabs contains tab %}
+                {% if tab != "" %}
+                  {% assign current_tab = tab %}
+                  {% assign tab_items = collection_items | where: "research_tab", current_tab %}
+                  {% if tab_items.size > 0 %}
+                    {% assign active_items = tab_items | where: "url", page.url %}
+                    {% assign folder_id = tab | downcase | replace: ' ', '-' | replace: '/', '-' %}
+                    <section class="study-folder-group{% if active_items.size > 0 %} is-open{% endif %}" data-folder="{{ tab }}">
+                      <button type="button" class="study-folder-toggle" aria-expanded="{% if active_items.size > 0 %}true{% else %}false{% endif %}" aria-controls="single-mobile-research-folder-{{ folder_id }}">
+                        <span>{{ tab }}</span>
+                      </button>
+                      <ul id="single-mobile-research-folder-{{ folder_id }}" class="study-folder-items">
+                        {% for item in tab_items %}
+                          {% assign menu_title = item.title %}
+                          {% if item.title contains ']' %}
+                            {% assign menu_title = item.title | split: ']' | last | strip %}
+                          {% endif %}
+                          <li class="study-folder-item{% if item.url == page.url %} is-active{% endif %}">
+                            <a class="study-item-link" href="{{ item.url | relative_url }}">
+                              {% if item.research_kind %}
+                                <span class="study-item-topic">{{ item.research_kind }}</span>
+                              {% endif %}
+                              <span class="study-item-title">{{ menu_title }}</span>
+                            </a>
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    </section>
+                  {% endif %}
+                {% endif %}
+              {% endunless %}
+            {% endfor %}
+          </div>
         {% else %}
           <ul class="collection-doc-left__list">
             {% for item in collection_items %}
@@ -201,7 +338,10 @@ layout: default
                 {% assign menu_title = item.title | split: ']' | last | strip %}
               {% endif %}
               <li class="collection-doc-left__item{% if item.url == page.url %} is-active{% endif %}">
-                <a class="{% if page.collection == "study" %}study-item-link{% endif %}" href="{{ item.url | relative_url }}">
+                <a class="{% if page.collection == "study" or page.collection == "research" %}study-item-link{% endif %}" href="{{ item.url | relative_url }}">
+                  {% if page.collection == "research" and item.research_kind %}
+                    <span class="study-item-topic">{{ item.research_kind }}</span>
+                  {% endif %}
                   <span class="study-item-title">{{ menu_title }}</span>
                 </a>
               </li>
