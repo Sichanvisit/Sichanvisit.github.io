@@ -11,7 +11,6 @@ tags:
   - xgboost
 header:
   teaser: /assets/images/research/ml-sprint.svg
-classes: wide
 ---
 
 ## Research Snapshot

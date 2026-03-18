@@ -12,7 +12,6 @@ tags:
   - langgraph
 header:
   teaser: /assets/images/research/llm-genai.svg
-classes: wide
 ---
 
 ## Research Snapshot

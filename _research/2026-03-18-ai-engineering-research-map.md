@@ -12,7 +12,6 @@ tags:
   - llm
 header:
   teaser: /assets/images/research/research-map.svg
-classes: wide
 ---
 
 ## Archive Snapshot

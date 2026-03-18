@@ -12,7 +12,6 @@ tags:
   - gan
 header:
   teaser: /assets/images/research/dl-vision.svg
-classes: wide
 ---
 
 ## Research Snapshot
