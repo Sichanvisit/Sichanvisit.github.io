@@ -1113,24 +1113,6 @@ a {
   min-width: 0;
 }
 
-.collection-doc-right {
-  border: 1px solid var(--photo-line);
-  border-radius: 12px;
-  background: var(--photo-card);
-  padding: 0.8rem 0.9rem;
-  box-sizing: border-box;
-  width: 250px;
-  max-width: 250px;
-  max-height: calc(100vh - 6rem);
-  overflow: hidden;
-  margin-top: 0.45rem;
-}
-
-.collection-doc-right .toc {
-  max-height: calc(100vh - 7.3rem);
-  overflow-y: auto;
-}
-
 .collection-doc-left::-webkit-scrollbar {
   width: 0;
   height: 0;
@@ -1164,7 +1146,6 @@ a {
 /* Keep scrolling behavior but hide visible scrollbars in TOC/menu panes. */
 .collection-doc-left__list,
 .collection-doc-left .study-folder-list,
-.collection-doc-right .toc .toc__menu,
 .collection-doc-page .toc .toc__menu,
 #toc-right-drawer-mobile .toc__menu,
 #collection-left-drawer-mobile,
@@ -1175,7 +1156,6 @@ a {
 
 .collection-doc-left__list::-webkit-scrollbar,
 .collection-doc-left .study-folder-list::-webkit-scrollbar,
-.collection-doc-right .toc .toc__menu::-webkit-scrollbar,
 .collection-doc-page .toc .toc__menu::-webkit-scrollbar,
 #toc-right-drawer-mobile .toc__menu::-webkit-scrollbar,
 #collection-left-drawer-mobile::-webkit-scrollbar,
@@ -1301,7 +1281,6 @@ a {
 }
 
 /* Collection detail right TOC: remove boxed border look */
-.collection-doc-right .toc,
 .collection-doc-page .toc {
   border: 0 !important;
   border-radius: 0 !important;
@@ -1309,27 +1288,22 @@ a {
   box-shadow: none !important;
 }
 
-.collection-doc-right .toc .nav__title,
 .collection-doc-page .toc .nav__title {
   border: 0 !important;
   background: transparent !important;
   padding-inline: 0 !important;
 }
 
-.collection-doc-right .toc .toc__menu,
 .collection-doc-page .toc .toc__menu {
   border-top: 0 !important;
 }
 
-.collection-doc-right .toc .toc__menu ul,
-.collection-doc-right .toc .toc__menu ol,
 .collection-doc-page .toc .toc__menu ul,
 .collection-doc-page .toc .toc__menu ol {
   margin: 0.2rem 0 0.14rem 0.32rem;
   padding-inline-start: 0.28rem;
 }
 
-.collection-doc-right .toc .toc__menu li.toc-has-children,
 .collection-doc-page .toc .toc__menu li.toc-has-children {
   position: relative;
 }
@@ -1338,7 +1312,6 @@ a {
   position: relative;
 }
 
-.collection-doc-right .toc .toc__menu li.toc-has-children > .toc-fold-toggle,
 .collection-doc-page .toc .toc__menu li.toc-has-children > .toc-fold-toggle {
   border: 0;
   background: transparent;
@@ -1369,7 +1342,6 @@ a {
   z-index: 2;
 }
 
-.collection-doc-right .toc .toc__menu li.toc-has-children > a,
 .collection-doc-page .toc .toc__menu li.toc-has-children > a {
   display: block;
   padding-inline-end: 1.55rem;
@@ -1380,7 +1352,6 @@ a {
   padding-inline-end: 1.55rem;
 }
 
-.collection-doc-right .toc .toc__menu li.toc-has-children > .toc-fold-toggle > span,
 .collection-doc-page .toc .toc__menu li.toc-has-children > .toc-fold-toggle > span {
   display: inline-block;
   transform: rotate(0deg);
@@ -1393,23 +1364,19 @@ a {
   transition: transform 0.16s ease;
 }
 
-.collection-doc-right .toc .toc__menu li.toc-has-children.is-collapsed > .toc-fold-toggle > span,
 .collection-doc-page .toc .toc__menu li.toc-has-children.is-collapsed > .toc-fold-toggle > span {
   transform: rotate(-90deg);
 }
 
-.collection-doc-right .toc .toc__menu li li,
 .collection-doc-page .toc .toc__menu li li {
   margin: 0.17rem 0;
   padding-bottom: 0.16rem;
 }
 
-.collection-doc-right .toc .toc__menu li li > a,
 .collection-doc-page .toc .toc__menu li li > a {
   font-size: 0.68rem;
 }
 
-.collection-doc-right .toc .toc__menu > li > a,
 .collection-doc-page .toc .toc__menu > li > a {
   font-size: 0.74rem;
 }
@@ -1442,44 +1409,16 @@ a {
 }
 
 @media (min-width: 1024px) {
-  .collection-doc-right.sidebar__right.sticky,
   .collection-doc-page .sidebar__right.sticky {
     position: sticky !important;
     top: 4.8rem !important;
   }
 }
 
-@media (min-width: 1025px) and (max-width: 1800px) {
-  #main.collection-doc-layout {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 250px;
-    gap: 1.2rem;
-    align-items: start;
-  }
-
-  .collection-doc-page {
-    grid-column: 1;
-  }
-
-  .collection-doc-right {
-    grid-column: 2;
-  }
-}
-
 @media (min-width: 1801px) {
-  #main.collection-doc-layout {
-    display: grid;
-    grid-template-columns: 250px minmax(0, 1fr) 250px;
-    gap: 1.2rem;
-    align-items: start;
-  }
-
-  .collection-doc-page {
-    grid-column: 2;
-  }
-
-  .collection-doc-right {
-    grid-column: 3;
+  .collection-doc-page.page {
+    width: calc(100% - 550px) !important;
+    max-width: none;
   }
 }
 
