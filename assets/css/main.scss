@@ -569,6 +569,136 @@ a {
   background: rgba(10, 24, 41, 0.76);
 }
 
+.research-card .photo-card-image {
+  overflow: hidden;
+  background:
+    radial-gradient(circle at top right, rgba(255, 202, 111, 0.16), transparent 34%),
+    linear-gradient(180deg, rgba(35, 23, 12, 0.95), rgba(17, 12, 8, 0.98));
+}
+
+.research-card .research-card-art {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(125deg, rgba(255, 255, 255, 0.05) 0%, transparent 34%),
+    radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.12), transparent 18%),
+    linear-gradient(180deg, transparent 0 70%, rgba(0, 0, 0, 0.2) 100%);
+  opacity: 0.95;
+}
+
+.research-card .research-card-art::before,
+.research-card .research-card-art::after {
+  content: "";
+  position: absolute;
+}
+
+.research-card .research-card-art::before {
+  width: 42%;
+  height: 42%;
+  right: 10%;
+  top: 14%;
+  border-radius: 26px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: transparent;
+}
+
+.research-card .research-card-art::after {
+  left: 11%;
+  right: 11%;
+  bottom: 20%;
+  height: 1px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 -18px 0 rgba(255, 255, 255, 0.09),
+    0 -36px 0 rgba(255, 255, 255, 0.06),
+    0 -54px 0 rgba(255, 255, 255, 0.04);
+}
+
+.research-card .research-card-tab,
+.research-card .research-card-kind {
+  position: absolute;
+  top: 0.48rem;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.2rem;
+  padding: 0.14rem 0.34rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  background: rgba(8, 16, 30, 0.74);
+  font-size: 0.48rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.research-card .research-card-tab {
+  left: 0.52rem;
+  color: #fff6df;
+}
+
+.research-card .research-card-kind {
+  right: 0.52rem;
+  color: #e8f0ff;
+  text-transform: none;
+  letter-spacing: 0.03em;
+  max-width: calc(100% - 5.3rem);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.research-card.collection-tab-overview .photo-card-image {
+  background:
+    radial-gradient(circle at top right, rgba(255, 201, 107, 0.18), transparent 34%),
+    linear-gradient(180deg, rgba(41, 29, 13, 0.95), rgba(19, 13, 8, 0.98));
+}
+
+.research-card.collection-tab-overview .research-card-tab {
+  color: #fff2d1;
+  border-color: rgba(255, 201, 107, 0.18);
+  background: rgba(42, 29, 13, 0.78);
+}
+
+.research-card.collection-tab-ml .photo-card-image {
+  background:
+    radial-gradient(circle at top right, rgba(76, 193, 173, 0.18), transparent 34%),
+    linear-gradient(180deg, rgba(8, 22, 28, 0.96), rgba(5, 14, 22, 0.98));
+}
+
+.research-card.collection-tab-ml .research-card-tab {
+  color: #d9fff8;
+  border-color: rgba(94, 224, 198, 0.18);
+  background: rgba(9, 33, 36, 0.76);
+}
+
+.research-card.collection-tab-dl .photo-card-image {
+  background:
+    radial-gradient(circle at top right, rgba(80, 116, 255, 0.2), transparent 36%),
+    linear-gradient(180deg, rgba(10, 18, 44, 0.96), rgba(6, 12, 28, 0.98));
+}
+
+.research-card.collection-tab-dl .research-card-tab {
+  color: #e3e9ff;
+  border-color: rgba(108, 135, 255, 0.18);
+  background: rgba(12, 20, 47, 0.76);
+}
+
+.research-card.collection-tab-llm .photo-card-image {
+  background:
+    radial-gradient(circle at top right, rgba(160, 112, 255, 0.2), transparent 34%),
+    linear-gradient(180deg, rgba(22, 13, 44, 0.96), rgba(12, 7, 26, 0.98));
+}
+
+.research-card.collection-tab-llm .research-card-tab {
+  color: #f0e4ff;
+  border-color: rgba(182, 134, 255, 0.2);
+  background: rgba(25, 15, 48, 0.78);
+}
+
 .photo-card-image img {
   width: 100%;
   height: 100%;
@@ -1767,6 +1897,21 @@ a {
     top: 0.42rem;
     left: 0.44rem;
     font-size: 0.48rem;
+  }
+
+  .research-card .research-card-tab,
+  .research-card .research-card-kind {
+    top: 0.42rem;
+    font-size: 0.46rem;
+  }
+
+  .research-card .research-card-tab {
+    left: 0.44rem;
+  }
+
+  .research-card .research-card-kind {
+    right: 0.44rem;
+    max-width: calc(100% - 4.8rem);
   }
 
   .photo-card-overlay .photo-card-overlay-title {

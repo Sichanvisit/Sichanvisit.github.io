@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">AI Engineering Research Map</title>
+  <desc id="desc">A cover image for the AI engineering research archive.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#091f3a" />
+      <stop offset="55%" stop-color="#133d67" />
+      <stop offset="100%" stop-color="#f39c6b" />
+    </linearGradient>
+    <linearGradient id="card" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.18" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.04" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <circle cx="1020" cy="130" r="120" fill="#ffffff" opacity="0.08" />
+  <circle cx="160" cy="520" r="160" fill="#ffd39f" opacity="0.12" />
+  <rect x="70" y="70" width="1060" height="490" rx="34" fill="url(#card)" stroke="#ffffff" stroke-opacity="0.18" />
+  <text x="110" y="170" fill="#f7fbff" font-family="'Segoe UI', Arial, sans-serif" font-size="32" letter-spacing="3">RESEARCH ARCHIVE</text>
+  <text x="110" y="255" fill="#ffffff" font-family="'Segoe UI Semibold', Arial, sans-serif" font-size="72">AI Engineering</text>
+  <text x="110" y="328" fill="#e6f0f7" font-family="'Segoe UI', Arial, sans-serif" font-size="34">From notebooks to portfolio-ready research stories</text>
+  <rect x="110" y="390" width="220" height="88" rx="22" fill="#0c2747" fill-opacity="0.72" />
+  <rect x="360" y="390" width="220" height="88" rx="22" fill="#0c2747" fill-opacity="0.72" />
+  <rect x="610" y="390" width="220" height="88" rx="22" fill="#0c2747" fill-opacity="0.72" />
+  <text x="145" y="425" fill="#8fd3ff" font-family="'Segoe UI', Arial, sans-serif" font-size="20">TRACK 1</text>
+  <text x="145" y="460" fill="#ffffff" font-family="'Segoe UI Semibold', Arial, sans-serif" font-size="28">Machine Learning</text>
+  <text x="395" y="425" fill="#8fd3ff" font-family="'Segoe UI', Arial, sans-serif" font-size="20">TRACK 2</text>
+  <text x="395" y="460" fill="#ffffff" font-family="'Segoe UI Semibold', Arial, sans-serif" font-size="28">Deep Learning</text>
+  <text x="645" y="425" fill="#8fd3ff" font-family="'Segoe UI', Arial, sans-serif" font-size="20">TRACK 3</text>
+  <text x="645" y="460" fill="#ffffff" font-family="'Segoe UI Semibold', Arial, sans-serif" font-size="28">LLM / GenAI</text>
+</svg>

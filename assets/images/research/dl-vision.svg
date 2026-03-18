@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Deep Learning Vision Track</title>
+  <desc id="desc">A cover image for the deep learning vision track.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#140f2d" />
+      <stop offset="48%" stop-color="#0f5d83" />
+      <stop offset="100%" stop-color="#8fd694" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <rect x="70" y="70" width="1060" height="490" rx="36" fill="#ffffff" fill-opacity="0.08" stroke="#ffffff" stroke-opacity="0.16" />
+  <rect x="750" y="140" width="250" height="250" rx="30" fill="#0d1f34" fill-opacity="0.55" />
+  <rect x="790" y="180" width="170" height="170" rx="24" fill="none" stroke="#8fd694" stroke-width="10" />
+  <circle cx="845" cy="235" r="16" fill="#8fd694" />
+  <path d="M806 318 L865 264 L905 298 L960 230" stroke="#8fd694" stroke-width="10" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+  <text x="110" y="170" fill="#93d9ff" font-family="'Segoe UI', Arial, sans-serif" font-size="28" letter-spacing="3">VISION TRACK</text>
+  <text x="110" y="254" fill="#ffffff" font-family="'Segoe UI Semibold', Arial, sans-serif" font-size="74">Deep Learning</text>
+  <text x="110" y="328" fill="#eefaff" font-family="'Segoe UI', Arial, sans-serif" font-size="34">PyTorch fundamentals to detection, segmentation and generation</text>
+  <rect x="110" y="392" width="340" height="96" rx="24" fill="#0d2034" fill-opacity="0.75" />
+  <text x="145" y="430" fill="#8fd694" font-family="'Segoe UI', Arial, sans-serif" font-size="22">Representative Themes</text>
+  <text x="145" y="468" fill="#ffffff" font-family="'Segoe UI Semibold', Arial, sans-serif" font-size="28">Object Detection, U-Net, cGAN</text>
+</svg>

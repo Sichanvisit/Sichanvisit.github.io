@@ -1,4 +1,4 @@
-﻿---
+---
 layout: archive
 ---
 
@@ -15,20 +15,32 @@ layout: archive
 {% if use_home_cards %}
   {% assign items = site[page.collection] %}
   {% assign items = items | sort: "date" | reverse %}
+  {% assign collection_tabs = "" | split: "" %}
+  {% assign collection_kinds = "" | split: "" %}
+  {% assign has_collection_filters = false %}
+
   {% if page.collection == "study" %}
-    {% capture study_tabs_raw %}{% for item in items %}{{ item.study_tab | default: "General" }}|{% endfor %}{% endcapture %}
-    {% assign study_tabs = study_tabs_raw | split: "|" | uniq | sort %}
+    {% assign has_collection_filters = true %}
+    {% capture collection_tabs_raw %}{% for item in items %}{{ item.study_tab | default: "General" }}|{% endfor %}{% endcapture %}
+    {% assign collection_tabs = collection_tabs_raw | split: "|" | uniq | sort %}
+  {% elsif page.collection == "research" %}
+    {% assign has_collection_filters = true %}
+    {% capture collection_tabs_raw %}{% for item in items %}{{ item.research_tab | default: "General" }}|{% endfor %}{% endcapture %}
+    {% assign collection_tabs = collection_tabs_raw | split: "|" | uniq | sort %}
+    {% capture collection_kinds_raw %}{% for item in items %}{{ item.research_kind | default: "Archive" }}|{% endfor %}{% endcapture %}
+    {% assign collection_kinds = collection_kinds_raw | split: "|" | uniq | sort %}
   {% endif %}
 
   <div class="collection-with-menu">
     <aside class="collection-menu">
       <h2>{{ page.title }} Topics</h2>
-      {% if page.collection == "study" and study_tabs.size > 0 %}
+
+      {% if page.collection == "study" and collection_tabs.size > 0 %}
         <div class="study-folder-list" aria-label="Study folders">
           {% assign preferred_tabs = "ML|DL|LLM" | split: "|" %}
           {% for tab in preferred_tabs %}
             {% assign current_tab = tab %}
-            {% assign tab_items = items | where: "study_tab", current_tab %}
+            {% assign tab_items = items | where: "study_tab", current_tab | sort: "title" %}
             {% if tab_items.size > 0 %}
               {% assign folder_id = tab | downcase | replace: ' ', '-' | replace: '/', '-' %}
               <section class="study-folder-group" data-folder="{{ tab }}">
@@ -52,11 +64,11 @@ layout: archive
             {% endif %}
           {% endfor %}
 
-          {% for tab in study_tabs %}
+          {% for tab in collection_tabs %}
             {% unless preferred_tabs contains tab %}
               {% if tab != "" %}
                 {% assign current_tab = tab %}
-                {% assign tab_items = items | where: "study_tab", current_tab %}
+                {% assign tab_items = items | where: "study_tab", current_tab | sort: "title" %}
                 {% if tab_items.size > 0 %}
                   {% assign folder_id = tab | downcase | replace: ' ', '-' | replace: '/', '-' %}
                   <section class="study-folder-group" data-folder="{{ tab }}">
@@ -82,6 +94,71 @@ layout: archive
             {% endunless %}
           {% endfor %}
         </div>
+      {% elsif page.collection == "research" and collection_tabs.size > 0 %}
+        <div class="study-folder-list" aria-label="Research folders">
+          {% assign preferred_tabs = "Overview|ML|DL|LLM" | split: "|" %}
+          {% for tab in preferred_tabs %}
+            {% assign current_tab = tab %}
+            {% assign tab_items = items | where: "research_tab", current_tab | sort: "title" %}
+            {% if tab_items.size > 0 %}
+              {% assign folder_id = tab | downcase | replace: ' ', '-' | replace: '/', '-' %}
+              <section class="study-folder-group" data-folder="{{ tab }}">
+                <button type="button" class="study-folder-toggle" aria-expanded="false" aria-controls="research-folder-{{ folder_id }}">
+                  <span>{{ tab }}</span>
+                </button>
+                <ul id="research-folder-{{ folder_id }}" class="study-folder-items">
+                  {% for item in tab_items %}
+                    {% assign menu_title = item.title %}
+                    {% if item.title contains ']' %}
+                      {% assign menu_title = item.title | split: ']' | last | strip %}
+                    {% endif %}
+                    <li class="study-folder-item">
+                      <a class="study-item-link" href="{{ item.url | relative_url }}">
+                        {% if item.research_kind %}
+                          <span class="study-item-topic">{{ item.research_kind }}</span>
+                        {% endif %}
+                        <span class="study-item-title">{{ menu_title }}</span>
+                      </a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </section>
+            {% endif %}
+          {% endfor %}
+
+          {% for tab in collection_tabs %}
+            {% unless preferred_tabs contains tab %}
+              {% if tab != "" %}
+                {% assign current_tab = tab %}
+                {% assign tab_items = items | where: "research_tab", current_tab | sort: "title" %}
+                {% if tab_items.size > 0 %}
+                  {% assign folder_id = tab | downcase | replace: ' ', '-' | replace: '/', '-' %}
+                  <section class="study-folder-group" data-folder="{{ tab }}">
+                    <button type="button" class="study-folder-toggle" aria-expanded="false" aria-controls="research-folder-{{ folder_id }}">
+                      <span>{{ tab }}</span>
+                    </button>
+                    <ul id="research-folder-{{ folder_id }}" class="study-folder-items">
+                      {% for item in tab_items %}
+                        {% assign menu_title = item.title %}
+                        {% if item.title contains ']' %}
+                          {% assign menu_title = item.title | split: ']' | last | strip %}
+                        {% endif %}
+                        <li class="study-folder-item">
+                          <a class="study-item-link" href="{{ item.url | relative_url }}">
+                            {% if item.research_kind %}
+                              <span class="study-item-topic">{{ item.research_kind }}</span>
+                            {% endif %}
+                            <span class="study-item-title">{{ menu_title }}</span>
+                          </a>
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  </section>
+                {% endif %}
+              {% endif %}
+            {% endunless %}
+          {% endfor %}
+        </div>
       {% else %}
         <ul>
           {% for item in items %}
@@ -90,7 +167,10 @@ layout: archive
               {% assign menu_title = item.title | split: ']' | last | strip %}
             {% endif %}
             <li>
-              <a{% if page.collection == "study" %} class="study-item-link"{% endif %} href="{{ item.url | relative_url }}">
+              <a{% if page.collection == "study" or page.collection == "research" %} class="study-item-link"{% endif %} href="{{ item.url | relative_url }}">
+                {% if page.collection == "research" and item.research_kind %}
+                  <span class="study-item-topic">{{ item.research_kind }}</span>
+                {% endif %}
                 <span class="study-item-title">{{ menu_title }}</span>
               </a>
             </li>
@@ -100,30 +180,80 @@ layout: archive
     </aside>
 
     <section class="photo-grid-wrap collection-grid-area">
-      {% if page.collection == "study" and study_tabs.size > 0 %}
-        <div class="collection-filter-bar" aria-label="Study tab filters">
-          <button type="button" class="collection-filter-btn is-active" data-study-tab-filter="all">All Tabs</button>
-          {% for tab in study_tabs %}
+      {% if has_collection_filters and collection_tabs.size > 0 %}
+        <div class="collection-filter-bar" aria-label="{{ page.collection | capitalize }} tab filters">
+          <button type="button" class="collection-filter-btn is-active" data-collection-tab-filter="all">
+            {% if page.collection == "research" %}All Tracks{% else %}All Tabs{% endif %}
+          </button>
+          {% for tab in collection_tabs %}
             {% if tab != "" %}
-              <button type="button" class="collection-filter-btn" data-study-tab-filter="{{ tab | downcase | escape }}">{{ tab }}</button>
+              <button type="button" class="collection-filter-btn" data-collection-tab-filter="{{ tab | downcase | escape }}">{{ tab }}</button>
             {% endif %}
           {% endfor %}
         </div>
       {% endif %}
-      {% if page.collection == "study" and study_tabs.size > 0 %}
-        <div class="collection-filter-bar" aria-label="Study search filter">
+
+      {% if page.collection == "research" and collection_kinds.size > 0 %}
+        <div class="collection-filter-bar" aria-label="Research type filters">
+          <button type="button" class="collection-filter-btn is-active" data-collection-kind-filter="all">All Types</button>
+          {% for kind in collection_kinds %}
+            {% if kind != "" %}
+              <button type="button" class="collection-filter-btn" data-collection-kind-filter="{{ kind | downcase | escape }}">{{ kind }}</button>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% if has_collection_filters and collection_tabs.size > 0 %}
+        <div class="collection-filter-bar" aria-label="{{ page.collection | capitalize }} search filter">
           <input
             type="search"
             class="collection-filter-search"
-            data-study-search-input
-            placeholder="검색"
-            aria-label="Search study cards"
+            data-collection-search-input
+            placeholder="Search"
+            aria-label="Search collection cards"
           >
         </div>
       {% endif %}
+
       <div class="photo-grid">
         {% for item in items %}
-          <article class="photo-card{% if page.collection == "study" %} study-card study-filter-item study-tab-{{ item.study_tab | default: 'general' | downcase | replace: ' ', '-' | replace: '/', '-' }}{% endif %}"{% if page.collection == "study" %} data-study-tags="{% if item.tags %}{{ item.tags | join: ',' | downcase | escape }}{% endif %}" data-study-tab="{{ item.study_tab | default: 'General' | downcase | escape }}" data-study-search="{{ item.title | default: '' | downcase | escape }} {% if item.excerpt %}{{ item.excerpt | markdownify | strip_html | strip_newlines | downcase | escape }}{% endif %} {% if item.tags %}{{ item.tags | join: ' ' | downcase | escape }}{% endif %}"{% endif %}>
+          {% assign tab_value = "general" %}
+          {% assign kind_value = "" %}
+          {% assign search_text = item.title | default: "" %}
+          {% if item.excerpt %}
+            {% assign item_excerpt_text = item.excerpt | markdownify | strip_html | strip_newlines %}
+            {% assign search_text = search_text | append: " " | append: item_excerpt_text %}
+          {% endif %}
+          {% if item.tags %}
+            {% assign item_tags_text = item.tags | join: " " %}
+            {% assign search_text = search_text | append: " " | append: item_tags_text %}
+          {% endif %}
+
+          {% if page.collection == "study" %}
+            {% assign tab_value = item.study_tab | default: "General" %}
+          {% elsif page.collection == "research" %}
+            {% assign tab_value = item.research_tab | default: "General" %}
+            {% assign kind_value = item.research_kind | default: "Archive" %}
+            {% if item.source_title %}
+              {% assign search_text = search_text | append: " " | append: item.source_title %}
+            {% endif %}
+            {% if item.source_path %}
+              {% assign search_text = search_text | append: " " | append: item.source_path %}
+            {% endif %}
+            {% assign search_text = search_text | append: " " | append: kind_value %}
+          {% endif %}
+
+          <article
+            class="photo-card{% if page.collection == "study" %} study-card{% elsif page.collection == "research" %} research-card{% endif %}{% if has_collection_filters %} collection-filter-item{% endif %} collection-tab-{{ tab_value | downcase | replace: ' ', '-' | replace: '/', '-' }}{% if page.collection == "research" %} collection-kind-{{ kind_value | downcase | replace: ' ', '-' | replace: '/', '-' }}{% endif %}"
+            {% if has_collection_filters %}
+              data-collection-tab="{{ tab_value | downcase | escape }}"
+              data-collection-search="{{ search_text | downcase | escape }}"
+            {% endif %}
+            {% if page.collection == "research" %}
+              data-collection-kind="{{ kind_value | downcase | escape }}"
+            {% endif %}
+          >
             {% assign card_primary_url = item.frontend_url | default: item.demo_url | default: item.url %}
             {% assign card_is_external = false %}
             {% if card_primary_url contains '://' %}
@@ -133,6 +263,12 @@ layout: archive
               {% if page.collection == "study" %}
                 <div class="study-card-art" aria-hidden="true"></div>
                 <span class="study-card-tab">{{ item.study_tab | default: "General" }}</span>
+              {% elsif page.collection == "research" %}
+                <div class="research-card-art" aria-hidden="true"></div>
+                <span class="research-card-tab">{{ item.research_tab | default: "General" }}</span>
+                {% if item.research_kind %}
+                  <span class="research-card-kind">{{ item.research_kind }}</span>
+                {% endif %}
               {% endif %}
               {% if item.header.teaser %}
                 <img src="{{ item.header.teaser | relative_url }}" alt="" loading="lazy" onerror="this.remove();">
@@ -142,7 +278,14 @@ layout: archive
               </div>
             </a>
             <div class="photo-card-content">
-              {% if item.date %}<p class="photo-meta">{{ item.date | date: "%Y-%m-%d" }}</p>{% endif %}
+              {% capture meta_line %}
+                {% if item.date %}{{ item.date | date: "%Y-%m-%d" }}{% endif %}
+                {% if page.collection == "research" and item.research_kind %}
+                  {% if item.date %} · {% endif %}{{ item.research_kind }}
+                {% endif %}
+              {% endcapture %}
+              {% assign meta_line = meta_line | strip %}
+              {% if meta_line != "" %}<p class="photo-meta">{{ meta_line }}</p>{% endif %}
               {% if item.excerpt %}<p>{{ item.excerpt | markdownify | strip_html | strip_newlines | truncate: 160 }}</p>{% endif %}
               <div class="photo-links">
                 <a href="{{ item.url | relative_url }}">Read</a>
@@ -155,36 +298,51 @@ layout: archive
           </article>
         {% endfor %}
       </div>
-    </div>
+    </section>
   </div>
-  {% if page.collection == "study" and study_tabs.size > 0 %}
+
+  {% if has_collection_filters and collection_tabs.size > 0 %}
     <script>
       (function() {
-        var tabButtons = document.querySelectorAll(".collection-filter-btn[data-study-tab-filter]");
-        var searchInput = document.querySelector("[data-study-search-input]");
-        var cards = document.querySelectorAll(".study-filter-item");
+        var tabButtons = document.querySelectorAll(".collection-filter-btn[data-collection-tab-filter]");
+        var kindButtons = document.querySelectorAll(".collection-filter-btn[data-collection-kind-filter]");
+        var searchInput = document.querySelector("[data-collection-search-input]");
+        var cards = document.querySelectorAll(".collection-filter-item");
         var folderToggles = document.querySelectorAll(".study-folder-toggle");
 
         var activeTab = "all";
+        var activeKind = "all";
         var activeQuery = "";
 
         function applyFilters() {
           cards.forEach(function(card) {
-            var tab = (card.getAttribute("data-study-tab") || "").trim();
-            var searchText = (card.getAttribute("data-study-search") || "").toLowerCase();
+            var tab = (card.getAttribute("data-collection-tab") || "").trim();
+            var kind = (card.getAttribute("data-collection-kind") || "").trim();
+            var searchText = (card.getAttribute("data-collection-search") || "").toLowerCase();
 
             var tabMatch = activeTab === "all" || tab === activeTab;
+            var kindMatch = activeKind === "all" || !kind || kind === activeKind;
             var queryMatch = !activeQuery || searchText.indexOf(activeQuery) !== -1;
-            var visible = tabMatch && queryMatch;
+            var visible = tabMatch && kindMatch && queryMatch;
             card.classList.toggle("is-filter-hidden", !visible);
           });
         }
 
         tabButtons.forEach(function(btn) {
           btn.addEventListener("click", function() {
-            activeTab = btn.getAttribute("data-study-tab-filter");
+            activeTab = btn.getAttribute("data-collection-tab-filter");
             tabButtons.forEach(function(el) {
-              el.classList.toggle("is-active", el.getAttribute("data-study-tab-filter") === activeTab);
+              el.classList.toggle("is-active", el.getAttribute("data-collection-tab-filter") === activeTab);
+            });
+            applyFilters();
+          });
+        });
+
+        kindButtons.forEach(function(btn) {
+          btn.addEventListener("click", function() {
+            activeKind = btn.getAttribute("data-collection-kind-filter");
+            kindButtons.forEach(function(el) {
+              el.classList.toggle("is-active", el.getAttribute("data-collection-kind-filter") === activeKind);
             });
             applyFilters();
           });
@@ -213,4 +371,3 @@ layout: archive
     {% include documents-collection.html collection=page.collection sort_by=page.sort_by sort_order=page.sort_order type=entries_layout %}
   </div>
 {% endif %}
-
