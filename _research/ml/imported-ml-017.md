@@ -5,7 +5,7 @@ research_tab: "ML"
 research_kind: "Practice"
 source_title: "250901_코딩실습16_11.차원축소(PCA)"
 source_path: "11_Machine_Learning/Code_Snippets/250901_코딩실습16_11.차원축소(PCA).md"
-excerpt: "ML Practice 아카이브 엔트리입니다. 원본 실습 노트를 공개 research 섹션에서 구별하기 쉽게 정리한 카드입니다."
+excerpt: "사이킷런: https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_digits.html"
 tags:
   - research-archive
   - imported-note
@@ -13,24 +13,73 @@ tags:
   - practice
 ---
 
-## Archive Note
-
-이 글은 개인 실습 저장소에 있던 원본 노트를 `research` 컬렉션에서 구별해 보기 쉽게 정리한 아카이브 엔트리입니다.  
-대표 항목은 이후 별도 케이스 스터디로 확장하고, 현재 단계에서는 전체 실습 흐름을 빠르게 탐색할 수 있도록 메타데이터 중심으로 정리했습니다.
+## Snapshot
 
 | Item | Value |
 |------|-------|
 | Track | ML |
 | Type | Practice |
-| Source Title | `코딩실습16 11.차원축소(PCA)` |
-| Source Path | `11_Machine_Learning/Code_Snippets/250901_코딩실습16_11.차원축소(PCA).md` |
+| Source Files | `ipynb`, `md` |
+| Code Blocks | 11 |
+| Execution Cells | 10 |
+| Libraries | `sklearn`, `matplotlib` |
+| Source Note | `250901_코딩실습16_11.차원축소(PCA)` |
 
-## Source Glimpse
+## What I Worked On
 
-> 데이터 설명 / 64차원의 손글씨 데이터
+- 데이터 설명
+- 데이터 불러오기
+- 데이터 표준화
+- PCA전 시각화
+- 차원 축소
 
-## Notes
+## Implementation Flow
 
-- 원본 파일은 수업 실습, 스프린트 미션, 강사 공유, 샘플 코드 중 하나로 분류했습니다.
-- 현재 공개 블로그에서는 구분과 탐색을 우선하고, 의미 있는 항목부터 순차적으로 본문을 더 다듬을 예정입니다.
-- 같은 탭 안에서도 `type` 배지로 미션과 실습을 바로 구별할 수 있게 구성했습니다.
+1. 데이터 설명
+2. 데이터 불러오기
+3. 데이터 표준화
+4. PCA전 시각화
+5. 차원 축소
+6. PCA 후 시각화
+
+## Code Highlights
+
+### 데이터 설명
+
+```python
+from sklearn.datasets import load_digits                      # 손글씨 이미지 (64차원)
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
+import matplotlib.pyplot as plt
+```
+
+### 데이터 설명
+
+```python
+# 스크리플롯
+
+plt.figure(figsize=(12,4))
+plt.plot(
+        range(1, len(pca.explained_variance_ratio_)+1),        # X축
+        pca.explained_variance_,                               # Y축
+        marker='o', linestyle='--'
+        )
+plt.title("Scree plot")
+plt.grid(True)
+plt.show()
+```
+
+## Source Bundle
+
+- Source path: `11_Machine_Learning/Code_Snippets/250901_코딩실습16_11.차원축소(PCA).md`
+- Source formats: `ipynb`, `md`
+- Companion files: `250901_코딩실습16_11.차원축소(PCA).ipynb`, `250901_코딩실습16_11.차원축소(PCA).md`
+- Note type: `code-note`
+- Last updated in the source vault: `2026-03-08T03:33:14`
+- Related notes: `11_Machine_Learning_Code_Summary.md`
+- External references: `scikit-learn.org`, `localhost`
+
+## Note Preview
+
+> 64차원의 손글씨 데이터
+> 사이킷런: https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_digits.html

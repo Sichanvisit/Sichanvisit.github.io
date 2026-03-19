@@ -5,7 +5,7 @@ research_tab: "ML"
 research_kind: "Practice"
 source_title: "250827_코딩실습12_10.결정트리와 앙상블(AdaBoost)"
 source_path: "11_Machine_Learning/Code_Snippets/250827_코딩실습12_10.결정트리와 앙상블(AdaBoost).md"
-excerpt: "ML Practice 아카이브 엔트리입니다. 원본 실습 노트를 공개 research 섹션에서 구별하기 쉽게 정리한 카드입니다."
+excerpt: "ML Practice note with implementation details and archived source context."
 tags:
   - research-archive
   - imported-note
@@ -13,24 +13,77 @@ tags:
   - practice
 ---
 
-## Archive Note
-
-이 글은 개인 실습 저장소에 있던 원본 노트를 `research` 컬렉션에서 구별해 보기 쉽게 정리한 아카이브 엔트리입니다.  
-대표 항목은 이후 별도 케이스 스터디로 확장하고, 현재 단계에서는 전체 실습 흐름을 빠르게 탐색할 수 있도록 메타데이터 중심으로 정리했습니다.
+## Snapshot
 
 | Item | Value |
 |------|-------|
 | Track | ML |
 | Type | Practice |
-| Source Title | `코딩실습12 10.결정트리와 앙상블(AdaBoost)` |
-| Source Path | `11_Machine_Learning/Code_Snippets/250827_코딩실습12_10.결정트리와 앙상블(AdaBoost).md` |
+| Source Files | `ipynb`, `md` |
+| Code Blocks | 8 |
+| Execution Cells | 7 |
+| Libraries | `sklearn`, `matplotlib`, `numpy` |
+| Source Note | `250827_코딩실습12_10.결정트리와 앙상블(AdaBoost)` |
 
-## Source Glimpse
+## What I Worked On
 
-> 원본 노트는 현재 내용 미리보기를 제공하지 않습니다.
+- This archived note is categorized as `Practice` under `ML`.
 
-## Notes
+## Implementation Flow
 
-- 원본 파일은 수업 실습, 스프린트 미션, 강사 공유, 샘플 코드 중 하나로 분류했습니다.
-- 현재 공개 블로그에서는 구분과 탐색을 우선하고, 의미 있는 항목부터 순차적으로 본문을 더 다듬을 예정입니다.
-- 같은 탭 안에서도 `type` 배지로 미션과 실습을 바로 구별할 수 있게 구성했습니다.
+1. Review the archived source note.
+2. Inspect the main implementation blocks.
+3. Reuse the extracted approach in a full project page if needed.
+
+## Code Highlights
+
+### from sklearn.ensemble import AdaBoostClassifier
+
+```python
+from sklearn.ensemble import AdaBoostClassifier
+from sklearn.datasets import make_moons
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import accuracy_score
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.colors import ListedColormap           # 결정 경계 시각화 하기 위한 라이브러리
+```
+
+### def plot_decision_boundary(model, X, y, title="Decision Boundary")
+
+```python
+def plot_decision_boundary(model, X, y, title="Decision Boundary"):
+    cmap_light = ListedColormap(['#FFAAAA', '#AAAAFF'])
+    cmap_bold = ListedColormap(['#FF0000', '#0000FF'])
+
+    x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1
+    y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1
+    xx, yy = np.meshgrid(np.arange(x_min, x_max, 0.02),
+                         np.arange(y_min, y_max, 0.02))
+    Z = model.predict(np.c_[xx.ravel(), yy.ravel()])
+    Z = Z.reshape(xx.shape)
+
+    plt.figure(figsize=(8, 6))
+    plt.contourf(xx, yy, Z, cmap=cmap_light)
+    plt.scatter(X[:, 0], X[:, 1], c=y, cmap=cmap_bold, edgecolor='k', s=30)
+    plt.title(title)
+    plt.xlabel("Feature 1")
+    plt.ylabel("Feature 2")
+    plt.grid(True)
+    plt.show()
+```
+
+## Source Bundle
+
+- Source path: `11_Machine_Learning/Code_Snippets/250827_코딩실습12_10.결정트리와 앙상블(AdaBoost).md`
+- Source formats: `ipynb`, `md`
+- Companion files: `250827_코딩실습12_10.결정트리와 앙상블(AdaBoost).ipynb`, `250827_코딩실습12_10.결정트리와 앙상블(AdaBoost).md`
+- Note type: `code-note`
+- Last updated in the source vault: `2026-03-08T03:33:14`
+- Related notes: `11_Machine_Learning_Code_Summary.md`
+- External references: `localhost`
+
+## Note Preview
+
+> No prose preview was available in the source note.

@@ -5,7 +5,7 @@ research_tab: "ML"
 research_kind: "Practice"
 source_title: "250821_코딩실습7_9.기본 지도학습 알고리즘들 (Lasso, Ridge)"
 source_path: "11_Machine_Learning/Code_Snippets/250821_코딩실습7_9.기본 지도학습 알고리즘들 (Lasso, Ridge).md"
-excerpt: "ML Practice 아카이브 엔트리입니다. 원본 실습 노트를 공개 research 섹션에서 구별하기 쉽게 정리한 카드입니다."
+excerpt: "ML Practice: 데이터 불러오기, 위와 같은 코드, 테스트 데이터 트레이닝 데이터 분할"
 tags:
   - research-archive
   - imported-note
@@ -13,24 +13,62 @@ tags:
   - practice
 ---
 
-## Archive Note
-
-이 글은 개인 실습 저장소에 있던 원본 노트를 `research` 컬렉션에서 구별해 보기 쉽게 정리한 아카이브 엔트리입니다.  
-대표 항목은 이후 별도 케이스 스터디로 확장하고, 현재 단계에서는 전체 실습 흐름을 빠르게 탐색할 수 있도록 메타데이터 중심으로 정리했습니다.
+## Snapshot
 
 | Item | Value |
 |------|-------|
 | Track | ML |
 | Type | Practice |
-| Source Title | `코딩실습7 9.기본 지도학습 알고리즘들 (Lasso, Ridge)` |
-| Source Path | `11_Machine_Learning/Code_Snippets/250821_코딩실습7_9.기본 지도학습 알고리즘들 (Lasso, Ridge).md` |
+| Source Files | `ipynb`, `md` |
+| Code Blocks | 19 |
+| Execution Cells | 18 |
+| Libraries | `sklearn` |
+| Source Note | `250821_코딩실습7_9.기본 지도학습 알고리즘들 (Lasso, Ridge)` |
 
-## Source Glimpse
+## What I Worked On
 
-> 원본 노트는 현재 내용 미리보기를 제공하지 않습니다.
+- 데이터 불러오기
+- 위와 같은 코드
+- 테스트 데이터 트레이닝 데이터 분할
+- 모델링
+- 릿지 회귀 모델링
 
-## Notes
+## Implementation Flow
 
-- 원본 파일은 수업 실습, 스프린트 미션, 강사 공유, 샘플 코드 중 하나로 분류했습니다.
-- 현재 공개 블로그에서는 구분과 탐색을 우선하고, 의미 있는 항목부터 순차적으로 본문을 더 다듬을 예정입니다.
-- 같은 탭 안에서도 `type` 배지로 미션과 실습을 바로 구별할 수 있게 구성했습니다.
+1. 데이터 불러오기
+2. 위와 같은 코드
+3. 테스트 데이터 트레이닝 데이터 분할
+4. 모델링
+5. 릿지 회귀 모델링
+
+## Code Highlights
+
+### 테스트 데이터 트레이닝 데이터 분할
+
+```python
+# 테스트 데이터 트레이닝 데이터 분할
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3, random_state=42)
+```
+
+### 모델링
+
+```python
+# 모델링
+model_lr = LinearRegression()
+model_lr.fit(X_train, y_train)
+```
+
+## Source Bundle
+
+- Source path: `11_Machine_Learning/Code_Snippets/250821_코딩실습7_9.기본 지도학습 알고리즘들 (Lasso, Ridge).md`
+- Source formats: `ipynb`, `md`
+- Companion files: `250821_코딩실습7_9.기본 지도학습 알고리즘들 (Lasso, Ridge).ipynb`, `250821_코딩실습7_9.기본 지도학습 알고리즘들 (Lasso, Ridge).md`
+- Note type: `code-note`
+- Last updated in the source vault: `2026-03-08T03:33:14`
+- Related notes: `11_Machine_Learning_Code_Summary.md`
+- External references: `localhost`
+
+## Note Preview
+
+> No prose preview was available in the source note.

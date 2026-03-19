@@ -5,7 +5,7 @@ research_tab: "ML"
 research_kind: "Practice"
 source_title: "250822_코딩실습9_9.기본 지도학습 알고리즘들 (K-fold & 그리드서치)"
 source_path: "11_Machine_Learning/Code_Snippets/250822_코딩실습9_9.기본 지도학습 알고리즘들 (K-fold & 그리드서치).md"
-excerpt: "ML Practice 아카이브 엔트리입니다. 원본 실습 노트를 공개 research 섹션에서 구별하기 쉽게 정리한 카드입니다."
+excerpt: "https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_california_housing.html"
 tags:
   - research-archive
   - imported-note
@@ -13,24 +13,68 @@ tags:
   - practice
 ---
 
-## Archive Note
-
-이 글은 개인 실습 저장소에 있던 원본 노트를 `research` 컬렉션에서 구별해 보기 쉽게 정리한 아카이브 엔트리입니다.  
-대표 항목은 이후 별도 케이스 스터디로 확장하고, 현재 단계에서는 전체 실습 흐름을 빠르게 탐색할 수 있도록 메타데이터 중심으로 정리했습니다.
+## Snapshot
 
 | Item | Value |
 |------|-------|
 | Track | ML |
 | Type | Practice |
-| Source Title | `코딩실습9 9.기본 지도학습 알고리즘들 (K-fold & 그리드서치)` |
-| Source Path | `11_Machine_Learning/Code_Snippets/250822_코딩실습9_9.기본 지도학습 알고리즘들 (K-fold & 그리드서치).md` |
+| Source Files | `ipynb`, `md` |
+| Code Blocks | 7 |
+| Execution Cells | 6 |
+| Libraries | `sklearn`, `numpy` |
+| Source Note | `250822_코딩실습9_9.기본 지도학습 알고리즘들 (K-fold & 그리드서치)` |
 
-## Source Glimpse
+## What I Worked On
 
-> 1990년 캘리포니아 주택 데이터 / https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_california_housing.html
+- 1990년 캘리포니아 주택 데이터
+- 데이터 로드
+- RMSE 함수 정의
+- 파라미터 그리드 정의
+- 그리드 서치 설정 및 학습
 
-## Notes
+## Implementation Flow
 
-- 원본 파일은 수업 실습, 스프린트 미션, 강사 공유, 샘플 코드 중 하나로 분류했습니다.
-- 현재 공개 블로그에서는 구분과 탐색을 우선하고, 의미 있는 항목부터 순차적으로 본문을 더 다듬을 예정입니다.
-- 같은 탭 안에서도 `type` 배지로 미션과 실습을 바로 구별할 수 있게 구성했습니다.
+1. 1990년 캘리포니아 주택 데이터
+2. 데이터 로드
+3. RMSE 함수 정의
+4. 파라미터 그리드 정의
+5. 그리드 서치 설정 및 학습
+6. 결과 출력
+
+## Code Highlights
+
+### from sklearn.datasets import fetch_california_housing
+
+```python
+from sklearn.datasets import fetch_california_housing
+from sklearn.linear_model import Ridge
+from sklearn.model_selection import GridSearchCV
+from sklearn.metrics import mean_squared_error, make_scorer
+import numpy as np
+```
+
+### 1990년 캘리포니아 주택 데이터
+
+```python
+# RMSE 함수 정의
+def rmse(y_true, y_pred):
+    return np.sqrt(mean_squared_error(y_true, y_pred))
+
+rmse_scorer = make_scorer(rmse, greater_is_better=False)
+```
+
+## Source Bundle
+
+- Source path: `11_Machine_Learning/Code_Snippets/250822_코딩실습9_9.기본 지도학습 알고리즘들 (K-fold & 그리드서치).md`
+- Source formats: `ipynb`, `md`
+- Companion files: `250822_코딩실습9_9.기본 지도학습 알고리즘들 (K-fold & 그리드서치).ipynb`, `250822_코딩실습9_9.기본 지도학습 알고리즘들 (K-fold & 그리드서치).md`
+- Note type: `code-note`
+- Last updated in the source vault: `2026-03-08T03:33:14`
+- Related notes: `11_Machine_Learning_Code_Summary.md`
+- External references: `scikit-learn.org`, `localhost`
+
+## Note Preview
+
+> https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_california_housing.html
+> / 항목 / 내용 / / --------- / ---------------------------------------------------------------------------- / / 데이터 크기 / 총 20,640개의 샘플 / / 입력 특성 (X) / 8개의 수치형 변수 / / 타겟 (y) / 1인당 평균 주택 가격 (단위: 100,000 달러) / / 사용 목적 / **회귀 문제** (주택 가격 예측 등) / / 출처 / UCI Machine Learning Repository (California Housing Dataset, 1996 Census 기반) /

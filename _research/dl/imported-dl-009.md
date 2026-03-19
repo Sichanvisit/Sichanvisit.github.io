@@ -2,35 +2,119 @@
 title: "PyTorch 데이터"
 date: 2026-03-08
 research_tab: "DL"
-research_kind: "Practice"
+research_kind: "Archive Note"
 source_title: "(실습)PyTorch_데이터"
 source_path: "12_Deep_Learning/Code_Snippets/(실습)PyTorch_데이터.md"
-excerpt: "DL Practice 아카이브 엔트리입니다. 원본 실습 노트를 공개 research 섹션에서 구별하기 쉽게 정리한 카드입니다."
+excerpt: "scikit-learn에서 California Housing 데이터셋을 불러온 뒤, 입력은 input_data에 저장하고 타깃은 target_data에 저장하세요.이때 input_data와 target_data 모두 데이터 타입은 float32로 지정해주세요."
 tags:
   - research-archive
   - imported-note
   - dl
-  - practice
+  - archive-note
 ---
 
-## Archive Note
-
-이 글은 개인 실습 저장소에 있던 원본 노트를 `research` 컬렉션에서 구별해 보기 쉽게 정리한 아카이브 엔트리입니다.  
-대표 항목은 이후 별도 케이스 스터디로 확장하고, 현재 단계에서는 전체 실습 흐름을 빠르게 탐색할 수 있도록 메타데이터 중심으로 정리했습니다.
+## Snapshot
 
 | Item | Value |
 |------|-------|
 | Track | DL |
-| Type | Practice |
-| Source Title | `PyTorch 데이터` |
-| Source Path | `12_Deep_Learning/Code_Snippets/(실습)PyTorch_데이터.md` |
+| Type | Archive Note |
+| Source Files | `md` |
+| Code Blocks | 58 |
+| Execution Cells | 54 |
+| Libraries | `torch`, `numpy`, `pandas`, `PIL`, `glob`, `matplotlib`, `sklearn` |
+| Source Note | `(실습)PyTorch_데이터` |
 
-## Source Glimpse
+## What I Worked On
 
-> CSV 데이터 활용 / 이미지 데이터 활용
+- CSV 데이터 활용
+- 이미지 데이터 활용
+- 실습
+- data 분할
+- 데이터를 학습, 검증, 테스트 데이터로 나누기
 
-## Notes
+## Implementation Flow
 
-- 원본 파일은 수업 실습, 스프린트 미션, 강사 공유, 샘플 코드 중 하나로 분류했습니다.
-- 현재 공개 블로그에서는 구분과 탐색을 우선하고, 의미 있는 항목부터 순차적으로 본문을 더 다듬을 예정입니다.
-- 같은 탭 안에서도 `type` 배지로 미션과 실습을 바로 구별할 수 있게 구성했습니다.
+1. CSV 데이터 활용
+2. 이미지 데이터 활용
+3. 실습
+4. data 분할
+5. 데이터를 학습, 검증, 테스트 데이터로 나누기
+6. 표준화
+
+## Code Highlights
+
+### data 분할
+
+```python
+abalone_df = pd.read_csv(
+    'https://storage.googleapis.com/download.tensorflow.org/data/abalone_train.csv',
+    names=['Length', 'Diameter', 'Height', 'Whole weight', 'Shucked weight',
+           'Viscera weight', 'Shell weight', 'Age']
+)
+
+input_data = abalone_df.drop(columns=['Age']).to_numpy().astype(np.float32)
+target_data = abalone_df['Age'].to_numpy().astype(np.float32)
+
+class AbaloneDataset(Dataset):
+    def __init__(self, input_data, target_data):
+        self.input_data = input_data
+        self.target_data = target_data
+
+    def __len__(self):
+        return len(self.input_data)
+
+    def __getitem__(self, index):
+        input_tensor = torch.tensor(self.input_data[index])
+        target_tensor = torch.tensor(self.target_data[index])
+        return input_tensor, target_tensor
+```
+
+### 표준화
+
+```python
+from sklearn.preprocessing import StandardScaler
+import torch
+from torch.utils.data import Dataset
+
+# 데이터셋 클래스 정의
+class AbaloneDataset(Dataset):
+    def __init__(self, inputs, targets, scaler=None):
+        """
+        초기화 메서드
+        :param inputs: 원본 입력 데이터 (numpy 배열)
+        :param targets: 레이블 데이터 (numpy 배열)
+        :param scaler: Scikit-learn의 StandardScaler 객체 (선택사항)
+        """
+        self.original_inputs = inputs  # 복원을 위해 원본 데이터 저장
+        self.targets = targets
+        self.scaler = scaler
+
+        self.inputs = self.scale_transform(inputs)
+        # # 데이터 표준화 수행
+        # if self.scaler:
+        #     self.inputs = self.scaler.transform(inputs)
+        # else:
+        #     self.inputs = inputs
+
+    def __len__(self):
+        return len(self.inputs)
+
+    def __getitem__(self, index):
+# ... trimmed ...
+```
+
+## Source Bundle
+
+- Source path: `12_Deep_Learning/Code_Snippets/(실습)PyTorch_데이터.md`
+- Source formats: `md`
+- Companion files: `(실습)PyTorch_데이터.md`
+- Note type: `code-note`
+- Last updated in the source vault: `2026-03-08T03:33:14`
+- Related notes: `12_Deep_Learning_Code_Summary.md`
+- External references: `localhost`, `storage.googleapis.com`
+
+## Note Preview
+
+> scikit-learn에서 California Housing 데이터셋을 불러온 뒤, 입력은 input_data에 저장하고 타깃은 target_data에 저장하세요.이때 input_data와 target_data 모두 데이터 타입은 float32로 지정해주세요.
+> California Housing 데이터셋의 입력과 타깃을 짝지어 관리하는 커스텀 Dataset 클래스 CaliforniaHousingDataset을 정의해 주세요.

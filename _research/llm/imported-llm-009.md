@@ -2,35 +2,126 @@
 title: "Seq2Seq Attention Transformer"
 date: 2026-03-08
 research_tab: "LLM"
-research_kind: "Practice"
+research_kind: "Archive Note"
 source_title: "3-2 (실습)Seq2Seq_Attention_Transformer"
 source_path: "13_LLM_GenAI/Code_Snippets/3-2 (실습)Seq2Seq_Attention_Transformer.md"
-excerpt: "LLM Practice 아카이브 엔트리입니다. 원본 실습 노트를 공개 research 섹션에서 구별하기 쉽게 정리한 카드입니다."
+excerpt: "LLM Archive Note: 데이터 전처리, Seq2Seq, Attention"
 tags:
   - research-archive
   - imported-note
   - llm
-  - practice
+  - archive-note
 ---
 
-## Archive Note
-
-이 글은 개인 실습 저장소에 있던 원본 노트를 `research` 컬렉션에서 구별해 보기 쉽게 정리한 아카이브 엔트리입니다.  
-대표 항목은 이후 별도 케이스 스터디로 확장하고, 현재 단계에서는 전체 실습 흐름을 빠르게 탐색할 수 있도록 메타데이터 중심으로 정리했습니다.
+## Snapshot
 
 | Item | Value |
 |------|-------|
 | Track | LLM |
-| Type | Practice |
-| Source Title | `Seq2Seq Attention Transformer` |
-| Source Path | `13_LLM_GenAI/Code_Snippets/3-2 (실습)Seq2Seq_Attention_Transformer.md` |
+| Type | Archive Note |
+| Source Files | `md` |
+| Code Blocks | 15 |
+| Execution Cells | 9 |
+| Libraries | `kagglehub`, `pandas`, `torch`, `sklearn`, `random` |
+| Source Note | `3-2 (실습)Seq2Seq_Attention_Transformer` |
 
-## Source Glimpse
+## What I Worked On
 
-> 데이터 전처리 / Seq2Seq
+- Download latest version
+- Reviews.csv 파일에서 'Text'와 'Summary' 컬럼을 50000줄만 불러오기
+- 데이터의 일부 확인
+- 데이터 전처리
+- Reviews.csv 파일에서 "Text"와 "Summary" 컬럼 추출하여 리스트로 변환
 
-## Notes
+## Implementation Flow
 
-- 원본 파일은 수업 실습, 스프린트 미션, 강사 공유, 샘플 코드 중 하나로 분류했습니다.
-- 현재 공개 블로그에서는 구분과 탐색을 우선하고, 의미 있는 항목부터 순차적으로 본문을 더 다듬을 예정입니다.
-- 같은 탭 안에서도 `type` 배지로 미션과 실습을 바로 구별할 수 있게 구성했습니다.
+1. Download latest version
+2. Reviews.csv 파일에서 'Text'와 'Summary' 컬럼을 50000줄만 불러오기
+3. 데이터의 일부 확인
+4. 데이터 전처리
+5. Reviews.csv 파일에서 "Text"와 "Summary" 컬럼 추출하여 리스트로 변환
+6. 하이퍼파라미터 및 전역 변수 정의
+
+## Code Highlights
+
+### 데이터 전처리
+
+```python
+import torch
+from torch.utils.data import TensorDataset, DataLoader, RandomSampler
+from sklearn.model_selection import train_test_split
+
+# 하이퍼파라미터 및 전역 변수 정의
+MAX_LENGTH = 100  # 최대 시퀀스 길이 (원문과 요약 모두에 적용)
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+# 특수 토큰 정의 (텍스트 요약에서는 target에 SOS, EOS가 필요)
+SOS_token = 0
+EOS_token = 1
+PAD_token = 2
+UNK_token = 3
+
+# Lang 클래스 (특수 토큰을 미리 등록)
+class Lang:
+    def __init__(self, name):
+        self.name = name
+        # 초기에는 PAD, SOS, EOS, UNK 토큰을 미리 등록 (단어 → 인덱스)
+        self.word2index = {"PAD": PAD_token, "SOS": SOS_token, "EOS": EOS_token, "<unk>": UNK_token}
+        self.index2word = {PAD_token: "PAD", SOS_token: "SOS", EOS_token: "EOS", UNK_token: "<unk>"}
+        self.word2count = {}
+        self.n_words = 4  # PAD, SOS, EOS, UNK 포함
+
+    def addSentence(self, sentence, tokenizer):
+        for word in tokenizer(sentence):
+            self.addWord(word)
+
+# ... trimmed ...
+```
+
+### Transformer
+
+```python
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+
+# 포지셔널 인코딩 정의 (단어 위치 정보 반영)
+class PositionalEncoding(nn.Module):
+    def __init__(self, d_model, max_len=5000):
+        super().__init__()
+        pe = torch.zeros(max_len, d_model)
+        position = torch.arange(0, max_len).unsqueeze(1)
+        div_term = torch.exp(torch.arange(0, d_model, 2) * (-torch.log(torch.tensor(10000.0)) / d_model))
+        pe[:, 0::2] = torch.sin(position * div_term)
+        pe[:, 1::2] = torch.cos(position * div_term)
+        self.register_buffer('pe', pe.unsqueeze(0))
+
+    def forward(self, x):
+        return x + self.pe[:, :x.size(1)]
+
+# 인코더 정의
+class TransformerEncoder(nn.Module):
+    def __init__(self, vocab_size, emb_size, n_heads, ff_dim, num_layers, dropout=0.1):
+        super().__init__()
+        self.embedding = nn.Embedding(vocab_size, emb_size, padding_idx=PAD_token)
+        self.pos_encoding = PositionalEncoding(emb_size)
+        encoder_layer = nn.TransformerEncoderLayer(d_model=emb_size, nhead=n_heads, dim_feedforward=ff_dim, dropout=dropout, batch_first=True)
+        self.encoder = nn.TransformerEncoder(encoder_layer, num_layers=num_layers)
+        self.hidden_size = emb_size
+
+# ... trimmed ...
+```
+
+## Source Bundle
+
+- Source path: `13_LLM_GenAI/Code_Snippets/3-2 (실습)Seq2Seq_Attention_Transformer.md`
+- Source formats: `md`
+- Companion files: `3-2 (실습)Seq2Seq_Attention_Transformer.md`
+- Note type: `code-note`
+- Last updated in the source vault: `2026-03-08T03:33:14`
+- Related notes: `13_LLM_code_Roadmap.md`, `13_LLM_GenAI_Code_Summary.md`
+- External references: `localhost`
+
+## Note Preview
+
+> No prose preview was available in the source note.

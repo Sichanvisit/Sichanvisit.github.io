@@ -5,7 +5,7 @@ research_tab: "ML"
 research_kind: "Practice"
 source_title: "250812_코드실습3_4.데이터사이언스 Toolkit"
 source_path: "11_Machine_Learning/Code_Snippets/250812_코드실습3_4.데이터사이언스 Toolkit.md"
-excerpt: "ML Practice 아카이브 엔트리입니다. 원본 실습 노트를 공개 research 섹션에서 구별하기 쉽게 정리한 카드입니다."
+excerpt: "- 파이썬 기초 문법 - 마크다운 정리법 - 데이터 시각화 - AI 엔지니어링"
 tags:
   - research-archive
   - imported-note
@@ -13,24 +13,98 @@ tags:
   - practice
 ---
 
-## Archive Note
-
-이 글은 개인 실습 저장소에 있던 원본 노트를 `research` 컬렉션에서 구별해 보기 쉽게 정리한 아카이브 엔트리입니다.  
-대표 항목은 이후 별도 케이스 스터디로 확장하고, 현재 단계에서는 전체 실습 흐름을 빠르게 탐색할 수 있도록 메타데이터 중심으로 정리했습니다.
+## Snapshot
 
 | Item | Value |
 |------|-------|
 | Track | ML |
 | Type | Practice |
-| Source Title | `코드실습3 4.데이터사이언스 Toolkit` |
-| Source Path | `11_Machine_Learning/Code_Snippets/250812_코드실습3_4.데이터사이언스 Toolkit.md` |
+| Source Files | `ipynb`, `md` |
+| Code Blocks | 60 |
+| Execution Cells | 59 |
+| Libraries | `numpy`, `google`, `pandas`, `matplotlib`, `warnings` |
+| Source Note | `250812_코드실습3_4.데이터사이언스 Toolkit` |
 
-## Source Glimpse
+## What I Worked On
 
-> 1. 마크다운 실습 / **자기소개 마크다운 미션**
+- 1. 마크다운 실습
+- **자기소개 마크다운 미션**
+- 이름
+- 요즘 배우는 것
+- 나의 목표
 
-## Notes
+## Implementation Flow
 
-- 원본 파일은 수업 실습, 스프린트 미션, 강사 공유, 샘플 코드 중 하나로 분류했습니다.
-- 현재 공개 블로그에서는 구분과 탐색을 우선하고, 의미 있는 항목부터 순차적으로 본문을 더 다듬을 예정입니다.
-- 같은 탭 안에서도 `type` 배지로 미션과 실습을 바로 구별할 수 있게 구성했습니다.
+1. 1. 마크다운 실습
+2. **자기소개 마크다운 미션**
+3. 이름
+4. 요즘 배우는 것
+5. 나의 목표
+6. 2. Numpy 실습
+
+## Code Highlights
+
+### 4. matplotlib 실습
+
+```python
+labels = ['A', 'B', 'C', 'D']
+sizes = [25, 30, 20, 25]
+colors = ['#ff9999', '#66b3ff', '#99ff99', '#ffcc99']
+explode = (0, 0.1, 0, 0)
+
+plt.figure(figsize=(4,4))
+plt.pie(
+    sizes,
+    labels = labels,
+    colors = colors,
+    autopct='%1.1f%%',              # 파이 조각 위에 "퍼센트" 보여주기
+    startangle=90,                  # 시작 각도 조절
+    explode=explode,                # 특정 조각 강조
+    shadow=True,                    # 그림자 효과
+    counterclock=False              # 시계 방향으로 돌려 보기
+)
+plt.title('커스터 마이징된 파이차트', fontsize=30, fontweight='bold')
+plt.tight_layout()                  # 그래프 겹쳐보이기 금지
+plt.show()
+```
+
+### 4. matplotlib 실습
+
+```python
+# 실습3 - 여러 그래프 시각화
+
+plt.figure(figsize=(15, 4))
+
+# 1. 키 분포
+plt.subplot(1, 3, 1)
+plt.hist(df['height'], bins=20)
+plt.title("키 히스토그램")
+
+# 2. 몸무게 분포
+plt.subplot(1, 3, 2)
+plt.hist(df['weight'], bins=20, color='gray')
+plt.title("몸무게 히스토그램")
+
+# 3. 산점도
+plt.subplot(1, 3, 3)
+plt.scatter(df['height'], df['weight'], alpha=0.6)
+plt.title("키와 몸무게 산점도")
+
+plt.tight_layout()
+plt.show()
+```
+
+## Source Bundle
+
+- Source path: `11_Machine_Learning/Code_Snippets/250812_코드실습3_4.데이터사이언스 Toolkit.md`
+- Source formats: `ipynb`, `md`
+- Companion files: `250812_코드실습3_4.데이터사이언스 Toolkit.ipynb`, `250812_코드실습3_4.데이터사이언스 Toolkit.md`
+- Note type: `code-note`
+- Last updated in the source vault: `2026-03-08T03:33:14`
+- Related notes: `11_Machine_Learning_Code_Summary.md`
+- External references: `localhost`
+
+## Note Preview
+
+> 조하나
+> - 파이썬 기초 문법 - 마크다운 정리법 - 데이터 시각화 - AI 엔지니어링

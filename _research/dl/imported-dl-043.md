@@ -5,7 +5,7 @@ research_tab: "DL"
 research_kind: "Sample Code"
 source_title: "AutoEncoder_samplecode"
 source_path: "12_Deep_Learning/Code_Snippets/AutoEncoder_samplecode.md"
-excerpt: "DL Sample Code 아카이브 엔트리입니다. 원본 실습 노트를 공개 research 섹션에서 구별하기 쉽게 정리한 카드입니다."
+excerpt: "DL Sample Code: Encoder : Dense(784 -> 128), Dense(128 -> 64), Dense(64 -> 32), Decoder : Dense(32 -> 64), Dense(64 -> 128), Dense(128 -> 784), mod..."
 tags:
   - research-archive
   - imported-note
@@ -13,24 +13,107 @@ tags:
   - sample-code
 ---
 
-## Archive Note
-
-이 글은 개인 실습 저장소에 있던 원본 노트를 `research` 컬렉션에서 구별해 보기 쉽게 정리한 아카이브 엔트리입니다.  
-대표 항목은 이후 별도 케이스 스터디로 확장하고, 현재 단계에서는 전체 실습 흐름을 빠르게 탐색할 수 있도록 메타데이터 중심으로 정리했습니다.
+## Snapshot
 
 | Item | Value |
 |------|-------|
 | Track | DL |
 | Type | Sample Code |
-| Source Title | `AutoEncoder samplecode` |
-| Source Path | `12_Deep_Learning/Code_Snippets/AutoEncoder_samplecode.md` |
+| Source Files | `md` |
+| Code Blocks | 10 |
+| Execution Cells | 10 |
+| Libraries | `torch`, `torchvision`, `matplotlib`, `numpy` |
+| Source Note | `AutoEncoder_samplecode` |
 
-## Source Glimpse
+## What I Worked On
+
+- Encoder : Dense(784 -> 128), Dense(128 -> 64), Dense(64 -> 32)
+- Decoder : Dense(32 -> 64), Dense(64 -> 128), Dense(128 -> 784)
+- model = AE()
+- Training
+- images_flat = images.view(images.size(0), -1)
+
+## Implementation Flow
+
+1. Encoder : Dense(784 -> 128), Dense(128 -> 64), Dense(64 -> 32)
+2. Decoder : Dense(32 -> 64), Dense(64 -> 128), Dense(128 -> 784)
+3. model = AE()
+4. Training
+5. images_flat = images.view(images.size(0), -1)
+6. recon_images_flat, encoded = model(images.to(device))
+
+## Code Highlights
+
+### Encoder : Dense(784 -> 128), Dense(128 -> 64), Dense(64 -> 32)
+
+```python
+# Encoder : Dense(784 -> 128), Dense(128 -> 64), Dense(64 -> 32)
+# Decoder : Dense(32 -> 64), Dense(64 -> 128), Dense(128 -> 784)
+
+class AE(nn.Module):
+    def __init__(self):
+        super(AE, self).__init__()
+        # Encoder
+        self.encoder = nn.Sequential(
+            nn.Linear(784, 128),
+            nn.ReLU(),
+            nn.Linear(128, 64),
+            nn.ReLU(),
+            nn.Linear(64, 32)
+        )
+        # Decoder
+        self.decoder = nn.Sequential(
+            nn.Linear(32, 64),
+            nn.ReLU(),
+            nn.Linear(64, 128),
+            nn.ReLU(),
+            nn.Linear(128, 784)
+        )
+    def forward(self, x):
+        encoded = self.encoder(x)
+        decoded = self.decoder(encoded)
+
+        return decoded, encoded
+```
+
+### class CNNAE(nn.Module)
+
+```python
+class CNNAE(nn.Module):
+    def __init__(self):
+        super(CNNAE, self).__init__()
+        #Encoder
+        self.encoder = nn.Sequential(
+            nn.Conv2d(1, 16, kernel_size=3, padding=1),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            nn.Conv2d(16, 32, kernel_size=3, padding=1),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+        )
+        #Decoder
+        self.decoder = nn.Sequential(
+            nn.ConvTranspose2d(32, 16, kernel_size=2, stride=2),
+            nn.ReLU(),
+            nn.ConvTranspose2d(16, 1, kernel_size=2, stride=2),
+            nn.Sigmoid()
+        )
+    def forward(self, x):
+        encoded = self.encoder(x)
+        decoded = self.decoder(encoded)
+        return decoded, encoded
+```
+
+## Source Bundle
+
+- Source path: `12_Deep_Learning/Code_Snippets/AutoEncoder_samplecode.md`
+- Source formats: `md`
+- Companion files: `AutoEncoder_samplecode.md`
+- Note type: `code-note`
+- Last updated in the source vault: `2026-03-08T03:33:14`
+- Related notes: `12_Deep_Learning_Code_Summary.md`
+- External references: `localhost`
+
+## Note Preview
 
 > -
-
-## Notes
-
-- 원본 파일은 수업 실습, 스프린트 미션, 강사 공유, 샘플 코드 중 하나로 분류했습니다.
-- 현재 공개 블로그에서는 구분과 탐색을 우선하고, 의미 있는 항목부터 순차적으로 본문을 더 다듬을 예정입니다.
-- 같은 탭 안에서도 `type` 배지로 미션과 실습을 바로 구별할 수 있게 구성했습니다.

@@ -5,7 +5,7 @@ research_tab: "DL"
 research_kind: "Mission"
 source_title: "Mission_5_강사공유"
 source_path: "12_Deep_Learning/Code_Snippets/Mission_5_강사공유.md"
-excerpt: "DL Mission 아카이브 엔트리입니다. 원본 실습 노트를 공개 research 섹션에서 구별하기 쉽게 정리한 카드입니다."
+excerpt: "- 파일 위치 주소 관련 : os - torch : torch, torch.nn, torch.optim. torch.nn.functional - torch.utils.data : Dataset, DataLoader, random_split - torchvision..."
 tags:
   - research-archive
   - imported-note
@@ -13,24 +13,92 @@ tags:
   - mission
 ---
 
-## Archive Note
-
-이 글은 개인 실습 저장소에 있던 원본 노트를 `research` 컬렉션에서 구별해 보기 쉽게 정리한 아카이브 엔트리입니다.  
-대표 항목은 이후 별도 케이스 스터디로 확장하고, 현재 단계에서는 전체 실습 흐름을 빠르게 탐색할 수 있도록 메타데이터 중심으로 정리했습니다.
+## Snapshot
 
 | Item | Value |
 |------|-------|
 | Track | DL |
 | Type | Mission |
-| Source Title | `Mission 5 강사공유` |
-| Source Path | `12_Deep_Learning/Code_Snippets/Mission_5_강사공유.md` |
+| Source Files | `md` |
+| Code Blocks | 44 |
+| Execution Cells | 12 |
+| Libraries | `os`, `torch`, `numpy`, `cv2`, `matplotlib`, `math`, `torchvision`, `PIL` |
+| Source Note | `Mission_5_강사공유` |
 
-## Source Glimpse
+## What I Worked On
 
-> 사전처리 / import 추가
+- 사전처리
+- import 추가
+- device 설정
+- 데이터 처리
+- 데이터 설정
 
-## Notes
+## Implementation Flow
 
-- 원본 파일은 수업 실습, 스프린트 미션, 강사 공유, 샘플 코드 중 하나로 분류했습니다.
-- 현재 공개 블로그에서는 구분과 탐색을 우선하고, 의미 있는 항목부터 순차적으로 본문을 더 다듬을 예정입니다.
-- 같은 탭 안에서도 `type` 배지로 미션과 실습을 바로 구별할 수 있게 구성했습니다.
+1. 사전처리
+2. import 추가
+3. device 설정
+4. 데이터 처리
+5. 데이터 설정
+6. 데이터 셋 길이와 샘플 출력
+
+## Code Highlights
+
+### import 추가
+
+```python
+import os
+import torch
+import torch.nn as nn
+import torch.optim as optim
+import numpy as np
+import cv2
+import matplotlib.pyplot as plt
+import math
+import torchvision.transforms.functional as TF
+import torch.nn.functional as F
+
+from PIL import Image, ImageEnhance, ImageFilter
+from torch.utils.data import Dataset, DataLoader, random_split
+from torchvision import transforms
+from torchvision.transforms import v2
+from glob import glob
+```
+
+### DataSet Class
+
+```python
+class Dataset(Dataset):
+  def __init__(self, files, transform=None):
+    self.files = files
+    self.transform = transform
+
+  def __len__(self):
+    return len(self.files)
+
+  def __getitem__(self, idx):
+    data_path = os.path.join(self.files[idx])
+    img = Image.open(data_path)
+    clean_path = data_path.replace("train", "train_cleaned")
+    clean_img = Image.open(clean_path)
+
+    if self.transform:
+        img, clean_img = self.transform(img, clean_img)
+
+    return img.to(device), clean_img.to(device)
+```
+
+## Source Bundle
+
+- Source path: `12_Deep_Learning/Code_Snippets/Mission_5_강사공유.md`
+- Source formats: `md`
+- Companion files: `Mission_5_강사공유.md`
+- Note type: `code-note`
+- Last updated in the source vault: `2026-03-08T03:33:14`
+- Related notes: `axes`, `12_Deep_Learning_Code_Summary.md`
+- External references: `localhost`
+
+## Note Preview
+
+> - 파일 위치 주소 관련 : os - torch : torch, torch.nn, torch.optim. torch.nn.functional - torch.utils.data : Dataset, DataLoader, random_split - torchvision : torchvision.transform, v2
+> * CUDA gpu가 있는 경우 cuda로 디바이스 설정 * mac - Apple 실리콘의 gpu 사용을 위해 mps 설정추가

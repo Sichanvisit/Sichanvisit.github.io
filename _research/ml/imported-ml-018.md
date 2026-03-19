@@ -5,7 +5,7 @@ research_tab: "ML"
 research_kind: "Practice"
 source_title: "250901_코딩실습17_11.차원축소(KMeans+PCA)"
 source_path: "11_Machine_Learning/Code_Snippets/250901_코딩실습17_11.차원축소(KMeans+PCA).md"
-excerpt: "ML Practice 아카이브 엔트리입니다. 원본 실습 노트를 공개 research 섹션에서 구별하기 쉽게 정리한 카드입니다."
+excerpt: "=> K=3일때 실루엣 스코어가 가장 높다!"
 tags:
   - research-archive
   - imported-note
@@ -13,24 +13,80 @@ tags:
   - practice
 ---
 
-## Archive Note
-
-이 글은 개인 실습 저장소에 있던 원본 노트를 `research` 컬렉션에서 구별해 보기 쉽게 정리한 아카이브 엔트리입니다.  
-대표 항목은 이후 별도 케이스 스터디로 확장하고, 현재 단계에서는 전체 실습 흐름을 빠르게 탐색할 수 있도록 메타데이터 중심으로 정리했습니다.
+## Snapshot
 
 | Item | Value |
 |------|-------|
 | Track | ML |
 | Type | Practice |
-| Source Title | `코딩실습17 11.차원축소(KMeans+PCA)` |
-| Source Path | `11_Machine_Learning/Code_Snippets/250901_코딩실습17_11.차원축소(KMeans+PCA).md` |
+| Source Files | `ipynb`, `md` |
+| Code Blocks | 12 |
+| Execution Cells | 11 |
+| Libraries | `sklearn`, `matplotlib`, `pandas` |
+| Source Note | `250901_코딩실습17_11.차원축소(KMeans+PCA)` |
 
-## Source Glimpse
+## What I Worked On
+
+- 표준화
+- PCA 적용
+- 스크리플롯
+- 설명 비율 출력
+- PCA 적용 - 2차원 축소
+
+## Implementation Flow
+
+1. 표준화
+2. PCA 적용
+3. 스크리플롯
+4. 설명 비율 출력
+5. PCA 적용 - 2차원 축소
+6. Kmeans
+
+## Code Highlights
+
+### from sklearn.datasets import load_wine
+
+```python
+from sklearn.datasets import load_wine
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
+from sklearn.cluster import KMeans
+import matplotlib.pyplot as plt
+import pandas as pd
+from sklearn.metrics import silhouette_score
+```
+
+### 스크리 플랏
+
+```python
+# 스크리 플랏
+
+sse = []                                            # SSE 저장용 빈 리스트
+k_range = range(1, 11)
+
+for k in k_range:
+    kmeans = KMeans(n_clusters=k, n_init=10)
+    kmeans.fit(X_pca_2d)
+    sse.append(kmeans.inertia_)                      # inertia_: 각 클러스터 중심에서 데이터까지 거리 제곱합
+
+plt.figure(figsize=(8,4))
+plt.plot(k_range, sse, marker='o', linestyle='--')
+plt.title('Elbow Method')
+plt.grid(True)
+plt.xticks(k_range)
+plt.show()
+```
+
+## Source Bundle
+
+- Source path: `11_Machine_Learning/Code_Snippets/250901_코딩실습17_11.차원축소(KMeans+PCA).md`
+- Source formats: `ipynb`, `md`
+- Companion files: `250901_코딩실습17_11.차원축소(KMeans+PCA).ipynb`, `250901_코딩실습17_11.차원축소(KMeans+PCA).md`
+- Note type: `code-note`
+- Last updated in the source vault: `2026-03-08T03:33:14`
+- Related notes: `11_Machine_Learning_Code_Summary.md`
+- External references: `localhost`
+
+## Note Preview
 
 > => K=3일때 실루엣 스코어가 가장 높다!
-
-## Notes
-
-- 원본 파일은 수업 실습, 스프린트 미션, 강사 공유, 샘플 코드 중 하나로 분류했습니다.
-- 현재 공개 블로그에서는 구분과 탐색을 우선하고, 의미 있는 항목부터 순차적으로 본문을 더 다듬을 예정입니다.
-- 같은 탭 안에서도 `type` 배지로 미션과 실습을 바로 구별할 수 있게 구성했습니다.

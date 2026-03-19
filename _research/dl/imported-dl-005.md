@@ -2,35 +2,119 @@
 title: "FCN"
 date: 2026-03-08
 research_tab: "DL"
-research_kind: "Practice"
+research_kind: "Archive Note"
 source_title: "(실습)FCN"
 source_path: "12_Deep_Learning/Code_Snippets/(실습)FCN.md"
-excerpt: "DL Practice 아카이브 엔트리입니다. 원본 실습 노트를 공개 research 섹션에서 구별하기 쉽게 정리한 카드입니다."
+excerpt: "DL Archive Note: 모델"
 tags:
   - research-archive
   - imported-note
   - dl
-  - practice
+  - archive-note
 ---
 
-## Archive Note
-
-이 글은 개인 실습 저장소에 있던 원본 노트를 `research` 컬렉션에서 구별해 보기 쉽게 정리한 아카이브 엔트리입니다.  
-대표 항목은 이후 별도 케이스 스터디로 확장하고, 현재 단계에서는 전체 실습 흐름을 빠르게 탐색할 수 있도록 메타데이터 중심으로 정리했습니다.
+## Snapshot
 
 | Item | Value |
 |------|-------|
 | Track | DL |
-| Type | Practice |
-| Source Title | `FCN` |
-| Source Path | `12_Deep_Learning/Code_Snippets/(실습)FCN.md` |
+| Type | Archive Note |
+| Source Files | `md` |
+| Code Blocks | 12 |
+| Execution Cells | 12 |
+| Libraries | `os`, `json`, `torch`, `numpy`, `PIL`, `torchvision`, `matplotlib`, `tqdm` |
+| Source Note | `(실습)FCN` |
 
-## Source Glimpse
+## What I Worked On
 
-> 모델
+- 모델
+- FCN-8s --> backbone : VGG16
 
-## Notes
+## Implementation Flow
 
-- 원본 파일은 수업 실습, 스프린트 미션, 강사 공유, 샘플 코드 중 하나로 분류했습니다.
-- 현재 공개 블로그에서는 구분과 탐색을 우선하고, 의미 있는 항목부터 순차적으로 본문을 더 다듬을 예정입니다.
-- 같은 탭 안에서도 `type` 배지로 미션과 실습을 바로 구별할 수 있게 구성했습니다.
+1. 모델
+2. FCN-8s --> backbone : VGG16
+
+## Code Highlights
+
+### @title VOCSegmentation 데이터셋 로드 및 클래스 정보 설정하기
+
+```python
+#@title VOCSegmentation 데이터셋 로드 및 클래스 정보 설정하기
+class SegmentationDataset(Dataset):
+    def __init__(self, root, train=True, transform=None, target_transform=None, download=False):
+
+        # train==True 이면 train 아니면 val
+        image_set = 'train' if train else 'val'
+
+        #torchvision에서 데이터셋 다운로드
+        self.voc = datasets.VOCSegmentation(
+            root=root,
+            year='2012',
+            image_set=image_set,
+            download=download
+        )
+
+        # VOC 데이터셋 내에 클래스 정보를 담고있는 json 파일 위치
+        classes_json_path = os.path.join(root, "VOCdevkit", "VOC2012", "classes.json")
+        if os.path.exists(classes_json_path):
+            with open(classes_json_path, 'r') as file:
+                self.categories = json.load(file)
+        else:
+            self.categories = {str(i): {"class": f"class_{i}",
+                                        "color": [i * 10 % 256, i * 20 % 256, i * 30 % 256]}
+                                for i in range(1,22)}
+
+        self.transform = transform
+        self.target_transform = target_transform
+
+# ... trimmed ...
+```
+
+### 모델
+
+```python
+import torch
+import torch.nn as nn
+import torch.optim as optim
+import torchvision.models as models
+from tqdm import tqdm
+import numpy as np
+
+# FCN-8s --> backbone : VGG16
+class FCN8s(nn.Module):
+    def __init__(self, num_classes=21):
+        super().__init__()
+        vgg16 = models.vgg16(pretrained=True)
+        features = list(vgg16.features.children())
+
+        #VGG16에서 중간 feature를 추출
+        #pool3 : features[0:17] 약(1/8 해상도)
+        #pool4 : features[17:24] (1/16)
+        #pool5 : features[24:]   (1/32)
+        self.pool3 = nn.Sequential(*features[:17])
+        self.pool4 = nn.Sequential(*features[17:24])
+        self.pool5 = nn.Sequential(*features[24:])
+
+        # 1x1 conv로 ch수를 조정
+        self.score_pool3 = nn.Conv2d(256, num_classes, kernel_size=1)
+        self.score_pool4 = nn.Conv2d(512, num_classes, kernel_size=1)
+        self.score_fr    = nn.Conv2d(512, num_classes, kernel_size=1)
+
+        # Transposed conv
+# ... trimmed ...
+```
+
+## Source Bundle
+
+- Source path: `12_Deep_Learning/Code_Snippets/(실습)FCN.md`
+- Source formats: `md`
+- Companion files: `(실습)FCN.md`
+- Note type: `code-note`
+- Last updated in the source vault: `2026-03-08T03:33:14`
+- Related notes: `2025.10.1,2,13,14.md`, `12_Deep_Learning_Code_Summary.md`
+- External references: `data.brainchip.com`, `localhost`
+
+## Note Preview
+
+> No prose preview was available in the source note.

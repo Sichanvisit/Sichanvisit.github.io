@@ -2,35 +2,126 @@
 title: "7 Object Detection"
 date: 2026-03-08
 research_tab: "DL"
-research_kind: "Sprint Mission"
+research_kind: "Archive Note"
 source_title: "[스프린트_미션]7_Object_Detection"
 source_path: "12_Deep_Learning/Code_Snippets/[스프린트_미션]7_Object_Detection.md"
-excerpt: "DL Sprint Mission 아카이브 엔트리입니다. 원본 실습 노트를 공개 research 섹션에서 구별하기 쉽게 정리한 카드입니다."
+excerpt: "DL Archive Note: 데이터 탐색 및 불러오기, Object Detection 시각화, 데이터셋 준비"
 tags:
   - research-archive
   - imported-note
   - dl
-  - sprint-mission
+  - archive-note
 ---
 
-## Archive Note
-
-이 글은 개인 실습 저장소에 있던 원본 노트를 `research` 컬렉션에서 구별해 보기 쉽게 정리한 아카이브 엔트리입니다.  
-대표 항목은 이후 별도 케이스 스터디로 확장하고, 현재 단계에서는 전체 실습 흐름을 빠르게 탐색할 수 있도록 메타데이터 중심으로 정리했습니다.
+## Snapshot
 
 | Item | Value |
 |------|-------|
 | Track | DL |
-| Type | Sprint Mission |
-| Source Title | `7 Object Detection` |
-| Source Path | `12_Deep_Learning/Code_Snippets/[스프린트_미션]7_Object_Detection.md` |
+| Type | Archive Note |
+| Source Files | `md` |
+| Code Blocks | 27 |
+| Execution Cells | 17 |
+| Libraries | `kagglehub`, `torch`, `pandas`, `os`, `cv2`, `matplotlib`, `xml`, `torchvision` |
+| Source Note | `[스프린트_미션]7_Object_Detection` |
 
-## Source Glimpse
+## What I Worked On
 
-> 데이터 탐색 및 불러오기 / Object Detection 시각화
+- 데이터 탐색 및 불러오기
+- Download latest version
+- GPU 설정
+- 파일 경로 설정
+- 이미지, Annotation 경로 설정
 
-## Notes
+## Implementation Flow
 
-- 원본 파일은 수업 실습, 스프린트 미션, 강사 공유, 샘플 코드 중 하나로 분류했습니다.
-- 현재 공개 블로그에서는 구분과 탐색을 우선하고, 의미 있는 항목부터 순차적으로 본문을 더 다듬을 예정입니다.
-- 같은 탭 안에서도 `type` 배지로 미션과 실습을 바로 구별할 수 있게 구성했습니다.
+1. 데이터 탐색 및 불러오기
+2. Download latest version
+3. GPU 설정
+4. 파일 경로 설정
+5. 이미지, Annotation 경로 설정
+6. Train/Validation 파일 읽기
+
+## Code Highlights
+
+### 데이터셋 준비
+
+```python
+from PIL import Image
+from torch.utils.data import Dataset
+
+class VOCDataset(Dataset):
+    def __init__(self, image_dir, annotation_dir, classes, image_list, transforms=None):
+        self.image_dir = image_dir
+        self.annotation_dir = annotation_dir
+        self.classes = classes
+        self.transforms = transforms
+        self.image_files = image_list # 미리 필터링된 유효한 이미지 파일 리스트
+
+    def __len__(self):
+        return len(self.image_files)
+
+    def __getitem__(self, idx):
+        # 이미지 및 XML 파일 경로 설정
+        image_file = self.image_files[idx] + ".jpg"
+        annotation_file = self.image_files[idx] + ".xml"
+        image_path = os.path.join(self.image_dir, image_file)
+        annotation_path = os.path.join(self.annotation_dir, annotation_file)
+
+        # 이미지 로드
+        image = Image.open(image_path).convert("RGB")
+
+        # 어노테이션 로드
+        boxes = []
+        labels = []
+        tree = ET.parse(annotation_path)
+# ... trimmed ...
+```
+
+### 모델 학습 및 평가
+
+```python
+from tqdm import tqdm # 진행 상황 시각화
+import torch
+
+# Training + Validation Loop
+num_epochs = 5
+
+for epoch in range(num_epochs):
+    print(f"Epoch {epoch + 1}/{num_epochs} 시작")
+
+    # Training Phase
+    model.train()
+    total_train_loss = 0
+
+    for images, targets in tqdm(train_loader, desc="Training"):
+        images = [img.to(device) for img in images]
+        targets = [{k: v.to(device) for k, v in t.items()} for t in targets]
+
+        # Forward pass
+        loss_dict = model(images, targets)
+        losses = sum(loss for loss in loss_dict.values())
+        total_train_loss += losses.item()
+
+        # Backward pass and optimization
+        optimizer.zero_grad()
+        losses.backward()
+        optimizer.step()
+
+    avg_train_loss = total_train_loss / len(train_loader)
+# ... trimmed ...
+```
+
+## Source Bundle
+
+- Source path: `12_Deep_Learning/Code_Snippets/[스프린트_미션]7_Object_Detection.md`
+- Source formats: `md`
+- Companion files: `[스프린트_미션]7_Object_Detection.md`
+- Note type: `code-note`
+- Last updated in the source vault: `2026-03-08T03:33:14`
+- Related notes: `x_min, y_min, x_max, y_max`
+- External references: `localhost`
+
+## Note Preview
+
+> No prose preview was available in the source note.

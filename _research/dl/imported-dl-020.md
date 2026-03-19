@@ -1,11 +1,11 @@
 ---
-title: "PyTorch 텐서 살펴보기"
+title: "PyTorch 텐서 살펴보기 - 공유"
 date: 2026-03-08
 research_tab: "DL"
 research_kind: "Shared Note"
 source_title: "3-1_PyTorch_텐서_살펴보기 - 공유"
 source_path: "12_Deep_Learning/Code_Snippets/3-1_PyTorch_텐서_살펴보기 - 공유.md"
-excerpt: "DL Shared Note 아카이브 엔트리입니다. 원본 실습 노트를 공개 research 섹션에서 구별하기 쉽게 정리한 카드입니다."
+excerpt: "Python 리스트를 PyTorch 텐서로 변환하려면 torch.tensor() 함수를 사용합니다."
 tags:
   - research-archive
   - imported-note
@@ -13,24 +13,104 @@ tags:
   - shared-note
 ---
 
-## Archive Note
-
-이 글은 개인 실습 저장소에 있던 원본 노트를 `research` 컬렉션에서 구별해 보기 쉽게 정리한 아카이브 엔트리입니다.  
-대표 항목은 이후 별도 케이스 스터디로 확장하고, 현재 단계에서는 전체 실습 흐름을 빠르게 탐색할 수 있도록 메타데이터 중심으로 정리했습니다.
+## Snapshot
 
 | Item | Value |
 |------|-------|
 | Track | DL |
 | Type | Shared Note |
-| Source Title | `PyTorch 텐서 살펴보기` |
-| Source Path | `12_Deep_Learning/Code_Snippets/3-1_PyTorch_텐서_살펴보기 - 공유.md` |
+| Source Files | `md` |
+| Code Blocks | 127 |
+| Execution Cells | 95 |
+| Libraries | `torch`, `numpy` |
+| Source Note | `3-1_PyTorch_텐서_살펴보기 - 공유` |
 
-## Source Glimpse
+## What I Worked On
 
-> 01. 텐서만들기 / Python 리스트를 PyTorch 텐서로 변환하려면 torch.tensor() 함수를 사용합니다.
+- 01. 텐서만들기
+- 임포트할 때 파이토치가 아니라 그냥 토치라고 써야 합니다.
+- 방법 1 : torch.tensor()
+- 방법 2 : torch.from_numpy()
+- 방법 3 : torch.as_tensor()
 
-## Notes
+## Implementation Flow
 
-- 원본 파일은 수업 실습, 스프린트 미션, 강사 공유, 샘플 코드 중 하나로 분류했습니다.
-- 현재 공개 블로그에서는 구분과 탐색을 우선하고, 의미 있는 항목부터 순차적으로 본문을 더 다듬을 예정입니다.
-- 같은 탭 안에서도 `type` 배지로 미션과 실습을 바로 구별할 수 있게 구성했습니다.
+1. 01. 텐서만들기
+2. 임포트할 때 파이토치가 아니라 그냥 토치라고 써야 합니다.
+3. 방법 1 : torch.tensor()
+4. 방법 2 : torch.from_numpy()
+5. 방법 3 : torch.as_tensor()
+6. 데이터 타입 지정하기
+
+## Code Highlights
+
+### Quiz.
+
+```python
+import numpy as np
+import torch
+
+data_list = [
+    [1, 1],
+    [-1, -1],
+]
+data_np = np.array(
+    [
+        [3, 4],
+        [5, 6]
+    ]
+)
+
+# 여기에 코드를 작성하세요.
+tensor_from_list = torch.tensor(data_list)
+# tensor_from_np_array = torch.np_
+# 테스트 코드
+print(tensor_from_list)
+print(tensor_from_np_array)
+```
+
+### Quiz.
+
+```python
+import numpy as np
+import torch
+
+tensor0 = torch.tensor(
+    [
+        [1, 1],
+        [-1, -1]
+    ]
+)
+tensor1 = torch.tensor(
+    [
+        [1, 1],
+        [0, 0]
+    ]
+)
+tensor2 = torch.tensor(
+    [
+        [1, -1],
+        [1, -1]
+    ]
+)
+
+# 여기에 코드를 작성하세요.
+
+# 테스트 코드
+print(final_np_array)
+```
+
+## Source Bundle
+
+- Source path: `12_Deep_Learning/Code_Snippets/3-1_PyTorch_텐서_살펴보기 - 공유.md`
+- Source formats: `md`
+- Companion files: `3-1_PyTorch_텐서_살펴보기 - 공유.md`
+- Note type: `concept-note`
+- Last updated in the source vault: `2026-03-08T03:33:14`
+- Related notes: `12_Deep_Learning_Code_Summary.md`
+- External references: `localhost`, `deeplearninguniversity.com`, `www.nvidia.com`
+
+## Note Preview
+
+> Python 리스트를 PyTorch 텐서로 변환하려면 torch.tensor() 함수를 사용합니다.
+> 변환된 텐서는 리스트와 동일한 값을 가지며, tensor() 함수를 통해 PyTorch의 텐서 객체로 만들어집니다

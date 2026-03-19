@@ -5,7 +5,7 @@ research_tab: "ML"
 research_kind: "Archive Note"
 source_title: "250901_SVM"
 source_path: "11_Machine_Learning/Code_Snippets/250901_SVM.md"
-excerpt: "ML Archive Note 아카이브 엔트리입니다. 원본 실습 노트를 공개 research 섹션에서 구별하기 쉽게 정리한 카드입니다."
+excerpt: "ML Archive Note: centers=2: 2차원으로 만들기 위한 것. centers=3이면 시각화 어려움, C: cost (오분류에 대한 패널티 강도), gamma: 커널 곡률 조절"
 tags:
   - research-archive
   - imported-note
@@ -13,24 +13,78 @@ tags:
   - archive-note
 ---
 
-## Archive Note
-
-이 글은 개인 실습 저장소에 있던 원본 노트를 `research` 컬렉션에서 구별해 보기 쉽게 정리한 아카이브 엔트리입니다.  
-대표 항목은 이후 별도 케이스 스터디로 확장하고, 현재 단계에서는 전체 실습 흐름을 빠르게 탐색할 수 있도록 메타데이터 중심으로 정리했습니다.
+## Snapshot
 
 | Item | Value |
 |------|-------|
 | Track | ML |
 | Type | Archive Note |
-| Source Title | `SVM` |
-| Source Path | `11_Machine_Learning/Code_Snippets/250901_SVM.md` |
+| Source Files | `ipynb`, `md` |
+| Code Blocks | 8 |
+| Execution Cells | 8 |
+| Libraries | `numpy`, `matplotlib`, `sklearn` |
+| Source Note | `250901_SVM` |
 
-## Source Glimpse
+## What I Worked On
 
-> 원본 노트는 현재 내용 미리보기를 제공하지 않습니다.
+- centers=2: 2차원으로 만들기 위한 것. centers=3이면 시각화 어려움
+- C: cost (오분류에 대한 패널티 강도), gamma: 커널 곡률 조절
 
-## Notes
+## Implementation Flow
 
-- 원본 파일은 수업 실습, 스프린트 미션, 강사 공유, 샘플 코드 중 하나로 분류했습니다.
-- 현재 공개 블로그에서는 구분과 탐색을 우선하고, 의미 있는 항목부터 순차적으로 본문을 더 다듬을 예정입니다.
-- 같은 탭 안에서도 `type` 배지로 미션과 실습을 바로 구별할 수 있게 구성했습니다.
+1. centers=2: 2차원으로 만들기 위한 것. centers=3이면 시각화 어려움
+2. C: cost (오분류에 대한 패널티 강도), gamma: 커널 곡률 조절
+
+## Code Highlights
+
+### import numpy as np
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.datasets import make_blobs
+from sklearn.svm import SVC
+from matplotlib.colors import ListedColormap
+```
+
+### def plot_decision_boundary(clf, X, y, ax, title)
+
+```python
+def plot_decision_boundary(clf, X, y, ax, title):
+    x_min, x_max = X[:, 0].min() - 0.5, X[:, 0].max() + 0.5
+    y_min, y_max = X[:, 1].min() - 0.5, X[:, 1].max() + 0.5
+    xx, yy = np.meshgrid(np.linspace(x_min, x_max, 100),
+                         np.linspace(y_min, y_max, 100))
+    Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
+    Z = Z.reshape(xx.shape)
+
+    cmap_light = ListedColormap(['#FFAAAA', '#AAFFAA'])
+    cmap_bold = ListedColormap(['#FF0000', '#00FF00'])
+
+    ax.contourf(xx, yy, Z, alpha=0.3, cmap=cmap_light)
+    ax.scatter(X[:, 0][y==0], X[:, 1][y==0], c='red', marker='o', label='Class 0')
+    ax.scatter(X[:, 0][y==1], X[:, 1][y==1], c='blue', marker='x', label='Class 1')
+
+    ax.scatter(clf.support_vectors_[:, 0], clf.support_vectors_[:, 1],
+               s=150, facecolors='none', edgecolors='black', linewidths=2, label='Support Vectors')
+
+    ax.set_title(title)
+    ax.set_xlabel('Feature 1')
+    ax.set_ylabel('Feature 2')
+    ax.legend()
+    ax.grid(True)
+```
+
+## Source Bundle
+
+- Source path: `11_Machine_Learning/Code_Snippets/250901_SVM.md`
+- Source formats: `ipynb`, `md`
+- Companion files: `250901_SVM.ipynb`, `250901_SVM.md`
+- Note type: `code-note`
+- Last updated in the source vault: `2026-03-08T03:33:14`
+- Related notes: `11_Machine_Learning_Code_Summary.md`
+- External references: `localhost`
+
+## Note Preview
+
+> No prose preview was available in the source note.

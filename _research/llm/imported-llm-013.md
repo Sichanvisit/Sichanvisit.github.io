@@ -2,35 +2,127 @@
 title: "ALBERT 사전학습"
 date: 2026-03-08
 research_tab: "LLM"
-research_kind: "Practice"
+research_kind: "Archive Note"
 source_title: "3-3 (실습)ALBERT_사전학습"
 source_path: "13_LLM_GenAI/Code_Snippets/3-3 (실습)ALBERT_사전학습.md"
-excerpt: "LLM Practice 아카이브 엔트리입니다. 원본 실습 노트를 공개 research 섹션에서 구별하기 쉽게 정리한 카드입니다."
+excerpt: "기본 적으로 BERT 모델은 인코딩 블록이 깊어질 수 록 파라미터의 규모가 매우 커질 뿐만 아니라, 매우 큰 어휘 사전(vocab)과 임베딩 길이를 사용할 때, 임베딩 매트릭스가 차지하는 파라미터가 너무 커져 버리는 문제가 생깁니다."
 tags:
   - research-archive
   - imported-note
   - llm
-  - practice
+  - archive-note
 ---
 
-## Archive Note
-
-이 글은 개인 실습 저장소에 있던 원본 노트를 `research` 컬렉션에서 구별해 보기 쉽게 정리한 아카이브 엔트리입니다.  
-대표 항목은 이후 별도 케이스 스터디로 확장하고, 현재 단계에서는 전체 실습 흐름을 빠르게 탐색할 수 있도록 메타데이터 중심으로 정리했습니다.
+## Snapshot
 
 | Item | Value |
 |------|-------|
 | Track | LLM |
-| Type | Practice |
-| Source Title | `ALBERT 사전학습` |
-| Source Path | `13_LLM_GenAI/Code_Snippets/3-3 (실습)ALBERT_사전학습.md` |
+| Type | Archive Note |
+| Source Files | `md` |
+| Code Blocks | 11 |
+| Execution Cells | 6 |
+| Libraries | `google`, `torch`, `copy`, `sentencepiece`, `pandas`, `numpy`, `math`, `os` |
+| Source Note | `3-3 (실습)ALBERT_사전학습` |
 
-## Source Glimpse
+## What I Worked On
 
-> ALBERT 모델 / 기본 적으로 BERT 모델은 인코딩 블록이 깊어질 수 록 파라미터의 규모가 매우 커질 뿐만 아니라, 매우 큰 어휘 사전(vocab)과 임베딩 길이를 사용할 때, 임베딩 매트릭스가 차지하는 파라미터가 너무 커져 버리는 문제가 생깁니다.
+- ALBERT 모델
+- 학습 데이터세트 구성
+- BPE :바이트 페어 인코딩(Byte Pair Encoding, BPE)
+- 추가 쓰기모드로 텍스트 파일 열기
+- 저장 경로 생성
 
-## Notes
+## Implementation Flow
 
-- 원본 파일은 수업 실습, 스프린트 미션, 강사 공유, 샘플 코드 중 하나로 분류했습니다.
-- 현재 공개 블로그에서는 구분과 탐색을 우선하고, 의미 있는 항목부터 순차적으로 본문을 더 다듬을 예정입니다.
-- 같은 탭 안에서도 `type` 배지로 미션과 실습을 바로 구별할 수 있게 구성했습니다.
+1. ALBERT 모델
+2. 학습 데이터세트 구성
+3. BPE :바이트 페어 인코딩(Byte Pair Encoding, BPE)
+4. 추가 쓰기모드로 텍스트 파일 열기
+5. 저장 경로 생성
+6. 예시 사용
+
+## Code Highlights
+
+### 학습 데이터세트 구성
+
+```python
+class SPDataSet(Dataset):
+    def __init__(self, sp, max_len):
+        self.max_len = max_len
+        self.df = pd.read_csv(f'./train.csv')
+        self.sp = sp
+
+        # SOP 태스크를 위한 (sent1, sent2, label) 리스트
+        self.pairs = []
+
+        # "올바른 순서" => label = 0
+        # "뒤집힌 순서" => label = 1
+        for _, item in self.df.iterrows():
+            sent1 = item['HS01']
+            sent2 = item['SS01']
+
+            # 원래 순서
+            self.pairs.append((sent1, sent2, 0))
+            # 뒤집힌 순서
+            self.pairs.append((sent2, sent1, 1))
+
+        # 10개의 문장쌍만 확인 (디버그 용도)
+        print(self.pairs[:10])
+
+    def zero_pad(self, tok):
+        """토큰 리스트를 max_len 길이에 맞춰 제로 패딩"""
+        if len(tok) >= self.max_len:
+            return tok[:self.max_len]
+        else:
+# ... trimmed ...
+```
+
+### 모델 학습
+
+```python
+# 하이퍼파라미터 정의
+seq_len = 100
+embed_dim = 64
+hidden_dim=128
+num_heads = 4
+feed_dim = 256
+num_layers = 4
+num_classes = 2
+num_epochs = 50
+batch_size = 64
+lr = 1e-4
+
+# MLM 변환 함수에 넣어줄 스페셜 토큰 정의
+mask_id = sp.get_piece_size()
+special_tokens_ids = [sp.bos_id(), sp.eos_id(), 0]
+
+# 마스크 토큰이 추가되므로 토큰개수에 +1
+sp = spm.SentencePieceProcessor(model_file=f'./bpe/spm_krsent.model')
+vocab_size = sp.get_piece_size() + 1
+
+# 데이터세트 분할
+dataset = SPDataSet(sp, seq_len)
+generator1 = torch.Generator().manual_seed(42)
+test_dataset, train_dataset = random_split(dataset, [0.2, 0.8], generator=generator1)
+
+train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+val_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
+
+# ... trimmed ...
+```
+
+## Source Bundle
+
+- Source path: `13_LLM_GenAI/Code_Snippets/3-3 (실습)ALBERT_사전학습.md`
+- Source formats: `md`
+- Companion files: `3-3 (실습)ALBERT_사전학습.md`
+- Note type: `code-note`
+- Last updated in the source vault: `2026-03-08T03:33:14`
+- Related notes: `HS01'',''SS01`, `Hugging`
+- External references: `localhost`
+
+## Note Preview
+
+> 기본 적으로 BERT 모델은 인코딩 블록이 깊어질 수 록 파라미터의 규모가 매우 커질 뿐만 아니라, 매우 큰 어휘 사전(vocab)과 임베딩 길이를 사용할 때, 임베딩 매트릭스가 차지하는 파라미터가 너무 커져 버리는 문제가 생깁니다.
+> ALBERT는 크게 2가지 기법을 활용하여 이를 크게 낮추고 모델 파라미터 규모를 효과적으로 줄입니다.

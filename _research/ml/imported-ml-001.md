@@ -5,7 +5,7 @@ research_tab: "ML"
 research_kind: "Practice"
 source_title: "250807-08_코드실습2_2.객체와 클래스"
 source_path: "11_Machine_Learning/Code_Snippets/250807-08_코드실습2_2.객체와 클래스.md"
-excerpt: "ML Practice 아카이브 엔트리입니다. 원본 실습 노트를 공개 research 섹션에서 구별하기 쉽게 정리한 카드입니다."
+excerpt: "ML Practice: 1. 클래스 코드 연습, 2. 은행 클래스, 3. 다양한 메소드"
 tags:
   - research-archive
   - imported-note
@@ -13,24 +13,105 @@ tags:
   - practice
 ---
 
-## Archive Note
-
-이 글은 개인 실습 저장소에 있던 원본 노트를 `research` 컬렉션에서 구별해 보기 쉽게 정리한 아카이브 엔트리입니다.  
-대표 항목은 이후 별도 케이스 스터디로 확장하고, 현재 단계에서는 전체 실습 흐름을 빠르게 탐색할 수 있도록 메타데이터 중심으로 정리했습니다.
+## Snapshot
 
 | Item | Value |
 |------|-------|
 | Track | ML |
 | Type | Practice |
-| Source Title | `08 코드실습2 2.객체와 클래스` |
-| Source Path | `11_Machine_Learning/Code_Snippets/250807-08_코드실습2_2.객체와 클래스.md` |
+| Source Files | `ipynb`, `md` |
+| Code Blocks | 28 |
+| Execution Cells | 18 |
+| Libraries | Not detected |
+| Source Note | `250807-08_코드실습2_2.객체와 클래스` |
 
-## Source Glimpse
+## What I Worked On
 
-> 1. 클래스 코드 연습 / 2. 은행 클래스
+- 1. 클래스 코드 연습
+- Person 클래스 연습
+- 두 명 추가하기
+- 2. 은행 클래스
+- 위의 은행 클래스 init없이 구현
 
-## Notes
+## Implementation Flow
 
-- 원본 파일은 수업 실습, 스프린트 미션, 강사 공유, 샘플 코드 중 하나로 분류했습니다.
-- 현재 공개 블로그에서는 구분과 탐색을 우선하고, 의미 있는 항목부터 순차적으로 본문을 더 다듬을 예정입니다.
-- 같은 탭 안에서도 `type` 배지로 미션과 실습을 바로 구별할 수 있게 구성했습니다.
+1. 1. 클래스 코드 연습
+2. Person 클래스 연습
+3. 두 명 추가하기
+4. 2. 은행 클래스
+5. 위의 은행 클래스 init없이 구현
+6. 실습문제1 상품 클래스 구현하기 문제
+
+## Code Highlights
+
+### 2. 은행 클래스
+
+```python
+class BankAccount:
+    def __init__(self, owner, balance=0):
+        self.owner = owner
+        self.balance = balance
+
+    # 입금 기능 구현
+    def deposit(self, amount):
+        self.balance += amount
+        return f'{amount}원이 입금됨. 현재 잔액: {self.balance}원.'
+
+    # 출금 기능 구현
+    def withdraw(self, amount):
+        if amount > self.balance:
+            return '잔액이 부족.'
+        self.balance -= amount
+        return f'{amount}원이 출금됨. 현재 잔액: {self.balance}원.'
+
+    # 이체 기능 구현
+    def transfer(self, target_amount, amount):
+        if amount > self.balance:
+            return '이체 실패 - 잔액 부족'
+        self.balance -= amount
+        target_amount.balance += amount
+        return (f'{amount}원 {target_amount.owner}님께 이체 완료\n'
+                f'내 잔액: {self.balance}원')
+```
+
+### 2. 은행 클래스
+
+```python
+# 위의 은행 클래스 init없이 구현
+class BankAccount:
+
+    # 입금 기능 구현
+    def deposit(self, amount):
+        self.balance += amount
+        return f'{amount}원이 입금됨. 현재 잔액: {self.balance}원.'
+
+    # 출금 기능 구현
+    def withdraw(self, amount):
+        if amount > self.balance:
+            return '잔액이 부족.'
+        self.balance -= amount
+        return f'{amount}원이 출금됨. 현재 잔액: {self.balance}원.'
+
+    # 이체 기능 구현
+    def transfer(self, target_amount, amount):
+        if amount > self.balance:
+            return '이체 실패 - 잔액 부족'
+        self.balance -= amount
+        target_amount.balance += amount
+        return (f'{amount}원 {target_amount.owner}님께 이체 완료\n'
+                f'내 잔액: {self.balance}원')
+```
+
+## Source Bundle
+
+- Source path: `11_Machine_Learning/Code_Snippets/250807-08_코드실습2_2.객체와 클래스.md`
+- Source formats: `ipynb`, `md`
+- Companion files: `250807-08_코드실습2_2.객체와 클래스.ipynb`, `250807-08_코드실습2_2.객체와 클래스.md`
+- Note type: `code-note`
+- Last updated in the source vault: `2026-03-08T03:33:14`
+- Related notes: `11_Machine_Learning_Code_Summary.md`
+- External references: `localhost`
+
+## Note Preview
+
+> No prose preview was available in the source note.

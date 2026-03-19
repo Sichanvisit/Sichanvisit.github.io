@@ -5,7 +5,7 @@ research_tab: "ML"
 research_kind: "Practice"
 source_title: "250827_코딩실습10_10.결정트리와 앙상블(DT)"
 source_path: "11_Machine_Learning/Code_Snippets/250827_코딩실습10_10.결정트리와 앙상블(DT).md"
-excerpt: "ML Practice 아카이브 엔트리입니다. 원본 실습 노트를 공개 research 섹션에서 구별하기 쉽게 정리한 카드입니다."
+excerpt: "- _reg: 회귀의 관례적 표현 - _clf: 분류의 관례적 표현"
 tags:
   - research-archive
   - imported-note
@@ -13,24 +13,84 @@ tags:
   - practice
 ---
 
-## Archive Note
-
-이 글은 개인 실습 저장소에 있던 원본 노트를 `research` 컬렉션에서 구별해 보기 쉽게 정리한 아카이브 엔트리입니다.  
-대표 항목은 이후 별도 케이스 스터디로 확장하고, 현재 단계에서는 전체 실습 흐름을 빠르게 탐색할 수 있도록 메타데이터 중심으로 정리했습니다.
+## Snapshot
 
 | Item | Value |
 |------|-------|
 | Track | ML |
 | Type | Practice |
-| Source Title | `코딩실습10 10.결정트리와 앙상블(DT)` |
-| Source Path | `11_Machine_Learning/Code_Snippets/250827_코딩실습10_10.결정트리와 앙상블(DT).md` |
+| Source Files | `ipynb`, `md` |
+| Code Blocks | 26 |
+| Execution Cells | 25 |
+| Libraries | `matplotlib`, `warnings`, `sklearn`, `pandas` |
+| Source Note | `250827_코딩실습10_10.결정트리와 앙상블(DT)` |
 
-## Source Glimpse
+## What I Worked On
 
-> 1. DT 회귀 실습 / - _reg: 회귀의 관례적 표현
+- 1. DT 회귀 실습
+- 위 코드 판다스로 지정해 불러올 때
+- 트리 시각화
+- DT 분류 실습
+- 변수명 추출
 
-## Notes
+## Implementation Flow
 
-- 원본 파일은 수업 실습, 스프린트 미션, 강사 공유, 샘플 코드 중 하나로 분류했습니다.
-- 현재 공개 블로그에서는 구분과 탐색을 우선하고, 의미 있는 항목부터 순차적으로 본문을 더 다듬을 예정입니다.
-- 같은 탭 안에서도 `type` 배지로 미션과 실습을 바로 구별할 수 있게 구성했습니다.
+1. 1. DT 회귀 실습
+2. 위 코드 판다스로 지정해 불러올 때
+3. 트리 시각화
+4. DT 분류 실습
+5. 변수명 추출
+6. 3. 속성 중요도 실습
+
+## Code Highlights
+
+### 1. DT 회귀 실습
+
+```python
+from sklearn.tree import plot_tree
+
+# 트리 시각화
+plt.figure(figsize=(20, 10))
+plot_tree(dt_reg,
+          max_depth=3,
+          filled=True,
+          rounded=True,
+          fontsize=10,
+          feature_names=data.feature_names
+          )
+plt.title("결정 트리 시각화")
+plt.show()
+```
+
+### DT 분류 실습
+
+```python
+dt_clf = DecisionTreeClassifier(random_state=42)
+dt_clf.fit(X_clf, y_clf)
+
+plt.figure(figsize=(20,10))
+plot_tree(
+    dt_clf,
+    feature_names=feature_names_clf,
+    class_names=class_names_clf,
+    filled=True,
+    rounded=True,
+    fontsize=10
+)
+plt.title("결정 트리 분류")
+plt.show()
+```
+
+## Source Bundle
+
+- Source path: `11_Machine_Learning/Code_Snippets/250827_코딩실습10_10.결정트리와 앙상블(DT).md`
+- Source formats: `ipynb`, `md`
+- Companion files: `250827_코딩실습10_10.결정트리와 앙상블(DT).ipynb`, `250827_코딩실습10_10.결정트리와 앙상블(DT).md`
+- Note type: `code-note`
+- Last updated in the source vault: `2026-03-08T03:33:14`
+- Related notes: `11_Machine_Learning_Code_Summary.md`
+- External references: `localhost`
+
+## Note Preview
+
+> - _reg: 회귀의 관례적 표현 - _clf: 분류의 관례적 표현

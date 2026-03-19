@@ -5,7 +5,7 @@ research_tab: "DL"
 research_kind: "Sample Code"
 source_title: "MNIST_samplecode"
 source_path: "12_Deep_Learning/Code_Snippets/MNIST_samplecode.md"
-excerpt: "DL Sample Code 아카이브 엔트리입니다. 원본 실습 노트를 공개 research 섹션에서 구별하기 쉽게 정리한 카드입니다."
+excerpt: "DL Sample Code: 데이터 로더, model = MLP(input_size, hidden_size, num_cls).to(device), input_ch, hidden_size, num_cls"
 tags:
   - research-archive
   - imported-note
@@ -13,24 +13,113 @@ tags:
   - sample-code
 ---
 
-## Archive Note
-
-이 글은 개인 실습 저장소에 있던 원본 노트를 `research` 컬렉션에서 구별해 보기 쉽게 정리한 아카이브 엔트리입니다.  
-대표 항목은 이후 별도 케이스 스터디로 확장하고, 현재 단계에서는 전체 실습 흐름을 빠르게 탐색할 수 있도록 메타데이터 중심으로 정리했습니다.
+## Snapshot
 
 | Item | Value |
 |------|-------|
 | Track | DL |
 | Type | Sample Code |
-| Source Title | `MNIST samplecode` |
-| Source Path | `12_Deep_Learning/Code_Snippets/MNIST_samplecode.md` |
+| Source Files | `md` |
+| Code Blocks | 11 |
+| Execution Cells | 11 |
+| Libraries | `torch`, `torchvision`, `matplotlib`, `numpy` |
+| Source Note | `MNIST_samplecode` |
 
-## Source Glimpse
+## What I Worked On
+
+- 데이터 로더
+- model = MLP(input_size, hidden_size, num_cls).to(device)
+- input_ch, hidden_size, num_cls
+- 테스트 셋에서 20개 샘플 추출
+- 모델 예측
+
+## Implementation Flow
+
+1. 데이터 로더
+2. model = MLP(input_size, hidden_size, num_cls).to(device)
+3. input_ch, hidden_size, num_cls
+4. 테스트 셋에서 20개 샘플 추출
+5. 모델 예측
+6. 결과 시각화
+
+## Code Highlights
+
+### class CNN(nn.Module)
+
+```python
+class CNN(nn.Module):
+    def __init__(self, input_ch, hidden_size, num_cls):
+        super(CNN, self).__init__()
+        self.block1 = nn.Sequential(
+            nn.Conv2d(input_ch, hidden_size, kernel_size=3, padding=1),
+            nn.ReLU()
+        )
+        self.block2 = nn.Sequential(
+            nn.Conv2d(hidden_size, hidden_size, kernel_size=3, padding=1),
+            nn.ReLU()
+        )
+        self.block3 = nn.Sequential(
+            nn.Conv2d(hidden_size, input_ch, kernel_size=3, padding=1),
+            nn.ReLU()
+        )
+        self.flatten = nn.Flatten()
+        self.output = nn.Linear(784, num_cls)
+
+    def forward(self, x):
+        x = self.block1(x)
+        x = self.block2(x)
+        x = self.block3(x)
+
+        x = self.flatten(x)
+        out = self.output(x)
+
+        return out
+```
+
+### input_size = 784
+
+```python
+input_size = 784
+hidden_size = 500
+num_cls = 10
+epochs = 3
+
+# model = MLP(input_size, hidden_size, num_cls).to(device)
+
+# input_ch, hidden_size, num_cls
+model = CNN(1, 16, 10).to(device)
+
+loss_fn = nn.CrossEntropyLoss()
+optim = opt.Adam(model.parameters(), lr=0.001)
+
+for epoch in range(epochs):
+    for i, (images, labels) in enumerate(train_loader):
+        # 데이터를 디바이스로 이동
+        # images = images.reshape(-1,input_size)
+        images = images.to(device)
+        labels = labels.to(device)
+
+        # 모델을 실행
+        outputs = model(images).squeeze()
+        loss = loss_fn(outputs,labels)
+
+        # 역전파 & 옵티마이저
+        optim.zero_grad()
+        loss.backward()
+        optim.step()
+# ... trimmed ...
+```
+
+## Source Bundle
+
+- Source path: `12_Deep_Learning/Code_Snippets/MNIST_samplecode.md`
+- Source formats: `md`
+- Companion files: `MNIST_samplecode.md`
+- Note type: `code-note`
+- Last updated in the source vault: `2026-03-08T03:33:14`
+- Related notes: `12_Deep_Learning_Code_Summary.md`
+- External references: `localhost`
+
+## Note Preview
 
 > -
-
-## Notes
-
-- 원본 파일은 수업 실습, 스프린트 미션, 강사 공유, 샘플 코드 중 하나로 분류했습니다.
-- 현재 공개 블로그에서는 구분과 탐색을 우선하고, 의미 있는 항목부터 순차적으로 본문을 더 다듬을 예정입니다.
-- 같은 탭 안에서도 `type` 배지로 미션과 실습을 바로 구별할 수 있게 구성했습니다.

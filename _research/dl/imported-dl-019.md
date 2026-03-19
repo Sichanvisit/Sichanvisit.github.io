@@ -1,11 +1,11 @@
 ---
-title: "Autoencoder CNN"
+title: "Autoencoder CNN - 공유"
 date: 2026-03-08
 research_tab: "DL"
 research_kind: "Shared Note"
 source_title: "10-1_Autoencoder_CNN - 공유"
 source_path: "12_Deep_Learning/Code_Snippets/10-1_Autoencoder_CNN - 공유.md"
-excerpt: "DL Shared Note 아카이브 엔트리입니다. 원본 실습 노트를 공개 research 섹션에서 구별하기 쉽게 정리한 카드입니다."
+excerpt: "DL Shared Note: Latent Vactor에 noise 추가"
 tags:
   - research-archive
   - imported-note
@@ -13,24 +13,115 @@ tags:
   - shared-note
 ---
 
-## Archive Note
-
-이 글은 개인 실습 저장소에 있던 원본 노트를 `research` 컬렉션에서 구별해 보기 쉽게 정리한 아카이브 엔트리입니다.  
-대표 항목은 이후 별도 케이스 스터디로 확장하고, 현재 단계에서는 전체 실습 흐름을 빠르게 탐색할 수 있도록 메타데이터 중심으로 정리했습니다.
+## Snapshot
 
 | Item | Value |
 |------|-------|
 | Track | DL |
 | Type | Shared Note |
-| Source Title | `Autoencoder CNN` |
-| Source Path | `12_Deep_Learning/Code_Snippets/10-1_Autoencoder_CNN - 공유.md` |
+| Source Files | `md` |
+| Code Blocks | 7 |
+| Execution Cells | 6 |
+| Libraries | `torch`, `torchvision`, `matplotlib`, `numpy` |
+| Source Note | `10-1_Autoencoder_CNN - 공유` |
 
-## Source Glimpse
+## What I Worked On
 
-> - / Latent Vactor에 noise 추가
+- 1. 라이브러리 임포트 및 MNIST 데이터셋 로드
+- 2. 오토인코더 모델 생성
+- CNN 코드
+- 모델 학습
+- Training loop
 
-## Notes
+## Implementation Flow
 
-- 원본 파일은 수업 실습, 스프린트 미션, 강사 공유, 샘플 코드 중 하나로 분류했습니다.
-- 현재 공개 블로그에서는 구분과 탐색을 우선하고, 의미 있는 항목부터 순차적으로 본문을 더 다듬을 예정입니다.
-- 같은 탭 안에서도 `type` 배지로 미션과 실습을 바로 구별할 수 있게 구성했습니다.
+1. 1. 라이브러리 임포트 및 MNIST 데이터셋 로드
+2. 2. 오토인코더 모델 생성
+3. CNN 코드
+4. 모델 학습
+5. Training loop
+6. Evaluation and Intermediate Result Visualization
+
+## Code Highlights
+
+### 모델 학습
+
+```python
+# 모델 학습
+model = CNNAutoencoder()
+criterion = nn.MSELoss() # Mean Squared Error loss for autoencoders
+optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+
+# Training loop
+num_epochs = 3
+num_channels_to_show = 5
+
+plt.figure(figsize=(20, 10))
+
+for epoch in range(num_epochs):
+    model.train() # Set the model to training mode
+    running_loss = 0.0
+    for data in trainloader:
+        inputs, _ = data # Autoencoder input is the image itself, ignore the label
+        optimizer.zero_grad() # Zero the parameter gradients
+
+        outputs, encoded_feat = model(inputs) # Forward pass
+
+        loss = criterion(outputs, inputs) # Calculate the loss
+
+        loss.backward() # Backward pass
+        optimizer.step() # Optimize
+
+        running_loss += loss.item()
+
+    for c in range(num_channels_to_show):
+# ... trimmed ...
+```
+
+### Latent Vactor에 noise 추가
+
+```python
+import matplotlib.pyplot as plt
+# Function to generate a new image from a random latent vector
+def generate_image(model):
+    smple_num = 34
+    model.eval()  # Set the model to evaluation mode
+    with torch.no_grad():
+        # Create a random latent vector (matching the shape of the encoded features)
+        # The shape of the encoded features is [batch_size, 32, 7, 7] based on the model definition.
+        # For a single generated image, the batch size is 1.
+        # random_latent_vector = encoded_features[smple_num].unsqueeze(0) + torch.randn(1, 32, 7, 7)
+        random_latent_vector = encoded_features[smple_num].unsqueeze(0) * 0.7 +0.9
+
+        # Pass the random latent vector through the decoder part of the model
+        # We need to access the decoder directly.
+        generated_image = model.decoder(random_latent_vector)
+
+        # Unnormalize and convert to numpy for plotting
+        # Since the decoder output has Sigmoid, it's already in [0, 1].
+        generated_img_np = generated_image.squeeze().cpu().numpy()
+
+        plt.figure(figsize=(5, 5))
+        plt.subplot(2,1,1)
+        plt.imshow(images[smple_num].squeeze(), cmap='gray')
+        plt.subplot(2,1,2)
+        plt.imshow(generated_img_np, cmap='gray')
+        plt.title("Generated Image")
+        plt.axis('off')
+        plt.show()
+# ... trimmed ...
+```
+
+## Source Bundle
+
+- Source path: `12_Deep_Learning/Code_Snippets/10-1_Autoencoder_CNN - 공유.md`
+- Source formats: `md`
+- Companion files: `10-1_Autoencoder_CNN - 공유.md`
+- Note type: `code-note`
+- Last updated in the source vault: `2026-03-08T03:33:14`
+- Related notes: `12_Deep_Learning_Code_Summary.md`
+- External references: `localhost`
+
+## Note Preview
+
+> -

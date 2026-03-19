@@ -5,7 +5,7 @@ research_tab: "DL"
 research_kind: "Sample Code"
 source_title: "RNN_samplecode"
 source_path: "12_Deep_Learning/Code_Snippets/RNN_samplecode.md"
-excerpt: "DL Sample Code 아카이브 엔트리입니다. 원본 실습 노트를 공개 research 섹션에서 구별하기 쉽게 정리한 카드입니다."
+excerpt: "DL Sample Code: @title 하이퍼파라미터, 사인파 코사인파 주파수를 합성, 저주파 진폭 변조"
 tags:
   - research-archive
   - imported-note
@@ -13,24 +13,93 @@ tags:
   - sample-code
 ---
 
-## Archive Note
-
-이 글은 개인 실습 저장소에 있던 원본 노트를 `research` 컬렉션에서 구별해 보기 쉽게 정리한 아카이브 엔트리입니다.  
-대표 항목은 이후 별도 케이스 스터디로 확장하고, 현재 단계에서는 전체 실습 흐름을 빠르게 탐색할 수 있도록 메타데이터 중심으로 정리했습니다.
+## Snapshot
 
 | Item | Value |
 |------|-------|
 | Track | DL |
 | Type | Sample Code |
-| Source Title | `RNN samplecode` |
-| Source Path | `12_Deep_Learning/Code_Snippets/RNN_samplecode.md` |
+| Source Files | `md` |
+| Code Blocks | 14 |
+| Execution Cells | 14 |
+| Libraries | `torch`, `numpy`, `matplotlib` |
+| Source Note | `RNN_samplecode` |
 
-## Source Glimpse
+## What I Worked On
+
+- @title 하이퍼파라미터
+- 사인파 코사인파 주파수를 합성
+- 저주파 진폭 변조
+- 완만한 선형 추세
+- 가우시안 노이즈
+
+## Implementation Flow
+
+1. @title 하이퍼파라미터
+2. 사인파 코사인파 주파수를 합성
+3. 저주파 진폭 변조
+4. 완만한 선형 추세
+5. 가우시안 노이즈
+6. 단일 채널 (2000,1)
+
+## Code Highlights
+
+### @title RNN모델
+
+```python
+# @title RNN모델
+class RNN(nn.Module):
+    def __init__(self,input_size=1,
+                 hidden_size=HIDDEN_SIZE,
+                 num_layers=NUM_LAYERS,
+                 output_size=1):
+        super().__init__()
+        self.rnn = nn.RNN(input_size=input_size,
+                          hidden_size=hidden_size,
+                          num_layers=num_layers,
+                          batch_first=True) # (batch, seq, feat)
+        self.fc = nn.Linear(hidden_size, output_size)
+
+    def forward(self, x):
+        out, _ = self.rnn(x) # RNN 출력 --> (전체 output, h_n)
+        out = out[:, -1, :]
+        out = self.fc(out)
+        return out
+```
+
+### @title LSTM모델
+
+```python
+# @title LSTM모델
+class LSTM(nn.Module):
+    def __init__(self,input_size=1,
+                 hidden_size=HIDDEN_SIZE,
+                 num_layers=NUM_LAYERS,
+                 output_size=1):
+        super().__init__()
+        self.lstm = nn.LSTM(input_size=input_size,
+                            hidden_size=hidden_size,
+                            num_layers=num_layers,
+                            batch_first=True)
+        self.fc = nn.Linear(hidden_size, output_size)
+
+    def forward(self, x):
+        out, _ = self.lstm(x) # LSTM 출력 --> (전체 output, h_n)
+        out = out[:, -1, :]
+        out = self.fc(out)
+        return out
+```
+
+## Source Bundle
+
+- Source path: `12_Deep_Learning/Code_Snippets/RNN_samplecode.md`
+- Source formats: `md`
+- Companion files: `RNN_samplecode.md`
+- Note type: `code-note`
+- Last updated in the source vault: `2026-03-08T03:33:14`
+- Related notes: `12_Deep_Learning_Code_Summary.md`
+- External references: `localhost`
+
+## Note Preview
 
 > -
-
-## Notes
-
-- 원본 파일은 수업 실습, 스프린트 미션, 강사 공유, 샘플 코드 중 하나로 분류했습니다.
-- 현재 공개 블로그에서는 구분과 탐색을 우선하고, 의미 있는 항목부터 순차적으로 본문을 더 다듬을 예정입니다.
-- 같은 탭 안에서도 `type` 배지로 미션과 실습을 바로 구별할 수 있게 구성했습니다.

@@ -1,11 +1,11 @@
 ---
-title: "U-Net"
+title: "U-Net - 공유"
 date: 2026-03-08
 research_tab: "DL"
 research_kind: "Shared Note"
 source_title: "U-Net - 공유"
 source_path: "12_Deep_Learning/Code_Snippets/U-Net - 공유.md"
-excerpt: "DL Shared Note 아카이브 엔트리입니다. 원본 실습 노트를 공개 research 섹션에서 구별하기 쉽게 정리한 카드입니다."
+excerpt: "DL Shared Note: PennFudanPed Dataset, 예시: transform 함수 (resize, tensor 변환), UNet 모델 정의"
 tags:
   - research-archive
   - imported-note
@@ -13,24 +13,115 @@ tags:
   - shared-note
 ---
 
-## Archive Note
-
-이 글은 개인 실습 저장소에 있던 원본 노트를 `research` 컬렉션에서 구별해 보기 쉽게 정리한 아카이브 엔트리입니다.  
-대표 항목은 이후 별도 케이스 스터디로 확장하고, 현재 단계에서는 전체 실습 흐름을 빠르게 탐색할 수 있도록 메타데이터 중심으로 정리했습니다.
+## Snapshot
 
 | Item | Value |
 |------|-------|
 | Track | DL |
 | Type | Shared Note |
-| Source Title | `U-Net` |
-| Source Path | `12_Deep_Learning/Code_Snippets/U-Net - 공유.md` |
+| Source Files | `md` |
+| Code Blocks | 7 |
+| Execution Cells | 5 |
+| Libraries | `os`, `numpy`, `PIL`, `torch`, `torchvision`, `matplotlib` |
+| Source Note | `U-Net - 공유` |
 
-## Source Glimpse
+## What I Worked On
 
-> 원본 노트는 현재 내용 미리보기를 제공하지 않습니다.
+- PennFudanPed Dataset
+- 예시: transform 함수 (resize, tensor 변환)
+- UNet 모델 정의
+- 학습 및 평가 루프
+- 메인 실행 코드
 
-## Notes
+## Implementation Flow
 
-- 원본 파일은 수업 실습, 스프린트 미션, 강사 공유, 샘플 코드 중 하나로 분류했습니다.
-- 현재 공개 블로그에서는 구분과 탐색을 우선하고, 의미 있는 항목부터 순차적으로 본문을 더 다듬을 예정입니다.
-- 같은 탭 안에서도 `type` 배지로 미션과 실습을 바로 구별할 수 있게 구성했습니다.
+1. PennFudanPed Dataset
+2. 예시: transform 함수 (resize, tensor 변환)
+3. UNet 모델 정의
+4. 학습 및 평가 루프
+5. 메인 실행 코드
+6. 하이퍼파라미터 설정
+
+## Code Highlights
+
+### import os
+
+```python
+import os
+import numpy as np
+from PIL import Image
+import torch
+from torch import nn
+import torch.nn.functional as F
+from torch.utils.data import Dataset, DataLoader
+import torchvision.transforms as transforms
+import torchvision.transforms.functional as TF
+import matplotlib.pyplot as plt
+
+# ======================
+# PennFudanPed Dataset
+# ======================
+class PennFudanDataset(Dataset):
+    def __init__(self, root, transform=None):
+        """
+        root: PennFudanPed 폴더의 상위 경로 (예: "./data/PennFudanPed")
+        transform: 이미지 및 마스크에 적용할 transform (동일하게 적용)
+        """
+        self.root = root
+        self.imgs_dir = os.path.join(root, "PNGImages")
+        self.masks_dir = os.path.join(root, "PedMasks")
+        self.imgs = list(sorted(os.listdir(self.imgs_dir)))
+        self.masks = list(sorted(os.listdir(self.masks_dir)))
+        self.transform = transform
+
+    def __len__(self):
+# ... trimmed ...
+```
+
+### ======================
+
+```python
+# ======================
+# 메인 실행 코드
+# ======================
+
+# 하이퍼파라미터 설정
+num_epochs = 25
+batch_size = 4
+learning_rate = 1e-4
+
+# device 설정
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+# Dataset 및 DataLoader
+dataset = PennFudanDataset(root="./data/PennFudanPed", transform=joint_transform)
+
+# 학습/검증 분할 (예: 80% train, 20% val)
+train_size = int(0.8 * len(dataset))
+val_size = len(dataset) - train_size
+train_dataset, val_dataset = torch.utils.data.random_split(dataset, [train_size, val_size])
+train_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=True, num_workers=2)
+val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False, num_workers=2)
+
+# 모델, 손실함수, optimizer
+model = UNet(n_channels=3, n_classes=2).to(device)
+criterion = nn.CrossEntropyLoss()  # output: [B, 2, H, W], mask: [B, H, W] (각 픽셀 0 또는 1)
+optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+
+# 학습 루프
+# ... trimmed ...
+```
+
+## Source Bundle
+
+- Source path: `12_Deep_Learning/Code_Snippets/U-Net - 공유.md`
+- Source formats: `md`
+- Companion files: `U-Net - 공유.md`
+- Note type: `code-note`
+- Last updated in the source vault: `2026-03-08T03:33:14`
+- Related notes: `12_Deep_Learning_Code_Summary.md`
+- External references: `localhost`, `www.cis.upenn.edu`
+
+## Note Preview
+
+> No prose preview was available in the source note.

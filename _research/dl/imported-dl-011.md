@@ -2,35 +2,127 @@
 title: "PyTorch 텐서 살펴보기"
 date: 2026-03-08
 research_tab: "DL"
-research_kind: "Practice"
+research_kind: "Archive Note"
 source_title: "(실습)PyTorch_텐서_살펴보기"
 source_path: "12_Deep_Learning/Code_Snippets/(실습)PyTorch_텐서_살펴보기.md"
-excerpt: "DL Practice 아카이브 엔트리입니다. 원본 실습 노트를 공개 research 섹션에서 구별하기 쉽게 정리한 카드입니다."
+excerpt: "파이썬 리스트 data_list와 NumPy array data_np가 주어져 있습니다. 이 두 데이터를 PyTorch 텐서로 만들어 주세요."
 tags:
   - research-archive
   - imported-note
   - dl
-  - practice
+  - archive-note
 ---
 
-## Archive Note
-
-이 글은 개인 실습 저장소에 있던 원본 노트를 `research` 컬렉션에서 구별해 보기 쉽게 정리한 아카이브 엔트리입니다.  
-대표 항목은 이후 별도 케이스 스터디로 확장하고, 현재 단계에서는 전체 실습 흐름을 빠르게 탐색할 수 있도록 메타데이터 중심으로 정리했습니다.
+## Snapshot
 
 | Item | Value |
 |------|-------|
 | Track | DL |
-| Type | Practice |
-| Source Title | `PyTorch 텐서 살펴보기` |
-| Source Path | `12_Deep_Learning/Code_Snippets/(실습)PyTorch_텐서_살펴보기.md` |
+| Type | Archive Note |
+| Source Files | `md` |
+| Code Blocks | 119 |
+| Execution Cells | 117 |
+| Libraries | `torch`, `numpy` |
+| Source Note | `(실습)PyTorch_텐서_살펴보기` |
 
-## Source Glimpse
+## What I Worked On
 
-> 텐서만들기 / data 타입
+- 텐서만들기
+- 방법 1 : torch.tensor()
+- 방법 3: torch.as_tensor()
+- torch_from_numpy2 = torch.from_numpy([[1,2],[3,4]])
+- data 타입
 
-## Notes
+## Implementation Flow
 
-- 원본 파일은 수업 실습, 스프린트 미션, 강사 공유, 샘플 코드 중 하나로 분류했습니다.
-- 현재 공개 블로그에서는 구분과 탐색을 우선하고, 의미 있는 항목부터 순차적으로 본문을 더 다듬을 예정입니다.
-- 같은 탭 안에서도 `type` 배지로 미션과 실습을 바로 구별할 수 있게 구성했습니다.
+1. 텐서만들기
+2. 방법 1 : torch.tensor()
+3. 방법 3: torch.as_tensor()
+4. torch_from_numpy2 = torch.from_numpy([[1,2],[3,4]])
+5. data 타입
+6. gpu_int_tensor = tensor.to(dtype=torch.int32, device='cuda')
+
+## Code Highlights
+
+### Quiz.
+
+```python
+import numpy as np
+import torch
+
+tensor0 = torch.tensor(
+    [
+        [1, 1],
+        [-1, -1]
+    ]
+)
+tensor1 = torch.tensor(
+    [
+        [1, 1],
+        [0, 0]
+    ]
+)
+tensor2 = torch.tensor(
+    [
+        [1, -1],
+        [1, -1]
+    ]
+)
+
+# 여기에 코드를 작성하세요.
+a = tensor0 + tensor1
+b = a @ tensor2
+c = b + torch.tensor([2,-2])
+#[[4,-4]   [[2 -2]
+# [-2 2]]  [2 -2]]
+# ... trimmed ...
+```
+
+### 여러 텐서 합치기
+
+```python
+x = torch.tensor(
+    [
+        [
+            [
+                [1,2,3,4,5],
+                [6,7,8,9,10],
+                [1,2,3,4,5],
+                [6,7,8,9,10]
+            ],
+            [
+                [1,2,3,4,5],
+                [6,7,8,9,10],
+                [1,2,3,4,5],
+                [6,7,8,9,10]
+            ]
+        ],
+        [
+            [
+                [1,2,3,4,5],
+                [6,7,8,9,10],
+                [1,2,3,4,5],
+                [6,7,8,9,10]
+            ],
+            [
+                [1,2,3,4,5],
+                [6,7,8,9,10],
+                [1,2,3,4,5],
+                [6,7,8,9,10]
+# ... trimmed ...
+```
+
+## Source Bundle
+
+- Source path: `12_Deep_Learning/Code_Snippets/(실습)PyTorch_텐서_살펴보기.md`
+- Source formats: `md`
+- Companion files: `(실습)PyTorch_텐서_살펴보기.md`
+- Note type: `code-note`
+- Last updated in the source vault: `2026-03-08T03:33:14`
+- Related notes: `12_Deep_Learning_Code_Summary.md`
+- External references: `localhost`
+
+## Note Preview
+
+> 파이썬 리스트 data_list와 NumPy array data_np가 주어져 있습니다. 이 두 데이터를 PyTorch 텐서로 만들어 주세요.
+> data_list에서 만든 텐서는 tensor_from_list 변수에 저장하고, data_np에서 만든 텐서는 tensor_from_np_array에 저장해야 합니다.

@@ -1,11 +1,11 @@
 ---
-title: "PyTorch 데이터"
+title: "PyTorch 데이터 - 공유"
 date: 2026-03-08
 research_tab: "DL"
 research_kind: "Shared Note"
 source_title: "3-2_PyTorch_데이터 - 공유"
 source_path: "12_Deep_Learning/Code_Snippets/3-2_PyTorch_데이터 - 공유.md"
-excerpt: "DL Shared Note 아카이브 엔트리입니다. 원본 실습 노트를 공개 research 섹션에서 구별하기 쉽게 정리한 카드입니다."
+excerpt: "Dataset 클래스는 데이터셋과 레이블을 관리하기 편리하게 만들어 주는 PyTorch의 유틸리티입니다. 커스텀 데이터셋을 정의하면, 데이터셋의 크기와 특정 인덱스 데이터를 쉽게 확인할 수 있습니다."
 tags:
   - research-archive
   - imported-note
@@ -13,24 +13,116 @@ tags:
   - shared-note
 ---
 
-## Archive Note
-
-이 글은 개인 실습 저장소에 있던 원본 노트를 `research` 컬렉션에서 구별해 보기 쉽게 정리한 아카이브 엔트리입니다.  
-대표 항목은 이후 별도 케이스 스터디로 확장하고, 현재 단계에서는 전체 실습 흐름을 빠르게 탐색할 수 있도록 메타데이터 중심으로 정리했습니다.
+## Snapshot
 
 | Item | Value |
 |------|-------|
 | Track | DL |
 | Type | Shared Note |
-| Source Title | `PyTorch 데이터` |
-| Source Path | `12_Deep_Learning/Code_Snippets/3-2_PyTorch_데이터 - 공유.md` |
+| Source Files | `md` |
+| Code Blocks | 54 |
+| Execution Cells | 24 |
+| Libraries | `torch`, `numpy`, `pandas`, `PIL`, `glob`, `matplotlib`, `sklearn` |
+| Source Note | `3-2_PyTorch_데이터 - 공유` |
 
-## Source Glimpse
+## What I Worked On
 
-> PyTorch에서 데이터 다루기 / Dataset 살펴보기 : 간단한 데이터
+- PyTorch에서 데이터 다루기
+- Dataset 살펴보기 : 간단한 데이터
+- Dataset 클래스 만들기
+- Dataset 클래스를 상속받아 커스텀 데이터셋을 정의합니다.
+- Dataset 객체 사용하기
 
-## Notes
+## Implementation Flow
 
-- 원본 파일은 수업 실습, 스프린트 미션, 강사 공유, 샘플 코드 중 하나로 분류했습니다.
-- 현재 공개 블로그에서는 구분과 탐색을 우선하고, 의미 있는 항목부터 순차적으로 본문을 더 다듬을 예정입니다.
-- 같은 탭 안에서도 `type` 배지로 미션과 실습을 바로 구별할 수 있게 구성했습니다.
+1. PyTorch에서 데이터 다루기
+2. Dataset 살펴보기 : 간단한 데이터
+3. Dataset 클래스 만들기
+4. Dataset 클래스를 상속받아 커스텀 데이터셋을 정의합니다.
+5. Dataset 객체 사용하기
+6. 객체 생성
+
+## Code Highlights
+
+### 데이터셋 클래스에 전처리 코드를 함께 넣는다면?
+
+```python
+from sklearn.preprocessing import StandardScaler
+import torch
+from torch.utils.data import Dataset
+
+# 데이터셋 클래스 정의
+class AbaloneDataset(Dataset):
+    def __init__(self, inputs, targets, scaler=None):
+        """
+        초기화 메서드
+        :param inputs: 원본 입력 데이터 (numpy 배열)
+        :param targets: 레이블 데이터 (numpy 배열)
+        :param scaler: Scikit-learn의 StandardScaler 객체 (선택사항)
+        """
+        self.original_inputs = inputs  # 복원을 위해 원본 데이터 저장
+        self.targets = targets
+        self.scaler = scaler
+
+        # 데이터 표준화 수행
+        if self.scaler:
+            self.inputs = self.scaler.transform(inputs)
+        else:
+            self.inputs = inputs
+
+    def __len__(self):
+        return len(self.inputs)
+
+    def __getitem__(self, index):
+        input_data = torch.tensor(self.inputs[index], dtype=torch.float32)
+# ... trimmed ...
+```
+
+### 실습
+
+```python
+# CaliforniaHousingDataset 클래스 정의
+class CaliforniaHousingDataset(Dataset):
+    def __init__(self, input_data, target_data):
+        self.input_data = input_data
+        self.target_data = target_data
+
+    def __len__(self):
+        return len(self.input_data)
+
+    def __getitem__(self, index):
+        input_tensor = torch.tensor(self.input_data[index])
+        target_tensor = torch.tensor(self.target_data[index])
+        return input_tensor, target_tensor
+
+# 학습/검증/테스트 분할
+train_size = int(len(input_data) * 0.8)
+val_size = int(len(input_data) * 0.1)
+
+train_inputs = input_data[:train_size]
+train_targets = target_data[:train_size]
+
+val_inputs = input_data[train_size:train_size + val_size]
+val_targets = target_data[train_size:train_size + val_size]
+
+test_inputs = input_data[train_size + val_size:]
+test_targets = target_data[train_size + val_size:]
+
+# 학습 입력 데이터 기준 표준화
+# ... trimmed ...
+```
+
+## Source Bundle
+
+- Source path: `12_Deep_Learning/Code_Snippets/3-2_PyTorch_데이터 - 공유.md`
+- Source formats: `md`
+- Companion files: `3-2_PyTorch_데이터 - 공유.md`
+- Note type: `code-note`
+- Last updated in the source vault: `2026-03-08T03:33:14`
+- Related notes: `12_Deep_Learning_Code_Summary.md`
+- External references: `localhost`, `storage.googleapis.com`
+
+## Note Preview
+
+> Dataset 클래스는 데이터셋과 레이블을 관리하기 편리하게 만들어 주는 PyTorch의 유틸리티입니다. 커스텀 데이터셋을 정의하면, 데이터셋의 크기와 특정 인덱스 데이터를 쉽게 확인할 수 있습니다.
+> 이번 예제에서는 간단한 2차원 데이터와 이진 레이블을 활용해 Dataset 클래스를 만들어보겠습니다.

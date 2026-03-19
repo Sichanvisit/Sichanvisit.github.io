@@ -1,11 +1,11 @@
 ---
-title: "GAN"
+title: "GAN - 공유"
 date: 2026-03-08
 research_tab: "DL"
 research_kind: "Shared Note"
 source_title: "GAN - 공유"
 source_path: "12_Deep_Learning/Code_Snippets/GAN - 공유.md"
-excerpt: "DL Shared Note 아카이브 엔트리입니다. 원본 실습 노트를 공개 research 섹션에서 구별하기 쉽게 정리한 카드입니다."
+excerpt: "DL Shared Note: MNIST"
 tags:
   - research-archive
   - imported-note
@@ -13,24 +13,115 @@ tags:
   - shared-note
 ---
 
-## Archive Note
-
-이 글은 개인 실습 저장소에 있던 원본 노트를 `research` 컬렉션에서 구별해 보기 쉽게 정리한 아카이브 엔트리입니다.  
-대표 항목은 이후 별도 케이스 스터디로 확장하고, 현재 단계에서는 전체 실습 흐름을 빠르게 탐색할 수 있도록 메타데이터 중심으로 정리했습니다.
+## Snapshot
 
 | Item | Value |
 |------|-------|
 | Track | DL |
 | Type | Shared Note |
-| Source Title | `GAN` |
-| Source Path | `12_Deep_Learning/Code_Snippets/GAN - 공유.md` |
+| Source Files | `md` |
+| Code Blocks | 6 |
+| Execution Cells | 3 |
+| Libraries | `torch`, `torchvision`, `matplotlib`, `os`, `numpy` |
+| Source Note | `GAN - 공유` |
 
-## Source Glimpse
+## What I Worked On
 
-> MNIST
+- MNIST
+- MNIST 데이터셋 준비 및 DataLoader 설정
+- Generator 네트워크 정의 (생성기)
+- Discriminator 네트워크 정의 (판별기)
+- 장치 설정 (GPU 사용 가능하면 GPU 사용)
 
-## Notes
+## Implementation Flow
 
-- 원본 파일은 수업 실습, 스프린트 미션, 강사 공유, 샘플 코드 중 하나로 분류했습니다.
-- 현재 공개 블로그에서는 구분과 탐색을 우선하고, 의미 있는 항목부터 순차적으로 본문을 더 다듬을 예정입니다.
-- 같은 탭 안에서도 `type` 배지로 미션과 실습을 바로 구별할 수 있게 구성했습니다.
+1. MNIST
+2. MNIST 데이터셋 준비 및 DataLoader 설정
+3. Generator 네트워크 정의 (생성기)
+4. Discriminator 네트워크 정의 (판별기)
+5. 장치 설정 (GPU 사용 가능하면 GPU 사용)
+6. 생성기와 판별기 초기화
+
+## Code Highlights
+
+### MNIST
+
+```python
+# Generator 네트워크 정의 (생성기)
+class Generator(nn.Module):
+    def __init__(self):
+        super(Generator, self).__init__()
+        self.model = nn.Sequential(
+            nn.Linear(100, 256),
+            nn.LeakyReLU(0.2),
+            nn.Linear(256, 512),
+            nn.LeakyReLU(0.2),
+            nn.Linear(512, 1024),
+            nn.LeakyReLU(0.2),
+            nn.Linear(1024, 28*28),
+            nn.Tanh()  # 출력값을 [-1, 1] 범위로 맞춤
+        )
+
+    def forward(self, z):
+        return self.model(z).view(-1, 1, 28, 28)
+
+# Discriminator 네트워크 정의 (판별기)
+class Discriminator(nn.Module):
+    def __init__(self):
+        super(Discriminator, self).__init__()
+        self.model = nn.Sequential(
+            nn.Linear(28*28, 1024),
+            nn.LeakyReLU(0.2),
+            nn.Dropout(0.3),
+            nn.Linear(1024, 512),
+            nn.LeakyReLU(0.2),
+# ... trimmed ...
+```
+
+### MNIST
+
+```python
+# 장치 설정 (GPU 사용 가능하면 GPU 사용)
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+# 생성기와 판별기 초기화
+generator = Generator().to(device)
+discriminator = Discriminator().to(device)
+
+# 옵티마이저 설정 (Adam 사용)
+optimizer_G = optim.Adam(generator.parameters(), lr=0.0002, betas=(0.5, 0.999))
+optimizer_D = optim.Adam(discriminator.parameters(), lr=0.0002, betas=(0.5, 0.999))
+
+# 손실 함수: Binary Cross Entropy Loss 사용
+criterion = nn.BCELoss()
+
+# 에포크 수 설정
+num_epochs = 100
+
+# 평가를 위해 고정된 노이즈 벡터 생성 (이미지 생성 비교용)
+fixed_noise = torch.randn(64, 100, device=device)
+
+# 결과 저장을 위한 폴더 생성
+os.makedirs('./images', exist_ok=True)
+os.makedirs('./results', exist_ok=True)
+
+# GAN 학습 루프 (에포크 단위)
+for epoch in range(num_epochs):
+    generator.train()
+    discriminator.train()
+# ... trimmed ...
+```
+
+## Source Bundle
+
+- Source path: `12_Deep_Learning/Code_Snippets/GAN - 공유.md`
+- Source formats: `md`
+- Companion files: `GAN - 공유.md`
+- Note type: `code-note`
+- Last updated in the source vault: `2026-03-08T03:33:14`
+- Related notes: `12_Deep_Learning_Code_Summary.md`
+- External references: `localhost`
+
+## Note Preview
+
+> No prose preview was available in the source note.

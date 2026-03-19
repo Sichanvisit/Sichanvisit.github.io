@@ -5,7 +5,7 @@ research_tab: "LLM"
 research_kind: "Archive Note"
 source_title: "4-1 LangGraph_1_조건분기"
 source_path: "13_LLM_GenAI/Code_Snippets/4-1 LangGraph_1_조건분기.md"
-excerpt: "LLM Archive Note 아카이브 엔트리입니다. 원본 실습 노트를 공개 research 섹션에서 구별하기 쉽게 정리한 카드입니다."
+excerpt: "- LangGraph의 핵심 3요소(State, Node, Edge)를 이해한다 - 조건부 엣지(Conditional Edge)로 분기 로직을 구현한다 - 그래프를 시각화하고 실행 흐름을 추적한다"
 tags:
   - research-archive
   - imported-note
@@ -13,24 +13,116 @@ tags:
   - archive-note
 ---
 
-## Archive Note
-
-이 글은 개인 실습 저장소에 있던 원본 노트를 `research` 컬렉션에서 구별해 보기 쉽게 정리한 아카이브 엔트리입니다.  
-대표 항목은 이후 별도 케이스 스터디로 확장하고, 현재 단계에서는 전체 실습 흐름을 빠르게 탐색할 수 있도록 메타데이터 중심으로 정리했습니다.
+## Snapshot
 
 | Item | Value |
 |------|-------|
 | Track | LLM |
 | Type | Archive Note |
-| Source Title | `LangGraph 1 조건분기` |
-| Source Path | `13_LLM_GenAI/Code_Snippets/4-1 LangGraph_1_조건분기.md` |
+| Source Files | `ipynb`, `md` |
+| Code Blocks | 12 |
+| Execution Cells | 7 |
+| Libraries | `os`, `getpass`, `typing`, `langchain_openai`, `langgraph`, `IPython` |
+| Source Note | `4-1 LangGraph_1_조건분기` |
 
-## Source Glimpse
+## What I Worked On
 
-> LangGraph 실습 1: 조건 분기 (Conditional Branching) / - LangGraph의 핵심 3요소(State, Node, Edge)를 이해한다
+- LangGraph 실습 1: 조건 분기 (Conditional Branching)
+- 0. 환경 설정
+- 패키지 설치
+- API 키 설정
+- 1. 핵심 개념 복습
 
-## Notes
+## Implementation Flow
 
-- 원본 파일은 수업 실습, 스프린트 미션, 강사 공유, 샘플 코드 중 하나로 분류했습니다.
-- 현재 공개 블로그에서는 구분과 탐색을 우선하고, 의미 있는 항목부터 순차적으로 본문을 더 다듬을 예정입니다.
-- 같은 탭 안에서도 `type` 배지로 미션과 실습을 바로 구별할 수 있게 구성했습니다.
+1. LangGraph 실습 1: 조건 분기 (Conditional Branching)
+2. 0. 환경 설정
+3. 패키지 설치
+4. API 키 설정
+5. 1. 핵심 개념 복습
+6. LangGraph 3대 요소
+
+## Code Highlights
+
+### 3. 코드 구현
+
+```python
+# ============================================
+# [2] Node 정의: 실제 작업을 수행하는 함수들
+# ============================================
+
+def check_weather(state: WeatherState) -> dict:
+    """날씨를 보고 좋음/나쁨을 판단하는 노드"""
+    print("[check_weather] 날씨 확인 중...")
+
+    weather = state["weather"]
+
+    # LLM에게 판단 요청
+    response = llm.invoke(
+        f"날씨가 '{weather}'입니다. "
+        "야외 활동하기 좋으면 'good', 안 좋으면 'bad'라고만 답해주세요."
+    )
+
+    decision = response.content.strip().lower()
+    print(f"   → LLM 판단: {decision}")
+
+    # State 업데이트 (변경된 부분만 반환)
+    return {"decision": decision}
+
+
+def go_for_walk(state: WeatherState) -> dict:
+    """산책 추천 노드"""
+    print("[go_for_walk] 산책을 추천합니다!")
+    return {"activity": "산책하기~~"}
+
+# ... trimmed ...
+```
+
+### 3. 코드 구현
+
+```python
+# ============================================
+# [4] 그래프 조립
+# ============================================
+
+# 그래프 생성 (State 타입 지정)
+workflow = StateGraph(WeatherState)
+
+# 노드 등록
+workflow.add_node("check_weather", check_weather)
+workflow.add_node("go_for_walk", go_for_walk)
+workflow.add_node("code_at_home", code_at_home)
+
+# 엣지 연결
+workflow.add_edge(START, "check_weather")  # 시작 → check_weather
+
+# 조건부 엣지: check_weather 이후 router 함수로 분기
+workflow.add_conditional_edges(
+    source="check_weather",      # 출발 노드
+    path=weather_router,          # 분기 결정 함수
+    path_map={                    # 반환값 → 도착 노드 매핑
+        "go_for_walk": "go_for_walk",
+        "code_at_home": "code_at_home",
+    }
+)
+
+# 종료 엣지
+workflow.add_edge("go_for_walk", END)
+workflow.add_edge("code_at_home", END)
+# ... trimmed ...
+```
+
+## Source Bundle
+
+- Source path: `13_LLM_GenAI/Code_Snippets/4-1 LangGraph_1_조건분기.md`
+- Source formats: `ipynb`, `md`
+- Companion files: `4-1 LangGraph_1_조건분기.ipynb`, `4-1 LangGraph_1_조건분기.md`
+- Note type: `code-note`
+- Last updated in the source vault: `2026-03-08T03:33:14`
+- Related notes: `13_LLM_code_Roadmap.md`, `13_LLM_GenAI_Code_Summary.md`
+- External references: `localhost`
+
+## Note Preview
+
+> - LangGraph의 핵심 3요소(State, Node, Edge)를 이해한다 - 조건부 엣지(Conditional Edge)로 분기 로직을 구현한다 - 그래프를 시각화하고 실행 흐름을 추적한다
+> ---

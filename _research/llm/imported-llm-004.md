@@ -2,35 +2,117 @@
 title: "임베딩 스팸메시지분류"
 date: 2026-03-08
 research_tab: "LLM"
-research_kind: "Practice"
+research_kind: "Archive Note"
 source_title: "3-1(실습)임베딩_스팸메시지분류"
 source_path: "13_LLM_GenAI/Code_Snippets/3-1(실습)임베딩_스팸메시지분류.md"
-excerpt: "LLM Practice 아카이브 엔트리입니다. 원본 실습 노트를 공개 research 섹션에서 구별하기 쉽게 정리한 카드입니다."
+excerpt: "https://wikidocs.net/50739"
 tags:
   - research-archive
   - imported-note
   - llm
-  - practice
+  - archive-note
 ---
 
-## Archive Note
-
-이 글은 개인 실습 저장소에 있던 원본 노트를 `research` 컬렉션에서 구별해 보기 쉽게 정리한 아카이브 엔트리입니다.  
-대표 항목은 이후 별도 케이스 스터디로 확장하고, 현재 단계에서는 전체 실습 흐름을 빠르게 탐색할 수 있도록 메타데이터 중심으로 정리했습니다.
+## Snapshot
 
 | Item | Value |
 |------|-------|
 | Track | LLM |
-| Type | Practice |
-| Source Title | `임베딩 스팸메시지분류` |
-| Source Path | `13_LLM_GenAI/Code_Snippets/3-1(실습)임베딩_스팸메시지분류.md` |
+| Type | Archive Note |
+| Source Files | `md` |
+| Code Blocks | 27 |
+| Execution Cells | 13 |
+| Libraries | `pandas`, `numpy`, `matplotlib`, `torch`, `sklearn`, `nltk`, `gensim`, `os` |
+| Source Note | `3-1(실습)임베딩_스팸메시지분류` |
 
-## Source Glimpse
+## What I Worked On
 
-> --- / 데이터 불러오기
+- 데이터 불러오기
+- SMS Spam 데이터 다운로드 및 로드
+- 데이터 확인
+- GPU 설정
+- 데이터 분할
 
-## Notes
+## Implementation Flow
 
-- 원본 파일은 수업 실습, 스프린트 미션, 강사 공유, 샘플 코드 중 하나로 분류했습니다.
-- 현재 공개 블로그에서는 구분과 탐색을 우선하고, 의미 있는 항목부터 순차적으로 본문을 더 다듬을 예정입니다.
-- 같은 탭 안에서도 `type` 배지로 미션과 실습을 바로 구별할 수 있게 구성했습니다.
+1. 데이터 불러오기
+2. SMS Spam 데이터 다운로드 및 로드
+3. 데이터 확인
+4. GPU 설정
+5. 데이터 분할
+6. 라벨 변환
+
+## Code Highlights
+
+### Word2Vec
+
+```python
+class WordSpamDataset(Dataset):
+  """텍스트 문장을 토큰화, 정수 인코딩, 패딩/절단을 거쳐 지정된 길이(max_len)의 텐서로 변환하는 스팸 데이터셋"""
+  def __init__(self, texts, labels, word2idx, max_len):
+      self.texts = texts
+      self.labels = labels
+      self.word2idx = word2idx
+      self.max_len = max_len
+
+  def __len__(self):
+      return len(self.texts)
+
+  def __getitem__(self, idx):
+      tokens = word_tokenize(self.texts[idx])
+      encoded = [self.word2idx.get(word, 0) for word in tokens]  # OOV 단어는 0
+      if len(encoded) < self.max_len:
+          encoded += [0] * (self.max_len - len(encoded))
+      else:
+          encoded = encoded[:self.max_len]
+      return torch.tensor(encoded, dtype=torch.long), torch.tensor(self.labels[idx], dtype=torch.float)
+```
+
+### Word2Vec
+
+```python
+def train(model, loader, criterion, optimizer):
+  """모델을 1 epoch 동안 학습시키는 함수"""
+  model.train()
+  total_loss = 0
+  for texts, labels in loader:
+      texts, labels = texts.to(device), labels.to(device)
+      labels = labels.unsqueeze(1)  # 라벨 크기를 (batch_size, 1)로 변환
+      optimizer.zero_grad()
+      outputs = model(texts)  # 모델 출력: (batch_size, 1)
+      loss = criterion(outputs, labels)  # BCELoss 사용
+      loss.backward()
+      optimizer.step()
+      total_loss += loss.item()
+  return total_loss / len(loader)
+
+def evaluate(model, loader):
+  """모델의 성능(정확도)을 평가하는 함수"""
+  model.eval()
+  correct, total = 0, 0
+  with torch.no_grad():
+      for texts, labels in loader:
+          texts, labels = texts.to(device), labels.to(device)
+          labels = labels.unsqueeze(1).float()
+          outputs = model(texts)
+          # 확률값(outputs)이 0.5 이상이면 1(스팸), 아니면 0(햄)으로 변환
+          predictions = (outputs >= 0.5).float()
+          correct += (predictions == labels).sum().item()
+          total += labels.size(0)
+# ... trimmed ...
+```
+
+## Source Bundle
+
+- Source path: `13_LLM_GenAI/Code_Snippets/3-1(실습)임베딩_스팸메시지분류.md`
+- Source formats: `md`
+- Companion files: `3-1(실습)임베딩_스팸메시지분류.md`
+- Note type: `code-note`
+- Last updated in the source vault: `2026-03-08T03:33:14`
+- Related notes: `13_LLM_code_Roadmap.md`, `13_LLM_GenAI_Code_Summary.md`
+- External references: `localhost`, `raw.githubusercontent.com`, `wikidocs.net`, `nlp.stanford.edu`
+
+## Note Preview
+
+> ---
+> https://wikidocs.net/50739

@@ -1,11 +1,11 @@
 ---
-title: "Segmentation 데이터다루기"
+title: "Segmentation 데이터다루기 - 공유"
 date: 2026-03-08
 research_tab: "DL"
 research_kind: "Shared Note"
 source_title: "Segmentation_데이터다루기 - 공유"
 source_path: "12_Deep_Learning/Code_Snippets/Segmentation_데이터다루기 - 공유.md"
-excerpt: "DL Shared Note 아카이브 엔트리입니다. 원본 실습 노트를 공개 research 섹션에서 구별하기 쉽게 정리한 카드입니다."
+excerpt: "xml.etree.ElementTree는 Python 내장 XML 처리 라이브러리로, XML 파일을 파싱하고, 트리 형태로 데이터를 탐색하며 필요한 정보를 추출할 수 있도록 도와줍니다. 대략적인 사용 방법은 다음과 같습니다."
 tags:
   - research-archive
   - imported-note
@@ -13,24 +13,116 @@ tags:
   - shared-note
 ---
 
-## Archive Note
-
-이 글은 개인 실습 저장소에 있던 원본 노트를 `research` 컬렉션에서 구별해 보기 쉽게 정리한 아카이브 엔트리입니다.  
-대표 항목은 이후 별도 케이스 스터디로 확장하고, 현재 단계에서는 전체 실습 흐름을 빠르게 탐색할 수 있도록 메타데이터 중심으로 정리했습니다.
+## Snapshot
 
 | Item | Value |
 |------|-------|
 | Track | DL |
 | Type | Shared Note |
-| Source Title | `Segmentation 데이터다루기` |
-| Source Path | `12_Deep_Learning/Code_Snippets/Segmentation_데이터다루기 - 공유.md` |
+| Source Files | `md` |
+| Code Blocks | 76 |
+| Execution Cells | 52 |
+| Libraries | `os`, `json`, `torch`, `numpy`, `PIL`, `torchvision`, `matplotlib`, `xml` |
+| Source Note | `Segmentation_데이터다루기 - 공유` |
 
-## Source Glimpse
+## What I Worked On
 
-> VOC2012 다루기 / 이미지와 마스크
+- VOC2012 다루기
+- 이미지와 마스크
+- VOC 데이터셋의 첫 샘플을 불러와 이미지와 마스크의 형태를 확인합니다.
+- 첫 번째 이미지와 마스크 불러오기
+- 원본 데이터를 시각화해봅니다.
 
-## Notes
+## Implementation Flow
 
-- 원본 파일은 수업 실습, 스프린트 미션, 강사 공유, 샘플 코드 중 하나로 분류했습니다.
-- 현재 공개 블로그에서는 구분과 탐색을 우선하고, 의미 있는 항목부터 순차적으로 본문을 더 다듬을 예정입니다.
-- 같은 탭 안에서도 `type` 배지로 미션과 실습을 바로 구별할 수 있게 구성했습니다.
+1. VOC2012 다루기
+2. 이미지와 마스크
+3. VOC 데이터셋의 첫 샘플을 불러와 이미지와 마스크의 형태를 확인합니다.
+4. 첫 번째 이미지와 마스크 불러오기
+5. 원본 데이터를 시각화해봅니다.
+6. Step 3: 마스크 데이터의 전처리 이해하기
+
+## Code Highlights
+
+### 데이터셋과 데이터로더
+
+```python
+import os
+import json
+import torch
+import numpy as np
+from PIL import Image
+from torch.utils.data import Dataset, DataLoader
+from torchvision import transforms, datasets
+import matplotlib.pyplot as plt
+
+###############################################
+# Step 1: VOCSegmentation 데이터셋 로드 및 클래스 정보 설정하기
+###############################################
+class SegmentationDataset(Dataset):
+    def __init__(self, root, train=True, transform=None, target_transform=None, download=False):
+        """
+        VOCSegmentation 데이터셋을 로드하고, 이미지와 pixel-level segmentation mask를 반환하는 Dataset 클래스입니다.
+
+        Args:
+            root (str): 데이터셋이 저장될 루트 경로
+            train (bool): True이면 training 데이터를, False이면 validation 데이터를 사용
+            transform: 입력 이미지에 적용할 변환(예: 크기 조정, tensor 변환 등)
+            target_transform: segmentation mask에 적용할 변환(보통 크기 조정 등, 클래스 값 보존을 위해 nearest interpolation 사용)
+            download (bool): 데이터가 없으면 자동으로 다운로드할지 여부
+        """
+        # train이면 'train', 아니면 'val' 이미지를 선택합니다.
+        image_set = 'train' if train else 'val'
+
+        # torchvision의 VOCSegmentation 클래스를 사용하여 VOC 데이터셋을 불러옵니다.
+# ... trimmed ...
+```
+
+### 시각화
+
+```python
+###############################################
+# Step 4: 시각화 함수 정의하기
+###############################################
+def draw_mask(images, masks, outputs=None, plot_size=4):
+    """
+    학습 중 또는 결과 확인을 위해, 이미지와 segmentation mask를 시각화합니다.
+
+    Args:
+        images (Tensor): 배치 이미지 (shape: [B, C, H, W])
+        masks (Tensor): 배치 마스크 (shape: [B, 1, H, W])
+        outputs (Tensor, optional): 예측 마스크 (있을 경우)
+        plot_size (int): 시각화할 배치의 수
+    """
+    # 내부 함수: 마스크에 클래스별 색상을 입히는 함수
+    def color_mask(image, target):
+        # target: (1, H, W) 텐서를 squeeze하여 (H, W) 형태로 변경
+        m = target.squeeze().numpy().astype(np.uint8)
+        # image와 같은 크기를 가지는 빈 컬러 이미지를 생성 (H, W, 3)
+        cm = np.zeros_like(image, dtype=np.uint8)
+        # 클래스 1~20에 대해 색상 적용 (background는 0으로 남음)
+        for i in range(1, 21):
+            cm[m == i] = train_dataset.categories.get(str(i), {"color": [0, 0, 0]})["color"]
+
+        # 마스크에 포함된 클래스 번호를 이용해 클래스 이름 리스트 생성
+        classes = [train_dataset.categories.get(str(idx), {"class": f"class_{idx}"})["class"] for idx in np.unique(m)]
+        return cm, classes
+
+    # 출력할 열 수: 예측 결과(outputs)가 있으면 3, 없으면 2
+# ... trimmed ...
+```
+
+## Source Bundle
+
+- Source path: `12_Deep_Learning/Code_Snippets/Segmentation_데이터다루기 - 공유.md`
+- Source formats: `md`
+- Companion files: `Segmentation_데이터다루기 - 공유.md`
+- Note type: `code-note`
+- Last updated in the source vault: `2026-03-08T03:33:14`
+- Related notes: `12_Deep_Learning_Code_Summary.md`
+- External references: `docs.python.org`, `localhost`, `www.cis.upenn.edu`, `github.com`, `cocodataset.org`
+
+## Note Preview
+
+> xml.etree.ElementTree는 Python 내장 XML 처리 라이브러리로, XML 파일을 파싱하고, 트리 형태로 데이터를 탐색하며 필요한 정보를 추출할 수 있도록 도와줍니다. 대략적인 사용 방법은 다음과 같습니다.
+> 1. **XML 파싱:** - ET.parse('파일경로.xml')를 사용하여 XML 파일을 파싱하고, XML 트리 객체를 생성합니다. - tree.getroot()를 호출하여 트리의 최상위(root) 엘리먼트를 가져옵니다.

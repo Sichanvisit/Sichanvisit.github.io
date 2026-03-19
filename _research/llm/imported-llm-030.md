@@ -5,7 +5,7 @@ research_tab: "LLM"
 research_kind: "Archive Note"
 source_title: "3-5 RAG_맛보기"
 source_path: "13_LLM_GenAI/Code_Snippets/3-5 RAG_맛보기.md"
-excerpt: "LLM Archive Note 아카이브 엔트리입니다. 원본 실습 노트를 공개 research 섹션에서 구별하기 쉽게 정리한 카드입니다."
+excerpt: "**RAG(Retrieval-Augmented Generation)**는 대규모 언어 모델(LLM)이 **외부의 지식(데이터)**을 참고하여 더 정확하고 풍부한 답변을 생성하도록 만드는 기술입니다."
 tags:
   - research-archive
   - imported-note
@@ -13,24 +13,83 @@ tags:
   - archive-note
 ---
 
-## Archive Note
-
-이 글은 개인 실습 저장소에 있던 원본 노트를 `research` 컬렉션에서 구별해 보기 쉽게 정리한 아카이브 엔트리입니다.  
-대표 항목은 이후 별도 케이스 스터디로 확장하고, 현재 단계에서는 전체 실습 흐름을 빠르게 탐색할 수 있도록 메타데이터 중심으로 정리했습니다.
+## Snapshot
 
 | Item | Value |
 |------|-------|
 | Track | LLM |
 | Type | Archive Note |
-| Source Title | `RAG 맛보기` |
-| Source Path | `13_LLM_GenAI/Code_Snippets/3-5 RAG_맛보기.md` |
+| Source Files | `ipynb`, `md` |
+| Code Blocks | 7 |
+| Execution Cells | 3 |
+| Libraries | `os`, `langchain_openai`, `langchain_core`, `getpass` |
+| Source Note | `3-5 RAG_맛보기` |
 
-## Source Glimpse
+## What I Worked On
 
-> RAG (검색 증강 생성) / **RAG(Retrieval-Augmented Generation)**는 대규모 언어 모델(LLM)이 **외부의 지식(데이터)**을 참고하여 더 정확하고 풍부한 답변을 생성하도록 만드는 기술입니다.
+- RAG (검색 증강 생성)
+- **왜 RAG가 필요한가요?**
+- **RAG의 작동 원리 (3단계)**
+- Prompt the user for the OpenAI API key securely
+- 1. 모델 준비
 
-## Notes
+## Implementation Flow
 
-- 원본 파일은 수업 실습, 스프린트 미션, 강사 공유, 샘플 코드 중 하나로 분류했습니다.
-- 현재 공개 블로그에서는 구분과 탐색을 우선하고, 의미 있는 항목부터 순차적으로 본문을 더 다듬을 예정입니다.
-- 같은 탭 안에서도 `type` 배지로 미션과 실습을 바로 구별할 수 있게 구성했습니다.
+1. RAG (검색 증강 생성)
+2. **왜 RAG가 필요한가요?**
+3. **RAG의 작동 원리 (3단계)**
+4. Prompt the user for the OpenAI API key securely
+5. 1. 모델 준비
+6. 2. 우리 가게만의 지식 (Context) - 아직 DB 없이 변수로 직접 정의
+
+## Code Highlights
+
+### **RAG의 작동 원리 (3단계)**
+
+```python
+# 1. 모델 준비
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+
+# 2. 우리 가게만의 지식 (Context) - 아직 DB 없이 변수로 직접 정의
+context = """
+[맛있는 김밥집 메뉴판]
+1. 원조 김밥: 3,000원 - 40년 전통의 맛
+2. 치즈 폭탄 김밥: 4,500원 - 모짜렐라 치즈가 듬뿍
+3. 불닭 김밥: 5,000원 - 아주 매움, 맵찔이 금지
+* 영업 시간: 오전 10시 ~ 오후 8시 (매주 월요일 휴무)
+"""
+```
+
+### **RAG의 작동 원리 (3단계)**
+
+```python
+# 3. 프롬프트 템플릿 만들기
+# RAG의 핵심: {context} 자리에 검색된 문서를 넣는 것!
+template = """
+당신은 친절한 김밥집 점원입니다.
+아래 [참고 정보]를 바탕으로 손님의 [질문]에 답변해주세요.
+정보에 없는 내용은 "잘 모르겠습니다"라고 답하세요.
+
+[참고 정보]
+{context}
+
+[질문]: {question}
+"""
+
+prompt = PromptTemplate.from_template(template)
+```
+
+## Source Bundle
+
+- Source path: `13_LLM_GenAI/Code_Snippets/3-5 RAG_맛보기.md`
+- Source formats: `ipynb`, `md`
+- Companion files: `3-5 RAG_맛보기.ipynb`, `3-5 RAG_맛보기.md`
+- Note type: `code-note`
+- Last updated in the source vault: `2026-03-08T03:33:14`
+- Related notes: `13_LLM_code_Roadmap.md`, `13_LLM_GenAI_Code_Summary.md`
+- External references: `localhost`, `ai.google.dev`, `platform.openai.com`
+
+## Note Preview
+
+> **RAG(Retrieval-Augmented Generation)**는 대규모 언어 모델(LLM)이 **외부의 지식(데이터)**을 참고하여 더 정확하고 풍부한 답변을 생성하도록 만드는 기술입니다.
+> 쉽게 비유하자면, **"시험을 볼 때 교과서를 펼쳐 놓고 답을 찾는 오픈 북 테스트(Open-book Test)"**와 같습니다.

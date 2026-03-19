@@ -2,35 +2,118 @@
 title: "UNet"
 date: 2026-03-08
 research_tab: "DL"
-research_kind: "Practice"
+research_kind: "Archive Note"
 source_title: "(실습)UNet"
 source_path: "12_Deep_Learning/Code_Snippets/(실습)UNet.md"
-excerpt: "DL Practice 아카이브 엔트리입니다. 원본 실습 노트를 공개 research 섹션에서 구별하기 쉽게 정리한 카드입니다."
+excerpt: "DL Archive Note note with implementation details and archived source context."
 tags:
   - research-archive
   - imported-note
   - dl
-  - practice
+  - archive-note
 ---
 
-## Archive Note
-
-이 글은 개인 실습 저장소에 있던 원본 노트를 `research` 컬렉션에서 구별해 보기 쉽게 정리한 아카이브 엔트리입니다.  
-대표 항목은 이후 별도 케이스 스터디로 확장하고, 현재 단계에서는 전체 실습 흐름을 빠르게 탐색할 수 있도록 메타데이터 중심으로 정리했습니다.
+## Snapshot
 
 | Item | Value |
 |------|-------|
 | Track | DL |
-| Type | Practice |
-| Source Title | `UNet` |
-| Source Path | `12_Deep_Learning/Code_Snippets/(실습)UNet.md` |
+| Type | Archive Note |
+| Source Files | `md` |
+| Code Blocks | 11 |
+| Execution Cells | 8 |
+| Libraries | `os`, `numpy`, `PIL`, `torch`, `torchvision`, `matplotlib`, `pdb` |
+| Source Note | `(실습)UNet` |
 
-## Source Glimpse
+## What I Worked On
 
-> 원본 노트는 현재 내용 미리보기를 제공하지 않습니다.
+- This archived note is categorized as `Archive Note` under `DL`.
 
-## Notes
+## Implementation Flow
 
-- 원본 파일은 수업 실습, 스프린트 미션, 강사 공유, 샘플 코드 중 하나로 분류했습니다.
-- 현재 공개 블로그에서는 구분과 탐색을 우선하고, 의미 있는 항목부터 순차적으로 본문을 더 다듬을 예정입니다.
-- 같은 탭 안에서도 `type` 배지로 미션과 실습을 바로 구별할 수 있게 구성했습니다.
+1. Review the archived source note.
+2. Inspect the main implementation blocks.
+3. Reuse the extracted approach in a full project page if needed.
+
+## Code Highlights
+
+### from pdb import run
+
+```python
+from pdb import run
+#@title 학습/평가 함수
+def train(model, dataloader, optimizer, criterion, device):
+    model.train()
+    running_loss = 0.0
+    for imgs, masks in dataloader:
+        imgs = imgs.to(device)
+        masks = masks.to(device)
+
+        optimizer.zero_grad()
+        outputs = model(imgs)
+        loss = criterion(outputs, masks)
+        loss.backward()
+        optimizer.step()
+
+        running_loss += loss.item() * imgs.size(0)
+    epoch_loss = running_loss / len(dataloader.dataset)
+    return epoch_loss
+
+def evaluate(model, dataloader, criterion, device):
+    model.eval()
+    running_loss = 0.0
+    with torch.no_grad():
+        for imgs, masks in dataloader:
+            imgs.to(device)
+            masks.to(device)
+            outputs = model(imgs)
+            loss = criterion(outputs, masks)
+# ... trimmed ...
+```
+
+### @title 학습 루프
+
+```python
+#@title 학습 루프
+num_epochs = 2
+batch_size = 4
+lr = 1e-4
+
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+dataset = PennFudanDataset(root="/content/data/PennFudanPed", transform=joint_transform)
+
+train_size = int(0.8* len(dataset))
+val_size = len(dataset)-train_size
+train_dataset, val_dataset = torch.utils.data.random_split(dataset, [train_size, val_size])
+
+train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+val_dataloader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
+
+model = UNet(n_ch=3, n_classes=2).to(device)
+criterion = nn.CrossEntropyLoss()
+optimizer = torch.optim.Adam(model.parameters(), lr=lr)
+
+best_val_loss = float('inf')
+for epoch in range(num_epochs):
+    train_loss = train(model, train_dataloader, optimizer, criterion, device)
+    val_loss = evaluate(model, val_dataloader, criterion, device)
+    print(f"Epoch {epoch+1}/{num_epochs} , Train Loss : {train_loss:.4f}, Val Loss : {val_loss:.4f}")
+    if val_loss < best_val_loss:
+        best_val_loss = val_loss
+        torch.save(model.state_dict(), 'best_unet.pt')
+```
+
+## Source Bundle
+
+- Source path: `12_Deep_Learning/Code_Snippets/(실습)UNet.md`
+- Source formats: `md`
+- Companion files: `(실습)UNet.md`
+- Note type: `code-note`
+- Last updated in the source vault: `2026-03-08T03:33:14`
+- Related notes: `2025.10.1,2,13,14.md`, `12_Deep_Learning_Code_Summary.md`
+- External references: `localhost`, `www.cis.upenn.edu`
+
+## Note Preview
+
+> No prose preview was available in the source note.

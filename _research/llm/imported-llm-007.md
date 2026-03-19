@@ -2,35 +2,127 @@
 title: "Attention 1"
 date: 2026-03-08
 research_tab: "LLM"
-research_kind: "Practice"
+research_kind: "Archive Note"
 source_title: "3-2 (실습)Attention_1"
 source_path: "13_LLM_GenAI/Code_Snippets/3-2 (실습)Attention_1.md"
-excerpt: "LLM Practice 아카이브 엔트리입니다. 원본 실습 노트를 공개 research 섹션에서 구별하기 쉽게 정리한 카드입니다."
+excerpt: "Embedding + BiLSTM 모델과 추가로 Seq2seq을 구성하여 Attention 층을 추가"
 tags:
   - research-archive
   - imported-note
   - llm
-  - practice
+  - archive-note
 ---
 
-## Archive Note
-
-이 글은 개인 실습 저장소에 있던 원본 노트를 `research` 컬렉션에서 구별해 보기 쉽게 정리한 아카이브 엔트리입니다.  
-대표 항목은 이후 별도 케이스 스터디로 확장하고, 현재 단계에서는 전체 실습 흐름을 빠르게 탐색할 수 있도록 메타데이터 중심으로 정리했습니다.
+## Snapshot
 
 | Item | Value |
 |------|-------|
 | Track | LLM |
-| Type | Practice |
-| Source Title | `Attention 1` |
-| Source Path | `13_LLM_GenAI/Code_Snippets/3-2 (실습)Attention_1.md` |
+| Type | Archive Note |
+| Source Files | `md` |
+| Code Blocks | 14 |
+| Execution Cells | 12 |
+| Libraries | `torch`, `google`, `pandas`, `numpy`, `sentencepiece`, `os`, `math` |
+| Source Note | `3-2 (실습)Attention_1` |
 
-## Source Glimpse
+## What I Worked On
 
-> Attention / Embedding + BiLSTM 모델과 추가로 Seq2seq을 구성하여 Attention 층을 추가
+- 1. 감정 분류을 위한 Attention 순환 신경망: BiLSTM + Attention
+- 단계:
+- 모델링
+- 모델 생성
+- 모델 학습
 
-## Notes
+## Implementation Flow
 
-- 원본 파일은 수업 실습, 스프린트 미션, 강사 공유, 샘플 코드 중 하나로 분류했습니다.
-- 현재 공개 블로그에서는 구분과 탐색을 우선하고, 의미 있는 항목부터 순차적으로 본문을 더 다듬을 예정입니다.
-- 같은 탭 안에서도 `type` 배지로 미션과 실습을 바로 구별할 수 있게 구성했습니다.
+1. 1. 감정 분류을 위한 Attention 순환 신경망: BiLSTM + Attention
+2. 단계:
+3. 모델링
+4. 모델 생성
+5. 모델 학습
+6. 파일 업로드 창 열기
+
+## Code Highlights
+
+### 모델 학습(train) + 평가(validation) 단계
+
+```python
+criterion = nn.CrossEntropyLoss() # 다중 클래스 분류
+optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+
+history = {'train_loss': [],
+           'val_loss': [],
+           'val_acc': []
+           }
+
+for epoch in range(num_epochs):
+  model.train() # 모델을 학습모드로 설정
+  total_loss = 0.0
+
+  for input, labels in train_loader:
+    # 입력데이터 준비
+    input_ids = input.long().to(device) # [batch_size, seq_len]
+    labels = labels.to(device)
+    # 순전파
+    outputs = model(input_ids)          # [batch_size, num_calsses]
+    loss = criterion(outputs, labels)   # 손실 계산
+
+    # 역전파 및 옵티마아지 업데이트
+    optimizer.zero_grad()
+    loss.backward()
+    optimizer.step()
+
+    total_loss += loss.item()
+
+  avg_loss = total_loss / len(train_loader)
+# ... trimmed ...
+```
+
+### 디코더 구성
+
+```python
+from torch.utils.data import Dataset, DataLoader, random_split
+import sentencepiece as spm
+import numpy as np
+
+class SPDataSet(Dataset):
+    def __init__(self, sp, max_len):
+        self.max_len = max_len
+        self.df = pd.read_csv(f'train.csv')[['HS01','SS01']]
+        self.sp = sp
+
+    # 제로 패딩
+    def zero_pad(self, tok):
+        if len(tok) >= self.max_len:
+            return tok[:self.max_len]
+        else:
+            padding = np.zeros(self.max_len)
+            padding[:len(tok)] = tok
+            return padding
+
+    def __len__(self):
+        return (len(self.df))
+
+    def __getitem__(self, i):
+        sent = self.df.iloc[i]
+        sent1 = self.sp.encode_as_ids(sent['HS01'])
+        sent2 = self.sp.encode_as_ids(sent['SS01'])
+
+        # 질의는 단어 토큰만 활용
+# ... trimmed ...
+```
+
+## Source Bundle
+
+- Source path: `13_LLM_GenAI/Code_Snippets/3-2 (실습)Attention_1.md`
+- Source formats: `md`
+- Companion files: `3-2 (실습)Attention_1.md`
+- Note type: `code-note`
+- Last updated in the source vault: `2026-03-08T03:33:14`
+- Related notes: `label'',''HS01`, `HS01'', ''SS01`, `HS01'',''SS01`, `13_LLM_code_Roadmap.md`, `13_LLM_GenAI_Code_Summary.md`
+- External references: `www.aihub.or.kr`, `drive.google.com`, `localhost`
+
+## Note Preview
+
+> Attention
+> Embedding + BiLSTM 모델과 추가로 Seq2seq을 구성하여 Attention 층을 추가

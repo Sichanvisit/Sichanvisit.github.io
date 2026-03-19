@@ -2,35 +2,124 @@
 title: "VGGNet"
 date: 2026-03-08
 research_tab: "DL"
-research_kind: "Practice"
+research_kind: "Archive Note"
 source_title: "(실습)VGGNet"
 source_path: "12_Deep_Learning/Code_Snippets/(실습)VGGNet.md"
-excerpt: "DL Practice 아카이브 엔트리입니다. 원본 실습 노트를 공개 research 섹션에서 구별하기 쉽게 정리한 카드입니다."
+excerpt: "데이터 전처리 - 이미지 변환은 이미지 데이터의 크기를 256으로 키웠다가 224로 중앙 자르기 수행 - 탐지하려는 객체가 중앙에 위치할 확률이 높으므로 불필요한 지역특징을 제거하기 위한 전처리 방법"
 tags:
   - research-archive
   - imported-note
   - dl
-  - practice
+  - archive-note
 ---
 
-## Archive Note
-
-이 글은 개인 실습 저장소에 있던 원본 노트를 `research` 컬렉션에서 구별해 보기 쉽게 정리한 아카이브 엔트리입니다.  
-대표 항목은 이후 별도 케이스 스터디로 확장하고, 현재 단계에서는 전체 실습 흐름을 빠르게 탐색할 수 있도록 메타데이터 중심으로 정리했습니다.
+## Snapshot
 
 | Item | Value |
 |------|-------|
 | Track | DL |
-| Type | Practice |
-| Source Title | `VGGNet` |
-| Source Path | `12_Deep_Learning/Code_Snippets/(실습)VGGNet.md` |
+| Type | Archive Note |
+| Source Files | `md` |
+| Code Blocks | 25 |
+| Execution Cells | 25 |
+| Libraries | `torch`, `torchinfo`, `os`, `torchvision`, `matplotlib`, `tqdm`, `collections`, `random` |
+| Source Note | `(실습)VGGNet` |
 
-## Source Glimpse
+## What I Worked On
 
-> VGG Network / 사전 훈련 모델 활용
+- VGG Network
+- 사전 훈련 모델 활용
+- 모델
+- '''D'': [64, 64, ''M'', 128, 128, ''M'', 256, 256, 256, ''M'', 512, 512, 512, ''M'',
 
-## Notes
+## Implementation Flow
 
-- 원본 파일은 수업 실습, 스프린트 미션, 강사 공유, 샘플 코드 중 하나로 분류했습니다.
-- 현재 공개 블로그에서는 구분과 탐색을 우선하고, 의미 있는 항목부터 순차적으로 본문을 더 다듬을 예정입니다.
-- 같은 탭 안에서도 `type` 배지로 미션과 실습을 바로 구별할 수 있게 구성했습니다.
+1. VGG Network
+2. 사전 훈련 모델 활용
+3. 모델
+4. '''D'': [64, 64, ''M'', 128, 128, ''M'', 256, 256, 256, ''M'', 512, 512, 512, ''M'',
+
+## Code Highlights
+
+### VGG Network
+
+```python
+class VGG(nn.Module):
+    def __init__(self, cfg, batch_norm, num_classes=1000, init_weights=True):
+        super().__init__()
+        self.features = self.make_layers(cfg, batch_norm)
+        self.avgpool = nn.AdaptiveAvgPool2d((7,7))
+        self.classifier = nn.Sequential(
+            nn.Linear(512*7*7, 4096),
+            nn.ReLU(True),
+            nn.Dropout(),
+            nn.Linear(4096, 4096),
+            nn.ReLU(True),
+            nn.Dropout(),
+            nn.Linear(4096, num_classes)
+        )
+        if init_weights:
+            self._initialize_weigths()
+
+    def forward(self, x):
+        x = self.features(x)
+        x = self.avgpool(x)
+        x = torch.flatten(x,1)
+        x = self.classifier(x)
+        return x
+
+    def _initialize_weigths(self):
+        for m in self.modules():
+            if isinstance(m, nn.Conv2d):
+                nn.init.kaiming_normal_(m.weight, mode='fan_out', nonlinearity='relu')
+# ... trimmed ...
+```
+
+### 모델 활용
+
+```python
+train_acc_hist, val_acc_hist = [], []
+EPOCHS = 10
+for epoch in range(EPOCHS):
+    # train
+    model.train()
+    corr = 0
+    tot = 0  # correct =0, total =0
+    for x,y in tqdm(train_loader, desc=f"E{epoch+1}/{EPOCHS}"):
+        x,y = x.to(device), y.to(device)
+        opt.zero_grad()
+        out = model(x)
+        loss = loss_fn(out, y)
+        loss.backward()
+        opt.step()
+
+        corr += (out.argmax(1) == y).sum().item()
+        tot += y.size(0)
+    train_acc_hist.append(corr/tot)
+
+    #val
+    model.eval()
+    corr = 0
+    tot = 0
+    with torch.no_grad():
+        for x, y in val_loader:
+            x,y = x.to(device), y.to(device)
+            out = model(x)
+            corr += (out.argmax(1)==y).sum().item()
+# ... trimmed ...
+```
+
+## Source Bundle
+
+- Source path: `12_Deep_Learning/Code_Snippets/(실습)VGGNet.md`
+- Source formats: `md`
+- Companion files: `(실습)VGGNet.md`
+- Note type: `code-note`
+- Last updated in the source vault: `2026-03-08T03:33:14`
+- Related notes: `12_Deep_Learning_Code_Summary.md`
+- External references: `localhost`
+
+## Note Preview
+
+> 데이터 전처리 - 이미지 변환은 이미지 데이터의 크기를 256으로 키웠다가 224로 중앙 자르기 수행 - 탐지하려는 객체가 중앙에 위치할 확률이 높으므로 불필요한 지역특징을 제거하기 위한 전처리 방법
+> - 입력 이미지 크기를 224로 바로 리사이즈 할 수도 있지만, 그러면 검출하려는 객체의 크기가 더 작아질 수 있음
