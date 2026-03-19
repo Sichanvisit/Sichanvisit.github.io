@@ -428,6 +428,25 @@ a {
   border-top: 1px solid var(--photo-line);
 }
 
+.home-section-divider {
+  max-width: 1260px;
+  margin: 0.75rem auto 0.42rem;
+  padding-top: 0.62rem;
+  border-top: 1px solid var(--photo-line);
+}
+
+.home-section-divider span {
+  display: inline-block;
+  font-family: "Fraunces", serif;
+  font-size: 0.88rem;
+  color: var(--photo-text);
+  letter-spacing: 0.02em;
+}
+
+.home-research-grid-wrap {
+  margin-top: 0;
+}
+
 .home-study-tabs-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
