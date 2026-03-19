@@ -5,13 +5,37 @@ research_tab: "DL"
 research_kind: "Shared Note"
 source_title: "4-3_CNN_이미지 분류_part2 - 공유"
 source_path: "12_Deep_Learning/Code_Snippets/4-3_CNN_이미지 분류_part2 - 공유.md"
-excerpt: "Fashion MNIST는 다양한 **패션 아이템 이미지**가 포함된 데이터셋입니다."
+excerpt: "Fashion MNIST는 다양한 패션 아이템 이미지가 포함된 데이터셋입니다"
+research_summary: "Fashion MNIST는 다양한 패션 아이템 이미지가 포함된 데이터셋입니다. 학습 데이터: 6만 개 - 테스트 데이터: 1만 개 - 이미지 크기: 28×28 (그레이스케일) - 클래스: 총 10개 (각 클래스에 데이터 균등 분포). `md` 원본과 60개 코드 블록, 27개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, torch, torchvision, matplotlib입니다."
+research_artifacts: "md · 코드 60개 · 실행 27개"
+code_block_count: 60
+execution_block_count: 27
+research_focus:
+  - "Fashion MNIST는 다양한 패션 아이템 이미지가 포함된 데이터셋입니다."
+  - "데이터 소개"
+  - "학습 데이터"
+research_stack:
+  - "numpy"
+  - "torch"
+  - "torchvision"
+  - "matplotlib"
+  - "PIL"
+source_formats:
+  - "md"
 tags:
   - research-archive
   - imported-note
   - dl
   - shared-note
 ---
+
+Fashion MNIST는 다양한 패션 아이템 이미지가 포함된 데이터셋입니다. 학습 데이터: 6만 개 - 테스트 데이터: 1만 개 - 이미지 크기: 28×28 (그레이스케일) - 클래스: 총 10개 (각 클래스에 데이터 균등 분포). `md` 원본과 60개 코드 블록, 27개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, torch, torchvision, matplotlib입니다.
+
+**빠르게 볼 수 있는 포인트**: Fashion MNIST는 다양한 패션 아이템 이미지가 포함된 데이터셋..., 데이터 소개, 학습 데이터.
+
+**남겨둔 자료**: `md` 원본과 60개 코드 블록, 27개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, torch, torchvision, matplotlib입니다.
+
+**주요 스택**: `numpy`, `torch`, `torchvision`, `matplotlib`, `PIL`
 
 ## Snapshot
 
@@ -25,26 +49,36 @@ tags:
 | Libraries | `numpy`, `torch`, `torchvision`, `matplotlib`, `PIL`, `torchinfo`, `sklearn` |
 | Source Note | `4-3_CNN_이미지 분류_part2 - 공유` |
 
-## What I Worked On
+## What This Note Covers
 
-- 데이터 소개
-- 데이터셋 특징
-- 클래스 정보
-- 데이터 불러오기
-- 라이브러리 임포트
+### 데이터 소개
+
+Fashion MNIST는 다양한 패션 아이템 이미지가 포함된 데이터셋입니다.
+
+### 데이터셋 특징
+
+학습 데이터: 6만 개 - 테스트 데이터: 1만 개 - 이미지 크기: 28×28 (그레이스케일) - 클래스: 총 10개 (각 클래스에 데이터 균등 분포)
+
+### 클래스 정보
+
+0번부터 9번까지 다음과 같은 패션 아이템으로 구성됩니다
+
+### 데이터 불러오기
+
+TorchVision은 PyTorch에서 제공하는 컴퓨터 비전용 라이브러리입니다. - 다양한 데이터셋, 모델, 이미지 전처리 및 증강 기능을 지원합니다. - 이번 강의에서는 TorchVision의 datasets 모듈을 활용합니다.
 
 ## Implementation Flow
 
-1. 데이터 소개
-2. 데이터셋 특징
-3. 클래스 정보
-4. 데이터 불러오기
-5. 라이브러리 임포트
-6. 학습 데이터셋 생성
+1. 데이터 소개: Fashion MNIST는 다양한 패션 아이템 이미지가 포함된 데이터셋입니다.
+2. 데이터셋 특징: 학습 데이터: 6만 개 - 테스트 데이터: 1만 개 - 이미지 크기: 28×28 (그레이스케일) - 클래스: 총 10개 (각 클래스에 데이터 균등 분포)
+3. 클래스 정보: 0번부터 9번까지 다음과 같은 패션 아이템으로 구성됩니다
+4. 데이터 불러오기: TorchVision은 PyTorch에서 제공하는 컴퓨터 비전용 라이브러리입니다. - 다양한 데이터셋, 모델, 이미지 전처리 및 증강 기능을 지원합니다. - 이번 강의에서는 TorchVision의 datasets 모듈을 활용합니다.
 
 ## Code Highlights
 
 ### 모델 학습시키기
+
+`모델 학습시키기`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 학습 루프 작성 흐름이 주석과 함께 드러납니다.
 
 ```python
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -76,6 +110,8 @@ print('Training finished!')
 ```
 
 ### (참고) ImageFolder
+
+`(참고) ImageFolder`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 데이터 증강 및 전처리 정의, 훈련 데이터 전용: 증강 포함, 검증 및 테스트 데이터 전용: 증강 없음 흐름이 주석과 함께 드러납니다.
 
 ```python
 from torchvision import datasets, transforms

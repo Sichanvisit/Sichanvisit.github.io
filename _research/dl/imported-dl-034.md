@@ -5,13 +5,37 @@ research_tab: "DL"
 research_kind: "Shared Note"
 source_title: "5-7_CAM_and_Grad-CAM - 공유"
 source_path: "12_Deep_Learning/Code_Snippets/5-7_CAM_and_Grad-CAM - 공유.md"
-excerpt: "Hook은 PyTorch에서 모델의 순전파(forward) 또는 역전파(backward) 중 특정 시점에 사용자 정의 함수를 \"연결\"하여, 그 시점의 입력, 출력 또는 기울기(gradient)를 관찰하거나 수정할 수 있게 해주는 기능입니다. 즉, 모델이 데이터를..."
+excerpt: "Hook은 PyTorch에서 모델의 순전파(forward) 또는 역전파(backward) 중 특정 시점에 사용자 정의 함수를 \"연결\"하여, 그 시점의 입력, 출력 또는 기울기(gradient)를 관찰하거나 수정할 수 있게 해주는 기능입니다"
+research_summary: "Hook은 PyTorch에서 모델의 순전파(forward) 또는 역전파(backward) 중 특정 시점에 사용자 정의 함수를 \"연결\"하여, 그 시점의 입력, 출력 또는 기울기(gradient)를 관찰하거나 수정할 수 있게 해주는 기능입니다. 즉, 모델이 데이터를 처리하는 중간 단계에 \"콜백 함수\"를 등록하여, 그 정보를 따로 저장하거... 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 11개 코드 블록, 8개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, PIL, requests입니다."
+research_artifacts: "md · 코드 11개 · 실행 8개"
+code_block_count: 11
+execution_block_count: 8
+research_focus:
+  - "CAM(Class Activation Map)"
+  - "Grad-CAM"
+  - "Hook은 PyTorch에서 모델의 순전파(forward) 또는 역전파(backward) 중 특정 시점..."
+research_stack:
+  - "torch"
+  - "torchvision"
+  - "PIL"
+  - "requests"
+  - "io"
+source_formats:
+  - "md"
 tags:
   - research-archive
   - imported-note
   - dl
   - shared-note
 ---
+
+Hook은 PyTorch에서 모델의 순전파(forward) 또는 역전파(backward) 중 특정 시점에 사용자 정의 함수를 "연결"하여, 그 시점의 입력, 출력 또는 기울기(gradient)를 관찰하거나 수정할 수 있게 해주는 기능입니다. 즉, 모델이 데이터를 처리하는 중간 단계에 "콜백 함수"를 등록하여, 그 정보를 따로 저장하거... 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 11개 코드 블록, 8개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, PIL, requests입니다.
+
+**빠르게 볼 수 있는 포인트**: CAM(Class Activation Map), Grad-CAM, Hook은 PyTorch에서 모델의 순전파(forward) 또는 역전파....
+
+**남겨둔 자료**: `md` 원본과 11개 코드 블록, 8개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, PIL, requests입니다.
+
+**주요 스택**: `torch`, `torchvision`, `PIL`, `requests`, `io`
 
 ## Snapshot
 
@@ -25,26 +49,36 @@ tags:
 | Libraries | `torch`, `torchvision`, `PIL`, `requests`, `io`, `matplotlib`, `torchinfo` |
 | Source Note | `5-7_CAM_and_Grad-CAM - 공유` |
 
-## What I Worked On
+## What This Note Covers
 
-- CAM(Class Activation Map)
-- 이미지 다운로드 및 로드
-- 이미지 시각화 (원본 이미지)
-- 이미지 저장 예시
-- 1. 모델 준비: 사전학습된 ResNet-18 로드 및 평가 모드로 전환
+### Hook이란?
+
+Hook은 PyTorch에서 모델의 순전파(forward) 또는 역전파(backward) 중 특정 시점에 사용자 정의 함수를 "연결"하여, 그 시점의 입력, 출력 또는 기울기(gradient)를 관찰하거나 수정할 수 있게 해주는 기능입니다. 즉, 모델이 데이터를 처리하는 중간 단계에 "콜백 함수"를 등록하여, 그 정보를 따로 저장하거나 분석할 수 있습니다.
+
+### Key Step
+
+CAM(Class Activation Map)
+
+### Key Step
+
+이미지 시각화 (원본 이미지)
+
+### Key Step
+
+모델 준비: 사전학습된 ResNet-18 로드 및 평가 모드로 전환
 
 ## Implementation Flow
 
-1. CAM(Class Activation Map)
-2. 이미지 다운로드 및 로드
-3. 이미지 시각화 (원본 이미지)
-4. 이미지 저장 예시
-5. 1. 모델 준비: 사전학습된 ResNet-18 로드 및 평가 모드로 전환
-6. 마지막 두 레이어(fc, avgpool) 제외한 feature extractor 구성
+1. Hook이란?: Hook은 PyTorch에서 모델의 순전파(forward) 또는 역전파(backward) 중 특정 시점에 사용자 정의 함수를 "연결"하여, 그 시점의 입력, 출력 또는 기울기(gradient)를 관찰하거나 수정할 수 있게 해주는 기능입니다. 즉, 모델이 데이터를 처리하는 중간 단계에...
+2. Key Step: CAM(Class Activation Map)
+3. Key Step: 이미지 시각화 (원본 이미지)
+4. Key Step: 모델 준비: 사전학습된 ResNet-18 로드 및 평가 모드로 전환
 
 ## Code Highlights
 
 ### CAM(Class Activation Map)
+
+`CAM(Class Activation Map)`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 모델 준비: 사전학습된 ResNet-18 로드 및 평가 모드로 전환, 마지막 두 레이어(fc, avgpool) 제외한 feature extractor 구성, 이미지 전처리 정의: ResNet 입력에 맞게 사이즈 조정, 텐서 변환, 정규화 흐름이 주석과 함께 드러납니다.
 
 ```python
 import torch
@@ -78,7 +112,9 @@ for image_path in image_paths:
 # ... trimmed ...
 ```
 
-### 1. Hook이란?
+### Hook이란?
+
+`Hook이란?`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 모델의 자식 모듈들을 순회합니다., main_layer_name에 해당하는 모듈 내부에서 마지막 레이어의 자식 모듈들을 순회, forward hook: feature map 저장 흐름이 주석과 함께 드러납니다.
 
 ```python
 import torch

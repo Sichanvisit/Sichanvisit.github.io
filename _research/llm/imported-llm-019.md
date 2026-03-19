@@ -6,12 +6,36 @@ research_kind: "Archive Note"
 source_title: "3-4 (실습)2_BERT_LoRA"
 source_path: "13_LLM_GenAI/Code_Snippets/3-4 (실습)2_BERT_LoRA.md"
 excerpt: "BERT 모델을 사용하여 PEFT(LoRA) 사용"
+research_summary: "BERT 모델을 사용하여 PEFT(LoRA) 사용. LoRA는 모델 전체가 아니라 학습된 '어댑터(Adapter)' 부분만 저장하면 됩니다. 용량이 매우 작아서 효율적입니다. `md` 원본과 9개 코드 블록, 9개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 huggingface_hub, transformers, datasets, peft입니다."
+research_artifacts: "md · 코드 9개 · 실행 9개"
+code_block_count: 9
+execution_block_count: 9
+research_focus:
+  - "BERT 모델을 사용하여 PEFT(LoRA) 사용"
+  - "LoRA - BERT 모델을 사용한 PEFT"
+  - "허깅페이스 계정에 로그인"
+research_stack:
+  - "huggingface_hub"
+  - "transformers"
+  - "datasets"
+  - "peft"
+  - "evaluate"
+source_formats:
+  - "md"
 tags:
   - research-archive
   - imported-note
   - llm
   - archive-note
 ---
+
+BERT 모델을 사용하여 PEFT(LoRA) 사용. LoRA는 모델 전체가 아니라 학습된 '어댑터(Adapter)' 부분만 저장하면 됩니다. 용량이 매우 작아서 효율적입니다. `md` 원본과 9개 코드 블록, 9개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 huggingface_hub, transformers, datasets, peft입니다.
+
+**빠르게 볼 수 있는 포인트**: BERT 모델을 사용하여 PEFT(LoRA) 사용, LoRA - BERT 모델을 사용한 PEFT, 허깅페이스 계정에 로그인.
+
+**남겨둔 자료**: `md` 원본과 9개 코드 블록, 9개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 huggingface_hub, transformers, datasets, peft입니다.
+
+**주요 스택**: `huggingface_hub`, `transformers`, `datasets`, `peft`, `evaluate`
 
 ## Snapshot
 
@@ -25,26 +49,36 @@ tags:
 | Libraries | `huggingface_hub`, `transformers`, `datasets`, `peft`, `evaluate`, `torch` |
 | Source Note | `3-4 (실습)2_BERT_LoRA` |
 
-## What I Worked On
+## What This Note Covers
 
-- 1. LoRA - BERT 모델을 사용한 PEFT
-- 허깅페이스 계정에 로그인
-- hugging face login
-- BERT 모델 로드
-- BERT 로드
+### LoRA - BERT 모델을 사용한 PEFT
+
+BERT 모델을 사용하여 PEFT(LoRA) 사용
+
+### 모델 저장 (Save)
+
+LoRA는 모델 전체가 아니라 학습된 '어댑터(Adapter)' 부분만 저장하면 됩니다. 용량이 매우 작아서 효율적입니다.
+
+### 실제 테스트 (Inference)
+
+저장된 모델이 새로운 문장을 보고 감정을 잘 맞추는지 직접 테스트해 봅니다.
+
+### Key Step
+
+PEFT - Lora 설정과 학습
 
 ## Implementation Flow
 
-1. 1. LoRA - BERT 모델을 사용한 PEFT
-2. 허깅페이스 계정에 로그인
-3. hugging face login
-4. BERT 모델 로드
-5. BERT 로드
-6. 데이터세트 로드
+1. LoRA - BERT 모델을 사용한 PEFT: BERT 모델을 사용하여 PEFT(LoRA) 사용
+2. 모델 저장 (Save): LoRA는 모델 전체가 아니라 학습된 '어댑터(Adapter)' 부분만 저장하면 됩니다. 용량이 매우 작아서 효율적입니다.
+3. 실제 테스트 (Inference): 저장된 모델이 새로운 문장을 보고 감정을 잘 맞추는지 직접 테스트해 봅니다.
+4. Key Step: PEFT - Lora 설정과 학습
 
 ## Code Highlights
 
 ### 토크나이저 설정
+
+`토크나이저 설정`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 토크나이저 흐름이 주석과 함께 드러납니다.
 
 ```python
 # 토크나이저
@@ -68,6 +102,8 @@ train_ds[0]
 ```
 
 ### PEFT - Lora 설정과 학습
+
+`PEFT - Lora 설정과 학습`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 LoRA 구성, LoRA 적용, Trainer 구성 흐름이 주석과 함께 드러납니다.
 
 ```python
 from peft import LoraConfig, get_peft_model

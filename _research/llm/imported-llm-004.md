@@ -6,12 +6,36 @@ research_kind: "Archive Note"
 source_title: "3-1(실습)임베딩_스팸메시지분류"
 source_path: "13_LLM_GenAI/Code_Snippets/3-1(실습)임베딩_스팸메시지분류.md"
 excerpt: "https://wikidocs.net/50739"
+research_summary: "https://wikidocs.net/50739. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 27개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 pandas, numpy, matplotlib, torch입니다."
+research_artifacts: "md · 코드 27개 · 실행 13개"
+code_block_count: 27
+execution_block_count: 13
+research_focus:
+  - "데이터 불러오기"
+  - "데이터 분할"
+  - "https"
+research_stack:
+  - "pandas"
+  - "numpy"
+  - "matplotlib"
+  - "torch"
+  - "sklearn"
+source_formats:
+  - "md"
 tags:
   - research-archive
   - imported-note
   - llm
   - archive-note
 ---
+
+https://wikidocs.net/50739. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 27개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 pandas, numpy, matplotlib, torch입니다.
+
+**빠르게 볼 수 있는 포인트**: 데이터 불러오기, 데이터 분할, https.
+
+**남겨둔 자료**: `md` 원본과 27개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 pandas, numpy, matplotlib, torch입니다.
+
+**주요 스택**: `pandas`, `numpy`, `matplotlib`, `torch`, `sklearn`
 
 ## Snapshot
 
@@ -25,50 +49,36 @@ tags:
 | Libraries | `pandas`, `numpy`, `matplotlib`, `torch`, `sklearn`, `nltk`, `gensim`, `os` |
 | Source Note | `3-1(실습)임베딩_스팸메시지분류` |
 
-## What I Worked On
+## What This Note Covers
 
-- 데이터 불러오기
-- SMS Spam 데이터 다운로드 및 로드
-- 데이터 확인
-- GPU 설정
-- 데이터 분할
+### Word2Vec
+
+https://wikidocs.net/50739
+
+### Key Step
+
+SMS Spam 데이터 다운로드 및 로드
+
+### Key Step
+
+Series를 list로 변환하여 레이블 인덱스 문제를 제거합니다
+
+### Key Step
+
+Word2Vec 모델 학습 및 단어-인덱스 매핑 생성
 
 ## Implementation Flow
 
-1. 데이터 불러오기
-2. SMS Spam 데이터 다운로드 및 로드
-3. 데이터 확인
-4. GPU 설정
-5. 데이터 분할
-6. 라벨 변환
+1. Word2Vec: https://wikidocs.net/50739
+2. Key Step: SMS Spam 데이터 다운로드 및 로드
+3. Key Step: Series를 list로 변환하여 레이블 인덱스 문제를 제거합니다
+4. Key Step: Word2Vec 모델 학습 및 단어-인덱스 매핑 생성
 
 ## Code Highlights
 
 ### Word2Vec
 
-```python
-class WordSpamDataset(Dataset):
-  """텍스트 문장을 토큰화, 정수 인코딩, 패딩/절단을 거쳐 지정된 길이(max_len)의 텐서로 변환하는 스팸 데이터셋"""
-  def __init__(self, texts, labels, word2idx, max_len):
-      self.texts = texts
-      self.labels = labels
-      self.word2idx = word2idx
-      self.max_len = max_len
-
-  def __len__(self):
-      return len(self.texts)
-
-  def __getitem__(self, idx):
-      tokens = word_tokenize(self.texts[idx])
-      encoded = [self.word2idx.get(word, 0) for word in tokens]  # OOV 단어는 0
-      if len(encoded) < self.max_len:
-          encoded += [0] * (self.max_len - len(encoded))
-      else:
-          encoded = encoded[:self.max_len]
-      return torch.tensor(encoded, dtype=torch.long), torch.tensor(self.labels[idx], dtype=torch.float)
-```
-
-### Word2Vec
+`Word2Vec`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 확률값(outputs)이 0.5 이상이면 1(스팸), 아니면 0(햄)으로 변환 흐름이 주석과 함께 드러납니다.
 
 ```python
 def train(model, loader, criterion, optimizer):
@@ -100,6 +110,25 @@ def evaluate(model, loader):
           correct += (predictions == labels).sum().item()
           total += labels.size(0)
 # ... trimmed ...
+```
+
+### GloVe
+
+`GloVe`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 모델 학습, 모델 평가 흐름이 주석과 함께 드러납니다.
+
+```python
+model_glove = EmbeddingLSTM(glove_matrix, hidden_dim, output_dim).to(device)
+loss_fn = nn.BCELoss()
+optimizer = torch.optim.Adam(model_glove.parameters(), lr=0.005)
+
+# 모델 학습
+for epoch in range(10):
+    loss = train(model_glove, train_loader_glove, loss_fn, optimizer)
+    print(f"Epoch {epoch+1}, Loss: {loss:.4f}")
+
+# 모델 평가
+accuracy = evaluate(model_glove, test_loader_glove)
+print(f"Test Accuracy: {accuracy:.4f}")
 ```
 
 ## Source Bundle

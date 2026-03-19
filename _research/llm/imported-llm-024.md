@@ -5,13 +5,38 @@ research_tab: "LLM"
 research_kind: "Archive Note"
 source_title: "3-5 (실습)사내_규정_챗봇"
 source_path: "13_LLM_GenAI/Code_Snippets/3-5 (실습)사내_규정_챗봇.md"
-excerpt: "LLM Archive Note: 사내 규정 챗봇 만들기, RAG 실습 준비, RAG 실습 시작 - LangChain 사용"
+excerpt: "사내 규정 챗봇 만들기, RAG 실습 준비, RAG 실습 시작 - LangChain 사용 중심으로 구현 과정을 정리한 사내 규정 챗봇 기록입니다"
+research_summary: "사내 규정 챗봇 만들기, RAG 실습 준비, RAG 실습 시작 - LangChain 사용 중심으로 구현 과정을 정리한 사내 규정 챗봇 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `ipynb/md` 원본과 12개 코드 블록, 8개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, langchain_community, langchain_text_splitters, langchain_openai입니다."
+research_artifacts: "ipynb/md · 코드 12개 · 실행 8개"
+code_block_count: 12
+execution_block_count: 8
+research_focus:
+  - "사내 규정 챗봇 만들기"
+  - "RAG 실습 준비"
+  - "RAG 실습 시작 - LangChain 사용"
+research_stack:
+  - "os"
+  - "langchain_community"
+  - "langchain_text_splitters"
+  - "langchain_openai"
+  - "langchain_chroma"
+source_formats:
+  - "ipynb"
+  - "md"
 tags:
   - research-archive
   - imported-note
   - llm
   - archive-note
 ---
+
+사내 규정 챗봇 만들기, RAG 실습 준비, RAG 실습 시작 - LangChain 사용 중심으로 구현 과정을 정리한 사내 규정 챗봇 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `ipynb/md` 원본과 12개 코드 블록, 8개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, langchain_community, langchain_text_splitters, langchain_openai입니다.
+
+**빠르게 볼 수 있는 포인트**: 사내 규정 챗봇 만들기, RAG 실습 준비, RAG 실습 시작 - LangChain 사용.
+
+**남겨둔 자료**: `ipynb/md` 원본과 12개 코드 블록, 8개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, langchain_community, langchain_text_splitters, langchain_openai입니다.
+
+**주요 스택**: `os`, `langchain_community`, `langchain_text_splitters`, `langchain_openai`, `langchain_chroma`
 
 ## Snapshot
 
@@ -25,26 +50,26 @@ tags:
 | Libraries | `os`, `langchain_community`, `langchain_text_splitters`, `langchain_openai`, `langchain_chroma`, `langchain_core`, `getpass` |
 | Source Note | `3-5 (실습)사내_규정_챗봇` |
 
-## What I Worked On
+## What This Note Covers
 
 - 사내 규정 챗봇 만들기
 - RAG 실습 준비
-- 0. 초기 설정
-- OpenAI API key
-- API키 설정
+- RAG 실습 시작 - LangChain 사용
+- 문서 로딩 (Loading)
+- 문서 분할 (Splitting)
 
 ## Implementation Flow
 
-1. 사내 규정 챗봇 만들기
-2. RAG 실습 준비
-3. 0. 초기 설정
-4. OpenAI API key
-5. API키 설정
-6. 실습용 가상 데이터 생성 (사내 규정 문서)
+1. Key Step: 실습용 가상 데이터 생성 (사내 규정 문서)
+2. Key Step: 실제로는 PDF나 txt 파일이 있는 경우가 많지만, 실습 편의를 위해 즉석에서 파일을 만듭니다.
+3. Key Step: RAG 실습 시작 - LangChain 사용
+4. Key Step: 문서 분할 (Splitting)
 
 ## Code Highlights
 
 ### RAG 실습 준비
+
+`RAG 실습 준비`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 실습용 가상 데이터 생성 (사내 규정 문서), 실제로는 PDF나 txt 파일이 있는 경우가 많지만, 실습 편의를 위해 즉석에서 파일을..., 파일을 저장합니다. 흐름이 주석과 함께 드러납니다.
 
 ```python
 # 실습용 가상 데이터 생성 (사내 규정 문서)
@@ -75,6 +100,8 @@ print("[준비 완료] 사내 규정 문서가 생성되었습니다.")
 
 ### 임베딩 & 벡터 저장소 생성 (Indexing)
 
+`임베딩 & 벡터 저장소 생성 (Indexing)`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 ==========================================, 임베딩 & 벡터 저장소 생성 (Indexing) 흐름이 주석과 함께 드러납니다.
+
 ```python
 # ==========================================
 # 3. 임베딩 & 벡터 저장소 생성 (Indexing)
@@ -100,4 +127,4 @@ print("   -> Chroma DB에 저장 완료!")
 
 ## Note Preview
 
-> No prose preview was available in the source note.
+> 원본 노트에 별도 설명 문단이 많지 않아 코드 중심으로 보존했습니다.

@@ -62,6 +62,129 @@ def clean_markdown_text(text: str) -> str:
     return compact_spaces(cleaned)
 
 
+def normalize_display_text(text: str) -> str:
+    cleaned = clean_markdown_text(text)
+    cleaned = cleaned.replace("**", "").replace("__", "")
+    cleaned = re.sub(r"^\d+(?:\.\d+)*[\.\)]\s+", "", cleaned)
+    cleaned = re.sub(r"^[A-Za-z]\.\s*", "", cleaned)
+    cleaned = cleaned.strip(":- ")
+    return compact_spaces(cleaned)
+
+
+def is_meaningful_sentence(text: str) -> bool:
+    normalized = normalize_display_text(text)
+    if len(normalized) < 16:
+        return False
+    token_count = len(normalized.split())
+    if token_count >= 4:
+        return True
+    return ":" in normalized or "," in normalized or "(" in normalized
+
+
+GENERIC_LABELS = {
+    "overview",
+    "archive note",
+    "지침",
+    "데이터셋 설명",
+    "가이드라인",
+    "환경준비",
+    "import",
+    "gpu 설정",
+    "한글 폰트 설치",
+    "구글 마운트 + 저장경로 설정",
+    "setup",
+    "imports",
+}
+
+
+SECTION_TITLE_ALIASES = {
+    "지침": "Problem Brief",
+    "데이터셋 설명": "Dataset Context",
+    "가이드라인": "Implementation Guide",
+    "환경준비": "Environment Setup",
+    "import": "Imports",
+    "gpu 설정": "Runtime Setup",
+}
+
+
+def normalize_section_title(text: str) -> str:
+    normalized = normalize_display_text(text)
+    lowered = normalized.lower()
+    return SECTION_TITLE_ALIASES.get(lowered, normalized)
+
+
+def is_generic_label(text: str) -> bool:
+    normalized = normalize_display_text(text).lower()
+    if normalized in GENERIC_LABELS:
+        return True
+    if re.match(r"^(스프린트\s*)?미션\s*\d+$", normalized):
+        return True
+    if re.match(r"^mission\s*\d+$", normalized):
+        return True
+    return False
+
+
+def format_plain_list(items: list[str]) -> str:
+    cleaned = [normalize_display_text(item) for item in items if normalize_display_text(item)]
+    if not cleaned:
+        return ""
+    if len(cleaned) == 1:
+        return cleaned[0]
+    if len(cleaned) == 2:
+        return f"{cleaned[0]} and {cleaned[1]}"
+    return ", ".join(cleaned[:-1]) + f", and {cleaned[-1]}"
+
+
+def format_korean_list(items: list[str], limit: int | None = None, max_item_len: int = 52) -> str:
+    cleaned: list[str] = []
+    for item in items:
+        normalized = normalize_display_text(item)
+        if not normalized:
+            continue
+        cleaned.append(trim_text(normalized, max_item_len))
+        if limit is not None and len(cleaned) >= limit:
+            break
+    return ", ".join(cleaned)
+
+
+def ensure_sentence(text: str) -> str:
+    cleaned = compact_spaces(text)
+    if not cleaned:
+        return ""
+    if cleaned[-1] in ".!?":
+        return cleaned
+    return cleaned + "."
+
+
+def condense_focus_item(text: str, max_len: int = 60) -> str:
+    normalized = normalize_display_text(text)
+    if not normalized:
+        return ""
+    if ":" in normalized:
+        prefix, _ = normalized.split(":", 1)
+        prefix = prefix.strip()
+        if 2 <= len(prefix) <= 24:
+            return prefix
+    return trim_text(normalized, max_len)
+
+
+LOW_SIGNAL_PREFIXES = (
+    "여기서는",
+    "이 경우",
+    "먼저",
+    "그 다음",
+    "다음으로",
+    "마지막으로",
+)
+
+
+def should_skip_focus_item(text: str) -> bool:
+    normalized = normalize_display_text(text)
+    if not normalized:
+        return True
+    return any(normalized.startswith(prefix) for prefix in LOW_SIGNAL_PREFIXES)
+
+
 def parse_front_matter(path: Path) -> tuple[dict[str, object], list[str]]:
     lines = path.read_text(encoding="utf-8").splitlines()
     if not lines or lines[0].strip() != "---":
@@ -143,6 +266,7 @@ def parse_note_structure(lines: list[str]) -> dict[str, object]:
     headings: list[str] = []
     paragraphs: list[str] = []
     code_blocks: list[dict[str, object]] = []
+    sections: list[dict[str, object]] = []
 
     current_heading = "Overview"
     current_paragraph: list[str] = []
@@ -151,6 +275,14 @@ def parse_note_structure(lines: list[str]) -> dict[str, object]:
     block_heading = current_heading
     block_lines: list[str] = []
     block_has_output = False
+    current_section: dict[str, object] = {
+        "heading": current_heading,
+        "paragraphs": [],
+        "code_blocks": [],
+    }
+
+    def section_has_content(section: dict[str, object]) -> bool:
+        return bool(section["paragraphs"]) or bool(section["code_blocks"]) or normalize_display_text(str(section["heading"])) not in {"", "Overview"}
 
     def flush_paragraph() -> None:
         if not current_paragraph:
@@ -159,6 +291,19 @@ def parse_note_structure(lines: list[str]) -> dict[str, object]:
         current_paragraph.clear()
         if text:
             paragraphs.append(text)
+            cast_paragraphs = current_section["paragraphs"]
+            if isinstance(cast_paragraphs, list):
+                cast_paragraphs.append(text)
+
+    def flush_section() -> None:
+        if section_has_content(current_section):
+            sections.append(
+                {
+                    "heading": current_section["heading"],
+                    "paragraphs": list(current_section["paragraphs"]),
+                    "code_blocks": list(current_section["code_blocks"]),
+                }
+            )
 
     for raw_line in lines:
         stripped = raw_line.strip()
@@ -181,8 +326,12 @@ def parse_note_structure(lines: list[str]) -> dict[str, object]:
                         "heading": block_heading,
                         "body": "\n".join(block_lines).rstrip(),
                         "has_output": block_has_output,
+                        "context": current_section["paragraphs"][-1] if current_section["paragraphs"] else "",
                     }
                 )
+                cast_code_blocks = current_section["code_blocks"]
+                if isinstance(cast_code_blocks, list):
+                    cast_code_blocks.append(code_blocks[-1])
                 in_code_block = False
                 block_info = ""
                 block_lines = []
@@ -203,10 +352,16 @@ def parse_note_structure(lines: list[str]) -> dict[str, object]:
         heading_match = HEADING_RE.match(stripped)
         if heading_match:
             flush_paragraph()
+            flush_section()
             heading_text = clean_markdown_text(heading_match.group(2))
             if heading_text:
                 headings.append(heading_text)
                 current_heading = heading_text
+                current_section = {
+                    "heading": heading_text,
+                    "paragraphs": [],
+                    "code_blocks": [],
+                }
             continue
 
         quote_text = stripped.lstrip("> ").strip()
@@ -214,11 +369,13 @@ def parse_note_structure(lines: list[str]) -> dict[str, object]:
             current_paragraph.append(quote_text)
 
     flush_paragraph()
+    flush_section()
 
     return {
         "headings": unique_preserve_order(headings),
         "paragraphs": paragraphs,
         "code_blocks": code_blocks,
+        "sections": sections,
     }
 
 
@@ -240,55 +397,216 @@ def unique_preserve_order(items: list[str]) -> list[str]:
     return unique
 
 
-def build_excerpt(
-    paragraphs: list[str],
-    headings: list[str],
-    metadata_items: list[str],
-    track: str,
-    kind: str,
-) -> str:
-    for paragraph in paragraphs:
-        if len(paragraph) >= 24:
-            return trim_text(paragraph, 150)
-    if headings:
-        return trim_text(f"{track} {kind}: " + ", ".join(headings[:3]), 150)
-    if metadata_items:
-        return trim_text(f"{track} {kind}: " + ", ".join(metadata_items[:3]), 150)
-    return f"{track} {kind} note with implementation details and archived source context."
-
-
 def trim_text(text: str, limit: int) -> str:
     if len(text) <= limit:
         return text
     return text[: limit - 3].rstrip() + "..."
 
 
+def unique_cleaned_items(items: list[str], *, limit: int | None = None) -> list[str]:
+    cleaned_items: list[str] = []
+    seen: set[str] = set()
+    for item in items:
+        cleaned = normalize_display_text(item)
+        if not cleaned:
+            continue
+        lower_cleaned = cleaned.lower()
+        if lower_cleaned in seen:
+            continue
+        seen.add(lower_cleaned)
+        cleaned_items.append(cleaned)
+        if limit is not None and len(cleaned_items) >= limit:
+            break
+    return cleaned_items
+
+
+def select_intro_paragraphs(
+    sections: list[dict[str, object]],
+    paragraphs: list[str],
+    limit: int,
+) -> list[str]:
+    candidates: list[str] = []
+
+    for section in sections:
+        for paragraph in section.get("paragraphs", []):
+            normalized = normalize_display_text(str(paragraph))
+            if not is_meaningful_sentence(normalized):
+                continue
+            candidates.append(trim_text(normalized, 190))
+            break
+
+    if not candidates:
+        for paragraph in paragraphs:
+            normalized = normalize_display_text(paragraph)
+            if not is_meaningful_sentence(normalized):
+                continue
+            candidates.append(trim_text(normalized, 190))
+
+    return unique_cleaned_items(candidates, limit=limit)
+
+
 def select_focus_items(
+    sections: list[dict[str, object]],
     metadata_items: list[str],
     headings: list[str],
     title: str,
     limit: int,
 ) -> list[str]:
-    source = metadata_items if metadata_items else headings
-    cleaned_items: list[str] = []
-    seen: set[str] = set()
-    normalized_title = clean_markdown_text(title).lower()
+    normalized_title = normalize_display_text(title).lower()
+    candidates: list[str] = []
 
-    for item in source:
-        cleaned = clean_markdown_text(item)
-        if not cleaned:
+    for section in sections:
+        for paragraph in section.get("paragraphs", []):
+            normalized = normalize_display_text(str(paragraph))
+            if normalized and normalized.lower() != normalized_title and is_meaningful_sentence(normalized):
+                candidates.append(trim_text(normalized, 150))
+                break
+
+        heading = condense_focus_item(str(section.get("heading", "")), max_len=42)
+        if heading and heading.lower() != normalized_title and not is_generic_label(heading):
+            candidates.append(heading)
+
+    for item in metadata_items + headings:
+        normalized = condense_focus_item(item, max_len=52)
+        if not normalized or normalized.lower() == normalized_title:
             continue
-        lower_cleaned = cleaned.lower()
-        if lower_cleaned == normalized_title:
+        if is_generic_label(normalized):
             continue
-        if lower_cleaned in seen:
+        if should_skip_focus_item(normalized):
             continue
-        seen.add(lower_cleaned)
-        cleaned_items.append(cleaned)
-        if len(cleaned_items) >= limit:
+        candidates.append(normalized)
+
+    return unique_cleaned_items(candidates, limit=limit)
+
+
+def build_section_summaries(
+    sections: list[dict[str, object]],
+    metadata_items: list[str],
+    limit: int,
+) -> list[dict[str, str]]:
+    summaries: list[dict[str, str]] = []
+    seen_titles: set[str] = set()
+
+    for section in sections:
+        raw_title = str(section.get("heading", ""))
+        title = normalize_section_title(raw_title)
+        summary_text = ""
+
+        for paragraph in section.get("paragraphs", []):
+            normalized = normalize_display_text(str(paragraph))
+            if is_meaningful_sentence(normalized):
+                summary_text = trim_text(normalized, 220)
+                break
+
+        if not summary_text:
+            continue
+        if not title:
+            title = "Key Step"
+
+        title_key = title.lower()
+        if title_key in seen_titles:
+            continue
+        seen_titles.add(title_key)
+        summaries.append({"title": title, "summary": summary_text or trim_text(title, 180)})
+        if len(summaries) >= limit:
+            return summaries
+
+    for item in metadata_items:
+        normalized = normalize_display_text(item)
+        if not normalized or is_generic_label(normalized) or not is_meaningful_sentence(normalized):
+            continue
+        title = trim_text(normalized, 72)
+        key = title.lower()
+        if key in seen_titles:
+            continue
+        seen_titles.add(key)
+        summaries.append({"title": "Key Step", "summary": trim_text(normalized, 200)})
+        if len(summaries) >= limit:
             break
 
-    return cleaned_items
+    return summaries
+
+
+def build_flow_items(
+    section_summaries: list[dict[str, str]],
+    focus_items: list[str],
+    metadata_items: list[str],
+    limit: int,
+) -> list[str]:
+    items: list[str] = []
+    for entry in section_summaries:
+        combined = entry["title"]
+        if entry["summary"] and entry["summary"].lower() != entry["title"].lower():
+            combined = f"{entry['title']}: {entry['summary']}"
+        items.append(trim_text(combined, 170))
+
+    if not items:
+        items.extend(focus_items)
+    if not items:
+        items.extend(unique_cleaned_items(metadata_items, limit=limit))
+
+    return unique_cleaned_items(items, limit=limit)
+
+
+def build_artifact_summary(
+    source_formats: list[str],
+    code_block_count: int,
+    execution_block_count: int,
+    libraries: list[str],
+) -> str:
+    format_text = "/".join(source_formats) if source_formats else "원본 파일"
+    library_text = format_korean_list(libraries[:4])
+    summary = f"`{format_text}` 원본과 {code_block_count}개 코드 블록, {execution_block_count}개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다"
+    if library_text:
+        summary += f". 주요 스택은 {library_text}입니다"
+    return ensure_sentence(summary)
+
+
+def build_research_summary(
+    title: str,
+    track: str,
+    kind: str,
+    intro_paragraphs: list[str],
+    focus_items: list[str],
+    artifact_summary: str,
+) -> str:
+    condensed_focus = unique_cleaned_items([condense_focus_item(item, max_len=28) for item in focus_items], limit=3)
+    if intro_paragraphs:
+        lead = intro_paragraphs[0]
+    elif condensed_focus:
+        lead = f"{format_korean_list(condensed_focus, limit=3, max_item_len=28)} 중심으로 구현 과정을 정리한 {title} 기록입니다"
+    else:
+        lead = f"{title}에서 다룬 구현 흐름과 참고 소스를 다시 볼 수 있게 정리한 {track} 아카이브 노트입니다"
+
+    if len(intro_paragraphs) > 1:
+        detail = intro_paragraphs[1]
+    elif condensed_focus:
+        detail = f"페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다"
+    else:
+        detail = "문제 맥락과 구현 흔적을 한 화면에서 빠르게 파악할 수 있도록 핵심 정보부터 배치했습니다"
+
+    return " ".join(
+        part
+        for part in (
+            ensure_sentence(lead),
+            ensure_sentence(detail),
+            artifact_summary,
+        )
+        if part
+    )
+
+
+def build_excerpt(
+    research_summary: str,
+    focus_items: list[str],
+    title: str,
+) -> str:
+    if research_summary:
+        lead = research_summary.split(". ")[0]
+        return trim_text(lead, 170)
+    if focus_items:
+        return trim_text(f"{title}: {format_korean_list(focus_items, limit=3, max_item_len=34)}", 170)
+    return trim_text(f"{title} 구현 기록과 참고 소스를 함께 남긴 research note.", 170)
 
 
 def score_code_block(block: dict[str, object]) -> int:
@@ -323,7 +641,7 @@ def score_code_block(block: dict[str, object]) -> int:
 
 
 def get_code_label(block: dict[str, object]) -> str:
-    heading = clean_markdown_text(str(block["heading"]))
+    heading = normalize_display_text(str(block["heading"]))
     if heading and heading.lower() not in {"overview", "archive note"}:
         return heading
 
@@ -340,6 +658,76 @@ def get_code_label(block: dict[str, object]) -> str:
         return trim_text(clean_markdown_text(stripped), 80)
 
     return "Code Highlight"
+
+
+def extract_comment_clues(body: str, limit: int = 3) -> list[str]:
+    clues: list[str] = []
+    for raw_line in body.splitlines():
+        stripped = raw_line.strip()
+        if not stripped:
+            continue
+        if stripped.startswith("#"):
+            stripped = stripped.lstrip("#").strip()
+        elif stripped.startswith("//"):
+            stripped = stripped.lstrip("/").strip()
+        else:
+            continue
+
+        stripped = stripped.replace("@title", "").strip()
+        cleaned = normalize_display_text(stripped)
+        if not cleaned:
+            continue
+        if cleaned.lower() in {"trimmed", "...", "imports"}:
+            continue
+        clues.append(cleaned)
+        if len(clues) >= limit:
+            break
+
+    return unique_cleaned_items(clues, limit=limit)
+
+
+def infer_code_purpose(block: dict[str, object]) -> str:
+    body = str(block["body"])
+
+    if re.search(r"class\s+\w+.*Dataset", body) or "torch.utils.data.Dataset" in body:
+        return "원본 데이터를 모델이 바로 받을 수 있는 샘플 구조로 바꾸기 위해 커스텀 Dataset을 정의하는 부분입니다."
+    if "DataLoader(" in body or "collate_fn" in body:
+        return "학습과 평가가 배치 단위로 안정적으로 돌도록 DataLoader와 collate 구성을 잡는 부분입니다."
+    if any(token in body for token in ("optimizer", "backward(", "loss_dict", "lr_scheduler", "for epoch", "epoch_loss")):
+        return "손실 계산, 역전파, optimizer 또는 scheduler 업데이트가 이어지는 학습 루프입니다."
+    if any(token in body for token in ("train_test_split", "fillna", "dropna", "StandardScaler", "MinMaxScaler", "LabelEncoder")):
+        return "전처리와 학습/검증 분리를 담당해 전체 파이프라인의 출발점을 정리하는 코드입니다."
+    if any(token in body for token in ("Word2Vec", "FastText", "GloVe", "Embedding", "embedding", "Tokenizer")):
+        return "토큰을 벡터 표현으로 바꾸는 임베딩 또는 벡터화 단계를 구성하는 코드입니다."
+    if any(token in body for token in ("FAISS", "Chroma", "Retriever", "vectorstore", "similarity_search", "as_retriever")):
+        return "RAG 검색 경로의 기반이 되는 인덱싱과 Retriever 구성을 담당하는 코드입니다."
+    if any(token in body for token in ("ChatOpenAI", "PromptTemplate", "Runnable", "chain.invoke", "llm.invoke")):
+        return "프롬프트와 모델 호출을 연결해 재현 가능한 추론 체인을 만드는 부분입니다."
+    if any(token in body for token in ("accuracy_score", "f1_score", "classification_report", "confusion_matrix", "roc_auc", "mean_squared_error")):
+        return "지표를 계산해 성능을 비교하고 결과를 해석하는 평가 단계입니다."
+    if any(token in body for token in ("model.eval()", "torch.no_grad()", "predict(", "inference")):
+        return "학습된 모델로 추론을 수행하고 예측 결과를 점검하는 코드입니다."
+    if any(token in body for token in ("Conv2d", "Linear(", "nn.Module", "transformer", "LSTM", "GRU")):
+        return "실험의 중심이 되는 모델 아키텍처를 정의하는 코드입니다."
+    return "원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다."
+
+
+def describe_code_block(block: dict[str, object]) -> str:
+    label = get_code_label(block)
+    comments = extract_comment_clues(str(block["body"]))
+    context = normalize_display_text(str(block.get("context", "")))
+    intro = ""
+    if label and label.lower() not in {"code highlight", "overview"}:
+        intro = f"`{label}`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다."
+
+    if comments:
+        detail = f"코드 안에서는 {format_korean_list(comments[:3])} 흐름이 주석과 함께 드러납니다."
+    elif context and is_meaningful_sentence(context):
+        detail = ensure_sentence(context)
+    else:
+        detail = infer_code_purpose(block)
+
+    return " ".join(part for part in (intro, detail) if part)
 
 
 def get_code_trim_marker(lang: str) -> str:
@@ -372,7 +760,28 @@ def select_code_blocks(code_blocks: list[dict[str, object]], limit: int = 2) -> 
         enumerate(code_blocks),
         key=lambda item: (-score_code_block(item[1]), item[0]),
     )
-    selected_indexes = sorted(index for index, _ in ranked[:limit])
+
+    selected_indexes: list[int] = []
+    used_headings: set[str] = set()
+
+    for index, block in ranked:
+        heading_key = normalize_display_text(str(block["heading"])).lower() or f"index-{index}"
+        if heading_key in used_headings:
+            continue
+        selected_indexes.append(index)
+        used_headings.add(heading_key)
+        if len(selected_indexes) >= limit:
+            break
+
+    if len(selected_indexes) < limit:
+        for index, _ in ranked:
+            if index in selected_indexes:
+                continue
+            selected_indexes.append(index)
+            if len(selected_indexes) >= limit:
+                break
+
+    selected_indexes.sort()
     return [code_blocks[index] for index in selected_indexes]
 
 
@@ -424,6 +833,15 @@ def format_inline_code_list(items: list[str], empty_text: str = "None") -> str:
     return ", ".join(f"`{item}`" for item in items)
 
 
+def format_yaml_list(name: str, items: list[str]) -> str:
+    if not items:
+        return f"{name}: []"
+    lines = [f"{name}:"]
+    for item in items:
+        lines.append(f'  - "{escape_yaml(normalize_display_text(item))}"')
+    return "\n".join(lines)
+
+
 def build_content(
     *,
     title: str,
@@ -439,7 +857,10 @@ def build_content(
     execution_block_count: int,
     source_formats: list[str],
     companion_files: list[str],
+    research_summary: str,
+    artifact_summary: str,
     focus_items: list[str],
+    section_summaries: list[dict[str, str]],
     flow_items: list[str],
     code_samples: list[dict[str, object]],
     libraries: list[str],
@@ -449,6 +870,7 @@ def build_content(
     note_type: str,
     updated_at: str,
 ) -> str:
+    focus_display_items = unique_cleaned_items([condense_focus_item(item, max_len=60) for item in focus_items], limit=5)
     snapshot_rows = [
         ("Track", research_tab),
         ("Type", research_kind),
@@ -461,15 +883,23 @@ def build_content(
 
     snapshot_table = "\n".join(f"| {label} | {value} |" for label, value in snapshot_rows)
 
-    if focus_items:
-        focus_section = "\n".join(f"- {item}" for item in focus_items)
+    if focus_display_items:
+        focus_section = "\n".join(f"- {item}" for item in focus_display_items)
     else:
-        focus_section = f"- This archived note is categorized as `{research_kind}` under `{research_tab}`."
+        focus_section = f"- 이 기록은 `{research_tab}` 트랙의 `{research_kind}` 아카이브로 정리되어 있습니다."
+
+    if section_summaries and any(entry["title"] != "Key Step" for entry in section_summaries):
+        coverage_section = "\n\n".join(
+            f"### {entry['title']}\n\n{entry['summary']}"
+            for entry in section_summaries
+        )
+    else:
+        coverage_section = focus_section
 
     if flow_items:
         flow_section = "\n".join(f"{index}. {item}" for index, item in enumerate(flow_items, start=1))
     else:
-        flow_section = "1. Review the archived source note.\n2. Inspect the main implementation blocks.\n3. Reuse the extracted approach in a full project page if needed."
+        flow_section = "1. 원본 노트의 문제 정의를 먼저 확인합니다.\n2. 핵심 코드 블록과 구현 단계를 따라갑니다.\n3. 필요하면 이 흐름을 별도 케이스 스터디로 확장합니다."
 
     if code_samples:
         code_sections = []
@@ -477,12 +907,13 @@ def build_content(
             lang = str(block["lang"])
             label = get_code_label(block)
             body = trim_code_block(str(block["body"]), lang)
-            code_sections.append(f"### {label}\n\n```{lang}\n{body}\n```")
+            explanation = describe_code_block(block)
+            code_sections.append(f"### {label}\n\n{explanation}\n\n```{lang}\n{body}\n```")
         code_section = "\n\n".join(code_sections)
     else:
-        code_section = "No executable code block was detected in the source note. This entry is preserved as a concept or reference note."
+        code_section = "실행 가능한 코드 블록은 없지만, 개념 정리나 참고 노트로서 맥락을 보존하고 있습니다."
 
-    preview_block = "\n".join(f"> {line}" for line in preview_lines) if preview_lines else "> No prose preview was available in the source note."
+    preview_block = "\n".join(f"> {line}" for line in preview_lines) if preview_lines else "> 원본 노트에 별도 설명 문단이 많지 않아 코드 중심으로 보존했습니다."
 
     bundle_lines = [
         f"- Source path: `{clean_markdown_text(source_path)}`",
@@ -498,6 +929,17 @@ def build_content(
         bundle_lines.append(f"- External references: {format_inline_code_list(external_refs)}")
 
     bundle_section = "\n".join(bundle_lines)
+    top_focus = focus_display_items[:3]
+    top_libraries = libraries[:5]
+    intro_lines = [research_summary]
+    if top_focus:
+        intro_lines.append(f"**빠르게 볼 수 있는 포인트**: {format_korean_list(top_focus, limit=3, max_item_len=42)}.")
+    intro_lines.append(f"**남겨둔 자료**: {artifact_summary}")
+    if top_libraries:
+        intro_lines.append(f"**주요 스택**: {format_inline_code_list(top_libraries)}")
+    intro_block = "\n\n".join(intro_lines)
+    artifact_line = "/".join(source_formats) if source_formats else "source"
+    artifact_line = f"{artifact_line} · 코드 {code_block_count}개 · 실행 {execution_block_count}개"
 
     return f"""---
 title: "{escape_yaml(title)}"
@@ -507,6 +949,13 @@ research_kind: "{research_kind}"
 source_title: "{escape_yaml(source_title)}"
 source_path: "{escape_yaml(source_path)}"
 excerpt: "{escape_yaml(excerpt)}"
+research_summary: "{escape_yaml(research_summary)}"
+research_artifacts: "{escape_yaml(artifact_line)}"
+code_block_count: {code_block_count}
+execution_block_count: {execution_block_count}
+{format_yaml_list("research_focus", top_focus)}
+{format_yaml_list("research_stack", top_libraries)}
+{format_yaml_list("source_formats", source_formats)}
 tags:
   - research-archive
   - imported-note
@@ -514,15 +963,17 @@ tags:
   - {kind_tag}
 ---
 
+{intro_block}
+
 ## Snapshot
 
 | Item | Value |
 |------|-------|
 {snapshot_table}
 
-## What I Worked On
+## What This Note Covers
 
-{focus_section}
+{coverage_section}
 
 ## Implementation Flow
 
@@ -548,6 +999,7 @@ def build_note_payload(track: dict[str, str], file_path: Path) -> str:
     code_blocks = list(structure["code_blocks"])
     headings = list(structure["headings"])
     paragraphs = list(structure["paragraphs"])
+    sections = list(structure["sections"])
 
     source_title = str(metadata.get("title") or file_path.stem)
     clean_title = get_clean_title(source_title, file_path.stem)
@@ -558,8 +1010,10 @@ def build_note_payload(track: dict[str, str], file_path: Path) -> str:
         metadata_sections = []
 
     preview_lines = paragraphs[:2]
-    focus_items = select_focus_items(metadata_sections, headings, clean_title, limit=5)
-    flow_items = select_focus_items(metadata_sections, headings, clean_title, limit=6)
+    intro_paragraphs = select_intro_paragraphs(sections, paragraphs, limit=2)
+    focus_items = select_focus_items(sections, metadata_sections, headings, clean_title, limit=5)
+    section_summaries = build_section_summaries(sections, metadata_sections, limit=4)
+    flow_items = build_flow_items(section_summaries, focus_items, metadata_sections, limit=6)
     code_samples = select_code_blocks(code_blocks, limit=2)
     libraries = extract_libraries(code_blocks)
 
@@ -579,7 +1033,21 @@ def build_note_payload(track: dict[str, str], file_path: Path) -> str:
     updated_at = str(metadata.get("updated_at") or datetime.fromtimestamp(file_path.stat().st_mtime).strftime("%Y-%m-%d"))
     note_type = clean_markdown_text(str(metadata.get("note_type_auto") or "research-note"))
     companion_file_names = [candidate.name for candidate in companion_files]
-    excerpt = build_excerpt(paragraphs, headings, focus_items, track["tab"], research_kind)
+    artifact_summary = build_artifact_summary(
+        source_formats,
+        len(code_blocks),
+        sum(1 for block in code_blocks if bool(block["has_output"])),
+        libraries,
+    )
+    research_summary = build_research_summary(
+        clean_title,
+        track["tab"],
+        research_kind,
+        intro_paragraphs,
+        focus_items,
+        artifact_summary,
+    )
+    excerpt = build_excerpt(research_summary, focus_items, clean_title)
     source_path = file_path.relative_to(KNOWLEDGE_ROOT).as_posix()
 
     return build_content(
@@ -596,7 +1064,10 @@ def build_note_payload(track: dict[str, str], file_path: Path) -> str:
         execution_block_count=sum(1 for block in code_blocks if bool(block["has_output"])),
         source_formats=source_formats,
         companion_files=companion_file_names,
+        research_summary=research_summary,
+        artifact_summary=artifact_summary,
         focus_items=focus_items,
+        section_summaries=section_summaries,
         flow_items=flow_items,
         code_samples=code_samples,
         libraries=libraries,

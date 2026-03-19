@@ -5,13 +5,37 @@ research_tab: "DL"
 research_kind: "Archive Note"
 source_title: "6-3_SSD"
 source_path: "12_Deep_Learning/Code_Snippets/6-3_SSD.md"
-excerpt: "먼저, ResNet과 같이 사전 학습된 네트워크의 일부 층을 사용하여 SSD의 특징 추출기(backbone)를 구성합니다."
+excerpt: "먼저, ResNet과 같이 사전 학습된 네트워크의 일부 층을 사용하여 SSD의 특징 추출기(backbone)를 구성합니다"
+research_summary: "먼저, ResNet과 같이 사전 학습된 네트워크의 일부 층을 사용하여 SSD의 특징 추출기(backbone)를 구성합니다. 사전 학습된 ResNet34를 기반으로 SSD 백본을 구성하고, SSD 모델 및 앵커 박스 생성자를 정의합니다. `md` 원본과 14개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 shutil, os, torch, collections입니다."
+research_artifacts: "md · 코드 14개 · 실행 7개"
+code_block_count: 14
+execution_block_count: 7
+research_focus:
+  - "먼저, ResNet과 같이 사전 학습된 네트워크의 일부 층을 사용하여 SSD의 특징 추출기(backbo..."
+  - "SSD 백본(Backbone) 정의"
+  - "사전 학습된 ResNet34를 기반으로 SSD 백본을 구성하고, SSD 모델 및 앵커 박스 생성자를 정..."
+research_stack:
+  - "shutil"
+  - "os"
+  - "torch"
+  - "collections"
+  - "torchvision"
+source_formats:
+  - "md"
 tags:
   - research-archive
   - imported-note
   - dl
   - archive-note
 ---
+
+먼저, ResNet과 같이 사전 학습된 네트워크의 일부 층을 사용하여 SSD의 특징 추출기(backbone)를 구성합니다. 사전 학습된 ResNet34를 기반으로 SSD 백본을 구성하고, SSD 모델 및 앵커 박스 생성자를 정의합니다. `md` 원본과 14개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 shutil, os, torch, collections입니다.
+
+**빠르게 볼 수 있는 포인트**: 먼저, ResNet과 같이 사전 학습된 네트워크의 일부 층을 사용하여..., SSD 백본(Backbone) 정의, 사전 학습된 ResNet34를 기반으로 SSD 백본을 구성하고, SSD....
+
+**남겨둔 자료**: `md` 원본과 14개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 shutil, os, torch, collections입니다.
+
+**주요 스택**: `shutil`, `os`, `torch`, `collections`, `torchvision`
 
 ## Snapshot
 
@@ -25,26 +49,36 @@ tags:
 | Libraries | `shutil`, `os`, `torch`, `collections`, `torchvision`, `PIL`, `pycocotools`, `tqdm` |
 | Source Note | `6-3_SSD` |
 
-## What I Worked On
+## What This Note Covers
 
-- 먼저, 압축 파일(pytorch-transformer.zip)을 지정된 경로(현재 디렉토리)로 압축 해제합니다.
-- 작업 디렉토리를 변경합니다.
-- SSD 백본(Backbone) 정의
-- 모델과 앵커 생성자(Anchor Generator) 초기화
-- 사전 학습된 ResNet34 모델을 불러옵니다.
+### SSD 백본(Backbone) 정의
+
+먼저, ResNet과 같이 사전 학습된 네트워크의 일부 층을 사용하여 SSD의 특징 추출기(backbone)를 구성합니다.
+
+### 모델과 앵커 생성자(Anchor Generator) 초기화
+
+사전 학습된 ResNet34를 기반으로 SSD 백본을 구성하고, SSD 모델 및 앵커 박스 생성자를 정의합니다.
+
+### COCO 데이터셋 클래스 정의
+
+COCO 데이터셋의 이미지와 어노테이션(JSON 파일)을 읽어와서 모델 학습에 사용할 수 있도록 Dataset 클래스를 정의합니다.
+
+### DataLoader와 데이터 전처리
+
+이미지를 텐서로 변환하는 transform과 함께 학습 및 테스트 데이터셋을 로드합니다.
 
 ## Implementation Flow
 
-1. 먼저, 압축 파일(pytorch-transformer.zip)을 지정된 경로(현재 디렉토리)로 압축 해제합니다.
-2. 작업 디렉토리를 변경합니다.
-3. SSD 백본(Backbone) 정의
-4. 모델과 앵커 생성자(Anchor Generator) 초기화
-5. 사전 학습된 ResNet34 모델을 불러옵니다.
-6. 위에서 정의한 SSDBackbone으로 ResNet34의 일부 층을 래핑합니다.
+1. SSD 백본(Backbone) 정의: 먼저, ResNet과 같이 사전 학습된 네트워크의 일부 층을 사용하여 SSD의 특징 추출기(backbone)를 구성합니다.
+2. 모델과 앵커 생성자(Anchor Generator) 초기화: 사전 학습된 ResNet34를 기반으로 SSD 백본을 구성하고, SSD 모델 및 앵커 박스 생성자를 정의합니다.
+3. COCO 데이터셋 클래스 정의: COCO 데이터셋의 이미지와 어노테이션(JSON 파일)을 읽어와서 모델 학습에 사용할 수 있도록 Dataset 클래스를 정의합니다.
+4. DataLoader와 데이터 전처리: 이미지를 텐서로 변환하는 transform과 함께 학습 및 테스트 데이터셋을 로드합니다.
 
 ## Code Highlights
 
 ### COCO 데이터셋 클래스 정의
+
+`COCO 데이터셋 클래스 정의`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 학습/검증 데이터를 구분하여 파일 경로 설정, COCO 어노테이션 파일을 읽어옵니다., 카테고리 정보 및 데이터셋의 이미지-어노테이션 페어를 로드합니다. 흐름이 주석과 함께 드러납니다.
 
 ```python
 import os
@@ -79,6 +113,8 @@ class COCODataset(Dataset):
 ```
 
 ### 모델 학습
+
+`모델 학습`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 학습 가능한 파라미터만 모아서 optimizer에 전달, 총 10 에폭 동안 학습, tqdm으로 training loop 진행 상황 표시 흐름이 주석과 함께 드러납니다.
 
 ```python
 from torch import optim

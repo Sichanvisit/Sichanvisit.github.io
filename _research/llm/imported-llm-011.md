@@ -5,13 +5,37 @@ research_tab: "LLM"
 research_kind: "Archive Note"
 source_title: "3-2 11_Seq2Seq_예시1"
 source_path: "13_LLM_GenAI/Code_Snippets/3-2 11_Seq2Seq_예시1.md"
-excerpt: "본 실습에서는 한영 말뭉치 데이터셋을 기반으로 **Sequence-to-Sequence 모델을 구축**하였다. 이 과정에서 과적합을 개선하기 위해 GRU 양방향 구조, Label Smoothing, Dropout, L2 정규화, Teacher Forcing 스케줄..."
+excerpt: "본 실습에서는 한영 말뭉치 데이터셋을 기반으로 Sequence-to-Sequence 모델을 구축하였다"
+research_summary: "본 실습에서는 한영 말뭉치 데이터셋을 기반으로 Sequence-to-Sequence 모델을 구축하였다. 이 과정에서 과적합을 개선하기 위해 GRU 양방향 구조, Label Smoothing, Dropout, L2 정규화, Teacher Forcing 스케줄링 등을 적용하였지만, 문장 예측 품질(BLEU)은 0.1217로 낮았다. 이에... 목적 본 실습의 목적은 한국어 문장을 영어로 번역하는 기계번역 모델을 구현하고 성능을 비교하는 것이다. 이를 위해 전통적인 Seq2Seq 모델, Attention 기법을 적용한 모델을 각각 구현한 후, 동일한 데이터셋을 기반으로 학습시켜 성능을 정량적(BLEU 점수) 및 정성적으로(번역 분석) 평가할 것이다. `md` 원본과 36개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 json, os, random, re입니다."
+research_artifacts: "md · 코드 36개 · 실행 13개"
+code_block_count: 36
+execution_block_count: 13
+research_focus:
+  - "✔️ 사전 세팅"
+  - "본 실습에서는 한영 말뭉치 데이터셋을 기반으로 Sequence-to-Sequence 모델을 구축하였다...."
+  - "✔️ 요약"
+research_stack:
+  - "json"
+  - "os"
+  - "random"
+  - "re"
+  - "sys"
+source_formats:
+  - "md"
 tags:
   - research-archive
   - imported-note
   - llm
   - archive-note
 ---
+
+본 실습에서는 한영 말뭉치 데이터셋을 기반으로 Sequence-to-Sequence 모델을 구축하였다. 이 과정에서 과적합을 개선하기 위해 GRU 양방향 구조, Label Smoothing, Dropout, L2 정규화, Teacher Forcing 스케줄링 등을 적용하였지만, 문장 예측 품질(BLEU)은 0.1217로 낮았다. 이에... 목적 본 실습의 목적은 한국어 문장을 영어로 번역하는 기계번역 모델을 구현하고 성능을 비교하는 것이다. 이를 위해 전통적인 Seq2Seq 모델, Attention 기법을 적용한 모델을 각각 구현한 후, 동일한 데이터셋을 기반으로 학습시켜 성능을 정량적(BLEU 점수) 및 정성적으로(번역 분석) 평가할 것이다. `md` 원본과 36개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 json, os, random, re입니다.
+
+**빠르게 볼 수 있는 포인트**: ✔️ 사전 세팅, 본 실습에서는 한영 말뭉치 데이터셋을 기반으로 Sequence-to-S..., ✔️ 요약.
+
+**남겨둔 자료**: `md` 원본과 36개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 json, os, random, re입니다.
+
+**주요 스택**: `json`, `os`, `random`, `re`, `sys`
 
 ## Snapshot
 
@@ -25,26 +49,36 @@ tags:
 | Libraries | `json`, `os`, `random`, `re`, `sys`, `urllib`, `warnings`, `zipfile` |
 | Source Note | `3-2 11_Seq2Seq_예시1` |
 
-## What I Worked On
+## What This Note Covers
 
-- ✔️ 사전 세팅
-- Warnings 제거
-- Pandas 보기 옵션
-- GPU 설정
-- ✔️ 요약
+### ✔️ 요약
+
+본 실습에서는 한영 말뭉치 데이터셋을 기반으로 Sequence-to-Sequence 모델을 구축하였다. 이 과정에서 과적합을 개선하기 위해 GRU 양방향 구조, Label Smoothing, Dropout, L2 정규화, Teacher Forcing 스케줄링 등을 적용하였지만, 문장 예측 품질(BLEU)은 0.1217로 낮았다. 이에 따라 Bahdanau Attention을 추가한 모델...
+
+### ✔️ 데이터 설명
+
+목적 본 실습의 목적은 한국어 문장을 영어로 번역하는 기계번역 모델을 구현하고 성능을 비교하는 것이다. 이를 위해 전통적인 Seq2Seq 모델, Attention 기법을 적용한 모델을 각각 구현한 후, 동일한 데이터셋을 기반으로 학습시켜 성능을 정량적(BLEU 점수) 및 정성적으로(번역 분석) 평가할 것이다.
+
+### 데이터 재구성
+
+일상생활및구어체_한영_train_set.json의 데이터 개수는 1,200,000개이고, 일상생활및구어체_한영_valid_set.json의 데이터 개수는 150,000개였다. 이번 미션에서 사용하기에는 데이터 개수가 너무 많기 때문에, train_set.json에서 60000, valid_set.json에서 3000개만을 사용하기로 결정했다.
+
+### 불필요한 기호 제거
+
+데이터에 포함된 불필요한 기호는 제거하였다.
 
 ## Implementation Flow
 
-1. ✔️ 사전 세팅
-2. Warnings 제거
-3. Pandas 보기 옵션
-4. GPU 설정
-5. ✔️ 요약
-6. ✔️ **데이터 설명**
+1. ✔️ 요약: 본 실습에서는 한영 말뭉치 데이터셋을 기반으로 Sequence-to-Sequence 모델을 구축하였다. 이 과정에서 과적합을 개선하기 위해 GRU 양방향 구조, Label Smoothing, Dropout, L2 정규화, Teacher Forcing 스케줄링 등을 적용하였지만, 문장 예...
+2. ✔️ 데이터 설명: 목적 본 실습의 목적은 한국어 문장을 영어로 번역하는 기계번역 모델을 구현하고 성능을 비교하는 것이다. 이를 위해 전통적인 Seq2Seq 모델, Attention 기법을 적용한 모델을 각각 구현한 후, 동일한 데이터셋을 기반으로 학습시켜 성능을 정량적(BLEU 점수) 및 정성적으...
+3. 데이터 재구성: 일상생활및구어체_한영_train_set.json의 데이터 개수는 1,200,000개이고, 일상생활및구어체_한영_valid_set.json의 데이터 개수는 150,000개였다. 이번 미션에서 사용하기에는 데이터 개수가 너무 많기 때문에, train_set.json에서 60000, va...
+4. 불필요한 기호 제거: 데이터에 포함된 불필요한 기호는 제거하였다.
 
 ## Code Highlights
 
 ### ✔️ 사전 세팅
+
+`✔️ 사전 세팅`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 전처리와 학습/검증 분리를 담당해 전체 파이프라인의 출발점을 정리하는 코드입니다.
 
 ```python
 import json
@@ -78,7 +112,9 @@ import sentencepiece as spm
 # ... trimmed ...
 ```
 
-### **데이터 재구성**
+### 데이터 재구성
+
+`데이터 재구성`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 기존 데이터에서 일부만 사용, train_set.json을 train/val로 나누기, 새로운 파일로 저장 흐름이 주석과 함께 드러납니다.
 
 ```python
 train_path = "/content/drive/MyDrive/코드잇/스프린트 미션/data/미션 11/일상생활및구어체_한영_train_set.json"

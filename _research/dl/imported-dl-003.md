@@ -5,13 +5,37 @@ research_tab: "DL"
 research_kind: "Archive Note"
 source_title: "(실습)CNN_이미지 분류1"
 source_path: "12_Deep_Learning/Code_Snippets/(실습)CNN_이미지 분류1.md"
-excerpt: "Fashion MNIST는 다양한 **패션 아이템 이미지**가 포함된 데이터셋입니다."
+excerpt: "Fashion MNIST는 다양한 패션 아이템 이미지가 포함된 데이터셋입니다"
+research_summary: "Fashion MNIST는 다양한 패션 아이템 이미지가 포함된 데이터셋입니다. 학습 데이터: 6만 개 - 테스트 데이터: 1만 개 - 이미지 크기: 28×28 (그레이스케일) - 클래스: 총 10개 (각 클래스에 데이터 균등 분포). `md` 원본과 76개 코드 블록, 72개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, torch, torchvision, matplotlib입니다."
+research_artifacts: "md · 코드 76개 · 실행 72개"
+code_block_count: 76
+execution_block_count: 72
+research_focus:
+  - "Fashion MNIST는 다양한 패션 아이템 이미지가 포함된 데이터셋입니다."
+  - "학습 데이터"
+  - "데이터셋"
+research_stack:
+  - "numpy"
+  - "torch"
+  - "torchvision"
+  - "matplotlib"
+  - "types"
+source_formats:
+  - "md"
 tags:
   - research-archive
   - imported-note
   - dl
   - archive-note
 ---
+
+Fashion MNIST는 다양한 패션 아이템 이미지가 포함된 데이터셋입니다. 학습 데이터: 6만 개 - 테스트 데이터: 1만 개 - 이미지 크기: 28×28 (그레이스케일) - 클래스: 총 10개 (각 클래스에 데이터 균등 분포). `md` 원본과 76개 코드 블록, 72개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, torch, torchvision, matplotlib입니다.
+
+**빠르게 볼 수 있는 포인트**: Fashion MNIST는 다양한 패션 아이템 이미지가 포함된 데이터셋..., 학습 데이터, 데이터셋.
+
+**남겨둔 자료**: `md` 원본과 76개 코드 블록, 72개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, torch, torchvision, matplotlib입니다.
+
+**주요 스택**: `numpy`, `torch`, `torchvision`, `matplotlib`, `types`
 
 ## Snapshot
 
@@ -25,26 +49,36 @@ tags:
 | Libraries | `numpy`, `torch`, `torchvision`, `matplotlib`, `types`, `PIL`, `torchinfo`, `sklearn` |
 | Source Note | `(실습)CNN_이미지 분류1` |
 
-## What I Worked On
+## What This Note Covers
 
-- 데이터셋
-- 클래스 정보
-- 라이브러리
-- 데이터 셋 생성
-- 시각화
+### Overview
+
+Fashion MNIST는 다양한 패션 아이템 이미지가 포함된 데이터셋입니다.
+
+### 데이터셋
+
+학습 데이터: 6만 개 - 테스트 데이터: 1만 개 - 이미지 크기: 28×28 (그레이스케일) - 클래스: 총 10개 (각 클래스에 데이터 균등 분포)
+
+### 클래스 정보
+
+0번부터 9번까지 다음과 같은 패션 아이템으로 구성됩니다
+
+### 주요 파라미터
+
+in_channels: 입력 데이터의 채널 수. - out_channels: 출력 데이터의 채널 수 = 필터 개수. - kernel_size: 필터 크기. (정사각형) - stride: 필터 이동 간격. (기본값: 1) - padding: 입력 가장자리를 채워 크기를 조정. - 0: 패딩 없음 (valid), - 1: 출력 크기 = 입력 크기 (same은 스트라이드 1에서만 적용 가능).
 
 ## Implementation Flow
 
-1. 데이터셋
-2. 클래스 정보
-3. 라이브러리
-4. 데이터 셋 생성
-5. 시각화
-6. 이미지 --> 텐서로 변환
+1. Overview: Fashion MNIST는 다양한 패션 아이템 이미지가 포함된 데이터셋입니다.
+2. 데이터셋: 학습 데이터: 6만 개 - 테스트 데이터: 1만 개 - 이미지 크기: 28×28 (그레이스케일) - 클래스: 총 10개 (각 클래스에 데이터 균등 분포)
+3. 클래스 정보: 0번부터 9번까지 다음과 같은 패션 아이템으로 구성됩니다
+4. 주요 파라미터: in_channels: 입력 데이터의 채널 수. - out_channels: 출력 데이터의 채널 수 = 필터 개수. - kernel_size: 필터 크기. (정사각형) - stride: 필터 이동 간격. (기본값: 1) - padding: 입력 가장자리를 채워 크기를 조정. - 0:...
 
 ## Code Highlights
 
 ### DNN 모델
+
+`DNN 모델`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 GPU 설정, 데이터셋 로드 + 전처리, uint8 --> float32 흐름이 주석과 함께 드러납니다.
 
 ```python
 from types import CoroutineType
@@ -79,6 +113,8 @@ train_dataset = datasets.FashionMNIST(
 ```
 
 ### CNN 모델 만들기
+
+`CNN 모델 만들기`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 실험의 중심이 되는 모델 아키텍처를 정의하는 코드입니다.
 
 ```python
 import torch

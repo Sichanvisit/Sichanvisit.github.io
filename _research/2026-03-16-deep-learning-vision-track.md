@@ -3,6 +3,8 @@ title: "Deep Learning Vision Track"
 date: 2026-03-16
 research_tab: "DL"
 research_kind: "Track Overview"
+research_summary: "PyTorch 기본기에서 시작해 Object Detection, Segmentation, 이미지 생성까지 확장된 비전 실습을 한 흐름으로 묶은 DL 트랙 개요입니다. 모델 구조만이 아니라 데이터 로더, 학습 루프, 평가지표까지 어떤 식으로 구현했는지 대표 예시와 함께 볼 수 있습니다."
+research_artifacts: "PyTorch · Detection · Segmentation · Generation"
 excerpt: "PyTorch 기초에서 Object Detection, Segmentation, Image Generation까지 확장한 딥러닝 비전 실습 아카이브입니다."
 tags:
   - deep-learning

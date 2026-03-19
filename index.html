@@ -82,6 +82,7 @@ title: ""
     {% for item in researches %}
     {% assign tab_value = item.research_tab | default: "General" %}
     {% assign kind_value = item.research_kind | default: "Archive" %}
+    {% assign card_summary = item.research_summary | default: item.excerpt %}
     <article class="photo-card research-card collection-tab-{{ tab_value | downcase | replace: ' ', '-' | replace: '/', '-' }} collection-kind-{{ kind_value | downcase | replace: ' ', '-' | replace: '/', '-' }}">
       <a class="photo-card-image" href="{{ item.url | relative_url }}">
         <div class="research-card-art" aria-hidden="true"></div>
@@ -98,7 +99,8 @@ title: ""
       </a>
       <div class="photo-card-content">
         <p class="photo-meta">{{ item.date | date: "%Y-%m-%d" }}{% if item.research_kind %} · {{ item.research_kind }}{% endif %}</p>
-        <p>{{ item.excerpt | strip_html | strip_newlines | truncate: 84 }}</p>
+        <p class="photo-card-summary">{{ card_summary | strip_html | strip_newlines | truncate: 112 }}</p>
+        {% if item.research_artifacts %}<p class="photo-note">{{ item.research_artifacts }}</p>{% endif %}
         <div class="photo-links">
           <a href="{{ item.url | relative_url }}">Read Research</a>
         </div>

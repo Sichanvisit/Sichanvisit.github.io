@@ -5,13 +5,36 @@ research_tab: "DL"
 research_kind: "Archive Note"
 source_title: "(실습)Mask R-CNN"
 source_path: "12_Deep_Learning/Code_Snippets/(실습)Mask R-CNN.md"
-excerpt: "DL Archive Note: 데이터셋 준비: PennFudan 데이터셋의 경로와 변환 함수 지정, 데이터셋을 학습용과 테스트용으로 나눕니다., 여기서는 무작위로 선택하여 마지막 50개 이미지를 테스트셋으로 사용합니다."
+excerpt: "데이터셋 준비, 데이터셋을 학습용과 테스트용으로 나눕니다., DataLoader 생성 중심으로 구현 과정을 정리한 Mask R-CNN 기록입니다"
+research_summary: "데이터셋 준비, 데이터셋을 학습용과 테스트용으로 나눕니다., DataLoader 생성 중심으로 구현 과정을 정리한 Mask R-CNN 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 11개 코드 블록, 10개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, torch, torchvision, matplotlib입니다."
+research_artifacts: "md · 코드 11개 · 실행 10개"
+code_block_count: 11
+execution_block_count: 10
+research_focus:
+  - "데이터셋 준비"
+  - "데이터셋을 학습용과 테스트용으로 나눕니다."
+  - "DataLoader 생성"
+research_stack:
+  - "os"
+  - "torch"
+  - "torchvision"
+  - "matplotlib"
+source_formats:
+  - "md"
 tags:
   - research-archive
   - imported-note
   - dl
   - archive-note
 ---
+
+데이터셋 준비, 데이터셋을 학습용과 테스트용으로 나눕니다., DataLoader 생성 중심으로 구현 과정을 정리한 Mask R-CNN 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 11개 코드 블록, 10개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, torch, torchvision, matplotlib입니다.
+
+**빠르게 볼 수 있는 포인트**: 데이터셋 준비, 데이터셋을 학습용과 테스트용으로 나눕니다., DataLoader 생성.
+
+**남겨둔 자료**: `md` 원본과 11개 코드 블록, 10개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, torch, torchvision, matplotlib입니다.
+
+**주요 스택**: `os`, `torch`, `torchvision`, `matplotlib`
 
 ## Snapshot
 
@@ -25,26 +48,26 @@ tags:
 | Libraries | `os`, `torch`, `torchvision`, `matplotlib` |
 | Source Note | `(실습)Mask R-CNN` |
 
-## What I Worked On
+## What This Note Covers
 
-- 데이터셋 준비: PennFudan 데이터셋의 경로와 변환 함수 지정
+- 데이터셋 준비
 - 데이터셋을 학습용과 테스트용으로 나눕니다.
-- 여기서는 무작위로 선택하여 마지막 50개 이미지를 테스트셋으로 사용합니다.
-- DataLoader 생성: 배치 크기, 셔플 여부, 그리고 collate_fn 지정
-- 5. 간단한 학습 루프 (2 에폭 예시)
+- DataLoader 생성
+- 간단한 학습 루프 (2 에폭 예시)
+- 학습 가능한 파라미터만 모아 옵티마이저에 전달
 
 ## Implementation Flow
 
-1. 데이터셋 준비: PennFudan 데이터셋의 경로와 변환 함수 지정
-2. 데이터셋을 학습용과 테스트용으로 나눕니다.
-3. 여기서는 무작위로 선택하여 마지막 50개 이미지를 테스트셋으로 사용합니다.
-4. DataLoader 생성: 배치 크기, 셔플 여부, 그리고 collate_fn 지정
-5. 5. 간단한 학습 루프 (2 에폭 예시)
-6. 학습 가능한 파라미터만 모아 옵티마이저에 전달
+1. Key Step: 데이터셋 준비: PennFudan 데이터셋의 경로와 변환 함수 지정
+2. Key Step: 데이터셋을 학습용과 테스트용으로 나눕니다.
+3. Key Step: 여기서는 무작위로 선택하여 마지막 50개 이미지를 테스트셋으로 사용합니다.
+4. Key Step: DataLoader 생성: 배치 크기, 셔플 여부, 그리고 collate_fn 지정
 
 ## Code Highlights
 
 ### class  PennFudanDataset(torch.utils.data.Dataset)
+
+`class  PennFudanDataset(torch.utils.data.Dataset)`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 마스크에 포함된 클래스를 확인 -> 그중에 0은 배경으로 제외, 각 객체 인스턴스에 대해 binary mask를 생성합니다., mask == obj_ids[:, None, None]는 각 인스턴스마다 True/Fal... 흐름이 주석과 함께 드러납니다.
 
 ```python
 class  PennFudanDataset(torch.utils.data.Dataset):
@@ -79,6 +102,8 @@ class  PennFudanDataset(torch.utils.data.Dataset):
 ```
 
 ### 5. 간단한 학습 루프 (2 에폭 예시)
+
+`5. 간단한 학습 루프 (2 에폭 예시)`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 간단한 학습 루프 (2 에폭 예시), 학습 가능한 파라미터만 모아 옵티마이저에 전달, 학습률 스케줄러: 3 에폭마다 학습률을 0.1배 감소 흐름이 주석과 함께 드러납니다.
 
 ```python
 # 5. 간단한 학습 루프 (2 에폭 예시)
@@ -124,4 +149,4 @@ for epoch in range(num_epochs):
 
 ## Note Preview
 
-> No prose preview was available in the source note.
+> 원본 노트에 별도 설명 문단이 많지 않아 코드 중심으로 보존했습니다.

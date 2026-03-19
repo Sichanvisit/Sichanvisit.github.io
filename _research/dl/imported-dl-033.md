@@ -5,13 +5,35 @@ research_tab: "DL"
 research_kind: "Shared Note"
 source_title: "5-6_ResNet - 공유"
 source_path: "12_Deep_Learning/Code_Snippets/5-6_ResNet - 공유.md"
-excerpt: "DL Shared Note: BasicBlock: ResNet-18, ResNet-34에서 사용하는 기본 블록, Bottleneck: ResNet-50, ResNet-101, ResNet-152에서 사용하는 블록, ResNet 모델 클래스"
+excerpt: "BasicBlock, Bottleneck, ResNet 모델 클래스 중심으로 구현 과정을 정리한 ResNet - 공유 기록입니다"
+research_summary: "BasicBlock, Bottleneck, ResNet 모델 클래스 중심으로 구현 과정을 정리한 ResNet - 공유 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 6개 코드 블록, 4개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, torchinfo입니다."
+research_artifacts: "md · 코드 6개 · 실행 4개"
+code_block_count: 6
+execution_block_count: 4
+research_focus:
+  - "BasicBlock"
+  - "Bottleneck"
+  - "ResNet 모델 클래스"
+research_stack:
+  - "torch"
+  - "torchvision"
+  - "torchinfo"
+source_formats:
+  - "md"
 tags:
   - research-archive
   - imported-note
   - dl
   - shared-note
 ---
+
+BasicBlock, Bottleneck, ResNet 모델 클래스 중심으로 구현 과정을 정리한 ResNet - 공유 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 6개 코드 블록, 4개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, torchinfo입니다.
+
+**빠르게 볼 수 있는 포인트**: BasicBlock, Bottleneck, ResNet 모델 클래스.
+
+**남겨둔 자료**: `md` 원본과 6개 코드 블록, 4개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, torchinfo입니다.
+
+**주요 스택**: `torch`, `torchvision`, `torchinfo`
 
 ## Snapshot
 
@@ -25,21 +47,22 @@ tags:
 | Libraries | `torch`, `torchvision`, `torchinfo` |
 | Source Note | `5-6_ResNet - 공유` |
 
-## What I Worked On
+## What This Note Covers
 
-- BasicBlock: ResNet-18, ResNet-34에서 사용하는 기본 블록
-- Bottleneck: ResNet-50, ResNet-101, ResNet-152에서 사용하는 블록
+- BasicBlock
+- Bottleneck
 - ResNet 모델 클래스
 
 ## Implementation Flow
 
-1. BasicBlock: ResNet-18, ResNet-34에서 사용하는 기본 블록
-2. Bottleneck: ResNet-50, ResNet-101, ResNet-152에서 사용하는 블록
-3. ResNet 모델 클래스
+1. Key Step: BasicBlock: ResNet-18, ResNet-34에서 사용하는 기본 블록
+2. Key Step: Bottleneck: ResNet-50, ResNet-101, ResNet-152에서 사용하는 블록
 
 ## Code Highlights
 
 ### BasicBlock: ResNet-18, ResNet-34에서 사용하는 기본 블록
+
+`BasicBlock: ResNet-18, ResNet-34에서 사용하는 기본 블록`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 BasicBlock: ResNet-18, ResNet-34에서 사용하는 기본 블록, Bottleneck: ResNet-50, ResNet-101, ResNet-152에서 사..., ResNet 모델 클래스 흐름이 주석과 함께 드러납니다.
 
 ```python
 # BasicBlock: ResNet-18, ResNet-34에서 사용하는 기본 블록
@@ -75,6 +98,8 @@ class BasicBlock(nn.Module):
 
 ### from torchvision import models
 
+`from torchvision import models`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+
 ```python
 from torchvision import models
 from torchinfo import summary
@@ -106,4 +131,4 @@ print(torch_model_info.total_params)
 
 ## Note Preview
 
-> No prose preview was available in the source note.
+> 원본 노트에 별도 설명 문단이 많지 않아 코드 중심으로 보존했습니다.

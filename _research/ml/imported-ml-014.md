@@ -5,13 +5,36 @@ research_tab: "ML"
 research_kind: "Practice"
 source_title: "250827_코딩실습14_10.결정트리와 앙상블(보팅배깅부스팅스태킹)"
 source_path: "11_Machine_Learning/Code_Snippets/250827_코딩실습14_10.결정트리와 앙상블(보팅배깅부스팅스태킹).md"
-excerpt: "ML Practice: 시각화를 위한 헬퍼 함수 (이전 실습에서 사용한 것과 동일), 모델별 정확도 저장 딕셔너리, 1. 보팅"
+excerpt: "시각화를 위한 헬퍼 함수 (이전 실습에서 사용..., 모델별 정확도 저장 딕셔너리, 보팅 중심으로 구현 과정을 정리한 코딩실습14 10.결정트리와 앙상블(보팅배깅부스팅스태킹) 기록입니다"
+research_summary: "시각화를 위한 헬퍼 함수 (이전 실습에서 사용..., 모델별 정확도 저장 딕셔너리, 보팅 중심으로 구현 과정을 정리한 코딩실습14 10.결정트리와 앙상블(보팅배깅부스팅스태킹) 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `ipynb/md` 원본과 8개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, matplotlib, sklearn입니다."
+research_artifacts: "ipynb/md · 코드 8개 · 실행 7개"
+code_block_count: 8
+execution_block_count: 7
+research_focus:
+  - "시각화를 위한 헬퍼 함수 (이전 실습에서 사용한 것과 동일)"
+  - "모델별 정확도 저장 딕셔너리"
+  - "보팅"
+research_stack:
+  - "numpy"
+  - "matplotlib"
+  - "sklearn"
+source_formats:
+  - "ipynb"
+  - "md"
 tags:
   - research-archive
   - imported-note
   - ml
   - practice
 ---
+
+시각화를 위한 헬퍼 함수 (이전 실습에서 사용..., 모델별 정확도 저장 딕셔너리, 보팅 중심으로 구현 과정을 정리한 코딩실습14 10.결정트리와 앙상블(보팅배깅부스팅스태킹) 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `ipynb/md` 원본과 8개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, matplotlib, sklearn입니다.
+
+**빠르게 볼 수 있는 포인트**: 시각화를 위한 헬퍼 함수 (이전 실습에서 사용한 것과 동일), 모델별 정확도 저장 딕셔너리, 보팅.
+
+**남겨둔 자료**: `ipynb/md` 원본과 8개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, matplotlib, sklearn입니다.
+
+**주요 스택**: `numpy`, `matplotlib`, `sklearn`
 
 ## Snapshot
 
@@ -25,26 +48,23 @@ tags:
 | Libraries | `numpy`, `matplotlib`, `sklearn` |
 | Source Note | `250827_코딩실습14_10.결정트리와 앙상블(보팅배깅부스팅스태킹)` |
 
-## What I Worked On
+## What This Note Covers
 
 - 시각화를 위한 헬퍼 함수 (이전 실습에서 사용한 것과 동일)
 - 모델별 정확도 저장 딕셔너리
-- 1. 보팅
+- 보팅
 - 1-1. 기본 모델 세팅
 - 1-2. 소프트 보팅
 
 ## Implementation Flow
 
-1. 시각화를 위한 헬퍼 함수 (이전 실습에서 사용한 것과 동일)
-2. 모델별 정확도 저장 딕셔너리
-3. 1. 보팅
-4. 1-1. 기본 모델 세팅
-5. 1-2. 소프트 보팅
-6. 배깅
+1. Key Step: 시각화를 위한 헬퍼 함수 (이전 실습에서 사용한 것과 동일)
 
 ## Code Highlights
 
 ### 시각화를 위한 헬퍼 함수 (이전 실습에서 사용한 것과 동일)
+
+`시각화를 위한 헬퍼 함수 (이전 실습에서 사용한 것과 동일)`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 시각화를 위한 헬퍼 함수 (이전 실습에서 사용한 것과 동일) 흐름이 주석과 함께 드러납니다.
 
 ```python
 # 시각화를 위한 헬퍼 함수 (이전 실습에서 사용한 것과 동일)
@@ -71,6 +91,8 @@ def plot_decision_boundary(clf, X, y, ax, title):
 ```
 
 ### fig, axes = plt.subplots(2, 2, figsize=(12,11))
+
+`fig, axes = plt.subplots(2, 2, figsize=(12,11))`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 보팅, 1-1. 기본 모델 세팅, 1-2. 소프트 보팅 흐름이 주석과 함께 드러납니다.
 
 ```python
 fig, axes = plt.subplots(2, 2, figsize=(12,11))
@@ -116,4 +138,4 @@ bagging_clf.fit(X_train, y_train)
 
 ## Note Preview
 
-> No prose preview was available in the source note.
+> 원본 노트에 별도 설명 문단이 많지 않아 코드 중심으로 보존했습니다.

@@ -5,13 +5,37 @@ research_tab: "DL"
 research_kind: "Archive Note"
 source_title: "(실습)Faster R-CNN"
 source_path: "12_Deep_Learning/Code_Snippets/(실습)Faster R-CNN.md"
-excerpt: "- COCO API : https://github.com/cocodataset/cocoapi"
+excerpt: "COCO API : https://github.com/cocodataset/cocoapi"
+research_summary: "COCO API : https://github.com/cocodataset/cocoapi. COCO 데이터는 \"ID\"를 기준으로 파싱을 해야 합니다. images. `md` 원본과 18개 코드 블록, 17개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 kagglehub, os, shutil, future입니다."
+research_artifacts: "md · 코드 18개 · 실행 17개"
+code_block_count: 18
+execution_block_count: 17
+research_focus:
+  - "COCO API"
+  - "COCO Data"
+  - "COCO 데이터는 \"ID\"를 기준으로 파싱을 해야 합니다. images"
+research_stack:
+  - "kagglehub"
+  - "os"
+  - "shutil"
+  - "future"
+  - "json"
+source_formats:
+  - "md"
 tags:
   - research-archive
   - imported-note
   - dl
   - archive-note
 ---
+
+COCO API : https://github.com/cocodataset/cocoapi. COCO 데이터는 "ID"를 기준으로 파싱을 해야 합니다. images. `md` 원본과 18개 코드 블록, 17개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 kagglehub, os, shutil, future입니다.
+
+**빠르게 볼 수 있는 포인트**: COCO API, COCO Data, COCO 데이터는 "ID"를 기준으로 파싱을 해야 합니다. images.
+
+**남겨둔 자료**: `md` 원본과 18개 코드 블록, 17개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 kagglehub, os, shutil, future입니다.
+
+**주요 스택**: `kagglehub`, `os`, `shutil`, `__future__`, `json`
 
 ## Snapshot
 
@@ -25,60 +49,36 @@ tags:
 | Libraries | `kagglehub`, `os`, `shutil`, `__future__`, `json`, `torch`, `PIL`, `torchvision` |
 | Source Note | `(실습)Faster R-CNN` |
 
-## What I Worked On
+## What This Note Covers
 
-- COCO Data
-- 데이터셋
-- "area": 174816.81699840003,
-- "iscrowd": 0,
-- "image_id": 1,
+### COCO Data
+
+COCO API : https://github.com/cocodataset/cocoapi
+
+### 데이터셋
+
+COCO 데이터는 "ID"를 기준으로 파싱을 해야 합니다. images
+
+### Custom Collator가 필요한 이유
+
+아래에 기본 collate 함수의 출력과 custom collate를 적용한 최종 출력 형태를 요약했습니다.
+
+### Key Step
+
+"area": 174816.81699840003,
 
 ## Implementation Flow
 
-1. COCO Data
-2. 데이터셋
-3. "area": 174816.81699840003,
-4. "iscrowd": 0,
-5. "image_id": 1,
-6. "bbox": [
+1. COCO Data: COCO API : https://github.com/cocodataset/cocoapi
+2. 데이터셋: COCO 데이터는 "ID"를 기준으로 파싱을 해야 합니다. images
+3. Custom Collator가 필요한 이유: 아래에 기본 collate 함수의 출력과 custom collate를 적용한 최종 출력 형태를 요약했습니다.
+4. Key Step: "area": 174816.81699840003,
 
 ## Code Highlights
 
 ### 데이터셋
 
-```python
-from __future__ import annotations
-#@title CustomCOCO
-import os
-import json
-import torch
-from PIL import Image
-from torch.utils.data import Dataset
-
-# "area": 174816.81699840003,
-# "iscrowd": 0,
-# "image_id": 1,
-# "bbox": [
-#     1.0799999999999272,
-#     187.69008000000002,
-#     611.5897600000001,
-#     285.84000000000003
-# ],
-# "category_id": 19,
-# "id": 1
-# },
-class CustomCOCO:
-    # Json 파일을 읽어서 data에 입력
-    def __init__(self, annotation_file):
-        with open(annotation_file, 'r') as f:
-            self.data = json.load(f)
-
-        # 이미지 정보를 'id'를 키로 하는 딕셔너리로 저장
-        self.images = {img["id"]: img for img in self.data.get('images',[])} # 없으면 빈 리스트
-# ... trimmed ...
-```
-
-### 데이터셋
+`데이터셋`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 COCODataset class, customCOCO를 이용해 annotation 파일 정보 수지, 이미지 파일 경로 설정 흐름이 주석과 함께 드러납니다.
 
 ```python
 #@title COCODataset class
@@ -109,6 +109,42 @@ class COCODataset(Dataset):
             file_name = img_info["file_name"]
             image_path = os.path.join(self.image_path, file_name)
             image = Image.open(image_path).convert("RGB")
+# ... trimmed ...
+```
+
+### Custom Collator가 필요한 이유
+
+`Custom Collator가 필요한 이유`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 기본 collator, > (image1, image2), (target1, target2), custom collator 흐름이 주석과 함께 드러납니다.
+
+```python
+import torch
+from torch.utils.data import DataLoader
+
+image1 = torch.randn(3,300,300)
+target1 ={
+    'boxes' : torch.tensor([[50,50,200,200]], dtype=torch.float32),
+    'labels' : torch.tensor([1])
+}
+
+image2 = torch.randn(3,400,300)
+target2 ={
+    'boxes' : torch.tensor([[100,100,350,350], [20,20,100,100]], dtype=torch.float32),
+    'labels' : torch.tensor([2,3])
+}
+
+sample_data = [(image1,target1), (image2, target2)]
+
+#기본 collator
+loader_wo_collator = DataLoader(sample_data, batch_size=2)
+# --> (image1, image2), (target1, target2)
+
+try:
+    for batch in loader_wo_collator:
+        images, targets = batch
+        print("Batch images shape", images.shape)
+except Exception as e:
+    print("기본 collator함수 사용시 에러 ", e)
+
 # ... trimmed ...
 ```
 

@@ -5,13 +5,38 @@ research_tab: "LLM"
 research_kind: "Mission"
 source_title: "미션13_1팀_박시찬"
 source_path: "13_LLM_GenAI/Code_Snippets/미션13_1팀_박시찬.md"
-excerpt: "쇼핑몰 리뷰 데이터를 대상으로 **감성 분석(Sentiment Analysis)** 모델을 학습하고, **Full Fine-Tuning** 방식과 **PEFT** 방식의 성능·효율성을 비교하는 미션입니다."
+excerpt: "쇼핑몰 리뷰 데이터를 대상으로 감성 분석(Sentiment Analysis) 모델을 학습하고, Full Fine-Tuning 방식과 PEFT 방식의 성능·효율성을 비교하는 미션입니다"
+research_summary: "쇼핑몰 리뷰 데이터를 대상으로 감성 분석(Sentiment Analysis) 모델을 학습하고, Full Fine-Tuning 방식과 PEFT 방식의 성능·효율성을 비교하는 미션입니다. 초기 진단 (Initial Diagnosis) 데이터 로드 직후 수행한 1차 정밀 진단 결과입니다. `ipynb/md` 원본과 27개 코드 블록, 25개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 peft, google, os, re입니다."
+research_artifacts: "ipynb/md · 코드 27개 · 실행 25개"
+code_block_count: 27
+execution_block_count: 25
+research_focus:
+  - "쇼핑몰 리뷰 데이터를 대상으로 감성 분석(Sentiment Analysis) 모델을 학습하고, Full..."
+  - "쇼핑몰 리뷰 감성 분석 미션"
+  - "데이터셋"
+research_stack:
+  - "peft"
+  - "google"
+  - "os"
+  - "re"
+  - "torch"
+source_formats:
+  - "ipynb"
+  - "md"
 tags:
   - research-archive
   - imported-note
   - llm
   - mission
 ---
+
+쇼핑몰 리뷰 데이터를 대상으로 감성 분석(Sentiment Analysis) 모델을 학습하고, Full Fine-Tuning 방식과 PEFT 방식의 성능·효율성을 비교하는 미션입니다. 초기 진단 (Initial Diagnosis) 데이터 로드 직후 수행한 1차 정밀 진단 결과입니다. `ipynb/md` 원본과 27개 코드 블록, 25개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 peft, google, os, re입니다.
+
+**빠르게 볼 수 있는 포인트**: 쇼핑몰 리뷰 데이터를 대상으로 감성 분석(Sentiment Analys..., 쇼핑몰 리뷰 감성 분석 미션, 데이터셋.
+
+**남겨둔 자료**: `ipynb/md` 원본과 27개 코드 블록, 25개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 peft, google, os, re입니다.
+
+**주요 스택**: `peft`, `google`, `os`, `re`, `torch`
 
 ## Snapshot
 
@@ -25,26 +50,36 @@ tags:
 | Libraries | `peft`, `google`, `os`, `re`, `torch`, `numpy`, `pandas`, `nltk` |
 | Source Note | `미션13_1팀_박시찬` |
 
-## What I Worked On
+## What This Note Covers
 
-- 쇼핑몰 리뷰 감성 분석 미션
-- 사용 예시
-- 데이터셋
-- 경로 설정 (사용자 환경에 맞게 수정)
-- 실행
+### 쇼핑몰 리뷰 감성 분석 미션
+
+쇼핑몰 리뷰 데이터를 대상으로 감성 분석(Sentiment Analysis) 모델을 학습하고, Full Fine-Tuning 방식과 PEFT 방식의 성능·효율성을 비교하는 미션입니다.
+
+### 데이터 전처리 및 라벨 복원 보고서
+
+초기 진단 (Initial Diagnosis) 데이터 로드 직후 수행한 1차 정밀 진단 결과입니다.
+
+### 정량적 검증 및 심층 분석 보고서
+
+Full Fine-Tuning vs PEFT (LoRA) 비교 평가
+
+### 성능 및 효율성 종합 비교 (Global Comparison)
+
+/ 항목 / Full Fine-Tuning / PEFT (LoRA) / 차이 (Diff) / 비고 / /---------------------/------------------------/-----------------------/---------------------/-----------------------------------/ / Accuracy / 91.02% / 90.32%...
 
 ## Implementation Flow
 
-1. 쇼핑몰 리뷰 감성 분석 미션
-2. 사용 예시
-3. 데이터셋
-4. 경로 설정 (사용자 환경에 맞게 수정)
-5. 실행
-6. [데이터 다시 로드 - Aspects 컬럼까지 포함해서]
+1. 쇼핑몰 리뷰 감성 분석 미션: 쇼핑몰 리뷰 데이터를 대상으로 감성 분석(Sentiment Analysis) 모델을 학습하고, Full Fine-Tuning 방식과 PEFT 방식의 성능·효율성을 비교하는 미션입니다.
+2. 데이터 전처리 및 라벨 복원 보고서: 초기 진단 (Initial Diagnosis) 데이터 로드 직후 수행한 1차 정밀 진단 결과입니다.
+3. 정량적 검증 및 심층 분석 보고서: Full Fine-Tuning vs PEFT (LoRA) 비교 평가
+4. 성능 및 효율성 종합 비교 (Global Comparison): / 항목 / Full Fine-Tuning / PEFT (LoRA) / 차이 (Diff) / 비고 / /---------------------/------------------------/-----------------------/--...
 
 ## Code Highlights
 
 ### 데이터 전처리 및 라벨 복원 보고서
+
+`데이터 전처리 및 라벨 복원 보고서`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 모델 & 토크나이저 로드, 설정값, 전처리 함수 정의 흐름이 주석과 함께 드러납니다.
 
 ```python
 from transformers import AutoTokenizer
@@ -79,6 +114,8 @@ print(f"🚀 [Step 2-2] 토크나이징 및 컬럼 정리")
 ```
 
 ### 학습 실험
+
+`학습 실험`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 Data Collator 생성, 동적 패딩 검증 함수 (수정됨), ★ 중요: 학습에 불필요한 컬럼 제거 (Aspects 등이 있으면 에러남) 흐름이 주석과 함께 드러납니다.
 
 ```python
 from transformers import DataCollatorWithPadding

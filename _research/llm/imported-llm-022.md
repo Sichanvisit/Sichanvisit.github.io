@@ -5,13 +5,37 @@ research_tab: "LLM"
 research_kind: "Archive Note"
 source_title: "3-5 (실습)LangChain활용"
 source_path: "13_LLM_GenAI/Code_Snippets/3-5 (실습)LangChain활용.md"
-excerpt: "LangChain은 LLM에 입력되는 프롬프트에 다양한 엔지니어링 요소(프롬프트 템플릿, 체인, 메모리, 툴 호출 등)를 결합하여 하나의 완성된 애플리케이션 형태로 구성할 수 있는 단계별 워크플로우 프레임워크입니다."
+excerpt: "LangChain은 LLM에 입력되는 프롬프트에 다양한 엔지니어링 요소(프롬프트 템플릿, 체인, 메모리, 툴 호출 등)를 결합하여 하나의 완성된 애플리케이션 형태로 구성할 수 있는 단계별 워크플로우 프레임워크입니다"
+research_summary: "LangChain은 LLM에 입력되는 프롬프트에 다양한 엔지니어링 요소(프롬프트 템플릿, 체인, 메모리, 툴 호출 등)를 결합하여 하나의 완성된 애플리케이션 형태로 구성할 수 있는 단계별 워크플로우 프레임워크입니다. LangChain은 입력된 프롬프트를 탬플릿화 시키고 불러온 LLM 모델과 연결하여 단계별 워크플로우를 하나의 프로세스로 합쳐 줍니다. `ipynb/md` 원본과 10개 코드 블록, 6개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 getpass, langchain_openai, os, langchain_core입니다."
+research_artifacts: "ipynb/md · 코드 10개 · 실행 6개"
+code_block_count: 10
+execution_block_count: 6
+research_focus:
+  - "LangChain은 LLM에 입력되는 프롬프트에 다양한 엔지니어링 요소(프롬프트 템플릿, 체인, 메모리..."
+  - "LangChain을 활용한 RAG 실습"
+  - "필요 라이브러리 설치"
+research_stack:
+  - "getpass"
+  - "langchain_openai"
+  - "os"
+  - "langchain_core"
+source_formats:
+  - "ipynb"
+  - "md"
 tags:
   - research-archive
   - imported-note
   - llm
   - archive-note
 ---
+
+LangChain은 LLM에 입력되는 프롬프트에 다양한 엔지니어링 요소(프롬프트 템플릿, 체인, 메모리, 툴 호출 등)를 결합하여 하나의 완성된 애플리케이션 형태로 구성할 수 있는 단계별 워크플로우 프레임워크입니다. LangChain은 입력된 프롬프트를 탬플릿화 시키고 불러온 LLM 모델과 연결하여 단계별 워크플로우를 하나의 프로세스로 합쳐 줍니다. `ipynb/md` 원본과 10개 코드 블록, 6개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 getpass, langchain_openai, os, langchain_core입니다.
+
+**빠르게 볼 수 있는 포인트**: LangChain은 LLM에 입력되는 프롬프트에 다양한 엔지니어링 요소..., LangChain을 활용한 RAG 실습, 필요 라이브러리 설치.
+
+**남겨둔 자료**: `ipynb/md` 원본과 10개 코드 블록, 6개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 getpass, langchain_openai, os, langchain_core입니다.
+
+**주요 스택**: `getpass`, `langchain_openai`, `os`, `langchain_core`
 
 ## Snapshot
 
@@ -25,26 +49,36 @@ tags:
 | Libraries | `getpass`, `langchain_openai`, `os`, `langchain_core` |
 | Source Note | `3-5 (실습)LangChain활용` |
 
-## What I Worked On
+## What This Note Covers
 
-- LangChain을 활용한 RAG 실습
-- 필요 라이브러리 설치
-- LangChain 프롬프트 엔지니어링
-- OpenAI API key
-- API키 설정
+### LangChain을 활용한 RAG 실습
+
+LangChain은 LLM에 입력되는 프롬프트에 다양한 엔지니어링 요소(프롬프트 템플릿, 체인, 메모리, 툴 호출 등)를 결합하여 하나의 완성된 애플리케이션 형태로 구성할 수 있는 단계별 워크플로우 프레임워크입니다.
+
+### LangChain 프롬프트 엔지니어링
+
+LangChain은 입력된 프롬프트를 탬플릿화 시키고 불러온 LLM 모델과 연결하여 단계별 워크플로우를 하나의 프로세스로 합쳐 줍니다.
+
+### 프롬프트 템플릿 생성
+
+langchain_core.prompts 모듈은 PromptTemplate 객체를 제공하여 사용자가 입력한 프롬프트에 적절한 템플릿을 덮어 씌워 모델에 입력할수 있게 도와줍니다. 이때 PromptTemplate에 입력되는 문자열 안에 {변수이름}형식으로 수정 가능한 변수를 할당할 수 있습니다.
+
+### LLM - Prompt 체인 만들기 (LCEL 방식)
+
+LangChain에서는 기존의 LLMChain.run() 방식 대신, LangChain Expression Language(LCEL)을 사용해 프롬프트 → LLM → 출력 파싱 과정을 하나의 체인으로 간단히 구성할 수 있습니다.
 
 ## Implementation Flow
 
-1. LangChain을 활용한 RAG 실습
-2. 필요 라이브러리 설치
-3. LangChain 프롬프트 엔지니어링
-4. OpenAI API key
-5. API키 설정
-6. 모델 로드
+1. LangChain을 활용한 RAG 실습: LangChain은 LLM에 입력되는 프롬프트에 다양한 엔지니어링 요소(프롬프트 템플릿, 체인, 메모리, 툴 호출 등)를 결합하여 하나의 완성된 애플리케이션 형태로 구성할 수 있는 단계별 워크플로우 프레임워크입니다.
+2. LangChain 프롬프트 엔지니어링: LangChain은 입력된 프롬프트를 탬플릿화 시키고 불러온 LLM 모델과 연결하여 단계별 워크플로우를 하나의 프로세스로 합쳐 줍니다.
+3. 프롬프트 템플릿 생성: langchain_core.prompts 모듈은 PromptTemplate 객체를 제공하여 사용자가 입력한 프롬프트에 적절한 템플릿을 덮어 씌워 모델에 입력할수 있게 도와줍니다. 이때 PromptTemplate에 입력되는 문자열 안에 {변수이름}형식으로 수정 가능한 변수를 할...
+4. LLM - Prompt 체인 만들기 (LCEL 방식): LangChain에서는 기존의 LLMChain.run() 방식 대신, LangChain Expression Language(LCEL)을 사용해 프롬프트 → LLM → 출력 파싱 과정을 하나의 체인으로 간단히 구성할 수 있습니다.
 
 ## Code Highlights
 
 ### LLM - Prompt 체인 만들기 (LCEL 방식)
+
+`LLM - Prompt 체인 만들기 (LCEL 방식)`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 Using LangChain Expression Language (LCEL) to cre..., 사용자 프롬프트, 사용자 프롬프트를 체인에 입력 흐름이 주석과 함께 드러납니다.
 
 ```python
 from langchain_core.output_parsers import StrOutputParser
@@ -79,6 +113,8 @@ text_to_summarize = """
 ```
 
 ### 메모리 활용
+
+`메모리 활용`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 기본 체인: 프롬프트 → LLM, 세션별로 메모리(대화 기록)를 관리할 저장소, RunnableWithMessageHistory로 "메모리 있는 체인" 만들기 흐름이 주석과 함께 드러납니다.
 
 ```python
 # 3) 기본 체인: 프롬프트 → LLM

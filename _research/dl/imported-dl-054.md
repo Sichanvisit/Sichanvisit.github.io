@@ -5,13 +5,37 @@ research_tab: "DL"
 research_kind: "Shared Note"
 source_title: "Segmentation_데이터다루기 - 공유"
 source_path: "12_Deep_Learning/Code_Snippets/Segmentation_데이터다루기 - 공유.md"
-excerpt: "xml.etree.ElementTree는 Python 내장 XML 처리 라이브러리로, XML 파일을 파싱하고, 트리 형태로 데이터를 탐색하며 필요한 정보를 추출할 수 있도록 도와줍니다. 대략적인 사용 방법은 다음과 같습니다."
+excerpt: "xml.etree.ElementTree는 Python 내장 XML 처리 라이브러리로, XML 파일을 파싱하고, 트리 형태로 데이터를 탐색하며 필요한 정보를 추출할 수 있도록 도와줍니다"
+research_summary: "xml.etree.ElementTree는 Python 내장 XML 처리 라이브러리로, XML 파일을 파싱하고, 트리 형태로 데이터를 탐색하며 필요한 정보를 추출할 수 있도록 도와줍니다. 대략적인 사용 방법은 다음과 같습니다. PennFudanPed 데이터셋은 보행자 탐지 및 segmentation(분할) 작업을 위한 데이터셋입니다. `md` 원본과 76개 코드 블록, 52개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, json, torch, numpy입니다."
+research_artifacts: "md · 코드 76개 · 실행 52개"
+code_block_count: 76
+execution_block_count: 52
+research_focus:
+  - "VOC2012 다루기"
+  - "이미지와 마스크"
+  - "xml.etree.ElementTree는 Python 내장 XML 처리 라이브러리로, XML 파일을 파..."
+research_stack:
+  - "os"
+  - "json"
+  - "torch"
+  - "numpy"
+  - "PIL"
+source_formats:
+  - "md"
 tags:
   - research-archive
   - imported-note
   - dl
   - shared-note
 ---
+
+xml.etree.ElementTree는 Python 내장 XML 처리 라이브러리로, XML 파일을 파싱하고, 트리 형태로 데이터를 탐색하며 필요한 정보를 추출할 수 있도록 도와줍니다. 대략적인 사용 방법은 다음과 같습니다. PennFudanPed 데이터셋은 보행자 탐지 및 segmentation(분할) 작업을 위한 데이터셋입니다. `md` 원본과 76개 코드 블록, 52개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, json, torch, numpy입니다.
+
+**빠르게 볼 수 있는 포인트**: VOC2012 다루기, 이미지와 마스크, xml.etree.ElementTree는 Python 내장 XML 처리....
+
+**남겨둔 자료**: `md` 원본과 76개 코드 블록, 52개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, json, torch, numpy입니다.
+
+**주요 스택**: `os`, `json`, `torch`, `numpy`, `PIL`
 
 ## Snapshot
 
@@ -25,26 +49,36 @@ tags:
 | Libraries | `os`, `json`, `torch`, `numpy`, `PIL`, `torchvision`, `matplotlib`, `xml` |
 | Source Note | `Segmentation_데이터다루기 - 공유` |
 
-## What I Worked On
+## What This Note Covers
 
-- VOC2012 다루기
-- 이미지와 마스크
-- VOC 데이터셋의 첫 샘플을 불러와 이미지와 마스크의 형태를 확인합니다.
-- 첫 번째 이미지와 마스크 불러오기
-- 원본 데이터를 시각화해봅니다.
+### Annotation
+
+xml.etree.ElementTree는 Python 내장 XML 처리 라이브러리로, XML 파일을 파싱하고, 트리 형태로 데이터를 탐색하며 필요한 정보를 추출할 수 있도록 도와줍니다. 대략적인 사용 방법은 다음과 같습니다.
+
+### PennFudanPed
+
+PennFudanPed 데이터셋은 보행자 탐지 및 segmentation(분할) 작업을 위한 데이터셋입니다.
+
+### 데이터 구조 이해
+
+하나의 JSON 파일 - 모든 이미지 메타데이터, 객체 Annotation, 카테고리, 라이선스 정보가 하나의 JSON 파일(예: instances_train2017.json 또는 instances_val2017.json)에 저장됨
+
+### Annotation의 유형
+
+바운딩 박스 (Bounding Box): - 객체의 위치와 크기를 나타내는 사각형 정보
 
 ## Implementation Flow
 
-1. VOC2012 다루기
-2. 이미지와 마스크
-3. VOC 데이터셋의 첫 샘플을 불러와 이미지와 마스크의 형태를 확인합니다.
-4. 첫 번째 이미지와 마스크 불러오기
-5. 원본 데이터를 시각화해봅니다.
-6. Step 3: 마스크 데이터의 전처리 이해하기
+1. Annotation: xml.etree.ElementTree는 Python 내장 XML 처리 라이브러리로, XML 파일을 파싱하고, 트리 형태로 데이터를 탐색하며 필요한 정보를 추출할 수 있도록 도와줍니다. 대략적인 사용 방법은 다음과 같습니다.
+2. PennFudanPed: PennFudanPed 데이터셋은 보행자 탐지 및 segmentation(분할) 작업을 위한 데이터셋입니다.
+3. 데이터 구조 이해: 하나의 JSON 파일 - 모든 이미지 메타데이터, 객체 Annotation, 카테고리, 라이선스 정보가 하나의 JSON 파일(예: instances_train2017.json 또는 instances_val2017.json)에 저장됨
+4. Annotation의 유형: 바운딩 박스 (Bounding Box): - 객체의 위치와 크기를 나타내는 사각형 정보
 
 ## Code Highlights
 
 ### 데이터셋과 데이터로더
+
+`데이터셋과 데이터로더`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 Step 1: VOCSegmentation 데이터셋 로드 및 클래스 정보 설정하기, train이면 'train', 아니면 'val' 이미지를 선택합니다., torchvision의 VOCSegmentation 클래스를 사용하여 VOC 데이터셋을... 흐름이 주석과 함께 드러납니다.
 
 ```python
 import os
@@ -79,6 +113,8 @@ class SegmentationDataset(Dataset):
 ```
 
 ### 시각화
+
+`시각화`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 Step 4: 시각화 함수 정의하기, 내부 함수: 마스크에 클래스별 색상을 입히는 함수, target: (1, H, W) 텐서를 squeeze하여 (H, W) 형태로 변경 흐름이 주석과 함께 드러납니다.
 
 ```python
 ###############################################

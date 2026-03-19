@@ -5,13 +5,37 @@ research_tab: "DL"
 research_kind: "Mission"
 source_title: "Mission_8_강사공유"
 source_path: "12_Deep_Learning/Code_Snippets/Mission_8_강사공유.md"
-excerpt: "1. Focal Loss - Cross Entropy Loss의 개선된 버전 - 클래스 불균형 문제 해결을 위해 도입 - 쉽게 맞추는 샘플보다 어려운 샘플에 더 큰 가중치를 부여하여 모델이 어려운 샘플을 더 학습하도록 유도"
+excerpt: "Focal Loss - Cross Entropy Loss의 개선된 버전 - 클래스 불균형 문제 해결을 위해 도입 - 쉽게 맞추는 샘플보다 어려운 샘플에 더 큰 가중치를 부여하여 모델이 어려운 샘플을 더 학습하도록 유도"
+research_summary: "Focal Loss - Cross Entropy Loss의 개선된 버전 - 클래스 불균형 문제 해결을 위해 도입 - 쉽게 맞추는 샘플보다 어려운 샘플에 더 큰 가중치를 부여하여 모델이 어려운 샘플을 더 학습하도록 유도. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 28개 코드 블록, 21개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, random, collections, numpy입니다."
+research_artifacts: "md · 코드 28개 · 실행 21개"
+code_block_count: 28
+execution_block_count: 21
+research_focus:
+  - "사전설정"
+  - "2.데이터 불러오기"
+  - "데이터 시각화"
+research_stack:
+  - "os"
+  - "random"
+  - "collections"
+  - "numpy"
+  - "cv2"
+source_formats:
+  - "md"
 tags:
   - research-archive
   - imported-note
   - dl
   - mission
 ---
+
+Focal Loss - Cross Entropy Loss의 개선된 버전 - 클래스 불균형 문제 해결을 위해 도입 - 쉽게 맞추는 샘플보다 어려운 샘플에 더 큰 가중치를 부여하여 모델이 어려운 샘플을 더 학습하도록 유도. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 28개 코드 블록, 21개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, random, collections, numpy입니다.
+
+**빠르게 볼 수 있는 포인트**: 사전설정, 2.데이터 불러오기, 데이터 시각화.
+
+**남겨둔 자료**: `md` 원본과 28개 코드 블록, 21개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, random, collections, numpy입니다.
+
+**주요 스택**: `os`, `random`, `collections`, `numpy`, `cv2`
 
 ## Snapshot
 
@@ -25,26 +49,36 @@ tags:
 | Libraries | `os`, `random`, `collections`, `numpy`, `cv2`, `matplotlib`, `torch`, `torchvision` |
 | Source Note | `Mission_8_강사공유` |
 
-## What I Worked On
+## What This Note Covers
 
-- 1. 사전설정
-- 드라이브 마운트
-- device 설정
-- 2.데이터 불러오기
-- Download latest version
+### 4.모델 학습 및 평가
+
+Focal Loss - Cross Entropy Loss의 개선된 버전 - 클래스 불균형 문제 해결을 위해 도입 - 쉽게 맞추는 샘플보다 어려운 샘플에 더 큰 가중치를 부여하여 모델이 어려운 샘플을 더 학습하도록 유도
+
+### Key Step
+
+폴더 내부 이미지 모두 가져오기
+
+### Key Step
+
+원본이미지와 fuse이미지, save이미지
+
+### Key Step
+
+사이즈 확인 (H, W, C)
 
 ## Implementation Flow
 
-1. 1. 사전설정
-2. 드라이브 마운트
-3. device 설정
-4. 2.데이터 불러오기
-5. Download latest version
-6. 폴더 내부 이미지 모두 가져오기
+1. 4.모델 학습 및 평가: Focal Loss - Cross Entropy Loss의 개선된 버전 - 클래스 불균형 문제 해결을 위해 도입 - 쉽게 맞추는 샘플보다 어려운 샘플에 더 큰 가중치를 부여하여 모델이 어려운 샘플을 더 학습하도록 유도
+2. Key Step: 폴더 내부 이미지 모두 가져오기
+3. Key Step: 원본이미지와 fuse이미지, save이미지
+4. Key Step: 사이즈 확인 (H, W, C)
 
 ## Code Highlights
 
 ### 마스크 라벨링
+
+`마스크 라벨링`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 데이터셋 전체의 고유 색상 수집, 클래스 개수가 max_classes를 넘으면 중단, 모든 마스크에서 등장하는 색상 수집 흐름이 주석과 함께 드러납니다.
 
 ```python
 import numpy as np
@@ -79,6 +113,8 @@ def get_unique_colors(image_folder, mask_files, max_classes=11):
 ```
 
 ### 4.모델 학습 및 평가
+
+`4.모델 학습 및 평가`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 학습 및 검증 함수, 학습 시작, 학습 진행 흐름이 주석과 함께 드러납니다.
 
 ```python
 # 학습 및 검증 함수

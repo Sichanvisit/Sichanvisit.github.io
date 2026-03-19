@@ -3,6 +3,8 @@ title: "LLM / GenAI Experiment Log"
 date: 2026-03-15
 research_tab: "LLM"
 research_kind: "Track Overview"
+research_summary: "임베딩과 검색, RAG, LoRA/QLoRA, LangChain, LangGraph 실험을 포트폴리오형 research 흐름으로 다시 정리한 LLM/GenAI 개요입니다. FAQ 챗봇, Gemma QLoRA, 평가 로그처럼 실제로 무엇을 구현하고 비교했는지 한 번에 확인할 수 있습니다."
+research_artifacts: "RAG · LoRA · Agent · Evaluation"
 excerpt: "임베딩, RAG, LoRA, LangGraph 에이전트까지 이어지는 생성형 AI 실험 노트를 포트폴리오용으로 묶었습니다."
 tags:
   - llm

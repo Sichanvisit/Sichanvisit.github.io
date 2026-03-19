@@ -5,13 +5,37 @@ research_tab: "LLM"
 research_kind: "Archive Note"
 source_title: "3-2 (실습)Seq2Seq_Attention_Transformer"
 source_path: "13_LLM_GenAI/Code_Snippets/3-2 (실습)Seq2Seq_Attention_Transformer.md"
-excerpt: "LLM Archive Note: 데이터 전처리, Seq2Seq, Attention"
+excerpt: "데이터 전처리, Seq2Seq, Attention 중심으로 구현 과정을 정리한 Seq2Seq Attention Transformer 기록입니다"
+research_summary: "데이터 전처리, Seq2Seq, Attention 중심으로 구현 과정을 정리한 Seq2Seq Attention Transformer 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 15개 코드 블록, 9개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 kagglehub, pandas, torch, sklearn입니다."
+research_artifacts: "md · 코드 15개 · 실행 9개"
+code_block_count: 15
+execution_block_count: 9
+research_focus:
+  - "데이터 전처리"
+  - "Seq2Seq"
+  - "Attention"
+research_stack:
+  - "kagglehub"
+  - "pandas"
+  - "torch"
+  - "sklearn"
+  - "random"
+source_formats:
+  - "md"
 tags:
   - research-archive
   - imported-note
   - llm
   - archive-note
 ---
+
+데이터 전처리, Seq2Seq, Attention 중심으로 구현 과정을 정리한 Seq2Seq Attention Transformer 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 15개 코드 블록, 9개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 kagglehub, pandas, torch, sklearn입니다.
+
+**빠르게 볼 수 있는 포인트**: 데이터 전처리, Seq2Seq, Attention.
+
+**남겨둔 자료**: `md` 원본과 15개 코드 블록, 9개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 kagglehub, pandas, torch, sklearn입니다.
+
+**주요 스택**: `kagglehub`, `pandas`, `torch`, `sklearn`, `random`
 
 ## Snapshot
 
@@ -25,26 +49,26 @@ tags:
 | Libraries | `kagglehub`, `pandas`, `torch`, `sklearn`, `random` |
 | Source Note | `3-2 (실습)Seq2Seq_Attention_Transformer` |
 
-## What I Worked On
+## What This Note Covers
 
-- Download latest version
-- Reviews.csv 파일에서 'Text'와 'Summary' 컬럼을 50000줄만 불러오기
-- 데이터의 일부 확인
 - 데이터 전처리
-- Reviews.csv 파일에서 "Text"와 "Summary" 컬럼 추출하여 리스트로 변환
+- Seq2Seq
+- Attention
+- Transformer
+- Download latest version
 
 ## Implementation Flow
 
-1. Download latest version
-2. Reviews.csv 파일에서 'Text'와 'Summary' 컬럼을 50000줄만 불러오기
-3. 데이터의 일부 확인
-4. 데이터 전처리
-5. Reviews.csv 파일에서 "Text"와 "Summary" 컬럼 추출하여 리스트로 변환
-6. 하이퍼파라미터 및 전역 변수 정의
+1. Key Step: Reviews.csv 파일에서 'Text'와 'Summary' 컬럼을 50000줄만 불러오기
+2. Key Step: Reviews.csv 파일에서 "Text"와 "Summary" 컬럼 추출하여 리스트로 변환
+3. Key Step: 하이퍼파라미터 및 전역 변수 정의
+4. Key Step: 특수 토큰 정의 (텍스트 요약에서는 target에 SOS, EOS가 필요)
 
 ## Code Highlights
 
 ### 데이터 전처리
+
+`데이터 전처리`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 하이퍼파라미터 및 전역 변수 정의, 특수 토큰 정의 (텍스트 요약에서는 target에 SOS, EOS가 필요), Lang 클래스 (특수 토큰을 미리 등록) 흐름이 주석과 함께 드러납니다.
 
 ```python
 import torch
@@ -79,6 +103,8 @@ class Lang:
 ```
 
 ### Transformer
+
+`Transformer`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 포지셔널 인코딩 정의 (단어 위치 정보 반영), 인코더 정의, 디코더 정의 흐름이 주석과 함께 드러납니다.
 
 ```python
 import torch
@@ -124,4 +150,4 @@ class TransformerEncoder(nn.Module):
 
 ## Note Preview
 
-> No prose preview was available in the source note.
+> 원본 노트에 별도 설명 문단이 많지 않아 코드 중심으로 보존했습니다.

@@ -5,13 +5,37 @@ research_tab: "DL"
 research_kind: "Archive Note"
 source_title: "(실습)PyTorch_데이터"
 source_path: "12_Deep_Learning/Code_Snippets/(실습)PyTorch_데이터.md"
-excerpt: "scikit-learn에서 California Housing 데이터셋을 불러온 뒤, 입력은 input_data에 저장하고 타깃은 target_data에 저장하세요.이때 input_data와 target_data 모두 데이터 타입은 float32로 지정해주세요."
+excerpt: "scikit-learn에서 California Housing 데이터셋을 불러온 뒤, 입력은 input_data에 저장하고 타깃은 target_data에 저장하세요.이때 input_data와 target_data 모두 데이터 타입은 float32로 지정해주세요"
+research_summary: "scikit-learn에서 California Housing 데이터셋을 불러온 뒤, 입력은 input_data에 저장하고 타깃은 target_data에 저장하세요.이때 input_data와 target_data 모두 데이터 타입은 float32로 지정해주세요. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 58개 코드 블록, 54개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, numpy, pandas, PIL입니다."
+research_artifacts: "md · 코드 58개 · 실행 54개"
+code_block_count: 58
+execution_block_count: 54
+research_focus:
+  - "CSV 데이터 활용"
+  - "이미지 데이터 활용"
+  - "scikit-learn에서 California Housing 데이터셋을 불러온 뒤, 입력은 input_..."
+research_stack:
+  - "torch"
+  - "numpy"
+  - "pandas"
+  - "PIL"
+  - "glob"
+source_formats:
+  - "md"
 tags:
   - research-archive
   - imported-note
   - dl
   - archive-note
 ---
+
+scikit-learn에서 California Housing 데이터셋을 불러온 뒤, 입력은 input_data에 저장하고 타깃은 target_data에 저장하세요.이때 input_data와 target_data 모두 데이터 타입은 float32로 지정해주세요. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 58개 코드 블록, 54개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, numpy, pandas, PIL입니다.
+
+**빠르게 볼 수 있는 포인트**: CSV 데이터 활용, 이미지 데이터 활용, scikit-learn에서 California Housing 데이터셋을....
+
+**남겨둔 자료**: `md` 원본과 58개 코드 블록, 54개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, numpy, pandas, PIL입니다.
+
+**주요 스택**: `torch`, `numpy`, `pandas`, `PIL`, `glob`
 
 ## Snapshot
 
@@ -25,26 +49,31 @@ tags:
 | Libraries | `torch`, `numpy`, `pandas`, `PIL`, `glob`, `matplotlib`, `sklearn` |
 | Source Note | `(실습)PyTorch_데이터` |
 
-## What I Worked On
+## What This Note Covers
 
-- CSV 데이터 활용
-- 이미지 데이터 활용
-- 실습
-- data 분할
-- 데이터를 학습, 검증, 테스트 데이터로 나누기
+### 실습
+
+scikit-learn에서 California Housing 데이터셋을 불러온 뒤, 입력은 input_data에 저장하고 타깃은 target_data에 저장하세요.이때 input_data와 target_data 모두 데이터 타입은 float32로 지정해주세요.
+
+### Key Step
+
+데이터를 학습, 검증, 테스트 데이터로 나누기
+
+### Key Step
+
+train_dataset.log_statistics()
 
 ## Implementation Flow
 
-1. CSV 데이터 활용
-2. 이미지 데이터 활용
-3. 실습
-4. data 분할
-5. 데이터를 학습, 검증, 테스트 데이터로 나누기
-6. 표준화
+1. 실습: scikit-learn에서 California Housing 데이터셋을 불러온 뒤, 입력은 input_data에 저장하고 타깃은 target_data에 저장하세요.이때 input_data와 target_data 모두 데이터 타입은 float32로 지정해주세요.
+2. Key Step: 데이터를 학습, 검증, 테스트 데이터로 나누기
+3. Key Step: train_dataset.log_statistics()
 
 ## Code Highlights
 
 ### data 분할
+
+`data 분할`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 원본 데이터를 모델이 바로 받을 수 있는 샘플 구조로 바꾸기 위해 커스텀 Dataset을 정의하는 부분입니다.
 
 ```python
 abalone_df = pd.read_csv(
@@ -71,6 +100,8 @@ class AbaloneDataset(Dataset):
 ```
 
 ### 표준화
+
+`표준화`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 데이터셋 클래스 정의, # 데이터 표준화 수행, if self.scaler 흐름이 주석과 함께 드러납니다.
 
 ```python
 from sklearn.preprocessing import StandardScaler

@@ -5,13 +5,38 @@ research_tab: "LLM"
 research_kind: "Archive Note"
 source_title: "3-5 LangGraph_맛보기"
 source_path: "13_LLM_GenAI/Code_Snippets/3-5 LangGraph_맛보기.md"
-excerpt: "LangGraph는 LLM 애플리케이션에 **\"순환(Loop)\"**과 \"제어(Control)\" 기능을 부여하는 라이브러리입니다."
+excerpt: "LangGraph는 LLM 애플리케이션에 \"순환(Loop)\"과 \"제어(Control)\" 기능을 부여하는 라이브러리입니다"
+research_summary: "LangGraph는 LLM 애플리케이션에 \"순환(Loop)\"과 \"제어(Control)\" 기능을 부여하는 라이브러리입니다. LangGraph의 핵심은 State(상태)입니다. 이 상태 객체가 노드들 사이를 흘러다니며 대화 내용(messages)을 계속 업데이트합니다. `ipynb/md` 원본과 7개 코드 블록, 6개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, getpass, typing, typing_extensions입니다."
+research_artifacts: "ipynb/md · 코드 7개 · 실행 6개"
+code_block_count: 7
+execution_block_count: 6
+research_focus:
+  - "LangGraph"
+  - "LangGraph는 LLM 애플리케이션에 \"순환(Loop)\"과 \"제어(Control)\" 기능을 부여하는..."
+  - "LangGraph란 무엇인가요?"
+research_stack:
+  - "os"
+  - "getpass"
+  - "typing"
+  - "typing_extensions"
+  - "langgraph"
+source_formats:
+  - "ipynb"
+  - "md"
 tags:
   - research-archive
   - imported-note
   - llm
   - archive-note
 ---
+
+LangGraph는 LLM 애플리케이션에 "순환(Loop)"과 "제어(Control)" 기능을 부여하는 라이브러리입니다. LangGraph의 핵심은 State(상태)입니다. 이 상태 객체가 노드들 사이를 흘러다니며 대화 내용(messages)을 계속 업데이트합니다. `ipynb/md` 원본과 7개 코드 블록, 6개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, getpass, typing, typing_extensions입니다.
+
+**빠르게 볼 수 있는 포인트**: LangGraph, LangGraph는 LLM 애플리케이션에 "순환(Loop)"과 "제어(..., LangGraph란 무엇인가요?.
+
+**남겨둔 자료**: `ipynb/md` 원본과 7개 코드 블록, 6개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, getpass, typing, typing_extensions입니다.
+
+**주요 스택**: `os`, `getpass`, `typing`, `typing_extensions`, `langgraph`
 
 ## Snapshot
 
@@ -25,26 +50,36 @@ tags:
 | Libraries | `os`, `getpass`, `typing`, `typing_extensions`, `langgraph`, `langchain_openai`, `langchain_core` |
 | Source Note | `3-5 LangGraph_맛보기` |
 
-## What I Worked On
+## What This Note Covers
 
-- LangGraph
-- LangGraph란 무엇인가요?
-- 1. 라이브러리 설치
-- 2. OpenAI API Key 설정
-- 상태(State)와 도구(Tool) 정의
+### LangGraph란 무엇인가요?
+
+LangGraph는 LLM 애플리케이션에 "순환(Loop)"과 "제어(Control)" 기능을 부여하는 라이브러리입니다.
+
+### 상태(State)와 도구(Tool) 정의
+
+LangGraph의 핵심은 State(상태)입니다. 이 상태 객체가 노드들 사이를 흘러다니며 대화 내용(messages)을 계속 업데이트합니다.
+
+### 노드(Node)와 그래프(Graph) 구성
+
+이제 작업자(Node)를 배치하고 작업 순서(Edge)를 연결합니다.
+
+### 실전 테스트
+
+이제 만든 챗봇을 테스트해 봅니다.
 
 ## Implementation Flow
 
-1. LangGraph
-2. LangGraph란 무엇인가요?
-3. 1. 라이브러리 설치
-4. 2. OpenAI API Key 설정
-5. 상태(State)와 도구(Tool) 정의
-6. 1. 그래프의 상태(State) 정의
+1. LangGraph란 무엇인가요?: LangGraph는 LLM 애플리케이션에 "순환(Loop)"과 "제어(Control)" 기능을 부여하는 라이브러리입니다.
+2. 상태(State)와 도구(Tool) 정의: LangGraph의 핵심은 State(상태)입니다. 이 상태 객체가 노드들 사이를 흘러다니며 대화 내용(messages)을 계속 업데이트합니다.
+3. 노드(Node)와 그래프(Graph) 구성: 이제 작업자(Node)를 배치하고 작업 순서(Edge)를 연결합니다.
+4. 실전 테스트: 이제 만든 챗봇을 테스트해 봅니다.
 
 ## Code Highlights
 
 ### 상태(State)와 도구(Tool) 정의
+
+`상태(State)와 도구(Tool) 정의`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 그래프의 상태(State) 정의, 메시지 리스트에 새로운 메시지를 계속 추가(append)하는 방식입니다., 사용할 도구(Tool) 정의 흐름이 주석과 함께 드러납니다.
 
 ```python
 from typing import Annotated
@@ -76,6 +111,8 @@ print("상태 정의 및 도구 연결 완료!")
 ```
 
 ### 노드(Node)와 그래프(Graph) 구성
+
+`노드(Node)와 그래프(Graph) 구성`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 챗봇 노드 함수 정의, 현재까지의 대화 기록(state["messages"])을 보고 다음 말을 생성합니다., 그래프 빌더 생성 흐름이 주석과 함께 드러납니다.
 
 ```python
 from langgraph.prebuilt import ToolNode, tools_condition

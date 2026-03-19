@@ -5,13 +5,37 @@ research_tab: "DL"
 research_kind: "Mission"
 source_title: "Mission 9_이미지 생성"
 source_path: "12_Deep_Learning/Code_Snippets/Mission 9_이미지 생성.md"
-excerpt: "- 이번 미션에서는 모델을 활용하여 FashionMNIST 데이터셋의 각 패션 아이템(예: 티셔츠, 바지, 스니커즈 등)을 조건부로 생성하는 작업을 수행합니다. 각 클래스에 해당하는 이미지를 생성하는 cGAN (Conditional GAN) 모델을 직접 설계하고..."
+excerpt: "이번 미션에서는 모델을 활용하여 FashionMNIST 데이터셋의 각 패션 아이템(예: 티셔츠, 바지, 스니커즈 등)을 조건부로 생성하는 작업을 수행합니다"
+research_summary: "이번 미션에서는 모델을 활용하여 FashionMNIST 데이터셋의 각 패션 아이템(예: 티셔츠, 바지, 스니커즈 등)을 조건부로 생성하는 작업을 수행합니다. 각 클래스에 해당하는 이미지를 생성하는 cGAN (Conditional GAN) 모델을 직접 설계하고 학습시켜 보세요. 훈련 데이터: 60,000장의 이미지 테스트 데이터: 10,000장의 이미지 28×28 크기의 흑백 이미지 (10개 클래스) 11개 클래스가 포함되어 있습니다. - T-shirt/top - Trouser - Pullover - Dress - Coat - Sandal - Shirt - Sneaker - Bag - Ankle boot. `md` 원본과 20개 코드 블록, 15개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, numpy입니다."
+research_artifacts: "md · 코드 20개 · 실행 15개"
+code_block_count: 20
+execution_block_count: 15
+research_focus:
+  - "이번 미션에서는 모델을 활용하여 FashionMNIST 데이터셋의 각 패션 아이템(예: 티셔츠, 바지,..."
+  - "미션 소개"
+  - "데이터 소개"
+research_stack:
+  - "torch"
+  - "torchvision"
+  - "matplotlib"
+  - "numpy"
+  - "random"
+source_formats:
+  - "md"
 tags:
   - research-archive
   - imported-note
   - dl
   - mission
 ---
+
+이번 미션에서는 모델을 활용하여 FashionMNIST 데이터셋의 각 패션 아이템(예: 티셔츠, 바지, 스니커즈 등)을 조건부로 생성하는 작업을 수행합니다. 각 클래스에 해당하는 이미지를 생성하는 cGAN (Conditional GAN) 모델을 직접 설계하고 학습시켜 보세요. 훈련 데이터: 60,000장의 이미지 테스트 데이터: 10,000장의 이미지 28×28 크기의 흑백 이미지 (10개 클래스) 11개 클래스가 포함되어 있습니다. - T-shirt/top - Trouser - Pullover - Dress - Coat - Sandal - Shirt - Sneaker - Bag - Ankle boot. `md` 원본과 20개 코드 블록, 15개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, numpy입니다.
+
+**빠르게 볼 수 있는 포인트**: 이번 미션에서는 모델을 활용하여 FashionMNIST 데이터셋의 각..., 미션 소개, 데이터 소개.
+
+**남겨둔 자료**: `md` 원본과 20개 코드 블록, 15개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, numpy입니다.
+
+**주요 스택**: `torch`, `torchvision`, `matplotlib`, `numpy`, `random`
 
 ## Snapshot
 
@@ -25,26 +49,36 @@ tags:
 | Libraries | `torch`, `torchvision`, `matplotlib`, `numpy`, `random`, `google`, `os`, `scipy` |
 | Source Note | `Mission 9_이미지 생성` |
 
-## What I Worked On
+## What This Note Covers
 
-- 미션 소개
-- 데이터 소개
-- 데이터 링크: torchvision.datasets.FashionMNIST
-- 데이터 구성
-- **1. Setting**
+### 미션 소개
+
+이번 미션에서는 모델을 활용하여 FashionMNIST 데이터셋의 각 패션 아이템(예: 티셔츠, 바지, 스니커즈 등)을 조건부로 생성하는 작업을 수행합니다. 각 클래스에 해당하는 이미지를 생성하는 cGAN (Conditional GAN) 모델을 직접 설계하고 학습시켜 보세요.
+
+### 데이터 구성
+
+훈련 데이터: 60,000장의 이미지 테스트 데이터: 10,000장의 이미지 28×28 크기의 흑백 이미지 (10개 클래스) 11개 클래스가 포함되어 있습니다. - T-shirt/top - Trouser - Pullover - Dress - Coat - Sandal - Shirt - Sneaker - Bag - Ankle boot
+
+### 모델 평가
+
+생성 분포와 실제 데이터 분포간의 거리 측정 - 거리가 가까울수록 (FID 값이 작을 수록) 실제 분포와 유사한 데이터가 생성
+
+### Key Step
+
+데이터 링크: torchvision.datasets.FashionMNIST
 
 ## Implementation Flow
 
-1. 미션 소개
-2. 데이터 소개
-3. 데이터 링크: torchvision.datasets.FashionMNIST
-4. 데이터 구성
-5. **1. Setting**
-6. **2. 데이터 전처리**
+1. 미션 소개: 이번 미션에서는 모델을 활용하여 FashionMNIST 데이터셋의 각 패션 아이템(예: 티셔츠, 바지, 스니커즈 등)을 조건부로 생성하는 작업을 수행합니다. 각 클래스에 해당하는 이미지를 생성하는 cGAN (Conditional GAN) 모델을 직접 설계하고 학습시켜 보세요.
+2. 데이터 구성: 훈련 데이터: 60,000장의 이미지 테스트 데이터: 10,000장의 이미지 28×28 크기의 흑백 이미지 (10개 클래스) 11개 클래스가 포함되어 있습니다. - T-shirt/top - Trouser - Pullover - Dress - Coat - Sandal - Shirt -...
+3. 모델 평가: 생성 분포와 실제 데이터 분포간의 거리 측정 - 거리가 가까울수록 (FID 값이 작을 수록) 실제 분포와 유사한 데이터가 생성
+4. Key Step: 데이터 링크: torchvision.datasets.FashionMNIST
 
 ## Code Highlights
 
-### **3. 모델 생성**
+### 모델 생성
+
+`모델 생성`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 Generator Model, 레이블 임베딩: num_classes (10) 개의 클래스에 대해 각각 num_class..., 초기 크기 계산: 이미지 크기 (28) 를 4로 나눈 값 (7) 흐름이 주석과 함께 드러납니다.
 
 ```python
 #@title Generator Model
@@ -79,6 +113,8 @@ class Generator(nn.Module):
 ```
 
 ### 모델 학습
+
+`모델 학습`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 한 에폭 학습 함수, 모델을 학습 모드로 설정, 데이터 로더에서 이미지와 레이블 가져오기 흐름이 주석과 함께 드러납니다.
 
 ```python
 #@title 한 에폭 학습 함수

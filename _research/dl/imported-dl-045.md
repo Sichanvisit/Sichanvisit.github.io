@@ -5,13 +5,37 @@ research_tab: "DL"
 research_kind: "Shared Note"
 source_title: "GAN - 공유"
 source_path: "12_Deep_Learning/Code_Snippets/GAN - 공유.md"
-excerpt: "DL Shared Note: MNIST"
+excerpt: "MNIST, MNIST 데이터셋 준비 및 DataLoade..., Generator 네트워크 정의 (생성기) 중심으로 구현 과정을 정리한 GAN - 공유 기록입니다"
+research_summary: "MNIST, MNIST 데이터셋 준비 및 DataLoade..., Generator 네트워크 정의 (생성기) 중심으로 구현 과정을 정리한 GAN - 공유 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 6개 코드 블록, 3개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, os입니다."
+research_artifacts: "md · 코드 6개 · 실행 3개"
+code_block_count: 6
+execution_block_count: 3
+research_focus:
+  - "MNIST"
+  - "MNIST 데이터셋 준비 및 DataLoader 설정"
+  - "Generator 네트워크 정의 (생성기)"
+research_stack:
+  - "torch"
+  - "torchvision"
+  - "matplotlib"
+  - "os"
+  - "numpy"
+source_formats:
+  - "md"
 tags:
   - research-archive
   - imported-note
   - dl
   - shared-note
 ---
+
+MNIST, MNIST 데이터셋 준비 및 DataLoade..., Generator 네트워크 정의 (생성기) 중심으로 구현 과정을 정리한 GAN - 공유 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 6개 코드 블록, 3개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, os입니다.
+
+**빠르게 볼 수 있는 포인트**: MNIST, MNIST 데이터셋 준비 및 DataLoader 설정, Generator 네트워크 정의 (생성기).
+
+**남겨둔 자료**: `md` 원본과 6개 코드 블록, 3개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, os입니다.
+
+**주요 스택**: `torch`, `torchvision`, `matplotlib`, `os`, `numpy`
 
 ## Snapshot
 
@@ -25,7 +49,7 @@ tags:
 | Libraries | `torch`, `torchvision`, `matplotlib`, `os`, `numpy` |
 | Source Note | `GAN - 공유` |
 
-## What I Worked On
+## What This Note Covers
 
 - MNIST
 - MNIST 데이터셋 준비 및 DataLoader 설정
@@ -35,50 +59,31 @@ tags:
 
 ## Implementation Flow
 
-1. MNIST
-2. MNIST 데이터셋 준비 및 DataLoader 설정
-3. Generator 네트워크 정의 (생성기)
-4. Discriminator 네트워크 정의 (판별기)
-5. 장치 설정 (GPU 사용 가능하면 GPU 사용)
-6. 생성기와 판별기 초기화
+1. Key Step: MNIST 데이터셋 준비 및 DataLoader 설정
+2. Key Step: Generator 네트워크 정의 (생성기)
+3. Key Step: Discriminator 네트워크 정의 (판별기)
+4. Key Step: 장치 설정 (GPU 사용 가능하면 GPU 사용)
 
 ## Code Highlights
 
-### MNIST
+### import torch
+
+`import torch`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
 
 ```python
-# Generator 네트워크 정의 (생성기)
-class Generator(nn.Module):
-    def __init__(self):
-        super(Generator, self).__init__()
-        self.model = nn.Sequential(
-            nn.Linear(100, 256),
-            nn.LeakyReLU(0.2),
-            nn.Linear(256, 512),
-            nn.LeakyReLU(0.2),
-            nn.Linear(512, 1024),
-            nn.LeakyReLU(0.2),
-            nn.Linear(1024, 28*28),
-            nn.Tanh()  # 출력값을 [-1, 1] 범위로 맞춤
-        )
-
-    def forward(self, z):
-        return self.model(z).view(-1, 1, 28, 28)
-
-# Discriminator 네트워크 정의 (판별기)
-class Discriminator(nn.Module):
-    def __init__(self):
-        super(Discriminator, self).__init__()
-        self.model = nn.Sequential(
-            nn.Linear(28*28, 1024),
-            nn.LeakyReLU(0.2),
-            nn.Dropout(0.3),
-            nn.Linear(1024, 512),
-            nn.LeakyReLU(0.2),
-# ... trimmed ...
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from torchvision import datasets, transforms, utils
+from torchvision.utils import save_image
+import matplotlib.pyplot as plt
+import os
+import numpy as np
 ```
 
 ### MNIST
+
+`MNIST`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 장치 설정 (GPU 사용 가능하면 GPU 사용), 생성기와 판별기 초기화, 옵티마이저 설정 (Adam 사용) 흐름이 주석과 함께 드러납니다.
 
 ```python
 # 장치 설정 (GPU 사용 가능하면 GPU 사용)
@@ -124,4 +129,4 @@ for epoch in range(num_epochs):
 
 ## Note Preview
 
-> No prose preview was available in the source note.
+> 원본 노트에 별도 설명 문단이 많지 않아 코드 중심으로 보존했습니다.

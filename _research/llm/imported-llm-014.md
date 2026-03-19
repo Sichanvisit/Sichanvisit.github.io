@@ -5,13 +5,37 @@ research_tab: "LLM"
 research_kind: "Archive Note"
 source_title: "3-3 (실습)BERT_사전학습"
 source_path: "13_LLM_GenAI/Code_Snippets/3-3 (실습)BERT_사전학습.md"
-excerpt: "BERT 모델은 사전학습과 미세조정(Fine-Tuning)이 확실하게 나눠지는 대표적인 모델입니다. 미세조정은 자연어 Task에 따라 다양하게 진행 될 수 있지만, 사전 학습은 대부분 NSP 학습과 MLM 학습으로 진행이 됩니다."
+excerpt: "BERT 모델은 사전학습과 미세조정(Fine-Tuning)이 확실하게 나눠지는 대표적인 모델입니다"
+research_summary: "BERT 모델은 사전학습과 미세조정(Fine-Tuning)이 확실하게 나눠지는 대표적인 모델입니다. 미세조정은 자연어 Task에 따라 다양하게 진행 될 수 있지만, 사전 학습은 대부분 NSP 학습과 MLM 학습으로 진행이 됩니다. BERT 사전학습에 있어서 먼저 NSP 학습이 가능하게 하기 위해 2개의 문장을 연결하여 적절하게 연결된 문장과 비적절하게 연결된 문장을 이진 분류 할 수 있게 구성해 줍니다. `md` 원본과 13개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 google, torch, copy, sentencepiece입니다."
+research_artifacts: "md · 코드 13개 · 실행 13개"
+code_block_count: 13
+execution_block_count: 13
+research_focus:
+  - "BERT 모델은 사전학습과 미세조정(Fine-Tuning)이 확실하게 나눠지는 대표적인 모델입니다. 미..."
+  - "사전 학습을 위한 데이터세트 구성"
+  - "BERT 사전학습에 있어서 먼저 NSP 학습이 가능하게 하기 위해 2개의 문장을 연결하여 적절하게 연결..."
+research_stack:
+  - "google"
+  - "torch"
+  - "copy"
+  - "sentencepiece"
+  - "pandas"
+source_formats:
+  - "md"
 tags:
   - research-archive
   - imported-note
   - llm
   - archive-note
 ---
+
+BERT 모델은 사전학습과 미세조정(Fine-Tuning)이 확실하게 나눠지는 대표적인 모델입니다. 미세조정은 자연어 Task에 따라 다양하게 진행 될 수 있지만, 사전 학습은 대부분 NSP 학습과 MLM 학습으로 진행이 됩니다. BERT 사전학습에 있어서 먼저 NSP 학습이 가능하게 하기 위해 2개의 문장을 연결하여 적절하게 연결된 문장과 비적절하게 연결된 문장을 이진 분류 할 수 있게 구성해 줍니다. `md` 원본과 13개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 google, torch, copy, sentencepiece입니다.
+
+**빠르게 볼 수 있는 포인트**: BERT 모델은 사전학습과 미세조정(Fine-Tuning)이 확실하게..., 사전 학습을 위한 데이터세트 구성, BERT 사전학습에 있어서 먼저 NSP 학습이 가능하게 하기 위해 2개....
+
+**남겨둔 자료**: `md` 원본과 13개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 google, torch, copy, sentencepiece입니다.
+
+**주요 스택**: `google`, `torch`, `copy`, `sentencepiece`, `pandas`
 
 ## Snapshot
 
@@ -25,26 +49,36 @@ tags:
 | Libraries | `google`, `torch`, `copy`, `sentencepiece`, `pandas`, `numpy`, `os`, `math` |
 | Source Note | `3-3 (실습)BERT_사전학습` |
 
-## What I Worked On
+## What This Note Covers
 
-- 사전 학습을 위한 데이터세트 구성
-- NSP 학습을 위한 두문장 토큰
-- BPE :바이트 페어 인코딩(Byte Pair Encoding, BPE)
-- 추가 쓰기모드로 텍스트 파일 열기
-- 저장 경로 생성
+### 사전 학습을 위한 데이터세트 구성
+
+BERT 모델은 사전학습과 미세조정(Fine-Tuning)이 확실하게 나눠지는 대표적인 모델입니다. 미세조정은 자연어 Task에 따라 다양하게 진행 될 수 있지만, 사전 학습은 대부분 NSP 학습과 MLM 학습으로 진행이 됩니다.
+
+### NSP 학습을 위한 두문장 토큰
+
+BERT 사전학습에 있어서 먼저 NSP 학습이 가능하게 하기 위해 2개의 문장을 연결하여 적절하게 연결된 문장과 비적절하게 연결된 문장을 이진 분류 할 수 있게 구성해 줍니다.
+
+### MLM 학습을 위한 마스킹 처리
+
+MLM 마스킹 처리는 데이터세트 내부에서 진행하지 않고 학습 로직에 적용할 함수로 구현합니다.
+
+### BERT 모델링
+
+BERT 모델은 pytorch의 nn.MultiheadAttention 레이어를 활용하여 Transformer의 인코더와 동일한 아키텍처로 구성합니다.
 
 ## Implementation Flow
 
-1. 사전 학습을 위한 데이터세트 구성
-2. NSP 학습을 위한 두문장 토큰
-3. BPE :바이트 페어 인코딩(Byte Pair Encoding, BPE)
-4. 추가 쓰기모드로 텍스트 파일 열기
-5. 저장 경로 생성
-6. MLM 학습을 위한 마스킹 처리
+1. 사전 학습을 위한 데이터세트 구성: BERT 모델은 사전학습과 미세조정(Fine-Tuning)이 확실하게 나눠지는 대표적인 모델입니다. 미세조정은 자연어 Task에 따라 다양하게 진행 될 수 있지만, 사전 학습은 대부분 NSP 학습과 MLM 학습으로 진행이 됩니다.
+2. NSP 학습을 위한 두문장 토큰: BERT 사전학습에 있어서 먼저 NSP 학습이 가능하게 하기 위해 2개의 문장을 연결하여 적절하게 연결된 문장과 비적절하게 연결된 문장을 이진 분류 할 수 있게 구성해 줍니다.
+3. MLM 학습을 위한 마스킹 처리: MLM 마스킹 처리는 데이터세트 내부에서 진행하지 않고 학습 로직에 적용할 함수로 구현합니다.
+4. BERT 모델링: BERT 모델은 pytorch의 nn.MultiheadAttention 레이어를 활용하여 Transformer의 인코더와 동일한 아키텍처로 구성합니다.
 
 ## Code Highlights
 
 ### NSP 학습을 위한 두문장 토큰
+
+`NSP 학습을 위한 두문장 토큰`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 두개의 문장을 담을 리스트, 적절하게 연결되 문장은 라벨 1로 설정, 비적절한 연결을 만들기 위해 랜덤한 인덱스 생성 흐름이 주석과 함께 드러납니다.
 
 ```python
 class SPDataSet(Dataset):
@@ -79,6 +113,8 @@ class SPDataSet(Dataset):
 ```
 
 ### 모델 학습하기(MLM + NSP)
+
+`모델 학습하기(MLM + NSP)`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 하이퍼파라미터 정의, MLM 변환 함수에 넣어줄 스페셜 토큰 정의, 마스크 토큰이 추가되므로 토큰개수에 + 1 흐름이 주석과 함께 드러납니다.
 
 ```python
 # 하이퍼파라미터 정의

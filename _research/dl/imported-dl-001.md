@@ -5,13 +5,37 @@ research_tab: "DL"
 research_kind: "Archive Note"
 source_title: "(실습)AlexNet"
 source_path: "12_Deep_Learning/Code_Snippets/(실습)AlexNet.md"
-excerpt: "당시 GTX 580 3 GB 두 장으로만 훈련 가능해 모델 파라미터를 반씩 나눠 실행했다. 현대 GPU에는 10 GB 이상 메모리가 흔해 통합 구조가 더 단순·빠르다. PyTorch torchvision.models.alexnet은 저자가 단일 GPU용으로 다시..."
+excerpt: "당시 GTX 580 3 GB 두 장으로만 훈련 가능해 모델 파라미터를 반씩 나눠 실행했다"
+research_summary: "당시 GTX 580 3 GB 두 장으로만 훈련 가능해 모델 파라미터를 반씩 나눠 실행했다. 현대 GPU에는 10 GB 이상 메모리가 흔해 통합 구조가 더 단순·빠르다. PyTorch torchvision.models.alexnet은 저자가 단일 GPU용으로 다시 공개한 Caffe 모델을 그대로 옮긴 버전. 이 가중치는 논문의 결과를 간단한 학습 방법을 사용하여 거의 동일하게 재현한 것입니다. 또한 AlexNet_Weights.DEFAULT로도 제공됩니다. `md` 원본과 7개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchinfo, torchvision, requests입니다."
+research_artifacts: "md · 코드 7개 · 실행 7개"
+code_block_count: 7
+execution_block_count: 7
+research_focus:
+  - "당시 GTX 580 3 GB 두 장으로만 훈련 가능해 모델 파라미터를 반씩 나눠 실행했다. 현대 GPU..."
+  - "이 가중치는 논문의 결과를 간단한 학습 방법을 사용하여 거의 동일하게 재현한 것입니다. 또한 AlexN..."
+  - "AlexNet_Weights.IMAGENET1K_V1"
+research_stack:
+  - "torch"
+  - "torchinfo"
+  - "torchvision"
+  - "requests"
+  - "PIL"
+source_formats:
+  - "md"
 tags:
   - research-archive
   - imported-note
   - dl
   - archive-note
 ---
+
+당시 GTX 580 3 GB 두 장으로만 훈련 가능해 모델 파라미터를 반씩 나눠 실행했다. 현대 GPU에는 10 GB 이상 메모리가 흔해 통합 구조가 더 단순·빠르다. PyTorch torchvision.models.alexnet은 저자가 단일 GPU용으로 다시 공개한 Caffe 모델을 그대로 옮긴 버전. 이 가중치는 논문의 결과를 간단한 학습 방법을 사용하여 거의 동일하게 재현한 것입니다. 또한 AlexNet_Weights.DEFAULT로도 제공됩니다. `md` 원본과 7개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchinfo, torchvision, requests입니다.
+
+**빠르게 볼 수 있는 포인트**: 당시 GTX 580 3 GB 두 장으로만 훈련 가능해 모델 파라미터를..., 이 가중치는 논문의 결과를 간단한 학습 방법을 사용하여 거의 동일하게..., AlexNet_Weights.IMAGENET1K_V1.
+
+**남겨둔 자료**: `md` 원본과 7개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchinfo, torchvision, requests입니다.
+
+**주요 스택**: `torch`, `torchinfo`, `torchvision`, `requests`, `PIL`
 
 ## Snapshot
 
@@ -25,26 +49,36 @@ tags:
 | Libraries | `torch`, `torchinfo`, `torchvision`, `requests`, `PIL`, `io`, `matplotlib` |
 | Source Note | `(실습)AlexNet` |
 
-## What I Worked On
+## What This Note Covers
 
-- alexnet.py
-- from alexnet import AlexNet
-- **AlexNet_Weights.IMAGENET1K_V1:**
-- **모델 성능 (ImageNet-1K 기준)**
-- **추론(Inference) 변환**
+### Overview
+
+당시 GTX 580 3 GB 두 장으로만 훈련 가능해 모델 파라미터를 반씩 나눠 실행했다. 현대 GPU에는 10 GB 이상 메모리가 흔해 통합 구조가 더 단순·빠르다. PyTorch torchvision.models.alexnet은 저자가 단일 GPU용으로 다시 공개한 Caffe 모델을 그대로 옮긴 버전
+
+### AlexNet_Weights.IMAGENET1K_V1
+
+이 가중치는 논문의 결과를 간단한 학습 방법을 사용하여 거의 동일하게 재현한 것입니다. 또한 AlexNet_Weights.DEFAULT로도 제공됩니다.
+
+### 모델 성능 (ImageNet-1K 기준)
+
+Top-1 정확도 (acc@1): 56.522% - Top-5 정확도 (acc@5): 79.066% - 총 파라미터 수: 61,100,840 - 최소 입력 이미지 크기: 높이 63px, 너비 63px - 분류 가능한 카테고리: - 예시: tench(숭어), goldfish(금붕어), great white shark(백상아리) 등 (총 1000개 중 997개 생략) - 학습 방법 (rec...
+
+### 추론(Inference) 변환
+
+AlexNet_Weights.IMAGENET1K_V1.transforms에서 제공하는 변환(transforms)은 다음과 같은 전처리 과정을 수행합니다.
 
 ## Implementation Flow
 
-1. alexnet.py
-2. from alexnet import AlexNet
-3. **AlexNet_Weights.IMAGENET1K_V1:**
-4. **모델 성능 (ImageNet-1K 기준)**
-5. **추론(Inference) 변환**
-6. 이미지 다운로드
+1. Overview: 당시 GTX 580 3 GB 두 장으로만 훈련 가능해 모델 파라미터를 반씩 나눠 실행했다. 현대 GPU에는 10 GB 이상 메모리가 흔해 통합 구조가 더 단순·빠르다. PyTorch torchvision.models.alexnet은 저자가 단일 GPU용으로 다시 공개한 Caffe...
+2. AlexNet_Weights.IMAGENET1K_V1: 이 가중치는 논문의 결과를 간단한 학습 방법을 사용하여 거의 동일하게 재현한 것입니다. 또한 AlexNet_Weights.DEFAULT로도 제공됩니다.
+3. 모델 성능 (ImageNet-1K 기준): Top-1 정확도 (acc@1): 56.522% - Top-5 정확도 (acc@5): 79.066% - 총 파라미터 수: 61,100,840 - 최소 입력 이미지 크기: 높이 63px, 너비 63px - 분류 가능한 카테고리: - 예시: tench(숭어),...
+4. 추론(Inference) 변환: AlexNet_Weights.IMAGENET1K_V1.transforms에서 제공하는 변환(transforms)은 다음과 같은 전처리 과정을 수행합니다.
 
 ## Code Highlights
 
 ### alexnet.py
+
+`alexnet.py`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 alexnet.py, from alexnet import AlexNet, 1 conv :입력 3, 출력 64, 커널 11 stride 4, padding2 흐름이 주석과 함께 드러납니다.
 
 ```python
 # alexnet.py
@@ -78,7 +112,9 @@ class AlexNet(nn.Module):
 # ... trimmed ...
 ```
 
-### **추론(Inference) 변환**
+### 추론(Inference) 변환
+
+`추론(Inference) 변환`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 이미지 다운로드, 이미지 시각화, 전처리 흐름이 주석과 함께 드러납니다.
 
 ```python
 import torch

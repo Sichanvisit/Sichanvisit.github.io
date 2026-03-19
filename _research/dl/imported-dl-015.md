@@ -5,13 +5,37 @@ research_tab: "DL"
 research_kind: "Archive Note"
 source_title: "(실습)VAE"
 source_path: "12_Deep_Learning/Code_Snippets/(실습)VAE.md"
-excerpt: "두 정규분포 $q(z) = {N}(\\mu, \\sigma^2)$와 $p(z) = {N}(0,1)$의 KL 발산을 계산해보면:"
+excerpt: "두 정규분포 $q(z) = {N}(\\mu, \\sigma^2)$와 $p(z) = {N}(0,1)$의 KL 발산을 계산해보면"
+research_summary: "두 정규분포 $q(z) = {N}(\\mu, \\sigma^2)$와 $p(z) = {N}(0,1)$의 KL 발산을 계산해보면. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 10개 코드 블록, 10개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, numpy, os, torchvision입니다."
+research_artifacts: "md · 코드 10개 · 실행 10개"
+code_block_count: 10
+execution_block_count: 10
+research_focus:
+  - "두 정규분포 $q(z) = {N}(\\mu, \\sigma^2)$와 $p(z) = {N}(0,1)$의 KL..."
+  - "필요한 라이브러리 임포트"
+  - "손실 함수 정의 ###"
+research_stack:
+  - "torch"
+  - "numpy"
+  - "os"
+  - "torchvision"
+  - "matplotlib"
+source_formats:
+  - "md"
 tags:
   - research-archive
   - imported-note
   - dl
   - archive-note
 ---
+
+두 정규분포 $q(z) = {N}(\mu, \sigma^2)$와 $p(z) = {N}(0,1)$의 KL 발산을 계산해보면. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 10개 코드 블록, 10개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, numpy, os, torchvision입니다.
+
+**빠르게 볼 수 있는 포인트**: 두 정규분포 $q(z) = {N}(\mu, \sigma^2)$와 $p(..., 필요한 라이브러리 임포트, 손실 함수 정의 ###.
+
+**남겨둔 자료**: `md` 원본과 10개 코드 블록, 10개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, numpy, os, torchvision입니다.
+
+**주요 스택**: `torch`, `numpy`, `os`, `torchvision`, `matplotlib`
 
 ## Snapshot
 
@@ -25,26 +49,36 @@ tags:
 | Libraries | `torch`, `numpy`, `os`, `torchvision`, `matplotlib`, `random` |
 | Source Note | `(실습)VAE` |
 
-## What I Worked On
+## What This Note Covers
 
-- 필요한 라이브러리 임포트
-- 손실 함수 정의 ###
-- VAE의 손실 함수는 재구성 손실(BCE)과 KL 발산(KLD) 손실의 합으로 구성됩니다.
-- beta 값은 KL 손실의 가중치를 조절합니다.
-- 잠재 공간을 이용한 새로운 데이터 생성
+### Overview
+
+두 정규분포 $q(z) = {N}(\mu, \sigma^2)$와 $p(z) = {N}(0,1)$의 KL 발산을 계산해보면
+
+### Key Step
+
+VAE의 손실 함수는 재구성 손실(BCE)과 KL 발산(KLD) 손실의 합으로 구성됩니다.
+
+### Key Step
+
+beta 값은 KL 손실의 가중치를 조절합니다.
+
+### Key Step
+
+잠재 공간을 이용한 새로운 데이터 생성
 
 ## Implementation Flow
 
-1. 필요한 라이브러리 임포트
-2. 손실 함수 정의 ###
-3. VAE의 손실 함수는 재구성 손실(BCE)과 KL 발산(KLD) 손실의 합으로 구성됩니다.
-4. beta 값은 KL 손실의 가중치를 조절합니다.
-5. 잠재 공간을 이용한 새로운 데이터 생성
-6. 잠재공간 차원을 128D
+1. Overview: 두 정규분포 $q(z) = {N}(\mu, \sigma^2)$와 $p(z) = {N}(0,1)$의 KL 발산을 계산해보면
+2. Key Step: VAE의 손실 함수는 재구성 손실(BCE)과 KL 발산(KLD) 손실의 합으로 구성됩니다.
+3. Key Step: beta 값은 KL 손실의 가중치를 조절합니다.
+4. Key Step: 잠재 공간을 이용한 새로운 데이터 생성
 
 ## Code Highlights
 
 ### class VAE(nn.Module)
+
+`class VAE(nn.Module)`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 인코더 정의 --> 입력을 400 차원으로, 잠재변수의 평균, log분산, 디코더 흐름이 주석과 함께 드러납니다.
 
 ```python
 class VAE(nn.Module):
@@ -79,6 +113,8 @@ class VAE(nn.Module):
 ```
 
 ### model.eval()
+
+`model.eval()`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 다변량일 경우 각 차원마다 위와 같은 계산을 진행하면, 최종 식은 $ D_{\text{KL}}(q(z/x) \parallel p(z)) = \frac{1}{2} \sum_{i=1}^{d} \left( \mu_i^2 + \sigma_i^2 - 1 - \log \sigma_i^2 \right) $ 가 됩니다.
 
 ```python
 model.eval()

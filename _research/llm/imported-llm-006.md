@@ -5,13 +5,37 @@ research_tab: "LLM"
 research_kind: "Archive Note"
 source_title: "3-1_10_텍스트임베딩_예"
 source_path: "13_LLM_GenAI/Code_Snippets/3-1_10_텍스트임베딩_예.md"
-excerpt: "--- tags: [\"LLM\", \"Code\"] ---"
+excerpt: "tags: [\"LLM\", \"Code\"]"
+research_summary: "tags: [\"LLM\", \"Code\"]. 본 실습에서는 20개의 뉴스 카테고리로 구성된 텍스트 분류 문제를 해결하기 위해, LSTM 기반 분류 모델을 구현하고 성능을 비교하였다. 텍스트는 소문자화, 특수문자 제거, 불용어 제거를 통해 학습에 적합한 형태로 정제했다. `md` 원본과 45개 코드 블록, 45개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, random, re, sys입니다."
+research_artifacts: "md · 코드 45개 · 실행 45개"
+code_block_count: 45
+execution_block_count: 45
+research_focus:
+  - "tags"
+  - "✔️ 사전 세팅"
+  - "본 실습에서는 20개의 뉴스 카테고리로 구성된 텍스트 분류 문제를 해결하기 위해, LSTM 기반 분류..."
+research_stack:
+  - "os"
+  - "random"
+  - "re"
+  - "sys"
+  - "urllib"
+source_formats:
+  - "md"
 tags:
   - research-archive
   - imported-note
   - llm
   - archive-note
 ---
+
+tags: ["LLM", "Code"]. 본 실습에서는 20개의 뉴스 카테고리로 구성된 텍스트 분류 문제를 해결하기 위해, LSTM 기반 분류 모델을 구현하고 성능을 비교하였다. 텍스트는 소문자화, 특수문자 제거, 불용어 제거를 통해 학습에 적합한 형태로 정제했다. `md` 원본과 45개 코드 블록, 45개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, random, re, sys입니다.
+
+**빠르게 볼 수 있는 포인트**: tags, ✔️ 사전 세팅, 본 실습에서는 20개의 뉴스 카테고리로 구성된 텍스트 분류 문제를 해결....
+
+**남겨둔 자료**: `md` 원본과 45개 코드 블록, 45개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, random, re, sys입니다.
+
+**주요 스택**: `os`, `random`, `re`, `sys`, `urllib`
 
 ## Snapshot
 
@@ -25,26 +49,36 @@ tags:
 | Libraries | `os`, `random`, `re`, `sys`, `urllib`, `warnings`, `zipfile`, `numpy` |
 | Source Note | `3-1_10_텍스트임베딩_예` |
 
-## What I Worked On
+## What This Note Covers
 
-- ✔️ 사전 세팅
-- Warnings 제거
-- Pandas 보기 옵션
-- GPU 설정
-- ✔️ 요약
+### Overview
+
+tags: ["LLM", "Code"]
+
+### ✔️ 요약
+
+본 실습에서는 20개의 뉴스 카테고리로 구성된 텍스트 분류 문제를 해결하기 위해, LSTM 기반 분류 모델을 구현하고 성능을 비교하였다. 텍스트는 소문자화, 특수문자 제거, 불용어 제거를 통해 학습에 적합한 형태로 정제했다.
+
+### ✔️ 데이터 설명
+
+목적 본 실습의 목적은 18,846개의 뉴스 문서를 20개의 주제 카테고리로 분류하는 딥러닝 모델을 구현하는 것이다. 텍스트 데이터를 입력으로 받아 뉴스의 카테고리를 예측하며, 다양한 임베딩 기법을 적용해 분류 성능을 비교한다.
+
+### 데이터 불러오기
+
+headers, footers, quotes를 제거하여 뉴스 데이터를 다운받았으며, 사용할 데이터의 수는 총 18,846개이다.
 
 ## Implementation Flow
 
-1. ✔️ 사전 세팅
-2. Warnings 제거
-3. Pandas 보기 옵션
-4. GPU 설정
-5. ✔️ 요약
-6. ✔️ **데이터 설명**
+1. Overview: tags: ["LLM", "Code"]
+2. ✔️ 요약: 본 실습에서는 20개의 뉴스 카테고리로 구성된 텍스트 분류 문제를 해결하기 위해, LSTM 기반 분류 모델을 구현하고 성능을 비교하였다. 텍스트는 소문자화, 특수문자 제거, 불용어 제거를 통해 학습에 적합한 형태로 정제했다.
+3. ✔️ 데이터 설명: 목적 본 실습의 목적은 18,846개의 뉴스 문서를 20개의 주제 카테고리로 분류하는 딥러닝 모델을 구현하는 것이다. 텍스트 데이터를 입력으로 받아 뉴스의 카테고리를 예측하며, 다양한 임베딩 기법을 적용해 분류 성능을 비교한다.
+4. 데이터 불러오기: headers, footers, quotes를 제거하여 뉴스 데이터를 다운받았으며, 사용할 데이터의 수는 총 18,846개이다.
 
 ## Code Highlights
 
 ### ✔️ 사전 세팅
+
+`✔️ 사전 세팅`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 전처리와 학습/검증 분리를 담당해 전체 파이프라인의 출발점을 정리하는 코드입니다.
 
 ```python
 import os
@@ -78,7 +112,9 @@ import torch.nn as nn
 # ... trimmed ...
 ```
 
-### **LSTM 모델 정의**
+### LSTM 모델 정의
+
+`LSTM 모델 정의`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 임베딩 레이어, LSTM, FC 레이어 흐름이 주석과 함께 드러납니다.
 
 ```python
 class LSTMClassifier(nn.Module):

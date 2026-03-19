@@ -5,13 +5,36 @@ research_tab: "DL"
 research_kind: "Shared Note"
 source_title: "Mask R-CNN - 공유"
 source_path: "12_Deep_Learning/Code_Snippets/Mask R-CNN - 공유.md"
-excerpt: "- TV tensors : https://pytorch.org/vision/main/tv_tensors.html"
+excerpt: "TV tensors : https://pytorch.org/vision/main/tv_tensors.html"
+research_summary: "TV tensors : https://pytorch.org/vision/main/tv_tensors.html. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 11개 코드 블록, 6개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, torch, torchvision, matplotlib입니다."
+research_artifacts: "md · 코드 11개 · 실행 6개"
+code_block_count: 11
+execution_block_count: 6
+research_focus:
+  - "TV tensors"
+  - "데이터셋 정의 (PennFudanDataset)"
+  - "PennFudan 데이터셋은 보행자 이미지와 각 이미지에 대한 마스크(분할 정보)를 포함..."
+research_stack:
+  - "os"
+  - "torch"
+  - "torchvision"
+  - "matplotlib"
+source_formats:
+  - "md"
 tags:
   - research-archive
   - imported-note
   - dl
   - shared-note
 ---
+
+TV tensors : https://pytorch.org/vision/main/tv_tensors.html. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 11개 코드 블록, 6개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, torch, torchvision, matplotlib입니다.
+
+**빠르게 볼 수 있는 포인트**: TV tensors, 데이터셋 정의 (PennFudanDataset), PennFudan 데이터셋은 보행자 이미지와 각 이미지에 대한 마스크(....
+
+**남겨둔 자료**: `md` 원본과 11개 코드 블록, 6개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, torch, torchvision, matplotlib입니다.
+
+**주요 스택**: `os`, `torch`, `torchvision`, `matplotlib`
 
 ## Snapshot
 
@@ -25,26 +48,36 @@ tags:
 | Libraries | `os`, `torch`, `torchvision`, `matplotlib` |
 | Source Note | `Mask R-CNN - 공유` |
 
-## What I Worked On
+## What This Note Covers
 
-- 1. 데이터셋 정의 (PennFudanDataset)
-- PennFudan 데이터셋은 보행자 이미지와 각 이미지에 대한 마스크(분할 정보)를 포함합니다.
-- 2. 데이터 변환 함수 정의
-- 3. 모델 정의 (COCO 사전 학습된 Mask R-CNN 사용)
-- COCO에서 사전 학습된 Mask R-CNN (ResNet50 FPN 기반) 모델을 사용하여 파인튜닝합니다.
+### Overview
+
+TV tensors : https://pytorch.org/vision/main/tv_tensors.html
+
+### Key Step
+
+데이터셋 정의 (PennFudanDataset)
+
+### Key Step
+
+PennFudan 데이터셋은 보행자 이미지와 각 이미지에 대한 마스크(분할 정보)를 포함합니다.
+
+### Key Step
+
+모델 정의 (COCO 사전 학습된 Mask R-CNN 사용)
 
 ## Implementation Flow
 
-1. 1. 데이터셋 정의 (PennFudanDataset)
-2. PennFudan 데이터셋은 보행자 이미지와 각 이미지에 대한 마스크(분할 정보)를 포함합니다.
-3. 2. 데이터 변환 함수 정의
-4. 3. 모델 정의 (COCO 사전 학습된 Mask R-CNN 사용)
-5. COCO에서 사전 학습된 Mask R-CNN (ResNet50 FPN 기반) 모델을 사용하여 파인튜닝합니다.
-6. 이 모델은 객체 검출 및 인스턴스 분할을 모두 수행합니다.
+1. Overview: TV tensors : https://pytorch.org/vision/main/tv_tensors.html
+2. Key Step: 데이터셋 정의 (PennFudanDataset)
+3. Key Step: PennFudan 데이터셋은 보행자 이미지와 각 이미지에 대한 마스크(분할 정보)를 포함합니다.
+4. Key Step: 모델 정의 (COCO 사전 학습된 Mask R-CNN 사용)
 
 ## Code Highlights
 
 ### import os
+
+`import os`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 데이터셋 정의 (PennFudanDataset), PennFudan 데이터셋은 보행자 이미지와 각 이미지에 대한 마스크(분할 정보)를 포함..., PNGImages 폴더와 PedMasks 폴더 내의 파일 이름을 정렬해서 리스트로 저장 흐름이 주석과 함께 드러납니다.
 
 ```python
 import os
@@ -79,6 +112,8 @@ class PennFudanDataset(torch.utils.data.Dataset):
 ```
 
 ### 5. 간단한 학습 루프 (2 에폭 예시)
+
+`5. 간단한 학습 루프 (2 에폭 예시)`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 간단한 학습 루프 (2 에폭 예시), 학습 가능한 파라미터만 모아 옵티마이저에 전달, 학습률 스케줄러: 3 에폭마다 학습률을 0.1배 감소 흐름이 주석과 함께 드러납니다.
 
 ```python
 # 5. 간단한 학습 루프 (2 에폭 예시)

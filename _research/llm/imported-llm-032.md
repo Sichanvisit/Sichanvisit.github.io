@@ -6,12 +6,37 @@ research_kind: "Archive Note"
 source_title: "4-2 LangGraph_2_Self_Corrective"
 source_path: "13_LLM_GenAI/Code_Snippets/4-2 LangGraph_2_Self_Corrective.md"
 excerpt: "Self-Corrective 검색 (루프): Corrective-RAG (CRAG) 단순화버전"
+research_summary: "Self-Corrective 검색 (루프): Corrective-RAG (CRAG) 단순화버전. LangChain (Chain): 직선 흐름만 가능. `ipynb/md` 원본과 19개 코드 블록, 6개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, getpass, typing, langchain_openai입니다."
+research_artifacts: "ipynb/md · 코드 19개 · 실행 6개"
+code_block_count: 19
+execution_block_count: 6
+research_focus:
+  - "Self-Corrective 검색 (루프)"
+  - "LangGraph 실습 2"
+  - "LangChain (Chain)"
+research_stack:
+  - "os"
+  - "getpass"
+  - "typing"
+  - "langchain_openai"
+  - "langgraph"
+source_formats:
+  - "ipynb"
+  - "md"
 tags:
   - research-archive
   - imported-note
   - llm
   - archive-note
 ---
+
+Self-Corrective 검색 (루프): Corrective-RAG (CRAG) 단순화버전. LangChain (Chain): 직선 흐름만 가능. `ipynb/md` 원본과 19개 코드 블록, 6개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, getpass, typing, langchain_openai입니다.
+
+**빠르게 볼 수 있는 포인트**: Self-Corrective 검색 (루프), LangGraph 실습 2, LangChain (Chain).
+
+**남겨둔 자료**: `ipynb/md` 원본과 19개 코드 블록, 6개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, getpass, typing, langchain_openai입니다.
+
+**주요 스택**: `os`, `getpass`, `typing`, `langchain_openai`, `langgraph`
 
 ## Snapshot
 
@@ -25,56 +50,36 @@ tags:
 | Libraries | `os`, `getpass`, `typing`, `langchain_openai`, `langgraph`, `IPython` |
 | Source Note | `4-2 LangGraph_2_Self_Corrective` |
 
-## What I Worked On
+## What This Note Covers
 
-- LangGraph 실습 2: Self-Corrective 검색 (루프)
-- 핵심: 왜 루프가 필요한가?
-- 0. 환경 설정
-- 패키지 설치
-- API 키 설정
+### LangGraph 실습 2: Self-Corrective 검색 (루프)
+
+Self-Corrective 검색 (루프): Corrective-RAG (CRAG) 단순화버전
+
+### 핵심: 왜 루프가 필요한가?
+
+LangChain (Chain): 직선 흐름만 가능
+
+### 시나리오: Self-Corrective RAG 시뮬레이션
+
+search: 검색 수행 (시뮬레이션: 3번째에 좋은 결과) - evaluate: 결과 품질 평가 - 평가 통과 시 → generate로 이동 - 평가 실패 시 → search로 되돌아감 (루프!)
+
+### 문제 1: 다중 평가 기준
+
+현재는 "관련성"만 평가합니다. "정확성" 평가도 추가해서, 관련성과 정확성 모두 통과해야 generate로 가도록 수정해보기
 
 ## Implementation Flow
 
-1. LangGraph 실습 2: Self-Corrective 검색 (루프)
-2. 핵심: 왜 루프가 필요한가?
-3. 0. 환경 설정
-4. 패키지 설치
-5. API 키 설정
-6. 1. 시나리오: Self-Corrective RAG 시뮬레이션
+1. LangGraph 실습 2: Self-Corrective 검색 (루프): Self-Corrective 검색 (루프): Corrective-RAG (CRAG) 단순화버전
+2. 핵심: 왜 루프가 필요한가?: LangChain (Chain): 직선 흐름만 가능
+3. 시나리오: Self-Corrective RAG 시뮬레이션: search: 검색 수행 (시뮬레이션: 3번째에 좋은 결과) - evaluate: 결과 품질 평가 - 평가 통과 시 → generate로 이동 - 평가 실패 시 → search로 되돌아감 (루프!)
+4. 문제 1: 다중 평가 기준: 현재는 "관련성"만 평가합니다. "정확성" 평가도 추가해서, 관련성과 정확성 모두 통과해야 generate로 가도록 수정해보기
 
 ## Code Highlights
 
-### 2. 코드 구현
+### 코드 구현
 
-```python
-# ============================================
-# [3] Router 정의: 루프 여부 결정
-# ============================================
-
-def should_continue(state: SearchState) -> Literal["rewrite_query", "generate"]:
-    """
-    평가 결과에 따라 루프 여부 결정
-    - 관련 있음 OR 최대 시도 횟수 도달 → generate로 이동
-    - 관련 없음 AND 시도 가능 → rewrite_query로 이동 (루프!)
-    """
-    MAX_ATTEMPTS = 5
-
-    print(f"\n[Router] 판단 중...")
-    print(f"   is_relevant={state['is_relevant']}, attempts={state['attempts']}")
-
-    if state["is_relevant"]:
-        print("   → generate로 이동 (평가 통과)")
-        return "generate"
-
-    if state["attempts"] >= MAX_ATTEMPTS:
-        print(f"   → generate로 이동 (최대 시도 {MAX_ATTEMPTS}회 도달)")
-        return "generate"
-
-    print("   → rewrite_query로 이동 (재시도)")
-    return "rewrite_query"  # 👈 루프!
-```
-
-### 2. 코드 구현
+`코드 구현`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 ============================================, [4] 그래프 조립 흐름이 주석과 함께 드러납니다.
 
 ```python
 # ============================================
@@ -106,6 +111,35 @@ workflow.add_conditional_edges(
 # rewrite_query → search 로 되돌아감 (루프 완성!)
 workflow.add_edge("rewrite_query", "search")
 # ... trimmed ...
+```
+
+### 스트리밍으로 루프 과정 추적
+
+`스트리밍으로 루프 과정 추적`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 각 스텝별 State 변화 추적 흐름이 주석과 함께 드러납니다.
+
+```python
+# 각 스텝별 State 변화 추적
+print("=" * 60)
+print("스트리밍 모드: 각 노드 실행 추적")
+print("=" * 60)
+
+step_count = 0
+for step in app.stream({
+    "query": "LangGraph의 핵심 구성요소는?",
+    "current_query": "LangGraph의 핵심 구성요소는?",
+    "search_result": "",
+    "is_relevant": False,
+    "attempts": 0,
+    "final_answer": ""
+}):
+    step_count += 1
+    for node_name, node_output in step.items():
+        print(f"\n{'─' * 40}")
+        print(f"Step {step_count}: 노드 '{node_name}' 완료")
+        if "attempts" in node_output:
+            print(f"  attempts: {node_output['attempts']}")
+        if "is_relevant" in node_output:
+            print(f"  is_relevant: {node_output['is_relevant']}")
 ```
 
 ## Source Bundle

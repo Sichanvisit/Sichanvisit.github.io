@@ -5,13 +5,37 @@ research_tab: "DL"
 research_kind: "Shared Note"
 source_title: "4-6_Autoencoder - 공유"
 source_path: "12_Deep_Learning/Code_Snippets/4-6_Autoencoder - 공유.md"
-excerpt: "DL Shared Note: 1. 기본적인 오토인코더 구현 실습(MNIST), 라이브러리 불러오기, 데이터 불러오기"
+excerpt: "기본적인 오토인코더 구현 실습(MNIST), 라이브러리 불러오기, 데이터 불러오기 중심으로 구현 과정을 정리한 Autoencoder - 공유 기록입니다"
+research_summary: "기본적인 오토인코더 구현 실습(MNIST), 라이브러리 불러오기, 데이터 불러오기 중심으로 구현 과정을 정리한 Autoencoder - 공유 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 23개 코드 블록, 23개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, matplotlib, torch, torchvision입니다."
+research_artifacts: "md · 코드 23개 · 실행 23개"
+code_block_count: 23
+execution_block_count: 23
+research_focus:
+  - "기본적인 오토인코더 구현 실습(MNIST)"
+  - "라이브러리 불러오기"
+  - "데이터 불러오기"
+research_stack:
+  - "numpy"
+  - "matplotlib"
+  - "torch"
+  - "torchvision"
+  - "mpl_toolkits"
+source_formats:
+  - "md"
 tags:
   - research-archive
   - imported-note
   - dl
   - shared-note
 ---
+
+기본적인 오토인코더 구현 실습(MNIST), 라이브러리 불러오기, 데이터 불러오기 중심으로 구현 과정을 정리한 Autoencoder - 공유 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 23개 코드 블록, 23개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, matplotlib, torch, torchvision입니다.
+
+**빠르게 볼 수 있는 포인트**: 기본적인 오토인코더 구현 실습(MNIST), 라이브러리 불러오기, 데이터 불러오기.
+
+**남겨둔 자료**: `md` 원본과 23개 코드 블록, 23개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, matplotlib, torch, torchvision입니다.
+
+**주요 스택**: `numpy`, `matplotlib`, `torch`, `torchvision`, `mpl_toolkits`
 
 ## Snapshot
 
@@ -25,26 +49,49 @@ tags:
 | Libraries | `numpy`, `matplotlib`, `torch`, `torchvision`, `mpl_toolkits`, `plotly` |
 | Source Note | `4-6_Autoencoder - 공유` |
 
-## What I Worked On
+## What This Note Covers
 
-- 1. 기본적인 오토인코더 구현 실습(MNIST)
+- 기본적인 오토인코더 구현 실습(MNIST)
 - 라이브러리 불러오기
 - 데이터 불러오기
-- train_dataset = datasets.MNIST(
-- root='./mnist',
+- 기본 전처리 후 데이터 불러오기
+- 모델 학습
 
 ## Implementation Flow
 
-1. 1. 기본적인 오토인코더 구현 실습(MNIST)
-2. 라이브러리 불러오기
-3. 데이터 불러오기
-4. train_dataset = datasets.MNIST(
-5. root='./mnist',
-6. train=True,
+1. Key Step: 기본적인 오토인코더 구현 실습(MNIST)
+2. Key Step: train_dataset = datasets.MNIST(
+3. Key Step: test_dataset = datasets.MNIST(
+4. Key Step: 기본 전처리 후 데이터 불러오기
 
 ## Code Highlights
 
+### 모델 생성 및 학습
+
+`모델 생성 및 학습`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 Training Loop 흐름이 주석과 함께 드러납니다.
+
+```python
+# Training Loop
+num_epochs = 10
+for epoch in range(num_epochs):
+    model.train()
+    total_loss = 0
+    for images, _ in train_dataloader:
+        images = images.view(images.size(0), -1).to(device)  # 28x28 -> 784 벡터화
+        outputs = model(images)
+        loss = loss_fn(outputs, images)
+
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+
+        total_loss += loss.item()
+    print(f"Epoch [{epoch+1}/{num_epochs}], Loss: {total_loss/len(train_dataloader):.4f}")
+```
+
 ### 차원축소와 시각화
+
+`차원축소와 시각화`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 데이터 전처리 (버전 문제 시 transforms.ToTensor()로 대체 가능), MNIST 데이터셋 불러오기, train_dataset = datasets.FashionMNIST( 흐름이 주석과 함께 드러납니다.
 
 ```python
 import numpy as np
@@ -78,40 +125,6 @@ test_dataset = datasets.MNIST(
 # ... trimmed ...
 ```
 
-### 차원축소와 시각화
-
-```python
-# latent 공간 시각화를 위한 데이터 추출
-model.eval()
-all_latents = []
-all_labels = []
-with torch.no_grad():
-    for images, labels in test_dataloader:
-        images = images.view(images.size(0), -1).to(device)
-        # latent 벡터만 추출 (model.encode() 사용)
-        latent = model.encode(images)
-        all_latents.append(latent.cpu().numpy())
-        all_labels.append(labels.cpu().numpy())
-
-all_latents = np.concatenate(all_latents, axis=0)
-all_labels = np.concatenate(all_labels, axis=0)
-
-# 3D 시각화: 전체 분포와 일부 샘플에 텍스트 어노테이션 추가
-fig = plt.figure(figsize=(12, 10))
-ax = fig.add_subplot(111, projection='3d')
-
-# 전체 latent 벡터에 대해 scatter plot (작은 크기와 낮은 불투명도로 분포 확인)
-scatter = ax.scatter(all_latents[:, 0], all_latents[:, 1], all_latents[:, 2],
-                     c=all_labels, cmap='tab10', s=10, alpha=0.3)
-
-# 각 digit별로 일부 포인트만 선택하여 텍스트 어노테이션 추가
-for digit in range(10):
-    # 현재 클래스(digit)에 해당하는 인덱스 찾기
-    indices = np.where(all_labels == digit)[0]
-    # 전체 포인트 중 최대 50개를 무작위로 샘플링 (포인트가 50개 미만인 경우 전체 사용)
-# ... trimmed ...
-```
-
 ## Source Bundle
 
 - Source path: `12_Deep_Learning/Code_Snippets/4-6_Autoencoder - 공유.md`
@@ -124,4 +137,4 @@ for digit in range(10):
 
 ## Note Preview
 
-> No prose preview was available in the source note.
+> 원본 노트에 별도 설명 문단이 많지 않아 코드 중심으로 보존했습니다.

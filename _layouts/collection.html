@@ -278,6 +278,10 @@ layout: archive
               </div>
             </a>
             <div class="photo-card-content">
+              {% assign card_summary = item.excerpt %}
+              {% if page.collection == "research" and item.research_summary %}
+                {% assign card_summary = item.research_summary %}
+              {% endif %}
               {% capture meta_line %}
                 {% if item.date %}{{ item.date | date: "%Y-%m-%d" }}{% endif %}
                 {% if page.collection == "research" and item.research_kind %}
@@ -286,7 +290,8 @@ layout: archive
               {% endcapture %}
               {% assign meta_line = meta_line | strip %}
               {% if meta_line != "" %}<p class="photo-meta">{{ meta_line }}</p>{% endif %}
-              {% if item.excerpt %}<p>{{ item.excerpt | markdownify | strip_html | strip_newlines | truncate: 160 }}</p>{% endif %}
+              {% if card_summary %}<p class="photo-card-summary">{{ card_summary | markdownify | strip_html | strip_newlines | truncate: 172 }}</p>{% endif %}
+              {% if page.collection == "research" and item.research_artifacts %}<p class="photo-note">{{ item.research_artifacts }}</p>{% endif %}
               <div class="photo-links">
                 <a href="{{ item.url | relative_url }}">Read</a>
                 {% if item.frontend_url %}<a href="{{ item.frontend_url }}" target="_blank" rel="noopener noreferrer">Frontend</a>{% endif %}

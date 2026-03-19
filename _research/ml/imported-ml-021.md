@@ -5,13 +5,37 @@ research_tab: "ML"
 research_kind: "Archive Note"
 source_title: "[스프린트미션]3_Bike Rental System - AI 5기 강사 답안"
 source_path: "11_Machine_Learning/Code_Snippets/[스프린트미션]3_Bike Rental System - AI 5기 강사 답안.md"
-excerpt: "- 자전거 대여 시스템의 운영 담당자 - 🎯자전거 대여 패턴을 분석하여 자전거 배치 및 운영 전략을 최적화하고, 대여 수요를 정확하게 예측하는 것 - 🎯최종 목표: **RMSLE(Root Mean Squared Logarithmic Error)를 최대한 낮추는 것**"
+excerpt: "자전거 대여 시스템의 운영 담당자 - 🎯자전거 대여 패턴을 분석하여 자전거 배치 및 운영 전략을 최적화하고, 대여 수요를 정확하게 예측하는 것 - 🎯최종 목표: RMSLE(Root Mean Squared Logarithmic Error)를 최대한 낮추는 것"
+research_summary: "자전거 대여 시스템의 운영 담당자 - 🎯자전거 대여 패턴을 분석하여 자전거 배치 및 운영 전략을 최적화하고, 대여 수요를 정확하게 예측하는 것 - 🎯최종 목표: RMSLE(Root Mean Squared Logarithmic Error)를 최대한 낮추는 것. $$ RMSLE = \\sqrt{\\frac{1}{n} \\sum_{i=1}^{n} \\left( \\log(p_i + 1) - \\log(a_i + 1) \\right)^2} $$ - n: 데이터 포인트의 수 - pi: 예측 값 - ai: 실제 값. `md` 원본과 108개 코드 블록, 107개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 matplotlib, warnings, numpy, pandas입니다."
+research_artifacts: "md · 코드 108개 · 실행 107개"
+code_block_count: 108
+execution_block_count: 107
+research_focus:
+  - "자전거 대여 시스템의 운영 담당자 - 🎯자전거 대여 패턴을 분석하여 자전거 배치 및 운영 전략을 최적화..."
+  - "🚲 미션 설명"
+  - "$$ RMSLE = \\sqrt{\\frac{1}{n} \\sum_{i=1}^{n} \\left( \\log(p..."
+research_stack:
+  - "matplotlib"
+  - "warnings"
+  - "numpy"
+  - "pandas"
+  - "seaborn"
+source_formats:
+  - "md"
 tags:
   - research-archive
   - imported-note
   - ml
   - archive-note
 ---
+
+자전거 대여 시스템의 운영 담당자 - 🎯자전거 대여 패턴을 분석하여 자전거 배치 및 운영 전략을 최적화하고, 대여 수요를 정확하게 예측하는 것 - 🎯최종 목표: RMSLE(Root Mean Squared Logarithmic Error)를 최대한 낮추는 것. $$ RMSLE = \sqrt{\frac{1}{n} \sum_{i=1}^{n} \left( \log(p_i + 1) - \log(a_i + 1) \right)^2} $$ - n: 데이터 포인트의 수 - pi: 예측 값 - ai: 실제 값. `md` 원본과 108개 코드 블록, 107개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 matplotlib, warnings, numpy, pandas입니다.
+
+**빠르게 볼 수 있는 포인트**: 자전거 대여 시스템의 운영 담당자 - 🎯자전거 대여 패턴을 분석하여 자..., 🚲 미션 설명, $$ RMSLE = \sqrt{\frac{1}{n} \sum_{i=1}....
+
+**남겨둔 자료**: `md` 원본과 108개 코드 블록, 107개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 matplotlib, warnings, numpy, pandas입니다.
+
+**주요 스택**: `matplotlib`, `warnings`, `numpy`, `pandas`, `seaborn`
 
 ## Snapshot
 
@@ -25,26 +49,36 @@ tags:
 | Libraries | `matplotlib`, `warnings`, `numpy`, `pandas`, `seaborn`, `datetime`, `sklearn`, `google` |
 | Source Note | `[스프린트미션]3_Bike Rental System - AI 5기 강사 답안` |
 
-## What I Worked On
+## What This Note Covers
 
-- 🚲 미션 설명
-- **RMSLE 공식**
-- 📑 데이터
-- 파일 설명
-- 🪛 분석 드릴다운
+### 🚲 미션 설명
+
+자전거 대여 시스템의 운영 담당자 - 🎯자전거 대여 패턴을 분석하여 자전거 배치 및 운영 전략을 최적화하고, 대여 수요를 정확하게 예측하는 것 - 🎯최종 목표: RMSLE(Root Mean Squared Logarithmic Error)를 최대한 낮추는 것
+
+### RMSLE 공식
+
+$$ RMSLE = \sqrt{\frac{1}{n} \sum_{i=1}^{n} \left( \log(p_i + 1) - \log(a_i + 1) \right)^2} $$ - n: 데이터 포인트의 수 - pi: 예측 값 - ai: 실제 값
+
+### 파일 설명
+
+train.csv - 자전거 대여 수요를 예측하기 위한 데이터 포함 - 종속 변수: count
+
+### 공유 시스템 이해
+
+공유할 대상이 존재해야함 - 물리적 관점: 사용자가 찾는 시간과 장소에 자전거 없음 (퇴근 시간에 지하철역에 자전거 부족 등) - 관념적 관점: 사용하고 싶지 않게 만드는 요인을 제거 - 예: 자전거가 녹슬어 있음, 안장이 젖어 있음, 기종이 불편함, 과금 정책이 불투명 - 운영 전략 관점: 특정 지역에 자전거 몰림, 고장 난 자전거가 장시간 방치
 
 ## Implementation Flow
 
-1. 🚲 미션 설명
-2. **RMSLE 공식**
-3. 📑 데이터
-4. 파일 설명
-5. 🪛 분석 드릴다운
-6. 공유 시스템 이해
+1. 🚲 미션 설명: 자전거 대여 시스템의 운영 담당자 - 🎯자전거 대여 패턴을 분석하여 자전거 배치 및 운영 전략을 최적화하고, 대여 수요를 정확하게 예측하는 것 - 🎯최종 목표: RMSLE(Root Mean Squared Logarithmic Error)를 최대한 낮추는 것
+2. RMSLE 공식: $$ RMSLE = \sqrt{\frac{1}{n} \sum_{i=1}^{n} \left( \log(p_i + 1) - \log(a_i + 1) \right)^2} $$ - n: 데이터 포인트의 수 - pi: 예측 값 - ai: 실제 값
+3. 파일 설명: train.csv - 자전거 대여 수요를 예측하기 위한 데이터 포함 - 종속 변수: count
+4. 공유 시스템 이해: 공유할 대상이 존재해야함 - 물리적 관점: 사용자가 찾는 시간과 장소에 자전거 없음 (퇴근 시간에 지하철역에 자전거 부족 등) - 관념적 관점: 사용하고 싶지 않게 만드는 요인을 제거 - 예: 자전거가 녹슬어 있음, 안장이 젖어 있음, 기종이 불편함, 과금 정책이 불투명 - 운영...
 
 ## Code Highlights
 
 ### (2) 2차 모델링
+
+`(2) 2차 모델링`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 최종 모델 결과 저장 리스트, 모델별 학습 및 평가 흐름이 주석과 함께 드러납니다.
 
 ```python
 # 최종 모델 결과 저장 리스트
@@ -79,6 +113,8 @@ for name, base_model in models_2.items():
 ```
 
 ### (3) 3차 모델링
+
+`(3) 3차 모델링`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 시간대별 정보로 다시 시각화, 오전 여부, 밤 여부 흐름이 주석과 함께 드러납니다.
 
 ```python
 # 시간대별 정보로 다시 시각화

@@ -3,6 +3,8 @@ title: "Machine Learning Sprint Archive"
 date: 2026-03-17
 research_tab: "ML"
 research_kind: "Track Overview"
+research_summary: "Python, pandas, 통계, scikit-learn 기반 회귀·분류, 앙상블까지 이어지는 ML 실습 흐름을 포트폴리오 관점에서 다시 정리한 트랙 개요입니다. Bike Rental, Portuguese Bank, Hotel Booking 같은 대표 미션으로 무엇을 구현했는지 빠르게 연결할 수 있습니다."
+research_artifacts: "대표 미션 · 회귀 · 분류 · 앙상블"
 excerpt: "Python 기초부터 예측과 분류 모델링까지 이어지는 ML 스프린트와 실습 파일을 포트폴리오형 기록으로 정리했습니다."
 tags:
   - machine-learning

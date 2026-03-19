@@ -5,13 +5,37 @@ research_tab: "DL"
 research_kind: "Shared Note"
 source_title: "5-3_AlexNet - 공유"
 source_path: "12_Deep_Learning/Code_Snippets/5-3_AlexNet - 공유.md"
-excerpt: "당시 GTX 580 3 GB 두 장으로만 훈련 가능해 모델 파라미터를 반씩 나눠 실행했다. 현대 GPU에는 10 GB 이상 메모리가 흔해 통합 구조가 더 단순·빠르다. PyTorch torchvision.models.alexnet은 저자가 단일 GPU용으로 다시..."
+excerpt: "당시 GTX 580 3 GB 두 장으로만 훈련 가능해 모델 파라미터를 반씩 나눠 실행했다"
+research_summary: "당시 GTX 580 3 GB 두 장으로만 훈련 가능해 모델 파라미터를 반씩 나눠 실행했다. 현대 GPU에는 10 GB 이상 메모리가 흔해 통합 구조가 더 단순·빠르다. PyTorch torchvision.models.alexnet은 저자가 단일 GPU용으로 다시 공개한 Caffe 모델을 그대로 옮긴 버전. 파이토치에서 제공하는 알렉스넷 모델 : https://pytorch.org/vision/main/models/generated/torchvision.models.alexnet.html. `md` 원본과 13개 코드 블록, 9개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchinfo, torchvision, requests입니다."
+research_artifacts: "md · 코드 13개 · 실행 9개"
+code_block_count: 13
+execution_block_count: 9
+research_focus:
+  - "당시 GTX 580 3 GB 두 장으로만 훈련 가능해 모델 파라미터를 반씩 나눠 실행했다. 현대 GPU..."
+  - "AlexNet 구현"
+  - "파이토치에서 제공하는 알렉스넷 모델"
+research_stack:
+  - "torch"
+  - "torchinfo"
+  - "torchvision"
+  - "requests"
+  - "PIL"
+source_formats:
+  - "md"
 tags:
   - research-archive
   - imported-note
   - dl
   - shared-note
 ---
+
+당시 GTX 580 3 GB 두 장으로만 훈련 가능해 모델 파라미터를 반씩 나눠 실행했다. 현대 GPU에는 10 GB 이상 메모리가 흔해 통합 구조가 더 단순·빠르다. PyTorch torchvision.models.alexnet은 저자가 단일 GPU용으로 다시 공개한 Caffe 모델을 그대로 옮긴 버전. 파이토치에서 제공하는 알렉스넷 모델 : https://pytorch.org/vision/main/models/generated/torchvision.models.alexnet.html. `md` 원본과 13개 코드 블록, 9개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchinfo, torchvision, requests입니다.
+
+**빠르게 볼 수 있는 포인트**: 당시 GTX 580 3 GB 두 장으로만 훈련 가능해 모델 파라미터를..., AlexNet 구현, 파이토치에서 제공하는 알렉스넷 모델.
+
+**남겨둔 자료**: `md` 원본과 13개 코드 블록, 9개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchinfo, torchvision, requests입니다.
+
+**주요 스택**: `torch`, `torchinfo`, `torchvision`, `requests`, `PIL`
 
 ## Snapshot
 
@@ -25,26 +49,36 @@ tags:
 | Libraries | `torch`, `torchinfo`, `torchvision`, `requests`, `PIL`, `io`, `matplotlib`, `time` |
 | Source Note | `5-3_AlexNet - 공유` |
 
-## What I Worked On
+## What This Note Covers
 
-- AlexNet 구현
-- 모델 인스턴스 생성 및 테스트 예시
-- 사전 훈련된 모델 활용
-- **AlexNet_Weights.IMAGENET1K_V1:**
-- **모델 성능 (ImageNet-1K 기준)**
+### AlexNet 구현
+
+당시 GTX 580 3 GB 두 장으로만 훈련 가능해 모델 파라미터를 반씩 나눠 실행했다. 현대 GPU에는 10 GB 이상 메모리가 흔해 통합 구조가 더 단순·빠르다. PyTorch torchvision.models.alexnet은 저자가 단일 GPU용으로 다시 공개한 Caffe 모델을 그대로 옮긴 버전
+
+### 사전 훈련된 모델 활용
+
+파이토치에서 제공하는 알렉스넷 모델 : https://pytorch.org/vision/main/models/generated/torchvision.models.alexnet.html
+
+### AlexNet_Weights.IMAGENET1K_V1
+
+이 가중치는 논문의 결과를 간단한 학습 방법을 사용하여 거의 동일하게 재현한 것입니다. 또한 AlexNet_Weights.DEFAULT로도 제공됩니다.
+
+### 모델 성능 (ImageNet-1K 기준)
+
+Top-1 정확도 (acc@1): 56.522% - Top-5 정확도 (acc@5): 79.066% - 총 파라미터 수: 61,100,840 - 최소 입력 이미지 크기: 높이 63px, 너비 63px - 분류 가능한 카테고리: - 예시: tench(숭어), goldfish(금붕어), great white shark(백상아리) 등 (총 1000개 중 997개 생략) - 학습 방법 (rec...
 
 ## Implementation Flow
 
-1. AlexNet 구현
-2. 모델 인스턴스 생성 및 테스트 예시
-3. 사전 훈련된 모델 활용
-4. **AlexNet_Weights.IMAGENET1K_V1:**
-5. **모델 성능 (ImageNet-1K 기준)**
-6. **추론(Inference) 변환**
+1. AlexNet 구현: 당시 GTX 580 3 GB 두 장으로만 훈련 가능해 모델 파라미터를 반씩 나눠 실행했다. 현대 GPU에는 10 GB 이상 메모리가 흔해 통합 구조가 더 단순·빠르다. PyTorch torchvision.models.alexnet은 저자가 단일 GPU용으로 다시 공개한 Caff...
+2. 사전 훈련된 모델 활용: 파이토치에서 제공하는 알렉스넷 모델 : https://pytorch.org/vision/main/models/generated/torchvision.models.alexnet.html
+3. AlexNet_Weights.IMAGENET1K_V1: 이 가중치는 논문의 결과를 간단한 학습 방법을 사용하여 거의 동일하게 재현한 것입니다. 또한 AlexNet_Weights.DEFAULT로도 제공됩니다.
+4. 모델 성능 (ImageNet-1K 기준): Top-1 정확도 (acc@1): 56.522% - Top-5 정확도 (acc@5): 79.066% - 총 파라미터 수: 61,100,840 - 최소 입력 이미지 크기: 높이 63px, 너비 63px - 분류 가능한 카테고리: - 예시: tench(숭어),...
 
 ## Code Highlights
 
 ### AlexNet 구현
+
+`AlexNet 구현`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 첫 번째 Convolution: 입력 채널 3, 출력 채널 64, 커널 크기 11, st..., 두 번째 Convolution: 입력 64, 출력 192, 커널 크기 5, padding 2, 세 번째 Convolution: 입력 192, 출력 384, 커널 크기 3, padding 1 흐름이 주석과 함께 드러납니다.
 
 ```python
 import torch
@@ -79,6 +113,8 @@ class AlexNet(nn.Module):
 ```
 
 ### 실습 단계
+
+`실습 단계`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 GPU 사용 가능 여부 확인, 데이터셋 다운로드 및 전처리, 데이터 전처리: 이미지 크기 조정, 데이터 증강, 텐서 변환, 정규화 흐름이 주석과 함께 드러납니다.
 
 ```python
 import torch

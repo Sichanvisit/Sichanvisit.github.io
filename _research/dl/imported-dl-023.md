@@ -6,12 +6,36 @@ research_kind: "Shared Note"
 source_title: "4-1_PyTorch_DNN기초 - 공유"
 source_path: "12_Deep_Learning/Code_Snippets/4-1_PyTorch_DNN기초 - 공유.md"
 excerpt: "각 레이어의 노드는 100개 일때, 아래 모델들을 실험해보세요"
+research_summary: "각 레이어의 노드는 100개 일때, 아래 모델들을 실험해보세요. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 20개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, sklearn, matplotlib, torchmetrics입니다."
+research_artifacts: "md · 코드 20개 · 실행 13개"
+code_block_count: 20
+execution_block_count: 13
+research_focus:
+  - "실제 데이터 모델링"
+  - "다중분류"
+  - "각 레이어의 노드는 100개 일때, 아래 모델들을 실험해보세요"
+research_stack:
+  - "torch"
+  - "sklearn"
+  - "matplotlib"
+  - "torchmetrics"
+  - "numpy"
+source_formats:
+  - "md"
 tags:
   - research-archive
   - imported-note
   - dl
   - shared-note
 ---
+
+각 레이어의 노드는 100개 일때, 아래 모델들을 실험해보세요. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 20개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, sklearn, matplotlib, torchmetrics입니다.
+
+**빠르게 볼 수 있는 포인트**: 실제 데이터 모델링, 다중분류, 각 레이어의 노드는 100개 일때, 아래 모델들을 실험해보세요.
+
+**남겨둔 자료**: `md` 원본과 20개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, sklearn, matplotlib, torchmetrics입니다.
+
+**주요 스택**: `torch`, `sklearn`, `matplotlib`, `torchmetrics`, `numpy`
 
 ## Snapshot
 
@@ -25,26 +49,36 @@ tags:
 | Libraries | `torch`, `sklearn`, `matplotlib`, `torchmetrics`, `numpy` |
 | Source Note | `4-1_PyTorch_DNN기초 - 공유` |
 
-## What I Worked On
+## What This Note Covers
 
-- 실제 데이터 모델링
-- Step1 : 데이터 수집
-- Step 2 : 모델 만들기
-- Step 3. 모델 학습시키기
-- Step 4 모델 테스트하기
+### 문제: 실험하기
+
+각 레이어의 노드는 100개 일때, 아래 모델들을 실험해보세요
+
+### Key Step
+
+Step 3. 모델 학습시키기
+
+### Key Step
+
+Accuracy metric 객체 생성
+
+### Key Step
+
+데이터 분할: train, validation, test
 
 ## Implementation Flow
 
-1. 실제 데이터 모델링
-2. Step1 : 데이터 수집
-3. Step 2 : 모델 만들기
-4. Step 3. 모델 학습시키기
-5. Step 4 모델 테스트하기
-6. Accuracy metric 객체 생성
+1. 문제: 실험하기: 각 레이어의 노드는 100개 일때, 아래 모델들을 실험해보세요
+2. Key Step: Step 3. 모델 학습시키기
+3. Key Step: Accuracy metric 객체 생성
+4. Key Step: 데이터 분할: train, validation, test
 
 ## Code Highlights
 
 ### 실제 데이터 모델링
+
+`실제 데이터 모델링`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 Step 3. 모델 학습시키기 흐름이 주석과 함께 드러납니다.
 
 ```python
 ### Step 3. 모델 학습시키기
@@ -77,6 +111,8 @@ plt.show()
 ```
 
 ### 다중분류
+
+`다중분류`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 학습 설정, 데이터 로더 생성, 학습 루프 흐름이 주석과 함께 드러납니다.
 
 ```python
 # 학습 설정

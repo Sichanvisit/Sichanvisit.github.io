@@ -788,11 +788,27 @@ a {
   line-height: 1.3;
 }
 
-.photo-card-content > p:not(.photo-meta) {
+.photo-card-content > p:not(.photo-meta):not(.photo-note) {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+.photo-card .photo-card-summary {
+  min-height: 2.7em;
+}
+
+.research-card .photo-card-summary {
+  -webkit-line-clamp: 3;
+  min-height: 3.9em;
+}
+
+.photo-note {
+  font-size: 0.58rem !important;
+  line-height: 1.25 !important;
+  color: var(--photo-muted);
+  letter-spacing: 0.01em;
 }
 
 .photo-links {
@@ -1465,6 +1481,21 @@ a {
 
 .collection-doc-page .page__meta {
   margin-top: 0.1rem;
+}
+
+.research-page-lead {
+  margin: 0.45rem 0 0.22rem;
+  max-width: 860px;
+  font-size: 0.98rem;
+  line-height: 1.7;
+  color: var(--photo-text);
+}
+
+.research-page-artifacts {
+  margin: 0 0 0.8rem;
+  font-size: 0.78rem;
+  color: var(--photo-muted);
+  letter-spacing: 0.01em;
 }
 
 .collection-doc-page .page__content {

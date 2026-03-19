@@ -5,13 +5,38 @@ research_tab: "LLM"
 research_kind: "Mission"
 source_title: "미션14_1팀_박시찬"
 source_path: "13_LLM_GenAI/Code_Snippets/미션14_1팀_박시찬.md"
-excerpt: "1. 미션 소개 **LLM이 외부 문서의 정보를 참고하여 답변할 수 있도록 RAG(Retrieval-Augmented Generation)를 구현하는 프로젝트입니다.** LangChain 프레임워크를 사용하여, **2024년 국세청 연말정산 안내 문서**를 기반으..."
+excerpt: "미션 소개 LLM이 외부 문서의 정보를 참고하여 답변할 수 있도록 RAG(Retrieval-Augmented Generation)를 구현하는 프로젝트입니다"
+research_summary: "미션 소개 LLM이 외부 문서의 정보를 참고하여 답변할 수 있도록 RAG(Retrieval-Augmented Generation)를 구현하는 프로젝트입니다. LangChain 프레임워크를 사용하여, 2024년 국세청 연말정산 안내 문서를 기반으로 사용자의 질문에 정확하게 답변하는 시스템을 구축합니다. 작성자: [팀명/성함] 프로젝트 기간: 202X.XX.XX ~ 202X.XX.XX 환경: Google Colab (T4 GPU), LangChain, HuggingFace. `ipynb/md` 원본과 19개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 google, langchain_community, os, random입니다."
+research_artifacts: "ipynb/md · 코드 19개 · 실행 13개"
+code_block_count: 19
+execution_block_count: 13
+research_focus:
+  - "미션 소개 LLM이 외부 문서의 정보를 참고하여 답변할 수 있도록 RAG(Retrieval-Augmen..."
+  - "[미션] 2024년 연말정산 가이드 RAG 시스템 구축"
+  - "구글 드라이브 마운트"
+research_stack:
+  - "google"
+  - "langchain_community"
+  - "os"
+  - "random"
+  - "numpy"
+source_formats:
+  - "ipynb"
+  - "md"
 tags:
   - research-archive
   - imported-note
   - llm
   - mission
 ---
+
+미션 소개 LLM이 외부 문서의 정보를 참고하여 답변할 수 있도록 RAG(Retrieval-Augmented Generation)를 구현하는 프로젝트입니다. LangChain 프레임워크를 사용하여, 2024년 국세청 연말정산 안내 문서를 기반으로 사용자의 질문에 정확하게 답변하는 시스템을 구축합니다. 작성자: [팀명/성함] 프로젝트 기간: 202X.XX.XX ~ 202X.XX.XX 환경: Google Colab (T4 GPU), LangChain, HuggingFace. `ipynb/md` 원본과 19개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 google, langchain_community, os, random입니다.
+
+**빠르게 볼 수 있는 포인트**: 미션 소개 LLM이 외부 문서의 정보를 참고하여 답변할 수 있도록 RA..., [미션] 2024년 연말정산 가이드 RAG 시스템 구축, 구글 드라이브 마운트.
+
+**남겨둔 자료**: `ipynb/md` 원본과 19개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 google, langchain_community, os, random입니다.
+
+**주요 스택**: `google`, `langchain_community`, `os`, `random`, `numpy`
 
 ## Snapshot
 
@@ -25,26 +50,36 @@ tags:
 | Libraries | `google`, `langchain_community`, `os`, `random`, `numpy`, `torch`, `transformers`, `langchain` |
 | Source Note | `미션14_1팀_박시찬` |
 
-## What I Worked On
+## What This Note Covers
 
-- [미션] 2024년 연말정산 가이드 RAG 시스템 구축
-- 구글 드라이브 마운트
-- - langchain 계열: RAG 체인 구성
-- - faiss-cpu/gpu: 벡터 검색 엔진
-- - bitsandbytes, accelerate: LLM 경량화(4bit) 및 가속
+### [미션] 2024년 연말정산 가이드 RAG 시스템 구축
+
+미션 소개 LLM이 외부 문서의 정보를 참고하여 답변할 수 있도록 RAG(Retrieval-Augmented Generation)를 구현하는 프로젝트입니다. LangChain 프레임워크를 사용하여, 2024년 국세청 연말정산 안내 문서를 기반으로 사용자의 질문에 정확하게 답변하는 시스템을 구축합니다.
+
+### [Final Report] 2024년 연말정산 지능형 QA 시스템 구축 결과 보고서
+
+작성자: [팀명/성함] 프로젝트 기간: 202X.XX.XX ~ 202X.XX.XX 환경: Google Colab (T4 GPU), LangChain, HuggingFace
+
+### Key Step
+
+langchain 계열: RAG 체인 구성
+
+### Key Step
+
+faiss-cpu/gpu: 벡터 검색 엔진
 
 ## Implementation Flow
 
-1. [미션] 2024년 연말정산 가이드 RAG 시스템 구축
-2. 구글 드라이브 마운트
-3. - langchain 계열: RAG 체인 구성
-4. - faiss-cpu/gpu: 벡터 검색 엔진
-5. - bitsandbytes, accelerate: LLM 경량화(4bit) 및 가속
-6. - pypdf: PDF 문서 로딩
+1. [미션] 2024년 연말정산 가이드 RAG 시스템 구축: 미션 소개 LLM이 외부 문서의 정보를 참고하여 답변할 수 있도록 RAG(Retrieval-Augmented Generation)를 구현하는 프로젝트입니다. LangChain 프레임워크를 사용하여, 2024년 국세청 연말정산 안내 문서를 기반...
+2. [Final Report] 2024년 연말정산 지능형 QA 시스템 구축 결과 보고서: 작성자: [팀명/성함] 프로젝트 기간: 202X.XX.XX ~ 202X.XX.XX 환경: Google Colab (T4 GPU), LangChain, HuggingFace
+3. Key Step: langchain 계열: RAG 체인 구성
+4. Key Step: faiss-cpu/gpu: 벡터 검색 엔진
 
 ## Code Highlights
 
 ### 구글 드라이브 마운트
+
+`구글 드라이브 마운트`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 ==========================================, PHASE 0. 실험 설계 및 환경 제어 (Implementation) 흐름이 주석과 함께 드러납니다.
 
 ```python
 # ==========================================
@@ -78,38 +113,34 @@ def set_seed(seed=42):
 # ... trimmed ...
 ```
 
-### 구글 드라이브 마운트
+### 가이드코드
+
+`가이드코드`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 language_model_name = "Bllossom/llama-3.2-Korean-... 흐름이 주석과 함께 드러납니다.
 
 ```python
-# ==========================================
-# PHASE 2. 생성 모델 엔지니어링 (Implementation)
-# ==========================================
-
-import torch
-from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig, pipeline
 from langchain_huggingface import ChatHuggingFace, HuggingFacePipeline
-import gc
-
-# ------------------------------------------
-# [중요] 메모리 청소 (VRAM 확보)
-# ------------------------------------------
-# PHASE 1에서 임베딩 모델이 GPU 메모리를 먹고 있으므로,
-# LLM 로드 전에 최대한 비워줘야 합니다.
-gc.collect()
-torch.cuda.empty_cache()
-print(f"🧹 Memory Cleared. Current Allocated: {torch.cuda.memory_allocated(0) / 1e9:.2f} GB")
+from langchain.schema.runnable import RunnablePassthrough
+from langchain.schema.output_parser import StrOutputParser
+from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig, pipeline
+import torch
 
 
-# ------------------------------------------
-# 2-1. LLM 경량화 및 로드 (4-bit Quantization)
-# ------------------------------------------
-print("\n🔄 [2-1] Loading LLM with 4-bit Quantization...")
+language_model_name = "nlpai-lab/KULLM3"
+# language_model_name = "Bllossom/llama-3.2-Korean-Bllossom-AICA-5B"
 
-# [모델 선택 전략: VRAM 6GB 대응]
-# KULLM3(10B+) -> 불가능 (OOM)
-# Llama-3-Ko-8B -> 매우 위험 (OOM 가능성 높음)
-# Recommendation: Llama-3.2-Korean-Bllossom-AICA-5B (안전하고 성능 좋음)
-# ... trimmed ...
+bnb_config = BitsAndBytesConfig(
+    load_in_4bit=True,
+    bnb_4bit_use_double_quant=True,
+    bnb_4bit_quant_type="nf4",
+    bnb_4bit_compute_dtype=torch.float16,
+    llm_int8_enable_fp32_cpu_offload=True,
+)
+model = AutoModelForCausalLM.from_pretrained(
+    language_model_name,
+    quantization_config=bnb_config,
+    trust_remote_code=True,
+)
+tokenizer = AutoTokenizer.from_pretrained(language_model_name)
 ```
 
 ## Source Bundle

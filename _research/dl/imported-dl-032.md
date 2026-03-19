@@ -5,13 +5,37 @@ research_tab: "DL"
 research_kind: "Shared Note"
 source_title: "5-5_GoogLeNet - 공유"
 source_path: "12_Deep_Learning/Code_Snippets/5-5_GoogLeNet - 공유.md"
-excerpt: "다음은 GoogLeNet 논문(“Going Deeper with Convolutions”, 2014)과 PyTorch 구현(예: torchvision의 구현) 간의 주요 차이점입니다(일부 항목은 구현에 따라 달라질 수 있음):"
+excerpt: "다음은 GoogLeNet 논문(“Going Deeper with Convolutions”, 2014)과 PyTorch 구현(예: torchvision의 구현) 간의 주요 차이점입니다(일부 항목은 구현에 따라 달라질 수 있음)"
+research_summary: "다음은 GoogLeNet 논문(“Going Deeper with Convolutions”, 2014)과 PyTorch 구현(예: torchvision의 구현) 간의 주요 차이점입니다(일부 항목은 구현에 따라 달라질 수 있음). https://pytorch.org/vision/main/models/generated/torchvision.models.googlenet.html#torchvision.models.GoogLeNet_Weights. `md` 원본과 5개 코드 블록, 3개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, time, copy입니다."
+research_artifacts: "md · 코드 5개 · 실행 3개"
+code_block_count: 5
+execution_block_count: 3
+research_focus:
+  - "다음은 GoogLeNet 논문(“Going Deeper with Convolutions”, 2014)과..."
+  - "https"
+  - "사전 훈련된 모델"
+research_stack:
+  - "torch"
+  - "torchvision"
+  - "time"
+  - "copy"
+  - "torchinfo"
+source_formats:
+  - "md"
 tags:
   - research-archive
   - imported-note
   - dl
   - shared-note
 ---
+
+다음은 GoogLeNet 논문(“Going Deeper with Convolutions”, 2014)과 PyTorch 구현(예: torchvision의 구현) 간의 주요 차이점입니다(일부 항목은 구현에 따라 달라질 수 있음). https://pytorch.org/vision/main/models/generated/torchvision.models.googlenet.html#torchvision.models.GoogLeNet_Weights. `md` 원본과 5개 코드 블록, 3개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, time, copy입니다.
+
+**빠르게 볼 수 있는 포인트**: 다음은 GoogLeNet 논문(“Going Deeper with Con..., https, 사전 훈련된 모델.
+
+**남겨둔 자료**: `md` 원본과 5개 코드 블록, 3개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, time, copy입니다.
+
+**주요 스택**: `torch`, `torchvision`, `time`, `copy`, `torchinfo`
 
 ## Snapshot
 
@@ -25,26 +49,36 @@ tags:
 | Libraries | `torch`, `torchvision`, `time`, `copy`, `torchinfo` |
 | Source Note | `5-5_GoogLeNet - 공유` |
 
-## What I Worked On
+## What This Note Covers
 
-- BasicConv2d: 합성곱 + BatchNorm + ReLU (공식 구현 참고)
-- Inception 모듈 (BasicConv2d 사용)
-- Auxiliary Classifier (옵션)
-- GoogLeNet (Inception v1) 모델 (공식 구현 참고)
-- 사전 훈련된 모델
+### Overview
+
+다음은 GoogLeNet 논문(“Going Deeper with Convolutions”, 2014)과 PyTorch 구현(예: torchvision의 구현) 간의 주요 차이점입니다(일부 항목은 구현에 따라 달라질 수 있음)
+
+### 사전 훈련된 모델
+
+https://pytorch.org/vision/main/models/generated/torchvision.models.googlenet.html#torchvision.models.GoogLeNet_Weights
+
+### 출처
+
+https://pytorch.org/vision/0.8/_modules/torchvision/models/googlenet.html#googlenet - https://pytorch.org/vision/0.8/models.html#id1
+
+### Key Step
+
+BasicConv2d: 합성곱 + BatchNorm + ReLU (공식 구현 참고)
 
 ## Implementation Flow
 
-1. BasicConv2d: 합성곱 + BatchNorm + ReLU (공식 구현 참고)
-2. Inception 모듈 (BasicConv2d 사용)
-3. Auxiliary Classifier (옵션)
-4. GoogLeNet (Inception v1) 모델 (공식 구현 참고)
-5. 사전 훈련된 모델
-6. 출처
+1. Overview: 다음은 GoogLeNet 논문(“Going Deeper with Convolutions”, 2014)과 PyTorch 구현(예: torchvision의 구현) 간의 주요 차이점입니다(일부 항목은 구현에 따라 달라질 수 있음)
+2. 사전 훈련된 모델: https://pytorch.org/vision/main/models/generated/torchvision.models.googlenet.html#torchvision.models.GoogLeNet_Weights
+3. 출처: https://pytorch.org/vision/0.8/_modules/torchvision/models/googlenet.html#googlenet - https://pytorch.org/vision/0.8/models.html#id1
+4. Key Step: BasicConv2d: 합성곱 + BatchNorm + ReLU (공식 구현 참고)
 
 ## Code Highlights
 
 ### import torch
+
+`import torch`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 BasicConv2d: 합성곱 + BatchNorm + ReLU (공식 구현 참고), Inception 모듈 (BasicConv2d 사용), Auxiliary Classifier (옵션) 흐름이 주석과 함께 드러납니다.
 
 ```python
 import torch
@@ -78,38 +112,16 @@ class Inception(nn.Module):
 # ... trimmed ...
 ```
 
-### --------------------------
+### 사전 훈련된 모델
+
+`사전 훈련된 모델`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. https://pytorch.org/vision/main/models/generated/torchvision.models.googlenet.html#torchvision.models.GoogLeNet_Weights.
 
 ```python
-# --------------------------
-# GoogLeNet (Inception v1) 모델 (공식 구현 참고)
-# --------------------------
-class GoogLeNet(nn.Module):
-    def __init__(self, num_classes=10, aux_logits=False, transform_input=False):
-        super(GoogLeNet, self).__init__()
-        self.aux_logits = aux_logits
-        self.transform_input = transform_input
+from torchinfo import summary
+num_classes = 10
 
-        self.conv1 = BasicConv2d(3, 64, kernel_size=7, stride=2, padding=3)
-        self.maxpool1 = nn.MaxPool2d(kernel_size=3, stride=2, ceil_mode=True)
-        self.conv2 = BasicConv2d(64, 64, kernel_size=1)
-        self.conv3 = BasicConv2d(64, 192, kernel_size=3, padding=1)
-        self.maxpool2 = nn.MaxPool2d(kernel_size=3, stride=2, ceil_mode=True)
-
-        self.inception3a = Inception(192, 64, 96, 128, 16, 32, 32)      # 출력: 256 채널
-        self.inception3b = Inception(256, 128, 128, 192, 32, 96, 64)     # 출력: 480 채널
-        self.maxpool3 = nn.MaxPool2d(kernel_size=3, stride=2, ceil_mode=True)
-
-        self.inception4a = Inception(480, 192, 96, 208, 16, 48, 64)      # 출력: 512 채널
-        self.inception4b = Inception(512, 160, 112, 224, 24, 64, 64)     # 출력: 512 채널
-        self.inception4c = Inception(512, 128, 128, 256, 24, 64, 64)     # 출력: 512 채널
-        self.inception4d = Inception(512, 112, 144, 288, 32, 64, 64)     # 출력: 528 채널
-        self.inception4e = Inception(528, 256, 160, 320, 32, 128, 128)    # 출력: 832 채널
-        self.maxpool4 = nn.MaxPool2d(kernel_size=3, stride=2, ceil_mode=True)
-
-        self.inception5a = Inception(832, 256, 160, 320, 32, 128, 128)    # 출력: 832 채널
-        self.inception5b = Inception(832, 384, 192, 384, 48, 128, 128)    # 출력: 1024 채널
-# ... trimmed ...
+model = GoogLeNet(num_classes=num_classes, aux_logits=False)
+summary(model, input_size=(2,3,224,224), device='cpu')
 ```
 
 ## Source Bundle

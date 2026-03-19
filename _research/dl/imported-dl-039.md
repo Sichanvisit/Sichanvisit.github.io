@@ -5,13 +5,34 @@ research_tab: "DL"
 research_kind: "Archive Note"
 source_title: "6-5_YOLOv3"
 source_path: "12_Deep_Learning/Code_Snippets/6-5_YOLOv3.md"
-excerpt: "- 실제 훈련을 시키고 싶다면 아래 github 구현체를 확인해보세요 : https://github.com/eriklindernoren/PyTorch-YOLOv3/blob/master/pytorchyolo/models.py"
+excerpt: "실제 훈련을 시키고 싶다면 아래 github 구현체를 확인해보세요 : https://github.com/eriklindernoren/PyTorch-YOLOv3/blob/master/pytorchyolo/models.py"
+research_summary: "실제 훈련을 시키고 싶다면 아래 github 구현체를 확인해보세요 : https://github.com/eriklindernoren/PyTorch-YOLOv3/blob/master/pytorchyolo/models.py. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 5개 코드 블록, 5개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchinfo입니다."
+research_artifacts: "md · 코드 5개 · 실행 5개"
+code_block_count: 5
+execution_block_count: 5
+research_focus:
+  - "실제 훈련을 시키고 싶다면 아래 github 구현체를 확인해보세요 : https://github.com..."
+  - "기본 Residual Block (Darknet-53 구성 요소)"
+  - "Darknet-53 백본"
+research_stack:
+  - "torch"
+  - "torchinfo"
+source_formats:
+  - "md"
 tags:
   - research-archive
   - imported-note
   - dl
   - archive-note
 ---
+
+실제 훈련을 시키고 싶다면 아래 github 구현체를 확인해보세요 : https://github.com/eriklindernoren/PyTorch-YOLOv3/blob/master/pytorchyolo/models.py. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 5개 코드 블록, 5개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchinfo입니다.
+
+**빠르게 볼 수 있는 포인트**: 실제 훈련을 시키고 싶다면 아래 github 구현체를 확인해보세요 :..., 기본 Residual Block (Darknet-53 구성 요소), Darknet-53 백본.
+
+**남겨둔 자료**: `md` 원본과 5개 코드 블록, 5개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchinfo입니다.
+
+**주요 스택**: `torch`, `torchinfo`
 
 ## Snapshot
 
@@ -25,26 +46,36 @@ tags:
 | Libraries | `torch`, `torchinfo` |
 | Source Note | `6-5_YOLOv3` |
 
-## What I Worked On
+## What This Note Covers
 
-- 기본 Residual Block (Darknet-53 구성 요소)
-- Darknet-53 백본
-- YOLOv3 Detection Head (각 스케일별 예측 모듈)
-- YOLOv3 전체 모델
-- 모델 요약 정보 출력 (배치 크기 1, 입력 크기 3x416x416)
+### Overview
+
+실제 훈련을 시키고 싶다면 아래 github 구현체를 확인해보세요 : https://github.com/eriklindernoren/PyTorch-YOLOv3/blob/master/pytorchyolo/models.py
+
+### Key Step
+
+기본 Residual Block (Darknet-53 구성 요소)
+
+### Key Step
+
+YOLOv3 Detection Head (각 스케일별 예측 모듈)
+
+### Key Step
+
+모델 요약 정보 출력 (배치 크기 1, 입력 크기 3x416x416)
 
 ## Implementation Flow
 
-1. 기본 Residual Block (Darknet-53 구성 요소)
-2. Darknet-53 백본
-3. YOLOv3 Detection Head (각 스케일별 예측 모듈)
-4. YOLOv3 전체 모델
-5. 모델 요약 정보 출력 (배치 크기 1, 입력 크기 3x416x416)
-6. 간단한 테스트
+1. Overview: 실제 훈련을 시키고 싶다면 아래 github 구현체를 확인해보세요 : https://github.com/eriklindernoren/PyTorch-YOLOv3/blob/master/pytorchyolo/models.py
+2. Key Step: 기본 Residual Block (Darknet-53 구성 요소)
+3. Key Step: YOLOv3 Detection Head (각 스케일별 예측 모듈)
+4. Key Step: 모델 요약 정보 출력 (배치 크기 1, 입력 크기 3x416x416)
 
 ## Code Highlights
 
 ### import torch
+
+`import torch`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 기본 Residual Block (Darknet-53 구성 요소), Darknet-53 백본, Downsampling + residual blocks (논문에 따른 반복 횟수) 흐름이 주석과 함께 드러납니다.
 
 ```python
 import torch
@@ -79,6 +110,8 @@ class Darknet53(nn.Module):
 ```
 
 ### import torch
+
+`import torch`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 좌표에 대해서는 MSE Loss, confidence와 클래스에 대해서는 BCE Loss..., 각 스케일별로 손실을 계산하여 합산, pred: (batch, grid_h, grid_w, num_anchors, 5+num_... 흐름이 주석과 함께 드러납니다.
 
 ```python
 import torch

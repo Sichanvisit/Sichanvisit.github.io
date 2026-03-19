@@ -5,13 +5,37 @@ research_tab: "DL"
 research_kind: "Archive Note"
 source_title: "(실습)GAN"
 source_path: "12_Deep_Learning/Code_Snippets/(실습)GAN.md"
-excerpt: "DL Archive Note: GAN, CGAN"
+excerpt: "CGAN, Generator, 학습 설정 중심으로 구현 과정을 정리한 GAN 기록입니다"
+research_summary: "CGAN, Generator, 학습 설정 중심으로 구현 과정을 정리한 GAN 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 12개 코드 블록, 11개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, os입니다."
+research_artifacts: "md · 코드 12개 · 실행 11개"
+code_block_count: 12
+execution_block_count: 11
+research_focus:
+  - "CGAN"
+  - "Generator"
+  - "학습 설정"
+research_stack:
+  - "torch"
+  - "torchvision"
+  - "matplotlib"
+  - "os"
+  - "numpy"
+source_formats:
+  - "md"
 tags:
   - research-archive
   - imported-note
   - dl
   - archive-note
 ---
+
+CGAN, Generator, 학습 설정 중심으로 구현 과정을 정리한 GAN 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 12개 코드 블록, 11개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, os입니다.
+
+**빠르게 볼 수 있는 포인트**: CGAN, Generator, 학습 설정.
+
+**남겨둔 자료**: `md` 원본과 12개 코드 블록, 11개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, os입니다.
+
+**주요 스택**: `torch`, `torchvision`, `matplotlib`, `os`, `numpy`
 
 ## Snapshot
 
@@ -25,26 +49,26 @@ tags:
 | Libraries | `torch`, `torchvision`, `matplotlib`, `os`, `numpy`, `logging` |
 | Source Note | `(실습)GAN` |
 
-## What I Worked On
+## What This Note Covers
 
+- CGAN
 - Generator
 - 학습 설정
 - GAN 학습 루프
-- CGAN
 - device 설정
 
 ## Implementation Flow
 
-1. Generator
-2. 학습 설정
-3. GAN 학습 루프
-4. CGAN
-5. device 설정
-6. 데이터셋 및 DataLoader 설정
+1. Key Step: 데이터셋 및 DataLoader 설정
+2. Key Step: 클래스 이름 (MNIST는 0~9 숫자)
+3. Key Step: 판별자 (Discriminator)
+4. Key Step: 학습 루프 (에포크마다 D(x)와 D(G(z)) 평균 점수 계산)
 
 ## Code Highlights
 
 ### GAN
+
+`GAN`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 GAN 학습 루프, 판별기 학습, 생성기 학습 흐름이 주석과 함께 드러납니다.
 
 ```python
 # GAN 학습 루프
@@ -79,6 +103,8 @@ for epoch in range(num_epoch):
 ```
 
 ### CGAN
+
+`CGAN`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 모델 초기화, 학습 루프 (에포크마다 D(x)와 D(G(z)) 평균 점수 계산), 판별자 학습 흐름이 주석과 함께 드러납니다.
 
 ```python
 # 모델 초기화
@@ -124,4 +150,4 @@ for epoch in range(epochs):
 
 ## Note Preview
 
-> No prose preview was available in the source note.
+> 원본 노트에 별도 설명 문단이 많지 않아 코드 중심으로 보존했습니다.

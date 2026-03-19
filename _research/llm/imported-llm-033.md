@@ -5,13 +5,38 @@ research_tab: "LLM"
 research_kind: "Archive Note"
 source_title: "4-3 LangGraph_3_ReAct에이전트"
 source_path: "13_LLM_GenAI/Code_Snippets/4-3 LangGraph_3_ReAct에이전트.md"
-excerpt: "- LLM이 **스스로 도구를 선택**하는 ReAct 패턴을 이해한다 - create_react_agent로 빠르게 에이전트를 만든다 - 내부 동작을 StateGraph로 직접 구현해본다"
+excerpt: "LLM이 스스로 도구를 선택하는 ReAct 패턴을 이해한다 - create_react_agent로 빠르게 에이전트를 만든다 - 내부 동작을 StateGraph로 직접 구현해본다"
+research_summary: "LLM이 스스로 도구를 선택하는 ReAct 패턴을 이해한다 - create_react_agent로 빠르게 에이전트를 만든다 - 내부 동작을 StateGraph로 직접 구현해본다. ReAct = Reasoning + Acting. `ipynb/md` 원본과 17개 코드 블록, 11개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, getpass, langchain_core, typing입니다."
+research_artifacts: "ipynb/md · 코드 17개 · 실행 11개"
+code_block_count: 17
+execution_block_count: 11
+research_focus:
+  - "LLM이 스스로 도구를 선택하는 ReAct 패턴을 이해한다 - create_react_agent로 빠르..."
+  - "LangGraph 실습 3"
+  - "ReAct = Reasoning + Acting"
+research_stack:
+  - "os"
+  - "getpass"
+  - "langchain_core"
+  - "typing"
+  - "random"
+source_formats:
+  - "ipynb"
+  - "md"
 tags:
   - research-archive
   - imported-note
   - llm
   - archive-note
 ---
+
+LLM이 스스로 도구를 선택하는 ReAct 패턴을 이해한다 - create_react_agent로 빠르게 에이전트를 만든다 - 내부 동작을 StateGraph로 직접 구현해본다. ReAct = Reasoning + Acting. `ipynb/md` 원본과 17개 코드 블록, 11개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, getpass, langchain_core, typing입니다.
+
+**빠르게 볼 수 있는 포인트**: LLM이 스스로 도구를 선택하는 ReAct 패턴을 이해한다 - crea..., LangGraph 실습 3, ReAct = Reasoning + Acting.
+
+**남겨둔 자료**: `ipynb/md` 원본과 17개 코드 블록, 11개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, getpass, langchain_core, typing입니다.
+
+**주요 스택**: `os`, `getpass`, `langchain_core`, `typing`, `random`
 
 ## Snapshot
 
@@ -25,26 +50,36 @@ tags:
 | Libraries | `os`, `getpass`, `langchain_core`, `typing`, `random`, `langchain_openai`, `langgraph`, `IPython` |
 | Source Note | `4-3 LangGraph_3_ReAct에이전트` |
 
-## What I Worked On
+## What This Note Covers
 
-- LangGraph 실습 3: Tool 에이전트 (ReAct 패턴)
-- 핵심 개념: ReAct 패턴
-- 0. 환경 설정
-- 패키지 설치
-- API 키 설정
+### LangGraph 실습 3: Tool 에이전트 (ReAct 패턴)
+
+LLM이 스스로 도구를 선택하는 ReAct 패턴을 이해한다 - create_react_agent로 빠르게 에이전트를 만든다 - 내부 동작을 StateGraph로 직접 구현해본다
+
+### 핵심 개념: ReAct 패턴
+
+ReAct = Reasoning + Acting
+
+### 도구(Tool) 정의
+
+LLM이 사용할 수 있는 도구들을 정의합니다. @tool 데코레이터를 사용하면 함수가 LLM이 호출 가능한 도구로 변환됩니다.
+
+### 방법 1: create_react_agent (간편 버전)
+
+LangGraph가 제공하는 create_react_agent를 사용하면 단 몇 줄로 ReAct 에이전트를 만들 수 있습니다.
 
 ## Implementation Flow
 
-1. LangGraph 실습 3: Tool 에이전트 (ReAct 패턴)
-2. 핵심 개념: ReAct 패턴
-3. 0. 환경 설정
-4. 패키지 설치
-5. API 키 설정
-6. 1. 도구(Tool) 정의
+1. LangGraph 실습 3: Tool 에이전트 (ReAct 패턴): LLM이 스스로 도구를 선택하는 ReAct 패턴을 이해한다 - create_react_agent로 빠르게 에이전트를 만든다 - 내부 동작을 StateGraph로 직접 구현해본다
+2. 핵심 개념: ReAct 패턴: ReAct = Reasoning + Acting
+3. 도구(Tool) 정의: LLM이 사용할 수 있는 도구들을 정의합니다. @tool 데코레이터를 사용하면 함수가 LLM이 호출 가능한 도구로 변환됩니다.
+4. 방법 1: create_react_agent (간편 버전): LangGraph가 제공하는 create_react_agent를 사용하면 단 몇 줄로 ReAct 에이전트를 만들 수 있습니다.
 
 ## Code Highlights
 
-### 1. 도구(Tool) 정의
+### 도구(Tool) 정의
+
+`도구(Tool) 정의`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 시뮬레이션용 가짜 데이터, 안전한 eval (숫자와 연산자만 허용) 흐름이 주석과 함께 드러납니다.
 
 ```python
 from langchain_core.tools import tool
@@ -78,7 +113,9 @@ def calculator(
 # ... trimmed ...
 ```
 
-### 3. 방법 2: StateGraph로 직접 구현 (상세 버전)
+### 방법 2: StateGraph로 직접 구현 (상세 버전)
+
+`방법 2: StateGraph로 직접 구현 (상세 버전)`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 ============================================, [2] Node 정의 흐름이 주석과 함께 드러납니다.
 
 ```python
 # ============================================

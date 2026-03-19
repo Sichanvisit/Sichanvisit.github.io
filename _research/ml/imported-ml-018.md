@@ -5,13 +5,36 @@ research_tab: "ML"
 research_kind: "Practice"
 source_title: "250901_코딩실습17_11.차원축소(KMeans+PCA)"
 source_path: "11_Machine_Learning/Code_Snippets/250901_코딩실습17_11.차원축소(KMeans+PCA).md"
-excerpt: "=> K=3일때 실루엣 스코어가 가장 높다!"
+excerpt: "=> K=3일때 실루엣 스코어가 가장 높다! 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다"
+research_summary: "=> K=3일때 실루엣 스코어가 가장 높다! 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `ipynb/md` 원본과 12개 코드 블록, 11개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 sklearn, matplotlib, pandas입니다."
+research_artifacts: "ipynb/md · 코드 12개 · 실행 11개"
+code_block_count: 12
+execution_block_count: 11
+research_focus:
+  - "=> K=3일때 실루엣 스코어가 가장 높다!"
+  - "표준화"
+  - "PCA 적용"
+research_stack:
+  - "sklearn"
+  - "matplotlib"
+  - "pandas"
+source_formats:
+  - "ipynb"
+  - "md"
 tags:
   - research-archive
   - imported-note
   - ml
   - practice
 ---
+
+=> K=3일때 실루엣 스코어가 가장 높다! 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `ipynb/md` 원본과 12개 코드 블록, 11개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 sklearn, matplotlib, pandas입니다.
+
+**빠르게 볼 수 있는 포인트**: => K=3일때 실루엣 스코어가 가장 높다!, 표준화, PCA 적용.
+
+**남겨둔 자료**: `ipynb/md` 원본과 12개 코드 블록, 11개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 sklearn, matplotlib, pandas입니다.
+
+**주요 스택**: `sklearn`, `matplotlib`, `pandas`
 
 ## Snapshot
 
@@ -25,26 +48,26 @@ tags:
 | Libraries | `sklearn`, `matplotlib`, `pandas` |
 | Source Note | `250901_코딩실습17_11.차원축소(KMeans+PCA)` |
 
-## What I Worked On
+## What This Note Covers
 
-- 표준화
-- PCA 적용
-- 스크리플롯
-- 설명 비율 출력
-- PCA 적용 - 2차원 축소
+### Overview
+
+=> K=3일때 실루엣 스코어가 가장 높다!
+
+### Key Step
+
+클러스터링 평가 (실루엣 스코어)
 
 ## Implementation Flow
 
-1. 표준화
-2. PCA 적용
-3. 스크리플롯
-4. 설명 비율 출력
-5. PCA 적용 - 2차원 축소
-6. Kmeans
+1. Overview: => K=3일때 실루엣 스코어가 가장 높다!
+2. Key Step: 클러스터링 평가 (실루엣 스코어)
 
 ## Code Highlights
 
 ### from sklearn.datasets import load_wine
+
+`from sklearn.datasets import load_wine`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 전처리와 학습/검증 분리를 담당해 전체 파이프라인의 출발점을 정리하는 코드입니다.
 
 ```python
 from sklearn.datasets import load_wine
@@ -57,6 +80,8 @@ from sklearn.metrics import silhouette_score
 ```
 
 ### 스크리 플랏
+
+`스크리 플랏`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 스크리 플랏 흐름이 주석과 함께 드러납니다.
 
 ```python
 # 스크리 플랏

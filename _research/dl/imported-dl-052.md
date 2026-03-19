@@ -5,13 +5,36 @@ research_tab: "DL"
 research_kind: "Sample Code"
 source_title: "MNIST_samplecode"
 source_path: "12_Deep_Learning/Code_Snippets/MNIST_samplecode.md"
-excerpt: "DL Sample Code: 데이터 로더, model = MLP(input_size, hidden_size, num_cls).to(device), input_ch, hidden_size, num_cls"
+excerpt: "데이터 로더, model = MLP(input_size, h..., input_ch, hidden_size, nu.."
+research_summary: "데이터 로더, model = MLP(input_size, h..., input_ch, hidden_size, nu... 중심으로 구현 과정을 정리한 MNIST samplecode 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 11개 코드 블록, 11개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, numpy입니다."
+research_artifacts: "md · 코드 11개 · 실행 11개"
+code_block_count: 11
+execution_block_count: 11
+research_focus:
+  - "데이터 로더"
+  - "model = MLP(input_size, hidden_size, num_cls).to(..."
+  - "input_ch, hidden_size, num_cls"
+research_stack:
+  - "torch"
+  - "torchvision"
+  - "matplotlib"
+  - "numpy"
+source_formats:
+  - "md"
 tags:
   - research-archive
   - imported-note
   - dl
   - sample-code
 ---
+
+데이터 로더, model = MLP(input_size, h..., input_ch, hidden_size, nu... 중심으로 구현 과정을 정리한 MNIST samplecode 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 11개 코드 블록, 11개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, numpy입니다.
+
+**빠르게 볼 수 있는 포인트**: 데이터 로더, model = MLP(input_size, hidden_size, nu..., input_ch, hidden_size, num_cls.
+
+**남겨둔 자료**: `md` 원본과 11개 코드 블록, 11개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, numpy입니다.
+
+**주요 스택**: `torch`, `torchvision`, `matplotlib`, `numpy`
 
 ## Snapshot
 
@@ -25,26 +48,25 @@ tags:
 | Libraries | `torch`, `torchvision`, `matplotlib`, `numpy` |
 | Source Note | `MNIST_samplecode` |
 
-## What I Worked On
+## What This Note Covers
 
 - 데이터 로더
-- model = MLP(input_size, hidden_size, num_cls).to(device)
+- model = MLP(input_size, hidden_size, num_cls).to(...
 - input_ch, hidden_size, num_cls
 - 테스트 셋에서 20개 샘플 추출
 - 모델 예측
 
 ## Implementation Flow
 
-1. 데이터 로더
-2. model = MLP(input_size, hidden_size, num_cls).to(device)
-3. input_ch, hidden_size, num_cls
-4. 테스트 셋에서 20개 샘플 추출
-5. 모델 예측
-6. 결과 시각화
+1. Key Step: model = MLP(input_size, hidden_size, num_cls).to(device)
+2. Key Step: input_ch, hidden_size, num_cls
+3. Key Step: 테스트 셋에서 20개 샘플 추출
 
 ## Code Highlights
 
 ### class CNN(nn.Module)
+
+`class CNN(nn.Module)`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 실험의 중심이 되는 모델 아키텍처를 정의하는 코드입니다.
 
 ```python
 class CNN(nn.Module):
@@ -77,6 +99,8 @@ class CNN(nn.Module):
 ```
 
 ### input_size = 784
+
+`input_size = 784`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 model = MLP(input_size, hidden_size, num_cls).to(..., input_ch, hidden_size, num_cls, 데이터를 디바이스로 이동 흐름이 주석과 함께 드러납니다.
 
 ```python
 input_size = 784

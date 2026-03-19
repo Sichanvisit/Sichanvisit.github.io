@@ -5,13 +5,37 @@ research_tab: "DL"
 research_kind: "Shared Note"
 source_title: "4-5_RNN_시계열예측 - 공유"
 source_path: "12_Deep_Learning/Code_Snippets/4-5_RNN_시계열예측 - 공유.md"
-excerpt: "- **데이터셋 정보** - 예나 날씨 데이터 - **2009년부터 2016년까지** 독일 예나 도시의 날씨 데이터를 10분 간격으로 기록. - **14개 칼럼**: 기온(°C), 기압(hPa), 습도(%), 바람 속도 등 다양한 정보 포함."
+excerpt: "데이터셋 정보 - 예나 날씨 데이터 - 2009년부터 2016년까지 독일 예나 도시의 날씨 데이터를 10분 간격으로 기록"
+research_summary: "데이터셋 정보 - 예나 날씨 데이터 - 2009년부터 2016년까지 독일 예나 도시의 날씨 데이터를 10분 간격으로 기록. - 14개 칼럼: 기온(°C), 기압(hPa), 습도(%), 바람 속도 등 다양한 정보 포함. 칼럼 설명 - Date Time: 기록된 시간 - T (degC): 섭씨 온도 - 기타 12개의 기상 요소 포함. `md` 원본과 18개 코드 블록, 16개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, pandas, matplotlib, numpy입니다."
+research_artifacts: "md · 코드 18개 · 실행 16개"
+code_block_count: 18
+execution_block_count: 16
+research_focus:
+  - "데이터셋 정보 - 예나 날씨 데이터 - 2009년부터 2016년까지 독일 예나 도시의 날씨 데이터를 1..."
+  - "데이터셋 소개"
+  - "칼럼 설명 - Date Time"
+research_stack:
+  - "torch"
+  - "pandas"
+  - "matplotlib"
+  - "numpy"
+  - "sklearn"
+source_formats:
+  - "md"
 tags:
   - research-archive
   - imported-note
   - dl
   - shared-note
 ---
+
+데이터셋 정보 - 예나 날씨 데이터 - 2009년부터 2016년까지 독일 예나 도시의 날씨 데이터를 10분 간격으로 기록. - 14개 칼럼: 기온(°C), 기압(hPa), 습도(%), 바람 속도 등 다양한 정보 포함. 칼럼 설명 - Date Time: 기록된 시간 - T (degC): 섭씨 온도 - 기타 12개의 기상 요소 포함. `md` 원본과 18개 코드 블록, 16개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, pandas, matplotlib, numpy입니다.
+
+**빠르게 볼 수 있는 포인트**: 데이터셋 정보 - 예나 날씨 데이터 - 2009년부터 2016년까지 독..., 데이터셋 소개, 칼럼 설명 - Date Time.
+
+**남겨둔 자료**: `md` 원본과 18개 코드 블록, 16개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, pandas, matplotlib, numpy입니다.
+
+**주요 스택**: `torch`, `pandas`, `matplotlib`, `numpy`, `sklearn`
 
 ## Snapshot
 
@@ -25,49 +49,48 @@ tags:
 | Libraries | `torch`, `pandas`, `matplotlib`, `numpy`, `sklearn` |
 | Source Note | `4-5_RNN_시계열예측 - 공유` |
 
-## What I Worked On
+## What This Note Covers
 
-- 데이터셋 소개
-- 데이터 불러오기
-- 시각화
-- 시계열 데이터 준비하기
-- 데이터 처리
+### 데이터셋 소개
+
+데이터셋 정보 - 예나 날씨 데이터 - 2009년부터 2016년까지 독일 예나 도시의 날씨 데이터를 10분 간격으로 기록. - 14개 칼럼: 기온(°C), 기압(hPa), 습도(%), 바람 속도 등 다양한 정보 포함.
+
+### 데이터 불러오기
+
+칼럼 설명 - Date Time: 기록된 시간 - T (degC): 섭씨 온도 - 기타 12개의 기상 요소 포함.
+
+### 시각화
+
+계절성 패턴이 뚜렷하게 나타남: - 여름: 기온 상승. - 겨울: 기온 하강. - 변동성: 짧은 시간 간격에서도 기온 변동이 관측됨.
+
+### 데이터 처리
+
+데이터프레임에서 기온 데이터를 numpy array 형식으로 변환
 
 ## Implementation Flow
 
-1. 데이터셋 소개
-2. 데이터 불러오기
-3. 시각화
-4. 시계열 데이터 준비하기
-5. 데이터 처리
-6. @title to numpy
+1. 데이터셋 소개: 데이터셋 정보 - 예나 날씨 데이터 - 2009년부터 2016년까지 독일 예나 도시의 날씨 데이터를 10분 간격으로 기록. - 14개 칼럼: 기온(°C), 기압(hPa), 습도(%), 바람 속도 등 다양한 정보 포함.
+2. 데이터 불러오기: 칼럼 설명 - Date Time: 기록된 시간 - T (degC): 섭씨 온도 - 기타 12개의 기상 요소 포함.
+3. 시각화: 계절성 패턴이 뚜렷하게 나타남: - 여름: 기온 상승. - 겨울: 기온 하강. - 변동성: 짧은 시간 간격에서도 기온 변동이 관측됨.
+4. 데이터 처리: 데이터프레임에서 기온 데이터를 numpy array 형식으로 변환
 
 ## Code Highlights
 
-### 데이터 처리
+### import torch
+
+`import torch`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
 
 ```python
-# @title 데이터셋 객체 만들기
 import torch
-from torch.utils.data import Dataset
-
-class JenaTemperatureDataset(Dataset):
-    def __init__(self, temperatures, sequence_length):
-      self.temperatures = temperatures
-      self.sequence_length = sequence_length
-
-    def __len__(self):
-      #원본 데이터 개수에서 시퀀스 길이를 뺀 만큼
-      return len(self.temperatures) - self.sequence_length
-
-    def __getitem__(self, index):
-      inputs = self.temperatures[index:index+self.sequence_length]
-      targets = self.temperatures[index+1:index+self.sequence_length+1]
-
-      return torch.tensor(inputs), torch.tensor(targets)
+import torch.nn as nn
+import torch.optim as optim
+import torch.nn.functional as F
+from torch.utils.data import Dataset, DataLoader
 ```
 
 ### 데이터 처리
+
+`데이터 처리`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 Train loop 흐름이 주석과 함께 드러납니다.
 
 ```python
 # @title Train loop

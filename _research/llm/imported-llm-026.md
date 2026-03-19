@@ -6,12 +6,37 @@ research_kind: "Archive Note"
 source_title: "3-5 (실습)하이브리드검색_리랭킹"
 source_path: "13_LLM_GenAI/Code_Snippets/3-5 (실습)하이브리드검색_리랭킹.md"
 excerpt: "키워드 검색(Keyword Search)과 의미 기반 검색(Semantic Search)의 장점을 결합하여 검색 정확도를 높이는 기법"
+research_summary: "키워드 검색(Keyword Search)과 의미 기반 검색(Semantic Search)의 장점을 결합하여 검색 정확도를 높이는 기법. BM25 알고리즘이 대표적: 단어의 빈도와 역문서 빈도를 기반으로 작동하며, 정확한 단어 매칭에 강합니다. `ipynb/md` 원본과 10개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 getpass, os, langchain_community, langchain_openai입니다."
+research_artifacts: "ipynb/md · 코드 10개 · 실행 7개"
+code_block_count: 10
+execution_block_count: 7
+research_focus:
+  - "하이브리드 검색과 리랭킹"
+  - "키워드 검색(Keyword Search)과 의미 기반 검색(Semantic Search)의 장점을 결합..."
+  - "하이브리드 검색"
+research_stack:
+  - "getpass"
+  - "os"
+  - "langchain_community"
+  - "langchain_openai"
+  - "langchain_core"
+source_formats:
+  - "ipynb"
+  - "md"
 tags:
   - research-archive
   - imported-note
   - llm
   - archive-note
 ---
+
+키워드 검색(Keyword Search)과 의미 기반 검색(Semantic Search)의 장점을 결합하여 검색 정확도를 높이는 기법. BM25 알고리즘이 대표적: 단어의 빈도와 역문서 빈도를 기반으로 작동하며, 정확한 단어 매칭에 강합니다. `ipynb/md` 원본과 10개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 getpass, os, langchain_community, langchain_openai입니다.
+
+**빠르게 볼 수 있는 포인트**: 하이브리드 검색과 리랭킹, 키워드 검색(Keyword Search)과 의미 기반 검색(Semant..., 하이브리드 검색.
+
+**남겨둔 자료**: `ipynb/md` 원본과 10개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 getpass, os, langchain_community, langchain_openai입니다.
+
+**주요 스택**: `getpass`, `os`, `langchain_community`, `langchain_openai`, `langchain_core`
 
 ## Snapshot
 
@@ -25,26 +50,36 @@ tags:
 | Libraries | `getpass`, `os`, `langchain_community`, `langchain_openai`, `langchain_core`, `langchain_huggingface` |
 | Source Note | `3-5 (실습)하이브리드검색_리랭킹` |
 
-## What I Worked On
+## What This Note Covers
 
-- 하이브리드 검색과 리랭킹
-- 하이브리드 검색
-- 키워드 검색(Sparse Retriever):
-- 의미 검색(Dense Retriever):
-- Prompt the user for the OpenAI API key securely
+### 하이브리드 검색
+
+키워드 검색(Keyword Search)과 의미 기반 검색(Semantic Search)의 장점을 결합하여 검색 정확도를 높이는 기법
+
+### 키워드 검색(Sparse Retriever)
+
+BM25 알고리즘이 대표적: 단어의 빈도와 역문서 빈도를 기반으로 작동하며, 정확한 단어 매칭에 강합니다.
+
+### 의미 검색(Dense Retriever)
+
+임베딩(Embedding) 벡터 유사도(Cosine Similarity 등)를 기반: 단어가 달라도 문맥적 의미가 유사한 문서를 찾는 데 강합니다.
+
+### 리랭킹(Re-ranking): "속도 vs 정확도"의 타협점
+
+Retrieval 단계 (Bi-Encoder)
 
 ## Implementation Flow
 
-1. 하이브리드 검색과 리랭킹
-2. 하이브리드 검색
-3. 키워드 검색(Sparse Retriever):
-4. 의미 검색(Dense Retriever):
-5. Prompt the user for the OpenAI API key securely
-6. 1. 샘플 데이터
+1. 하이브리드 검색: 키워드 검색(Keyword Search)과 의미 기반 검색(Semantic Search)의 장점을 결합하여 검색 정확도를 높이는 기법
+2. 키워드 검색(Sparse Retriever): BM25 알고리즘이 대표적: 단어의 빈도와 역문서 빈도를 기반으로 작동하며, 정확한 단어 매칭에 강합니다.
+3. 의미 검색(Dense Retriever): 임베딩(Embedding) 벡터 유사도(Cosine Similarity 등)를 기반: 단어가 달라도 문맥적 의미가 유사한 문서를 찾는 데 강합니다.
+4. 리랭킹(Re-ranking): "속도 vs 정확도"의 타협점: Retrieval 단계 (Bi-Encoder)
 
 ## Code Highlights
 
-### 의미 검색(Dense Retriever):
+### 의미 검색(Dense Retriever)
+
+`의미 검색(Dense Retriever)`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 샘플 데이터, BM25 retriever, Vector retriever 흐름이 주석과 함께 드러납니다.
 
 ```python
 from langchain_community.retrievers import BM25Retriever
@@ -78,7 +113,9 @@ def hybrid_search(query):
 # ... trimmed ...
 ```
 
-### Re-ranking 단계 (Cross-Encoder):
+### Re-ranking 단계 (Cross-Encoder)
+
+`Re-ranking 단계 (Cross-Encoder)`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 문서 준비, BM25 Retriever, Vector Retriever 흐름이 주석과 함께 드러납니다.
 
 ```python
 from langchain_community.retrievers import BM25Retriever

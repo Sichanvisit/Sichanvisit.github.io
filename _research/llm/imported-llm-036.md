@@ -5,13 +5,38 @@ research_tab: "LLM"
 research_kind: "Mission"
 source_title: "미션12_1팀_박시찬"
 source_path: "13_LLM_GenAI/Code_Snippets/미션12_1팀_박시찬.md"
-excerpt: "미션 소개 Hugging Face transformers 라이브러리를 사용하여 **실제 한국어 문서 요약 모델**을 처음부터 끝까지 구축하는 미션입니다. 데이터 로드 → 전처리 → 모델 Fine-tuning → 요약 생성 → 평가까지 **전체 파이프라인**을 직접..."
+excerpt: "미션 소개 Hugging Face transformers 라이브러리를 사용하여 실제 한국어 문서 요약 모델을 처음부터 끝까지 구축하는 미션입니다"
+research_summary: "미션 소개 Hugging Face transformers 라이브러리를 사용하여 실제 한국어 문서 요약 모델을 처음부터 끝까지 구축하는 미션입니다. 데이터 로드 → 전처리 → 모델 Fine-tuning → 요약 생성 → 평가까지 전체 파이프라인을 직접 구현해 봅니다. 원문 (Text): 95%가 678 토큰 이내. 요약 (Summary): 95%가 74 토큰 이내. 이 숫자가 황금 비율입니다. 보통 BART 기본 설정이 1024인데, 굳이 1024까지 쓸 필요 없이 700~800 정도만 써도 충분하다는 뜻입니다. 이러면 학습 속도도 빨라지고 메모리도 아낄 수 있습니다. `ipynb/md` 원본과 22개 코드 블록, 19개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 google, torch, os, json입니다."
+research_artifacts: "ipynb/md · 코드 22개 · 실행 19개"
+code_block_count: 22
+execution_block_count: 19
+research_focus:
+  - "미션 소개 Hugging Face transformers 라이브러리를 사용하여 실제 한국어 문서 요약..."
+  - "미션"
+  - "원문 (Text)"
+research_stack:
+  - "google"
+  - "torch"
+  - "os"
+  - "json"
+  - "pandas"
+source_formats:
+  - "ipynb"
+  - "md"
 tags:
   - research-archive
   - imported-note
   - llm
   - mission
 ---
+
+미션 소개 Hugging Face transformers 라이브러리를 사용하여 실제 한국어 문서 요약 모델을 처음부터 끝까지 구축하는 미션입니다. 데이터 로드 → 전처리 → 모델 Fine-tuning → 요약 생성 → 평가까지 전체 파이프라인을 직접 구현해 봅니다. 원문 (Text): 95%가 678 토큰 이내. 요약 (Summary): 95%가 74 토큰 이내. 이 숫자가 황금 비율입니다. 보통 BART 기본 설정이 1024인데, 굳이 1024까지 쓸 필요 없이 700~800 정도만 써도 충분하다는 뜻입니다. 이러면 학습 속도도 빨라지고 메모리도 아낄 수 있습니다. `ipynb/md` 원본과 22개 코드 블록, 19개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 google, torch, os, json입니다.
+
+**빠르게 볼 수 있는 포인트**: 미션 소개 Hugging Face transformers 라이브러리를..., 미션, 원문 (Text).
+
+**남겨둔 자료**: `ipynb/md` 원본과 22개 코드 블록, 19개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 google, torch, os, json입니다.
+
+**주요 스택**: `google`, `torch`, `os`, `json`, `pandas`
 
 ## Snapshot
 
@@ -25,26 +50,36 @@ tags:
 | Libraries | `google`, `torch`, `os`, `json`, `pandas`, `re`, `html`, `numpy` |
 | Source Note | `미션12_1팀_박시찬` |
 
-## What I Worked On
+## What This Note Covers
 
-- 미션: Hugging Face Transformers를 활용한 문서 요약 모델 구현
-- 1. CUDA 사용 가능 여부 체크 및 장치 설정
-- 2. 실제 사용 예시 (데이터/모델을 장치로 이동)
-- 이후 모델 정의 시에도 아래처럼 사용합니다
-- model = MyModel().to(device)
+### 미션: Hugging Face Transformers를 활용한 문서 요약 모델 구현
+
+미션 소개 Hugging Face transformers 라이브러리를 사용하여 실제 한국어 문서 요약 모델을 처음부터 끝까지 구축하는 미션입니다. 데이터 로드 → 전처리 → 모델 Fine-tuning → 요약 생성 → 평가까지 전체 파이프라인을 직접 구현해 봅니다.
+
+### EDA 및 데이터 정제 실험
+
+원문 (Text): 95%가 678 토큰 이내. 요약 (Summary): 95%가 74 토큰 이내. 이 숫자가 황금 비율입니다. 보통 BART 기본 설정이 1024인데, 굳이 1024까지 쓸 필요 없이 700~800 정도만 써도 충분하다는 뜻입니다. 이러면 학습 속도도 빨라지고 메모리도 아낄 수 있습니다.
+
+### 토크나이저 정렬 분석
+
+UNK 비율 확인: 모델이 모르는 단어가 1% 미만이어야 안전합니다. - 파편화율 확인: 단어가 너무 잘게 쪼개지면 학습이 어렵습니다. (0.3 ~ 0.6 사이면 양호)
+
+### Key Step
+
+CUDA 사용 가능 여부 체크 및 장치 설정
 
 ## Implementation Flow
 
-1. 미션: Hugging Face Transformers를 활용한 문서 요약 모델 구현
-2. 1. CUDA 사용 가능 여부 체크 및 장치 설정
-3. 2. 실제 사용 예시 (데이터/모델을 장치로 이동)
-4. 이후 모델 정의 시에도 아래처럼 사용합니다
-5. model = MyModel().to(device)
-6. 기본 경로 설정
+1. 미션: Hugging Face Transformers를 활용한 문서 요약 모델 구현: 미션 소개 Hugging Face transformers 라이브러리를 사용하여 실제 한국어 문서 요약 모델을 처음부터 끝까지 구축하는 미션입니다. 데이터 로드 → 전처리 → 모델 Fine-tuning → 요약 생성...
+2. EDA 및 데이터 정제 실험: 원문 (Text): 95%가 678 토큰 이내. 요약 (Summary): 95%가 74 토큰 이내. 이 숫자가 황금 비율입니다. 보통 BART 기본 설정이 1024인데, 굳이 1024까지 쓸 필요 없이 700~800 정도만 써도 충분하다는 뜻입니다. 이러면 학습 속도도...
+3. 토크나이저 정렬 분석: UNK 비율 확인: 모델이 모르는 단어가 1% 미만이어야 안전합니다. - 파편화율 확인: 단어가 너무 잘게 쪼개지면 학습이 어렵습니다. (0.3 ~ 0.6 사이면 양호)
+4. Key Step: CUDA 사용 가능 여부 체크 및 장치 설정
 
 ## Code Highlights
 
 ### 토크나이저 정렬 분석
+
+`토크나이저 정렬 분석`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 =================================================..., 여기서 정의한 값을 함수로 넘겨줄 겁니다 흐름이 주석과 함께 드러납니다.
 
 ```python
 import pandas as pd
@@ -79,6 +114,8 @@ def preprocess_function(examples, tokenizer=None, max_input_len=None, max_target
 ```
 
 ### 모델 파이프라인
+
+`모델 파이프라인`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 =================================================..., [사용자 설정] 흐름이 주석과 함께 드러납니다.
 
 ```python
 import os

@@ -5,13 +5,36 @@ research_tab: "ML"
 research_kind: "Practice"
 source_title: "250822_코딩실습8_9.기본 지도학습 알고리즘들 (로지스틱 회귀)"
 source_path: "11_Machine_Learning/Code_Snippets/250822_코딩실습8_9.기본 지도학습 알고리즘들 (로지스틱 회귀).md"
-excerpt: "- **legend_elements()** - (handles, label) 두 값을 반환 - https://matplotlib.org/stable/gallery/lines_bars_and_markers/scatter_with_legend.html - scatte..."
+excerpt: "legend_elements() - (handles, label) 두 값을 반환 - https://matplotlib.org/stable/gallery/lines_bars_and_markers/scatter_with_legend.html - scatter plot이 튜플 반환 - handles: 스..."
+research_summary: "legend_elements() - (handles, label) 두 값을 반환 - https://matplotlib.org/stable/gallery/lines_bars_and_markers/scatter_with_legend.html - scatter plot이 튜플 반환 - handles: 스캐터 플롯에 표현되는 작은 점 - l... 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `ipynb/md` 원본과 19개 코드 블록, 18개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 sklearn, matplotlib, numpy입니다."
+research_artifacts: "ipynb/md · 코드 19개 · 실행 18개"
+code_block_count: 19
+execution_block_count: 18
+research_focus:
+  - "Iris 데이터로 이진 분류"
+  - "Iris 데이터로 다중 분류"
+  - "Softmax 이용한 다중 분류"
+research_stack:
+  - "sklearn"
+  - "matplotlib"
+  - "numpy"
+source_formats:
+  - "ipynb"
+  - "md"
 tags:
   - research-archive
   - imported-note
   - ml
   - practice
 ---
+
+legend_elements() - (handles, label) 두 값을 반환 - https://matplotlib.org/stable/gallery/lines_bars_and_markers/scatter_with_legend.html - scatter plot이 튜플 반환 - handles: 스캐터 플롯에 표현되는 작은 점 - l... 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `ipynb/md` 원본과 19개 코드 블록, 18개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 sklearn, matplotlib, numpy입니다.
+
+**빠르게 볼 수 있는 포인트**: Iris 데이터로 이진 분류, Iris 데이터로 다중 분류, Softmax 이용한 다중 분류.
+
+**남겨둔 자료**: `ipynb/md` 원본과 19개 코드 블록, 18개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 sklearn, matplotlib, numpy입니다.
+
+**주요 스택**: `sklearn`, `matplotlib`, `numpy`
 
 ## Snapshot
 
@@ -25,26 +48,26 @@ tags:
 | Libraries | `sklearn`, `matplotlib`, `numpy` |
 | Source Note | `250822_코딩실습8_9.기본 지도학습 알고리즘들 (로지스틱 회귀)` |
 
-## What I Worked On
+## What This Note Covers
 
-- 1. Iris 데이터로 이진 분류
-- 데이터 로드
-- 모델 학습
-- 시각화용 격자 생성 코드
-- 시각화
+### handles, _ = scatter.legend_elements() 코드 설명
+
+legend_elements() - (handles, label) 두 값을 반환 - https://matplotlib.org/stable/gallery/lines_bars_and_markers/scatter_with_legend.html - scatter plot이 튜플 반환 - handles: 스캐터 플롯에 표현되는 작은 점 - label: 0, 1, 2처럼 자동 생성된 클래스 이름...
+
+### Key Step
+
+Softmax 이용한 다중 분류
 
 ## Implementation Flow
 
-1. 1. Iris 데이터로 이진 분류
-2. 데이터 로드
-3. 모델 학습
-4. 시각화용 격자 생성 코드
-5. 시각화
-6. 2. Iris 데이터로 다중 분류
+1. handles, _ = scatter.legend_elements() 코드 설명: legend_elements() - (handles, label) 두 값을 반환 - https://matplotlib.org/stable/gallery/lines_bars_and_markers/scatter_with_...
+2. Key Step: Softmax 이용한 다중 분류
 
 ## Code Highlights
 
-### 1. Iris 데이터로 이진 분류
+### Iris 데이터로 이진 분류
+
+`Iris 데이터로 이진 분류`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
 
 ```python
 from sklearn.datasets import load_iris
@@ -53,7 +76,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 ```
 
-### 2. Iris 데이터로 다중 분류
+### Iris 데이터로 다중 분류
+
+`Iris 데이터로 다중 분류`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 모델링 & 시각화 흐름이 주석과 함께 드러납니다.
 
 ```python
 # 모델링 & 시각화

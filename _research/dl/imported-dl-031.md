@@ -5,13 +5,37 @@ research_tab: "DL"
 research_kind: "Shared Note"
 source_title: "5-4_VGGNet - 공유"
 source_path: "12_Deep_Learning/Code_Snippets/5-4_VGGNet - 공유.md"
-excerpt: "- 파이토치 : https://pytorch.org/vision/main/models.html#table-of-all-available-classification-weights - VGG-16 with ImageNet & BN : https://pytorch.or..."
+excerpt: "파이토치 : https://pytorch.org/vision/main/models.html#table-of-all-available-classification-weights - VGG-16 with ImageNet & BN : https://pytorch.org/vision/main/models/g..."
+research_summary: "파이토치 : https://pytorch.org/vision/main/models.html#table-of-all-available-classification-weights - VGG-16 with ImageNet & BN : https://pytorch.org/vision/main/models/generated/torchvision... 데이터 셋 : https://pytorch.org/vision/main/generated/torchvision.datasets.OxfordIIITPet.html. `md` 원본과 14개 코드 블록, 11개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchinfo, os, torchvision입니다."
+research_artifacts: "md · 코드 14개 · 실행 11개"
+code_block_count: 14
+execution_block_count: 11
+research_focus:
+  - "파이토치"
+  - "사전 훈련된 모델 활용"
+  - "데이터 셋"
+research_stack:
+  - "torch"
+  - "torchinfo"
+  - "os"
+  - "torchvision"
+  - "matplotlib"
+source_formats:
+  - "md"
 tags:
   - research-archive
   - imported-note
   - dl
   - shared-note
 ---
+
+파이토치 : https://pytorch.org/vision/main/models.html#table-of-all-available-classification-weights - VGG-16 with ImageNet & BN : https://pytorch.org/vision/main/models/generated/torchvision... 데이터 셋 : https://pytorch.org/vision/main/generated/torchvision.datasets.OxfordIIITPet.html. `md` 원본과 14개 코드 블록, 11개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchinfo, os, torchvision입니다.
+
+**빠르게 볼 수 있는 포인트**: 파이토치, 사전 훈련된 모델 활용, 데이터 셋.
+
+**남겨둔 자료**: `md` 원본과 14개 코드 블록, 11개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchinfo, os, torchvision입니다.
+
+**주요 스택**: `torch`, `torchinfo`, `os`, `torchvision`, `matplotlib`
 
 ## Snapshot
 
@@ -25,26 +49,36 @@ tags:
 | Libraries | `torch`, `torchinfo`, `os`, `torchvision`, `matplotlib`, `tqdm`, `collections`, `random` |
 | Source Note | `5-4_VGGNet - 공유` |
 
-## What I Worked On
+## What This Note Covers
 
-- 사전 훈련된 모델 활용
-- GPU 사용 가능 여부 확인
-- model = torchvision.models.vgg16_bn(pretrained=True)
-- 실습
-- 라벨 해석 함수: 0 -> Cat, 1 -> Dog
+### 사전 훈련된 모델 활용
+
+파이토치 : https://pytorch.org/vision/main/models.html#table-of-all-available-classification-weights - VGG-16 with ImageNet & BN : https://pytorch.org/vision/main/models/generated/torchvision.models.vgg16_bn.html#torchvis...
+
+### 실습
+
+데이터 셋 : https://pytorch.org/vision/main/generated/torchvision.datasets.OxfordIIITPet.html
+
+### 출처
+
+vgg-16 : https://pytorch.org/vision/0.8/_modules/torchvision/models/vgg.html
+
+### Key Step
+
+model = torchvision.models.vgg16_bn(pretrained=True)
 
 ## Implementation Flow
 
-1. 사전 훈련된 모델 활용
-2. GPU 사용 가능 여부 확인
-3. model = torchvision.models.vgg16_bn(pretrained=True)
-4. 실습
-5. 라벨 해석 함수: 0 -> Cat, 1 -> Dog
-6. 카테고리별로 n개의 샘플 이미지를 수집하여 시각화하는 함수
+1. 사전 훈련된 모델 활용: 파이토치 : https://pytorch.org/vision/main/models.html#table-of-all-available-classification-weights - VGG-16 with ImageNet & BN : https://pytorch.org/vision...
+2. 실습: 데이터 셋 : https://pytorch.org/vision/main/generated/torchvision.datasets.OxfordIIITPet.html
+3. 출처: vgg-16 : https://pytorch.org/vision/0.8/_modules/torchvision/models/vgg.html
+4. Key Step: model = torchvision.models.vgg16_bn(pretrained=True)
 
 ## Code Highlights
 
 ### class VGG(nn.Module)
+
+`class VGG(nn.Module)`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 실험의 중심이 되는 모델 아키텍처를 정의하는 코드입니다.
 
 ```python
 class VGG(nn.Module):
@@ -79,6 +113,8 @@ class VGG(nn.Module):
 ```
 
 ### 실습
+
+`실습`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 → 초반에는 빠르게 학습하고, 일정 단계 이후에는 작은 lr로 미세 조정, Train, Val 흐름이 주석과 함께 드러납니다.
 
 ```python
 import torch.nn as nn

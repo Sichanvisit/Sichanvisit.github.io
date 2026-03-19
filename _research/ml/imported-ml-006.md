@@ -5,13 +5,38 @@ research_tab: "ML"
 research_kind: "Practice"
 source_title: "250821_코딩실습6_9.기본 지도학습 알고리즘들 (선형회귀 - 사이킷런)"
 source_path: "11_Machine_Learning/Code_Snippets/250821_코딩실습6_9.기본 지도학습 알고리즘들 (선형회귀 - 사이킷런).md"
-excerpt: "**해석** 1. 나이가 1살 많을 수록 소득은 4.41 증가 2. 성별 1->2 바뀌면 소득이 8.71 증가 3. 경력이 1년 늘어나면 소득은 2.83 하락"
+excerpt: "해석 1"
+research_summary: "해석 1. 나이가 1살 많을 수록 소득은 4.41 증가 2. 성별 1->2 바뀌면 소득이 8.71 증가 3. 경력이 1년 늘어나면 소득은 2.83 하락. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `ipynb/md` 원본과 35개 코드 블록, 35개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 matplotlib, warnings, numpy, sklearn입니다."
+research_artifacts: "ipynb/md · 코드 35개 · 실행 35개"
+code_block_count: 35
+execution_block_count: 35
+research_focus:
+  - "선형회귀"
+  - "Salary 데이터로 선형회귀 기본 코딩 (사이킷런 사용 X)"
+  - "해석 1. 나이가 1살 많을 수록 소득은 4.41 증가 2. 성별 1->2 바뀌면 소득이 8.71 증가..."
+research_stack:
+  - "matplotlib"
+  - "warnings"
+  - "numpy"
+  - "sklearn"
+  - "google"
+source_formats:
+  - "ipynb"
+  - "md"
 tags:
   - research-archive
   - imported-note
   - ml
   - practice
 ---
+
+해석 1. 나이가 1살 많을 수록 소득은 4.41 증가 2. 성별 1->2 바뀌면 소득이 8.71 증가 3. 경력이 1년 늘어나면 소득은 2.83 하락. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `ipynb/md` 원본과 35개 코드 블록, 35개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 matplotlib, warnings, numpy, sklearn입니다.
+
+**빠르게 볼 수 있는 포인트**: 선형회귀, Salary 데이터로 선형회귀 기본 코딩 (사이킷런 사용 X), 해석 1. 나이가 1살 많을 수록 소득은 4.41 증가 2. 성별 1-....
+
+**남겨둔 자료**: `ipynb/md` 원본과 35개 코드 블록, 35개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 matplotlib, warnings, numpy, sklearn입니다.
+
+**주요 스택**: `matplotlib`, `warnings`, `numpy`, `sklearn`, `google`
 
 ## Snapshot
 
@@ -25,60 +50,36 @@ tags:
 | Libraries | `matplotlib`, `warnings`, `numpy`, `sklearn`, `google`, `pandas` |
 | Source Note | `250821_코딩실습6_9.기본 지도학습 알고리즘들 (선형회귀 - 사이킷런)` |
 
-## What I Worked On
+## What This Note Covers
 
-- 1. 선형회귀
-- 실습1 문제 코드 - 선형 회귀 + MSE
-- import matplotlib.pyplot as plt # 한글파일 문제없는 분들은 맨 앞 주석 빼고 진행
-- 입력 변수 (집 크기)와 출력 변수 (집 가격)
-- 1. 선형 회귀 수식 구하기
+### (1) 첫번째 모델 - 절편 없음
+
+해석 1. 나이가 1살 많을 수록 소득은 4.41 증가 2. 성별 1->2 바뀌면 소득이 8.71 증가 3. 경력이 1년 늘어나면 소득은 2.83 하락
+
+### Key Step
+
+실습1 문제 코드 - 선형 회귀 + MSE
+
+### Key Step
+
+import matplotlib.pyplot as plt # 한글파일 문제없는 분들은 맨 앞 주석 빼고 진행
+
+### Key Step
+
+입력 변수 (집 크기)와 출력 변수 (집 가격)
 
 ## Implementation Flow
 
-1. 1. 선형회귀
-2. 실습1 문제 코드 - 선형 회귀 + MSE
-3. import matplotlib.pyplot as plt # 한글파일 문제없는 분들은 맨 앞 주석 빼고 진행
-4. 입력 변수 (집 크기)와 출력 변수 (집 가격)
-5. 1. 선형 회귀 수식 구하기
-6. 2. 예측값 계산
+1. (1) 첫번째 모델 - 절편 없음: 해석 1. 나이가 1살 많을 수록 소득은 4.41 증가 2. 성별 1->2 바뀌면 소득이 8.71 증가 3. 경력이 1년 늘어나면 소득은 2.83 하락
+2. Key Step: 실습1 문제 코드 - 선형 회귀 + MSE
+3. Key Step: import matplotlib.pyplot as plt # 한글파일 문제없는 분들은 맨 앞 주석 빼고 진행
+4. Key Step: 입력 변수 (집 크기)와 출력 변수 (집 가격)
 
 ## Code Highlights
 
-### 1. 선형회귀
+### 선형회귀
 
-```python
-# 실습2 문제 코드 - 기울기 하강법으로 선형 회귀 실습
-# 초기 파라미터
-w = 0.0
-b = 0.0
-lr = 0.01       # 학습률 (learning rate)
-epochs = 1000   # 반복 횟수=> ML/DL에서 최적화할 때 변경하는 수치
-n = len(house_size)
-
-# 비용 추적용 리스트
-cost_list = []
-
-# 경사 하강법
-for epoch in range(epochs):
-    y_pred = w * house_size + b
-    error = y_pred - house_price
-
-    dw = (2/n) * np.dot(error, house_size)
-    db = (2/n) * error.sum()
-
-    w -= lr * dw
-    b -= lr * db
-
-    mse = np.mean(error ** 2)
-    cost_list.append(mse)
-
-# 최종 결과 출력
-print(f"학습 완료! 기울기 w = {w:.4f}, 절편 b = {b:.4f}")
-print(f"최종 MSE: {mse:.4f}")
-# ... trimmed ...
-```
-
-### 1. 선형회귀
+`선형회귀`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 추가 - 다중 선형 회귀 실습 코드 예시 (Python - scikit-learn), 데이터 정의, 종속 변수(y): 여기선 임의로 생성 (실제 데이터가 없으니 가상의 가격 데이터 예시) 흐름이 주석과 함께 드러납니다.
 
 ```python
 # 추가 -  다중 선형 회귀 실습 코드 예시 (Python - scikit-learn)
@@ -110,6 +111,15 @@ print("절편 (intercept):", model.intercept_)
 print("R^2 점수:", model.score(X, price))
 
 # ... trimmed ...
+```
+
+### Salary 데이터로 선형회귀 - 사이킷런 이용 코딩
+
+`Salary 데이터로 선형회귀 - 사이킷런 이용 코딩`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 모델 학습 흐름이 주석과 함께 드러납니다.
+
+```python
+# 모델 학습
+model.fit(X_train, y_train)
 ```
 
 ## Source Bundle

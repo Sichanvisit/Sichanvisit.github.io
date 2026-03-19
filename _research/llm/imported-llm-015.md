@@ -5,13 +5,37 @@ research_tab: "LLM"
 research_kind: "Archive Note"
 source_title: "3-3 (실습)GPT_사전학습"
 source_path: "13_LLM_GenAI/Code_Snippets/3-3 (실습)GPT_사전학습.md"
-excerpt: "GPT 모델 또한 일반적으로 사전학습과 미세조정 두가지의 학습 단계가 존재합니다."
+excerpt: "GPT 모델 또한 일반적으로 사전학습과 미세조정 두가지의 학습 단계가 존재합니다"
+research_summary: "GPT 모델 또한 일반적으로 사전학습과 미세조정 두가지의 학습 단계가 존재합니다. GPT는 Transformer의 디코더 구조를 활용한 모델이므로 기본적으로 자기회귀(Autoregressive) 방식으로 왼쪽에서 오른쪽 방향으로 순차적 토큰을 생성합니다. 따라서 학습을 위한 입력 데이터는 캐주얼(Causal) 마스크를 통해 미래 토큰을 가려주어야 하며, 입력-라벨 구조는 단순히 입력 토큰을 왼쪽으로 한칸씩 쉬프트... `md` 원본과 13개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 google, torch, sentencepiece, pandas입니다."
+research_artifacts: "md · 코드 13개 · 실행 13개"
+code_block_count: 13
+execution_block_count: 13
+research_focus:
+  - "GPT"
+  - "GPT 모델 또한 일반적으로 사전학습과 미세조정 두가지의 학습 단계가 존재합니다."
+  - "GPT 학습을 위한 데이터세트 구성"
+research_stack:
+  - "google"
+  - "torch"
+  - "sentencepiece"
+  - "pandas"
+  - "numpy"
+source_formats:
+  - "md"
 tags:
   - research-archive
   - imported-note
   - llm
   - archive-note
 ---
+
+GPT 모델 또한 일반적으로 사전학습과 미세조정 두가지의 학습 단계가 존재합니다. GPT는 Transformer의 디코더 구조를 활용한 모델이므로 기본적으로 자기회귀(Autoregressive) 방식으로 왼쪽에서 오른쪽 방향으로 순차적 토큰을 생성합니다. 따라서 학습을 위한 입력 데이터는 캐주얼(Causal) 마스크를 통해 미래 토큰을 가려주어야 하며, 입력-라벨 구조는 단순히 입력 토큰을 왼쪽으로 한칸씩 쉬프트... `md` 원본과 13개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 google, torch, sentencepiece, pandas입니다.
+
+**빠르게 볼 수 있는 포인트**: GPT, GPT 모델 또한 일반적으로 사전학습과 미세조정 두가지의 학습 단계가..., GPT 학습을 위한 데이터세트 구성.
+
+**남겨둔 자료**: `md` 원본과 13개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 google, torch, sentencepiece, pandas입니다.
+
+**주요 스택**: `google`, `torch`, `sentencepiece`, `pandas`, `numpy`
 
 ## Snapshot
 
@@ -25,26 +49,36 @@ tags:
 | Libraries | `google`, `torch`, `sentencepiece`, `pandas`, `numpy`, `os`, `math`, `matplotlib` |
 | Source Note | `3-3 (실습)GPT_사전학습` |
 
-## What I Worked On
+## What This Note Covers
 
-- GPT
-- GPT 학습을 위한 데이터세트 구성
-- Autoregressive 학습을 위한 데이터세트
-- BPE :바이트 페어 인코딩(Byte Pair Encoding, BPE)
-- 추가 쓰기모드로 텍스트 파일 열기
+### GPT 학습을 위한 데이터세트 구성
+
+GPT 모델 또한 일반적으로 사전학습과 미세조정 두가지의 학습 단계가 존재합니다.
+
+### Autoregressive 학습을 위한 데이터세트
+
+GPT는 Transformer의 디코더 구조를 활용한 모델이므로 기본적으로 자기회귀(Autoregressive) 방식으로 왼쪽에서 오른쪽 방향으로 순차적 토큰을 생성합니다. 따라서 학습을 위한 입력 데이터는 캐주얼(Causal) 마스크를 통해 미래 토큰을 가려주어야 하며, 입력-라벨 구조는 단순히 입력 토큰을 왼쪽으로 한칸씩 쉬프트 한 토큰으로 구성이됩니다.
+
+### Causal Mask
+
+Causal Mask(look-ahead)는 Transformer에서 구현한 방식과 동일하게 bool 타입의 삼각 행렬로 구현하며, 데이터세트 내부가 아닌 모델 내부에서 적용합니다.
+
+### GPT 모델링
+
+GPT는 Transformer의 디코더 구조의 아케텍처를 기반으로 합니다. 정확하게는 Transformer디코더는 두개의 멀티헤드 어텐션이 있지만, GPT는 셀프어텐션만 진행하는 하나의 멀티헤드 어텐션만 활용합니다.
 
 ## Implementation Flow
 
-1. GPT
-2. GPT 학습을 위한 데이터세트 구성
-3. Autoregressive 학습을 위한 데이터세트
-4. BPE :바이트 페어 인코딩(Byte Pair Encoding, BPE)
-5. 추가 쓰기모드로 텍스트 파일 열기
-6. 저장 경로 생성
+1. GPT 학습을 위한 데이터세트 구성: GPT 모델 또한 일반적으로 사전학습과 미세조정 두가지의 학습 단계가 존재합니다.
+2. Autoregressive 학습을 위한 데이터세트: GPT는 Transformer의 디코더 구조를 활용한 모델이므로 기본적으로 자기회귀(Autoregressive) 방식으로 왼쪽에서 오른쪽 방향으로 순차적 토큰을 생성합니다. 따라서 학습을 위한 입력 데이터는 캐주얼(Causal) 마스크를 통해 미래...
+3. Causal Mask: Causal Mask(look-ahead)는 Transformer에서 구현한 방식과 동일하게 bool 타입의 삼각 행렬로 구현하며, 데이터세트 내부가 아닌 모델 내부에서 적용합니다.
+4. GPT 모델링: GPT는 Transformer의 디코더 구조의 아케텍처를 기반으로 합니다. 정확하게는 Transformer디코더는 두개의 멀티헤드 어텐션이 있지만, GPT는 셀프어텐션만 진행하는 하나의 멀티헤드 어텐션만 활용합니다.
 
 ## Code Highlights
 
 ### Autoregressive 학습을 위한 데이터세트
+
+`Autoregressive 학습을 위한 데이터세트`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 문장 구분을 위해 bos 토큰과 eos 토큰 추가, 문장이 끝나면 제로 패딩, 입력 토큰을 왼쪽으로 한 칸 쉬프트하여 라벨링 흐름이 주석과 함께 드러납니다.
 
 ```python
 class SPDataSet(Dataset):
@@ -79,6 +113,8 @@ class SPDataSet(Dataset):
 ```
 
 ### 모델 학습하기
+
+`모델 학습하기`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 손실 계산시 형상 변환, pred shape: (batch_size, seq_len, vocab_size), tar shape: (batch_size, seq_len) 흐름이 주석과 함께 드러납니다.
 
 ```python
 # 손실 계산시 형상 변환

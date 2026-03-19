@@ -5,13 +5,37 @@ research_tab: "DL"
 research_kind: "Shared Note"
 source_title: "6-1_Faster R-CNN - 공유"
 source_path: "12_Deep_Learning/Code_Snippets/6-1_Faster R-CNN - 공유.md"
-excerpt: "- Faster RCNN : https://pytorch.org/vision/0.9/_modules/torchvision/models/detection/faster_rcnn.html#fasterrcnn_resnet50_fpn"
+excerpt: "Faster RCNN : https://pytorch.org/vision/0.9/_modules/torchvision/models/detection/faster_rcnn.html#fasterrcnn_resnet50_fpn"
+research_summary: "Faster RCNN : https://pytorch.org/vision/0.9/_modules/torchvision/models/detection/faster_rcnn.html#fasterrcnn_resnet50_fpn. MS COCO 데이터셋은 약 328000장의 이미지와 80개의 클래스로 이루어져있으나, 워낙 대규모이기 때문에 개와 고양이 클래스를 소규모로 샘플링해 실습을 진행합니다. `md` 원본과 28개 코드 블록, 14개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 kagglehub, os, shutil, json입니다."
+research_artifacts: "md · 코드 28개 · 실행 14개"
+code_block_count: 28
+execution_block_count: 14
+research_focus:
+  - "Faster RCNN"
+  - "Faster R-CNN(coco_pytorch)"
+  - "MS COCO 데이터셋은 약 328000장의 이미지와 80개의 클래스로 이루어져있으나, 워낙 대규모이기..."
+research_stack:
+  - "kagglehub"
+  - "os"
+  - "shutil"
+  - "json"
+  - "torch"
+source_formats:
+  - "md"
 tags:
   - research-archive
   - imported-note
   - dl
   - shared-note
 ---
+
+Faster RCNN : https://pytorch.org/vision/0.9/_modules/torchvision/models/detection/faster_rcnn.html#fasterrcnn_resnet50_fpn. MS COCO 데이터셋은 약 328000장의 이미지와 80개의 클래스로 이루어져있으나, 워낙 대규모이기 때문에 개와 고양이 클래스를 소규모로 샘플링해 실습을 진행합니다. `md` 원본과 28개 코드 블록, 14개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 kagglehub, os, shutil, json입니다.
+
+**빠르게 볼 수 있는 포인트**: Faster RCNN, Faster R-CNN(coco_pytorch), MS COCO 데이터셋은 약 328000장의 이미지와 80개의 클래스로....
+
+**남겨둔 자료**: `md` 원본과 28개 코드 블록, 14개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 kagglehub, os, shutil, json입니다.
+
+**주요 스택**: `kagglehub`, `os`, `shutil`, `json`, `torch`
 
 ## Snapshot
 
@@ -25,26 +49,36 @@ tags:
 | Libraries | `kagglehub`, `os`, `shutil`, `json`, `torch`, `PIL`, `torchvision`, `tqdm` |
 | Source Note | `6-1_Faster R-CNN - 공유` |
 
-## What I Worked On
+## What This Note Covers
 
-- Faster R-CNN(coco_pytorch)
-- 데이터 다운로드
-- Download latest version
-- 먼저, 압축 파일(pytorch-transformer.zip)을 지정된 경로(현재 디렉토리)로 압축 해제합니다.
-- 작업 디렉토리를 변경합니다.
+### Faster R-CNN(coco_pytorch)
+
+Faster RCNN : https://pytorch.org/vision/0.9/_modules/torchvision/models/detection/faster_rcnn.html#fasterrcnn_resnet50_fpn
+
+### 데이터 다운로드
+
+MS COCO 데이터셋은 약 328000장의 이미지와 80개의 클래스로 이루어져있으나, 워낙 대규모이기 때문에 개와 고양이 클래스를 소규모로 샘플링해 실습을 진행합니다.
+
+### 데이터셋
+
+COCO 데이터는 "ID"를 기준으로 파싱을 해야 합니다. images
+
+### Custom Collator가 필요한 이유
+
+아래에 기본 collate 함수의 출력과 custom collate를 적용한 최종 출력 형태를 요약했습니다.
 
 ## Implementation Flow
 
-1. Faster R-CNN(coco_pytorch)
-2. 데이터 다운로드
-3. Download latest version
-4. 먼저, 압축 파일(pytorch-transformer.zip)을 지정된 경로(현재 디렉토리)로 압축 해제합니다.
-5. 작업 디렉토리를 변경합니다.
-6. 데이터셋
+1. Faster R-CNN(coco_pytorch): Faster RCNN : https://pytorch.org/vision/0.9/_modules/torchvision/models/detection/faster_rcnn.html#fasterrcnn_resnet50_fpn
+2. 데이터 다운로드: MS COCO 데이터셋은 약 328000장의 이미지와 80개의 클래스로 이루어져있으나, 워낙 대규모이기 때문에 개와 고양이 클래스를 소규모로 샘플링해 실습을 진행합니다.
+3. 데이터셋: COCO 데이터는 "ID"를 기준으로 파싱을 해야 합니다. images
+4. Custom Collator가 필요한 이유: 아래에 기본 collate 함수의 출력과 custom collate를 적용한 최종 출력 형태를 요약했습니다.
 
 ## Code Highlights
 
 ### 데이터셋
+
+`데이터셋`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 COCO 데이터셋의 JSON 파일을 직접 파싱하기 위한 사용자 정의 클래스, JSON 파일을 열어서 데이터를 읽습니다., 이미지 정보를 'id'를 키로 하는 딕셔너리로 저장합니다. 흐름이 주석과 함께 드러납니다.
 
 ```python
 import os              # 파일 및 디렉토리 경로를 다루기 위한 표준 라이브러리
@@ -79,6 +113,8 @@ class CustomCOCO:
 ```
 
 ### 실습(Pascal VOC 2007)
+
+`실습(Pascal VOC 2007)`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 VOC 클래스 목록 (첫번째 background 포함), 클래스 이름을 id로 매핑하는 딕셔너리 생성 (ex: 'cat': 9), VOC 데이터셋은 보통 ImageSets/Main 폴더에 train.txt, val.tx... 흐름이 주석과 함께 드러납니다.
 
 ```python
 import os

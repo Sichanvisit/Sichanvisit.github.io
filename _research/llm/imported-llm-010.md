@@ -5,13 +5,37 @@ research_tab: "LLM"
 research_kind: "Archive Note"
 source_title: "3-2 (실습)트랜스포머"
 source_path: "13_LLM_GenAI/Code_Snippets/3-2 (실습)트랜스포머.md"
-excerpt: "Transformer는 Seq2seq와 비슷하게 기계번역을 해결하기 위한 인코더와 디코더구조를 가지고 있습니다. Seq2seq와는 달리 인코더 와 디코더 내부에는 MultiHeadAttention 블록과 FeedForwaed라는 블록으로 구성"
+excerpt: "Transformer는 Seq2seq와 비슷하게 기계번역을 해결하기 위한 인코더와 디코더구조를 가지고 있습니다"
+research_summary: "Transformer는 Seq2seq와 비슷하게 기계번역을 해결하기 위한 인코더와 디코더구조를 가지고 있습니다. Seq2seq와는 달리 인코더 와 디코더 내부에는 MultiHeadAttention 블록과 FeedForwaed라는 블록으로 구성. 트랜스포머의 심장인 Attention(Q, K, V) 공식을 코드로 직접 구현합니다. `md` 원본과 23개 코드 블록, 17개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, math, numpy, matplotlib입니다."
+research_artifacts: "md · 코드 23개 · 실행 17개"
+code_block_count: 23
+execution_block_count: 17
+research_focus:
+  - "Transformer는 Seq2seq와 비슷하게 기계번역을 해결하기 위한 인코더와 디코더구조를 가지고..."
+  - "Transformer 모델 구조"
+  - "🧩 Transformer 구현 단계별 가이드"
+research_stack:
+  - "torch"
+  - "math"
+  - "numpy"
+  - "matplotlib"
+  - "google"
+source_formats:
+  - "md"
 tags:
   - research-archive
   - imported-note
   - llm
   - archive-note
 ---
+
+Transformer는 Seq2seq와 비슷하게 기계번역을 해결하기 위한 인코더와 디코더구조를 가지고 있습니다. Seq2seq와는 달리 인코더 와 디코더 내부에는 MultiHeadAttention 블록과 FeedForwaed라는 블록으로 구성. 트랜스포머의 심장인 Attention(Q, K, V) 공식을 코드로 직접 구현합니다. `md` 원본과 23개 코드 블록, 17개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, math, numpy, matplotlib입니다.
+
+**빠르게 볼 수 있는 포인트**: Transformer는 Seq2seq와 비슷하게 기계번역을 해결하기 위..., Transformer 모델 구조, 🧩 Transformer 구현 단계별 가이드.
+
+**남겨둔 자료**: `md` 원본과 23개 코드 블록, 17개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, math, numpy, matplotlib입니다.
+
+**주요 스택**: `torch`, `math`, `numpy`, `matplotlib`, `google`
 
 ## Snapshot
 
@@ -25,26 +49,36 @@ tags:
 | Libraries | `torch`, `math`, `numpy`, `matplotlib`, `google`, `sentencepiece`, `pandas`, `re` |
 | Source Note | `3-2 (실습)트랜스포머` |
 
-## What I Worked On
+## What This Note Covers
 
-- Transformer 모델 구조
-- 🧩 Transformer 구현 단계별 가이드
-- ⚙️ 1단계: *Scaled Dot-Product Attention*
-- 🧠 2단계: *Multi-Head Attention*
-- 🛡️ 3단계: *Padding & Look-Ahead Masks*
+### Transformer 모델 구조
+
+Transformer는 Seq2seq와 비슷하게 기계번역을 해결하기 위한 인코더와 디코더구조를 가지고 있습니다. Seq2seq와는 달리 인코더 와 디코더 내부에는 MultiHeadAttention 블록과 FeedForwaed라는 블록으로 구성
+
+### ⚙️ 1단계: *Scaled Dot-Product Attention*
+
+트랜스포머의 심장인 Attention(Q, K, V) 공식을 코드로 직접 구현합니다.
+
+### 🧠 2단계: *Multi-Head Attention*
+
+1단계에서 만든 어텐션을 여러 개 병렬로 실행하여 “다양한 관점”에서 문장을 바라볼 수 있도록 확장합니다.
+
+### 🛡️ 3단계: *Padding & Look-Ahead Masks*
+
+어텐션이 불필요한 토큰을 무시하고, 디코더가 미래 단어를 미리 엿보지 못하게 합니다.
 
 ## Implementation Flow
 
-1. Transformer 모델 구조
-2. 🧩 Transformer 구현 단계별 가이드
-3. ⚙️ 1단계: *Scaled Dot-Product Attention*
-4. 🧠 2단계: *Multi-Head Attention*
-5. 🛡️ 3단계: *Padding & Look-Ahead Masks*
-6. 🏗️ 4단계: 인코더 유닛 조립 — *EncoderLayer*
+1. Transformer 모델 구조: Transformer는 Seq2seq와 비슷하게 기계번역을 해결하기 위한 인코더와 디코더구조를 가지고 있습니다. Seq2seq와는 달리 인코더 와 디코더 내부에는 MultiHeadAttention 블록과 FeedForwaed라는 블록으로 구성
+2. ⚙️ 1단계: *Scaled Dot-Product Attention*: 트랜스포머의 심장인 Attention(Q, K, V) 공식을 코드로 직접 구현합니다.
+3. 🧠 2단계: *Multi-Head Attention*: 1단계에서 만든 어텐션을 여러 개 병렬로 실행하여 “다양한 관점”에서 문장을 바라볼 수 있도록 확장합니다.
+4. 🛡️ 3단계: *Padding & Look-Ahead Masks*: 어텐션이 불필요한 토큰을 무시하고, 디코더가 미래 단어를 미리 엿보지 못하게 합니다.
 
 ## Code Highlights
 
 ### 데이터세트 준비
+
+`데이터세트 준비`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 이전 Seq2seq 모델 학습과 동일하게 준비한 Transformer 모델에 AIHUB 한국어 감성 대화 말뭉치를 부분적으로 활용하여 질의(입력) 응답(타겟) 데이터세트를 학습 합니다.
 
 ```python
 class SPDataSet(Dataset):
@@ -79,6 +113,8 @@ class SPDataSet(Dataset):
 ```
 
 ### 모델 학습
+
+`모델 학습`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 batch_size, seq_len => batch_size * seq_len 하여 손실 연산, pred shape: (batch_size, seq_len, vocab_size), real shape: (batch_size, seq_len) 흐름이 주석과 함께 드러납니다.
 
 ```python
 # batch_size, seq_len => batch_size * seq_len 하여 손실 연산

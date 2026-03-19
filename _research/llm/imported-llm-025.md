@@ -5,13 +5,38 @@ research_tab: "LLM"
 research_kind: "Practice"
 source_title: "3-5 (실습)여행_가이드_봇_만들기_혼자실습"
 source_path: "13_LLM_GenAI/Code_Snippets/3-5 (실습)여행_가이드_봇_만들기_혼자실습.md"
-excerpt: "LLM Practice: 여행 가이드 봇 만들기 - 혼자 실습, RAG 실습 준비"
+excerpt: "여행 가이드 봇 만들기 - 혼자 실습, RAG 실습 준비, 초기 설정 중심으로 구현 과정을 정리한 여행 가이드 봇 만들기 혼자실습 기록입니다"
+research_summary: "여행 가이드 봇 만들기 - 혼자 실습, RAG 실습 준비, 초기 설정 중심으로 구현 과정을 정리한 여행 가이드 봇 만들기 혼자실습 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `ipynb/md` 원본과 10개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, langchain_community, langchain_text_splitters, langchain_openai입니다."
+research_artifacts: "ipynb/md · 코드 10개 · 실행 7개"
+code_block_count: 10
+execution_block_count: 7
+research_focus:
+  - "여행 가이드 봇 만들기 - 혼자 실습"
+  - "RAG 실습 준비"
+  - "초기 설정"
+research_stack:
+  - "os"
+  - "langchain_community"
+  - "langchain_text_splitters"
+  - "langchain_openai"
+  - "langchain_chroma"
+source_formats:
+  - "ipynb"
+  - "md"
 tags:
   - research-archive
   - imported-note
   - llm
   - practice
 ---
+
+여행 가이드 봇 만들기 - 혼자 실습, RAG 실습 준비, 초기 설정 중심으로 구현 과정을 정리한 여행 가이드 봇 만들기 혼자실습 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `ipynb/md` 원본과 10개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, langchain_community, langchain_text_splitters, langchain_openai입니다.
+
+**빠르게 볼 수 있는 포인트**: 여행 가이드 봇 만들기 - 혼자 실습, RAG 실습 준비, 초기 설정.
+
+**남겨둔 자료**: `ipynb/md` 원본과 10개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, langchain_community, langchain_text_splitters, langchain_openai입니다.
+
+**주요 스택**: `os`, `langchain_community`, `langchain_text_splitters`, `langchain_openai`, `langchain_chroma`
 
 ## Snapshot
 
@@ -25,26 +50,25 @@ tags:
 | Libraries | `os`, `langchain_community`, `langchain_text_splitters`, `langchain_openai`, `langchain_chroma`, `langchain_core`, `getpass` |
 | Source Note | `3-5 (실습)여행_가이드_봇_만들기_혼자실습` |
 
-## What I Worked On
+## What This Note Covers
 
 - 여행 가이드 봇 만들기 - 혼자 실습
 - RAG 실습 준비
-- 0. 초기 설정
+- 초기 설정
 - OpenAI API key
 - API키 설정
 
 ## Implementation Flow
 
-1. 여행 가이드 봇 만들기 - 혼자 실습
-2. RAG 실습 준비
-3. 0. 초기 설정
-4. OpenAI API key
-5. API키 설정
-6. 실습용 데이터 (제주도 맛집 가이드)
+1. Key Step: 여행 가이드 봇 만들기 - 혼자 실습
+2. Key Step: 실습용 데이터 (제주도 맛집 가이드)
+3. Key Step: 문서를 불러오고(Load) 자르기(Split)
 
 ## Code Highlights
 
 ### RAG 실습 준비
+
+`RAG 실습 준비`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 실습용 데이터 (제주도 맛집 가이드), 파일 생성 흐름이 주석과 함께 드러납니다.
 
 ```python
 # 실습용 데이터 (제주도 맛집 가이드)
@@ -67,6 +91,8 @@ print("제주도 가이드북 파일 생성 완료")
 ```
 
 ### RAG 실습 준비
+
+`RAG 실습 준비`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 ==========================================, RAG 체인을 완성 흐름이 주석과 함께 드러납니다.
 
 ```python
 # ==========================================
@@ -104,4 +130,4 @@ prompt = PromptTemplate.from_template(template)
 
 ## Note Preview
 
-> No prose preview was available in the source note.
+> 원본 노트에 별도 설명 문단이 많지 않아 코드 중심으로 보존했습니다.

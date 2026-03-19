@@ -5,13 +5,35 @@ research_tab: "DL"
 research_kind: "Shared Note"
 source_title: "4-4_RNN 레이어 설명 - 공유"
 source_path: "12_Deep_Learning/Code_Snippets/4-4_RNN 레이어 설명 - 공유.md"
-excerpt: "PyTorch에서는 torch.nn.RNN, torch.nn.LSTM, torch.nn.GRU 클래스를 사용하여 순환 신경망을 쉽게 구현할 수 있습니다. 각 클래스는 공통적으로 아래와 같은 주요 파라미터를 가집니다."
+excerpt: "PyTorch에서는 torch.nn.RNN, torch.nn.LSTM, torch.nn.GRU 클래스를 사용하여 순환 신경망을 쉽게 구현할 수 있습니다"
+research_summary: "PyTorch에서는 torch.nn.RNN, torch.nn.LSTM, torch.nn.GRU 클래스를 사용하여 순환 신경망을 쉽게 구현할 수 있습니다. 각 클래스는 공통적으로 아래와 같은 주요 파라미터를 가집니다. out: 모든 타임스텝의 출력 ([batch_size, seq_len, hidden_size]). `md` 원본과 23개 코드 블록, 18개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, numpy, matplotlib입니다."
+research_artifacts: "md · 코드 23개 · 실행 18개"
+code_block_count: 23
+execution_block_count: 18
+research_focus:
+  - "PyTorch에서는 torch.nn.RNN, torch.nn.LSTM, torch.nn.GRU 클래스를..."
+  - "PyTorch에서 RNN, LSTM, GRU 사용법"
+  - "out"
+research_stack:
+  - "torch"
+  - "numpy"
+  - "matplotlib"
+source_formats:
+  - "md"
 tags:
   - research-archive
   - imported-note
   - dl
   - shared-note
 ---
+
+PyTorch에서는 torch.nn.RNN, torch.nn.LSTM, torch.nn.GRU 클래스를 사용하여 순환 신경망을 쉽게 구현할 수 있습니다. 각 클래스는 공통적으로 아래와 같은 주요 파라미터를 가집니다. out: 모든 타임스텝의 출력 ([batch_size, seq_len, hidden_size]). `md` 원본과 23개 코드 블록, 18개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, numpy, matplotlib입니다.
+
+**빠르게 볼 수 있는 포인트**: PyTorch에서는 torch.nn.RNN, torch.nn.LSTM,..., PyTorch에서 RNN, LSTM, GRU 사용법, out.
+
+**남겨둔 자료**: `md` 원본과 23개 코드 블록, 18개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, numpy, matplotlib입니다.
+
+**주요 스택**: `torch`, `numpy`, `matplotlib`
 
 ## Snapshot
 
@@ -25,26 +47,36 @@ tags:
 | Libraries | `torch`, `numpy`, `matplotlib` |
 | Source Note | `4-4_RNN 레이어 설명 - 공유` |
 
-## What I Worked On
+## What This Note Covers
 
-- 1. PyTorch에서 RNN, LSTM, GRU 사용법
-- RNN
-- LSTM
-- GRU
-- 시계열 데이터 실습
+### PyTorch에서 RNN, LSTM, GRU 사용법
+
+PyTorch에서는 torch.nn.RNN, torch.nn.LSTM, torch.nn.GRU 클래스를 사용하여 순환 신경망을 쉽게 구현할 수 있습니다. 각 클래스는 공통적으로 아래와 같은 주요 파라미터를 가집니다.
+
+### RNN
+
+out: 모든 타임스텝의 출력 ([batch_size, seq_len, hidden_size])
+
+### LSTM
+
+out: 모든 타임스텝의 출력 ([batch_size, seq_len, hidden_size])
+
+### GRU
+
+out: 모든 타임스텝의 출력 ([batch_size, seq_len, hidden_size])
 
 ## Implementation Flow
 
-1. 1. PyTorch에서 RNN, LSTM, GRU 사용법
-2. RNN
-3. LSTM
-4. GRU
-5. 시계열 데이터 실습
-6. 간단한 데이터 생성
+1. PyTorch에서 RNN, LSTM, GRU 사용법: PyTorch에서는 torch.nn.RNN, torch.nn.LSTM, torch.nn.GRU 클래스를 사용하여 순환 신경망을 쉽게 구현할 수 있습니다. 각 클래스는 공통적으로 아래와 같은 주요 파라미터를 가집니다.
+2. RNN: out: 모든 타임스텝의 출력 ([batch_size, seq_len, hidden_size])
+3. LSTM: out: 모든 타임스텝의 출력 ([batch_size, seq_len, hidden_size])
+4. GRU: out: 모든 타임스텝의 출력 ([batch_size, seq_len, hidden_size])
 
 ## Code Highlights
 
 ### 간단한 데이터 생성
+
+`간단한 데이터 생성`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 시계열 데이터를 모델이 학습할 수 있도록 입력과 정답(label)로 변환하는 함수, 주어진 데이터에서 일정 길이(seq_length)만큼의 연속된 데이터를 입력 시퀀스로 만들고,, 해당 시퀀스 바로 다음 값(y값)을 정답으로 설정 흐름이 주석과 함께 드러납니다.
 
 ```python
 import torch
@@ -72,6 +104,8 @@ print(X.shape, y.shape)  # 변환된 데이터의 크기 확인
 ```
 
 ### 🔍 설명
+
+`🔍 설명`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 모델 학습, 예측 및 시각화 흐름이 주석과 함께 드러납니다.
 
 ```python
 # 모델 학습

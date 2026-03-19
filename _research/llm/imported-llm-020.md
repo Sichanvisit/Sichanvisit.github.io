@@ -5,13 +5,37 @@ research_tab: "LLM"
 research_kind: "Archive Note"
 source_title: "3-4 (실습)3_Gemma_QLoRA"
 source_path: "13_LLM_GenAI/Code_Snippets/3-4 (실습)3_Gemma_QLoRA.md"
-excerpt: "LLM과 같은 대규모 모델에서 더욱 효율 적인 미세조정 즉, PEFT(Parameter-Efficient Fine-Tuning)을 하기위한 가장 대표적인 방식이 바로 Lora 방식 입니다."
+excerpt: "LLM과 같은 대규모 모델에서 더욱 효율 적인 미세조정 즉, PEFT(Parameter-Efficient Fine-Tuning)을 하기위한 가장 대표적인 방식이 바로 Lora 방식 입니다"
+research_summary: "LLM과 같은 대규모 모델에서 더욱 효율 적인 미세조정 즉, PEFT(Parameter-Efficient Fine-Tuning)을 하기위한 가장 대표적인 방식이 바로 Lora 방식 입니다. transformers > 4.50.1 : gemma3 가 포함된 최신 transformers 버전 2. bitsandbytes : 양자화를 위한 라이브러리 3. trl : SFTTrainer를 활용하여 학습하기 위한 라이브러리 4. datasets : Hugging Face Hub에 저장된 데이터세트를 불러오기 위한 라이브러리. `md` 원본과 20개 코드 블록, 16개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 huggingface_hub, transformers, torch, datasets입니다."
+research_artifacts: "md · 코드 20개 · 실행 16개"
+code_block_count: 20
+execution_block_count: 16
+research_focus:
+  - "LLM과 같은 대규모 모델에서 더욱 효율 적인 미세조정 즉, PEFT(Parameter-Efficien..."
+  - "Lora 기법을 활용한 PEFT"
+  - "초기화 과정"
+research_stack:
+  - "huggingface_hub"
+  - "transformers"
+  - "torch"
+  - "datasets"
+  - "peft"
+source_formats:
+  - "md"
 tags:
   - research-archive
   - imported-note
   - llm
   - archive-note
 ---
+
+LLM과 같은 대규모 모델에서 더욱 효율 적인 미세조정 즉, PEFT(Parameter-Efficient Fine-Tuning)을 하기위한 가장 대표적인 방식이 바로 Lora 방식 입니다. transformers > 4.50.1 : gemma3 가 포함된 최신 transformers 버전 2. bitsandbytes : 양자화를 위한 라이브러리 3. trl : SFTTrainer를 활용하여 학습하기 위한 라이브러리 4. datasets : Hugging Face Hub에 저장된 데이터세트를 불러오기 위한 라이브러리. `md` 원본과 20개 코드 블록, 16개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 huggingface_hub, transformers, torch, datasets입니다.
+
+**빠르게 볼 수 있는 포인트**: LLM과 같은 대규모 모델에서 더욱 효율 적인 미세조정 즉, PEFT(..., Lora 기법을 활용한 PEFT, 초기화 과정.
+
+**남겨둔 자료**: `md` 원본과 20개 코드 블록, 16개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 huggingface_hub, transformers, torch, datasets입니다.
+
+**주요 스택**: `huggingface_hub`, `transformers`, `torch`, `datasets`, `peft`
 
 ## Snapshot
 
@@ -25,26 +49,36 @@ tags:
 | Libraries | `huggingface_hub`, `transformers`, `torch`, `datasets`, `peft`, `trl`, `shutil`, `google` |
 | Source Note | `3-4 (실습)3_Gemma_QLoRA` |
 
-## What I Worked On
+## What This Note Covers
 
-- Lora 기법을 활용한 PEFT
-- 초기화 과정
-- 라이브러리 설치
-- 1. Gemma 모델 PEFT
-- 양자화 하여 모델 로드
+### Lora 기법을 활용한 PEFT
+
+LLM과 같은 대규모 모델에서 더욱 효율 적인 미세조정 즉, PEFT(Parameter-Efficient Fine-Tuning)을 하기위한 가장 대표적인 방식이 바로 Lora 방식 입니다.
+
+### 라이브러리 설치
+
+transformers > 4.50.1 : gemma3 가 포함된 최신 transformers 버전 2. bitsandbytes : 양자화를 위한 라이브러리 3. trl : SFTTrainer를 활용하여 학습하기 위한 라이브러리 4. datasets : Hugging Face Hub에 저장된 데이터세트를 불러오기 위한 라이브러리
+
+### Gemma 모델 PEFT
+
+Gemma3 모델은 구글에서 Gemini 모델을 만드는 데 사용된 것과 동일한 연구 및 기술로 구축한 GPT 기반의 최신 텍스트 생성 모델입니다.
+
+### 양자화 하여 모델 로드
+
+LLM 모델을 더욱 특정 테스크에 최적화하여 더욱 효율 적으로 사용하기 위해 모델의 크기를 줄이는 경량화 작업을 진행할 수 있습니다.
 
 ## Implementation Flow
 
-1. Lora 기법을 활용한 PEFT
-2. 초기화 과정
-3. 라이브러리 설치
-4. 1. Gemma 모델 PEFT
-5. 양자화 하여 모델 로드
-6. 4비트 양자화: https://huggingface.co/docs/transformers/ko/quantization/bitsandbytes#normal-float-4-(nf4)
+1. Lora 기법을 활용한 PEFT: LLM과 같은 대규모 모델에서 더욱 효율 적인 미세조정 즉, PEFT(Parameter-Efficient Fine-Tuning)을 하기위한 가장 대표적인 방식이 바로 Lora 방식 입니다.
+2. 라이브러리 설치: transformers > 4.50.1 : gemma3 가 포함된 최신 transformers 버전 2. bitsandbytes : 양자화를 위한 라이브러리 3. trl : SFTTrainer를 활용하여 학습하기 위한 라이브러리 4. datasets : Hugging Face Hu...
+3. Gemma 모델 PEFT: Gemma3 모델은 구글에서 Gemini 모델을 만드는 데 사용된 것과 동일한 연구 및 기술로 구축한 GPT 기반의 최신 텍스트 생성 모델입니다.
+4. 양자화 하여 모델 로드: LLM 모델을 더욱 특정 테스크에 최적화하여 더욱 효율 적으로 사용하기 위해 모델의 크기를 줄이는 경량화 작업을 진행할 수 있습니다.
 
 ## Code Highlights
 
 ### 양자화 하여 모델 로드
+
+`양자화 하여 모델 로드`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 4비트 양자화: https://huggingface.co/docs/transformers..., 양자화를 적용하여 모델 로드: https://huggingface.co/docs/tran... 흐름이 주석과 함께 드러납니다.
 
 ```python
 from transformers import AutoTokenizer, BitsAndBytesConfig, AutoModelForCausalLM
@@ -73,6 +107,8 @@ print(model)
 ```
 
 ### PEFT 학습 진행
+
+`PEFT 학습 진행`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 === 기본 설정 ===, === 배치 처리 ===, === 메모리 관리 === 흐름이 주석과 함께 드러납니다.
 
 ```python
 from trl import SFTConfig

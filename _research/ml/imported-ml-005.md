@@ -6,12 +6,37 @@ research_kind: "Practice"
 source_title: "250814_코드실습5_7.DF 마스터하기"
 source_path: "11_Machine_Learning/Code_Snippets/250814_코드실습5_7.DF 마스터하기.md"
 excerpt: "Sample Superstore 데이터 설명 (교육·실습용으로 자주 쓰이는 판매 주문 데이터셋)"
+research_summary: "Sample Superstore 데이터 설명 (교육·실습용으로 자주 쓰이는 판매 주문 데이터셋). loc: 레이블기반 데이터 선택 - df.loc[행 레이블, 열 레이블]. `ipynb/md` 원본과 83개 코드 블록, 69개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 google, pandas, seaborn, matplotlib입니다."
+research_artifacts: "ipynb/md · 코드 83개 · 실행 69개"
+code_block_count: 83
+execution_block_count: 69
+research_focus:
+  - "Sample Superstore 데이터 설명 (교육·실습용으로 자주 쓰이는 판매 주문 데이터셋)"
+  - "데이터 확인"
+  - "df 기본기"
+research_stack:
+  - "google"
+  - "pandas"
+  - "seaborn"
+  - "matplotlib"
+  - "numpy"
+source_formats:
+  - "ipynb"
+  - "md"
 tags:
   - research-archive
   - imported-note
   - ml
   - practice
 ---
+
+Sample Superstore 데이터 설명 (교육·실습용으로 자주 쓰이는 판매 주문 데이터셋). loc: 레이블기반 데이터 선택 - df.loc[행 레이블, 열 레이블]. `ipynb/md` 원본과 83개 코드 블록, 69개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 google, pandas, seaborn, matplotlib입니다.
+
+**빠르게 볼 수 있는 포인트**: Sample Superstore 데이터 설명 (교육·실습용으로 자주 쓰..., 데이터 확인, df 기본기.
+
+**남겨둔 자료**: `ipynb/md` 원본과 83개 코드 블록, 69개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 google, pandas, seaborn, matplotlib입니다.
+
+**주요 스택**: `google`, `pandas`, `seaborn`, `matplotlib`, `numpy`
 
 ## Snapshot
 
@@ -25,26 +50,26 @@ tags:
 | Libraries | `google`, `pandas`, `seaborn`, `matplotlib`, `numpy`, `sklearn` |
 | Source Note | `250814_코드실습5_7.DF 마스터하기` |
 
-## What I Worked On
+## What This Note Covers
 
-- 1. 데이터 확인
-- 드라이브 마운트 코드
-- 데이터의 컬럼별 정보 확인
-- 행과 열의 갯수 정보
-- 기술 통계 요약
+### 데이터 확인
+
+Sample Superstore 데이터 설명 (교육·실습용으로 자주 쓰이는 판매 주문 데이터셋)
+
+### loc/iloc
+
+loc: 레이블기반 데이터 선택 - df.loc[행 레이블, 열 레이블]
 
 ## Implementation Flow
 
-1. 1. 데이터 확인
-2. 드라이브 마운트 코드
-3. 데이터의 컬럼별 정보 확인
-4. 행과 열의 갯수 정보
-5. 기술 통계 요약
-6. 컬럼명 확인
+1. 데이터 확인: Sample Superstore 데이터 설명 (교육·실습용으로 자주 쓰이는 판매 주문 데이터셋)
+2. loc/iloc: loc: 레이블기반 데이터 선택 - df.loc[행 레이블, 열 레이블]
 
 ## Code Highlights
 
 ### 데이터 전처리
+
+`데이터 전처리`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 이상치 - IQR 단일 변수 흐름이 주석과 함께 드러납니다.
 
 ```python
 # 이상치 - IQR 단일 변수
@@ -60,21 +85,16 @@ print("Q2: ", q2)
 print("Q3: ", q3)
 ```
 
-### 데이터 전처리
+### 정규화/표준화
+
+`정규화/표준화`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 위와 같은 코드 흐름이 주석과 함께 드러납니다.
 
 ```python
-# 여러 변수 박스플롯 그리기
-selected_cols = ['Sales', 'Quantity', 'Profit']
+# 위와 같은 코드
+from sklearn.preprocessing import MinMaxScaler
 
-plt.figure(figsize=(8,3))
-
-for i, col in enumerate(selected_cols):
-    plt.subplot(1, 3, i)
-    plt.boxplot(df[col].dropna()) # .dropna(): 데이터에 결측치가 있다면 빼고 그려 (안정성을 위해서)
-    plt.title(f'{col}')
-
-plt.tight_layout()
-plt.show()
+scaler = MinMaxScaler()
+df['sales_norm'] = scaler.fit_transform(df[['sales']])
 ```
 
 ## Source Bundle

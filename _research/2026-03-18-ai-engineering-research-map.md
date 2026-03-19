@@ -3,6 +3,8 @@ title: "AI Engineering Research Map"
 date: 2026-03-18
 research_tab: "Overview"
 research_kind: "Research Map"
+research_summary: "Machine Learning, Deep Learning, LLM/GenAI로 흩어져 있던 실습과 미션을 하나의 research map으로 다시 엮은 개요 글입니다. 어떤 트랙에서 무엇을 구현했고, 대표 작업물이 무엇인지 빠르게 훑을 수 있게 구성했습니다."
+research_artifacts: "ML 22 · DL 55 · LLM 38"
 excerpt: "ML, DL, LLM 실습 노트를 포트폴리오형 리서치 지도로 다시 정리한 개요 글"
 tags:
   - research-archive

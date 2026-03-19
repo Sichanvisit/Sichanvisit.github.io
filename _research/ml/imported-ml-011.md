@@ -5,13 +5,37 @@ research_tab: "ML"
 research_kind: "Practice"
 source_title: "250827_코딩실습11_10.결정트리와 앙상블(RF)"
 source_path: "11_Machine_Learning/Code_Snippets/250827_코딩실습11_10.결정트리와 앙상블(RF).md"
-excerpt: "ML Practice: 1. 단일 디시전 트리 실습, 2. 랜덤 포레스트 실습"
+excerpt: "단일 디시전 트리 실습, 랜덤 포레스트 실습, make_moons 데이터 불러오기 - 암기 X 중심으로 구현 과정을 정리한 코딩실습11 10.결정트리와 앙상블(RF) 기록입니다"
+research_summary: "단일 디시전 트리 실습, 랜덤 포레스트 실습, make_moons 데이터 불러오기 - 암기 X 중심으로 구현 과정을 정리한 코딩실습11 10.결정트리와 앙상블(RF) 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `ipynb/md` 원본과 16개 코드 블록, 16개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, matplotlib, sklearn, graphviz입니다."
+research_artifacts: "ipynb/md · 코드 16개 · 실행 16개"
+code_block_count: 16
+execution_block_count: 16
+research_focus:
+  - "단일 디시전 트리 실습"
+  - "랜덤 포레스트 실습"
+  - "make_moons 데이터 불러오기 - 암기 X"
+research_stack:
+  - "numpy"
+  - "matplotlib"
+  - "sklearn"
+  - "graphviz"
+source_formats:
+  - "ipynb"
+  - "md"
 tags:
   - research-archive
   - imported-note
   - ml
   - practice
 ---
+
+단일 디시전 트리 실습, 랜덤 포레스트 실습, make_moons 데이터 불러오기 - 암기 X 중심으로 구현 과정을 정리한 코딩실습11 10.결정트리와 앙상블(RF) 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `ipynb/md` 원본과 16개 코드 블록, 16개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, matplotlib, sklearn, graphviz입니다.
+
+**빠르게 볼 수 있는 포인트**: 단일 디시전 트리 실습, 랜덤 포레스트 실습, make_moons 데이터 불러오기 - 암기 X.
+
+**남겨둔 자료**: `ipynb/md` 원본과 16개 코드 블록, 16개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, matplotlib, sklearn, graphviz입니다.
+
+**주요 스택**: `numpy`, `matplotlib`, `sklearn`, `graphviz`
 
 ## Snapshot
 
@@ -25,47 +49,39 @@ tags:
 | Libraries | `numpy`, `matplotlib`, `sklearn`, `graphviz` |
 | Source Note | `250827_코딩실습11_10.결정트리와 앙상블(RF)` |
 
-## What I Worked On
+## What This Note Covers
 
-- 1. 단일 디시전 트리 실습
+- 단일 디시전 트리 실습
+- 랜덤 포레스트 실습
 - make_moons 데이터 불러오기 - 암기 X
 - 데이터셋 시각화 (어떻게 생겼는지 눈으로 확인)
 - 정확도 계산
-- 추가 - 보기 좋은 시각화
 
 ## Implementation Flow
 
-1. 1. 단일 디시전 트리 실습
-2. make_moons 데이터 불러오기 - 암기 X
-3. 데이터셋 시각화 (어떻게 생겼는지 눈으로 확인)
-4. 정확도 계산
-5. 추가 - 보기 좋은 시각화
-6. 산점도 시각화할 함수 정의
+1. Key Step: make_moons 데이터 불러오기 - 암기 X
+2. Key Step: 데이터셋 시각화 (어떻게 생겼는지 눈으로 확인)
 
 ## Code Highlights
 
-### 1. 단일 디시전 트리 실습
+### import numpy as np
+
+`import numpy as np`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 전처리와 학습/검증 분리를 담당해 전체 파이프라인의 출발점을 정리하는 코드입니다.
 
 ```python
-# 추가 - 보기 좋은 시각화
-
-from sklearn.tree import export_graphviz
-import graphviz
-
-dot_data = export_graphviz(
-    dt_clf,
-    feature_names=['Feature1', 'Feature2'],
-    class_names=['Class0', 'Class1'],
-    filled=True,
-    rounded=True
-)
-
-graph = graphviz.Source(dot_data)
-
-graph
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.datasets import make_moons
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+from matplotlib.colors import ListedColormap              # 결정 경계 시각화위한 라이브러리
 ```
 
-### 1. 단일 디시전 트리 실습
+### 단일 디시전 트리 실습
+
+`단일 디시전 트리 실습`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 산점도 시각화할 함수 정의, 컬러맵 정의, 그리드 영역 설정 흐름이 주석과 함께 드러납니다.
 
 ```python
 # 산점도 시각화할 함수 정의
@@ -108,4 +124,4 @@ def plot_decision_boundary(model, X, y, title="Decision Boundary"):
 
 ## Note Preview
 
-> No prose preview was available in the source note.
+> 원본 노트에 별도 설명 문단이 많지 않아 코드 중심으로 보존했습니다.
