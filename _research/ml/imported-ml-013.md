@@ -31,6 +31,10 @@ tags:
 
 <div class="research-compact-wrap research-compact-wrap--intro">
   <table class="research-compact-table research-compact-table--intro">
+    <colgroup>
+      <col class="research-compact-table__col research-compact-table__col--label">
+      <col class="research-compact-table__col research-compact-table__col--value">
+    </colgroup>
     <thead>
       <tr>
         <th>항목</th>
