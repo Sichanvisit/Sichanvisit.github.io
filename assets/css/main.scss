@@ -1608,13 +1608,14 @@ a {
 }
 
 .research-compact-wrap {
-  max-width: 1040px;
-  margin: 0.16rem 0 0.7rem !important;
+  width: 100%;
+  max-width: none;
+  margin: 0.12rem 0 0.58rem !important;
   overflow-x: auto;
-  border: 1px solid var(--photo-line);
-  border-radius: 10px;
-  background: linear-gradient(180deg, rgba(16, 26, 40, 0.92), rgba(9, 15, 26, 0.98));
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(136, 162, 196, 0.14);
+  border-radius: 8px;
+  background: rgba(10, 18, 30, 0.82);
+  box-shadow: none;
 }
 
 .research-compact-wrap--intro {
@@ -1623,7 +1624,7 @@ a {
 
 .collection-doc-page--research .research-compact-wrap--intro {
   margin-top: 0.02rem !important;
-  margin-bottom: 0.4rem !important;
+  margin-bottom: 0.34rem !important;
 }
 
 .collection-doc-page--research .research-compact-table--intro {
@@ -1645,6 +1646,7 @@ a {
 
 .collection-doc-page--research .research-compact-table--intro thead th {
   font-size: 0.48rem;
+  background: rgba(24, 39, 64, 0.22);
 }
 
 .collection-doc-page--research .research-compact-table--intro tbody th {
@@ -1661,6 +1663,11 @@ a {
   font-size: 0.54rem;
   line-height: 1.12;
   letter-spacing: -0.01em;
+}
+
+.collection-doc-page--research .research-compact-table--intro tbody th,
+.collection-doc-page--research .research-compact-table--intro tbody td {
+  border-bottom-color: rgba(136, 162, 196, 0.1);
 }
 
 .collection-doc-page--research .research-compact-table--intro tbody th code,
