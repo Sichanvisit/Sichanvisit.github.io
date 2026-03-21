@@ -5,13 +5,13 @@ research_tab: "LLM"
 research_kind: "Archive Note"
 source_title: "3-4 (실습)gpt5_API"
 source_path: "13_LLM_GenAI/Code_Snippets/3-4 (실습)gpt5_API.md"
-excerpt: "/ 모드 (Mode) / 용도 (Use Case) / 속도 (Speed, 1~5) / 정확도 (Accuracy, 1~5) / 비용 (Cost, 1~5) / /------------------/--------------------/---------------------/-----------------..."
-research_summary: "/ 모드 (Mode) / 용도 (Use Case) / 속도 (Speed, 1~5) / 정확도 (Accuracy, 1~5) / 비용 (Cost, 1~5) / /------------------/--------------------/---------------------/--------------------------/----------... https://platform.openai.com 접속 2. API Keys 메뉴에서 새 키 생성. `md` 원본과 16개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, getpass, openai입니다."
+excerpt: "GPT-5.1 API 모델명 (Instant / Thinking) Instant 모드 - 모델명: \"gpt-5.1-chat-latest\" - 특징: 빠른 응답, 일상적인 작업·대화형 작업에 적합 - reasoning_effort=\"high\" 옵션을 주면 Instant 모델에서도 일정 수준의 Thin..."
+research_summary: "GPT-5.1 API 모델명 (Instant / Thinking) Instant 모드 - 모델명: \"gpt-5.1-chat-latest\" - 특징: 빠른 응답, 일상적인 작업·대화형 작업에 적합 - reasoning_effort=\"high\" 옵션을 주면 Instant 모델에서도 일정 수준의 Thinking 스타일 추론을 유도할 수 있음. https://platform.openai.com 접속 2. API Keys 메뉴에서 새 키 생성 OpenAI Key Pricing https://platform.openai.com/docs/pricing. `md` 원본과 16개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, getpass, openai입니다."
 research_artifacts: "md · 코드 16개 · 실행 13개"
 code_block_count: 16
 execution_block_count: 13
 research_focus:
-  - "/ 모드 (Mode) / 용도 (Use Case) / 속도 (Speed, 1~5) / 정확도 (Accu..."
+  - "✅ GPT-5.1 API 모델명 (Instant / Thinking)"
   - "GPT-5.1 와 API 사용 예"
   - "https"
 research_stack:
@@ -27,9 +27,9 @@ tags:
   - archive-note
 ---
 
-/ 모드 (Mode) / 용도 (Use Case) / 속도 (Speed, 1~5) / 정확도 (Accuracy, 1~5) / 비용 (Cost, 1~5) / /------------------/--------------------/---------------------/--------------------------/----------... https://platform.openai.com 접속 2. API Keys 메뉴에서 새 키 생성. `md` 원본과 16개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, getpass, openai입니다.
+GPT-5.1 API 모델명 (Instant / Thinking) Instant 모드 - 모델명: "gpt-5.1-chat-latest" - 특징: 빠른 응답, 일상적인 작업·대화형 작업에 적합 - reasoning_effort="high" 옵션을 주면 Instant 모델에서도 일정 수준의 Thinking 스타일 추론을 유도할 수 있음. https://platform.openai.com 접속 2. API Keys 메뉴에서 새 키 생성 OpenAI Key Pricing https://platform.openai.com/docs/pricing. `md` 원본과 16개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, getpass, openai입니다.
 
-**빠르게 볼 수 있는 포인트**: / 모드 (Mode) / 용도 (Use Case) / 속도 (Speed..., GPT-5.1 와 API 사용 예, https.
+**빠르게 볼 수 있는 포인트**: ✅ GPT-5.1 API 모델명 (Instant / Thinking), GPT-5.1 와 API 사용 예, https.
 
 **남겨둔 자료**: `md` 원본과 16개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, getpass, openai입니다.
 
@@ -51,19 +51,19 @@ tags:
 
 ### GPT-5.1 와 API 사용 예
 
-/ 모드 (Mode) / 용도 (Use Case) / 속도 (Speed, 1~5) / 정확도 (Accuracy, 1~5) / 비용 (Cost, 1~5) / /------------------/--------------------/---------------------/--------------------------/-------------------/ / Instant / 일상 작업 /...
+GPT-5.1 API 모델명 (Instant / Thinking) Instant 모드 - 모델명: "gpt-5.1-chat-latest" - 특징: 빠른 응답, 일상적인 작업·대화형 작업에 적합 - reasoning_effort="high" 옵션을 주면 Instant 모델에서도 일정 수준의 Thinking 스타일 추론을 유도할 수 있음
 
-### API Key 발급
+### GPT-5.1 와 API 사용 예 > API Key 발급
 
-https://platform.openai.com 접속 2. API Keys 메뉴에서 새 키 생성
+https://platform.openai.com 접속 2. API Keys 메뉴에서 새 키 생성 OpenAI Key Pricing https://platform.openai.com/docs/pricing
 
-### Adaptive Reasoning - 질문 난이도 자동 판단
+### Instant 모드 > Adaptive Reasoning - 질문 난이도 자동 판단
 
 GPT-5.1 Instant는 질문의 난이도를 자동으로 판단 - 쉬운 질문: 빠른 응답 (2초) - 어려운 질문: 깊은 사고 (10초)
 
-### 실전 활용
+### Instant 모드 > 실전 활용
 
-Use Case 1: 이메일 자동 작성
+Use Case 1: 이메일 자동 작성 Use Case 2: 코드 리뷰
 
 ## Why This Matters
 
@@ -75,10 +75,10 @@ Use Case 1: 이메일 자동 작성
 
 ## Implementation Flow
 
-1. GPT-5.1 와 API 사용 예: / 모드 (Mode) / 용도 (Use Case) / 속도 (Speed, 1~5) / 정확도 (Accuracy, 1~5) / 비용 (Cost, 1~5) / /------------------/--------------------/-------------------...
-2. API Key 발급: https://platform.openai.com 접속 2. API Keys 메뉴에서 새 키 생성
-3. Adaptive Reasoning - 질문 난이도 자동 판단: GPT-5.1 Instant는 질문의 난이도를 자동으로 판단 - 쉬운 질문: 빠른 응답 (2초) - 어려운 질문: 깊은 사고 (10초)
-4. 실전 활용: Use Case 1: 이메일 자동 작성
+1. GPT-5.1 와 API 사용 예: GPT-5.1 API 모델명 (Instant / Thinking) Instant 모드 - 모델명: "gpt-5.1-chat-latest" - 특징: 빠른 응답, 일상적인 작업·대화형 작업에 적합 - reasoning_effort="high" 옵션을 주면 Insta...
+2. GPT-5.1 와 API 사용 예 > API Key 발급: https://platform.openai.com 접속 2. API Keys 메뉴에서 새 키 생성 OpenAI Key Pricing https://platform.openai.com/docs/pricing
+3. Instant 모드 > Adaptive Reasoning - 질문 난이도 자동 판단: GPT-5.1 Instant는 질문의 난이도를 자동으로 판단 - 쉬운 질문: 빠른 응답 (2초) - 어려운 질문: 깊은 사고 (10초)
+4. Instant 모드 > 실전 활용: Use Case 1: 이메일 자동 작성 Use Case 2: 코드 리뷰
 
 ## Code Highlights
 
@@ -175,5 +175,5 @@ print(response.choices[0].message.content)
 
 ## Note Preview
 
-> / 모드 (Mode) / 용도 (Use Case) / 속도 (Speed, 1~5) / 정확도 (Accuracy, 1~5) / 비용 (Cost, 1~5) / /------------------/--------------------/---------------------/--------------------------/-------------------/ / **Instant** / 일상 작업 / 3 / 4 / 2 / / **Thinking** / 복잡한 추론 / 2 / 5 / 3 / / **No Reasoning** / 빠른 응답 / 4 / 3 / 1 /
 > ✅ GPT-5.1 API 모델명 (Instant / Thinking)
+> **Instant 모드** - 모델명: "gpt-5.1-chat-latest" - 특징: 빠른 응답, 일상적인 작업·대화형 작업에 적합 - reasoning_effort="high" 옵션을 주면 Instant 모델에서도 일정 수준의 Thinking 스타일 추론을 유도할 수 있음

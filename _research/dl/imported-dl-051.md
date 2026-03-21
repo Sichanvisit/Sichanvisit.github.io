@@ -5,8 +5,8 @@ research_tab: "DL"
 research_kind: "Mission"
 source_title: "Mission_8_강사공유"
 source_path: "12_Deep_Learning/Code_Snippets/Mission_8_강사공유.md"
-excerpt: "Focal Loss - Cross Entropy Loss의 개선된 버전 - 클래스 불균형 문제 해결을 위해 도입 - 쉽게 맞추는 샘플보다 어려운 샘플에 더 큰 가중치를 부여하여 모델이 어려운 샘플을 더 학습하도록 유도"
-research_summary: "Focal Loss - Cross Entropy Loss의 개선된 버전 - 클래스 불균형 문제 해결을 위해 도입 - 쉽게 맞추는 샘플보다 어려운 샘플에 더 큰 가중치를 부여하여 모델이 어려운 샘플을 더 학습하도록 유도. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 28개 코드 블록, 21개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, random, collections, numpy입니다."
+excerpt: "Focal Loss - Cross Entropy Loss의 개선된 버전 - 클래스 불균형 문제 해결을 위해 도입 - 쉽게 맞추는 샘플보다 어려운 샘플에 더 큰 가중치를 부여하여 모델이 어려운 샘플을 더 학습하도록 유도 Dice Loss - 불균형한 데이터에서 주로 사용되는 Segmentation L..."
+research_summary: "Focal Loss - Cross Entropy Loss의 개선된 버전 - 클래스 불균형 문제 해결을 위해 도입 - 쉽게 맞추는 샘플보다 어려운 샘플에 더 큰 가중치를 부여하여 모델이 어려운 샘플을 더 학습하도록 유도 Dice Loss - 불균형한 데이터에서 주로 사용되는 Segmentation Loss - IoU(Intersecti... 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 28개 코드 블록, 21개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, random, collections, numpy입니다."
 research_artifacts: "md · 코드 28개 · 실행 21개"
 code_block_count: 28
 execution_block_count: 21
@@ -29,7 +29,7 @@ tags:
   - mission
 ---
 
-Focal Loss - Cross Entropy Loss의 개선된 버전 - 클래스 불균형 문제 해결을 위해 도입 - 쉽게 맞추는 샘플보다 어려운 샘플에 더 큰 가중치를 부여하여 모델이 어려운 샘플을 더 학습하도록 유도. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 28개 코드 블록, 21개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, random, collections, numpy입니다.
+Focal Loss - Cross Entropy Loss의 개선된 버전 - 클래스 불균형 문제 해결을 위해 도입 - 쉽게 맞추는 샘플보다 어려운 샘플에 더 큰 가중치를 부여하여 모델이 어려운 샘플을 더 학습하도록 유도 Dice Loss - 불균형한 데이터에서 주로 사용되는 Segmentation Loss - IoU(Intersecti... 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 28개 코드 블록, 21개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, random, collections, numpy입니다.
 
 **빠르게 볼 수 있는 포인트**: 사전설정, 2.데이터 불러오기, 데이터 시각화.
 
@@ -53,7 +53,7 @@ Focal Loss - Cross Entropy Loss의 개선된 버전 - 클래스 불균형 문제
 
 ### 4.모델 학습 및 평가
 
-Focal Loss - Cross Entropy Loss의 개선된 버전 - 클래스 불균형 문제 해결을 위해 도입 - 쉽게 맞추는 샘플보다 어려운 샘플에 더 큰 가중치를 부여하여 모델이 어려운 샘플을 더 학습하도록 유도
+Focal Loss - Cross Entropy Loss의 개선된 버전 - 클래스 불균형 문제 해결을 위해 도입 - 쉽게 맞추는 샘플보다 어려운 샘플에 더 큰 가중치를 부여하여 모델이 어려운 샘플을 더 학습하도록 유도 Dice Loss - 불균형한 데이터에서 주로 사용되는 Segmentation Loss - IoU(Intersection over Union)와 유사한 방식으로 픽셀 간...
 
 ### Key Step
 
@@ -89,7 +89,7 @@ Focal Loss - Cross Entropy Loss의 개선된 버전 - 클래스 불균형 문제
 
 ## Implementation Flow
 
-1. 4.모델 학습 및 평가: Focal Loss - Cross Entropy Loss의 개선된 버전 - 클래스 불균형 문제 해결을 위해 도입 - 쉽게 맞추는 샘플보다 어려운 샘플에 더 큰 가중치를 부여하여 모델이 어려운 샘플을 더 학습하도록 유도
+1. 4.모델 학습 및 평가: Focal Loss - Cross Entropy Loss의 개선된 버전 - 클래스 불균형 문제 해결을 위해 도입 - 쉽게 맞추는 샘플보다 어려운 샘플에 더 큰 가중치를 부여하여 모델이 어려운 샘플을 더 학습하도록 유도 Dice Loss - 불균형한 데이터에서 주로 사용되는...
 2. Key Step: 폴더 내부 이미지 모두 가져오기
 3. Key Step: 원본이미지와 fuse이미지, save이미지
 4. Key Step: 사이즈 확인 (H, W, C)

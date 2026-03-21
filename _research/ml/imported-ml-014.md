@@ -1,5 +1,5 @@
 ---
-title: "코딩실습14 10.결정트리와 앙상블(보팅배깅부스팅스태킹)"
+title: "10.결정트리와 앙상블(보팅배깅부스팅스태킹)"
 date: 2026-03-08
 research_tab: "ML"
 research_kind: "Practice"

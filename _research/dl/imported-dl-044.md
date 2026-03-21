@@ -5,7 +5,7 @@ research_tab: "DL"
 research_kind: "Shared Note"
 source_title: "FCN - 공유"
 source_path: "12_Deep_Learning/Code_Snippets/FCN - 공유.md"
-excerpt: "실습, Step 1, Step 2 중심으로 구현 과정을 정리한 FCN - 공유 기록입니다"
+excerpt: "실습, Step 1, Step 2 중심으로 구현 과정을 정리한 FCN - 공유 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 11개 코드 블록, 8개 실행 셀을 함께 남겨 구현 흐름을 다시..."
 research_summary: "실습, Step 1, Step 2 중심으로 구현 과정을 정리한 FCN - 공유 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 11개 코드 블록, 8개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, json, torch, numpy입니다."
 research_artifacts: "md · 코드 11개 · 실행 8개"
 code_block_count: 11

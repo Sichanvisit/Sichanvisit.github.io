@@ -1,5 +1,5 @@
 ---
-title: "1 Python 연습(문제) - AI5 강사 답안"
+title: "1 Python 연습(문제)"
 date: 2026-03-08
 research_tab: "ML"
 research_kind: "Archive Note"

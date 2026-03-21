@@ -5,7 +5,7 @@ research_tab: "DL"
 research_kind: "Archive Note"
 source_title: "[스프린트_미션]7_Object_Detection"
 source_path: "12_Deep_Learning/Code_Snippets/[스프린트_미션]7_Object_Detection.md"
-excerpt: "데이터 탐색 및 불러오기, Object Detection 시각화, 데이터셋 준비 중심으로 구현 과정을 정리한 7 Object Detection 기록입니다"
+excerpt: "데이터 탐색 및 불러오기, Object Detection 시각화, 데이터셋 준비 중심으로 구현 과정을 정리한 7 Object Detection 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과..."
 research_summary: "데이터 탐색 및 불러오기, Object Detection 시각화, 데이터셋 준비 중심으로 구현 과정을 정리한 7 Object Detection 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 27개 코드 블록, 17개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 kagglehub, torch, pandas, os입니다."
 research_artifacts: "md · 코드 27개 · 실행 17개"
 code_block_count: 27

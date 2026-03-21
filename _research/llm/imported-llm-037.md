@@ -5,8 +5,8 @@ research_tab: "LLM"
 research_kind: "Mission"
 source_title: "미션13_1팀_박시찬"
 source_path: "13_LLM_GenAI/Code_Snippets/미션13_1팀_박시찬.md"
-excerpt: "쇼핑몰 리뷰 데이터를 대상으로 감성 분석(Sentiment Analysis) 모델을 학습하고, Full Fine-Tuning 방식과 PEFT 방식의 성능·효율성을 비교하는 미션입니다"
-research_summary: "쇼핑몰 리뷰 데이터를 대상으로 감성 분석(Sentiment Analysis) 모델을 학습하고, Full Fine-Tuning 방식과 PEFT 방식의 성능·효율성을 비교하는 미션입니다. 초기 진단 (Initial Diagnosis) 데이터 로드 직후 수행한 1차 정밀 진단 결과입니다. `ipynb/md` 원본과 27개 코드 블록, 25개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 peft, google, os, re입니다."
+excerpt: "쇼핑몰 리뷰 데이터를 대상으로 감성 분석(Sentiment Analysis) 모델을 학습하고, Full Fine-Tuning 방식과 PEFT 방식의 성능·효율성을 비교하는 미션입니다. 데이터 다운로드: 약 40MB (AI Hub - 속성기반 감정분석 데이터) - 형식: JSON 파일 (하나의 파일에..."
+research_summary: "쇼핑몰 리뷰 데이터를 대상으로 감성 분석(Sentiment Analysis) 모델을 학습하고, Full Fine-Tuning 방식과 PEFT 방식의 성능·효율성을 비교하는 미션입니다. 데이터 다운로드: 약 40MB (AI Hub - 속성기반 감정분석 데이터) - 형식: JSON 파일 (하나의 파일에 다수의 리뷰 포함) - 주요 필드... 초기 진단 (Initial Diagnosis) 데이터 로드 직후 수행한 1차 정밀 진단 결과입니다. 총 데이터 수: 201,616건 - 결측치 (Missing Values): - text: 0건 (양호) - label: 17,091건 (전체의 약 8.5% 누락). `ipynb/md` 원본과 27개 코드 블록, 25개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 peft, google, os, re입니다."
 research_artifacts: "ipynb/md · 코드 27개 · 실행 25개"
 code_block_count: 27
 execution_block_count: 25
@@ -30,7 +30,7 @@ tags:
   - mission
 ---
 
-쇼핑몰 리뷰 데이터를 대상으로 감성 분석(Sentiment Analysis) 모델을 학습하고, Full Fine-Tuning 방식과 PEFT 방식의 성능·효율성을 비교하는 미션입니다. 초기 진단 (Initial Diagnosis) 데이터 로드 직후 수행한 1차 정밀 진단 결과입니다. `ipynb/md` 원본과 27개 코드 블록, 25개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 peft, google, os, re입니다.
+쇼핑몰 리뷰 데이터를 대상으로 감성 분석(Sentiment Analysis) 모델을 학습하고, Full Fine-Tuning 방식과 PEFT 방식의 성능·효율성을 비교하는 미션입니다. 데이터 다운로드: 약 40MB (AI Hub - 속성기반 감정분석 데이터) - 형식: JSON 파일 (하나의 파일에 다수의 리뷰 포함) - 주요 필드... 초기 진단 (Initial Diagnosis) 데이터 로드 직후 수행한 1차 정밀 진단 결과입니다. 총 데이터 수: 201,616건 - 결측치 (Missing Values): - text: 0건 (양호) - label: 17,091건 (전체의 약 8.5% 누락). `ipynb/md` 원본과 27개 코드 블록, 25개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 peft, google, os, re입니다.
 
 **빠르게 볼 수 있는 포인트**: 쇼핑몰 리뷰 데이터를 대상으로 감성 분석(Sentiment Analys..., 쇼핑몰 리뷰 감성 분석 미션, 데이터셋.
 
@@ -54,19 +54,19 @@ tags:
 
 ### 쇼핑몰 리뷰 감성 분석 미션
 
-쇼핑몰 리뷰 데이터를 대상으로 감성 분석(Sentiment Analysis) 모델을 학습하고, Full Fine-Tuning 방식과 PEFT 방식의 성능·효율성을 비교하는 미션입니다.
+쇼핑몰 리뷰 데이터를 대상으로 감성 분석(Sentiment Analysis) 모델을 학습하고, Full Fine-Tuning 방식과 PEFT 방식의 성능·효율성을 비교하는 미션입니다. 데이터 다운로드: 약 40MB (AI Hub - 속성기반 감정분석 데이터) - 형식: JSON 파일 (하나의 파일에 다수의 리뷰 포함) - 주요 필드 - RawText: 리뷰 원문 텍스트 - General...
 
 ### 데이터 전처리 및 라벨 복원 보고서
 
-초기 진단 (Initial Diagnosis) 데이터 로드 직후 수행한 1차 정밀 진단 결과입니다.
+초기 진단 (Initial Diagnosis) 데이터 로드 직후 수행한 1차 정밀 진단 결과입니다. 총 데이터 수: 201,616건 - 결측치 (Missing Values): - text: 0건 (양호) - label: 17,091건 (전체의 약 8.5% 누락)
 
 ### 정량적 검증 및 심층 분석 보고서
 
-Full Fine-Tuning vs PEFT (LoRA) 비교 평가
+Full Fine-Tuning vs PEFT (LoRA) 비교 평가 본 프로젝트에서는 동일한 데이터셋과 학습 조건 하에 Full Fine-Tuning (Full FT) 방식과 PEFT-LoRA 방식을 각각 적용하여 모델을 학습하였으며, 성능·효율성·품질 측면에서 체계적인 비교 분석을 수행하였습니다.
 
-### 성능 및 효율성 종합 비교 (Global Comparison)
+### 성능 및 효율성 종합 비교 (Global Comparison) > 핵심 인사이트
 
-/ 항목 / Full Fine-Tuning / PEFT (LoRA) / 차이 (Diff) / 비고 / /---------------------/------------------------/-----------------------/---------------------/-----------------------------------/ / Accuracy / 91.02% / 90.32%...
+성능 보존 우수 LoRA는 전체 파라미터의 약 0.05%만 업데이트했음에도 Full FT 대비 정확도 손실 0.7% p 수준으로 방어 → 실서비스 적용 가능 수준 2. 용량 혁명 423 MB → 2.1 MB (약 1/200) → 동일 스토리지에 200개 이상의 특화 모델 동시 보관·서빙 가능 (MLOps 관점에서 압도적 이점)
 
 ## Why This Matters
 
@@ -90,10 +90,10 @@ Full Fine-Tuning vs PEFT (LoRA) 비교 평가
 
 ## Implementation Flow
 
-1. 쇼핑몰 리뷰 감성 분석 미션: 쇼핑몰 리뷰 데이터를 대상으로 감성 분석(Sentiment Analysis) 모델을 학습하고, Full Fine-Tuning 방식과 PEFT 방식의 성능·효율성을 비교하는 미션입니다.
-2. 데이터 전처리 및 라벨 복원 보고서: 초기 진단 (Initial Diagnosis) 데이터 로드 직후 수행한 1차 정밀 진단 결과입니다.
-3. 정량적 검증 및 심층 분석 보고서: Full Fine-Tuning vs PEFT (LoRA) 비교 평가
-4. 성능 및 효율성 종합 비교 (Global Comparison): / 항목 / Full Fine-Tuning / PEFT (LoRA) / 차이 (Diff) / 비고 / /---------------------/------------------------/-----------------------/--...
+1. 쇼핑몰 리뷰 감성 분석 미션: 쇼핑몰 리뷰 데이터를 대상으로 감성 분석(Sentiment Analysis) 모델을 학습하고, Full Fine-Tuning 방식과 PEFT 방식의 성능·효율성을 비교하는 미션입니다. 데이터 다운로드: 약 40MB (AI Hub - 속성기반 감정분석 데이터) - 형식:...
+2. 데이터 전처리 및 라벨 복원 보고서: 초기 진단 (Initial Diagnosis) 데이터 로드 직후 수행한 1차 정밀 진단 결과입니다. 총 데이터 수: 201,616건 - 결측치 (Missing Values): - text: 0건 (양호) - label: 17,091건 (전체의 약 8.5% 누락)
+3. 정량적 검증 및 심층 분석 보고서: Full Fine-Tuning vs PEFT (LoRA) 비교 평가 본 프로젝트에서는 동일한 데이터셋과 학습 조건 하에 Full Fine-Tuning (Full FT) 방식과 PEFT-LoRA 방식을 각각 적용하여 모델을 학습하였으며, 성능·효율성·품질 측면에서...
+4. 성능 및 효율성 종합 비교 (Global Comparison) > 핵심 인사이트: 성능 보존 우수 LoRA는 전체 파라미터의 약 0.05%만 업데이트했음에도 Full FT 대비 정확도 손실 0.7% p 수준으로 방어 → 실서비스 적용 가능 수준 2. 용량 혁명 423 MB → 2.1 MB (약 1/...
 
 ## Code Highlights
 
@@ -218,4 +218,4 @@ def verify_dynamic_padding(dataset, collator, batch_size=32):
 ## Note Preview
 
 > 쇼핑몰 리뷰 데이터를 대상으로 **감성 분석(Sentiment Analysis)** 모델을 학습하고, **Full Fine-Tuning** 방식과 **PEFT** 방식의 성능·효율성을 비교하는 미션입니다.
-> ---
+> 사용 데이터셋

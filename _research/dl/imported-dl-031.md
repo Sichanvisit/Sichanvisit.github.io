@@ -6,7 +6,7 @@ research_kind: "Shared Note"
 source_title: "5-4_VGGNet - 공유"
 source_path: "12_Deep_Learning/Code_Snippets/5-4_VGGNet - 공유.md"
 excerpt: "파이토치 : https://pytorch.org/vision/main/models.html#table-of-all-available-classification-weights - VGG-16 with ImageNet & BN : https://pytorch.org/vision/main/models/g..."
-research_summary: "파이토치 : https://pytorch.org/vision/main/models.html#table-of-all-available-classification-weights - VGG-16 with ImageNet & BN : https://pytorch.org/vision/main/models/generated/torchvision... 데이터 셋 : https://pytorch.org/vision/main/generated/torchvision.datasets.OxfordIIITPet.html. `md` 원본과 14개 코드 블록, 11개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchinfo, os, torchvision입니다."
+research_summary: "파이토치 : https://pytorch.org/vision/main/models.html#table-of-all-available-classification-weights - VGG-16 with ImageNet & BN : https://pytorch.org/vision/main/models/generated/torchvision... 데이터 셋 : https://pytorch.org/vision/main/generated/torchvision.datasets.OxfordIIITPet.html 데이터 전처리 - 이미지 변환은 이미지 데이터의 크기를 256으로 키웠다가 224로 중앙 자르기 수행 - 탐지하려는 객체가 중앙에 위치할 확률이 높으므로 불필요한 지역특징을... `md` 원본과 14개 코드 블록, 11개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchinfo, os, torchvision입니다."
 research_artifacts: "md · 코드 14개 · 실행 11개"
 code_block_count: 14
 execution_block_count: 11
@@ -29,7 +29,7 @@ tags:
   - shared-note
 ---
 
-파이토치 : https://pytorch.org/vision/main/models.html#table-of-all-available-classification-weights - VGG-16 with ImageNet & BN : https://pytorch.org/vision/main/models/generated/torchvision... 데이터 셋 : https://pytorch.org/vision/main/generated/torchvision.datasets.OxfordIIITPet.html. `md` 원본과 14개 코드 블록, 11개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchinfo, os, torchvision입니다.
+파이토치 : https://pytorch.org/vision/main/models.html#table-of-all-available-classification-weights - VGG-16 with ImageNet & BN : https://pytorch.org/vision/main/models/generated/torchvision... 데이터 셋 : https://pytorch.org/vision/main/generated/torchvision.datasets.OxfordIIITPet.html 데이터 전처리 - 이미지 변환은 이미지 데이터의 크기를 256으로 키웠다가 224로 중앙 자르기 수행 - 탐지하려는 객체가 중앙에 위치할 확률이 높으므로 불필요한 지역특징을... `md` 원본과 14개 코드 블록, 11개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchinfo, os, torchvision입니다.
 
 **빠르게 볼 수 있는 포인트**: 파이토치, 사전 훈련된 모델 활용, 데이터 셋.
 
@@ -57,9 +57,9 @@ tags:
 
 ### 실습
 
-데이터 셋 : https://pytorch.org/vision/main/generated/torchvision.datasets.OxfordIIITPet.html
+데이터 셋 : https://pytorch.org/vision/main/generated/torchvision.datasets.OxfordIIITPet.html 데이터 전처리 - 이미지 변환은 이미지 데이터의 크기를 256으로 키웠다가 224로 중앙 자르기 수행 - 탐지하려는 객체가 중앙에 위치할 확률이 높으므로 불필요한 지역특징을 제거하기 위한 전처리 방법
 
-### 출처
+### 실습 > 출처
 
 vgg-16 : https://pytorch.org/vision/0.8/_modules/torchvision/models/vgg.html
 
@@ -75,17 +75,11 @@ model = torchvision.models.vgg16_bn(pretrained=True)
 - 왜 이 방식을 쓰는가: Dataset/DataLoader 구조는 데이터 읽기, 변환, 배치 처리를 분리해 코드 재사용성과 실험 반복성을 높여줍니다.
 - 원리: 각 샘플을 Dataset이 제공하고, DataLoader가 이를 배치로 묶어 셔플·병렬 로딩·collate를 담당합니다.
 
-### 클래스와 객체 모델링
-
-- 왜 필요한가: 코드를 기능별로 나누고 상태를 함께 관리하려면 변수와 함수를 흩어두기보다 객체 단위로 묶는 연습이 필요합니다.
-- 왜 이 방식을 쓰는가: 클래스 기반 구조는 같은 패턴의 동작을 여러 인스턴스에 반복 적용하기 쉬워 기초 문법을 실제 코드 구조로 연결하기 좋습니다.
-- 원리: 클래스는 속성과 메서드를 묶는 설계도이고, 인스턴스는 그 설계도를 바탕으로 생성된 실제 객체입니다.
-
 ## Implementation Flow
 
 1. 사전 훈련된 모델 활용: 파이토치 : https://pytorch.org/vision/main/models.html#table-of-all-available-classification-weights - VGG-16 with ImageNet & BN : https://pytorch.org/vision...
-2. 실습: 데이터 셋 : https://pytorch.org/vision/main/generated/torchvision.datasets.OxfordIIITPet.html
-3. 출처: vgg-16 : https://pytorch.org/vision/0.8/_modules/torchvision/models/vgg.html
+2. 실습: 데이터 셋 : https://pytorch.org/vision/main/generated/torchvision.datasets.OxfordIIITPet.html 데이터 전처리 - 이미지 변환은 이미지 데이터의 크기를 256으로 키웠다가 224로 중앙 자르기 수행 - 탐지하려는 객체가 중앙에...
+3. 실습 > 출처: vgg-16 : https://pytorch.org/vision/0.8/_modules/torchvision/models/vgg.html
 4. Key Step: model = torchvision.models.vgg16_bn(pretrained=True)
 
 ## Code Highlights

@@ -5,8 +5,8 @@ research_tab: "LLM"
 research_kind: "Mission"
 source_title: "미션14_1팀_박시찬"
 source_path: "13_LLM_GenAI/Code_Snippets/미션14_1팀_박시찬.md"
-excerpt: "미션 소개 LLM이 외부 문서의 정보를 참고하여 답변할 수 있도록 RAG(Retrieval-Augmented Generation)를 구현하는 프로젝트입니다"
-research_summary: "미션 소개 LLM이 외부 문서의 정보를 참고하여 답변할 수 있도록 RAG(Retrieval-Augmented Generation)를 구현하는 프로젝트입니다. LangChain 프레임워크를 사용하여, 2024년 국세청 연말정산 안내 문서를 기반으로 사용자의 질문에 정확하게 답변하는 시스템을 구축합니다. 작성자: [팀명/성함] 프로젝트 기간: 202X.XX.XX ~ 202X.XX.XX 환경: Google Colab (T4 GPU), LangChain, HuggingFace. `ipynb/md` 원본과 19개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 google, langchain_community, os, random입니다."
+excerpt: "미션 소개 LLM이 외부 문서의 정보를 참고하여 답변할 수 있도록 RAG(Retrieval-Augmented Generation)를 구현하는 프로젝트입니다. LangChain 프레임워크를 사용하여, 2024년 국세청 연말정산 안내 문서를 기반으로 사용자의 질문에 정확하게 답변하는 시스템을 구축합니다..."
+research_summary: "미션 소개 LLM이 외부 문서의 정보를 참고하여 답변할 수 있도록 RAG(Retrieval-Augmented Generation)를 구현하는 프로젝트입니다. LangChain 프레임워크를 사용하여, 2024년 국세청 연말정산 안내 문서를 기반으로 사용자의 질문에 정확하게 답변하는 시스템을 구축합니다. 사용 데이터셋 * 데이터: 국세청... 작성자: [팀명/성함] 프로젝트 기간: 202X.XX.XX ~ 202X.XX.XX 환경: Google Colab (T4 GPU), LangChain, HuggingFace 프로젝트 개요 (Executive Summary). `ipynb/md` 원본과 19개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 google, langchain_community, os, random입니다."
 research_artifacts: "ipynb/md · 코드 19개 · 실행 13개"
 code_block_count: 19
 execution_block_count: 13
@@ -30,7 +30,7 @@ tags:
   - mission
 ---
 
-미션 소개 LLM이 외부 문서의 정보를 참고하여 답변할 수 있도록 RAG(Retrieval-Augmented Generation)를 구현하는 프로젝트입니다. LangChain 프레임워크를 사용하여, 2024년 국세청 연말정산 안내 문서를 기반으로 사용자의 질문에 정확하게 답변하는 시스템을 구축합니다. 작성자: [팀명/성함] 프로젝트 기간: 202X.XX.XX ~ 202X.XX.XX 환경: Google Colab (T4 GPU), LangChain, HuggingFace. `ipynb/md` 원본과 19개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 google, langchain_community, os, random입니다.
+미션 소개 LLM이 외부 문서의 정보를 참고하여 답변할 수 있도록 RAG(Retrieval-Augmented Generation)를 구현하는 프로젝트입니다. LangChain 프레임워크를 사용하여, 2024년 국세청 연말정산 안내 문서를 기반으로 사용자의 질문에 정확하게 답변하는 시스템을 구축합니다. 사용 데이터셋 * 데이터: 국세청... 작성자: [팀명/성함] 프로젝트 기간: 202X.XX.XX ~ 202X.XX.XX 환경: Google Colab (T4 GPU), LangChain, HuggingFace 프로젝트 개요 (Executive Summary). `ipynb/md` 원본과 19개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 google, langchain_community, os, random입니다.
 
 **빠르게 볼 수 있는 포인트**: 미션 소개 LLM이 외부 문서의 정보를 참고하여 답변할 수 있도록 RA..., [미션] 2024년 연말정산 가이드 RAG 시스템 구축, 구글 드라이브 마운트.
 
@@ -54,19 +54,19 @@ tags:
 
 ### [미션] 2024년 연말정산 가이드 RAG 시스템 구축
 
-미션 소개 LLM이 외부 문서의 정보를 참고하여 답변할 수 있도록 RAG(Retrieval-Augmented Generation)를 구현하는 프로젝트입니다. LangChain 프레임워크를 사용하여, 2024년 국세청 연말정산 안내 문서를 기반으로 사용자의 질문에 정확하게 답변하는 시스템을 구축합니다.
+미션 소개 LLM이 외부 문서의 정보를 참고하여 답변할 수 있도록 RAG(Retrieval-Augmented Generation)를 구현하는 프로젝트입니다. LangChain 프레임워크를 사용하여, 2024년 국세청 연말정산 안내 문서를 기반으로 사용자의 질문에 정확하게 답변하는 시스템을 구축합니다. 사용 데이터셋 * 데이터: 국세청 발간 [2024년 연말정산 신고 안내] * 내용: 연...
 
 ### [Final Report] 2024년 연말정산 지능형 QA 시스템 구축 결과 보고서
 
-작성자: [팀명/성함] 프로젝트 기간: 202X.XX.XX ~ 202X.XX.XX 환경: Google Colab (T4 GPU), LangChain, HuggingFace
+작성자: [팀명/성함] 프로젝트 기간: 202X.XX.XX ~ 202X.XX.XX 환경: Google Colab (T4 GPU), LangChain, HuggingFace 프로젝트 개요 (Executive Summary)
+
+### 가이드코드
+
+문서 파일 불러오기 Vector DB에 저장
 
 ### Key Step
 
 langchain 계열: RAG 체인 구성
-
-### Key Step
-
-faiss-cpu/gpu: 벡터 검색 엔진
 
 ## Why This Matters
 
@@ -91,9 +91,9 @@ faiss-cpu/gpu: 벡터 검색 엔진
 ## Implementation Flow
 
 1. [미션] 2024년 연말정산 가이드 RAG 시스템 구축: 미션 소개 LLM이 외부 문서의 정보를 참고하여 답변할 수 있도록 RAG(Retrieval-Augmented Generation)를 구현하는 프로젝트입니다. LangChain 프레임워크를 사용하여, 2024년 국세청 연말정산 안내 문서를 기반...
-2. [Final Report] 2024년 연말정산 지능형 QA 시스템 구축 결과 보고서: 작성자: [팀명/성함] 프로젝트 기간: 202X.XX.XX ~ 202X.XX.XX 환경: Google Colab (T4 GPU), LangChain, HuggingFace
-3. Key Step: langchain 계열: RAG 체인 구성
-4. Key Step: faiss-cpu/gpu: 벡터 검색 엔진
+2. [Final Report] 2024년 연말정산 지능형 QA 시스템 구축 결과 보고서: 작성자: [팀명/성함] 프로젝트 기간: 202X.XX.XX ~ 202X.XX.XX 환경: Google Colab (T4 GPU), LangChain, HuggingFace 프로젝트 개요 (Executive Summ...
+3. 가이드코드: 문서 파일 불러오기 Vector DB에 저장
+4. Key Step: langchain 계열: RAG 체인 구성
 
 ## Code Highlights
 
@@ -212,4 +212,4 @@ tokenizer = AutoTokenizer.from_pretrained(language_model_name)
 ## Note Preview
 
 > 1. 미션 소개 **LLM이 외부 문서의 정보를 참고하여 답변할 수 있도록 RAG(Retrieval-Augmented Generation)를 구현하는 프로젝트입니다.** LangChain 프레임워크를 사용하여, **2024년 국세청 연말정산 안내 문서**를 기반으로 사용자의 질문에 정확하게 답변하는 시스템을 구축합니다.
-> ---
+> 2. 사용 데이터셋 * **데이터:** 국세청 발간 [2024년 연말정산 신고 안내] * **내용:** 연말정산 절차, 공제 항목, 유의사항, **2024년 개정 세법** 등 * **목표:** 텍스트에 포함된 세법 정보와 절차를 LLM이 이해하고 참조할 수 있도록 처리

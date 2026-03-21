@@ -1,5 +1,5 @@
 ---
-title: "코드실습5 7.DF 마스터하기"
+title: "7.DF 마스터하기"
 date: 2026-03-08
 research_tab: "ML"
 research_kind: "Practice"

@@ -5,8 +5,8 @@ research_tab: "DL"
 research_kind: "Mission"
 source_title: "Mission_6_강사공유"
 source_path: "12_Deep_Learning/Code_Snippets/Mission_6_강사공유.md"
-excerpt: "이번 미션에서는 흉부 X-Ray 사진을 바탕으로 폐렴 환자를 구분하는 작업을 수행합니다"
-research_summary: "이번 미션에서는 흉부 X-Ray 사진을 바탕으로 폐렴 환자를 구분하는 작업을 수행합니다. 이번 미션의 목표는 X-Ray 사진을 입력으로 받아 폐렴 여부를 구분하는 분류(Classification) 모델을 만드는 것입니다. 아래 데이터셋을 활용하여 다양한 이미지 전처리 및 증강 기법과 Transfer Learning과 Fine-Tuni... * 본 프로젝트는 흉부 X-Ray 사진을 바탕으로 폐렴 환자를 구분하는 분류 모델 개발을 목표 * 다양한 이미지 전처리 및 증강 기법을 적용하고, Transfer Learning 및 Fine-Tuning 기법을 활용하여 모델 성능을 평가. `md` 원본과 38개 코드 블록, 38개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, math, glob, warnings입니다."
+excerpt: "* ResNet-18 이용하여 전이 학습. * ResNet-18 이용 * ResNet의 마지막 블록(layer4)와 Fully Connected Layer만 학습 하도록 설정. `md` 원본과 38개 코드 블록, 38개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택..."
+research_summary: "* ResNet-18 이용하여 전이 학습. * ResNet-18 이용 * ResNet의 마지막 블록(layer4)와 Fully Connected Layer만 학습 하도록 설정. `md` 원본과 38개 코드 블록, 38개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, math, glob, warnings입니다."
 research_artifacts: "md · 코드 38개 · 실행 38개"
 code_block_count: 38
 execution_block_count: 38
@@ -29,7 +29,7 @@ tags:
   - mission
 ---
 
-이번 미션에서는 흉부 X-Ray 사진을 바탕으로 폐렴 환자를 구분하는 작업을 수행합니다. 이번 미션의 목표는 X-Ray 사진을 입력으로 받아 폐렴 여부를 구분하는 분류(Classification) 모델을 만드는 것입니다. 아래 데이터셋을 활용하여 다양한 이미지 전처리 및 증강 기법과 Transfer Learning과 Fine-Tuni... * 본 프로젝트는 흉부 X-Ray 사진을 바탕으로 폐렴 환자를 구분하는 분류 모델 개발을 목표 * 다양한 이미지 전처리 및 증강 기법을 적용하고, Transfer Learning 및 Fine-Tuning 기법을 활용하여 모델 성능을 평가. `md` 원본과 38개 코드 블록, 38개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, math, glob, warnings입니다.
+* ResNet-18 이용하여 전이 학습. * ResNet-18 이용 * ResNet의 마지막 블록(layer4)와 Fully Connected Layer만 학습 하도록 설정. `md` 원본과 38개 코드 블록, 38개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, math, glob, warnings입니다.
 
 **빠르게 볼 수 있는 포인트**: 사전 설정, 이번 미션에서는 흉부 X-Ray 사진을 바탕으로 폐렴 환자를 구분하는..., 과제 요약.
 
@@ -51,19 +51,19 @@ tags:
 
 ## What This Note Covers
 
-### 과제 요약
+### 사전 설정 > 과제 요약
 
 이번 미션에서는 흉부 X-Ray 사진을 바탕으로 폐렴 환자를 구분하는 작업을 수행합니다. 이번 미션의 목표는 X-Ray 사진을 입력으로 받아 폐렴 여부를 구분하는 분류(Classification) 모델을 만드는 것입니다. 아래 데이터셋을 활용하여 다양한 이미지 전처리 및 증강 기법과 Transfer Learning과 Fine-Tuning 기법을 실험해보고, 모델의 성능을 평가해 보세요.
 
-### 목적
+### 데이터 > 목적
 
 * 본 프로젝트는 흉부 X-Ray 사진을 바탕으로 폐렴 환자를 구분하는 분류 모델 개발을 목표 * 다양한 이미지 전처리 및 증강 기법을 적용하고, Transfer Learning 및 Fine-Tuning 기법을 활용하여 모델 성능을 평가
 
-### 데이터셋
+### 데이터 > 데이터셋
 
 * 본 프로젝트에서는 Chest X-Ray Images (Pneumonia) 데이터셋을 사용하며, 데이터는 훈련(train), 검증(val), 테스트(test)로 구성되어 있다.
 
-### Feature Extraction
+### Transfer Learning > Feature Extraction
 
 * ResNet-18 이용하여 전이 학습
 
@@ -89,10 +89,10 @@ tags:
 
 ## Implementation Flow
 
-1. 과제 요약: 이번 미션에서는 흉부 X-Ray 사진을 바탕으로 폐렴 환자를 구분하는 작업을 수행합니다. 이번 미션의 목표는 X-Ray 사진을 입력으로 받아 폐렴 여부를 구분하는 분류(Classification) 모델을 만드는 것입니다. 아래 데이터셋을 활용하여 다양한 이미지 전처리 및 증강 기법과 T...
-2. 목적: * 본 프로젝트는 흉부 X-Ray 사진을 바탕으로 폐렴 환자를 구분하는 분류 모델 개발을 목표 * 다양한 이미지 전처리 및 증강 기법을 적용하고, Transfer Learning 및 Fine-Tuning 기법을 활용하여 모델 성능을 평가
-3. 데이터셋: * 본 프로젝트에서는 Chest X-Ray Images (Pneumonia) 데이터셋을 사용하며, 데이터는 훈련(train), 검증(val), 테스트(test)로 구성되어 있다.
-4. Feature Extraction: * ResNet-18 이용하여 전이 학습
+1. 사전 설정 > 과제 요약: 이번 미션에서는 흉부 X-Ray 사진을 바탕으로 폐렴 환자를 구분하는 작업을 수행합니다. 이번 미션의 목표는 X-Ray 사진을 입력으로 받아 폐렴 여부를 구분하는 분류(Classification) 모델을 만드는 것입니다. 아래 데이터셋을 활용하여 다양한 이미지 전처리 및...
+2. 데이터 > 목적: * 본 프로젝트는 흉부 X-Ray 사진을 바탕으로 폐렴 환자를 구분하는 분류 모델 개발을 목표 * 다양한 이미지 전처리 및 증강 기법을 적용하고, Transfer Learning 및 Fine-Tuning 기법을 활용하여 모델 성능을 평가
+3. 데이터 > 데이터셋: * 본 프로젝트에서는 Chest X-Ray Images (Pneumonia) 데이터셋을 사용하며, 데이터는 훈련(train), 검증(val), 테스트(test)로 구성되어 있다.
+4. Transfer Learning > Feature Extraction: * ResNet-18 이용하여 전이 학습
 
 ## Code Highlights
 

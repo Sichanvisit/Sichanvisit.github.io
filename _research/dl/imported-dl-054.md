@@ -5,8 +5,8 @@ research_tab: "DL"
 research_kind: "Shared Note"
 source_title: "Segmentation_데이터다루기 - 공유"
 source_path: "12_Deep_Learning/Code_Snippets/Segmentation_데이터다루기 - 공유.md"
-excerpt: "xml.etree.ElementTree는 Python 내장 XML 처리 라이브러리로, XML 파일을 파싱하고, 트리 형태로 데이터를 탐색하며 필요한 정보를 추출할 수 있도록 도와줍니다"
-research_summary: "xml.etree.ElementTree는 Python 내장 XML 처리 라이브러리로, XML 파일을 파싱하고, 트리 형태로 데이터를 탐색하며 필요한 정보를 추출할 수 있도록 도와줍니다. 대략적인 사용 방법은 다음과 같습니다. PennFudanPed 데이터셋은 보행자 탐지 및 segmentation(분할) 작업을 위한 데이터셋입니다. `md` 원본과 76개 코드 블록, 52개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, json, torch, numpy입니다."
+excerpt: "PennFudanPed 데이터셋은 보행자 탐지 및 segmentation(분할) 작업을 위한 데이터셋입니다. 도심 환경 등 다양한 배경에서 촬영된 이미지들이 포함되어 있으며, 각 이미지에 대해 보행자 영역을 나타내는 마스크(ground truth)가 제공됩니다. xml.etree.ElementTre..."
+research_summary: "PennFudanPed 데이터셋은 보행자 탐지 및 segmentation(분할) 작업을 위한 데이터셋입니다. 도심 환경 등 다양한 배경에서 촬영된 이미지들이 포함되어 있으며, 각 이미지에 대해 보행자 영역을 나타내는 마스크(ground truth)가 제공됩니다. xml.etree.ElementTree는 Python 내장 XML 처리 라이브러리로, XML 파일을 파싱하고, 트리 형태로 데이터를 탐색하며 필요한 정보를 추출할 수 있도록 도와줍니다. 대략적인 사용 방법은 다음과 같습니다. XML 파싱: - ET.parse('파일경로.xml')를 사용하여 XML 파일을 파싱하고, XML 트리 객체를... `md` 원본과 76개 코드 블록, 52개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, json, torch, numpy입니다."
 research_artifacts: "md · 코드 76개 · 실행 52개"
 code_block_count: 76
 execution_block_count: 52
@@ -29,7 +29,7 @@ tags:
   - shared-note
 ---
 
-xml.etree.ElementTree는 Python 내장 XML 처리 라이브러리로, XML 파일을 파싱하고, 트리 형태로 데이터를 탐색하며 필요한 정보를 추출할 수 있도록 도와줍니다. 대략적인 사용 방법은 다음과 같습니다. PennFudanPed 데이터셋은 보행자 탐지 및 segmentation(분할) 작업을 위한 데이터셋입니다. `md` 원본과 76개 코드 블록, 52개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, json, torch, numpy입니다.
+PennFudanPed 데이터셋은 보행자 탐지 및 segmentation(분할) 작업을 위한 데이터셋입니다. 도심 환경 등 다양한 배경에서 촬영된 이미지들이 포함되어 있으며, 각 이미지에 대해 보행자 영역을 나타내는 마스크(ground truth)가 제공됩니다. xml.etree.ElementTree는 Python 내장 XML 처리 라이브러리로, XML 파일을 파싱하고, 트리 형태로 데이터를 탐색하며 필요한 정보를 추출할 수 있도록 도와줍니다. 대략적인 사용 방법은 다음과 같습니다. XML 파싱: - ET.parse('파일경로.xml')를 사용하여 XML 파일을 파싱하고, XML 트리 객체를... `md` 원본과 76개 코드 블록, 52개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, json, torch, numpy입니다.
 
 **빠르게 볼 수 있는 포인트**: VOC2012 다루기, 이미지와 마스크, xml.etree.ElementTree는 Python 내장 XML 처리....
 
@@ -51,21 +51,21 @@ xml.etree.ElementTree는 Python 내장 XML 처리 라이브러리로, XML 파일
 
 ## What This Note Covers
 
-### Annotation
+### VOC2012 다루기 > Annotation
 
-xml.etree.ElementTree는 Python 내장 XML 처리 라이브러리로, XML 파일을 파싱하고, 트리 형태로 데이터를 탐색하며 필요한 정보를 추출할 수 있도록 도와줍니다. 대략적인 사용 방법은 다음과 같습니다.
+xml.etree.ElementTree는 Python 내장 XML 처리 라이브러리로, XML 파일을 파싱하고, 트리 형태로 데이터를 탐색하며 필요한 정보를 추출할 수 있도록 도와줍니다. 대략적인 사용 방법은 다음과 같습니다. XML 파싱: - ET.parse('파일경로.xml')를 사용하여 XML 파일을 파싱하고, XML 트리 객체를 생성합니다. - tree.getroot()를 호출하여...
 
 ### PennFudanPed
 
-PennFudanPed 데이터셋은 보행자 탐지 및 segmentation(분할) 작업을 위한 데이터셋입니다.
+PennFudanPed 데이터셋은 보행자 탐지 및 segmentation(분할) 작업을 위한 데이터셋입니다. 도심 환경 등 다양한 배경에서 촬영된 이미지들이 포함되어 있으며, 각 이미지에 대해 보행자 영역을 나타내는 마스크(ground truth)가 제공됩니다.
 
-### 데이터 구조 이해
+### COCO > 데이터 구조 이해
 
-하나의 JSON 파일 - 모든 이미지 메타데이터, 객체 Annotation, 카테고리, 라이선스 정보가 하나의 JSON 파일(예: instances_train2017.json 또는 instances_val2017.json)에 저장됨
+하나의 JSON 파일 - 모든 이미지 메타데이터, 객체 Annotation, 카테고리, 라이선스 정보가 하나의 JSON 파일(예: instances_train2017.json 또는 instances_val2017.json)에 저장됨 주요 키 구성 - images: 각 이미지의 파일명, 고유 ID, 해상도 등의 메타데이터 - annotations: 각 이미지에 포함된 객체의 Annotat...
 
-### Annotation의 유형
+### COCO > Annotation의 유형
 
-바운딩 박스 (Bounding Box): - 객체의 위치와 크기를 나타내는 사각형 정보
+바운딩 박스 (Bounding Box): - 객체의 위치와 크기를 나타내는 사각형 정보 Instance Segmentation: - 객체의 경계를 보다 세밀하게 표현하기 위해 polygon(다각형) 또는 마스크 형태의 정보 제공
 
 ## Why This Matters
 
@@ -89,10 +89,10 @@ PennFudanPed 데이터셋은 보행자 탐지 및 segmentation(분할) 작업을
 
 ## Implementation Flow
 
-1. Annotation: xml.etree.ElementTree는 Python 내장 XML 처리 라이브러리로, XML 파일을 파싱하고, 트리 형태로 데이터를 탐색하며 필요한 정보를 추출할 수 있도록 도와줍니다. 대략적인 사용 방법은 다음과 같습니다.
-2. PennFudanPed: PennFudanPed 데이터셋은 보행자 탐지 및 segmentation(분할) 작업을 위한 데이터셋입니다.
-3. 데이터 구조 이해: 하나의 JSON 파일 - 모든 이미지 메타데이터, 객체 Annotation, 카테고리, 라이선스 정보가 하나의 JSON 파일(예: instances_train2017.json 또는 instances_val2017.json)에 저장됨
-4. Annotation의 유형: 바운딩 박스 (Bounding Box): - 객체의 위치와 크기를 나타내는 사각형 정보
+1. VOC2012 다루기 > Annotation: xml.etree.ElementTree는 Python 내장 XML 처리 라이브러리로, XML 파일을 파싱하고, 트리 형태로 데이터를 탐색하며 필요한 정보를 추출할 수 있도록 도와줍니다. 대략적인 사용 방법은 다음과 같습니다. XML 파싱: - ET.pa...
+2. PennFudanPed: PennFudanPed 데이터셋은 보행자 탐지 및 segmentation(분할) 작업을 위한 데이터셋입니다. 도심 환경 등 다양한 배경에서 촬영된 이미지들이 포함되어 있으며, 각 이미지에 대해 보행자 영역을 나타내는 마스크(ground truth)가 제공됩니다.
+3. COCO > 데이터 구조 이해: 하나의 JSON 파일 - 모든 이미지 메타데이터, 객체 Annotation, 카테고리, 라이선스 정보가 하나의 JSON 파일(예: instances_train2017.json 또는 instances_val2017.json)에 저장됨 주요 키 구성 - images: 각...
+4. COCO > Annotation의 유형: 바운딩 박스 (Bounding Box): - 객체의 위치와 크기를 나타내는 사각형 정보 Instance Segmentation: - 객체의 경계를 보다 세밀하게 표현하기 위해 polygon(다각형) 또는 마스크 형태의 정보 제공
 
 ## Code Highlights
 

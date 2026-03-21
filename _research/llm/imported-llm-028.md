@@ -5,8 +5,8 @@ research_tab: "LLM"
 research_kind: "Archive Note"
 source_title: "3-5 AI_Agent_맛보기"
 source_path: "13_LLM_GenAI/Code_Snippets/3-5 AI_Agent_맛보기.md"
-excerpt: "단순한 LLM(ChatGPT 등)은 묻는 말에 대답만 할 수 있지만, 에이전트(Agent)는 스스로 계획을 세우고 도구(Tool)를 사용하여 실제 행동을 합니다"
-research_summary: "단순한 LLM(ChatGPT 등)은 묻는 말에 대답만 할 수 있지만, 에이전트(Agent)는 스스로 계획을 세우고 도구(Tool)를 사용하여 실제 행동을 합니다. ReAct (Reasoning + Acting)는 AI가 스스로 \"생각(Reasoning)\"하고, 필요한 \"행동(Acting, 도구 사용)\"을 결정하는 패턴입니다. `ipynb/md` 원본과 6개 코드 블록, 4개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, getpass, langchain_openai, langchain_community입니다."
+excerpt: "단순한 LLM(ChatGPT 등)은 묻는 말에 대답만 할 수 있지만, 에이전트(Agent)는 스스로 계획을 세우고 도구(Tool)를 사용하여 실제 행동을 합니다. 에이전트의 핵심 작동 원리: 에이전트는 ReAct (Reasoning + Acting) 방식을 주로 사용합니다. ReAct (Reason..."
+research_summary: "단순한 LLM(ChatGPT 등)은 묻는 말에 대답만 할 수 있지만, 에이전트(Agent)는 스스로 계획을 세우고 도구(Tool)를 사용하여 실제 행동을 합니다. 에이전트의 핵심 작동 원리: 에이전트는 ReAct (Reasoning + Acting) 방식을 주로 사용합니다. ReAct (Reasoning + Acting)는 AI가 스스로 \"생각(Reasoning)\"하고, 필요한 \"행동(Acting, 도구 사용)\"을 결정하는 패턴입니다. LangGraph 맛보기 실습: 노드와 조건부 엣지를 우리가 직접 연결했습니다. (수동). `ipynb/md` 원본과 6개 코드 블록, 4개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, getpass, langchain_openai, langchain_community입니다."
 research_artifacts: "ipynb/md · 코드 6개 · 실행 4개"
 code_block_count: 6
 execution_block_count: 4
@@ -30,7 +30,7 @@ tags:
   - archive-note
 ---
 
-단순한 LLM(ChatGPT 등)은 묻는 말에 대답만 할 수 있지만, 에이전트(Agent)는 스스로 계획을 세우고 도구(Tool)를 사용하여 실제 행동을 합니다. ReAct (Reasoning + Acting)는 AI가 스스로 "생각(Reasoning)"하고, 필요한 "행동(Acting, 도구 사용)"을 결정하는 패턴입니다. `ipynb/md` 원본과 6개 코드 블록, 4개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, getpass, langchain_openai, langchain_community입니다.
+단순한 LLM(ChatGPT 등)은 묻는 말에 대답만 할 수 있지만, 에이전트(Agent)는 스스로 계획을 세우고 도구(Tool)를 사용하여 실제 행동을 합니다. 에이전트의 핵심 작동 원리: 에이전트는 ReAct (Reasoning + Acting) 방식을 주로 사용합니다. ReAct (Reasoning + Acting)는 AI가 스스로 "생각(Reasoning)"하고, 필요한 "행동(Acting, 도구 사용)"을 결정하는 패턴입니다. LangGraph 맛보기 실습: 노드와 조건부 엣지를 우리가 직접 연결했습니다. (수동). `ipynb/md` 원본과 6개 코드 블록, 4개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, getpass, langchain_openai, langchain_community입니다.
 
 **빠르게 볼 수 있는 포인트**: AI Agent, 단순한 LLM(ChatGPT 등)은 묻는 말에 대답만 할 수 있지만,..., AI 에이전트(AI Agent)란?.
 
@@ -52,19 +52,19 @@ tags:
 
 ## What This Note Covers
 
-### AI 에이전트(AI Agent)란?
+### AI Agent: 실시간 웹 검색 에이전트 (ReAct:Reasoning + Acting) > AI 에이전트(AI Agent)란?
 
-단순한 LLM(ChatGPT 등)은 묻는 말에 대답만 할 수 있지만, 에이전트(Agent)는 스스로 계획을 세우고 도구(Tool)를 사용하여 실제 행동을 합니다.
+단순한 LLM(ChatGPT 등)은 묻는 말에 대답만 할 수 있지만, 에이전트(Agent)는 스스로 계획을 세우고 도구(Tool)를 사용하여 실제 행동을 합니다. 에이전트의 핵심 작동 원리: 에이전트는 ReAct (Reasoning + Acting) 방식을 주로 사용합니다.
 
-### ReAct 에이전트란?
+### AI Agent: 실시간 웹 검색 에이전트 (ReAct:Reasoning + Acting) > ReAct 에이전트란?
 
-ReAct (Reasoning + Acting)는 AI가 스스로 "생각(Reasoning)"하고, 필요한 "행동(Acting, 도구 사용)"을 결정하는 패턴입니다.
+ReAct (Reasoning + Acting)는 AI가 스스로 "생각(Reasoning)"하고, 필요한 "행동(Acting, 도구 사용)"을 결정하는 패턴입니다. LangGraph 맛보기 실습: 노드와 조건부 엣지를 우리가 직접 연결했습니다. (수동)
 
-### 검색 도구 및 에이전트 생성
+### AI Agent: 실시간 웹 검색 에이전트 (ReAct:Reasoning + Acting) > 검색 도구 및 에이전트 생성
 
 여기서 중요한 점은 그래프를 구성하는 코드가 사라지고, create_react_agent 함수 하나로 대체된다는 점입니다.
 
-### 에이전트 테스트 (실시간 검색)
+### AI Agent: 실시간 웹 검색 에이전트 (ReAct:Reasoning + Acting) > 에이전트 테스트 (실시간 검색)
 
 LLM은 최신 정보를 모릅니다(예: 오늘 날씨, 최근 뉴스 등). 하지만 이 에이전트는 검색 도구를 사용해 답변해냅니다.
 
@@ -84,10 +84,10 @@ LLM은 최신 정보를 모릅니다(예: 오늘 날씨, 최근 뉴스 등). 하
 
 ## Implementation Flow
 
-1. AI 에이전트(AI Agent)란?: 단순한 LLM(ChatGPT 등)은 묻는 말에 대답만 할 수 있지만, 에이전트(Agent)는 스스로 계획을 세우고 도구(Tool)를 사용하여 실제 행동을 합니다.
-2. ReAct 에이전트란?: ReAct (Reasoning + Acting)는 AI가 스스로 "생각(Reasoning)"하고, 필요한 "행동(Acting, 도구 사용)"을 결정하는 패턴입니다.
-3. 검색 도구 및 에이전트 생성: 여기서 중요한 점은 그래프를 구성하는 코드가 사라지고, create_react_agent 함수 하나로 대체된다는 점입니다.
-4. 에이전트 테스트 (실시간 검색): LLM은 최신 정보를 모릅니다(예: 오늘 날씨, 최근 뉴스 등). 하지만 이 에이전트는 검색 도구를 사용해 답변해냅니다.
+1. AI Agent: 실시간 웹 검색 에이전트 (ReAct:Reasoning + Acting) > AI 에이전트(AI Agent)란?: 단순한 LLM(ChatGPT 등)은 묻는 말에 대답만 할 수 있지만, 에이전트(Agent)는 스스로 계획을 세우고 도구(Tool)를 사용하여 실제 행동을 합니다. 에이...
+2. AI Agent: 실시간 웹 검색 에이전트 (ReAct:Reasoning + Acting) > ReAct 에이전트란?: ReAct (Reasoning + Acting)는 AI가 스스로 "생각(Reasoning)"하고, 필요한 "행동(Acting, 도구 사용)"을 결정하는 패턴입니다. LangGrap...
+3. AI Agent: 실시간 웹 검색 에이전트 (ReAct:Reasoning + Acting) > 검색 도구 및 에이전트 생성: 여기서 중요한 점은 그래프를 구성하는 코드가 사라지고, create_react_agent 함수 하나로 대체된다는 점입니다.
+4. AI Agent: 실시간 웹 검색 에이전트 (ReAct:Reasoning + Acting) > 에이전트 테스트 (실시간 검색): LLM은 최신 정보를 모릅니다(예: 오늘 날씨, 최근 뉴스 등). 하지만 이 에이전트는 검색 도구를 사용해 답변해냅니다.
 
 ## Code Highlights
 

@@ -1,5 +1,5 @@
 ---
-title: "코드실습3 4.데이터사이언스 Toolkit"
+title: "4.데이터사이언스 Toolkit"
 date: 2026-03-08
 research_tab: "ML"
 research_kind: "Practice"

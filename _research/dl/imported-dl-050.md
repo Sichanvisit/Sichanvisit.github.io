@@ -5,8 +5,8 @@ research_tab: "DL"
 research_kind: "Mission"
 source_title: "Mission_7_강사공유"
 source_path: "12_Deep_Learning/Code_Snippets/Mission_7_강사공유.md"
-excerpt: "이번 미션에서는 SSD 모델을 활용하여 개와 고양이의 얼굴(Face) 영역을 감지하는 Object Detection 작업을 수행해 봅시다"
-research_summary: "이번 미션에서는 SSD 모델을 활용하여 개와 고양이의 얼굴(Face) 영역을 감지하는 Object Detection 작업을 수행해 봅시다. * 1 = 고양이 * 2 = 개. `md` 원본과 41개 코드 블록, 40개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torchinfo, os, sys, math입니다."
+excerpt: "이번 미션에서는 SSD 모델을 활용하여 개와 고양이의 얼굴(Face) 영역을 감지하는 Object Detection 작업을 수행해 봅시다. 데이터 링크 (The Oxford-IIIT Pet Dataset). * 1 = 고양이 * 2 = 개. `md` 원본과 41개 코드 블록, 40개 실행 셀을 함께..."
+research_summary: "이번 미션에서는 SSD 모델을 활용하여 개와 고양이의 얼굴(Face) 영역을 감지하는 Object Detection 작업을 수행해 봅시다. 데이터 링크 (The Oxford-IIIT Pet Dataset). * 1 = 고양이 * 2 = 개. `md` 원본과 41개 코드 블록, 40개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torchinfo, os, sys, math입니다."
 research_artifacts: "md · 코드 41개 · 실행 40개"
 code_block_count: 41
 execution_block_count: 40
@@ -29,7 +29,7 @@ tags:
   - mission
 ---
 
-이번 미션에서는 SSD 모델을 활용하여 개와 고양이의 얼굴(Face) 영역을 감지하는 Object Detection 작업을 수행해 봅시다. * 1 = 고양이 * 2 = 개. `md` 원본과 41개 코드 블록, 40개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torchinfo, os, sys, math입니다.
+이번 미션에서는 SSD 모델을 활용하여 개와 고양이의 얼굴(Face) 영역을 감지하는 Object Detection 작업을 수행해 봅시다. 데이터 링크 (The Oxford-IIIT Pet Dataset). * 1 = 고양이 * 2 = 개. `md` 원본과 41개 코드 블록, 40개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torchinfo, os, sys, math입니다.
 
 **빠르게 볼 수 있는 포인트**: 사전 설정, 이번 미션에서는 SSD 모델을 활용하여 개와 고양이의 얼굴(Face)..., 과제 요약.
 
@@ -51,29 +51,23 @@ tags:
 
 ## What This Note Covers
 
-### 과제 요약
+### 사전 설정 > 과제 요약
 
-이번 미션에서는 SSD 모델을 활용하여 개와 고양이의 얼굴(Face) 영역을 감지하는 Object Detection 작업을 수행해 봅시다.
+이번 미션에서는 SSD 모델을 활용하여 개와 고양이의 얼굴(Face) 영역을 감지하는 Object Detection 작업을 수행해 봅시다. 데이터 링크 (The Oxford-IIIT Pet Dataset)
 
-### 데이터 확인
+### SSD 실험 > 데이터 확인
 
 * 1 = 고양이 * 2 = 개
 
-### 객체 Bounding Box 리스트화
+### 데이터 전처리 > 객체 Bounding Box 리스트화
 
-모든 XML을 읽고, 이미지별 Bounding Box 정보를 하나의 리스트(annotations)에 저장했다.
+모든 XML을 읽고, 이미지별 Bounding Box 정보를 하나의 리스트(annotations)에 저장했다. 지금까지 전처리가 잘 되었는지 예시 이미지를 시각화 해볼 것이다.
 
 ### Key Step
 
 라이브러리 설치 및 import
 
 ## Why This Matters
-
-### RAG 검색 파이프라인
-
-- 왜 필요한가: LLM이 외부 지식을 안정적으로 참조하게 하려면, 생성 전에 관련 문서를 정확히 찾아오는 검색 단계가 먼저 필요합니다.
-- 왜 이 방식을 쓰는가: 이 방식은 모델 파라미터만 믿지 않고 최신 문서나 도메인 지식을 붙일 수 있어서 실제 서비스형 QA에 적합합니다.
-- 원리: 문서를 청크로 나누고 임베딩한 뒤, 질문과 가까운 벡터를 검색해 프롬프트에 함께 넣는 구조로 동작합니다.
 
 ### 객체 탐지와 영역 단위 이해
 
@@ -87,11 +81,17 @@ tags:
 - 왜 이 방식을 쓰는가: Dataset/DataLoader 구조는 데이터 읽기, 변환, 배치 처리를 분리해 코드 재사용성과 실험 반복성을 높여줍니다.
 - 원리: 각 샘플을 Dataset이 제공하고, DataLoader가 이를 배치로 묶어 셔플·병렬 로딩·collate를 담당합니다.
 
+### 평가 지표 해석
+
+- 왜 필요한가: 정확도 하나만으로는 모델이 실제로 무엇을 잘하고 무엇을 놓치는지 충분히 설명할 수 없습니다.
+- 왜 이 방식을 쓰는가: 문제 유형에 맞는 지표를 함께 보면 불균형 데이터, 오차 크기, 재현율 같은 중요한 관점을 놓치지 않을 수 있습니다.
+- 원리: 예측 결과를 정답과 비교해 오차나 클래스별 성능을 수치화하고, 그 수치로 모델 선택과 개선 방향을 판단합니다.
+
 ## Implementation Flow
 
-1. 과제 요약: 이번 미션에서는 SSD 모델을 활용하여 개와 고양이의 얼굴(Face) 영역을 감지하는 Object Detection 작업을 수행해 봅시다.
-2. 데이터 확인: * 1 = 고양이 * 2 = 개
-3. 객체 Bounding Box 리스트화: 모든 XML을 읽고, 이미지별 Bounding Box 정보를 하나의 리스트(annotations)에 저장했다.
+1. 사전 설정 > 과제 요약: 이번 미션에서는 SSD 모델을 활용하여 개와 고양이의 얼굴(Face) 영역을 감지하는 Object Detection 작업을 수행해 봅시다. 데이터 링크 (The Oxford-IIIT Pet Dataset)
+2. SSD 실험 > 데이터 확인: * 1 = 고양이 * 2 = 개
+3. 데이터 전처리 > 객체 Bounding Box 리스트화: 모든 XML을 읽고, 이미지별 Bounding Box 정보를 하나의 리스트(annotations)에 저장했다. 지금까지 전처리가 잘 되었는지 예시 이미지를 시각화 해볼 것이다.
 4. Key Step: 라이브러리 설치 및 import
 
 ## Code Highlights

@@ -5,8 +5,8 @@ research_tab: "DL"
 research_kind: "Mission"
 source_title: "Mission 9_이미지 생성"
 source_path: "12_Deep_Learning/Code_Snippets/Mission 9_이미지 생성.md"
-excerpt: "이번 미션에서는 모델을 활용하여 FashionMNIST 데이터셋의 각 패션 아이템(예: 티셔츠, 바지, 스니커즈 등)을 조건부로 생성하는 작업을 수행합니다"
-research_summary: "이번 미션에서는 모델을 활용하여 FashionMNIST 데이터셋의 각 패션 아이템(예: 티셔츠, 바지, 스니커즈 등)을 조건부로 생성하는 작업을 수행합니다. 각 클래스에 해당하는 이미지를 생성하는 cGAN (Conditional GAN) 모델을 직접 설계하고 학습시켜 보세요. 훈련 데이터: 60,000장의 이미지 테스트 데이터: 10,000장의 이미지 28×28 크기의 흑백 이미지 (10개 클래스) 11개 클래스가 포함되어 있습니다. - T-shirt/top - Trouser - Pullover - Dress - Coat - Sandal - Shirt - Sneaker - Bag - Ankle boot. `md` 원본과 20개 코드 블록, 15개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, numpy입니다."
+excerpt: "이번 미션에서는 모델을 활용하여 FashionMNIST 데이터셋의 각 패션 아이템(예: 티셔츠, 바지, 스니커즈 등)을 조건부로 생성하는 작업을 수행합니다. 각 클래스에 해당하는 이미지를 생성하는 cGAN (Conditional GAN) 모델을 직접 설계하고 학습시켜 보세요. Fréchet Ince..."
+research_summary: "이번 미션에서는 모델을 활용하여 FashionMNIST 데이터셋의 각 패션 아이템(예: 티셔츠, 바지, 스니커즈 등)을 조건부로 생성하는 작업을 수행합니다. 각 클래스에 해당하는 이미지를 생성하는 cGAN (Conditional GAN) 모델을 직접 설계하고 학습시켜 보세요. Fréchet Inception Distance 생성 분포와 실제 데이터 분포간의 거리 측정 - 거리가 가까울수록 (FID 값이 작을 수록) 실제 분포와 유사한 데이터가 생성. `md` 원본과 20개 코드 블록, 15개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, numpy입니다."
 research_artifacts: "md · 코드 20개 · 실행 15개"
 code_block_count: 20
 execution_block_count: 15
@@ -29,7 +29,7 @@ tags:
   - mission
 ---
 
-이번 미션에서는 모델을 활용하여 FashionMNIST 데이터셋의 각 패션 아이템(예: 티셔츠, 바지, 스니커즈 등)을 조건부로 생성하는 작업을 수행합니다. 각 클래스에 해당하는 이미지를 생성하는 cGAN (Conditional GAN) 모델을 직접 설계하고 학습시켜 보세요. 훈련 데이터: 60,000장의 이미지 테스트 데이터: 10,000장의 이미지 28×28 크기의 흑백 이미지 (10개 클래스) 11개 클래스가 포함되어 있습니다. - T-shirt/top - Trouser - Pullover - Dress - Coat - Sandal - Shirt - Sneaker - Bag - Ankle boot. `md` 원본과 20개 코드 블록, 15개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, numpy입니다.
+이번 미션에서는 모델을 활용하여 FashionMNIST 데이터셋의 각 패션 아이템(예: 티셔츠, 바지, 스니커즈 등)을 조건부로 생성하는 작업을 수행합니다. 각 클래스에 해당하는 이미지를 생성하는 cGAN (Conditional GAN) 모델을 직접 설계하고 학습시켜 보세요. Fréchet Inception Distance 생성 분포와 실제 데이터 분포간의 거리 측정 - 거리가 가까울수록 (FID 값이 작을 수록) 실제 분포와 유사한 데이터가 생성. `md` 원본과 20개 코드 블록, 15개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, numpy입니다.
 
 **빠르게 볼 수 있는 포인트**: 이번 미션에서는 모델을 활용하여 FashionMNIST 데이터셋의 각..., 미션 소개, 데이터 소개.
 
@@ -55,13 +55,13 @@ tags:
 
 이번 미션에서는 모델을 활용하여 FashionMNIST 데이터셋의 각 패션 아이템(예: 티셔츠, 바지, 스니커즈 등)을 조건부로 생성하는 작업을 수행합니다. 각 클래스에 해당하는 이미지를 생성하는 cGAN (Conditional GAN) 모델을 직접 설계하고 학습시켜 보세요.
 
-### 데이터 구성
+### 데이터 소개 > 데이터 구성
 
-훈련 데이터: 60,000장의 이미지 테스트 데이터: 10,000장의 이미지 28×28 크기의 흑백 이미지 (10개 클래스) 11개 클래스가 포함되어 있습니다. - T-shirt/top - Trouser - Pullover - Dress - Coat - Sandal - Shirt - Sneaker - Bag - Ankle boot
+훈련 데이터: 60,000장의 이미지 테스트 데이터: 10,000장의 이미지 28×28 크기의 흑백 이미지 (10개 클래스) 11개 클래스가 포함되어 있습니다. - T-shirt/top - Trouser - Pullover - Dress - Coat - Sandal - Shirt - Sneaker - Bag - Ankle boot 목차(Context)
 
 ### 모델 평가
 
-생성 분포와 실제 데이터 분포간의 거리 측정 - 거리가 가까울수록 (FID 값이 작을 수록) 실제 분포와 유사한 데이터가 생성
+Fréchet Inception Distance 생성 분포와 실제 데이터 분포간의 거리 측정 - 거리가 가까울수록 (FID 값이 작을 수록) 실제 분포와 유사한 데이터가 생성
 
 ### Key Step
 
@@ -81,17 +81,11 @@ tags:
 - 왜 이 방식을 쓰는가: optimizer와 scheduler를 명시적으로 두면 학습률 변화와 갱신 방식을 실험별로 비교하기 쉬워집니다.
 - 원리: 예측값과 정답의 차이로 손실을 계산하고, 역전파로 기울기를 구한 뒤 optimizer가 가중치를 업데이트합니다.
 
-### 클래스와 객체 모델링
-
-- 왜 필요한가: 코드를 기능별로 나누고 상태를 함께 관리하려면 변수와 함수를 흩어두기보다 객체 단위로 묶는 연습이 필요합니다.
-- 왜 이 방식을 쓰는가: 클래스 기반 구조는 같은 패턴의 동작을 여러 인스턴스에 반복 적용하기 쉬워 기초 문법을 실제 코드 구조로 연결하기 좋습니다.
-- 원리: 클래스는 속성과 메서드를 묶는 설계도이고, 인스턴스는 그 설계도를 바탕으로 생성된 실제 객체입니다.
-
 ## Implementation Flow
 
 1. 미션 소개: 이번 미션에서는 모델을 활용하여 FashionMNIST 데이터셋의 각 패션 아이템(예: 티셔츠, 바지, 스니커즈 등)을 조건부로 생성하는 작업을 수행합니다. 각 클래스에 해당하는 이미지를 생성하는 cGAN (Conditional GAN) 모델을 직접 설계하고 학습시켜 보세요.
-2. 데이터 구성: 훈련 데이터: 60,000장의 이미지 테스트 데이터: 10,000장의 이미지 28×28 크기의 흑백 이미지 (10개 클래스) 11개 클래스가 포함되어 있습니다. - T-shirt/top - Trouser - Pullover - Dress - Coat - Sandal - Shirt -...
-3. 모델 평가: 생성 분포와 실제 데이터 분포간의 거리 측정 - 거리가 가까울수록 (FID 값이 작을 수록) 실제 분포와 유사한 데이터가 생성
+2. 데이터 소개 > 데이터 구성: 훈련 데이터: 60,000장의 이미지 테스트 데이터: 10,000장의 이미지 28×28 크기의 흑백 이미지 (10개 클래스) 11개 클래스가 포함되어 있습니다. - T-shirt/top - Trouser - Pullover - Dress - Coat - Sandal -...
+3. 모델 평가: Fréchet Inception Distance 생성 분포와 실제 데이터 분포간의 거리 측정 - 거리가 가까울수록 (FID 값이 작을 수록) 실제 분포와 유사한 데이터가 생성
 4. Key Step: 데이터 링크: torchvision.datasets.FashionMNIST
 
 ## Code Highlights

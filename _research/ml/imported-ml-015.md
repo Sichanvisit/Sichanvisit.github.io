@@ -1,5 +1,5 @@
 ---
-title: "코딩실습15 9.기본 지도학습 알고리즘들(KNN)"
+title: "9.기본 지도학습 알고리즘들(KNN)"
 date: 2026-03-08
 research_tab: "ML"
 research_kind: "Practice"

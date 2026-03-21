@@ -1,5 +1,5 @@
 ---
-title: "코드실습1 1. 파이썬 응용하기"
+title: "1. 파이썬 응용하기"
 date: 2026-03-08
 research_tab: "ML"
 research_kind: "Practice"

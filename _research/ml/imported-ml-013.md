@@ -1,5 +1,5 @@
 ---
-title: "코딩실습13 10.결정트리와 앙상블(XGBoost)"
+title: "10.결정트리와 앙상블(XGBoost)"
 date: 2026-03-08
 research_tab: "ML"
 research_kind: "Practice"

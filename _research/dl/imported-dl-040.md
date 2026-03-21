@@ -5,8 +5,8 @@ research_tab: "DL"
 research_kind: "Shared Note"
 source_title: "8-1_VAE - 공유"
 source_path: "12_Deep_Learning/Code_Snippets/8-1_VAE - 공유.md"
-excerpt: "두 정규분포 $q(z) = {N}(\\mu, \\sigma^2)$와 $p(z) = {N}(0,1)$의 KL 발산을 계산해보면"
-research_summary: "두 정규분포 $q(z) = {N}(\\mu, \\sigma^2)$와 $p(z) = {N}(0,1)$의 KL 발산을 계산해보면. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 10개 코드 블록, 6개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, numpy, os, torchvision입니다."
+excerpt: "두 정규분포 $q(z) = {N}(\\mu, \\sigma^2)$와 $p(z) = {N}(0,1)$의 KL 발산을 계산해보면 정의부터 시작합니다. 일반적인 KL 발산의 정의는 $ D_{\\text{KL}}(q(z) \\parallel p(z)) = \\int q(z) \\log \\frac{q(z)}{p(z)}..."
+research_summary: "두 정규분포 $q(z) = {N}(\\mu, \\sigma^2)$와 $p(z) = {N}(0,1)$의 KL 발산을 계산해보면 정의부터 시작합니다. 일반적인 KL 발산의 정의는 $ D_{\\text{KL}}(q(z) \\parallel p(z)) = \\int q(z) \\log \\frac{q(z)}{p(z)} \\, dz $ 입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 10개 코드 블록, 6개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, numpy, os, torchvision입니다."
 research_artifacts: "md · 코드 10개 · 실행 6개"
 code_block_count: 10
 execution_block_count: 6
@@ -29,7 +29,7 @@ tags:
   - shared-note
 ---
 
-두 정규분포 $q(z) = {N}(\mu, \sigma^2)$와 $p(z) = {N}(0,1)$의 KL 발산을 계산해보면. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 10개 코드 블록, 6개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, numpy, os, torchvision입니다.
+두 정규분포 $q(z) = {N}(\mu, \sigma^2)$와 $p(z) = {N}(0,1)$의 KL 발산을 계산해보면 정의부터 시작합니다. 일반적인 KL 발산의 정의는 $ D_{\text{KL}}(q(z) \parallel p(z)) = \int q(z) \log \frac{q(z)}{p(z)} \, dz $ 입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 10개 코드 블록, 6개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, numpy, os, torchvision입니다.
 
 **빠르게 볼 수 있는 포인트**: 참고, 두 정규분포 $q(z) = {N}(\mu, \sigma^2)$와 $p(..., KL 발산.
 
@@ -51,21 +51,11 @@ tags:
 
 ## What This Note Covers
 
-### KL 발산 : N(u, sigma^2), N(0, 1)
-
-두 정규분포 $q(z) = {N}(\mu, \sigma^2)$와 $p(z) = {N}(0,1)$의 KL 발산을 계산해보면
-
-### Key Step
-
-device 설정 (GPU가 있으면 GPU 사용)
-
-### Key Step
-
-데이터 전처리를 위해 ToTensor 변환을 적용
-
-### Key Step
-
-학습용 MNIST 데이터셋 다운로드 및 로드
+- 참고
+- 두 정규분포 $q(z) = {N}(\mu, \sigma^2)$와 $p(z) = {N}(0,1)$의 KL...
+- KL 발산
+- 필요한 라이브러리 임포트
+- device 설정 (GPU가 있으면 GPU 사용)
 
 ## Why This Matters
 
@@ -81,18 +71,12 @@ device 설정 (GPU가 있으면 GPU 사용)
 - 왜 이 방식을 쓰는가: optimizer와 scheduler를 명시적으로 두면 학습률 변화와 갱신 방식을 실험별로 비교하기 쉬워집니다.
 - 원리: 예측값과 정답의 차이로 손실을 계산하고, 역전파로 기울기를 구한 뒤 optimizer가 가중치를 업데이트합니다.
 
-### 클래스와 객체 모델링
-
-- 왜 필요한가: 코드를 기능별로 나누고 상태를 함께 관리하려면 변수와 함수를 흩어두기보다 객체 단위로 묶는 연습이 필요합니다.
-- 왜 이 방식을 쓰는가: 클래스 기반 구조는 같은 패턴의 동작을 여러 인스턴스에 반복 적용하기 쉬워 기초 문법을 실제 코드 구조로 연결하기 좋습니다.
-- 원리: 클래스는 속성과 메서드를 묶는 설계도이고, 인스턴스는 그 설계도를 바탕으로 생성된 실제 객체입니다.
-
 ## Implementation Flow
 
-1. KL 발산 : N(u, sigma^2), N(0, 1): 두 정규분포 $q(z) = {N}(\mu, \sigma^2)$와 $p(z) = {N}(0,1)$의 KL 발산을 계산해보면
-2. Key Step: device 설정 (GPU가 있으면 GPU 사용)
-3. Key Step: 데이터 전처리를 위해 ToTensor 변환을 적용
-4. Key Step: 학습용 MNIST 데이터셋 다운로드 및 로드
+1. Key Step: device 설정 (GPU가 있으면 GPU 사용)
+2. Key Step: 데이터 전처리를 위해 ToTensor 변환을 적용
+3. Key Step: 학습용 MNIST 데이터셋 다운로드 및 로드
+4. Key Step: VAE (Variational Autoencoder) 모델 정의 ###
 
 ## Code Highlights
 

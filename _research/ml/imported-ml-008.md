@@ -1,5 +1,5 @@
 ---
-title: "코딩실습8 9.기본 지도학습 알고리즘들 (로지스틱 회귀)"
+title: "9.기본 지도학습 알고리즘들 (로지스틱 회귀)"
 date: 2026-03-08
 research_tab: "ML"
 research_kind: "Practice"

@@ -1,5 +1,5 @@
 ---
-title: "코딩실습7 9.기본 지도학습 알고리즘들 (Lasso, Ridge)"
+title: "9.기본 지도학습 알고리즘들 (Lasso, Ridge)"
 date: 2026-03-08
 research_tab: "ML"
 research_kind: "Practice"

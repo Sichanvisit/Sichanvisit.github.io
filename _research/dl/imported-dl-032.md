@@ -5,8 +5,8 @@ research_tab: "DL"
 research_kind: "Shared Note"
 source_title: "5-5_GoogLeNet - 공유"
 source_path: "12_Deep_Learning/Code_Snippets/5-5_GoogLeNet - 공유.md"
-excerpt: "다음은 GoogLeNet 논문(“Going Deeper with Convolutions”, 2014)과 PyTorch 구현(예: torchvision의 구현) 간의 주요 차이점입니다(일부 항목은 구현에 따라 달라질 수 있음)"
-research_summary: "다음은 GoogLeNet 논문(“Going Deeper with Convolutions”, 2014)과 PyTorch 구현(예: torchvision의 구현) 간의 주요 차이점입니다(일부 항목은 구현에 따라 달라질 수 있음). https://pytorch.org/vision/main/models/generated/torchvision.models.googlenet.html#torchvision.models.GoogLeNet_Weights. `md` 원본과 5개 코드 블록, 3개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, time, copy입니다."
+excerpt: "https://pytorch.org/vision/main/models/generated/torchvision.models.googlenet.html#torchvision.models.GoogLeNet_Weights. https://pytorch.org/vision/0.8/_modules/torchv..."
+research_summary: "https://pytorch.org/vision/main/models/generated/torchvision.models.googlenet.html#torchvision.models.GoogLeNet_Weights. https://pytorch.org/vision/0.8/_modules/torchvision/models/googlenet.html#googlenet - https://pytorch.org/vision/0.8/models.html#id1. `md` 원본과 5개 코드 블록, 3개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, time, copy입니다."
 research_artifacts: "md · 코드 5개 · 실행 3개"
 code_block_count: 5
 execution_block_count: 3
@@ -29,7 +29,7 @@ tags:
   - shared-note
 ---
 
-다음은 GoogLeNet 논문(“Going Deeper with Convolutions”, 2014)과 PyTorch 구현(예: torchvision의 구현) 간의 주요 차이점입니다(일부 항목은 구현에 따라 달라질 수 있음). https://pytorch.org/vision/main/models/generated/torchvision.models.googlenet.html#torchvision.models.GoogLeNet_Weights. `md` 원본과 5개 코드 블록, 3개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, time, copy입니다.
+https://pytorch.org/vision/main/models/generated/torchvision.models.googlenet.html#torchvision.models.GoogLeNet_Weights. https://pytorch.org/vision/0.8/_modules/torchvision/models/googlenet.html#googlenet - https://pytorch.org/vision/0.8/models.html#id1. `md` 원본과 5개 코드 블록, 3개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, time, copy입니다.
 
 **빠르게 볼 수 있는 포인트**: 다음은 GoogLeNet 논문(“Going Deeper with Con..., https, 사전 훈련된 모델.
 
@@ -53,7 +53,7 @@ tags:
 
 ### Overview
 
-다음은 GoogLeNet 논문(“Going Deeper with Convolutions”, 2014)과 PyTorch 구현(예: torchvision의 구현) 간의 주요 차이점입니다(일부 항목은 구현에 따라 달라질 수 있음)
+다음은 GoogLeNet 논문(“Going Deeper with Convolutions”, 2014)과 PyTorch 구현(예: torchvision의 구현) 간의 주요 차이점입니다(일부 항목은 구현에 따라 달라질 수 있음) Batch Normalization 사용
 
 ### 사전 훈련된 모델
 
@@ -81,15 +81,9 @@ BasicConv2d: 합성곱 + BatchNorm + ReLU (공식 구현 참고)
 - 왜 이 방식을 쓰는가: CNN은 필터를 공유하며 지역 특징을 반복적으로 추출할 수 있어 이미지 실습의 기본 뼈대로 적합합니다.
 - 원리: 작은 커널이 이미지 위를 이동하며 특징을 뽑고, 층이 깊어질수록 더 추상적인 패턴을 학습합니다.
 
-### 클래스와 객체 모델링
-
-- 왜 필요한가: 코드를 기능별로 나누고 상태를 함께 관리하려면 변수와 함수를 흩어두기보다 객체 단위로 묶는 연습이 필요합니다.
-- 왜 이 방식을 쓰는가: 클래스 기반 구조는 같은 패턴의 동작을 여러 인스턴스에 반복 적용하기 쉬워 기초 문법을 실제 코드 구조로 연결하기 좋습니다.
-- 원리: 클래스는 속성과 메서드를 묶는 설계도이고, 인스턴스는 그 설계도를 바탕으로 생성된 실제 객체입니다.
-
 ## Implementation Flow
 
-1. Overview: 다음은 GoogLeNet 논문(“Going Deeper with Convolutions”, 2014)과 PyTorch 구현(예: torchvision의 구현) 간의 주요 차이점입니다(일부 항목은 구현에 따라 달라질 수 있음)
+1. Overview: 다음은 GoogLeNet 논문(“Going Deeper with Convolutions”, 2014)과 PyTorch 구현(예: torchvision의 구현) 간의 주요 차이점입니다(일부 항목은 구현에 따라 달라질 수 있음) Batch Normalization 사용
 2. 사전 훈련된 모델: https://pytorch.org/vision/main/models/generated/torchvision.models.googlenet.html#torchvision.models.GoogLeNet_Weights
 3. 출처: https://pytorch.org/vision/0.8/_modules/torchvision/models/googlenet.html#googlenet - https://pytorch.org/vision/0.8/models.html#id1
 4. Key Step: BasicConv2d: 합성곱 + BatchNorm + ReLU (공식 구현 참고)

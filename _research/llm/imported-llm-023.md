@@ -5,7 +5,7 @@ research_tab: "LLM"
 research_kind: "Archive Note"
 source_title: "3-5 (실습)멀티_벡터_검색"
 source_path: "13_LLM_GenAI/Code_Snippets/3-5 (실습)멀티_벡터_검색.md"
-excerpt: "LangChain 1.0+ / GPT-4o-mini / 네이버 뉴스 데이터셋"
+excerpt: "LangChain 1.0+ / GPT-4o-mini / 네이버 뉴스 데이터셋. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `ipynb/md` 원본과 19개 코드 블록, 16개 실행 셀을 함께 남겨 구현 흐름을 다시..."
 research_summary: "LangChain 1.0+ / GPT-4o-mini / 네이버 뉴스 데이터셋. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `ipynb/md` 원본과 19개 코드 블록, 16개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 langchain, os, uuid, getpass입니다."
 research_artifacts: "ipynb/md · 코드 19개 · 실행 16개"
 code_block_count: 19
@@ -213,4 +213,3 @@ def ask_question(question, k=3):
 ## Note Preview
 
 > **LangChain 1.0+ / GPT-4o-mini / 네이버 뉴스 데이터셋**
-> ---

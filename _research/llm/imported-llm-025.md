@@ -5,7 +5,7 @@ research_tab: "LLM"
 research_kind: "Practice"
 source_title: "3-5 (실습)여행_가이드_봇_만들기_혼자실습"
 source_path: "13_LLM_GenAI/Code_Snippets/3-5 (실습)여행_가이드_봇_만들기_혼자실습.md"
-excerpt: "여행 가이드 봇 만들기 - 혼자 실습, RAG 실습 준비, 초기 설정 중심으로 구현 과정을 정리한 여행 가이드 봇 만들기 혼자실습 기록입니다"
+excerpt: "여행 가이드 봇 만들기 - 혼자 실습, RAG 실습 준비, 초기 설정 중심으로 구현 과정을 정리한 여행 가이드 봇 만들기 혼자실습 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `ipynb/md` 원본과..."
 research_summary: "여행 가이드 봇 만들기 - 혼자 실습, RAG 실습 준비, 초기 설정 중심으로 구현 과정을 정리한 여행 가이드 봇 만들기 혼자실습 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `ipynb/md` 원본과 10개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, langchain_community, langchain_text_splitters, langchain_openai입니다."
 research_artifacts: "ipynb/md · 코드 10개 · 실행 7개"
 code_block_count: 10

@@ -5,8 +5,8 @@ research_tab: "DL"
 research_kind: "Shared Note"
 source_title: "6-1_Faster R-CNN - 공유"
 source_path: "12_Deep_Learning/Code_Snippets/6-1_Faster R-CNN - 공유.md"
-excerpt: "Faster RCNN : https://pytorch.org/vision/0.9/_modules/torchvision/models/detection/faster_rcnn.html#fasterrcnn_resnet50_fpn"
-research_summary: "Faster RCNN : https://pytorch.org/vision/0.9/_modules/torchvision/models/detection/faster_rcnn.html#fasterrcnn_resnet50_fpn. MS COCO 데이터셋은 약 328000장의 이미지와 80개의 클래스로 이루어져있으나, 워낙 대규모이기 때문에 개와 고양이 클래스를 소규모로 샘플링해 실습을 진행합니다. `md` 원본과 28개 코드 블록, 14개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 kagglehub, os, shutil, json입니다."
+excerpt: "Faster RCNN : https://pytorch.org/vision/0.9/_modules/torchvision/models/detection/faster_rcnn.html#fasterrcnn_resnet50_fpn COCO API : https://github.com/cocodataset/c..."
+research_summary: "Faster RCNN : https://pytorch.org/vision/0.9/_modules/torchvision/models/detection/faster_rcnn.html#fasterrcnn_resnet50_fpn COCO API : https://github.com/cocodataset/cocoapi. MS COCO 데이터셋은 약 328000장의 이미지와 80개의 클래스로 이루어져있으나, 워낙 대규모이기 때문에 개와 고양이 클래스를 소규모로 샘플링해 실습을 진행합니다. `md` 원본과 28개 코드 블록, 14개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 kagglehub, os, shutil, json입니다."
 research_artifacts: "md · 코드 28개 · 실행 14개"
 code_block_count: 28
 execution_block_count: 14
@@ -29,7 +29,7 @@ tags:
   - shared-note
 ---
 
-Faster RCNN : https://pytorch.org/vision/0.9/_modules/torchvision/models/detection/faster_rcnn.html#fasterrcnn_resnet50_fpn. MS COCO 데이터셋은 약 328000장의 이미지와 80개의 클래스로 이루어져있으나, 워낙 대규모이기 때문에 개와 고양이 클래스를 소규모로 샘플링해 실습을 진행합니다. `md` 원본과 28개 코드 블록, 14개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 kagglehub, os, shutil, json입니다.
+Faster RCNN : https://pytorch.org/vision/0.9/_modules/torchvision/models/detection/faster_rcnn.html#fasterrcnn_resnet50_fpn COCO API : https://github.com/cocodataset/cocoapi. MS COCO 데이터셋은 약 328000장의 이미지와 80개의 클래스로 이루어져있으나, 워낙 대규모이기 때문에 개와 고양이 클래스를 소규모로 샘플링해 실습을 진행합니다. `md` 원본과 28개 코드 블록, 14개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 kagglehub, os, shutil, json입니다.
 
 **빠르게 볼 수 있는 포인트**: Faster RCNN, Faster R-CNN(coco_pytorch), MS COCO 데이터셋은 약 328000장의 이미지와 80개의 클래스로....
 
@@ -53,19 +53,19 @@ Faster RCNN : https://pytorch.org/vision/0.9/_modules/torchvision/models/detecti
 
 ### Faster R-CNN(coco_pytorch)
 
-Faster RCNN : https://pytorch.org/vision/0.9/_modules/torchvision/models/detection/faster_rcnn.html#fasterrcnn_resnet50_fpn
+Faster RCNN : https://pytorch.org/vision/0.9/_modules/torchvision/models/detection/faster_rcnn.html#fasterrcnn_resnet50_fpn COCO API : https://github.com/cocodataset/cocoapi
 
-### 데이터 다운로드
+### Faster R-CNN(coco_pytorch) > 데이터 다운로드
 
 MS COCO 데이터셋은 약 328000장의 이미지와 80개의 클래스로 이루어져있으나, 워낙 대규모이기 때문에 개와 고양이 클래스를 소규모로 샘플링해 실습을 진행합니다.
 
-### 데이터셋
+### Faster R-CNN(coco_pytorch) > 데이터셋
 
-COCO 데이터는 "ID"를 기준으로 파싱을 해야 합니다. images
+COCO 데이터는 "ID"를 기준으로 파싱을 해야 합니다. images 각 이미지에 대한 정보가 담긴 리스트 - 각 항목은 이미지의 고유 id, 파일명, 너비, 높이 등의 정보를 포함합니다.
 
-### Custom Collator가 필요한 이유
+### 데이터셋 > Custom Collator가 필요한 이유
 
-아래에 기본 collate 함수의 출력과 custom collate를 적용한 최종 출력 형태를 요약했습니다.
+아래에 기본 collate 함수의 출력과 custom collate를 적용한 최종 출력 형태를 요약했습니다. 기본 collate 함수 (원래 형태): - 출력: - 이미지 텐서: 모든 이미지가 동일한 크기라면, 자동으로 스택되어 하나의 텐서로 만들어집니다. 예: (batch_size, channels, height, width) - 타겟(라벨) 텐서/딕셔너리: 동일한 방식으로 스택 또는...
 
 ## Why This Matters
 
@@ -89,10 +89,10 @@ COCO 데이터는 "ID"를 기준으로 파싱을 해야 합니다. images
 
 ## Implementation Flow
 
-1. Faster R-CNN(coco_pytorch): Faster RCNN : https://pytorch.org/vision/0.9/_modules/torchvision/models/detection/faster_rcnn.html#fasterrcnn_resnet50_fpn
-2. 데이터 다운로드: MS COCO 데이터셋은 약 328000장의 이미지와 80개의 클래스로 이루어져있으나, 워낙 대규모이기 때문에 개와 고양이 클래스를 소규모로 샘플링해 실습을 진행합니다.
-3. 데이터셋: COCO 데이터는 "ID"를 기준으로 파싱을 해야 합니다. images
-4. Custom Collator가 필요한 이유: 아래에 기본 collate 함수의 출력과 custom collate를 적용한 최종 출력 형태를 요약했습니다.
+1. Faster R-CNN(coco_pytorch): Faster RCNN : https://pytorch.org/vision/0.9/_modules/torchvision/models/detection/faster_rcnn.html#fasterrcnn_resnet50_fpn COCO API : http...
+2. Faster R-CNN(coco_pytorch) > 데이터 다운로드: MS COCO 데이터셋은 약 328000장의 이미지와 80개의 클래스로 이루어져있으나, 워낙 대규모이기 때문에 개와 고양이 클래스를 소규모로 샘플링해 실습을 진행합니다.
+3. Faster R-CNN(coco_pytorch) > 데이터셋: COCO 데이터는 "ID"를 기준으로 파싱을 해야 합니다. images 각 이미지에 대한 정보가 담긴 리스트 - 각 항목은 이미지의 고유 id, 파일명, 너비, 높이 등의 정보를 포함합니다.
+4. 데이터셋 > Custom Collator가 필요한 이유: 아래에 기본 collate 함수의 출력과 custom collate를 적용한 최종 출력 형태를 요약했습니다. 기본 collate 함수 (원래 형태): - 출력: - 이미지 텐서: 모든 이미지가 동일한 크기라면, 자동으로 스택되어 하나의 텐서로...
 
 ## Code Highlights
 

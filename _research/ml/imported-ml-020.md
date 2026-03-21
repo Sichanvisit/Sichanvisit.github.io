@@ -1,5 +1,5 @@
 ---
-title: "2 Hotel Booking Demand - AI5 강사 답안"
+title: "2 Hotel Booking Demand"
 date: 2026-03-08
 research_tab: "ML"
 research_kind: "Archive Note"

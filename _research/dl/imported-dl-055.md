@@ -5,7 +5,7 @@ research_tab: "DL"
 research_kind: "Shared Note"
 source_title: "U-Net - 공유"
 source_path: "12_Deep_Learning/Code_Snippets/U-Net - 공유.md"
-excerpt: "PennFudanPed Dataset, 예시, UNet 모델 정의 중심으로 구현 과정을 정리한 U-Net - 공유 기록입니다"
+excerpt: "PennFudanPed Dataset, 예시, UNet 모델 정의 중심으로 구현 과정을 정리한 U-Net - 공유 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 7개 코드 블록, 5개 실행..."
 research_summary: "PennFudanPed Dataset, 예시, UNet 모델 정의 중심으로 구현 과정을 정리한 U-Net - 공유 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 7개 코드 블록, 5개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, numpy, PIL, torch입니다."
 research_artifacts: "md · 코드 7개 · 실행 5개"
 code_block_count: 7

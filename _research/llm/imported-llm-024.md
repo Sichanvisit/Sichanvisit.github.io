@@ -5,7 +5,7 @@ research_tab: "LLM"
 research_kind: "Archive Note"
 source_title: "3-5 (실습)사내_규정_챗봇"
 source_path: "13_LLM_GenAI/Code_Snippets/3-5 (실습)사내_규정_챗봇.md"
-excerpt: "사내 규정 챗봇 만들기, RAG 실습 준비, RAG 실습 시작 - LangChain 사용 중심으로 구현 과정을 정리한 사내 규정 챗봇 기록입니다"
+excerpt: "사내 규정 챗봇 만들기, RAG 실습 준비, RAG 실습 시작 - LangChain 사용 중심으로 구현 과정을 정리한 사내 규정 챗봇 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `ipynb/md` 원본..."
 research_summary: "사내 규정 챗봇 만들기, RAG 실습 준비, RAG 실습 시작 - LangChain 사용 중심으로 구현 과정을 정리한 사내 규정 챗봇 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `ipynb/md` 원본과 12개 코드 블록, 8개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, langchain_community, langchain_text_splitters, langchain_openai입니다."
 research_artifacts: "ipynb/md · 코드 12개 · 실행 8개"
 code_block_count: 12

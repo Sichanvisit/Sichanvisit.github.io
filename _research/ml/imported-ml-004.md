@@ -1,5 +1,5 @@
 ---
-title: "코드실습4 5. 기초 통계와 데이터 시각화"
+title: "5. 기초 통계와 데이터 시각화"
 date: 2026-03-08
 research_tab: "ML"
 research_kind: "Practice"

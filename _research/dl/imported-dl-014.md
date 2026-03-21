@@ -5,7 +5,7 @@ research_tab: "DL"
 research_kind: "Archive Note"
 source_title: "(실습)UNet"
 source_path: "12_Deep_Learning/Code_Snippets/(실습)UNet.md"
-excerpt: "UNet에서 다룬 구현 흐름과 참고 소스를 다시 볼 수 있게 정리한 DL 아카이브 노트입니다"
+excerpt: "UNet에서 다룬 구현 흐름과 참고 소스를 다시 볼 수 있게 정리한 DL 아카이브 노트입니다. 문제 맥락과 구현 흔적을 한 화면에서 빠르게 파악할 수 있도록 핵심 정보부터 배치했습니다. `md` 원본과 11개 코드 블록, 8개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주..."
 research_summary: "UNet에서 다룬 구현 흐름과 참고 소스를 다시 볼 수 있게 정리한 DL 아카이브 노트입니다. 문제 맥락과 구현 흔적을 한 화면에서 빠르게 파악할 수 있도록 핵심 정보부터 배치했습니다. `md` 원본과 11개 코드 블록, 8개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, numpy, PIL, torch입니다."
 research_artifacts: "md · 코드 11개 · 실행 8개"
 code_block_count: 11

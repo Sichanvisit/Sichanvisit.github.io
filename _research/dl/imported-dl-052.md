@@ -5,7 +5,7 @@ research_tab: "DL"
 research_kind: "Sample Code"
 source_title: "MNIST_samplecode"
 source_path: "12_Deep_Learning/Code_Snippets/MNIST_samplecode.md"
-excerpt: "데이터 로더, model = MLP(input_size, h..., input_ch, hidden_size, nu.."
+excerpt: "데이터 로더, model = MLP(input_size, h..., input_ch, hidden_size, nu... 중심으로 구현 과정을 정리한 MNIST samplecode 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수..."
 research_summary: "데이터 로더, model = MLP(input_size, h..., input_ch, hidden_size, nu... 중심으로 구현 과정을 정리한 MNIST samplecode 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 11개 코드 블록, 11개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, numpy입니다."
 research_artifacts: "md · 코드 11개 · 실행 11개"
 code_block_count: 11
@@ -69,12 +69,6 @@ tags:
 - 왜 필요한가: 이미지는 인접 픽셀 관계와 지역 패턴이 중요해서, 완전연결층만으로는 공간 구조를 효율적으로 잡기 어렵습니다.
 - 왜 이 방식을 쓰는가: CNN은 필터를 공유하며 지역 특징을 반복적으로 추출할 수 있어 이미지 실습의 기본 뼈대로 적합합니다.
 - 원리: 작은 커널이 이미지 위를 이동하며 특징을 뽑고, 층이 깊어질수록 더 추상적인 패턴을 학습합니다.
-
-### 클래스와 객체 모델링
-
-- 왜 필요한가: 코드를 기능별로 나누고 상태를 함께 관리하려면 변수와 함수를 흩어두기보다 객체 단위로 묶는 연습이 필요합니다.
-- 왜 이 방식을 쓰는가: 클래스 기반 구조는 같은 패턴의 동작을 여러 인스턴스에 반복 적용하기 쉬워 기초 문법을 실제 코드 구조로 연결하기 좋습니다.
-- 원리: 클래스는 속성과 메서드를 묶는 설계도이고, 인스턴스는 그 설계도를 바탕으로 생성된 실제 객체입니다.
 
 ## Implementation Flow
 

@@ -5,8 +5,8 @@ research_tab: "LLM"
 research_kind: "Archive Note"
 source_title: "3-1(실습)임베딩_스팸메시지분류"
 source_path: "13_LLM_GenAI/Code_Snippets/3-1(실습)임베딩_스팸메시지분류.md"
-excerpt: "https://wikidocs.net/50739"
-research_summary: "https://wikidocs.net/50739. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 27개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 pandas, numpy, matplotlib, torch입니다."
+excerpt: "https://wikidocs.net/50739. glove.6B.100d.txt 사용. `md` 원본과 27개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 pandas, numpy, matplotlib, torch입니다."
+research_summary: "https://wikidocs.net/50739. glove.6B.100d.txt 사용. `md` 원본과 27개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 pandas, numpy, matplotlib, torch입니다."
 research_artifacts: "md · 코드 27개 · 실행 13개"
 code_block_count: 27
 execution_block_count: 13
@@ -29,7 +29,7 @@ tags:
   - archive-note
 ---
 
-https://wikidocs.net/50739. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 27개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 pandas, numpy, matplotlib, torch입니다.
+https://wikidocs.net/50739. glove.6B.100d.txt 사용. `md` 원본과 27개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 pandas, numpy, matplotlib, torch입니다.
 
 **빠르게 볼 수 있는 포인트**: 데이터 불러오기, 데이터 분할, https.
 
@@ -55,6 +55,10 @@ https://wikidocs.net/50739. 페이지 상단에서 문제 정의, 구현 범위,
 
 https://wikidocs.net/50739
 
+### GloVe
+
+glove.6B.100d.txt 사용
+
 ### Key Step
 
 SMS Spam 데이터 다운로드 및 로드
@@ -62,10 +66,6 @@ SMS Spam 데이터 다운로드 및 로드
 ### Key Step
 
 Series를 list로 변환하여 레이블 인덱스 문제를 제거합니다
-
-### Key Step
-
-Word2Vec 모델 학습 및 단어-인덱스 매핑 생성
 
 ## Why This Matters
 
@@ -90,9 +90,9 @@ Word2Vec 모델 학습 및 단어-인덱스 매핑 생성
 ## Implementation Flow
 
 1. Word2Vec: https://wikidocs.net/50739
-2. Key Step: SMS Spam 데이터 다운로드 및 로드
-3. Key Step: Series를 list로 변환하여 레이블 인덱스 문제를 제거합니다
-4. Key Step: Word2Vec 모델 학습 및 단어-인덱스 매핑 생성
+2. GloVe: glove.6B.100d.txt 사용
+3. Key Step: SMS Spam 데이터 다운로드 및 로드
+4. Key Step: Series를 list로 변환하여 레이블 인덱스 문제를 제거합니다
 
 ## Code Highlights
 
@@ -185,5 +185,5 @@ print(f"Test Accuracy: {accuracy:.4f}")
 
 ## Note Preview
 
-> ---
 > https://wikidocs.net/50739
+> - glove.6B.100d.txt 사용

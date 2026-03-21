@@ -1,5 +1,5 @@
 ---
-title: "코딩실습16 11.차원축소(PCA)"
+title: "11.차원축소(PCA)"
 date: 2026-03-08
 research_tab: "ML"
 research_kind: "Practice"

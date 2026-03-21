@@ -5,8 +5,8 @@ research_tab: "DL"
 research_kind: "Archive Note"
 source_title: "(실습)PyTorch_텐서_살펴보기"
 source_path: "12_Deep_Learning/Code_Snippets/(실습)PyTorch_텐서_살펴보기.md"
-excerpt: "파이썬 리스트 data_list와 NumPy array data_np가 주어져 있습니다"
-research_summary: "파이썬 리스트 data_list와 NumPy array data_np가 주어져 있습니다. 이 두 데이터를 PyTorch 텐서로 만들어 주세요. 크기가 1인 차원의 추가 : 차원 수가 적은 텐서는 차원 수가 많은 텐서와 맞추기 위해 크기가 1인 차원을 앞에 추가합니다. 2. 크기가 1인 차원의 확장 : 확장된 텐서에서 크기가 1인 차원은 상대 텐서에 맞춰 값이 복사됩니다. `md` 원본과 119개 코드 블록, 117개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, numpy입니다."
+excerpt: "view() & contiguous 개념 view() 메소드처럼 메모리를 공유하면서 텐서 형태를 바꾸려면, 텐서 값이 연속된 메모리 공간에 존재해야 합니다. PyTorch에서는 연속된 메모리를 갖는 텐서를 contiguous하다고 표현해요. 즉, contiguous한 텐서에서만 view() 메소드를..."
+research_summary: "view() & contiguous 개념 view() 메소드처럼 메모리를 공유하면서 텐서 형태를 바꾸려면, 텐서 값이 연속된 메모리 공간에 존재해야 합니다. PyTorch에서는 연속된 메모리를 갖는 텐서를 contiguous하다고 표현해요. 즉, contiguous한 텐서에서만 view() 메소드를 사용할 수 있는 겁니다. 파이썬 리스트 data_list와 NumPy array data_np가 주어져 있습니다. 이 두 데이터를 PyTorch 텐서로 만들어 주세요. data_list에서 만든 텐서는 tensor_from_list 변수에 저장하고, data_np에서 만든 텐서는 tensor_from_np_array에 저장해야 합니다. `md` 원본과 119개 코드 블록, 117개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, numpy입니다."
 research_artifacts: "md · 코드 119개 · 실행 117개"
 code_block_count: 119
 execution_block_count: 117
@@ -26,7 +26,7 @@ tags:
   - archive-note
 ---
 
-파이썬 리스트 data_list와 NumPy array data_np가 주어져 있습니다. 이 두 데이터를 PyTorch 텐서로 만들어 주세요. 크기가 1인 차원의 추가 : 차원 수가 적은 텐서는 차원 수가 많은 텐서와 맞추기 위해 크기가 1인 차원을 앞에 추가합니다. 2. 크기가 1인 차원의 확장 : 확장된 텐서에서 크기가 1인 차원은 상대 텐서에 맞춰 값이 복사됩니다. `md` 원본과 119개 코드 블록, 117개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, numpy입니다.
+view() & contiguous 개념 view() 메소드처럼 메모리를 공유하면서 텐서 형태를 바꾸려면, 텐서 값이 연속된 메모리 공간에 존재해야 합니다. PyTorch에서는 연속된 메모리를 갖는 텐서를 contiguous하다고 표현해요. 즉, contiguous한 텐서에서만 view() 메소드를 사용할 수 있는 겁니다. 파이썬 리스트 data_list와 NumPy array data_np가 주어져 있습니다. 이 두 데이터를 PyTorch 텐서로 만들어 주세요. data_list에서 만든 텐서는 tensor_from_list 변수에 저장하고, data_np에서 만든 텐서는 tensor_from_np_array에 저장해야 합니다. `md` 원본과 119개 코드 블록, 117개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, numpy입니다.
 
 **빠르게 볼 수 있는 포인트**: 텐서만들기, data 타입, 특수한 텐서 생성 함수.
 
@@ -48,21 +48,21 @@ tags:
 
 ## What This Note Covers
 
-### Quiz.
+### 특수한 텐서 생성 함수 > Quiz.
 
-파이썬 리스트 data_list와 NumPy array data_np가 주어져 있습니다. 이 두 데이터를 PyTorch 텐서로 만들어 주세요.
+파이썬 리스트 data_list와 NumPy array data_np가 주어져 있습니다. 이 두 데이터를 PyTorch 텐서로 만들어 주세요. data_list에서 만든 텐서는 tensor_from_list 변수에 저장하고, data_np에서 만든 텐서는 tensor_from_np_array에 저장해야 합니다.
 
-### 브로드캐스팅 동작원리
+### 텐서의 변환과 연산 > 브로드캐스팅 동작원리
 
 크기가 1인 차원의 추가 : 차원 수가 적은 텐서는 차원 수가 많은 텐서와 맞추기 위해 크기가 1인 차원을 앞에 추가합니다. 2. 크기가 1인 차원의 확장 : 확장된 텐서에서 크기가 1인 차원은 상대 텐서에 맞춰 값이 복사됩니다.
 
+### 텐서의 변환과 연산 > Quiz.
+
+실습 설명 세 개의 텐서 tensor0, tensor1, tensor2가 주어져 있습니다. 다음 단계를 따라 코드를 작성해 주세요. tensor0과 tensor1을 더합니다. 2. 1번 결과와 tensor2를 행렬곱합니다. 3. 2번 결과에서 첫 번째 열에는 2를 더하고, 두 번째 열에서는 2를 뺍니다. 4. 3번 결과를 NumPy array로 변환합니다. 이때 변수 이름은 final_...
+
 ### 텐서의 형태 바꾸기
 
-view() & contiguous 개념
-
-### Key Step
-
-방법 1 : torch.tensor()
+view() & contiguous 개념 view() 메소드처럼 메모리를 공유하면서 텐서 형태를 바꾸려면, 텐서 값이 연속된 메모리 공간에 존재해야 합니다. PyTorch에서는 연속된 메모리를 갖는 텐서를 contiguous하다고 표현해요. 즉, contiguous한 텐서에서만 view() 메소드를 사용할 수 있는 겁니다.
 
 ## Why This Matters
 
@@ -74,10 +74,10 @@ view() & contiguous 개념
 
 ## Implementation Flow
 
-1. Quiz.: 파이썬 리스트 data_list와 NumPy array data_np가 주어져 있습니다. 이 두 데이터를 PyTorch 텐서로 만들어 주세요.
-2. 브로드캐스팅 동작원리: 크기가 1인 차원의 추가 : 차원 수가 적은 텐서는 차원 수가 많은 텐서와 맞추기 위해 크기가 1인 차원을 앞에 추가합니다. 2. 크기가 1인 차원의 확장 : 확장된 텐서에서 크기가 1인 차원은 상대 텐서에 맞춰 값이 복사됩니다.
-3. 텐서의 형태 바꾸기: view() & contiguous 개념
-4. Key Step: 방법 1 : torch.tensor()
+1. 특수한 텐서 생성 함수 > Quiz.: 파이썬 리스트 data_list와 NumPy array data_np가 주어져 있습니다. 이 두 데이터를 PyTorch 텐서로 만들어 주세요. data_list에서 만든 텐서는 tensor_from_list 변수에 저장하고, data_np에서 만든 텐서는 te...
+2. 텐서의 변환과 연산 > 브로드캐스팅 동작원리: 크기가 1인 차원의 추가 : 차원 수가 적은 텐서는 차원 수가 많은 텐서와 맞추기 위해 크기가 1인 차원을 앞에 추가합니다. 2. 크기가 1인 차원의 확장 : 확장된 텐서에서 크기가 1인 차원은 상대 텐서에 맞춰 값이 복사됩니다.
+3. 텐서의 변환과 연산 > Quiz.: 실습 설명 세 개의 텐서 tensor0, tensor1, tensor2가 주어져 있습니다. 다음 단계를 따라 코드를 작성해 주세요. tensor0과 tensor1을 더합니다. 2. 1번 결과와 tensor2를 행렬곱합니다. 3. 2번 결과에서 첫 번째 열에는 2를...
+4. 텐서의 형태 바꾸기: view() & contiguous 개념 view() 메소드처럼 메모리를 공유하면서 텐서 형태를 바꾸려면, 텐서 값이 연속된 메모리 공간에 존재해야 합니다. PyTorch에서는 연속된 메모리를 갖는 텐서를 contiguous하다고 표현해요. 즉, contiguous한 텐서에서만...
 
 ## Code Highlights
 

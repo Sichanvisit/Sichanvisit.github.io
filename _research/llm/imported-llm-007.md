@@ -5,8 +5,8 @@ research_tab: "LLM"
 research_kind: "Archive Note"
 source_title: "3-2 (실습)Attention_1"
 source_path: "13_LLM_GenAI/Code_Snippets/3-2 (실습)Attention_1.md"
-excerpt: "Embedding + BiLSTM 모델과 추가로 Seq2seq을 구성하여 Attention 층을 추가"
-research_summary: "Embedding + BiLSTM 모델과 추가로 Seq2seq을 구성하여 Attention 층을 추가. 기존 Embedding + BiLSTM 모델 아키텍처에 Bahdanau Attention(Additive)을 추가. `md` 원본과 14개 코드 블록, 12개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, google, pandas, numpy입니다."
+excerpt: "기존 Embedding + BiLSTM 모델 아키텍처에 Bahdanau Attention(Additive)을 추가 BiLSTM 층을 통과해 나온 특성 벡터를 폴링 하지 않고 Attention을 통해 문장 전체에서 가장 중요한 토큰들의 정보가 압축된 컨텍스트 벡터(context vector)를 만듦...."
+research_summary: "기존 Embedding + BiLSTM 모델 아키텍처에 Bahdanau Attention(Additive)을 추가 BiLSTM 층을 통과해 나온 특성 벡터를 폴링 하지 않고 Attention을 통해 문장 전체에서 가장 중요한 토큰들의 정보가 압축된 컨텍스트 벡터(context vector)를 만듦. 간단한 Seq2seq 모델을 구축하여 질의로 부터 응답을 생성해내는 모델 아케텍처를 만듭니다. 이때 Attention을 추가하여 입력 시퀀스의 각 토큰에 대한 중요도를 계산하여 모든 토큰을 균등하게 처리하는 것이 아니라, 중요한 토큰에 더 집중할 수 있게 합니다. `md` 원본과 14개 코드 블록, 12개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, google, pandas, numpy입니다."
 research_artifacts: "md · 코드 14개 · 실행 12개"
 code_block_count: 14
 execution_block_count: 12
@@ -29,7 +29,7 @@ tags:
   - archive-note
 ---
 
-Embedding + BiLSTM 모델과 추가로 Seq2seq을 구성하여 Attention 층을 추가. 기존 Embedding + BiLSTM 모델 아키텍처에 Bahdanau Attention(Additive)을 추가. `md` 원본과 14개 코드 블록, 12개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, google, pandas, numpy입니다.
+기존 Embedding + BiLSTM 모델 아키텍처에 Bahdanau Attention(Additive)을 추가 BiLSTM 층을 통과해 나온 특성 벡터를 폴링 하지 않고 Attention을 통해 문장 전체에서 가장 중요한 토큰들의 정보가 압축된 컨텍스트 벡터(context vector)를 만듦. 간단한 Seq2seq 모델을 구축하여 질의로 부터 응답을 생성해내는 모델 아케텍처를 만듭니다. 이때 Attention을 추가하여 입력 시퀀스의 각 토큰에 대한 중요도를 계산하여 모든 토큰을 균등하게 처리하는 것이 아니라, 중요한 토큰에 더 집중할 수 있게 합니다. `md` 원본과 14개 코드 블록, 12개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, google, pandas, numpy입니다.
 
 **빠르게 볼 수 있는 포인트**: Embedding + BiLSTM 모델과 추가로 Seq2seq을 구성하..., 기존 Embedding + BiLSTM 모델 아키텍처에 Bahdanau..., 감정 분류을 위한 Attention 순환 신경망: BiLSTM + At....
 
@@ -53,19 +53,19 @@ Embedding + BiLSTM 모델과 추가로 Seq2seq을 구성하여 Attention 층을 
 
 ### Overview
 
-Embedding + BiLSTM 모델과 추가로 Seq2seq을 구성하여 Attention 층을 추가
+Attention Embedding + BiLSTM 모델과 추가로 Seq2seq을 구성하여 Attention 층을 추가
 
 ### 감정 분류을 위한 Attention 순환 신경망: BiLSTM + Attention
 
-기존 Embedding + BiLSTM 모델 아키텍처에 Bahdanau Attention(Additive)을 추가
+기존 Embedding + BiLSTM 모델 아키텍처에 Bahdanau Attention(Additive)을 추가 BiLSTM 층을 통과해 나온 특성 벡터를 폴링 하지 않고 Attention을 통해 문장 전체에서 가장 중요한 토큰들의 정보가 압축된 컨텍스트 벡터(context vector)를 만듦
 
-### 단계
+### 감정 분류을 위한 Attention 순환 신경망: BiLSTM + Attention > 단계
 
-모델 정의: BiLSTMWithAttention 클래스를 만듭니다.
+모델 정의: BiLSTMWithAttention 클래스를 만듭니다. 데이터 준비: AIHUB 감성 대화 데이터를 로드합니다.
 
-### 모델링
+### 감정 분류을 위한 Attention 순환 신경망: BiLSTM + Attention > 모델링
 
-임베딩 레이어 사용 - 토큰의 정수 인덱스로 부터 Embedding 레이어를 통 정수를 해당하는 임베딩 벡터로 매핑
+임베딩 레이어 사용 - 토큰의 정수 인덱스로 부터 Embedding 레이어를 통 정수를 해당하는 임베딩 벡터로 매핑 Bi-LSTM (Bidirectional LSTM) 레이어 - 입력된 임베딩 벡터를 시간 축을 따라 처리하여, 시퀀스 데이터의 문맥 정보를 학습 - 양방향 LSTM은 입력 데이터를 과거와 미래 방향으로 모두 처리해 더 풍부한 문맥 정보를 캡처
 
 ## Why This Matters
 
@@ -89,10 +89,10 @@ Embedding + BiLSTM 모델과 추가로 Seq2seq을 구성하여 Attention 층을 
 
 ## Implementation Flow
 
-1. Overview: Embedding + BiLSTM 모델과 추가로 Seq2seq을 구성하여 Attention 층을 추가
-2. 감정 분류을 위한 Attention 순환 신경망: BiLSTM + Attention: 기존 Embedding + BiLSTM 모델 아키텍처에 Bahdanau Attention(Additive)을 추가
-3. 단계: 모델 정의: BiLSTMWithAttention 클래스를 만듭니다.
-4. 모델링: 임베딩 레이어 사용 - 토큰의 정수 인덱스로 부터 Embedding 레이어를 통 정수를 해당하는 임베딩 벡터로 매핑
+1. Overview: Attention Embedding + BiLSTM 모델과 추가로 Seq2seq을 구성하여 Attention 층을 추가
+2. 감정 분류을 위한 Attention 순환 신경망: BiLSTM + Attention: 기존 Embedding + BiLSTM 모델 아키텍처에 Bahdanau Attention(Additive)을 추가 BiLSTM 층을 통과해 나온 특성 벡터를 폴링 하지 않고 Attention을 통해 문장 전체에서...
+3. 감정 분류을 위한 Attention 순환 신경망: BiLSTM + Attention > 단계: 모델 정의: BiLSTMWithAttention 클래스를 만듭니다. 데이터 준비: AIHUB 감성 대화 데이터를 로드합니다.
+4. 감정 분류을 위한 Attention 순환 신경망: BiLSTM + Attention > 모델링: 임베딩 레이어 사용 - 토큰의 정수 인덱스로 부터 Embedding 레이어를 통 정수를 해당하는 임베딩 벡터로 매핑 Bi-LSTM (Bidirectional LSTM) 레이어 - 입력된 임베딩 벡터를 시...
 
 ## Code Highlights
 

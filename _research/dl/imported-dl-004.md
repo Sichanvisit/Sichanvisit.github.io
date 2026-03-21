@@ -5,8 +5,8 @@ research_tab: "DL"
 research_kind: "Archive Note"
 source_title: "(실습)Faster R-CNN"
 source_path: "12_Deep_Learning/Code_Snippets/(실습)Faster R-CNN.md"
-excerpt: "COCO API : https://github.com/cocodataset/cocoapi"
-research_summary: "COCO API : https://github.com/cocodataset/cocoapi. COCO 데이터는 \"ID\"를 기준으로 파싱을 해야 합니다. images. `md` 원본과 18개 코드 블록, 17개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 kagglehub, os, shutil, future입니다."
+excerpt: "COCO API : https://github.com/cocodataset/cocoapi MS COCO 데이터셋은 약 328000장의 이미지와 80개의 클래스로 이루어져있으나, 워낙 대규모이기 때문에 개와 고양이 클래스를 소규모로 샘플링해 실습을 진행합니다. COCO 데이터는 \"ID\"를 기준으로 파..."
+research_summary: "COCO API : https://github.com/cocodataset/cocoapi MS COCO 데이터셋은 약 328000장의 이미지와 80개의 클래스로 이루어져있으나, 워낙 대규모이기 때문에 개와 고양이 클래스를 소규모로 샘플링해 실습을 진행합니다. COCO 데이터는 \"ID\"를 기준으로 파싱을 해야 합니다. images 각 이미지에 대한 정보가 담긴 리스트 - 각 항목은 이미지의 고유 id, 파일명, 너비, 높이 등의 정보를 포함합니다. `md` 원본과 18개 코드 블록, 17개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 kagglehub, os, shutil, future입니다."
 research_artifacts: "md · 코드 18개 · 실행 17개"
 code_block_count: 18
 execution_block_count: 17
@@ -29,7 +29,7 @@ tags:
   - archive-note
 ---
 
-COCO API : https://github.com/cocodataset/cocoapi. COCO 데이터는 "ID"를 기준으로 파싱을 해야 합니다. images. `md` 원본과 18개 코드 블록, 17개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 kagglehub, os, shutil, future입니다.
+COCO API : https://github.com/cocodataset/cocoapi MS COCO 데이터셋은 약 328000장의 이미지와 80개의 클래스로 이루어져있으나, 워낙 대규모이기 때문에 개와 고양이 클래스를 소규모로 샘플링해 실습을 진행합니다. COCO 데이터는 "ID"를 기준으로 파싱을 해야 합니다. images 각 이미지에 대한 정보가 담긴 리스트 - 각 항목은 이미지의 고유 id, 파일명, 너비, 높이 등의 정보를 포함합니다. `md` 원본과 18개 코드 블록, 17개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 kagglehub, os, shutil, future입니다.
 
 **빠르게 볼 수 있는 포인트**: COCO API, COCO Data, COCO 데이터는 "ID"를 기준으로 파싱을 해야 합니다. images.
 
@@ -53,15 +53,15 @@ COCO API : https://github.com/cocodataset/cocoapi. COCO 데이터는 "ID"를 기
 
 ### COCO Data
 
-COCO API : https://github.com/cocodataset/cocoapi
+COCO API : https://github.com/cocodataset/cocoapi MS COCO 데이터셋은 약 328000장의 이미지와 80개의 클래스로 이루어져있으나, 워낙 대규모이기 때문에 개와 고양이 클래스를 소규모로 샘플링해 실습을 진행합니다.
 
-### 데이터셋
+### COCO Data > 데이터셋
 
-COCO 데이터는 "ID"를 기준으로 파싱을 해야 합니다. images
+COCO 데이터는 "ID"를 기준으로 파싱을 해야 합니다. images 각 이미지에 대한 정보가 담긴 리스트 - 각 항목은 이미지의 고유 id, 파일명, 너비, 높이 등의 정보를 포함합니다.
 
-### Custom Collator가 필요한 이유
+### COCO Data > Custom Collator가 필요한 이유
 
-아래에 기본 collate 함수의 출력과 custom collate를 적용한 최종 출력 형태를 요약했습니다.
+아래에 기본 collate 함수의 출력과 custom collate를 적용한 최종 출력 형태를 요약했습니다. 기본 collate 함수 (원래 형태): - 출력: - 이미지 텐서: 모든 이미지가 동일한 크기라면, 자동으로 스택되어 하나의 텐서로 만들어집니다. 예: (batch_size, channels, height, width) - 타겟(라벨) 텐서/딕셔너리: 동일한 방식으로 스택 또는...
 
 ### Key Step
 
@@ -81,17 +81,11 @@ COCO 데이터는 "ID"를 기준으로 파싱을 해야 합니다. images
 - 왜 이 방식을 쓰는가: CNN은 필터를 공유하며 지역 특징을 반복적으로 추출할 수 있어 이미지 실습의 기본 뼈대로 적합합니다.
 - 원리: 작은 커널이 이미지 위를 이동하며 특징을 뽑고, 층이 깊어질수록 더 추상적인 패턴을 학습합니다.
 
-### 클래스와 객체 모델링
-
-- 왜 필요한가: 코드를 기능별로 나누고 상태를 함께 관리하려면 변수와 함수를 흩어두기보다 객체 단위로 묶는 연습이 필요합니다.
-- 왜 이 방식을 쓰는가: 클래스 기반 구조는 같은 패턴의 동작을 여러 인스턴스에 반복 적용하기 쉬워 기초 문법을 실제 코드 구조로 연결하기 좋습니다.
-- 원리: 클래스는 속성과 메서드를 묶는 설계도이고, 인스턴스는 그 설계도를 바탕으로 생성된 실제 객체입니다.
-
 ## Implementation Flow
 
-1. COCO Data: COCO API : https://github.com/cocodataset/cocoapi
-2. 데이터셋: COCO 데이터는 "ID"를 기준으로 파싱을 해야 합니다. images
-3. Custom Collator가 필요한 이유: 아래에 기본 collate 함수의 출력과 custom collate를 적용한 최종 출력 형태를 요약했습니다.
+1. COCO Data: COCO API : https://github.com/cocodataset/cocoapi MS COCO 데이터셋은 약 328000장의 이미지와 80개의 클래스로 이루어져있으나, 워낙 대규모이기 때문에 개와 고양이 클래스를 소규모로 샘플링해 실습을 진행합니다.
+2. COCO Data > 데이터셋: COCO 데이터는 "ID"를 기준으로 파싱을 해야 합니다. images 각 이미지에 대한 정보가 담긴 리스트 - 각 항목은 이미지의 고유 id, 파일명, 너비, 높이 등의 정보를 포함합니다.
+3. COCO Data > Custom Collator가 필요한 이유: 아래에 기본 collate 함수의 출력과 custom collate를 적용한 최종 출력 형태를 요약했습니다. 기본 collate 함수 (원래 형태): - 출력: - 이미지 텐서: 모든 이미지가 동일한 크기라면, 자동으로 스택되어 하나...
 4. Key Step: "area": 174816.81699840003,
 
 ## Code Highlights

@@ -5,8 +5,8 @@ research_tab: "LLM"
 research_kind: "Archive Note"
 source_title: "3-5 (실습)하이브리드검색_리랭킹"
 source_path: "13_LLM_GenAI/Code_Snippets/3-5 (실습)하이브리드검색_리랭킹.md"
-excerpt: "키워드 검색(Keyword Search)과 의미 기반 검색(Semantic Search)의 장점을 결합하여 검색 정확도를 높이는 기법"
-research_summary: "키워드 검색(Keyword Search)과 의미 기반 검색(Semantic Search)의 장점을 결합하여 검색 정확도를 높이는 기법. BM25 알고리즘이 대표적: 단어의 빈도와 역문서 빈도를 기반으로 작동하며, 정확한 단어 매칭에 강합니다. `ipynb/md` 원본과 10개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 getpass, os, langchain_community, langchain_openai입니다."
+excerpt: "키워드 검색(Keyword Search)과 의미 기반 검색(Semantic Search)의 장점을 결합하여 검색 정확도를 높이는 기법 RAG(Retrieval-Augmented Generation) 시스템 구축 시, 단순히 벡터 검색만 사용할 경우 고유명사나 정확한 용어 매칭이 어려울 수 있는데,..."
+research_summary: "키워드 검색(Keyword Search)과 의미 기반 검색(Semantic Search)의 장점을 결합하여 검색 정확도를 높이는 기법 RAG(Retrieval-Augmented Generation) 시스템 구축 시, 단순히 벡터 검색만 사용할 경우 고유명사나 정확한 용어 매칭이 어려울 수 있는데, 하이브리드 서치는 이를 보완(BM25... Retrieval 단계 (Bi-Encoder) 우리가 지금까지 배운 Vector Search나 BM25입니다. - 특징: 미리 계산된 벡터를 비교하므로 속도가 엄청 빠릅니다. 하지만 질문과 문서의 디테일한 관계를 완벽히 파악하지는 못합니다. (대략적인 유사도) - 비유: 서류 전형 (수천 명의 지원자 중 스펙이 비슷한 50명을 빠르게... `ipynb/md` 원본과 10개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 getpass, os, langchain_community, langchain_openai입니다."
 research_artifacts: "ipynb/md · 코드 10개 · 실행 7개"
 code_block_count: 10
 execution_block_count: 7
@@ -30,7 +30,7 @@ tags:
   - archive-note
 ---
 
-키워드 검색(Keyword Search)과 의미 기반 검색(Semantic Search)의 장점을 결합하여 검색 정확도를 높이는 기법. BM25 알고리즘이 대표적: 단어의 빈도와 역문서 빈도를 기반으로 작동하며, 정확한 단어 매칭에 강합니다. `ipynb/md` 원본과 10개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 getpass, os, langchain_community, langchain_openai입니다.
+키워드 검색(Keyword Search)과 의미 기반 검색(Semantic Search)의 장점을 결합하여 검색 정확도를 높이는 기법 RAG(Retrieval-Augmented Generation) 시스템 구축 시, 단순히 벡터 검색만 사용할 경우 고유명사나 정확한 용어 매칭이 어려울 수 있는데, 하이브리드 서치는 이를 보완(BM25... Retrieval 단계 (Bi-Encoder) 우리가 지금까지 배운 Vector Search나 BM25입니다. - 특징: 미리 계산된 벡터를 비교하므로 속도가 엄청 빠릅니다. 하지만 질문과 문서의 디테일한 관계를 완벽히 파악하지는 못합니다. (대략적인 유사도) - 비유: 서류 전형 (수천 명의 지원자 중 스펙이 비슷한 50명을 빠르게... `ipynb/md` 원본과 10개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 getpass, os, langchain_community, langchain_openai입니다.
 
 **빠르게 볼 수 있는 포인트**: 하이브리드 검색과 리랭킹, 키워드 검색(Keyword Search)과 의미 기반 검색(Semant..., 하이브리드 검색.
 
@@ -52,21 +52,21 @@ tags:
 
 ## What This Note Covers
 
-### 하이브리드 검색
+### 하이브리드 검색과 리랭킹 > 하이브리드 검색
 
-키워드 검색(Keyword Search)과 의미 기반 검색(Semantic Search)의 장점을 결합하여 검색 정확도를 높이는 기법
+키워드 검색(Keyword Search)과 의미 기반 검색(Semantic Search)의 장점을 결합하여 검색 정확도를 높이는 기법 RAG(Retrieval-Augmented Generation) 시스템 구축 시, 단순히 벡터 검색만 사용할 경우 고유명사나 정확한 용어 매칭이 어려울 수 있는데, 하이브리드 서치는 이를 보완(BM25 → 키워드 기반 정확한 검색, Vector Searc...
 
-### 키워드 검색(Sparse Retriever)
+### 하이브리드 검색 > 키워드 검색(Sparse Retriever)
 
 BM25 알고리즘이 대표적: 단어의 빈도와 역문서 빈도를 기반으로 작동하며, 정확한 단어 매칭에 강합니다.
 
-### 의미 검색(Dense Retriever)
+### 하이브리드 검색 > 의미 검색(Dense Retriever)
 
-임베딩(Embedding) 벡터 유사도(Cosine Similarity 등)를 기반: 단어가 달라도 문맥적 의미가 유사한 문서를 찾는 데 강합니다.
+임베딩(Embedding) 벡터 유사도(Cosine Similarity 등)를 기반: 단어가 달라도 문맥적 의미가 유사한 문서를 찾는 데 강합니다. LangChain에서는 EnsembleRetriever 클래스를 사용하여 매우 쉽게 하이브리드 서치를 구현할 수 있습니다. 가장 일반적인 조합은 BM25(키워드)와 VectorStore(의미)의 결합입니다.
 
-### 리랭킹(Re-ranking): "속도 vs 정확도"의 타협점
+### 하이브리드 검색과 리랭킹 > 리랭킹(Re-ranking): "속도 vs 정확도"의 타협점
 
-Retrieval 단계 (Bi-Encoder)
+Retrieval 단계 (Bi-Encoder) 우리가 지금까지 배운 Vector Search나 BM25입니다. - 특징: 미리 계산된 벡터를 비교하므로 속도가 엄청 빠릅니다. 하지만 질문과 문서의 디테일한 관계를 완벽히 파악하지는 못합니다. (대략적인 유사도) - 비유: 서류 전형 (수천 명의 지원자 중 스펙이 비슷한 50명을 빠르게 추려냄)
 
 ## Why This Matters
 
@@ -90,10 +90,10 @@ Retrieval 단계 (Bi-Encoder)
 
 ## Implementation Flow
 
-1. 하이브리드 검색: 키워드 검색(Keyword Search)과 의미 기반 검색(Semantic Search)의 장점을 결합하여 검색 정확도를 높이는 기법
-2. 키워드 검색(Sparse Retriever): BM25 알고리즘이 대표적: 단어의 빈도와 역문서 빈도를 기반으로 작동하며, 정확한 단어 매칭에 강합니다.
-3. 의미 검색(Dense Retriever): 임베딩(Embedding) 벡터 유사도(Cosine Similarity 등)를 기반: 단어가 달라도 문맥적 의미가 유사한 문서를 찾는 데 강합니다.
-4. 리랭킹(Re-ranking): "속도 vs 정확도"의 타협점: Retrieval 단계 (Bi-Encoder)
+1. 하이브리드 검색과 리랭킹 > 하이브리드 검색: 키워드 검색(Keyword Search)과 의미 기반 검색(Semantic Search)의 장점을 결합하여 검색 정확도를 높이는 기법 RAG(Retrieval-Augmented Generation) 시스템 구축 시, 단순히 벡터 검색만 사용할 경우 고유...
+2. 하이브리드 검색 > 키워드 검색(Sparse Retriever): BM25 알고리즘이 대표적: 단어의 빈도와 역문서 빈도를 기반으로 작동하며, 정확한 단어 매칭에 강합니다.
+3. 하이브리드 검색 > 의미 검색(Dense Retriever): 임베딩(Embedding) 벡터 유사도(Cosine Similarity 등)를 기반: 단어가 달라도 문맥적 의미가 유사한 문서를 찾는 데 강합니다. LangChain에서는 EnsembleRetriever 클래스를 사용하여 매우 쉽게 하이...
+4. 하이브리드 검색과 리랭킹 > 리랭킹(Re-ranking): "속도 vs 정확도"의 타협점: Retrieval 단계 (Bi-Encoder) 우리가 지금까지 배운 Vector Search나 BM25입니다. - 특징: 미리 계산된 벡터를 비교하므로 속도가 엄청 빠릅니다. 하지만 질문과 문서의 디테일한 관...
 
 ## Code Highlights
 

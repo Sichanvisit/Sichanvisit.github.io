@@ -5,8 +5,8 @@ research_tab: "DL"
 research_kind: "Archive Note"
 source_title: "(실습)Segmentation_데이터다루기"
 source_path: "12_Deep_Learning/Code_Snippets/(실습)Segmentation_데이터다루기.md"
-excerpt: "하나의 JSON 파일 - 모든 이미지 메타데이터, 객체 Annotation, 카테고리, 라이선스 정보가 하나의 JSON 파일(예: instances_train2017.json 또는 instances_val2017.json)에 저장됨"
-research_summary: "하나의 JSON 파일 - 모든 이미지 메타데이터, 객체 Annotation, 카테고리, 라이선스 정보가 하나의 JSON 파일(예: instances_train2017.json 또는 instances_val2017.json)에 저장됨. 바운딩 박스 (Bounding Box): - 객체의 위치와 크기를 나타내는 사각형 정보. `md` 원본과 47개 코드 블록, 41개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 pycocotools, numpy, os, json입니다."
+excerpt: "하나의 JSON 파일 - 모든 이미지 메타데이터, 객체 Annotation, 카테고리, 라이선스 정보가 하나의 JSON 파일(예: instances_train2017.json 또는 instances_val2017.json)에 저장됨 주요 키 구성 - images: 각 이미지의 파일명, 고유 ID,..."
+research_summary: "하나의 JSON 파일 - 모든 이미지 메타데이터, 객체 Annotation, 카테고리, 라이선스 정보가 하나의 JSON 파일(예: instances_train2017.json 또는 instances_val2017.json)에 저장됨 주요 키 구성 - images: 각 이미지의 파일명, 고유 ID, 해상도 등의 메타데이터 - annot... 바운딩 박스 (Bounding Box): - 객체의 위치와 크기를 나타내는 사각형 정보 Instance Segmentation: - 객체의 경계를 보다 세밀하게 표현하기 위해 polygon(다각형) 또는 마스크 형태의 정보 제공. `md` 원본과 47개 코드 블록, 41개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 pycocotools, numpy, os, json입니다."
 research_artifacts: "md · 코드 47개 · 실행 41개"
 code_block_count: 47
 execution_block_count: 41
@@ -29,7 +29,7 @@ tags:
   - archive-note
 ---
 
-하나의 JSON 파일 - 모든 이미지 메타데이터, 객체 Annotation, 카테고리, 라이선스 정보가 하나의 JSON 파일(예: instances_train2017.json 또는 instances_val2017.json)에 저장됨. 바운딩 박스 (Bounding Box): - 객체의 위치와 크기를 나타내는 사각형 정보. `md` 원본과 47개 코드 블록, 41개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 pycocotools, numpy, os, json입니다.
+하나의 JSON 파일 - 모든 이미지 메타데이터, 객체 Annotation, 카테고리, 라이선스 정보가 하나의 JSON 파일(예: instances_train2017.json 또는 instances_val2017.json)에 저장됨 주요 키 구성 - images: 각 이미지의 파일명, 고유 ID, 해상도 등의 메타데이터 - annot... 바운딩 박스 (Bounding Box): - 객체의 위치와 크기를 나타내는 사각형 정보 Instance Segmentation: - 객체의 경계를 보다 세밀하게 표현하기 위해 polygon(다각형) 또는 마스크 형태의 정보 제공. `md` 원본과 47개 코드 블록, 41개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 pycocotools, numpy, os, json입니다.
 
 **빠르게 볼 수 있는 포인트**: 하나의 JSON 파일 - 모든 이미지 메타데이터, 객체 Annotati..., 데이터 구조 이해, 바운딩 박스 (Bounding Box).
 
@@ -53,19 +53,19 @@ tags:
 
 ### 데이터 구조 이해
 
-하나의 JSON 파일 - 모든 이미지 메타데이터, 객체 Annotation, 카테고리, 라이선스 정보가 하나의 JSON 파일(예: instances_train2017.json 또는 instances_val2017.json)에 저장됨
+하나의 JSON 파일 - 모든 이미지 메타데이터, 객체 Annotation, 카테고리, 라이선스 정보가 하나의 JSON 파일(예: instances_train2017.json 또는 instances_val2017.json)에 저장됨 주요 키 구성 - images: 각 이미지의 파일명, 고유 ID, 해상도 등의 메타데이터 - annotations: 각 이미지에 포함된 객체의 Annotat...
 
 ### Annotation의 유형
 
-바운딩 박스 (Bounding Box): - 객체의 위치와 크기를 나타내는 사각형 정보
+바운딩 박스 (Bounding Box): - 객체의 위치와 크기를 나타내는 사각형 정보 Instance Segmentation: - 객체의 경계를 보다 세밀하게 표현하기 위해 polygon(다각형) 또는 마스크 형태의 정보 제공
 
 ### 데이터셋 분할 및 버전
 
-분할 (Train/Val/Test): - 학습, 검증, 평가 용도로 분리되어 있으며, 실습 시 데이터 분할에 따라 적절한 셋을 사용
+분할 (Train/Val/Test): - 학습, 검증, 평가 용도로 분리되어 있으며, 실습 시 데이터 분할에 따라 적절한 셋을 사용 버전 차이: - 2014, 2017 등 여러 버전이 있으며, 각 버전마다 이미지 및 Annotation 수가 다를 수 있음
 
 ### COCO API 활용
 
-pycocotools 라이브러리: - COCO 데이터를 쉽게 로드하고 탐색, 시각화할 수 있도록 도와주는 API 제공 - 설치 시 pip보다 conda 또는 GitHub 소스코드를 이용하는 방법 추천
+pycocotools 라이브러리: - COCO 데이터를 쉽게 로드하고 탐색, 시각화할 수 있도록 도와주는 API 제공 - 설치 시 pip보다 conda 또는 GitHub 소스코드를 이용하는 방법 추천 주요 기능 - COCO() 생성자를 통해 JSON 파일을 로드 - getCatIds(), loadCats(): 카테고리 관련 정보 확인 - getImgIds(), loadImgs(): 이미...
 
 ## Why This Matters
 
@@ -89,10 +89,10 @@ pycocotools 라이브러리: - COCO 데이터를 쉽게 로드하고 탐색, 시
 
 ## Implementation Flow
 
-1. 데이터 구조 이해: 하나의 JSON 파일 - 모든 이미지 메타데이터, 객체 Annotation, 카테고리, 라이선스 정보가 하나의 JSON 파일(예: instances_train2017.json 또는 instances_val2017.json)에 저장됨
-2. Annotation의 유형: 바운딩 박스 (Bounding Box): - 객체의 위치와 크기를 나타내는 사각형 정보
-3. 데이터셋 분할 및 버전: 분할 (Train/Val/Test): - 학습, 검증, 평가 용도로 분리되어 있으며, 실습 시 데이터 분할에 따라 적절한 셋을 사용
-4. COCO API 활용: pycocotools 라이브러리: - COCO 데이터를 쉽게 로드하고 탐색, 시각화할 수 있도록 도와주는 API 제공 - 설치 시 pip보다 conda 또는 GitHub 소스코드를 이용하는 방법 추천
+1. 데이터 구조 이해: 하나의 JSON 파일 - 모든 이미지 메타데이터, 객체 Annotation, 카테고리, 라이선스 정보가 하나의 JSON 파일(예: instances_train2017.json 또는 instances_val2017.json)에 저장됨 주요 키 구성 - images: 각 이미지의 파...
+2. Annotation의 유형: 바운딩 박스 (Bounding Box): - 객체의 위치와 크기를 나타내는 사각형 정보 Instance Segmentation: - 객체의 경계를 보다 세밀하게 표현하기 위해 polygon(다각형) 또는 마스크 형태의 정보 제공
+3. 데이터셋 분할 및 버전: 분할 (Train/Val/Test): - 학습, 검증, 평가 용도로 분리되어 있으며, 실습 시 데이터 분할에 따라 적절한 셋을 사용 버전 차이: - 2014, 2017 등 여러 버전이 있으며, 각 버전마다 이미지 및 Annotation 수가 다를 수 있음
+4. COCO API 활용: pycocotools 라이브러리: - COCO 데이터를 쉽게 로드하고 탐색, 시각화할 수 있도록 도와주는 API 제공 - 설치 시 pip보다 conda 또는 GitHub 소스코드를 이용하는 방법 추천 주요 기능 - COCO() 생성자를 통해 JSON 파일을 로드 - getCa...
 
 ## Code Highlights
 

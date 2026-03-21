@@ -5,8 +5,8 @@ research_tab: "DL"
 research_kind: "Mission"
 source_title: "Mission_5_강사공유"
 source_path: "12_Deep_Learning/Code_Snippets/Mission_5_강사공유.md"
-excerpt: "파일 위치 주소 관련 : os - torch : torch, torch.nn, torch.optim"
-research_summary: "파일 위치 주소 관련 : os - torch : torch, torch.nn, torch.optim. torch.nn.functional - torch.utils.data : Dataset, DataLoader, random_split - torchvision : torchvision.transform, v2. * CUDA gpu가 있는 경우 cuda로 디바이스 설정 * mac - Apple 실리콘의 gpu 사용을 위해 mps 설정추가. `md` 원본과 44개 코드 블록, 12개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, torch, numpy, cv2입니다."
+excerpt: "num_images_in_item = len(dataset[index]) fig, axes = plt.subplots(num_images_to_show, num_images_in_item, figsize=(num_images_in_item * 5, num_images_to_show * 3)). if..."
+research_summary: "num_images_in_item = len(dataset[index]) fig, axes = plt.subplots(num_images_to_show, num_images_in_item, figsize=(num_images_in_item * 5, num_images_to_show * 3)). if num_images_to_show == 1 and num_images_in_item == 1: axes = np.array([[axes]]) elif num_images_to_show == 1: axes = np.array([axes]) elif num_images_in_item == 1: axes = np.array(axes)... `md` 원본과 44개 코드 블록, 12개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, torch, numpy, cv2입니다."
 research_artifacts: "md · 코드 44개 · 실행 12개"
 code_block_count: 44
 execution_block_count: 12
@@ -29,7 +29,7 @@ tags:
   - mission
 ---
 
-파일 위치 주소 관련 : os - torch : torch, torch.nn, torch.optim. torch.nn.functional - torch.utils.data : Dataset, DataLoader, random_split - torchvision : torchvision.transform, v2. * CUDA gpu가 있는 경우 cuda로 디바이스 설정 * mac - Apple 실리콘의 gpu 사용을 위해 mps 설정추가. `md` 원본과 44개 코드 블록, 12개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, torch, numpy, cv2입니다.
+num_images_in_item = len(dataset[index]) fig, axes = plt.subplots(num_images_to_show, num_images_in_item, figsize=(num_images_in_item * 5, num_images_to_show * 3)). if num_images_to_show == 1 and num_images_in_item == 1: axes = np.array([[axes]]) elif num_images_to_show == 1: axes = np.array([axes]) elif num_images_in_item == 1: axes = np.array(axes)... `md` 원본과 44개 코드 블록, 12개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, torch, numpy, cv2입니다.
 
 **빠르게 볼 수 있는 포인트**: 사전처리, 파일 위치 주소 관련, import 추가.
 
@@ -51,21 +51,21 @@ tags:
 
 ## What This Note Covers
 
-### import 추가
+### 사전처리 > import 추가
 
 파일 위치 주소 관련 : os - torch : torch, torch.nn, torch.optim. torch.nn.functional - torch.utils.data : Dataset, DataLoader, random_split - torchvision : torchvision.transform, v2
 
-### device 설정
+### 사전처리 > device 설정
 
 * CUDA gpu가 있는 경우 cuda로 디바이스 설정 * mac - Apple 실리콘의 gpu 사용을 위해 mps 설정추가
 
-### 데이터 설정
+### 데이터 처리 > 데이터 설정
 
 * 데이터 매인 폴더와 데이터 파일 리스트 생성 * 데이터 길이와 내용 일부 확인 * Train dataset 크기와 Val dataset 크기 설정
 
-### Image Size check 함수
+### 데이터 처리 > Image Size check 함수
 
-* 이미지 file 리스트를 입력해 이미지의 shape 리스트 확인 * unique를 통해 중복 제거
+* 이미지 file 리스트를 입력해 이미지의 shape 리스트 확인 * unique를 통해 중복 제거 def check_image_shapes(image_paths): shapes = [] for path in image_paths: img = cv2.imread(path, cv2.IMREAD_GRAYSCALE) if img is not None: shapes.append(img.sha...
 
 ## Why This Matters
 
@@ -75,18 +75,12 @@ tags:
 - 왜 이 방식을 쓰는가: Dataset/DataLoader 구조는 데이터 읽기, 변환, 배치 처리를 분리해 코드 재사용성과 실험 반복성을 높여줍니다.
 - 원리: 각 샘플을 Dataset이 제공하고, DataLoader가 이를 배치로 묶어 셔플·병렬 로딩·collate를 담당합니다.
 
-### 클래스와 객체 모델링
-
-- 왜 필요한가: 코드를 기능별로 나누고 상태를 함께 관리하려면 변수와 함수를 흩어두기보다 객체 단위로 묶는 연습이 필요합니다.
-- 왜 이 방식을 쓰는가: 클래스 기반 구조는 같은 패턴의 동작을 여러 인스턴스에 반복 적용하기 쉬워 기초 문법을 실제 코드 구조로 연결하기 좋습니다.
-- 원리: 클래스는 속성과 메서드를 묶는 설계도이고, 인스턴스는 그 설계도를 바탕으로 생성된 실제 객체입니다.
-
 ## Implementation Flow
 
-1. import 추가: 파일 위치 주소 관련 : os - torch : torch, torch.nn, torch.optim. torch.nn.functional - torch.utils.data : Dataset, DataLoader, random_split - torchvision : torchvis...
-2. device 설정: * CUDA gpu가 있는 경우 cuda로 디바이스 설정 * mac - Apple 실리콘의 gpu 사용을 위해 mps 설정추가
-3. 데이터 설정: * 데이터 매인 폴더와 데이터 파일 리스트 생성 * 데이터 길이와 내용 일부 확인 * Train dataset 크기와 Val dataset 크기 설정
-4. Image Size check 함수: * 이미지 file 리스트를 입력해 이미지의 shape 리스트 확인 * unique를 통해 중복 제거
+1. 사전처리 > import 추가: 파일 위치 주소 관련 : os - torch : torch, torch.nn, torch.optim. torch.nn.functional - torch.utils.data : Dataset, DataLoader, random_split - torchvision : t...
+2. 사전처리 > device 설정: * CUDA gpu가 있는 경우 cuda로 디바이스 설정 * mac - Apple 실리콘의 gpu 사용을 위해 mps 설정추가
+3. 데이터 처리 > 데이터 설정: * 데이터 매인 폴더와 데이터 파일 리스트 생성 * 데이터 길이와 내용 일부 확인 * Train dataset 크기와 Val dataset 크기 설정
+4. 데이터 처리 > Image Size check 함수: * 이미지 file 리스트를 입력해 이미지의 shape 리스트 확인 * unique를 통해 중복 제거 def check_image_shapes(image_paths): shapes = [] for path in image_paths: img =...
 
 ## Code Highlights
 

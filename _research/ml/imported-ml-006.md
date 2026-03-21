@@ -1,5 +1,5 @@
 ---
-title: "코딩실습6 9.기본 지도학습 알고리즘들 (선형회귀 - 사이킷런)"
+title: "9.기본 지도학습 알고리즘들 (선형회귀 - 사이킷런)"
 date: 2026-03-08
 research_tab: "ML"
 research_kind: "Practice"

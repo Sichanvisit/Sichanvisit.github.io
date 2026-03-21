@@ -1,5 +1,5 @@
 ---
-title: "3 Bike Rental System - AI 5기 강사 답안"
+title: "3 Bike Rental System"
 date: 2026-03-08
 research_tab: "ML"
 research_kind: "Archive Note"

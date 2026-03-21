@@ -1,5 +1,5 @@
 ---
-title: "08 코드실습2 2.객체와 클래스"
+title: "2.객체와 클래스"
 date: 2026-03-08
 research_tab: "ML"
 research_kind: "Practice"

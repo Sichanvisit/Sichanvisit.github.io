@@ -5,8 +5,8 @@ research_tab: "DL"
 research_kind: "Shared Note"
 source_title: "4-1_PyTorch_DNN기초 - 공유"
 source_path: "12_Deep_Learning/Code_Snippets/4-1_PyTorch_DNN기초 - 공유.md"
-excerpt: "각 레이어의 노드는 100개 일때, 아래 모델들을 실험해보세요"
-research_summary: "각 레이어의 노드는 100개 일때, 아래 모델들을 실험해보세요. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 20개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, sklearn, matplotlib, torchmetrics입니다."
+excerpt: "torchmetrics. 각 레이어의 노드는 100개 일때, 아래 모델들을 실험해보세요 HiddenLayer 1개, activation sigmoid 함수 - HiddenLayer 3개, activation sigmoid 함수 - HiddenLayer 10개, activation sigmoid 함수..."
+research_summary: "torchmetrics. 각 레이어의 노드는 100개 일때, 아래 모델들을 실험해보세요 HiddenLayer 1개, activation sigmoid 함수 - HiddenLayer 3개, activation sigmoid 함수 - HiddenLayer 10개, activation sigmoid 함수 - HiddenLayer 10개, activation rel... `md` 원본과 20개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, sklearn, matplotlib, torchmetrics입니다."
 research_artifacts: "md · 코드 20개 · 실행 13개"
 code_block_count: 20
 execution_block_count: 13
@@ -29,7 +29,7 @@ tags:
   - shared-note
 ---
 
-각 레이어의 노드는 100개 일때, 아래 모델들을 실험해보세요. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 20개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, sklearn, matplotlib, torchmetrics입니다.
+torchmetrics. 각 레이어의 노드는 100개 일때, 아래 모델들을 실험해보세요 HiddenLayer 1개, activation sigmoid 함수 - HiddenLayer 3개, activation sigmoid 함수 - HiddenLayer 10개, activation sigmoid 함수 - HiddenLayer 10개, activation rel... `md` 원본과 20개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, sklearn, matplotlib, torchmetrics입니다.
 
 **빠르게 볼 수 있는 포인트**: 실제 데이터 모델링, 다중분류, 각 레이어의 노드는 100개 일때, 아래 모델들을 실험해보세요.
 
@@ -51,9 +51,13 @@ tags:
 
 ## What This Note Covers
 
+### 실제 데이터 모델링
+
+torchmetrics
+
 ### 문제: 실험하기
 
-각 레이어의 노드는 100개 일때, 아래 모델들을 실험해보세요
+각 레이어의 노드는 100개 일때, 아래 모델들을 실험해보세요 HiddenLayer 1개, activation sigmoid 함수 - HiddenLayer 3개, activation sigmoid 함수 - HiddenLayer 10개, activation sigmoid 함수 - HiddenLayer 10개, activation relu 함수
 
 ### Key Step
 
@@ -62,10 +66,6 @@ Step 3. 모델 학습시키기
 ### Key Step
 
 Accuracy metric 객체 생성
-
-### Key Step
-
-데이터 분할: train, validation, test
 
 ## Why This Matters
 
@@ -81,18 +81,12 @@ Accuracy metric 객체 생성
 - 왜 이 방식을 쓰는가: optimizer와 scheduler를 명시적으로 두면 학습률 변화와 갱신 방식을 실험별로 비교하기 쉬워집니다.
 - 원리: 예측값과 정답의 차이로 손실을 계산하고, 역전파로 기울기를 구한 뒤 optimizer가 가중치를 업데이트합니다.
 
-### 클래스와 객체 모델링
-
-- 왜 필요한가: 코드를 기능별로 나누고 상태를 함께 관리하려면 변수와 함수를 흩어두기보다 객체 단위로 묶는 연습이 필요합니다.
-- 왜 이 방식을 쓰는가: 클래스 기반 구조는 같은 패턴의 동작을 여러 인스턴스에 반복 적용하기 쉬워 기초 문법을 실제 코드 구조로 연결하기 좋습니다.
-- 원리: 클래스는 속성과 메서드를 묶는 설계도이고, 인스턴스는 그 설계도를 바탕으로 생성된 실제 객체입니다.
-
 ## Implementation Flow
 
-1. 문제: 실험하기: 각 레이어의 노드는 100개 일때, 아래 모델들을 실험해보세요
-2. Key Step: Step 3. 모델 학습시키기
-3. Key Step: Accuracy metric 객체 생성
-4. Key Step: 데이터 분할: train, validation, test
+1. 실제 데이터 모델링: torchmetrics
+2. 문제: 실험하기: 각 레이어의 노드는 100개 일때, 아래 모델들을 실험해보세요 HiddenLayer 1개, activation sigmoid 함수 - HiddenLayer 3개, activation sigmoid 함수 - HiddenLayer 10개, activation sigmoid 함수 - H...
+3. Key Step: Step 3. 모델 학습시키기
+4. Key Step: Accuracy metric 객체 생성
 
 ## Code Highlights
 

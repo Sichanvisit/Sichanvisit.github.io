@@ -5,7 +5,7 @@ research_tab: "DL"
 research_kind: "Archive Note"
 source_title: "(실습)AutoEncoder"
 source_path: "12_Deep_Learning/Code_Snippets/(실습)AutoEncoder.md"
-excerpt: "오토인코더 구현 (MNIST), 기본 전처리 + 데이터 로드, 모델 생성 및 학습 중심으로 구현 과정을 정리한 AutoEncoder 기록입니다"
+excerpt: "오토인코더 구현 (MNIST), 기본 전처리 + 데이터 로드, 모델 생성 및 학습 중심으로 구현 과정을 정리한 AutoEncoder 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 22개 코..."
 research_summary: "오토인코더 구현 (MNIST), 기본 전처리 + 데이터 로드, 모델 생성 및 학습 중심으로 구현 과정을 정리한 AutoEncoder 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 22개 코드 블록, 21개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, matplotlib, torch, torchvision입니다."
 research_artifacts: "md · 코드 22개 · 실행 21개"
 code_block_count: 22
@@ -64,12 +64,6 @@ tags:
 - 왜 필요한가: 모델 성능 이전에 입력이 일정한 형식으로 잘 들어가야 학습과 평가가 안정적으로 반복됩니다.
 - 왜 이 방식을 쓰는가: Dataset/DataLoader 구조는 데이터 읽기, 변환, 배치 처리를 분리해 코드 재사용성과 실험 반복성을 높여줍니다.
 - 원리: 각 샘플을 Dataset이 제공하고, DataLoader가 이를 배치로 묶어 셔플·병렬 로딩·collate를 담당합니다.
-
-### 클래스와 객체 모델링
-
-- 왜 필요한가: 코드를 기능별로 나누고 상태를 함께 관리하려면 변수와 함수를 흩어두기보다 객체 단위로 묶는 연습이 필요합니다.
-- 왜 이 방식을 쓰는가: 클래스 기반 구조는 같은 패턴의 동작을 여러 인스턴스에 반복 적용하기 쉬워 기초 문법을 실제 코드 구조로 연결하기 좋습니다.
-- 원리: 클래스는 속성과 메서드를 묶는 설계도이고, 인스턴스는 그 설계도를 바탕으로 생성된 실제 객체입니다.
 
 ## Implementation Flow
 
