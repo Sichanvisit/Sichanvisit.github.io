@@ -29,49 +29,35 @@ tags:
 
 ## 글 한눈에 보기
 
-<div class="research-compact-wrap research-compact-wrap--intro">
-  <table class="research-compact-table research-compact-table--intro">
-    <colgroup>
-      <col class="research-compact-table__col research-compact-table__col--label">
-      <col class="research-compact-table__col research-compact-table__col--value">
-    </colgroup>
-    <thead>
-      <tr>
-        <th>항목</th>
-        <th>내용</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">문제 설정</th>
-        <td>C: cost (오분류에 대한 패널티 강도), gamma: 커널 곡률 조절</td>
-      </tr>
-      <tr>
-        <th scope="row">원본 구조</th>
-        <td>원본 마크다운의 큰 섹션 흐름을 기준으로 이 실습을 다시 읽을 수 있게 정리했습니다.</td>
-      </tr>
-      <tr>
-        <th scope="row">데이터 맥락</th>
-        <td>원본 노트에서 데이터를 설명한 부분을 기준으로 실습 맥락을 정리했습니다.</td>
-      </tr>
-      <tr>
-        <th scope="row">주요 장</th>
-        <td>객체지향 설계 · 함수 분해와 로직 구성</td>
-      </tr>
-      <tr>
-        <th scope="row">구현 흐름</th>
-        <td>파생 변수 추가 -&gt; SVM 모델 학습 -&gt; 데이터 분포 시각화</td>
-      </tr>
-      <tr>
-        <th scope="row">자료</th>
-        <td>ipynb / md · 코드 8 · 실행 8</td>
-      </tr>
-      <tr>
-        <th scope="row">주요 스택</th>
-        <td>numpy, matplotlib, sklearn</td>
-      </tr>
-    </tbody>
-  </table>
+<div class="research-overview research-overview--intro">
+  <div class="research-overview__row">
+    <div class="research-overview__label">문제 설정</div>
+    <div class="research-overview__value">C: cost (오분류에 대한 패널티 강도), gamma: 커널 곡률 조절</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">원본 구조</div>
+    <div class="research-overview__value">원본 마크다운의 큰 섹션 흐름을 기준으로 이 실습을 다시 읽을 수 있게 정리했습니다.</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">데이터 맥락</div>
+    <div class="research-overview__value">원본 노트에서 데이터를 설명한 부분을 기준으로 실습 맥락을 정리했습니다.</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">주요 장</div>
+    <div class="research-overview__value">객체지향 설계 · 함수 분해와 로직 구성</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">구현 흐름</div>
+    <div class="research-overview__value">파생 변수 추가 -&gt; SVM 모델 학습 -&gt; 데이터 분포 시각화</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">자료</div>
+    <div class="research-overview__value">ipynb / md · 코드 8 · 실행 8</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">주요 스택</div>
+    <div class="research-overview__value">numpy, matplotlib, sklearn</div>
+  </div>
 </div>
 
 ## 원본 노트 흐름

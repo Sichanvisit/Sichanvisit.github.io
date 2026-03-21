@@ -31,49 +31,35 @@ tags:
 
 ## 글 한눈에 보기
 
-<div class="research-compact-wrap research-compact-wrap--intro">
-  <table class="research-compact-table research-compact-table--intro">
-    <colgroup>
-      <col class="research-compact-table__col research-compact-table__col--label">
-      <col class="research-compact-table__col research-compact-table__col--value">
-    </colgroup>
-    <thead>
-      <tr>
-        <th>항목</th>
-        <th>내용</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">문제 설정</th>
-        <td>코드실습1 1. 파이썬 응용하기에서 모듈 기본 3가지, 파일 입력과 문자 수정 흐름을 직접 따라가며 구현했습니다.</td>
-      </tr>
-      <tr>
-        <th scope="row">원본 구조</th>
-        <td>모듈 기본 3가지 -&gt; 파일 입력과 문자 수정</td>
-      </tr>
-      <tr>
-        <th scope="row">데이터 맥락</th>
-        <td>특정 데이터셋 설명보다 모듈 기본 3가지, 파일 입력과 문자 수정 같은 실습 흐름을 직접 익히는 데 초점을 둔 노트입니다.</td>
-      </tr>
-      <tr>
-        <th scope="row">주요 장</th>
-        <td>모듈 기본 3가지 · 파일 입력과 문자 수정</td>
-      </tr>
-      <tr>
-        <th scope="row">구현 흐름</th>
-        <td>(2) datetime -&gt; 파일 입력과 문자 수정 -&gt; (1) time</td>
-      </tr>
-      <tr>
-        <th scope="row">자료</th>
-        <td>ipynb / md · 코드 26 · 실행 25</td>
-      </tr>
-      <tr>
-        <th scope="row">주요 스택</th>
-        <td>time, datetime, random, google</td>
-      </tr>
-    </tbody>
-  </table>
+<div class="research-overview research-overview--intro">
+  <div class="research-overview__row">
+    <div class="research-overview__label">문제 설정</div>
+    <div class="research-overview__value">코드실습1 1. 파이썬 응용하기에서 모듈 기본 3가지, 파일 입력과 문자 수정 흐름을 직접 따라가며 구현했습니다.</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">원본 구조</div>
+    <div class="research-overview__value">모듈 기본 3가지 -&gt; 파일 입력과 문자 수정</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">데이터 맥락</div>
+    <div class="research-overview__value">특정 데이터셋 설명보다 모듈 기본 3가지, 파일 입력과 문자 수정 같은 실습 흐름을 직접 익히는 데 초점을 둔 노트입니다.</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">주요 장</div>
+    <div class="research-overview__value">모듈 기본 3가지 · 파일 입력과 문자 수정</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">구현 흐름</div>
+    <div class="research-overview__value">(2) datetime -&gt; 파일 입력과 문자 수정 -&gt; (1) time</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">자료</div>
+    <div class="research-overview__value">ipynb / md · 코드 26 · 실행 25</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">주요 스택</div>
+    <div class="research-overview__value">time, datetime, random, google</div>
+  </div>
 </div>
 
 ## 원본 노트 흐름

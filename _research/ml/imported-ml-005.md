@@ -32,49 +32,35 @@ tags:
 
 ## 글 한눈에 보기
 
-<div class="research-compact-wrap research-compact-wrap--intro">
-  <table class="research-compact-table research-compact-table--intro">
-    <colgroup>
-      <col class="research-compact-table__col research-compact-table__col--label">
-      <col class="research-compact-table__col research-compact-table__col--value">
-    </colgroup>
-    <thead>
-      <tr>
-        <th>항목</th>
-        <th>내용</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">문제 설정</th>
-        <td>코드실습5 7.DF 마스터하기에서 데이터 확인, df 기본기, 데이터 다듬기 흐름을 직접 따라가며 구현했습니다.</td>
-      </tr>
-      <tr>
-        <th scope="row">원본 구조</th>
-        <td>데이터 확인 -&gt; df 기본기 -&gt; 데이터 다듬기 -&gt; 문자 데이터 가공 -&gt; 정규화/표준화</td>
-      </tr>
-      <tr>
-        <th scope="row">데이터 맥락</th>
-        <td>Sample Superstore 데이터 설명 (교육·실습용으로 자주 쓰이는 판매 주문 데이터셋) 출처: Tableau, Kaggle 등 데이터 시각화·분석 튜토리얼에 널리 사용 - 미국 내 특정 기간 동안의 소매 판매 기...</td>
-      </tr>
-      <tr>
-        <th scope="row">주요 장</th>
-        <td>데이터 확인 · df 기본기 · 데이터 다듬기 · 문자 데이터 가공</td>
-      </tr>
-      <tr>
-        <th scope="row">구현 흐름</th>
-        <td>CSV 데이터 불러오기 -&gt; 데이터 전처리 -&gt; 정규화/표준화</td>
-      </tr>
-      <tr>
-        <th scope="row">자료</th>
-        <td>ipynb / md · 코드 83 · 실행 69</td>
-      </tr>
-      <tr>
-        <th scope="row">주요 스택</th>
-        <td>google, pandas, seaborn, matplotlib 외 1</td>
-      </tr>
-    </tbody>
-  </table>
+<div class="research-overview research-overview--intro">
+  <div class="research-overview__row">
+    <div class="research-overview__label">문제 설정</div>
+    <div class="research-overview__value">코드실습5 7.DF 마스터하기에서 데이터 확인, df 기본기, 데이터 다듬기 흐름을 직접 따라가며 구현했습니다.</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">원본 구조</div>
+    <div class="research-overview__value">데이터 확인 -&gt; df 기본기 -&gt; 데이터 다듬기 -&gt; 문자 데이터 가공 -&gt; 정규화/표준화</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">데이터 맥락</div>
+    <div class="research-overview__value">Sample Superstore 데이터 설명 (교육·실습용으로 자주 쓰이는 판매 주문 데이터셋) 출처: Tableau, Kaggle 등 데이터 시각화·분석 튜토리얼에 널리 사용 - 미국 내 특정 기간 동안의 소매 판매 기...</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">주요 장</div>
+    <div class="research-overview__value">데이터 확인 · df 기본기 · 데이터 다듬기 · 문자 데이터 가공</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">구현 흐름</div>
+    <div class="research-overview__value">CSV 데이터 불러오기 -&gt; 데이터 전처리 -&gt; 정규화/표준화</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">자료</div>
+    <div class="research-overview__value">ipynb / md · 코드 83 · 실행 69</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">주요 스택</div>
+    <div class="research-overview__value">google, pandas, seaborn, matplotlib 외 1</div>
+  </div>
 </div>
 
 ## 원본 노트 흐름

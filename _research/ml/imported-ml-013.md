@@ -29,49 +29,35 @@ tags:
 
 ## 글 한눈에 보기
 
-<div class="research-compact-wrap research-compact-wrap--intro">
-  <table class="research-compact-table research-compact-table--intro">
-    <colgroup>
-      <col class="research-compact-table__col research-compact-table__col--label">
-      <col class="research-compact-table__col research-compact-table__col--value">
-    </colgroup>
-    <thead>
-      <tr>
-        <th>항목</th>
-        <th>내용</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">문제 설정</th>
-        <td>코딩실습13 10.결정트리와 앙상블(XGBoost)에서 XGBoost 회귀, XGBoost 분류 흐름을 직접 따라가며 구현했습니다.</td>
-      </tr>
-      <tr>
-        <th scope="row">원본 구조</th>
-        <td>XGBoost 회귀 -&gt; XGBoost 분류</td>
-      </tr>
-      <tr>
-        <th scope="row">데이터 맥락</th>
-        <td>특정 데이터셋 설명보다 XGBoost 회귀, XGBoost 분류 같은 실습 흐름을 직접 익히는 데 초점을 둔 노트입니다.</td>
-      </tr>
-      <tr>
-        <th scope="row">주요 장</th>
-        <td>XGBoost 회귀 · XGBoost 분류</td>
-      </tr>
-      <tr>
-        <th scope="row">구현 흐름</th>
-        <td>XGBoost 회귀 -&gt; XGBoost 분류</td>
-      </tr>
-      <tr>
-        <th scope="row">자료</th>
-        <td>ipynb / md · 코드 12 · 실행 11</td>
-      </tr>
-      <tr>
-        <th scope="row">주요 스택</th>
-        <td>sklearn, xgboost, numpy</td>
-      </tr>
-    </tbody>
-  </table>
+<div class="research-overview research-overview--intro">
+  <div class="research-overview__row">
+    <div class="research-overview__label">문제 설정</div>
+    <div class="research-overview__value">코딩실습13 10.결정트리와 앙상블(XGBoost)에서 XGBoost 회귀, XGBoost 분류 흐름을 직접 따라가며 구현했습니다.</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">원본 구조</div>
+    <div class="research-overview__value">XGBoost 회귀 -&gt; XGBoost 분류</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">데이터 맥락</div>
+    <div class="research-overview__value">특정 데이터셋 설명보다 XGBoost 회귀, XGBoost 분류 같은 실습 흐름을 직접 익히는 데 초점을 둔 노트입니다.</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">주요 장</div>
+    <div class="research-overview__value">XGBoost 회귀 · XGBoost 분류</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">구현 흐름</div>
+    <div class="research-overview__value">XGBoost 회귀 -&gt; XGBoost 분류</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">자료</div>
+    <div class="research-overview__value">ipynb / md · 코드 12 · 실행 11</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">주요 스택</div>
+    <div class="research-overview__value">sklearn, xgboost, numpy</div>
+  </div>
 </div>
 
 ## 원본 노트 흐름

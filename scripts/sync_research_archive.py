@@ -2180,10 +2180,10 @@ def build_ml_intro_html(
     row_html = "\n".join(
         "\n".join(
             [
-                "      <tr>",
-                f'        <th scope="row">{html.escape(label)}</th>',
-                f'        <td>{html.escape(value)}</td>',
-                "      </tr>",
+                '  <div class="research-overview__row">',
+                f'    <div class="research-overview__label">{html.escape(label)}</div>',
+                f'    <div class="research-overview__value">{html.escape(value)}</div>',
+                "  </div>",
             ]
         )
         for label, value in rows
@@ -2192,22 +2192,8 @@ def build_ml_intro_html(
         [
             "## 글 한눈에 보기",
             "",
-            '<div class="research-compact-wrap research-compact-wrap--intro">',
-            '  <table class="research-compact-table research-compact-table--intro">',
-            "    <colgroup>",
-            '      <col class="research-compact-table__col research-compact-table__col--label">',
-            '      <col class="research-compact-table__col research-compact-table__col--value">',
-            "    </colgroup>",
-            "    <thead>",
-            "      <tr>",
-            "        <th>항목</th>",
-            "        <th>내용</th>",
-            "      </tr>",
-            "    </thead>",
-            "    <tbody>",
+            '<div class="research-overview research-overview--intro">',
             row_html,
-            "    </tbody>",
-            "  </table>",
             "</div>",
         ]
     )

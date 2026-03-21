@@ -30,49 +30,35 @@ tags:
 
 ## 글 한눈에 보기
 
-<div class="research-compact-wrap research-compact-wrap--intro">
-  <table class="research-compact-table research-compact-table--intro">
-    <colgroup>
-      <col class="research-compact-table__col research-compact-table__col--label">
-      <col class="research-compact-table__col research-compact-table__col--value">
-    </colgroup>
-    <thead>
-      <tr>
-        <th>항목</th>
-        <th>내용</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">문제 설정</th>
-        <td>=&gt; K=3일때 실루엣 스코어가 가장 높다!</td>
-      </tr>
-      <tr>
-        <th scope="row">원본 구조</th>
-        <td>원본 마크다운의 큰 섹션 흐름을 기준으로 이 실습을 다시 읽을 수 있게 정리했습니다.</td>
-      </tr>
-      <tr>
-        <th scope="row">데이터 맥락</th>
-        <td>원본 노트에서 데이터를 설명한 부분을 기준으로 실습 맥락을 정리했습니다.</td>
-      </tr>
-      <tr>
-        <th scope="row">주요 장</th>
-        <td>군집화 · 차원 축소 · 전처리와 입력 정리</td>
-      </tr>
-      <tr>
-        <th scope="row">구현 흐름</th>
-        <td>wine = load_wine() -&gt; StandardScaler 스케일링 -&gt; KMeans 모델 학습</td>
-      </tr>
-      <tr>
-        <th scope="row">자료</th>
-        <td>ipynb / md · 코드 12 · 실행 11</td>
-      </tr>
-      <tr>
-        <th scope="row">주요 스택</th>
-        <td>sklearn, matplotlib, pandas</td>
-      </tr>
-    </tbody>
-  </table>
+<div class="research-overview research-overview--intro">
+  <div class="research-overview__row">
+    <div class="research-overview__label">문제 설정</div>
+    <div class="research-overview__value">=&gt; K=3일때 실루엣 스코어가 가장 높다!</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">원본 구조</div>
+    <div class="research-overview__value">원본 마크다운의 큰 섹션 흐름을 기준으로 이 실습을 다시 읽을 수 있게 정리했습니다.</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">데이터 맥락</div>
+    <div class="research-overview__value">원본 노트에서 데이터를 설명한 부분을 기준으로 실습 맥락을 정리했습니다.</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">주요 장</div>
+    <div class="research-overview__value">군집화 · 차원 축소 · 전처리와 입력 정리</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">구현 흐름</div>
+    <div class="research-overview__value">wine = load_wine() -&gt; StandardScaler 스케일링 -&gt; KMeans 모델 학습</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">자료</div>
+    <div class="research-overview__value">ipynb / md · 코드 12 · 실행 11</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">주요 스택</div>
+    <div class="research-overview__value">sklearn, matplotlib, pandas</div>
+  </div>
 </div>
 
 ## 원본 노트 흐름

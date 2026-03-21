@@ -28,49 +28,35 @@ tags:
 
 ## 글 한눈에 보기
 
-<div class="research-compact-wrap research-compact-wrap--intro">
-  <table class="research-compact-table research-compact-table--intro">
-    <colgroup>
-      <col class="research-compact-table__col research-compact-table__col--label">
-      <col class="research-compact-table__col research-compact-table__col--value">
-    </colgroup>
-    <thead>
-      <tr>
-        <th>항목</th>
-        <th>내용</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">문제 설정</th>
-        <td>테스트 데이터 트레이닝 데이터 분할</td>
-      </tr>
-      <tr>
-        <th scope="row">원본 구조</th>
-        <td>원본 마크다운의 큰 섹션 흐름을 기준으로 이 실습을 다시 읽을 수 있게 정리했습니다.</td>
-      </tr>
-      <tr>
-        <th scope="row">데이터 맥락</th>
-        <td>테스트 데이터 트레이닝 데이터 분할</td>
-      </tr>
-      <tr>
-        <th scope="row">주요 장</th>
-        <td>선형 모델과 정규화 · 전처리와 입력 정리</td>
-      </tr>
-      <tr>
-        <th scope="row">구현 흐름</th>
-        <td>데이터 불러오기 -&gt; LinearRegression 모델 구성 -&gt; Ridge 모델 학습</td>
-      </tr>
-      <tr>
-        <th scope="row">자료</th>
-        <td>ipynb / md · 코드 19 · 실행 18</td>
-      </tr>
-      <tr>
-        <th scope="row">주요 스택</th>
-        <td>sklearn</td>
-      </tr>
-    </tbody>
-  </table>
+<div class="research-overview research-overview--intro">
+  <div class="research-overview__row">
+    <div class="research-overview__label">문제 설정</div>
+    <div class="research-overview__value">테스트 데이터 트레이닝 데이터 분할</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">원본 구조</div>
+    <div class="research-overview__value">원본 마크다운의 큰 섹션 흐름을 기준으로 이 실습을 다시 읽을 수 있게 정리했습니다.</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">데이터 맥락</div>
+    <div class="research-overview__value">테스트 데이터 트레이닝 데이터 분할</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">주요 장</div>
+    <div class="research-overview__value">선형 모델과 정규화 · 전처리와 입력 정리</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">구현 흐름</div>
+    <div class="research-overview__value">데이터 불러오기 -&gt; LinearRegression 모델 구성 -&gt; Ridge 모델 학습</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">자료</div>
+    <div class="research-overview__value">ipynb / md · 코드 19 · 실행 18</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">주요 스택</div>
+    <div class="research-overview__value">sklearn</div>
+  </div>
 </div>
 
 ## 원본 노트 흐름

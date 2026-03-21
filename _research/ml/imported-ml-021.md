@@ -32,49 +32,35 @@ tags:
 
 ## 글 한눈에 보기
 
-<div class="research-compact-wrap research-compact-wrap--intro">
-  <table class="research-compact-table research-compact-table--intro">
-    <colgroup>
-      <col class="research-compact-table__col research-compact-table__col--label">
-      <col class="research-compact-table__col research-compact-table__col--value">
-    </colgroup>
-    <thead>
-      <tr>
-        <th>항목</th>
-        <th>내용</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">문제 설정</th>
-        <td>자전거 대여 시스템의 운영 담당자. 자전거 대여 패턴을 분석하여 자전거 배치 및 운영 전략을 최적화하고, 대여 수요를 정확하게 예측하는 것</td>
-      </tr>
-      <tr>
-        <th scope="row">원본 구조</th>
-        <td>미션 설명 -&gt; 데이터 -&gt; 분석 드릴다운 -&gt; 데이터 확인 -&gt; 데이터 전처리</td>
-      </tr>
-      <tr>
-        <th scope="row">데이터 맥락</th>
-        <td>train.csv - 자전거 대여 수요를 예측하기 위한 데이터 포함 - 종속 변수: count test.csv</td>
-      </tr>
-      <tr>
-        <th scope="row">주요 장</th>
-        <td>미션 설명 · 데이터 · 분석 드릴다운 · 데이터 확인</td>
-      </tr>
-      <tr>
-        <th scope="row">구현 흐름</th>
-        <td>train/test CSV 불러오기 -&gt; StandardScaler 스케일링 -&gt; 파생 변수 추가</td>
-      </tr>
-      <tr>
-        <th scope="row">자료</th>
-        <td>ipynb / md · 코드 108 · 실행 107</td>
-      </tr>
-      <tr>
-        <th scope="row">주요 스택</th>
-        <td>matplotlib, warnings, numpy, pandas 외 1</td>
-      </tr>
-    </tbody>
-  </table>
+<div class="research-overview research-overview--intro">
+  <div class="research-overview__row">
+    <div class="research-overview__label">문제 설정</div>
+    <div class="research-overview__value">자전거 대여 시스템의 운영 담당자. 자전거 대여 패턴을 분석하여 자전거 배치 및 운영 전략을 최적화하고, 대여 수요를 정확하게 예측하는 것</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">원본 구조</div>
+    <div class="research-overview__value">미션 설명 -&gt; 데이터 -&gt; 분석 드릴다운 -&gt; 데이터 확인 -&gt; 데이터 전처리</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">데이터 맥락</div>
+    <div class="research-overview__value">train.csv - 자전거 대여 수요를 예측하기 위한 데이터 포함 - 종속 변수: count test.csv</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">주요 장</div>
+    <div class="research-overview__value">미션 설명 · 데이터 · 분석 드릴다운 · 데이터 확인</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">구현 흐름</div>
+    <div class="research-overview__value">train/test CSV 불러오기 -&gt; StandardScaler 스케일링 -&gt; 파생 변수 추가</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">자료</div>
+    <div class="research-overview__value">ipynb / md · 코드 108 · 실행 107</div>
+  </div>
+  <div class="research-overview__row">
+    <div class="research-overview__label">주요 스택</div>
+    <div class="research-overview__value">matplotlib, warnings, numpy, pandas 외 1</div>
+  </div>
 </div>
 
 ## 원본 노트 흐름

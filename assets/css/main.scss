@@ -1607,6 +1607,44 @@ a {
   margin-inline-start: 0 !important;
 }
 
+.research-overview {
+  width: 100%;
+  max-width: none;
+  margin: 0.12rem 0 0.58rem !important;
+  overflow: hidden;
+  border: 1px solid rgba(136, 162, 196, 0.14);
+  border-radius: 8px;
+  background: rgba(10, 18, 30, 0.82);
+}
+
+.research-overview__row {
+  display: grid;
+  grid-template-columns: 108px minmax(0, 1fr);
+  gap: 0.7rem;
+  align-items: start;
+  padding: 0.24rem 0.4rem;
+  border-bottom: 1px solid rgba(136, 162, 196, 0.1);
+}
+
+.research-overview__row:last-child {
+  border-bottom: none;
+}
+
+.research-overview__label {
+  color: var(--photo-link);
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.research-overview__value {
+  color: var(--photo-text);
+  font-size: 0.54rem;
+  line-height: 1.14;
+  letter-spacing: -0.01em;
+}
+
 .research-compact-wrap {
   width: 100%;
   max-width: none;
@@ -1625,6 +1663,25 @@ a {
 .collection-doc-page--research .research-compact-wrap--intro {
   margin-top: 0.02rem !important;
   margin-bottom: 0.34rem !important;
+}
+
+.collection-doc-page--research .research-overview--intro {
+  margin-top: 0.02rem !important;
+  margin-bottom: 0.34rem !important;
+}
+
+.collection-doc-page--research .research-overview__row {
+  grid-template-columns: 110px minmax(0, 1fr);
+  padding: 0.22rem 0.42rem;
+}
+
+.collection-doc-page--research .research-overview__label {
+  font-size: 0.49rem;
+}
+
+.collection-doc-page--research .research-overview__value {
+  font-size: 0.53rem;
+  line-height: 1.12;
 }
 
 .collection-doc-page--research .research-compact-table--intro {
@@ -2031,6 +2088,15 @@ a {
 
   .collection-doc-page--research .page__content .research-compact-wrap {
     overflow-x: auto;
+  }
+
+  .collection-doc-page--research .page__content .research-overview__row {
+    grid-template-columns: 104px minmax(0, 1fr);
+    gap: 0.62rem;
+  }
+
+  .collection-doc-page--research .page__content .research-overview__value {
+    font-size: 0.51rem;
   }
 
   .collection-doc-page--research .page__content .research-compact-table--intro {
