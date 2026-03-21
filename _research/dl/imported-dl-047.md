@@ -67,6 +67,26 @@ tags:
 
 데이터 링크: torchvision.datasets.FashionMNIST
 
+## Why This Matters
+
+### 데이터 파이프라인
+
+- 왜 필요한가: 모델 성능 이전에 입력이 일정한 형식으로 잘 들어가야 학습과 평가가 안정적으로 반복됩니다.
+- 왜 이 방식을 쓰는가: Dataset/DataLoader 구조는 데이터 읽기, 변환, 배치 처리를 분리해 코드 재사용성과 실험 반복성을 높여줍니다.
+- 원리: 각 샘플을 Dataset이 제공하고, DataLoader가 이를 배치로 묶어 셔플·병렬 로딩·collate를 담당합니다.
+
+### 학습 루프와 최적화
+
+- 왜 필요한가: 모델을 한 번 정의했다고 바로 학습되는 것이 아니라, 손실을 계산하고 가중치를 반복적으로 갱신하는 루프가 필요합니다.
+- 왜 이 방식을 쓰는가: optimizer와 scheduler를 명시적으로 두면 학습률 변화와 갱신 방식을 실험별로 비교하기 쉬워집니다.
+- 원리: 예측값과 정답의 차이로 손실을 계산하고, 역전파로 기울기를 구한 뒤 optimizer가 가중치를 업데이트합니다.
+
+### 클래스와 객체 모델링
+
+- 왜 필요한가: 코드를 기능별로 나누고 상태를 함께 관리하려면 변수와 함수를 흩어두기보다 객체 단위로 묶는 연습이 필요합니다.
+- 왜 이 방식을 쓰는가: 클래스 기반 구조는 같은 패턴의 동작을 여러 인스턴스에 반복 적용하기 쉬워 기초 문법을 실제 코드 구조로 연결하기 좋습니다.
+- 원리: 클래스는 속성과 메서드를 묶는 설계도이고, 인스턴스는 그 설계도를 바탕으로 생성된 실제 객체입니다.
+
 ## Implementation Flow
 
 1. 미션 소개: 이번 미션에서는 모델을 활용하여 FashionMNIST 데이터셋의 각 패션 아이템(예: 티셔츠, 바지, 스니커즈 등)을 조건부로 생성하는 작업을 수행합니다. 각 클래스에 해당하는 이미지를 생성하는 cGAN (Conditional GAN) 모델을 직접 설계하고 학습시켜 보세요.
@@ -145,6 +165,42 @@ def train_one_epoch(generator, discriminator,
 
         # 실제 이미지(valid)와 가짜 이미지(fake)에 대한 레이블 생성
         valid = torch.ones(batch_size, 1, device=device)
+# ... trimmed ...
+```
+
+### 모델 평가
+
+`모델 평가`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 Inception Feature 추출 함수 + Fréchet Inception Dista..., 입력 이미지는 [0,1] 범위, 크기 28x28, 채널: 1 (grayscale), Inception‑v3는 (3,299,299) 크기의 이미지를 요구하므로, 변환 과정을 포함. 흐름이 주석과 함께 드러납니다.
+
+```python
+#@title Inception Feature 추출 함수 + Fréchet Inception Distance (FID) 계산 함수
+
+# 입력 이미지는 [0,1] 범위, 크기 28x28, 채널: 1 (grayscale)
+# Inception‑v3는 (3,299,299) 크기의 이미지를 요구하므로, 변환 과정을 포함.
+def get_inception_features(images, model, batch_size=32, device=device):
+    """
+    Inception-v3 모델을 사용하여 이미지에서 특징 추출
+    """
+    model.eval() # 모델을 평가 모드로 설정
+    n_images = images.shape[0]
+    features = []
+    # Inception‑v3의 입력 정규화 값 (ImageNet)
+    norm_mean = torch.tensor([0.485, 0.456, 0.406], device=device).view(1,3,1,1)
+    norm_std  = torch.tensor([0.229, 0.224, 0.225], device=device).view(1,3,1,1)
+    with torch.no_grad(): # 그래디언트 계산 비활성화
+        for i in range(0, n_images, batch_size):
+            batch = images[i:i+batch_size]
+            # 만약 grayscale이면 3채널로 변환
+            if batch.shape[1] == 1:
+                batch = batch.repeat(1,3,1,1)
+            # 299x299로 업샘플링
+            batch = F.interpolate(batch, size=(299,299), mode='bilinear', align_corners=False)
+            # 정규화
+            batch = (batch - norm_mean) / norm_std
+            pred = model(batch) # Inception-v3 모델에 입력하여 특징 추출
+            features.append(pred.cpu().numpy()) # 추출된 특징을 CPU로 이동하여 numpy 배열로 변환
+    features = np.concatenate(features, axis=0) # 모든 배치의 특징을 하나로 연결
+    return features
 # ... trimmed ...
 ```
 

@@ -58,6 +58,14 @@ Seaborn 실습, 씨본 스타일, 상관관계 중심으로 구현 과정을 정
 - 박스 프롯 - 이상치 확인
 - 박스 프롯 - 커스터마이징 (1)
 
+## Why This Matters
+
+### 입력과 모델 연결
+
+- 왜 필요한가: 머신러닝 실습에서는 모델 선택만큼 입력 데이터를 어떤 형태로 정리하는지가 결과를 크게 좌우합니다.
+- 왜 이 방식을 쓰는가: 이 기록은 전처리와 모델링 코드를 같이 남겨, 학습한 개념이 실제 코드 흐름으로 어떻게 연결되는지 보게 합니다.
+- 원리: 데이터 정리, 특징 표현, 학습, 평가가 한 파이프라인으로 이어질 때 비로소 모델 동작을 해석할 수 있습니다.
+
 ## Implementation Flow
 
 1. Key Step: 박스 프롯 - 커스터마이징 (1)
@@ -92,6 +100,20 @@ plt.boxplot(
 plt.title("사분위수 시각화", fontsize=15, fontweight='bold')
 plt.grid(axis = 'x', linestyle = '--', alpha=0.4)
 plt.yticks([1], ['Group A'])
+plt.show()
+```
+
+### Seaborn 실습
+
+`Seaborn 실습`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 barplot 흐름이 주석과 함께 드러납니다.
+
+```python
+# barplot
+
+plt.figure(figsize=(6,3))
+sns.barplot(data=df, x='height_bin', y='weight', errorbar=None)
+plt.title("키와 몸무게 평균 비교")
+plt.xticks(rotation=45)
 plt.show()
 ```
 

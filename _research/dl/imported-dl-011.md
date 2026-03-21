@@ -64,6 +64,14 @@ view() & contiguous 개념
 
 방법 1 : torch.tensor()
 
+## Why This Matters
+
+### 표현 학습과 학습 루프
+
+- 왜 필요한가: 딥러닝은 모델 구조만 보는 것이 아니라 입력 텐서, 손실, optimizer가 함께 어떻게 맞물리는지 이해해야 합니다.
+- 왜 이 방식을 쓰는가: 그래서 이 아카이브는 모델 정의뿐 아니라 DataLoader와 학습 루프 코드를 같이 남기는 쪽으로 정리했습니다.
+- 원리: 입력이 층을 통과하며 표현으로 바뀌고, 손실의 기울기가 역전파되어 가중치가 조금씩 조정되는 구조입니다.
+
 ## Implementation Flow
 
 1. Quiz.: 파이썬 리스트 data_list와 NumPy array data_np가 주어져 있습니다. 이 두 데이터를 PyTorch 텐서로 만들어 주세요.
@@ -72,6 +80,30 @@ view() & contiguous 개념
 4. Key Step: 방법 1 : torch.tensor()
 
 ## Code Highlights
+
+### 텐서의 변환과 연산
+
+`텐서의 변환과 연산`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+
+```python
+a = torch.tensor(
+    [
+        [1,2],
+        [3,4],
+        [5,6],
+        [7,8]
+    ]
+)
+
+b = torch.tensor(
+    [
+        [1,0,0],
+        [0,0,1],
+        [1,1,0]]
+)
+print(f'a의 열개수 : {a.shape[1]}')
+print(f'b의 행개수 : {b.shape[0]}')
+```
 
 ### Quiz.
 

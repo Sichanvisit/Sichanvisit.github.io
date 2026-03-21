@@ -67,6 +67,20 @@ torch.autograd.grad는 함수𝑓의 결과(outputs)에 대해 지정된 입력 
 
 아래는 초기화(opt.zero_grad())를 하지 않는 경우의 예시 코드입니다. 초기화를 생략하면 기존 계산에서 남아있는 기울기가 누적되므로, 기울기 값이 계속 증가하는 것을 확인할 수 있습니다.
 
+## Why This Matters
+
+### 학습 루프와 최적화
+
+- 왜 필요한가: 모델을 한 번 정의했다고 바로 학습되는 것이 아니라, 손실을 계산하고 가중치를 반복적으로 갱신하는 루프가 필요합니다.
+- 왜 이 방식을 쓰는가: optimizer와 scheduler를 명시적으로 두면 학습률 변화와 갱신 방식을 실험별로 비교하기 쉬워집니다.
+- 원리: 예측값과 정답의 차이로 손실을 계산하고, 역전파로 기울기를 구한 뒤 optimizer가 가중치를 업데이트합니다.
+
+### 클래스와 객체 모델링
+
+- 왜 필요한가: 코드를 기능별로 나누고 상태를 함께 관리하려면 변수와 함수를 흩어두기보다 객체 단위로 묶는 연습이 필요합니다.
+- 왜 이 방식을 쓰는가: 클래스 기반 구조는 같은 패턴의 동작을 여러 인스턴스에 반복 적용하기 쉬워 기초 문법을 실제 코드 구조로 연결하기 좋습니다.
+- 원리: 클래스는 속성과 메서드를 묶는 설계도이고, 인스턴스는 그 설계도를 바탕으로 생성된 실제 객체입니다.
+
 ## Implementation Flow
 
 1. Autograd: 텐서(Tensor)에서 모든 연산에 대해 자동 미분 순전파(Forward) 그래프에 의해 역전파(Backward) 그래프가 자동으로 정의됩니다!
@@ -145,6 +159,42 @@ class AbaloneDataset(Dataset):
 # 학습/검증/테스트 데이터 분할
 train_size = int(len(input_data) * 0.8)
 val_size = int(len(input_data) * 0.1)
+# ... trimmed ...
+```
+
+### 트레이닝 루프에 저장 코드 추가
+
+`트레이닝 루프에 저장 코드 추가`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 training loop, 에폭마다 모델 저장 흐름이 주석과 함께 드러납니다.
+
+```python
+# training loop
+epochs = 10
+step = 0
+for epoch in range(epochs):
+    model.train()
+    for train_batch in train_dataloader:
+        x_train, y_train = train_batch[0].to(device), train_batch[1].to(device)
+        pred = model(x_train).squeeze()
+        loss = loss_fn(pred, y_train)
+        loss.backward()
+        optimizer.step()
+        optimizer.zero_grad()
+        step += 1
+
+        if step % 100 == 0:
+            print(f'Loss at step {step}: {loss.item():.4f}')
+
+    model.eval()
+    with torch.no_grad():
+        losses = []
+        for val_batch in val_dataloader:
+            x_val, y_val = val_batch[0].to(device), val_batch[1].to(device)
+            pred_val = model(x_val).squeeze()
+            loss = loss_fn(pred_val, y_val)
+            losses.append(loss.item())
+
+        val_loss_avg = sum(losses) / len(losses)
+        print(f'epoch {epoch+1}/{epochs}, validation loss: {val_loss_avg:.4f}\n')
 # ... trimmed ...
 ```
 

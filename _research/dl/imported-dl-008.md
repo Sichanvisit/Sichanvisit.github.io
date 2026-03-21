@@ -56,6 +56,26 @@ tags:
 - step 1
 - step 2
 
+## Why This Matters
+
+### 데이터 파이프라인
+
+- 왜 필요한가: 모델 성능 이전에 입력이 일정한 형식으로 잘 들어가야 학습과 평가가 안정적으로 반복됩니다.
+- 왜 이 방식을 쓰는가: Dataset/DataLoader 구조는 데이터 읽기, 변환, 배치 처리를 분리해 코드 재사용성과 실험 반복성을 높여줍니다.
+- 원리: 각 샘플을 Dataset이 제공하고, DataLoader가 이를 배치로 묶어 셔플·병렬 로딩·collate를 담당합니다.
+
+### 학습 루프와 최적화
+
+- 왜 필요한가: 모델을 한 번 정의했다고 바로 학습되는 것이 아니라, 손실을 계산하고 가중치를 반복적으로 갱신하는 루프가 필요합니다.
+- 왜 이 방식을 쓰는가: optimizer와 scheduler를 명시적으로 두면 학습률 변화와 갱신 방식을 실험별로 비교하기 쉬워집니다.
+- 원리: 예측값과 정답의 차이로 손실을 계산하고, 역전파로 기울기를 구한 뒤 optimizer가 가중치를 업데이트합니다.
+
+### 클래스와 객체 모델링
+
+- 왜 필요한가: 코드를 기능별로 나누고 상태를 함께 관리하려면 변수와 함수를 흩어두기보다 객체 단위로 묶는 연습이 필요합니다.
+- 왜 이 방식을 쓰는가: 클래스 기반 구조는 같은 패턴의 동작을 여러 인스턴스에 반복 적용하기 쉬워 기초 문법을 실제 코드 구조로 연결하기 좋습니다.
+- 원리: 클래스는 속성과 메서드를 묶는 설계도이고, 인스턴스는 그 설계도를 바탕으로 생성된 실제 객체입니다.
+
 ## Implementation Flow
 
 1. Key Step: 데이터 분할: train, validation, test
@@ -75,6 +95,27 @@ from sklearn.datasets import make_classification
 from sklearn.model_selection import train_test_split
 import torch
 from torch.utils.data import DataLoader, TensorDataset
+```
+
+### 이진 분류
+
+`이진 분류`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 step 2 : 모델 만들기 흐름이 주석과 함께 드러납니다.
+
+```python
+# step 2 : 모델 만들기
+
+class simpleNN(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.l1 = nn.Linear(2,10)
+        self.l2 = nn.Linear(10,1)
+
+    def forward(self, x):
+        x = F.sigmoid(self.l1(x))
+        x = F.sigmoid(self.l2(x))
+        return x
+model = simpleNN().to(device)
+print(model)
 ```
 
 ### 다중 분류

@@ -842,6 +842,213 @@ def format_yaml_list(name: str, items: list[str]) -> str:
     return "\n".join(lines)
 
 
+CONCEPT_RULES = [
+    {
+        "key": "rag",
+        "patterns": ["retriever", "vectorstore", "faiss", "chroma", "similarity_search", "as_retriever", "rag"],
+        "label": "RAG 검색 파이프라인",
+        "need": "LLM이 외부 지식을 안정적으로 참조하게 하려면, 생성 전에 관련 문서를 정확히 찾아오는 검색 단계가 먼저 필요합니다.",
+        "choice": "이 방식은 모델 파라미터만 믿지 않고 최신 문서나 도메인 지식을 붙일 수 있어서 실제 서비스형 QA에 적합합니다.",
+        "principle": "문서를 청크로 나누고 임베딩한 뒤, 질문과 가까운 벡터를 검색해 프롬프트에 함께 넣는 구조로 동작합니다.",
+    },
+    {
+        "key": "agent",
+        "patterns": ["langgraph", "stategraph", "agent", "toolnode", "tools_condition"],
+        "label": "에이전트 상태 흐름",
+        "need": "단일 호출만으로 해결되지 않는 작업은 추론, 도구 호출, 중간 상태 관리가 이어지는 흐름 제어가 필요합니다.",
+        "choice": "상태 그래프 기반 접근은 단계별 분기와 재시도를 명시적으로 관리할 수 있어 에이전트 실험을 설명하기 좋습니다.",
+        "principle": "현재 상태를 노드 간에 전달하면서, 조건에 따라 다음 노드나 도구 호출을 결정하는 방식으로 실행 흐름이 이어집니다.",
+    },
+    {
+        "key": "lora",
+        "patterns": ["lora", "qlora", "peft", "peftmodel"],
+        "label": "파라미터 효율 미세조정",
+        "need": "대형 언어모델 전체를 다시 학습하는 비용이 크기 때문에, 적은 자원으로도 실험 가능한 미세조정 방식이 필요합니다.",
+        "choice": "LoRA/QLoRA는 전체 가중치를 모두 바꾸지 않고 작은 적응 파라미터만 학습해 메모리와 시간을 크게 줄일 수 있습니다.",
+        "principle": "기존 가중치는 고정하고 저차원 행렬 업데이트만 추가로 학습해, 적은 파라미터로도 모델 행동을 조정합니다.",
+    },
+    {
+        "key": "detection",
+        "patterns": ["mask r-cnn", "fasterrcnn", "masks_to_boxes", "bounding box", "intersection over union", "iou"],
+        "label": "객체 탐지와 영역 단위 이해",
+        "need": "이미지 안에서 무엇이 있는지만이 아니라 어디에 있는지까지 알아야 할 때는 박스 또는 마스크 단위 예측이 필요합니다.",
+        "choice": "Detection 계열 모델은 분류보다 한 단계 더 나아가 위치 정보를 함께 학습하므로 실제 비전 문제에 더 직접적으로 연결됩니다.",
+        "principle": "모델은 후보 영역을 만들고, 각 영역의 클래스와 좌표 또는 마스크를 동시에 예측해 장면을 해석합니다.",
+    },
+    {
+        "key": "segmentation",
+        "patterns": ["segmentation", "unet", "dice", "pixel-wise"],
+        "label": "픽셀 단위 분할",
+        "need": "객체의 경계를 세밀하게 다뤄야 할 때는 이미지 전체를 한 번에 분류하는 방식만으로는 부족합니다.",
+        "choice": "Segmentation은 픽셀마다 클래스를 붙여주기 때문에 의료영상, 장면 이해, 배경 제거처럼 경계가 중요한 문제에 잘 맞습니다.",
+        "principle": "이미지 특징을 추출한 뒤 해상도를 복원하면서 각 픽셀 위치에 대한 클래스 확률을 예측합니다.",
+    },
+    {
+        "key": "embedding",
+        "patterns": ["word2vec", "fasttext", "glove", "embedding", "tokenizer"],
+        "label": "임베딩과 표현 학습",
+        "need": "텍스트나 토큰을 그대로는 모델이 다룰 수 없기 때문에, 의미를 담은 수치 벡터 표현으로 바꾸는 단계가 필요합니다.",
+        "choice": "Word2Vec, FastText, GloVe 같은 방식은 같은 단어라도 주변 문맥이나 서브워드 정보를 반영해 비교 가능한 표현 공간을 만듭니다.",
+        "principle": "자주 함께 등장하는 단어는 가까운 벡터가 되도록 학습해, 의미적으로 비슷한 표현이 공간에서도 가까워지게 합니다.",
+    },
+    {
+        "key": "rnn",
+        "patterns": ["lstm", "gru", "nn.lstm", "nn.gru", "rnn"],
+        "label": "순차 데이터 모델링",
+        "need": "문장, 시계열처럼 순서가 중요한 데이터는 현재 입력만이 아니라 앞선 맥락까지 함께 봐야 합니다.",
+        "choice": "LSTM/GRU는 기본 RNN보다 긴 문맥을 더 안정적으로 다룰 수 있어 텍스트 분류나 시계열 예측 실습에 자주 쓰입니다.",
+        "principle": "이전 시점의 은닉 상태를 다음 입력과 함께 업데이트하며, 게이트 구조로 필요한 정보는 남기고 불필요한 정보는 줄입니다.",
+    },
+    {
+        "key": "cnn",
+        "patterns": ["conv2d", "maxpool", "resnet", "alexnet", "cnn"],
+        "label": "합성곱 기반 특징 추출",
+        "need": "이미지는 인접 픽셀 관계와 지역 패턴이 중요해서, 완전연결층만으로는 공간 구조를 효율적으로 잡기 어렵습니다.",
+        "choice": "CNN은 필터를 공유하며 지역 특징을 반복적으로 추출할 수 있어 이미지 실습의 기본 뼈대로 적합합니다.",
+        "principle": "작은 커널이 이미지 위를 이동하며 특징을 뽑고, 층이 깊어질수록 더 추상적인 패턴을 학습합니다.",
+    },
+    {
+        "key": "dataset",
+        "patterns": ["dataloader", "dataset", "collate_fn", "train_test_split", "batch_size"],
+        "label": "데이터 파이프라인",
+        "need": "모델 성능 이전에 입력이 일정한 형식으로 잘 들어가야 학습과 평가가 안정적으로 반복됩니다.",
+        "choice": "Dataset/DataLoader 구조는 데이터 읽기, 변환, 배치 처리를 분리해 코드 재사용성과 실험 반복성을 높여줍니다.",
+        "principle": "각 샘플을 Dataset이 제공하고, DataLoader가 이를 배치로 묶어 셔플·병렬 로딩·collate를 담당합니다.",
+    },
+    {
+        "key": "preprocessing",
+        "patterns": ["standardscaler", "minmaxscaler", "labelencoder", "fillna", "dropna", "tokenize", "clean_text", "stopwords"],
+        "label": "전처리와 입력 정리",
+        "need": "원본 데이터는 결측치, 스케일 차이, 불필요한 기호처럼 학습을 방해하는 요소가 많아 바로 넣기 어렵습니다.",
+        "choice": "전처리는 모델 종류와 데이터 특성에 맞는 입력 형식을 먼저 맞춰주기 때문에, 단순해 보여도 성능 차이를 크게 만듭니다.",
+        "principle": "불필요한 정보를 줄이고 유효한 패턴을 남기도록 데이터를 정규화·정제·인코딩해 모델이 학습하기 쉬운 분포로 바꿉니다.",
+    },
+    {
+        "key": "training",
+        "patterns": ["optimizer", "backward(", "optimizer.step", "lr_scheduler", "epoch_loss", "loss_dict"],
+        "label": "학습 루프와 최적화",
+        "need": "모델을 한 번 정의했다고 바로 학습되는 것이 아니라, 손실을 계산하고 가중치를 반복적으로 갱신하는 루프가 필요합니다.",
+        "choice": "optimizer와 scheduler를 명시적으로 두면 학습률 변화와 갱신 방식을 실험별로 비교하기 쉬워집니다.",
+        "principle": "예측값과 정답의 차이로 손실을 계산하고, 역전파로 기울기를 구한 뒤 optimizer가 가중치를 업데이트합니다.",
+    },
+    {
+        "key": "evaluation",
+        "patterns": ["accuracy_score", "classification_report", "f1_score", "roc_auc", "mean_squared_error", "confusion_matrix", "precision", "recall", "rmsle"],
+        "label": "평가 지표 해석",
+        "need": "정확도 하나만으로는 모델이 실제로 무엇을 잘하고 무엇을 놓치는지 충분히 설명할 수 없습니다.",
+        "choice": "문제 유형에 맞는 지표를 함께 보면 불균형 데이터, 오차 크기, 재현율 같은 중요한 관점을 놓치지 않을 수 있습니다.",
+        "principle": "예측 결과를 정답과 비교해 오차나 클래스별 성능을 수치화하고, 그 수치로 모델 선택과 개선 방향을 판단합니다.",
+    },
+    {
+        "key": "llmchain",
+        "patterns": ["prompttemplate", "chatopenai", "chain.invoke", "llm.invoke", "runnable"],
+        "label": "프롬프트 체인 구성",
+        "need": "LLM 호출을 재현 가능하게 만들려면 입력 조합, 프롬프트 템플릿, 후처리 순서를 구조화할 필요가 있습니다.",
+        "choice": "체인 구조는 실험 중 프롬프트와 입력 변형을 비교하기 쉽고, 이후 RAG나 에이전트 단계로 확장하기도 좋습니다.",
+        "principle": "질문과 컨텍스트를 정해진 템플릿에 넣고, 모델 호출 결과를 다음 단계 입력으로 넘기며 처리 흐름을 구성합니다.",
+    },
+    {
+        "key": "oop",
+        "patterns": ["class ", "__init__", "self.", "method"],
+        "label": "클래스와 객체 모델링",
+        "need": "코드를 기능별로 나누고 상태를 함께 관리하려면 변수와 함수를 흩어두기보다 객체 단위로 묶는 연습이 필요합니다.",
+        "choice": "클래스 기반 구조는 같은 패턴의 동작을 여러 인스턴스에 반복 적용하기 쉬워 기초 문법을 실제 코드 구조로 연결하기 좋습니다.",
+        "principle": "클래스는 속성과 메서드를 묶는 설계도이고, 인스턴스는 그 설계도를 바탕으로 생성된 실제 객체입니다.",
+    },
+]
+
+
+CONCEPT_PRIORITY = {
+    "rag": 0,
+    "agent": 1,
+    "lora": 2,
+    "embedding": 3,
+    "rnn": 4,
+    "llmchain": 5,
+    "detection": 6,
+    "dataset": 7,
+    "preprocessing": 8,
+    "training": 9,
+    "evaluation": 10,
+    "cnn": 11,
+    "segmentation": 12,
+    "oop": 13,
+}
+
+
+def build_concept_notes(
+    *,
+    research_tab: str,
+    title: str,
+    focus_items: list[str],
+    section_summaries: list[dict[str, str]],
+    paragraphs: list[str],
+    code_blocks: list[dict[str, object]],
+    libraries: list[str],
+) -> list[dict[str, str]]:
+    corpus_parts = [research_tab, title]
+    corpus_parts.extend(focus_items[:8])
+    corpus_parts.extend(entry["title"] for entry in section_summaries[:6])
+    corpus_parts.extend(entry["summary"] for entry in section_summaries[:6])
+    corpus_parts.extend(paragraphs[:8])
+    corpus_parts.extend(libraries[:8])
+    corpus_parts.extend(str(block["heading"]) for block in code_blocks[:10])
+    corpus_parts.extend(str(block["body"])[:900] for block in code_blocks[:8])
+    corpus = "\n".join(corpus_parts).lower()
+
+    notes: list[dict[str, str]] = []
+    for rule in CONCEPT_RULES:
+        if any(pattern.lower() in corpus for pattern in rule["patterns"]):
+            notes.append(
+                {
+                    "key": rule["key"],
+                    "label": rule["label"],
+                    "need": rule["need"],
+                    "choice": rule["choice"],
+                    "principle": rule["principle"],
+                }
+            )
+
+    if notes:
+        notes.sort(key=lambda note: CONCEPT_PRIORITY.get(note["key"], 999))
+        return [
+            {
+                "label": note["label"],
+                "need": note["need"],
+                "choice": note["choice"],
+                "principle": note["principle"],
+            }
+            for note in notes[:3]
+        ]
+
+    if research_tab == "ML":
+        return [
+            {
+                "label": "입력과 모델 연결",
+                "need": "머신러닝 실습에서는 모델 선택만큼 입력 데이터를 어떤 형태로 정리하는지가 결과를 크게 좌우합니다.",
+                "choice": "이 기록은 전처리와 모델링 코드를 같이 남겨, 학습한 개념이 실제 코드 흐름으로 어떻게 연결되는지 보게 합니다.",
+                "principle": "데이터 정리, 특징 표현, 학습, 평가가 한 파이프라인으로 이어질 때 비로소 모델 동작을 해석할 수 있습니다.",
+            }
+        ]
+    if research_tab == "DL":
+        return [
+            {
+                "label": "표현 학습과 학습 루프",
+                "need": "딥러닝은 모델 구조만 보는 것이 아니라 입력 텐서, 손실, optimizer가 함께 어떻게 맞물리는지 이해해야 합니다.",
+                "choice": "그래서 이 아카이브는 모델 정의뿐 아니라 DataLoader와 학습 루프 코드를 같이 남기는 쪽으로 정리했습니다.",
+                "principle": "입력이 층을 통과하며 표현으로 바뀌고, 손실의 기울기가 역전파되어 가중치가 조금씩 조정되는 구조입니다.",
+            }
+        ]
+    return [
+        {
+            "label": "LLM 실험 구조화",
+            "need": "LLM 실습은 프롬프트 한 줄보다 검색, 컨텍스트, 모델 호출 순서를 함께 봐야 실제 동작을 이해할 수 있습니다.",
+            "choice": "그래서 이 기록은 체인 구성과 보조 코드까지 함께 남겨, 단순 결과보다 시스템 흐름을 읽을 수 있게 만들었습니다.",
+            "principle": "입력 가공, 컨텍스트 주입, 모델 호출, 출력 후처리가 연결되면서 하나의 응답 파이프라인이 만들어집니다.",
+        }
+    ]
+
+
 def build_content(
     *,
     title: str,
@@ -861,6 +1068,7 @@ def build_content(
     artifact_summary: str,
     focus_items: list[str],
     section_summaries: list[dict[str, str]],
+    concept_notes: list[dict[str, str]],
     flow_items: list[str],
     code_samples: list[dict[str, object]],
     libraries: list[str],
@@ -900,6 +1108,22 @@ def build_content(
         flow_section = "\n".join(f"{index}. {item}" for index, item in enumerate(flow_items, start=1))
     else:
         flow_section = "1. 원본 노트의 문제 정의를 먼저 확인합니다.\n2. 핵심 코드 블록과 구현 단계를 따라갑니다.\n3. 필요하면 이 흐름을 별도 케이스 스터디로 확장합니다."
+
+    if concept_notes:
+        concept_section = "\n\n".join(
+            "\n".join(
+                [
+                    f"### {note['label']}",
+                    "",
+                    f"- 왜 필요한가: {note['need']}",
+                    f"- 왜 이 방식을 쓰는가: {note['choice']}",
+                    f"- 원리: {note['principle']}",
+                ]
+            )
+            for note in concept_notes
+        )
+    else:
+        concept_section = "- 왜 필요한가: 이 기록은 구현 코드를 읽기 전에 핵심 개념을 빠르게 짚을 수 있도록 정리되어 있습니다.\n- 왜 이 방식을 쓰는가: 실습 노트와 코드 블록을 같이 남기면 개념과 구현을 한 번에 연결해서 볼 수 있습니다.\n- 원리: 입력, 처리, 학습 또는 추론, 평가 단계가 하나의 흐름으로 이어집니다."
 
     if code_samples:
         code_sections = []
@@ -975,6 +1199,10 @@ tags:
 
 {coverage_section}
 
+## Why This Matters
+
+{concept_section}
+
 ## Implementation Flow
 
 {flow_section}
@@ -1014,8 +1242,18 @@ def build_note_payload(track: dict[str, str], file_path: Path) -> str:
     focus_items = select_focus_items(sections, metadata_sections, headings, clean_title, limit=5)
     section_summaries = build_section_summaries(sections, metadata_sections, limit=4)
     flow_items = build_flow_items(section_summaries, focus_items, metadata_sections, limit=6)
-    code_samples = select_code_blocks(code_blocks, limit=2)
+    code_limit = 3 if len(code_blocks) >= 3 else max(len(code_blocks), 1)
+    code_samples = select_code_blocks(code_blocks, limit=code_limit)
     libraries = extract_libraries(code_blocks)
+    concept_notes = build_concept_notes(
+        research_tab=track["tab"],
+        title=clean_title,
+        focus_items=focus_items,
+        section_summaries=section_summaries,
+        paragraphs=paragraphs,
+        code_blocks=code_blocks,
+        libraries=libraries,
+    )
 
     companion_files = get_companion_files(file_path)
     source_formats = [candidate.suffix.lstrip(".").lower() or candidate.name.lower() for candidate in companion_files]
@@ -1068,6 +1306,7 @@ def build_note_payload(track: dict[str, str], file_path: Path) -> str:
         artifact_summary=artifact_summary,
         focus_items=focus_items,
         section_summaries=section_summaries,
+        concept_notes=concept_notes,
         flow_items=flow_items,
         code_samples=code_samples,
         libraries=libraries,

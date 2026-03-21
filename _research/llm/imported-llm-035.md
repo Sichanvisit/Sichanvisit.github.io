@@ -68,6 +68,20 @@ Seq2Seq · Attention 기반 NMT 모델 구현 & 성능 비교
 
 무엇을 봤나 - 숫자: KO 1.76%, EN 6.04% - 나머지는 극소수 - 왜 중요하나 - 숫자/화폐/날짜는 번역 오류가 잦지만, 비율이 낮아 현재는 큰 위험 아님. - 액션 - 기본은 치환 없이 진행. - 숫자/단위가 중요한 도메인이라면 / 같은 치환 실험을 “추가 실험”으로.
 
+## Why This Matters
+
+### 순차 데이터 모델링
+
+- 왜 필요한가: 문장, 시계열처럼 순서가 중요한 데이터는 현재 입력만이 아니라 앞선 맥락까지 함께 봐야 합니다.
+- 왜 이 방식을 쓰는가: LSTM/GRU는 기본 RNN보다 긴 문맥을 더 안정적으로 다룰 수 있어 텍스트 분류나 시계열 예측 실습에 자주 쓰입니다.
+- 원리: 이전 시점의 은닉 상태를 다음 입력과 함께 업데이트하며, 게이트 구조로 필요한 정보는 남기고 불필요한 정보는 줄입니다.
+
+### 전처리와 입력 정리
+
+- 왜 필요한가: 원본 데이터는 결측치, 스케일 차이, 불필요한 기호처럼 학습을 방해하는 요소가 많아 바로 넣기 어렵습니다.
+- 왜 이 방식을 쓰는가: 전처리는 모델 종류와 데이터 특성에 맞는 입력 형식을 먼저 맞춰주기 때문에, 단순해 보여도 성능 차이를 크게 만듭니다.
+- 원리: 불필요한 정보를 줄이고 유효한 패턴을 남기도록 데이터를 정규화·정제·인코딩해 모델이 학습하기 쉬운 분포로 바꿉니다.
+
 ## Implementation Flow
 
 1. 🧩 미션 11: 한국어→영어 기계 번역 모델 구축 프로젝트: Seq2Seq · Attention 기반 NMT 모델 구현 & 성능 비교
@@ -146,6 +160,42 @@ best_bleu, best_state = -1, None
 for epoch in range(1, EPOCHS + 1):
     tf_ratio = tf_end + (tf_start - tf_end) * max(0, (EPOCHS - epoch) / (EPOCHS - 1))
     t0 = time.time()
+# ... trimmed ...
+```
+
+### 분석/시각화 세트
+
+`분석/시각화 세트`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 단일 샘플용 (시각화), 디코더 한 스텝을 수동 수행해 attn 추출, 랜덤 하나 시각화 흐름이 주석과 함께 드러납니다.
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+
+if IS_ATTN:
+    @torch.no_grad()
+    def decode_with_attn(model, src_ids, tgt_ids):
+        # 단일 샘플용 (시각화)
+        batch = collate_sp([(src_ids, tgt_ids)])
+        src, src_m, tgt_in, tgt_out, _ = batch
+        src, src_m = src.to(device), src_m.to(device)
+        enc_out, h = model.enc(src, src_m)
+        y = torch.full((1,), SOS_ID, dtype=torch.long, device=device)
+        attn_list, hyp_ids = [], []
+        max_len = tgt_out.size(1) + 10
+        for _ in range(max_len):
+            # 디코더 한 스텝을 수동 수행해 attn 추출
+            emb = model.dec.emb(y).unsqueeze(1)  # [B=1,1,E]
+            ctx, attn = model.dec.attn(enc_out, h.squeeze(0), src_m)  # [1, Senc]
+            rnn_in = torch.cat([emb, ctx.unsqueeze(1)], dim=-1)
+            out, h = model.dec.rnn(rnn_in, h)
+            feat = torch.cat([out.squeeze(1), ctx], dim=-1)
+            if getattr(model.dec, "ff", None) is not None:
+                feat = model.dec.ff(feat)
+            logits = model.dec.proj(feat)
+            y = logits.argmax(-1)
+            hyp_ids.append(y.item());
+            attn_list.append(attn.squeeze(0).cpu().numpy())
+            if y.item() == EOS_ID: break
 # ... trimmed ...
 ```
 

@@ -66,6 +66,14 @@ tags:
 
 문제 설명 문자열의 길이를 반환하되, 문자열이 빈 문자열이면 “문자열이 비어 있습니다.“를 반환하는 함수를 작성하세요.
 
+## Why This Matters
+
+### 입력과 모델 연결
+
+- 왜 필요한가: 머신러닝 실습에서는 모델 선택만큼 입력 데이터를 어떤 형태로 정리하는지가 결과를 크게 좌우합니다.
+- 왜 이 방식을 쓰는가: 이 기록은 전처리와 모델링 코드를 같이 남겨, 학습한 개념이 실제 코드 흐름으로 어떻게 연결되는지 보게 합니다.
+- 원리: 데이터 정리, 특징 표현, 학습, 평가가 한 파이프라인으로 이어질 때 비로소 모델 동작을 해석할 수 있습니다.
+
 ## Implementation Flow
 
 1. 문제1. 3의 배수 출력: 문제 설명 1부터 n까지의 숫자 중에서 3의 배수만 출력하는 함수를 작성하세요.
@@ -144,6 +152,42 @@ class ReservationSystem:
     def sum_reservations(cls, branches):
         total = 0
         for branch in branches:
+# ... trimmed ...
+```
+
+### 문제3. 도서관 관리 시스템
+
+`문제3. 도서관 관리 시스템`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 기본 답안, Book 클래스: 도서 정보 저장, Member 클래스: 회원 정보 및 대여 기록 저장 흐름이 주석과 함께 드러납니다.
+
+```python
+# 기본 답안
+
+# Book 클래스: 도서 정보 저장
+class Book:
+    def __init__(self, title, author, year, isbn):
+        self.title = title
+        self.author = author
+        self.year = year
+        self.isbn = isbn
+
+# Member 클래스: 회원 정보 및 대여 기록 저장
+class Member:
+    def __init__(self, name):
+        self.name = name
+        self.borrowed_books = []                           # 대여 중인 도서 제목 리스트
+
+# Rental 클래스: 대여 내역 기록
+class Rental:
+    def __init__(self, member_name, isbn):
+        self.member_name = member_name
+        self.isbn = isbn
+
+# LibraryManagement 클래스: 도서관 전체 관리 시스템
+class LibraryManagement:
+    def __init__(self):
+        self.books = {}                                    # ISBN -> Book 객체
+        self.members = {}                                  # 이름 -> Member 객체
+
 # ... trimmed ...
 ```
 

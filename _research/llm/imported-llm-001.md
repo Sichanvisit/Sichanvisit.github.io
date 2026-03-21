@@ -68,6 +68,26 @@ tags:
 
 어떤 데이터인지 파악하기 위해 먼저 데이터 타입과 속성을 확인해보았다
 
+## Why This Matters
+
+### 임베딩과 표현 학습
+
+- 왜 필요한가: 텍스트나 토큰을 그대로는 모델이 다룰 수 없기 때문에, 의미를 담은 수치 벡터 표현으로 바꾸는 단계가 필요합니다.
+- 왜 이 방식을 쓰는가: Word2Vec, FastText, GloVe 같은 방식은 같은 단어라도 주변 문맥이나 서브워드 정보를 반영해 비교 가능한 표현 공간을 만듭니다.
+- 원리: 자주 함께 등장하는 단어는 가까운 벡터가 되도록 학습해, 의미적으로 비슷한 표현이 공간에서도 가까워지게 합니다.
+
+### 순차 데이터 모델링
+
+- 왜 필요한가: 문장, 시계열처럼 순서가 중요한 데이터는 현재 입력만이 아니라 앞선 맥락까지 함께 봐야 합니다.
+- 왜 이 방식을 쓰는가: LSTM/GRU는 기본 RNN보다 긴 문맥을 더 안정적으로 다룰 수 있어 텍스트 분류나 시계열 예측 실습에 자주 쓰입니다.
+- 원리: 이전 시점의 은닉 상태를 다음 입력과 함께 업데이트하며, 게이트 구조로 필요한 정보는 남기고 불필요한 정보는 줄입니다.
+
+### 데이터 파이프라인
+
+- 왜 필요한가: 모델 성능 이전에 입력이 일정한 형식으로 잘 들어가야 학습과 평가가 안정적으로 반복됩니다.
+- 왜 이 방식을 쓰는가: Dataset/DataLoader 구조는 데이터 읽기, 변환, 배치 처리를 분리해 코드 재사용성과 실험 반복성을 높여줍니다.
+- 원리: 각 샘플을 Dataset이 제공하고, DataLoader가 이를 배치로 묶어 셔플·병렬 로딩·collate를 담당합니다.
+
 ## Implementation Flow
 
 1. Problem Brief: 텍스트 데이터를 입력으로 받아 뉴스 그룹 게시글의 카테고리를 예측하는 딥 러닝 모델 구현
@@ -146,6 +166,42 @@ for prep_name in target_preprocesses:
     # 전처리 → 토큰화
     train_clean = [clean_fn(t) for t in X_train]
     test_clean  = [clean_fn(t) for t in X_test]
+# ... trimmed ...
+```
+
+### 추가 실험
+
+`추가 실험`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 추가실험 1, ====== 임베딩 생성 ======, 수정: vocab = train_tokens 기반으로 생성해야 되는데 아까는 전체 Glo... 흐름이 주석과 함께 드러납니다.
+
+```python
+# @title 추가실험 1
+'''
+전처리 v2_1, class_weight 적용, glove 코드 수정, 5epoch
+'''
+target_preprocess = "v2_1_patterns_preserved"
+target_embeddings = ["word2vec", "fasttext", "glove"]
+
+results_embed = []
+
+for emb_type in target_embeddings:
+
+    print(f"\n>>> 실험: Preprocess={target_preprocess}, Embedding={emb_type}")
+
+    # ====== 임베딩 생성 ======
+    if emb_type == "word2vec":
+        model_emb = Word2Vec(train_tokens, vector_size=vector_size, min_count=1, window=5, sg=1)
+        word2idx = {w: i+1 for i, w in enumerate(model_emb.wv.index_to_key)}
+        embedding_matrix = np.zeros((len(word2idx)+1, vector_size))
+        for w, i in word2idx.items():
+            embedding_matrix[i] = model_emb.wv[w]
+
+    elif emb_type == "fasttext":
+        model_emb = FastText(train_tokens, vector_size=vector_size, min_count=1, window=5, sg=1)
+        word2idx = {w: i+1 for i, w in enumerate(model_emb.wv.index_to_key)}
+        embedding_matrix = np.zeros((len(word2idx)+1, vector_size))
+        for w, i in word2idx.items():
+            embedding_matrix[i] = model_emb.wv[w]
+
 # ... trimmed ...
 ```
 

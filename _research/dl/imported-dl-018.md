@@ -67,6 +67,26 @@ def train(model, dd,,d,d,d,d)
 
 train_loss, train_acc = train_epoch(model_cifar, cifar_train_loader, loss_fn, optim_cifar)
 
+## Why This Matters
+
+### 데이터 파이프라인
+
+- 왜 필요한가: 모델 성능 이전에 입력이 일정한 형식으로 잘 들어가야 학습과 평가가 안정적으로 반복됩니다.
+- 왜 이 방식을 쓰는가: Dataset/DataLoader 구조는 데이터 읽기, 변환, 배치 처리를 분리해 코드 재사용성과 실험 반복성을 높여줍니다.
+- 원리: 각 샘플을 Dataset이 제공하고, DataLoader가 이를 배치로 묶어 셔플·병렬 로딩·collate를 담당합니다.
+
+### 합성곱 기반 특징 추출
+
+- 왜 필요한가: 이미지는 인접 픽셀 관계와 지역 패턴이 중요해서, 완전연결층만으로는 공간 구조를 효율적으로 잡기 어렵습니다.
+- 왜 이 방식을 쓰는가: CNN은 필터를 공유하며 지역 특징을 반복적으로 추출할 수 있어 이미지 실습의 기본 뼈대로 적합합니다.
+- 원리: 작은 커널이 이미지 위를 이동하며 특징을 뽑고, 층이 깊어질수록 더 추상적인 패턴을 학습합니다.
+
+### 클래스와 객체 모델링
+
+- 왜 필요한가: 코드를 기능별로 나누고 상태를 함께 관리하려면 변수와 함수를 흩어두기보다 객체 단위로 묶는 연습이 필요합니다.
+- 왜 이 방식을 쓰는가: 클래스 기반 구조는 같은 패턴의 동작을 여러 인스턴스에 반복 적용하기 쉬워 기초 문법을 실제 코드 구조로 연결하기 좋습니다.
+- 원리: 클래스는 속성과 메서드를 묶는 설계도이고, 인스턴스는 그 설계도를 바탕으로 생성된 실제 객체입니다.
+
 ## Implementation Flow
 
 1. 코드 설명: CIFAR-100 사전학습: CIFAR-100 데이터셋을 사용해 SimpleCNN 모델을 5 에폭 동안 학습한 후, 가중치를 저장합니다.
@@ -146,6 +166,38 @@ class SimpleCNN(nn.Module):
 
     def forward(self, x):
 # ... trimmed ...
+```
+
+### 학습/검증 함수
+
+`학습/검증 함수`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 preds = torch.argmax(outputs, dim=1) 흐름이 주석과 함께 드러납니다.
+
+```python
+def train_epoch(model, dataloader, loss_fn, opt):
+    model.train()
+    running_loss = 0.0
+    correct = 0
+    total = 0
+
+    for inputs, labels in tqdm(dataloader, leave=False, desc="Train"):
+        inputs = inputs.to(device)
+        labels = labels.to(device)
+
+        opt.zero_grad()
+        outputs = model(inputs)
+        loss = loss_fn(outputs, labels)
+        loss.backward()
+        opt.step()
+
+        running_loss += loss.item() * inputs.size(0)
+        _, preds = torch.max(outputs, dim=1)
+        # preds = torch.argmax(outputs, dim=1)
+        correct += (preds == labels).sum().item()
+        total += labels.size(0)
+
+    epoch_loss = running_loss / total
+    epoch_acc = correct / total
+    return epoch_loss, epoch_acc
 ```
 
 ## Source Bundle

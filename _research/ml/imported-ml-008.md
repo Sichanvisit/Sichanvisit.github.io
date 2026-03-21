@@ -58,6 +58,14 @@ legend_elements() - (handles, label) 두 값을 반환 - https://matplotlib.org/
 
 Softmax 이용한 다중 분류
 
+## Why This Matters
+
+### 데이터 파이프라인
+
+- 왜 필요한가: 모델 성능 이전에 입력이 일정한 형식으로 잘 들어가야 학습과 평가가 안정적으로 반복됩니다.
+- 왜 이 방식을 쓰는가: Dataset/DataLoader 구조는 데이터 읽기, 변환, 배치 처리를 분리해 코드 재사용성과 실험 반복성을 높여줍니다.
+- 원리: 각 샘플을 Dataset이 제공하고, DataLoader가 이를 배치로 묶어 셔플·병렬 로딩·collate를 담당합니다.
+
 ## Implementation Flow
 
 1. handles, _ = scatter.legend_elements() 코드 설명: legend_elements() - (handles, label) 두 값을 반환 - https://matplotlib.org/stable/gallery/lines_bars_and_markers/scatter_with_...
@@ -101,6 +109,17 @@ for i in range(3):
 
 plt.tight_layout()
 plt.show()
+```
+
+### Softmax 이용한 다중 분류
+
+`Softmax 이용한 다중 분류`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+
+```python
+from sklearn.datasets import load_iris
+from sklearn.linear_model import LogisticRegression
+import matplotlib.pyplot as plt
+import numpy as np
 ```
 
 ## Source Bundle

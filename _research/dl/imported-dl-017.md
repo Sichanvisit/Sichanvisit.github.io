@@ -54,12 +54,59 @@ YOLOv1 클래스는 여섯 개의 컨볼루션 블록과 두 개의 전결합층
 
 논문에 제시된 아키텍처 구성 (YOLOv1)
 
+## Why This Matters
+
+### 객체 탐지와 영역 단위 이해
+
+- 왜 필요한가: 이미지 안에서 무엇이 있는지만이 아니라 어디에 있는지까지 알아야 할 때는 박스 또는 마스크 단위 예측이 필요합니다.
+- 왜 이 방식을 쓰는가: Detection 계열 모델은 분류보다 한 단계 더 나아가 위치 정보를 함께 학습하므로 실제 비전 문제에 더 직접적으로 연결됩니다.
+- 원리: 모델은 후보 영역을 만들고, 각 영역의 클래스와 좌표 또는 마스크를 동시에 예측해 장면을 해석합니다.
+
+### 합성곱 기반 특징 추출
+
+- 왜 필요한가: 이미지는 인접 픽셀 관계와 지역 패턴이 중요해서, 완전연결층만으로는 공간 구조를 효율적으로 잡기 어렵습니다.
+- 왜 이 방식을 쓰는가: CNN은 필터를 공유하며 지역 특징을 반복적으로 추출할 수 있어 이미지 실습의 기본 뼈대로 적합합니다.
+- 원리: 작은 커널이 이미지 위를 이동하며 특징을 뽑고, 층이 깊어질수록 더 추상적인 패턴을 학습합니다.
+
+### 클래스와 객체 모델링
+
+- 왜 필요한가: 코드를 기능별로 나누고 상태를 함께 관리하려면 변수와 함수를 흩어두기보다 객체 단위로 묶는 연습이 필요합니다.
+- 왜 이 방식을 쓰는가: 클래스 기반 구조는 같은 패턴의 동작을 여러 인스턴스에 반복 적용하기 쉬워 기초 문법을 실제 코드 구조로 연결하기 좋습니다.
+- 원리: 클래스는 속성과 메서드를 묶는 설계도이고, 인스턴스는 그 설계도를 바탕으로 생성된 실제 객체입니다.
+
 ## Implementation Flow
 
 1. Overview: YOLOv1 클래스는 여섯 개의 컨볼루션 블록과 두 개의 전결합층(fully connected)을 정의합니다. 각 컨볼루션 블록은 nn.Conv2d, nn.LeakyReLU(0.1), nn.MaxPool2d 등을 사용하여 구성되어 있습니다.
 2. Key Step: 논문에 제시된 아키텍처 구성 (YOLOv1)
 
 ## Code Highlights
+
+### class YOLOv1(nn.Module)
+
+`class YOLOv1(nn.Module)`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 입력 이미지가 448 인경우 마지막 컨볼루션 feature map 7x7 흐름이 주석과 함께 드러납니다.
+
+```python
+class YOLOv1(nn.Module):
+    def __init__(self, in_channels=3, num_classes=20, split_size=7, num_boxes=2):
+        super().__init__()
+        self.conv_layers = create_conv_layers(architecture_config, in_channels)
+
+        # 입력 이미지가 448 인경우 마지막 컨볼루션 feature map 7x7
+        self.fc_layers = nn.Sequential(
+            nn.Flatten(),
+            nn.Linear(1024*7*7, 4096),
+            nn.LeakyReLU(0.1),
+            nn.Dropout(0.5),
+            nn.Linear(4096, split_size * split_size * (num_classes + num_boxes * 5))
+        )
+        self.split_size = split_size
+        self.num_boxes = num_boxes
+        self.num_classes = num_classes
+    def forward(self, x):
+        x = self.conv_layers(x)
+        x = self.fc_layers(x)
+        return x
+```
 
 ### @title IoU
 

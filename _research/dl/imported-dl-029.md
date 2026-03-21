@@ -67,6 +67,26 @@ CIFAR-100 데이터셋 (3채널 컬러 이미지, 32x32)
 
 MNIST 데이터셋 (1채널 흑백 이미지, 28x28)
 
+## Why This Matters
+
+### 데이터 파이프라인
+
+- 왜 필요한가: 모델 성능 이전에 입력이 일정한 형식으로 잘 들어가야 학습과 평가가 안정적으로 반복됩니다.
+- 왜 이 방식을 쓰는가: Dataset/DataLoader 구조는 데이터 읽기, 변환, 배치 처리를 분리해 코드 재사용성과 실험 반복성을 높여줍니다.
+- 원리: 각 샘플을 Dataset이 제공하고, DataLoader가 이를 배치로 묶어 셔플·병렬 로딩·collate를 담당합니다.
+
+### 합성곱 기반 특징 추출
+
+- 왜 필요한가: 이미지는 인접 픽셀 관계와 지역 패턴이 중요해서, 완전연결층만으로는 공간 구조를 효율적으로 잡기 어렵습니다.
+- 왜 이 방식을 쓰는가: CNN은 필터를 공유하며 지역 특징을 반복적으로 추출할 수 있어 이미지 실습의 기본 뼈대로 적합합니다.
+- 원리: 작은 커널이 이미지 위를 이동하며 특징을 뽑고, 층이 깊어질수록 더 추상적인 패턴을 학습합니다.
+
+### 클래스와 객체 모델링
+
+- 왜 필요한가: 코드를 기능별로 나누고 상태를 함께 관리하려면 변수와 함수를 흩어두기보다 객체 단위로 묶는 연습이 필요합니다.
+- 왜 이 방식을 쓰는가: 클래스 기반 구조는 같은 패턴의 동작을 여러 인스턴스에 반복 적용하기 쉬워 기초 문법을 실제 코드 구조로 연결하기 좋습니다.
+- 원리: 클래스는 속성과 메서드를 묶는 설계도이고, 인스턴스는 그 설계도를 바탕으로 생성된 실제 객체입니다.
+
 ## Implementation Flow
 
 1. 코드 설명: CIFAR-100 사전학습: CIFAR-100 데이터셋을 사용해 SimpleCNN 모델을 5 에폭 동안 학습한 후, 가중치를 저장합니다.
@@ -109,6 +129,42 @@ def print_dataset_info(name, train_set, test_set):
     if hasattr(train_set, 'classes'):
         print("클래스 (카테고리) 개수:", len(train_set.classes))
         print("클래스 이름:", train_set.classes)
+# ... trimmed ...
+```
+
+### 코드 설명
+
+`코드 설명`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 MNIST 데이터셋에서 첫 번째 이미지 로드 (그레이스케일), 3채널 데이터로 변환, 방법 1: transforms.Grayscale(num_output_channels=3) 사용 흐름이 주석과 함께 드러납니다.
+
+```python
+import torch
+import torchvision.transforms as transforms
+import torchvision.datasets as datasets
+import matplotlib.pyplot as plt
+from PIL import Image
+import numpy as np
+
+# MNIST 데이터셋에서 첫 번째 이미지 로드 (그레이스케일)
+mnist = datasets.MNIST(root='./data', train=True, download=True)
+gray_img_array = mnist.data[0].numpy()  # shape: [28, 28]
+gray_img_pil = Image.fromarray(gray_img_array, mode='L')  # PIL 이미지, 모드 'L' (그레이스케일)
+
+# 3채널 데이터로 변환
+# 방법 1: transforms.Grayscale(num_output_channels=3) 사용
+transform_to3 = transforms.Compose([
+    transforms.Grayscale(num_output_channels=3),
+    transforms.ToTensor()
+])
+img_method1 = transform_to3(gray_img_pil)  # 텐서 shape: [3, 28, 28]
+
+# 방법 2: PIL의 convert("RGB") 사용 후 ToTensor()
+img_method2 = transforms.ToTensor()(gray_img_pil.convert("RGB"))  # 텐서 shape: [3, 28, 28]
+
+# 두 결과의 차이 계산
+diff = torch.abs(img_method1 - img_method2)
+max_diff = diff.max().item()
+mean_diff = diff.mean().item()
+
 # ... trimmed ...
 ```
 

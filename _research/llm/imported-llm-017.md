@@ -65,6 +65,26 @@ tags:
 
 허깅페이스는 모델의 아키텍처에 따라 통일된 모델 객체를 만들어 놓고 허브에 올라온 모델 이름을 통해 쉽게 학습된 모델을 가져 올 수 있습니다.
 
+## Why This Matters
+
+### 임베딩과 표현 학습
+
+- 왜 필요한가: 텍스트나 토큰을 그대로는 모델이 다룰 수 없기 때문에, 의미를 담은 수치 벡터 표현으로 바꾸는 단계가 필요합니다.
+- 왜 이 방식을 쓰는가: Word2Vec, FastText, GloVe 같은 방식은 같은 단어라도 주변 문맥이나 서브워드 정보를 반영해 비교 가능한 표현 공간을 만듭니다.
+- 원리: 자주 함께 등장하는 단어는 가까운 벡터가 되도록 학습해, 의미적으로 비슷한 표현이 공간에서도 가까워지게 합니다.
+
+### 데이터 파이프라인
+
+- 왜 필요한가: 모델 성능 이전에 입력이 일정한 형식으로 잘 들어가야 학습과 평가가 안정적으로 반복됩니다.
+- 왜 이 방식을 쓰는가: Dataset/DataLoader 구조는 데이터 읽기, 변환, 배치 처리를 분리해 코드 재사용성과 실험 반복성을 높여줍니다.
+- 원리: 각 샘플을 Dataset이 제공하고, DataLoader가 이를 배치로 묶어 셔플·병렬 로딩·collate를 담당합니다.
+
+### 전처리와 입력 정리
+
+- 왜 필요한가: 원본 데이터는 결측치, 스케일 차이, 불필요한 기호처럼 학습을 방해하는 요소가 많아 바로 넣기 어렵습니다.
+- 왜 이 방식을 쓰는가: 전처리는 모델 종류와 데이터 특성에 맞는 입력 형식을 먼저 맞춰주기 때문에, 단순해 보여도 성능 차이를 크게 만듭니다.
+- 원리: 불필요한 정보를 줄이고 유효한 패턴을 남기도록 데이터를 정규화·정제·인코딩해 모델이 학습하기 쉬운 분포로 바꿉니다.
+
 ## Implementation Flow
 
 1. 허깅페이스를 활용한 BERT/GPT 모델 사용: 허깅페이스(Hugging Face)는 자연어 처리(NLP) 분야에서 매우 널리 사용되는 오픈소스 라이브러리와 커뮤니티를 제공하는 플랫폼으로, 모델 공유 HUB, 데이터셋 공유 HUB, 라이브러리(Transformers, Datasets 등)를 통해 손...
@@ -73,6 +93,33 @@ tags:
 4. 허깅페이스의 모델 객체: 허깅페이스는 모델의 아키텍처에 따라 통일된 모델 객체를 만들어 놓고 허브에 올라온 모델 이름을 통해 쉽게 학습된 모델을 가져 올 수 있습니다.
 
 ## Code Highlights
+
+### 기계번역 해보기
+
+`기계번역 해보기`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 타겟 언어 설정, 모델 입력 및 출력: 번역 결과 생성하기, input_ids: 번역할 문장의 토큰 ID 흐름이 주석과 함께 드러납니다.
+
+```python
+import torch
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+# 타겟 언어 설정
+tar_lang = tokenizer.convert_tokens_to_ids("eng_Latn")
+print(tar_lang)
+
+# 모델 입력 및 출력: 번역 결과 생성하기
+# - input_ids: 번역할 문장의 토큰 ID
+# - forced_bos_token_id: 출력 언어 지정(여기서는 영어: "eng_Latn")
+# - early_stopping=True: 문장의 끝(EOS)이 나오면 즉시 생성 중단
+generated_tokens = model.generate(input_ids.to(device),
+                                  forced_bos_token_id=tar_lang,     # 영어로 번역
+                                  early_stopping=True               # 끝토큰(eos)이 나오면 중단
+                                  )
+print(f'출력 토큰: {generated_tokens}')
+
+generated_text = tokenizer.decode(generated_tokens[0], skip_special_tokens=False)
+print(f'생성 텍스트: {generated_text}')
+```
 
 ### 텍스트 생성하기
 

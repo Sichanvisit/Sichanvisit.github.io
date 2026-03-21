@@ -67,6 +67,26 @@ https://pytorch.org/vision/0.8/_modules/torchvision/models/googlenet.html#google
 
 BasicConv2d: 합성곱 + BatchNorm + ReLU (공식 구현 참고)
 
+## Why This Matters
+
+### 데이터 파이프라인
+
+- 왜 필요한가: 모델 성능 이전에 입력이 일정한 형식으로 잘 들어가야 학습과 평가가 안정적으로 반복됩니다.
+- 왜 이 방식을 쓰는가: Dataset/DataLoader 구조는 데이터 읽기, 변환, 배치 처리를 분리해 코드 재사용성과 실험 반복성을 높여줍니다.
+- 원리: 각 샘플을 Dataset이 제공하고, DataLoader가 이를 배치로 묶어 셔플·병렬 로딩·collate를 담당합니다.
+
+### 합성곱 기반 특징 추출
+
+- 왜 필요한가: 이미지는 인접 픽셀 관계와 지역 패턴이 중요해서, 완전연결층만으로는 공간 구조를 효율적으로 잡기 어렵습니다.
+- 왜 이 방식을 쓰는가: CNN은 필터를 공유하며 지역 특징을 반복적으로 추출할 수 있어 이미지 실습의 기본 뼈대로 적합합니다.
+- 원리: 작은 커널이 이미지 위를 이동하며 특징을 뽑고, 층이 깊어질수록 더 추상적인 패턴을 학습합니다.
+
+### 클래스와 객체 모델링
+
+- 왜 필요한가: 코드를 기능별로 나누고 상태를 함께 관리하려면 변수와 함수를 흩어두기보다 객체 단위로 묶는 연습이 필요합니다.
+- 왜 이 방식을 쓰는가: 클래스 기반 구조는 같은 패턴의 동작을 여러 인스턴스에 반복 적용하기 쉬워 기초 문법을 실제 코드 구조로 연결하기 좋습니다.
+- 원리: 클래스는 속성과 메서드를 묶는 설계도이고, 인스턴스는 그 설계도를 바탕으로 생성된 실제 객체입니다.
+
 ## Implementation Flow
 
 1. Overview: 다음은 GoogLeNet 논문(“Going Deeper with Convolutions”, 2014)과 PyTorch 구현(예: torchvision의 구현) 간의 주요 차이점입니다(일부 항목은 구현에 따라 달라질 수 있음)
@@ -109,6 +129,42 @@ class BasicConv2d(nn.Module):
 # Inception 모듈 (BasicConv2d 사용)
 # --------------------------
 class Inception(nn.Module):
+# ... trimmed ...
+```
+
+### --------------------------
+
+`--------------------------`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 GoogLeNet (Inception v1) 모델 (공식 구현 참고), (필요 시 입력 변환 코드 추가), 224x224 크기의 입력을 예상 흐름이 주석과 함께 드러납니다.
+
+```python
+# --------------------------
+# GoogLeNet (Inception v1) 모델 (공식 구현 참고)
+# --------------------------
+class GoogLeNet(nn.Module):
+    def __init__(self, num_classes=10, aux_logits=False, transform_input=False):
+        super(GoogLeNet, self).__init__()
+        self.aux_logits = aux_logits
+        self.transform_input = transform_input
+
+        self.conv1 = BasicConv2d(3, 64, kernel_size=7, stride=2, padding=3)
+        self.maxpool1 = nn.MaxPool2d(kernel_size=3, stride=2, ceil_mode=True)
+        self.conv2 = BasicConv2d(64, 64, kernel_size=1)
+        self.conv3 = BasicConv2d(64, 192, kernel_size=3, padding=1)
+        self.maxpool2 = nn.MaxPool2d(kernel_size=3, stride=2, ceil_mode=True)
+
+        self.inception3a = Inception(192, 64, 96, 128, 16, 32, 32)      # 출력: 256 채널
+        self.inception3b = Inception(256, 128, 128, 192, 32, 96, 64)     # 출력: 480 채널
+        self.maxpool3 = nn.MaxPool2d(kernel_size=3, stride=2, ceil_mode=True)
+
+        self.inception4a = Inception(480, 192, 96, 208, 16, 48, 64)      # 출력: 512 채널
+        self.inception4b = Inception(512, 160, 112, 224, 24, 64, 64)     # 출력: 512 채널
+        self.inception4c = Inception(512, 128, 128, 256, 24, 64, 64)     # 출력: 512 채널
+        self.inception4d = Inception(512, 112, 144, 288, 32, 64, 64)     # 출력: 528 채널
+        self.inception4e = Inception(528, 256, 160, 320, 32, 128, 128)    # 출력: 832 채널
+        self.maxpool4 = nn.MaxPool2d(kernel_size=3, stride=2, ceil_mode=True)
+
+        self.inception5a = Inception(832, 256, 160, 320, 32, 128, 128)    # 출력: 832 채널
+        self.inception5b = Inception(832, 384, 192, 384, 48, 128, 128)    # 출력: 1024 채널
 # ... trimmed ...
 ```
 

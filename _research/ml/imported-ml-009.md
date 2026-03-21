@@ -53,6 +53,20 @@ https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_califor
 
 https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_california_housing.html
 
+## Why This Matters
+
+### 데이터 파이프라인
+
+- 왜 필요한가: 모델 성능 이전에 입력이 일정한 형식으로 잘 들어가야 학습과 평가가 안정적으로 반복됩니다.
+- 왜 이 방식을 쓰는가: Dataset/DataLoader 구조는 데이터 읽기, 변환, 배치 처리를 분리해 코드 재사용성과 실험 반복성을 높여줍니다.
+- 원리: 각 샘플을 Dataset이 제공하고, DataLoader가 이를 배치로 묶어 셔플·병렬 로딩·collate를 담당합니다.
+
+### 평가 지표 해석
+
+- 왜 필요한가: 정확도 하나만으로는 모델이 실제로 무엇을 잘하고 무엇을 놓치는지 충분히 설명할 수 없습니다.
+- 왜 이 방식을 쓰는가: 문제 유형에 맞는 지표를 함께 보면 불균형 데이터, 오차 크기, 재현율 같은 중요한 관점을 놓치지 않을 수 있습니다.
+- 원리: 예측 결과를 정답과 비교해 오차나 클래스별 성능을 수치화하고, 그 수치로 모델 선택과 개선 방향을 판단합니다.
+
 ## Implementation Flow
 
 1. 1990년 캘리포니아 주택 데이터: https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_california_housing.html
@@ -81,6 +95,16 @@ def rmse(y_true, y_pred):
     return np.sqrt(mean_squared_error(y_true, y_pred))
 
 rmse_scorer = make_scorer(rmse, greater_is_better=False)
+```
+
+### 1990년 캘리포니아 주택 데이터
+
+`1990년 캘리포니아 주택 데이터`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 그리드 서치 설정 및 학습 흐름이 주석과 함께 드러납니다.
+
+```python
+# 그리드 서치 설정 및 학습
+grid = GridSearchCV(Ridge(), param_grid, scoring=rmse_scorer, cv=5)         # cv=5: cross validation
+grid.fit(X,y)
 ```
 
 ## Source Bundle

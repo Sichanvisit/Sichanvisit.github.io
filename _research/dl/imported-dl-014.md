@@ -48,6 +48,26 @@ UNet에서 다룬 구현 흐름과 참고 소스를 다시 볼 수 있게 정리
 
 - 이 기록은 `DL` 트랙의 `Archive Note` 아카이브로 정리되어 있습니다.
 
+## Why This Matters
+
+### 데이터 파이프라인
+
+- 왜 필요한가: 모델 성능 이전에 입력이 일정한 형식으로 잘 들어가야 학습과 평가가 안정적으로 반복됩니다.
+- 왜 이 방식을 쓰는가: Dataset/DataLoader 구조는 데이터 읽기, 변환, 배치 처리를 분리해 코드 재사용성과 실험 반복성을 높여줍니다.
+- 원리: 각 샘플을 Dataset이 제공하고, DataLoader가 이를 배치로 묶어 셔플·병렬 로딩·collate를 담당합니다.
+
+### 학습 루프와 최적화
+
+- 왜 필요한가: 모델을 한 번 정의했다고 바로 학습되는 것이 아니라, 손실을 계산하고 가중치를 반복적으로 갱신하는 루프가 필요합니다.
+- 왜 이 방식을 쓰는가: optimizer와 scheduler를 명시적으로 두면 학습률 변화와 갱신 방식을 실험별로 비교하기 쉬워집니다.
+- 원리: 예측값과 정답의 차이로 손실을 계산하고, 역전파로 기울기를 구한 뒤 optimizer가 가중치를 업데이트합니다.
+
+### 합성곱 기반 특징 추출
+
+- 왜 필요한가: 이미지는 인접 픽셀 관계와 지역 패턴이 중요해서, 완전연결층만으로는 공간 구조를 효율적으로 잡기 어렵습니다.
+- 왜 이 방식을 쓰는가: CNN은 필터를 공유하며 지역 특징을 반복적으로 추출할 수 있어 이미지 실습의 기본 뼈대로 적합합니다.
+- 원리: 작은 커널이 이미지 위를 이동하며 특징을 뽑고, 층이 깊어질수록 더 추상적인 패턴을 학습합니다.
+
 ## Implementation Flow
 
 1. 원본 노트의 문제 정의를 먼저 확인합니다.
@@ -55,6 +75,42 @@ UNet에서 다룬 구현 흐름과 참고 소스를 다시 볼 수 있게 정리
 3. 필요하면 이 흐름을 별도 케이스 스터디로 확장합니다.
 
 ## Code Highlights
+
+### @title UNet 모델 정의
+
+`@title UNet 모델 정의`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 UNet 모델 정의 흐름이 주석과 함께 드러납니다.
+
+```python
+#@title UNet 모델 정의
+class DoubleConv(nn.Module):
+    def __init__(self, in_ch, out_ch):
+        super().__init__()
+        self.double_conv = nn.Sequential(
+            nn.Conv2d(in_ch, out_ch, kernel_size=3, padding=1), # 원래 UNet 에서는 패딩을 추가하지 X
+            nn.BatchNorm2d(out_ch),
+            nn.ReLU(True),
+
+            nn.Conv2d(out_ch, out_ch, kernel_size=3, padding=1),
+            nn.BatchNorm2d(out_ch),
+            nn.ReLU(True)
+        )
+    def forward(self, x):
+        return self.double_conv(x)
+
+class UNet(nn.Module):
+    def __init__(self, n_ch=3, n_classes=2):
+        super().__init__()
+        self.inc = DoubleConv(n_ch, 64)
+
+        self.down1 = nn.Sequential(
+            nn.MaxPool2d(2),
+            DoubleConv(64,128)
+        )
+        self.down2 = nn.Sequential(
+            nn.MaxPool2d(2),
+            DoubleConv(128,256)
+# ... trimmed ...
+```
 
 ### from pdb import run
 

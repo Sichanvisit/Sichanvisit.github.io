@@ -67,6 +67,14 @@ tags:
 
 Word2Vec, Glove등 각 단어를 저차원 벡터로 표현 - 단어간의 의미적 유사성을 벡터 공간에서 반영
 
+## Why This Matters
+
+### 임베딩과 표현 학습
+
+- 왜 필요한가: 텍스트나 토큰을 그대로는 모델이 다룰 수 없기 때문에, 의미를 담은 수치 벡터 표현으로 바꾸는 단계가 필요합니다.
+- 왜 이 방식을 쓰는가: Word2Vec, FastText, GloVe 같은 방식은 같은 단어라도 주변 문맥이나 서브워드 정보를 반영해 비교 가능한 표현 공간을 만듭니다.
+- 원리: 자주 함께 등장하는 단어는 가까운 벡터가 되도록 학습해, 의미적으로 비슷한 표현이 공간에서도 가까워지게 합니다.
+
 ## Implementation Flow
 
 1. 텍스트 벡터화: 백터화는 기본적으로 토큰화와 인코딩 이후 진행됩니다.
@@ -109,6 +117,32 @@ print(tokens)
 
 names = tfvec.vocabulary_
 print(names)
+```
+
+### 산점도 시각화
+
+`산점도 시각화`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 설치된 나눔고딕 폰트를 불러와 Matplotlib의 기본 폰트로 설정, 음수 부호 사용, 산점도 그리기 흐름이 주석과 함께 드러납니다.
+
+```python
+import matplotlib.pyplot as plt
+
+# 설치된 나눔고딕 폰트를 불러와 Matplotlib의 기본 폰트로 설정
+plt.rc('font', family='NanumBarunGothic')
+# 음수 부호 사용
+plt.rcParams['axes.unicode_minus'] = False
+
+# 산점도 그리기
+plt.figure(figsize=(10, 8))
+
+for i, word in enumerate(words):
+    plt.scatter(reduced_vectors[i, 0], reduced_vectors[i, 1])
+    plt.annotate(word, (reduced_vectors[i, 0] + 0.02, reduced_vectors[i, 1] + 0.02))
+
+plt.title(f"Word2Vec Similarity: {keyword}")
+plt.xlabel("PCA Component 1")
+plt.ylabel("PCA Component 2")
+plt.grid(True)
+plt.show()
 ```
 
 ## Source Bundle

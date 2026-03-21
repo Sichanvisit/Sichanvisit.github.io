@@ -67,6 +67,26 @@ device 설정 (GPU가 있으면 GPU 사용)
 
 학습용 MNIST 데이터셋 다운로드 및 로드
 
+## Why This Matters
+
+### 데이터 파이프라인
+
+- 왜 필요한가: 모델 성능 이전에 입력이 일정한 형식으로 잘 들어가야 학습과 평가가 안정적으로 반복됩니다.
+- 왜 이 방식을 쓰는가: Dataset/DataLoader 구조는 데이터 읽기, 변환, 배치 처리를 분리해 코드 재사용성과 실험 반복성을 높여줍니다.
+- 원리: 각 샘플을 Dataset이 제공하고, DataLoader가 이를 배치로 묶어 셔플·병렬 로딩·collate를 담당합니다.
+
+### 학습 루프와 최적화
+
+- 왜 필요한가: 모델을 한 번 정의했다고 바로 학습되는 것이 아니라, 손실을 계산하고 가중치를 반복적으로 갱신하는 루프가 필요합니다.
+- 왜 이 방식을 쓰는가: optimizer와 scheduler를 명시적으로 두면 학습률 변화와 갱신 방식을 실험별로 비교하기 쉬워집니다.
+- 원리: 예측값과 정답의 차이로 손실을 계산하고, 역전파로 기울기를 구한 뒤 optimizer가 가중치를 업데이트합니다.
+
+### 클래스와 객체 모델링
+
+- 왜 필요한가: 코드를 기능별로 나누고 상태를 함께 관리하려면 변수와 함수를 흩어두기보다 객체 단위로 묶는 연습이 필요합니다.
+- 왜 이 방식을 쓰는가: 클래스 기반 구조는 같은 패턴의 동작을 여러 인스턴스에 반복 적용하기 쉬워 기초 문법을 실제 코드 구조로 연결하기 좋습니다.
+- 원리: 클래스는 속성과 메서드를 묶는 설계도이고, 인스턴스는 그 설계도를 바탕으로 생성된 실제 객체입니다.
+
 ## Implementation Flow
 
 1. KL 발산 : N(u, sigma^2), N(0, 1): 두 정규분포 $q(z) = {N}(\mu, \sigma^2)$와 $p(z) = {N}(0,1)$의 KL 발산을 계산해보면
@@ -109,6 +129,42 @@ class VAE(nn.Module):
         return self.fc21(h1), self.fc22(h1)
 
     def reparameterize(self, mu, logvar):
+# ... trimmed ...
+```
+
+### 잠재 공간 시각화 (2D) 및 테스트 데이터셋 처리 ###
+
+`잠재 공간 시각화 (2D) 및 테스트 데이터셋 처리 ###`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 잠재 공간 시각화 (2D) 및 테스트 데이터셋 처리 ###, 테스트 데이터셋 다운로드 및 로드 (학습 데이터와는 별개), 테스트 데이터셋에 대해 인코딩 및 잠재 변수 샘플링 진행 흐름이 주석과 함께 드러납니다.
+
+```python
+### 잠재 공간 시각화 (2D) 및 테스트 데이터셋 처리 ###
+model.eval()  # 평가 모드로 전환
+all_z = []    # 모든 잠재 변수 저장 리스트
+all_labels = []  # 해당 이미지의 레이블 저장 리스트
+
+# 테스트 데이터셋 다운로드 및 로드 (학습 데이터와는 별개)
+with torch.no_grad():
+    testset = torchvision.datasets.MNIST(root='./data', train=False, download=True, transform=transform)
+    testloader = DataLoader(testset, batch_size=64, shuffle=False)
+
+    # 테스트 데이터셋에 대해 인코딩 및 잠재 변수 샘플링 진행
+    for data, labels in testloader:
+        data = data.to(device)
+        mu, logvar = model.encode(data.view(-1, 28 * 28))
+        z = model.reparameterize(mu, logvar)
+        z = z.cpu().numpy()
+
+        all_z.append(z)
+        all_labels.append(labels)
+
+    all_z = np.concatenate(all_z)
+    all_labels = np.concatenate(all_labels)
+
+    # 2D 잠재 공간에 대해 산점도(scatter plot) 시각화
+    plt.figure(figsize=(10, 8))
+    scatter = plt.scatter(all_z[:, 0], all_z[:, 1], c=all_labels, cmap='tab10', alpha=0.5, edgecolors='k', s=20)
+    plt.colorbar(scatter, ticks=range(10))
+    plt.xlabel('Latent Dimension 1')
 # ... trimmed ...
 ```
 

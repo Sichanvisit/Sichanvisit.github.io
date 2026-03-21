@@ -54,6 +54,14 @@ tags:
 - 모델링
 - 릿지 회귀 모델링
 
+## Why This Matters
+
+### 데이터 파이프라인
+
+- 왜 필요한가: 모델 성능 이전에 입력이 일정한 형식으로 잘 들어가야 학습과 평가가 안정적으로 반복됩니다.
+- 왜 이 방식을 쓰는가: Dataset/DataLoader 구조는 데이터 읽기, 변환, 배치 처리를 분리해 코드 재사용성과 실험 반복성을 높여줍니다.
+- 원리: 각 샘플을 Dataset이 제공하고, DataLoader가 이를 배치로 묶어 셔플·병렬 로딩·collate를 담당합니다.
+
 ## Implementation Flow
 
 1. Key Step: 테스트 데이터 트레이닝 데이터 분할
@@ -78,6 +86,16 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3, rando
 # 모델링
 model_lr = LinearRegression()
 model_lr.fit(X_train, y_train)
+```
+
+### 릿지 회귀 모델링
+
+`릿지 회귀 모델링`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 릿지 회귀 모델링 흐름이 주석과 함께 드러납니다.
+
+```python
+# 릿지 회귀 모델링
+model_ridge = Ridge(alpha=0.9)
+model_ridge.fit(X_train, y_train)
 ```
 
 ## Source Bundle

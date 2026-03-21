@@ -47,6 +47,20 @@ tags:
 
 - 이 기록은 `ML` 트랙의 `Practice` 아카이브로 정리되어 있습니다.
 
+## Why This Matters
+
+### 데이터 파이프라인
+
+- 왜 필요한가: 모델 성능 이전에 입력이 일정한 형식으로 잘 들어가야 학습과 평가가 안정적으로 반복됩니다.
+- 왜 이 방식을 쓰는가: Dataset/DataLoader 구조는 데이터 읽기, 변환, 배치 처리를 분리해 코드 재사용성과 실험 반복성을 높여줍니다.
+- 원리: 각 샘플을 Dataset이 제공하고, DataLoader가 이를 배치로 묶어 셔플·병렬 로딩·collate를 담당합니다.
+
+### 평가 지표 해석
+
+- 왜 필요한가: 정확도 하나만으로는 모델이 실제로 무엇을 잘하고 무엇을 놓치는지 충분히 설명할 수 없습니다.
+- 왜 이 방식을 쓰는가: 문제 유형에 맞는 지표를 함께 보면 불균형 데이터, 오차 크기, 재현율 같은 중요한 관점을 놓치지 않을 수 있습니다.
+- 원리: 예측 결과를 정답과 비교해 오차나 클래스별 성능을 수치화하고, 그 수치로 모델 선택과 개선 방향을 판단합니다.
+
 ## Implementation Flow
 
 1. 원본 노트의 문제 정의를 먼저 확인합니다.
@@ -68,6 +82,20 @@ from sklearn.metrics import accuracy_score
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.colors import ListedColormap           # 결정 경계 시각화 하기 위한 라이브러리
+```
+
+### base_estimator = DecisionTreeClassifier(max_depth=1) # Stump생성
+
+`base_estimator = DecisionTreeClassifier(max_depth=1) # Stump생성`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+
+```python
+base_estimator = DecisionTreeClassifier(max_depth=1)      # Stump생성
+ada_clf = AdaBoostClassifier(
+    estimator=base_estimator,
+    n_estimators=1000,
+    learning_rate=0.1
+)
+ada_clf.fit(X_train, y_train)
 ```
 
 ### def plot_decision_boundary(model, X, y, title="Decision Boundary")

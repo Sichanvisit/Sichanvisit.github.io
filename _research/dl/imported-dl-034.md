@@ -67,6 +67,20 @@ CAM(Class Activation Map)
 
 모델 준비: 사전학습된 ResNet-18 로드 및 평가 모드로 전환
 
+## Why This Matters
+
+### 합성곱 기반 특징 추출
+
+- 왜 필요한가: 이미지는 인접 픽셀 관계와 지역 패턴이 중요해서, 완전연결층만으로는 공간 구조를 효율적으로 잡기 어렵습니다.
+- 왜 이 방식을 쓰는가: CNN은 필터를 공유하며 지역 특징을 반복적으로 추출할 수 있어 이미지 실습의 기본 뼈대로 적합합니다.
+- 원리: 작은 커널이 이미지 위를 이동하며 특징을 뽑고, 층이 깊어질수록 더 추상적인 패턴을 학습합니다.
+
+### 클래스와 객체 모델링
+
+- 왜 필요한가: 코드를 기능별로 나누고 상태를 함께 관리하려면 변수와 함수를 흩어두기보다 객체 단위로 묶는 연습이 필요합니다.
+- 왜 이 방식을 쓰는가: 클래스 기반 구조는 같은 패턴의 동작을 여러 인스턴스에 반복 적용하기 쉬워 기초 문법을 실제 코드 구조로 연결하기 좋습니다.
+- 원리: 클래스는 속성과 메서드를 묶는 설계도이고, 인스턴스는 그 설계도를 바탕으로 생성된 실제 객체입니다.
+
 ## Implementation Flow
 
 1. Hook이란?: Hook은 PyTorch에서 모델의 순전파(forward) 또는 역전파(backward) 중 특정 시점에 사용자 정의 함수를 "연결"하여, 그 시점의 입력, 출력 또는 기울기(gradient)를 관찰하거나 수정할 수 있게 해주는 기능입니다. 즉, 모델이 데이터를 처리하는 중간 단계에...
@@ -75,6 +89,42 @@ CAM(Class Activation Map)
 4. Key Step: 모델 준비: 사전학습된 ResNet-18 로드 및 평가 모드로 전환
 
 ## Code Highlights
+
+### CAM(Class Activation Map)
+
+`CAM(Class Activation Map)`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 이미지 다운로드 및 로드, 이미지 시각화 (원본 이미지) 흐름이 주석과 함께 드러납니다.
+
+```python
+import torch
+from torchvision import models, transforms
+from PIL import Image
+import requests
+from io import BytesIO
+import matplotlib.pyplot as plt
+
+
+# 이미지 다운로드 및 로드
+url_1 = 'https://petmedaily.com/wp-content/uploads/2022/12/Featured-Image-do-goldfish-get-lonely-1536x512.png'
+url_2 = 'https://pethelpful.com/.image/w_384,q_auto:good,c_limit/MjEwNDM3MjkyNzE4ODI3MzQ1/easy-ways-to-keep-fish-alive-on-a-fish-bowl-without-air-pump.jpg'
+response = requests.get(url_1)
+img1 = Image.open(BytesIO(response.content)).convert('RGB')  # 확실한 RGB 변환
+
+response = requests.get(url_2)
+img2 = Image.open(BytesIO(response.content)).convert('RGB')  # 확실한 RGB 변환
+
+# 이미지 시각화 (원본 이미지)
+plt.figure(figsize=(6,6))
+plt.imshow(img1)
+plt.axis('off')
+plt.title("Sample Image")
+plt.show()
+
+plt.figure(figsize=(6,6))
+plt.imshow(img2)
+plt.axis('off')
+plt.title("Sample Image")
+# ... trimmed ...
+```
 
 ### CAM(Class Activation Map)
 

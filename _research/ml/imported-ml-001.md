@@ -51,6 +51,14 @@ tags:
 - Person 클래스 연습
 - 두 명 추가하기
 
+## Why This Matters
+
+### 클래스와 객체 모델링
+
+- 왜 필요한가: 코드를 기능별로 나누고 상태를 함께 관리하려면 변수와 함수를 흩어두기보다 객체 단위로 묶는 연습이 필요합니다.
+- 왜 이 방식을 쓰는가: 클래스 기반 구조는 같은 패턴의 동작을 여러 인스턴스에 반복 적용하기 쉬워 기초 문법을 실제 코드 구조로 연결하기 좋습니다.
+- 원리: 클래스는 속성과 메서드를 묶는 설계도이고, 인스턴스는 그 설계도를 바탕으로 생성된 실제 객체입니다.
+
 ## Implementation Flow
 
 1. Key Step: 위의 은행 클래스 init없이 구현
@@ -58,6 +66,22 @@ tags:
 3. Key Step: 실습2 문제 - 인스턴스 변수 초기화 예외 처리
 
 ## Code Highlights
+
+### 클래스 코드 연습
+
+`클래스 코드 연습`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 Person 클래스 연습 흐름이 주석과 함께 드러납니다.
+
+```python
+# Person 클래스 연습
+
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def greet(self):
+        print(f'Hello {self.name}')
+```
 
 ### 은행 클래스
 

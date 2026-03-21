@@ -68,6 +68,26 @@ UNK 비율 확인: 모델이 모르는 단어가 1% 미만이어야 안전합니
 
 CUDA 사용 가능 여부 체크 및 장치 설정
 
+## Why This Matters
+
+### 임베딩과 표현 학습
+
+- 왜 필요한가: 텍스트나 토큰을 그대로는 모델이 다룰 수 없기 때문에, 의미를 담은 수치 벡터 표현으로 바꾸는 단계가 필요합니다.
+- 왜 이 방식을 쓰는가: Word2Vec, FastText, GloVe 같은 방식은 같은 단어라도 주변 문맥이나 서브워드 정보를 반영해 비교 가능한 표현 공간을 만듭니다.
+- 원리: 자주 함께 등장하는 단어는 가까운 벡터가 되도록 학습해, 의미적으로 비슷한 표현이 공간에서도 가까워지게 합니다.
+
+### 데이터 파이프라인
+
+- 왜 필요한가: 모델 성능 이전에 입력이 일정한 형식으로 잘 들어가야 학습과 평가가 안정적으로 반복됩니다.
+- 왜 이 방식을 쓰는가: Dataset/DataLoader 구조는 데이터 읽기, 변환, 배치 처리를 분리해 코드 재사용성과 실험 반복성을 높여줍니다.
+- 원리: 각 샘플을 Dataset이 제공하고, DataLoader가 이를 배치로 묶어 셔플·병렬 로딩·collate를 담당합니다.
+
+### 전처리와 입력 정리
+
+- 왜 필요한가: 원본 데이터는 결측치, 스케일 차이, 불필요한 기호처럼 학습을 방해하는 요소가 많아 바로 넣기 어렵습니다.
+- 왜 이 방식을 쓰는가: 전처리는 모델 종류와 데이터 특성에 맞는 입력 형식을 먼저 맞춰주기 때문에, 단순해 보여도 성능 차이를 크게 만듭니다.
+- 원리: 불필요한 정보를 줄이고 유효한 패턴을 남기도록 데이터를 정규화·정제·인코딩해 모델이 학습하기 쉬운 분포로 바꿉니다.
+
 ## Implementation Flow
 
 1. 미션: Hugging Face Transformers를 활용한 문서 요약 모델 구현: 미션 소개 Hugging Face transformers 라이브러리를 사용하여 실제 한국어 문서 요약 모델을 처음부터 끝까지 구축하는 미션입니다. 데이터 로드 → 전처리 → 모델 Fine-tuning → 요약 생성...
@@ -76,6 +96,42 @@ CUDA 사용 가능 여부 체크 및 장치 설정
 4. Key Step: CUDA 사용 가능 여부 체크 및 장치 설정
 
 ## Code Highlights
+
+### 정제비교실험
+
+`정제비교실험`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 =================================================..., 데이터 로드 흐름이 주석과 함께 드러납니다.
+
+```python
+import pandas as pd
+import numpy as np
+from transformers import AutoTokenizer
+import os
+import time
+
+# =========================================================
+BASE_PATH =  r"C:\Users\bhs33\PyCharmMiscProject\summarization\summarization"
+
+FILE_RAW = "step1_clean_train.csv"           # 전처리 전 (Step 1-1 결과)
+FILE_CLEAN = "step5_density_controlled_train.csv" # 전처리 후 (Step 1-5 결과)
+
+MODEL_NAME = "gogamza/kobart-base-v2"
+# =========================================================
+
+def step1_7_efficiency_report():
+    print(f"\n🚀 [Step 1-7] 데이터 효율성 및 개선 효과 검증 (A/B Compare)")
+
+    path_raw = os.path.join(BASE_PATH, FILE_RAW)
+    path_clean = os.path.join(BASE_PATH, FILE_CLEAN)
+
+    if not os.path.exists(path_raw) or not os.path.exists(path_clean):
+        print("❌ 비교할 파일이 없습니다.")
+        return
+
+    # 1. 데이터 로드
+    print("   - 데이터 로드 중...")
+    df_raw = pd.read_csv(path_raw)
+# ... trimmed ...
+```
 
 ### 토크나이저 정렬 분석
 

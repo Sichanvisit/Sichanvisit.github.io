@@ -67,6 +67,26 @@ tags:
 
 데이터에 포함된 불필요한 기호는 제거하였다.
 
+## Why This Matters
+
+### 순차 데이터 모델링
+
+- 왜 필요한가: 문장, 시계열처럼 순서가 중요한 데이터는 현재 입력만이 아니라 앞선 맥락까지 함께 봐야 합니다.
+- 왜 이 방식을 쓰는가: LSTM/GRU는 기본 RNN보다 긴 문맥을 더 안정적으로 다룰 수 있어 텍스트 분류나 시계열 예측 실습에 자주 쓰입니다.
+- 원리: 이전 시점의 은닉 상태를 다음 입력과 함께 업데이트하며, 게이트 구조로 필요한 정보는 남기고 불필요한 정보는 줄입니다.
+
+### 데이터 파이프라인
+
+- 왜 필요한가: 모델 성능 이전에 입력이 일정한 형식으로 잘 들어가야 학습과 평가가 안정적으로 반복됩니다.
+- 왜 이 방식을 쓰는가: Dataset/DataLoader 구조는 데이터 읽기, 변환, 배치 처리를 분리해 코드 재사용성과 실험 반복성을 높여줍니다.
+- 원리: 각 샘플을 Dataset이 제공하고, DataLoader가 이를 배치로 묶어 셔플·병렬 로딩·collate를 담당합니다.
+
+### 전처리와 입력 정리
+
+- 왜 필요한가: 원본 데이터는 결측치, 스케일 차이, 불필요한 기호처럼 학습을 방해하는 요소가 많아 바로 넣기 어렵습니다.
+- 왜 이 방식을 쓰는가: 전처리는 모델 종류와 데이터 특성에 맞는 입력 형식을 먼저 맞춰주기 때문에, 단순해 보여도 성능 차이를 크게 만듭니다.
+- 원리: 불필요한 정보를 줄이고 유효한 패턴을 남기도록 데이터를 정규화·정제·인코딩해 모델이 학습하기 쉬운 분포로 바꿉니다.
+
 ## Implementation Flow
 
 1. ✔️ 요약: 본 실습에서는 한영 말뭉치 데이터셋을 기반으로 Sequence-to-Sequence 모델을 구축하였다. 이 과정에서 과적합을 개선하기 위해 GRU 양방향 구조, Label Smoothing, Dropout, L2 정규화, Teacher Forcing 스케줄링 등을 적용하였지만, 문장 예...
@@ -146,6 +166,37 @@ with open(out_dir + "mini_val.json", "w", encoding="utf-8") as f:
     json.dump({"data": val_split}, f, ensure_ascii=False, indent=2)
 
 # ... trimmed ...
+```
+
+### SentencePiece
+
+`SentencePiece`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 학습 옵션 (한국어용, 영어용 따로) 흐름이 주석과 함께 드러납니다.
+
+```python
+# 학습 옵션 (한국어용, 영어용 따로)
+spm.SentencePieceTrainer.train(
+    input=spm_dir + "ko_corpus.txt",
+    model_prefix=spm_dir + "spm_ko",
+    vocab_size=8000,
+    model_type="unigram",
+    character_coverage=0.999,
+    bos_id=1,
+    eos_id=2,
+    pad_id=0,
+    unk_id=3
+)
+
+spm.SentencePieceTrainer.train(
+    input=spm_dir + "en_corpus.txt",
+    model_prefix=spm_dir + "spm_en",
+    vocab_size=8000,
+    model_type="unigram",
+    character_coverage=1.0,
+    bos_id=1,
+    eos_id=2,
+    pad_id=0,
+    unk_id=3
+)
 ```
 
 ## Source Bundle

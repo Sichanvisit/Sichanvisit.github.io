@@ -56,6 +56,26 @@ tags:
 - 간단한 학습 루프 (2 에폭 예시)
 - 학습 가능한 파라미터만 모아 옵티마이저에 전달
 
+## Why This Matters
+
+### 객체 탐지와 영역 단위 이해
+
+- 왜 필요한가: 이미지 안에서 무엇이 있는지만이 아니라 어디에 있는지까지 알아야 할 때는 박스 또는 마스크 단위 예측이 필요합니다.
+- 왜 이 방식을 쓰는가: Detection 계열 모델은 분류보다 한 단계 더 나아가 위치 정보를 함께 학습하므로 실제 비전 문제에 더 직접적으로 연결됩니다.
+- 원리: 모델은 후보 영역을 만들고, 각 영역의 클래스와 좌표 또는 마스크를 동시에 예측해 장면을 해석합니다.
+
+### 데이터 파이프라인
+
+- 왜 필요한가: 모델 성능 이전에 입력이 일정한 형식으로 잘 들어가야 학습과 평가가 안정적으로 반복됩니다.
+- 왜 이 방식을 쓰는가: Dataset/DataLoader 구조는 데이터 읽기, 변환, 배치 처리를 분리해 코드 재사용성과 실험 반복성을 높여줍니다.
+- 원리: 각 샘플을 Dataset이 제공하고, DataLoader가 이를 배치로 묶어 셔플·병렬 로딩·collate를 담당합니다.
+
+### 합성곱 기반 특징 추출
+
+- 왜 필요한가: 이미지는 인접 픽셀 관계와 지역 패턴이 중요해서, 완전연결층만으로는 공간 구조를 효율적으로 잡기 어렵습니다.
+- 왜 이 방식을 쓰는가: CNN은 필터를 공유하며 지역 특징을 반복적으로 추출할 수 있어 이미지 실습의 기본 뼈대로 적합합니다.
+- 원리: 작은 커널이 이미지 위를 이동하며 특징을 뽑고, 층이 깊어질수록 더 추상적인 패턴을 학습합니다.
+
 ## Implementation Flow
 
 1. Key Step: 데이터셋 준비: PennFudan 데이터셋의 경로와 변환 함수 지정
@@ -99,6 +119,29 @@ class  PennFudanDataset(torch.utils.data.Dataset):
         iscrowd = torch.zeros((len(obj_ids),), dtype=torch.int64)
 
 # ... trimmed ...
+```
+
+### def collate_fn(batch)
+
+`def collate_fn(batch)`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 데이터셋 준비: PennFudan 데이터셋의 경로와 변환 함수 지정, 데이터셋을 학습용과 테스트용으로 나눕니다., 여기서는 무작위로 선택하여 마지막 50개 이미지를 테스트셋으로 사용합니다. 흐름이 주석과 함께 드러납니다.
+
+```python
+def collate_fn(batch):
+    return tuple(zip(*batch))
+
+# 데이터셋 준비: PennFudan 데이터셋의 경로와 변환 함수 지정
+dataset = PennFudanDataset('/content/data/PennFudanPed', get_transform(train=True))
+dataset_test = PennFudanDataset('./data/PennFudanPed', get_transform(train=False))
+
+# 데이터셋을 학습용과 테스트용으로 나눕니다.
+# 여기서는 무작위로 선택하여 마지막 50개 이미지를 테스트셋으로 사용합니다.
+indices = torch.randperm(len(dataset)).tolist()
+dataset = torch.utils.data.Subset(dataset, indices[:-50])
+dataset_test = torch.utils.data.Subset(dataset_test, indices[-50:])
+
+# DataLoader 생성: 배치 크기, 셔플 여부, 그리고 collate_fn 지정
+data_loader = torch.utils.data.DataLoader(dataset, batch_size=2, shuffle=True, collate_fn=collate_fn)
+data_loader_test = torch.utils.data.DataLoader(dataset_test, batch_size=1, shuffle=False, collate_fn=collate_fn)
 ```
 
 ### 5. 간단한 학습 루프 (2 에폭 예시)

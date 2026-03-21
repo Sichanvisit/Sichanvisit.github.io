@@ -67,6 +67,26 @@ tags:
 
 데이터프레임에서 기온 데이터를 numpy array 형식으로 변환
 
+## Why This Matters
+
+### RAG 검색 파이프라인
+
+- 왜 필요한가: LLM이 외부 지식을 안정적으로 참조하게 하려면, 생성 전에 관련 문서를 정확히 찾아오는 검색 단계가 먼저 필요합니다.
+- 왜 이 방식을 쓰는가: 이 방식은 모델 파라미터만 믿지 않고 최신 문서나 도메인 지식을 붙일 수 있어서 실제 서비스형 QA에 적합합니다.
+- 원리: 문서를 청크로 나누고 임베딩한 뒤, 질문과 가까운 벡터를 검색해 프롬프트에 함께 넣는 구조로 동작합니다.
+
+### 순차 데이터 모델링
+
+- 왜 필요한가: 문장, 시계열처럼 순서가 중요한 데이터는 현재 입력만이 아니라 앞선 맥락까지 함께 봐야 합니다.
+- 왜 이 방식을 쓰는가: LSTM/GRU는 기본 RNN보다 긴 문맥을 더 안정적으로 다룰 수 있어 텍스트 분류나 시계열 예측 실습에 자주 쓰입니다.
+- 원리: 이전 시점의 은닉 상태를 다음 입력과 함께 업데이트하며, 게이트 구조로 필요한 정보는 남기고 불필요한 정보는 줄입니다.
+
+### 데이터 파이프라인
+
+- 왜 필요한가: 모델 성능 이전에 입력이 일정한 형식으로 잘 들어가야 학습과 평가가 안정적으로 반복됩니다.
+- 왜 이 방식을 쓰는가: Dataset/DataLoader 구조는 데이터 읽기, 변환, 배치 처리를 분리해 코드 재사용성과 실험 반복성을 높여줍니다.
+- 원리: 각 샘플을 Dataset이 제공하고, DataLoader가 이를 배치로 묶어 셔플·병렬 로딩·collate를 담당합니다.
+
 ## Implementation Flow
 
 1. 데이터셋 소개: 데이터셋 정보 - 예나 날씨 데이터 - 2009년부터 2016년까지 독일 예나 도시의 날씨 데이터를 10분 간격으로 기록. - 14개 칼럼: 기온(°C), 기압(hPa), 습도(%), 바람 속도 등 다양한 정보 포함.
@@ -86,6 +106,27 @@ import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
 from torch.utils.data import Dataset, DataLoader
+```
+
+### 시각화
+
+`시각화`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+
+```python
+import matplotlib.pyplot as plt
+
+temperatures = df['T (degC)']
+temperatures.index = df['Date Time'] # 시간을 인덱스로 설정
+
+plt.figure(figsize=(10, 5))  # 그래프 크기 조정
+temperatures.plot()
+
+plt.xticks(rotation=20)  # x축 눈금 회전 (예: 45도)
+plt.xlabel("Date Time")  # x축 라벨 추가
+plt.ylabel("Temperature (°C)")  # y축 라벨 추가
+plt.title("Temperature Over Time")  # 제목 추가
+
+plt.show()
 ```
 
 ### 데이터 처리

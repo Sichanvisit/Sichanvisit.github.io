@@ -65,6 +65,20 @@ out: 모든 타임스텝의 출력 ([batch_size, seq_len, hidden_size])
 
 out: 모든 타임스텝의 출력 ([batch_size, seq_len, hidden_size])
 
+## Why This Matters
+
+### 순차 데이터 모델링
+
+- 왜 필요한가: 문장, 시계열처럼 순서가 중요한 데이터는 현재 입력만이 아니라 앞선 맥락까지 함께 봐야 합니다.
+- 왜 이 방식을 쓰는가: LSTM/GRU는 기본 RNN보다 긴 문맥을 더 안정적으로 다룰 수 있어 텍스트 분류나 시계열 예측 실습에 자주 쓰입니다.
+- 원리: 이전 시점의 은닉 상태를 다음 입력과 함께 업데이트하며, 게이트 구조로 필요한 정보는 남기고 불필요한 정보는 줄입니다.
+
+### 데이터 파이프라인
+
+- 왜 필요한가: 모델 성능 이전에 입력이 일정한 형식으로 잘 들어가야 학습과 평가가 안정적으로 반복됩니다.
+- 왜 이 방식을 쓰는가: Dataset/DataLoader 구조는 데이터 읽기, 변환, 배치 처리를 분리해 코드 재사용성과 실험 반복성을 높여줍니다.
+- 원리: 각 샘플을 Dataset이 제공하고, DataLoader가 이를 배치로 묶어 셔플·병렬 로딩·collate를 담당합니다.
+
 ## Implementation Flow
 
 1. PyTorch에서 RNN, LSTM, GRU 사용법: PyTorch에서는 torch.nn.RNN, torch.nn.LSTM, torch.nn.GRU 클래스를 사용하여 순환 신경망을 쉽게 구현할 수 있습니다. 각 클래스는 공통적으로 아래와 같은 주요 파라미터를 가집니다.
@@ -73,6 +87,21 @@ out: 모든 타임스텝의 출력 ([batch_size, seq_len, hidden_size])
 4. GRU: out: 모든 타임스텝의 출력 ([batch_size, seq_len, hidden_size])
 
 ## Code Highlights
+
+### RNN
+
+`RNN`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+
+```python
+import torch
+import torch.nn as nn
+
+rnn = nn.RNN(input_size=10, hidden_size=20, num_layers=1, batch_first=False)
+
+x = torch.randn(3, 32, 10)  # (seq_len, batch_size, input_size)
+out, hidden = rnn(x)
+print(out.shape, hidden.shape)
+```
 
 ### 간단한 데이터 생성
 

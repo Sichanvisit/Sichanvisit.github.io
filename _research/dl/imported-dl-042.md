@@ -57,6 +57,14 @@ tags:
 - SSD 모델 준비
 - 모델 학습 및 평가
 
+## Why This Matters
+
+### 데이터 파이프라인
+
+- 왜 필요한가: 모델 성능 이전에 입력이 일정한 형식으로 잘 들어가야 학습과 평가가 안정적으로 반복됩니다.
+- 왜 이 방식을 쓰는가: Dataset/DataLoader 구조는 데이터 읽기, 변환, 배치 처리를 분리해 코드 재사용성과 실험 반복성을 높여줍니다.
+- 원리: 각 샘플을 Dataset이 제공하고, DataLoader가 이를 배치로 묶어 셔플·병렬 로딩·collate를 담당합니다.
+
 ## Implementation Flow
 
 1. Key Step: 이미지, Annotation 경로 설정
@@ -135,6 +143,42 @@ for epoch in range(num_epochs):
         optimizer.step()
 
     avg_train_loss = total_train_loss / len(train_loader)
+# ... trimmed ...
+```
+
+### 모델 추론 및 시각화
+
+`모델 추론 및 시각화`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 Tensor 이미지를 (H, W, C) 형식으로 변환, Matplotlib을 사용한 이미지 시각화, Bounding Box와 클래스 이름 시각화 흐름이 주석과 함께 드러납니다.
+
+```python
+import matplotlib.patches as patches
+
+def visualize_prediction(image, prediction, classes):
+    """
+    image (torch.Tensor): 추론에 사용된 이미지 (C, H, W 형식).
+    prediction (dict): 모델의 예측 결과 (boxes, labels, scores 포함).
+    classes (list): 클래스 이름 리스트.
+    """
+    # Tensor 이미지를 (H, W, C) 형식으로 변환
+    image = image.permute(1, 2, 0).numpy()
+
+    # Matplotlib을 사용한 이미지 시각화
+    fig, ax = plt.subplots(1, figsize=(8, 8))
+    ax.imshow(image)
+
+    # Bounding Box와 클래스 이름 시각화
+    for box, label, score in zip(prediction["boxes"], prediction["labels"], prediction["scores"]):
+        if score > 0.5:  # Confidence Score 임계값
+            x_min, y_min, x_max, y_max = box.tolist()
+            width, height = x_max - x_min, y_max - y_min
+
+            # Bounding Box 추가
+            rect = patches.Rectangle(
+                (x_min, y_min), width, height, linewidth=2, edgecolor="red", facecolor="none"
+            )
+            ax.add_patch(rect)
+
+            # 클래스 이름과 Confidence Score 추가
 # ... trimmed ...
 ```
 

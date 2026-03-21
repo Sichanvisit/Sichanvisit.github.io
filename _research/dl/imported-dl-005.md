@@ -53,6 +53,26 @@ tags:
 - 모델
 - FCN-8s --> backbone
 
+## Why This Matters
+
+### 데이터 파이프라인
+
+- 왜 필요한가: 모델 성능 이전에 입력이 일정한 형식으로 잘 들어가야 학습과 평가가 안정적으로 반복됩니다.
+- 왜 이 방식을 쓰는가: Dataset/DataLoader 구조는 데이터 읽기, 변환, 배치 처리를 분리해 코드 재사용성과 실험 반복성을 높여줍니다.
+- 원리: 각 샘플을 Dataset이 제공하고, DataLoader가 이를 배치로 묶어 셔플·병렬 로딩·collate를 담당합니다.
+
+### 픽셀 단위 분할
+
+- 왜 필요한가: 객체의 경계를 세밀하게 다뤄야 할 때는 이미지 전체를 한 번에 분류하는 방식만으로는 부족합니다.
+- 왜 이 방식을 쓰는가: Segmentation은 픽셀마다 클래스를 붙여주기 때문에 의료영상, 장면 이해, 배경 제거처럼 경계가 중요한 문제에 잘 맞습니다.
+- 원리: 이미지 특징을 추출한 뒤 해상도를 복원하면서 각 픽셀 위치에 대한 클래스 확률을 예측합니다.
+
+### 클래스와 객체 모델링
+
+- 왜 필요한가: 코드를 기능별로 나누고 상태를 함께 관리하려면 변수와 함수를 흩어두기보다 객체 단위로 묶는 연습이 필요합니다.
+- 왜 이 방식을 쓰는가: 클래스 기반 구조는 같은 패턴의 동작을 여러 인스턴스에 반복 적용하기 쉬워 기초 문법을 실제 코드 구조로 연결하기 좋습니다.
+- 원리: 클래스는 속성과 메서드를 묶는 설계도이고, 인스턴스는 그 설계도를 바탕으로 생성된 실제 객체입니다.
+
 ## Implementation Flow
 
 1. Key Step: FCN-8s --> backbone : VGG16
@@ -128,6 +148,42 @@ class FCN8s(nn.Module):
         self.score_fr    = nn.Conv2d(512, num_classes, kernel_size=1)
 
         # Transposed conv
+# ... trimmed ...
+```
+
+### 모델
+
+`모델`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 mask는 다음 형태로 (B, H, W) 흐름이 주석과 함께 드러납니다.
+
+```python
+num_classes = 21
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+model = FCN8s(num_classes=num_classes).to(device)
+
+optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9, weight_decay=0.0005)
+criterion = nn.CrossEntropyLoss()
+
+num_epochs=10
+for epoch in range(num_epochs):
+    model.train()
+    running_loss = 0.0
+
+    for images, targets in tqdm(train_dataloader, desc=f"Epoch {epoch+1}/{num_epochs}"):
+        images = images.to(device)
+        targets = targets.to(device)
+
+        if targets.dim() == 4 and targets.size(1)==1:
+            targets = targets.squeeze(1)
+            # mask는 다음 형태로 (B, H, W)
+
+        optimizer.zero_grad()
+        outputs = model(images)
+        loss = criterion(outputs, targets)
+        loss.backward()
+        optimizer.step()
+
+        running_loss += loss.item()
+    avg_loss = running_loss / len(train_dataloader)
 # ... trimmed ...
 ```
 

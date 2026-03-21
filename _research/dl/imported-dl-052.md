@@ -56,6 +56,26 @@ tags:
 - 테스트 셋에서 20개 샘플 추출
 - 모델 예측
 
+## Why This Matters
+
+### 데이터 파이프라인
+
+- 왜 필요한가: 모델 성능 이전에 입력이 일정한 형식으로 잘 들어가야 학습과 평가가 안정적으로 반복됩니다.
+- 왜 이 방식을 쓰는가: Dataset/DataLoader 구조는 데이터 읽기, 변환, 배치 처리를 분리해 코드 재사용성과 실험 반복성을 높여줍니다.
+- 원리: 각 샘플을 Dataset이 제공하고, DataLoader가 이를 배치로 묶어 셔플·병렬 로딩·collate를 담당합니다.
+
+### 합성곱 기반 특징 추출
+
+- 왜 필요한가: 이미지는 인접 픽셀 관계와 지역 패턴이 중요해서, 완전연결층만으로는 공간 구조를 효율적으로 잡기 어렵습니다.
+- 왜 이 방식을 쓰는가: CNN은 필터를 공유하며 지역 특징을 반복적으로 추출할 수 있어 이미지 실습의 기본 뼈대로 적합합니다.
+- 원리: 작은 커널이 이미지 위를 이동하며 특징을 뽑고, 층이 깊어질수록 더 추상적인 패턴을 학습합니다.
+
+### 클래스와 객체 모델링
+
+- 왜 필요한가: 코드를 기능별로 나누고 상태를 함께 관리하려면 변수와 함수를 흩어두기보다 객체 단위로 묶는 연습이 필요합니다.
+- 왜 이 방식을 쓰는가: 클래스 기반 구조는 같은 패턴의 동작을 여러 인스턴스에 반복 적용하기 쉬워 기초 문법을 실제 코드 구조로 연결하기 좋습니다.
+- 원리: 클래스는 속성과 메서드를 묶는 설계도이고, 인스턴스는 그 설계도를 바탕으로 생성된 실제 객체입니다.
+
 ## Implementation Flow
 
 1. Key Step: model = MLP(input_size, hidden_size, num_cls).to(device)
@@ -132,6 +152,40 @@ for epoch in range(epochs):
         loss.backward()
         optim.step()
 # ... trimmed ...
+```
+
+### import matplotlib.pyplot as plt
+
+`import matplotlib.pyplot as plt`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 테스트 셋에서 20개 샘플 추출, 모델 예측, image = image.reshape(-1, input_size).to(device) 흐름이 주석과 함께 드러납니다.
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+
+# 테스트 셋에서 20개 샘플 추출
+sample_indices = np.random.choice(len(test_dataset), 20, replace=False)
+sampled_images = [test_dataset[i][0] for i in sample_indices]
+sampled_labels = [test_dataset[i][1] for i in sample_indices]
+
+# 모델 예측
+model.eval()  # 평가 모드로 설정
+predicted_labels = []
+with torch.no_grad():
+  for image in sampled_images:
+    # image = image.reshape(-1, input_size).to(device)
+    image = image.to(device)
+    output = model(image).argmax()
+    predicted_labels.append(output.item())
+
+# 결과 시각화
+fig, axes = plt.subplots(4, 5, figsize=(10, 8))
+for i, ax in enumerate(axes.flatten()):
+  ax.imshow(sampled_images[i].squeeze().numpy(), cmap='gray')
+  ax.set_title(f'True: {sampled_labels[i]}\nPred: {predicted_labels[i]}',
+               color='green' if sampled_labels[i] == predicted_labels[i] else 'red')
+  ax.axis('off')
+plt.tight_layout()
+plt.show()
 ```
 
 ## Source Bundle

@@ -56,6 +56,26 @@ Latent Vactor에 noise 추가, 라이브러리 임포트 및 MNIST 데이터셋 
 - CNN 코드
 - 모델 학습
 
+## Why This Matters
+
+### 데이터 파이프라인
+
+- 왜 필요한가: 모델 성능 이전에 입력이 일정한 형식으로 잘 들어가야 학습과 평가가 안정적으로 반복됩니다.
+- 왜 이 방식을 쓰는가: Dataset/DataLoader 구조는 데이터 읽기, 변환, 배치 처리를 분리해 코드 재사용성과 실험 반복성을 높여줍니다.
+- 원리: 각 샘플을 Dataset이 제공하고, DataLoader가 이를 배치로 묶어 셔플·병렬 로딩·collate를 담당합니다.
+
+### 학습 루프와 최적화
+
+- 왜 필요한가: 모델을 한 번 정의했다고 바로 학습되는 것이 아니라, 손실을 계산하고 가중치를 반복적으로 갱신하는 루프가 필요합니다.
+- 왜 이 방식을 쓰는가: optimizer와 scheduler를 명시적으로 두면 학습률 변화와 갱신 방식을 실험별로 비교하기 쉬워집니다.
+- 원리: 예측값과 정답의 차이로 손실을 계산하고, 역전파로 기울기를 구한 뒤 optimizer가 가중치를 업데이트합니다.
+
+### 합성곱 기반 특징 추출
+
+- 왜 필요한가: 이미지는 인접 픽셀 관계와 지역 패턴이 중요해서, 완전연결층만으로는 공간 구조를 효율적으로 잡기 어렵습니다.
+- 왜 이 방식을 쓰는가: CNN은 필터를 공유하며 지역 특징을 반복적으로 추출할 수 있어 이미지 실습의 기본 뼈대로 적합합니다.
+- 원리: 작은 커널이 이미지 위를 이동하며 특징을 뽑고, 층이 깊어질수록 더 추상적인 패턴을 학습합니다.
+
 ## Implementation Flow
 
 1. Key Step: 라이브러리 임포트 및 MNIST 데이터셋 로드
@@ -64,6 +84,39 @@ Latent Vactor에 noise 추가, 라이브러리 임포트 및 MNIST 데이터셋 
 4. Key Step: Function to generate a new image from a random latent vector
 
 ## Code Highlights
+
+### 2. 오토인코더 모델 생성
+
+`2. 오토인코더 모델 생성`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 오토인코더 모델 생성, CNN 코드, Encoder 흐름이 주석과 함께 드러납니다.
+
+```python
+# 2. 오토인코더 모델 생성
+## CNN  코드
+class CNNAutoencoder(nn.Module):
+    def __init__(self):
+        super(CNNAutoencoder, self).__init__()
+        # Encoder
+        self.encoder = nn.Sequential(
+            nn.Conv2d(1, 16, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(True),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            nn.Conv2d(16, 32, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(True),
+            nn.MaxPool2d(kernel_size=2, stride=2)
+        )
+        # Decoder
+        self.decoder = nn.Sequential(
+            nn.ConvTranspose2d(32, 16, kernel_size=2, stride=2),
+            nn.ReLU(True),
+            nn.ConvTranspose2d(16, 1, kernel_size=2, stride=2),
+            nn.Sigmoid()
+        )
+
+    def forward(self, x):
+        encoded = self.encoder(x)
+        decoded = self.decoder(encoded)
+        return decoded, encoded # Return both decoded image and the encoded feature map
+```
 
 ### 모델 학습
 

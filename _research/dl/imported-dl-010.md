@@ -59,12 +59,57 @@ tags:
 
 backward 기울기 계산 -> 모든 변수의 기울기를 자동으로 계산 + 저장
 
+## Why This Matters
+
+### 학습 루프와 최적화
+
+- 왜 필요한가: 모델을 한 번 정의했다고 바로 학습되는 것이 아니라, 손실을 계산하고 가중치를 반복적으로 갱신하는 루프가 필요합니다.
+- 왜 이 방식을 쓰는가: optimizer와 scheduler를 명시적으로 두면 학습률 변화와 갱신 방식을 실험별로 비교하기 쉬워집니다.
+- 원리: 예측값과 정답의 차이로 손실을 계산하고, 역전파로 기울기를 구한 뒤 optimizer가 가중치를 업데이트합니다.
+
+### 클래스와 객체 모델링
+
+- 왜 필요한가: 코드를 기능별로 나누고 상태를 함께 관리하려면 변수와 함수를 흩어두기보다 객체 단위로 묶는 연습이 필요합니다.
+- 왜 이 방식을 쓰는가: 클래스 기반 구조는 같은 패턴의 동작을 여러 인스턴스에 반복 적용하기 쉬워 기초 문법을 실제 코드 구조로 연결하기 좋습니다.
+- 원리: 클래스는 속성과 메서드를 묶는 설계도이고, 인스턴스는 그 설계도를 바탕으로 생성된 실제 객체입니다.
+
 ## Implementation Flow
 
 1. Autograd: 텐서(Tensor)에서 모든 연산에 대해 자동 미분 순전파(Forward) 그래프에 의해 역전파(Backward) 그래프가 자동으로 정의됩니다!
 2. Key Step: backward 기울기 계산 -> 모든 변수의 기울기를 자동으로 계산 + 저장
 
 ## Code Highlights
+
+### 복잡한 모델 설계
+
+`복잡한 모델 설계`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 레이어 정의, 첫줄, concat 흐름이 주석과 함께 드러납니다.
+
+```python
+import torch
+import torch.nn as nn
+
+class ComplexModel(nn.Module):
+    def __init__(self):
+        super().__init__()
+        #레이어 정의
+        self.l0_0 = nn.Linear(4,8)
+        self.l0_1 = nn.Linear(6,4)
+        self.l1_0 = nn.Linear(14,8)
+        self.l1_1 = nn.Linear(14,2)
+        self.relu = nn.ReLU()
+    def forward(self, input0, input1, input2):
+        # 첫줄
+        h0_0 = self.relu(self.l0_0(input0))
+        h0_1 = self.relu(self.l0_1(input1))
+
+        # concat
+        h1 = torch.cat([h0_0, h0_1, input2], dim=1)
+
+        # 출력
+        output0 = self.l1_0(h1)
+        output1 = self.l1_1(h1)
+        return output0, output1
+```
 
 ### 모델 학습 하기
 

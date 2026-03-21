@@ -67,6 +67,26 @@ tags:
 
 김명환님 제공 git: https://github.com/c0z0c/jupyter_hangul
 
+## Why This Matters
+
+### 객체 탐지와 영역 단위 이해
+
+- 왜 필요한가: 이미지 안에서 무엇이 있는지만이 아니라 어디에 있는지까지 알아야 할 때는 박스 또는 마스크 단위 예측이 필요합니다.
+- 왜 이 방식을 쓰는가: Detection 계열 모델은 분류보다 한 단계 더 나아가 위치 정보를 함께 학습하므로 실제 비전 문제에 더 직접적으로 연결됩니다.
+- 원리: 모델은 후보 영역을 만들고, 각 영역의 클래스와 좌표 또는 마스크를 동시에 예측해 장면을 해석합니다.
+
+### 데이터 파이프라인
+
+- 왜 필요한가: 모델 성능 이전에 입력이 일정한 형식으로 잘 들어가야 학습과 평가가 안정적으로 반복됩니다.
+- 왜 이 방식을 쓰는가: Dataset/DataLoader 구조는 데이터 읽기, 변환, 배치 처리를 분리해 코드 재사용성과 실험 반복성을 높여줍니다.
+- 원리: 각 샘플을 Dataset이 제공하고, DataLoader가 이를 배치로 묶어 셔플·병렬 로딩·collate를 담당합니다.
+
+### 전처리와 입력 정리
+
+- 왜 필요한가: 원본 데이터는 결측치, 스케일 차이, 불필요한 기호처럼 학습을 방해하는 요소가 많아 바로 넣기 어렵습니다.
+- 왜 이 방식을 쓰는가: 전처리는 모델 종류와 데이터 특성에 맞는 입력 형식을 먼저 맞춰주기 때문에, 단순해 보여도 성능 차이를 크게 만듭니다.
+- 원리: 불필요한 정보를 줄이고 유효한 패턴을 남기도록 데이터를 정규화·정제·인코딩해 모델이 학습하기 쉬운 분포로 바꿉니다.
+
 ## Implementation Flow
 
 1. 🏦 미션 설명: 결정 트리와 앙상블 기법을 사용하여 분류 모델을 구축 - 🎯마케팅 캠페인의 효율성을 높이는 전략을 도출 - 데이터를 이용해 고객이 정기 예금을 가입할 가능성을 예측 - 마케팅 캠페인의 효율성을 높이는 것 - 최종 목표 : 가장 정확한 분류 모델을 개발하여 고객이 정기 예금을 가입할지...
@@ -79,6 +99,41 @@ tags:
 ### 모델링
 
 `모델링`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 모델 평가 흐름이 주석과 함께 드러납니다.
+
+```python
+# 모델 평가
+models = {
+    'Decision Tree': dt,
+    'Random Forest': rf,
+    'Bagging': bag,
+    'AdaBoost': ada,
+    'XGBoost': xgb,
+    'Voting': voting,
+    'Stacking': stacking
+}
+
+results = []
+for name, model in models.items():
+    model.fit(X_train, y_train)
+    preds = model.predict(X_test)
+
+    acc = accuracy_score(y_test, preds)
+    prec = precision_score(y_test, preds)
+    rec = recall_score(y_test, preds)
+    f1 = f1_score(y_test, preds)
+
+    results.append({
+        'Model': name,
+        'Accuracy': acc,
+        'Precision': prec,
+        'Recall': rec,
+        'F1 Score': f1
+    })
+```
+
+### (3) 3차 모델링
+
+`(3) 3차 모델링`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 모델 평가 흐름이 주석과 함께 드러납니다.
 
 ```python
 # 모델 평가

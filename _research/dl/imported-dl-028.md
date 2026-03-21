@@ -57,6 +57,14 @@ tags:
 - 기본 전처리 후 데이터 불러오기
 - 모델 학습
 
+## Why This Matters
+
+### 데이터 파이프라인
+
+- 왜 필요한가: 모델 성능 이전에 입력이 일정한 형식으로 잘 들어가야 학습과 평가가 안정적으로 반복됩니다.
+- 왜 이 방식을 쓰는가: Dataset/DataLoader 구조는 데이터 읽기, 변환, 배치 처리를 분리해 코드 재사용성과 실험 반복성을 높여줍니다.
+- 원리: 각 샘플을 Dataset이 제공하고, DataLoader가 이를 배치로 묶어 셔플·병렬 로딩·collate를 담당합니다.
+
 ## Implementation Flow
 
 1. Key Step: 기본적인 오토인코더 구현 실습(MNIST)
@@ -65,6 +73,21 @@ tags:
 4. Key Step: 기본 전처리 후 데이터 불러오기
 
 ## Code Highlights
+
+### 라이브러리 불러오기
+
+`라이브러리 불러오기`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+import torch.nn as nn
+import torch.optim as optim
+import torch
+from torchvision import datasets, transforms
+from torch.utils.data import DataLoader, random_split
+from torchvision.transforms import v2
+```
 
 ### 모델 생성 및 학습
 

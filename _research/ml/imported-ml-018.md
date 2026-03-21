@@ -58,6 +58,20 @@ tags:
 
 클러스터링 평가 (실루엣 스코어)
 
+## Why This Matters
+
+### 데이터 파이프라인
+
+- 왜 필요한가: 모델 성능 이전에 입력이 일정한 형식으로 잘 들어가야 학습과 평가가 안정적으로 반복됩니다.
+- 왜 이 방식을 쓰는가: Dataset/DataLoader 구조는 데이터 읽기, 변환, 배치 처리를 분리해 코드 재사용성과 실험 반복성을 높여줍니다.
+- 원리: 각 샘플을 Dataset이 제공하고, DataLoader가 이를 배치로 묶어 셔플·병렬 로딩·collate를 담당합니다.
+
+### 전처리와 입력 정리
+
+- 왜 필요한가: 원본 데이터는 결측치, 스케일 차이, 불필요한 기호처럼 학습을 방해하는 요소가 많아 바로 넣기 어렵습니다.
+- 왜 이 방식을 쓰는가: 전처리는 모델 종류와 데이터 특성에 맞는 입력 형식을 먼저 맞춰주기 때문에, 단순해 보여도 성능 차이를 크게 만듭니다.
+- 원리: 불필요한 정보를 줄이고 유효한 패턴을 남기도록 데이터를 정규화·정제·인코딩해 모델이 학습하기 쉬운 분포로 바꿉니다.
+
 ## Implementation Flow
 
 1. Overview: => K=3일때 실루엣 스코어가 가장 높다!
@@ -77,6 +91,25 @@ from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.metrics import silhouette_score
+```
+
+### 스크리플롯
+
+`스크리플롯`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 스크리플롯 흐름이 주석과 함께 드러납니다.
+
+```python
+# 스크리플롯
+
+plt.figure(figsize=(6,4))
+plt.plot(
+    range(1, len(pca.explained_variance_ratio_)+1),           # X축
+    pca.explained_variance_ratio_,                            # y축
+    marker='o', linestyle='--'
+)
+plt.title('Scree Plot')
+plt.xticks(range(1, len(pca.explained_variance_ratio_)+1))
+plt.grid(True)
+plt.show()
 ```
 
 ### 스크리 플랏

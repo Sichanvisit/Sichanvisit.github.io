@@ -64,6 +64,20 @@ YOLOv1 클래스는 여섯 개의 컨볼루션 블록과 두 개의 전결합층
 
 confidence가 낮은 박스 제거 후, 가장 높은 confidence 박스를 선택하고 나머지 박스들과 IoU를 계산하여 제거합니다. - 박스 간의 IoU 계산 시, 텐서 변환 및 .item() 호출로 스칼라 값을 사용합니다.
 
+## Why This Matters
+
+### 객체 탐지와 영역 단위 이해
+
+- 왜 필요한가: 이미지 안에서 무엇이 있는지만이 아니라 어디에 있는지까지 알아야 할 때는 박스 또는 마스크 단위 예측이 필요합니다.
+- 왜 이 방식을 쓰는가: Detection 계열 모델은 분류보다 한 단계 더 나아가 위치 정보를 함께 학습하므로 실제 비전 문제에 더 직접적으로 연결됩니다.
+- 원리: 모델은 후보 영역을 만들고, 각 영역의 클래스와 좌표 또는 마스크를 동시에 예측해 장면을 해석합니다.
+
+### 합성곱 기반 특징 추출
+
+- 왜 필요한가: 이미지는 인접 픽셀 관계와 지역 패턴이 중요해서, 완전연결층만으로는 공간 구조를 효율적으로 잡기 어렵습니다.
+- 왜 이 방식을 쓰는가: CNN은 필터를 공유하며 지역 특징을 반복적으로 추출할 수 있어 이미지 실습의 기본 뼈대로 적합합니다.
+- 원리: 작은 커널이 이미지 위를 이동하며 특징을 뽑고, 층이 깊어질수록 더 추상적인 패턴을 학습합니다.
+
 ## Implementation Flow
 
 1. yolov1_implementation: 출처 : https://github.com/aladdinpersson/Machine-Learning-Collection/tree/master/ML/Pytorch/object_detection/YOLO
@@ -107,6 +121,39 @@ def create_conv_layers(config, in_channels):
 
 class YOLOv1(nn.Module):
 # ... trimmed ...
+```
+
+### IOU
+
+`IOU`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 IoU 계산 함수 (YOLOv1에서 사용하는 bounding box 형식: [x_cent..., 좌측 상단, 우측 하단 좌표 계산 흐름이 주석과 함께 드러납니다.
+
+```python
+# IoU 계산 함수 (YOLOv1에서 사용하는 bounding box 형식: [x_center, y_center, width, height])
+def iou(boxes1, boxes2, eps=1e-6):
+    """
+    boxes1, boxes2: 텐서, 마지막 차원이 [x_center, y_center, width, height]
+    """
+    # 좌측 상단, 우측 하단 좌표 계산
+    box1_x1 = boxes1[..., 0:1] - boxes1[..., 2:3] / 2
+    box1_y1 = boxes1[..., 1:2] - boxes1[..., 3:4] / 2
+    box1_x2 = boxes1[..., 0:1] + boxes1[..., 2:3] / 2
+    box1_y2 = boxes1[..., 1:2] + boxes1[..., 3:4] / 2
+
+    box2_x1 = boxes2[..., 0:1] - boxes2[..., 2:3] / 2
+    box2_y1 = boxes2[..., 1:2] - boxes2[..., 3:4] / 2
+    box2_x2 = boxes2[..., 0:1] + boxes2[..., 2:3] / 2
+    box2_y2 = boxes2[..., 1:2] + boxes2[..., 3:4] / 2
+
+    x1 = torch.max(box1_x1, box2_x1)
+    y1 = torch.max(box1_y1, box2_y1)
+    x2 = torch.min(box1_x2, box2_x2)
+    y2 = torch.min(box1_y2, box2_y2)
+
+    inter = torch.clamp(x2 - x1, min=0) * torch.clamp(y2 - y1, min=0)
+    box1_area = torch.abs((box1_x2 - box1_x1) * (box1_y2 - box1_y1))
+    box2_area = torch.abs((box2_x2 - box2_x1) * (box2_y2 - box2_y1))
+    iou_val = inter / (box1_area + box2_area - inter + eps)
+    return iou_val
 ```
 
 ### Loss

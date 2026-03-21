@@ -64,6 +64,26 @@ LangChain 1.0+ 및 필요 라이브러리 설치
 
 실습 - 요약으로 검색 → 원본 반환
 
+## Why This Matters
+
+### RAG 검색 파이프라인
+
+- 왜 필요한가: LLM이 외부 지식을 안정적으로 참조하게 하려면, 생성 전에 관련 문서를 정확히 찾아오는 검색 단계가 먼저 필요합니다.
+- 왜 이 방식을 쓰는가: 이 방식은 모델 파라미터만 믿지 않고 최신 문서나 도메인 지식을 붙일 수 있어서 실제 서비스형 QA에 적합합니다.
+- 원리: 문서를 청크로 나누고 임베딩한 뒤, 질문과 가까운 벡터를 검색해 프롬프트에 함께 넣는 구조로 동작합니다.
+
+### 임베딩과 표현 학습
+
+- 왜 필요한가: 텍스트나 토큰을 그대로는 모델이 다룰 수 없기 때문에, 의미를 담은 수치 벡터 표현으로 바꾸는 단계가 필요합니다.
+- 왜 이 방식을 쓰는가: Word2Vec, FastText, GloVe 같은 방식은 같은 단어라도 주변 문맥이나 서브워드 정보를 반영해 비교 가능한 표현 공간을 만듭니다.
+- 원리: 자주 함께 등장하는 단어는 가까운 벡터가 되도록 학습해, 의미적으로 비슷한 표현이 공간에서도 가까워지게 합니다.
+
+### 프롬프트 체인 구성
+
+- 왜 필요한가: LLM 호출을 재현 가능하게 만들려면 입력 조합, 프롬프트 템플릿, 후처리 순서를 구조화할 필요가 있습니다.
+- 왜 이 방식을 쓰는가: 체인 구조는 실험 중 프롬프트와 입력 변형을 비교하기 쉽고, 이후 RAG나 에이전트 단계로 확장하기도 좋습니다.
+- 원리: 질문과 컨텍스트를 정해진 템플릿에 넣고, 모델 호출 결과를 다음 단계 입력으로 넘기며 처리 흐름을 구성합니다.
+
 ## Implementation Flow
 
 1. 멀티 벡터 검색 (Multi-Vector Retrieval) 실습: LangChain 1.0+ / GPT-4o-mini / 네이버 뉴스 데이터셋
@@ -105,6 +125,42 @@ def multivector_retrieve(query):
     return parent_docs
 
 # LCEL Runnable 형태의 retriever 만들기 (MultiVectorRetriever 대체)
+# ... trimmed ...
+```
+
+### 문서 인덱싱 (요약 → 원본 매핑)
+
+`문서 인덱싱 (요약 → 원본 매핑)`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 고유 ID 생성, 원본 문서 (DocStore 저장용), 요약 문서 (VectorStore 검색용) 흐름이 주석과 함께 드러납니다.
+
+```python
+import uuid
+from langchain_core.documents import Document
+
+doc_ids = []
+summary_docs = []
+full_docs = []
+
+for idx, item in enumerate(data):
+    # 고유 ID 생성
+    doc_id = str(uuid.uuid4())
+    doc_ids.append(doc_id)
+
+    # -------------------------
+    # 1) 원본 문서 (DocStore 저장용)
+    # -------------------------
+    full_doc = Document(
+        page_content=item['document'],
+        metadata={
+            "doc_id": doc_id,
+            "title": item.get('title', f'뉴스_{idx}'),
+            "type": "full_document"
+        }
+    )
+    full_docs.append(full_doc)
+
+    # -------------------------
+    # 2) 요약 문서 (VectorStore 검색용)
+    # -------------------------
 # ... trimmed ...
 ```
 

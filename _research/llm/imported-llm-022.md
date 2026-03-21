@@ -67,6 +67,26 @@ langchain_core.prompts 모듈은 PromptTemplate 객체를 제공하여 사용자
 
 LangChain에서는 기존의 LLMChain.run() 방식 대신, LangChain Expression Language(LCEL)을 사용해 프롬프트 → LLM → 출력 파싱 과정을 하나의 체인으로 간단히 구성할 수 있습니다.
 
+## Why This Matters
+
+### RAG 검색 파이프라인
+
+- 왜 필요한가: LLM이 외부 지식을 안정적으로 참조하게 하려면, 생성 전에 관련 문서를 정확히 찾아오는 검색 단계가 먼저 필요합니다.
+- 왜 이 방식을 쓰는가: 이 방식은 모델 파라미터만 믿지 않고 최신 문서나 도메인 지식을 붙일 수 있어서 실제 서비스형 QA에 적합합니다.
+- 원리: 문서를 청크로 나누고 임베딩한 뒤, 질문과 가까운 벡터를 검색해 프롬프트에 함께 넣는 구조로 동작합니다.
+
+### 프롬프트 체인 구성
+
+- 왜 필요한가: LLM 호출을 재현 가능하게 만들려면 입력 조합, 프롬프트 템플릿, 후처리 순서를 구조화할 필요가 있습니다.
+- 왜 이 방식을 쓰는가: 체인 구조는 실험 중 프롬프트와 입력 변형을 비교하기 쉽고, 이후 RAG나 에이전트 단계로 확장하기도 좋습니다.
+- 원리: 질문과 컨텍스트를 정해진 템플릿에 넣고, 모델 호출 결과를 다음 단계 입력으로 넘기며 처리 흐름을 구성합니다.
+
+### 데이터 파이프라인
+
+- 왜 필요한가: 모델 성능 이전에 입력이 일정한 형식으로 잘 들어가야 학습과 평가가 안정적으로 반복됩니다.
+- 왜 이 방식을 쓰는가: Dataset/DataLoader 구조는 데이터 읽기, 변환, 배치 처리를 분리해 코드 재사용성과 실험 반복성을 높여줍니다.
+- 원리: 각 샘플을 Dataset이 제공하고, DataLoader가 이를 배치로 묶어 셔플·병렬 로딩·collate를 담당합니다.
+
 ## Implementation Flow
 
 1. LangChain을 활용한 RAG 실습: LangChain은 LLM에 입력되는 프롬프트에 다양한 엔지니어링 요소(프롬프트 템플릿, 체인, 메모리, 툴 호출 등)를 결합하여 하나의 완성된 애플리케이션 형태로 구성할 수 있는 단계별 워크플로우 프레임워크입니다.
@@ -110,6 +130,29 @@ text_to_summarize = """
 
 앱 개발자가 느낀 앱 최초 등록 과정상의 어려움으로는 ‘심사 기준이 확하지 않음’(구글 플레이 29.8%, 애플 앱스토어 29.6%), ‘질의에 대한 드백 지연’(각각 26.1%, 25.3%) 등이 꼽혔다.
 # ... trimmed ...
+```
+
+### 롤 토큰 Chat 템플릿
+
+`롤 토큰 Chat 템플릿`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 ChatPromptTemplate 생성: 시스템/사용자 메시지 정의, LCEL( LangChain Expression Language )을 이용한 체인 구성, 프롬프트 → LLM → 문자열 파서 로 이어지는 파이프라인 구성 흐름이 주석과 함께 드러납니다.
+
+```python
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+
+# ChatPromptTemplate 생성: 시스템/사용자 메시지 정의
+chat_template = ChatPromptTemplate([
+    ("system", "당신은 질문의 상황에 적절한 인공지능 모델을 찾아주는 AI 전문가입니다"),
+    ("user", "다음 상황에 맞는 모델을 찾아줘 \n{input}")
+])
+
+# LCEL( LangChain Expression Language )을 이용한 체인 구성
+# 프롬프트 → LLM → 문자열 파서 로 이어지는 파이프라인 구성
+chat_chain = chat_template | llm | StrOutputParser()
+
+# 체인을 실행할 때는 딕셔너리 형태로 변수(input)을 전달
+response = chat_chain.invoke({"input": "우리는 CCTV에 범죄 상황을 인지하기 위한 기능을 넣으려고 한다"})
+print("[응답]\n", response)
 ```
 
 ### 메모리 활용

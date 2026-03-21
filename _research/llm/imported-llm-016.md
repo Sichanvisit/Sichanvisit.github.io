@@ -67,6 +67,26 @@ https://huggingface.co/docs/transformers/en/model_doc/gpt2
 
 포맷 지정 및 label 컬럼 명시
 
+## Why This Matters
+
+### 임베딩과 표현 학습
+
+- 왜 필요한가: 텍스트나 토큰을 그대로는 모델이 다룰 수 없기 때문에, 의미를 담은 수치 벡터 표현으로 바꾸는 단계가 필요합니다.
+- 왜 이 방식을 쓰는가: Word2Vec, FastText, GloVe 같은 방식은 같은 단어라도 주변 문맥이나 서브워드 정보를 반영해 비교 가능한 표현 공간을 만듭니다.
+- 원리: 자주 함께 등장하는 단어는 가까운 벡터가 되도록 학습해, 의미적으로 비슷한 표현이 공간에서도 가까워지게 합니다.
+
+### 객체 탐지와 영역 단위 이해
+
+- 왜 필요한가: 이미지 안에서 무엇이 있는지만이 아니라 어디에 있는지까지 알아야 할 때는 박스 또는 마스크 단위 예측이 필요합니다.
+- 왜 이 방식을 쓰는가: Detection 계열 모델은 분류보다 한 단계 더 나아가 위치 정보를 함께 학습하므로 실제 비전 문제에 더 직접적으로 연결됩니다.
+- 원리: 모델은 후보 영역을 만들고, 각 영역의 클래스와 좌표 또는 마스크를 동시에 예측해 장면을 해석합니다.
+
+### 데이터 파이프라인
+
+- 왜 필요한가: 모델 성능 이전에 입력이 일정한 형식으로 잘 들어가야 학습과 평가가 안정적으로 반복됩니다.
+- 왜 이 방식을 쓰는가: Dataset/DataLoader 구조는 데이터 읽기, 변환, 배치 처리를 분리해 코드 재사용성과 실험 반복성을 높여줍니다.
+- 원리: 각 샘플을 Dataset이 제공하고, DataLoader가 이를 배치로 묶어 셔플·병렬 로딩·collate를 담당합니다.
+
 ## Implementation Flow
 
 1. 문장 생성(이어쓰기): https://huggingface.co/docs/transformers/en/model_doc/gpt2
@@ -143,6 +163,42 @@ tokenized_datasets = dataset.map(
 
 tokenized_datasets.set_format(
     type="torch",
+# ... trimmed ...
+```
+
+### Trainer 설정 및 학습
+
+`Trainer 설정 및 학습`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 GPU 장치 설정, test 셋 선택, 요약 결과 저장용 리스트 흐름이 주석과 함께 드러납니다.
+
+```python
+import torch
+
+# 1. GPU 장치 설정
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+model = model.to(device)
+
+# 2. test 셋 선택
+test_texts = dataset["test"]["Text"][:10]  # 예시로 10개만 추론
+
+# 3. 요약 결과 저장용 리스트
+summaries = []
+
+# 4. 문장 하나씩 요약
+for text in test_texts:
+    inputs = tokenizer(
+        text,
+        return_tensors="pt",
+        max_length=256,
+        truncation=True,
+        padding="max_length"
+    ).to(device)  # 입력도 GPU로 이동
+
+    summary_ids = model.generate(
+        **inputs,
+        max_length=48,
+        num_beams=4,
+        early_stopping=True
+    )
 # ... trimmed ...
 ```
 

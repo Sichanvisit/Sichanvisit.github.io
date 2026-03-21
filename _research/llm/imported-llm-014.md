@@ -67,6 +67,26 @@ MLM 마스킹 처리는 데이터세트 내부에서 진행하지 않고 학습 
 
 BERT 모델은 pytorch의 nn.MultiheadAttention 레이어를 활용하여 Transformer의 인코더와 동일한 아키텍처로 구성합니다.
 
+## Why This Matters
+
+### 데이터 파이프라인
+
+- 왜 필요한가: 모델 성능 이전에 입력이 일정한 형식으로 잘 들어가야 학습과 평가가 안정적으로 반복됩니다.
+- 왜 이 방식을 쓰는가: Dataset/DataLoader 구조는 데이터 읽기, 변환, 배치 처리를 분리해 코드 재사용성과 실험 반복성을 높여줍니다.
+- 원리: 각 샘플을 Dataset이 제공하고, DataLoader가 이를 배치로 묶어 셔플·병렬 로딩·collate를 담당합니다.
+
+### 픽셀 단위 분할
+
+- 왜 필요한가: 객체의 경계를 세밀하게 다뤄야 할 때는 이미지 전체를 한 번에 분류하는 방식만으로는 부족합니다.
+- 왜 이 방식을 쓰는가: Segmentation은 픽셀마다 클래스를 붙여주기 때문에 의료영상, 장면 이해, 배경 제거처럼 경계가 중요한 문제에 잘 맞습니다.
+- 원리: 이미지 특징을 추출한 뒤 해상도를 복원하면서 각 픽셀 위치에 대한 클래스 확률을 예측합니다.
+
+### 클래스와 객체 모델링
+
+- 왜 필요한가: 코드를 기능별로 나누고 상태를 함께 관리하려면 변수와 함수를 흩어두기보다 객체 단위로 묶는 연습이 필요합니다.
+- 왜 이 방식을 쓰는가: 클래스 기반 구조는 같은 패턴의 동작을 여러 인스턴스에 반복 적용하기 쉬워 기초 문법을 실제 코드 구조로 연결하기 좋습니다.
+- 원리: 클래스는 속성과 메서드를 묶는 설계도이고, 인스턴스는 그 설계도를 바탕으로 생성된 실제 객체입니다.
+
 ## Implementation Flow
 
 1. 사전 학습을 위한 데이터세트 구성: BERT 모델은 사전학습과 미세조정(Fine-Tuning)이 확실하게 나눠지는 대표적인 모델입니다. 미세조정은 자연어 Task에 따라 다양하게 진행 될 수 있지만, 사전 학습은 대부분 NSP 학습과 MLM 학습으로 진행이 됩니다.
@@ -109,6 +129,42 @@ class SPDataSet(Dataset):
             self.pairs.append((sent1, sent2, 0))
 
         # 앞뒤 10개 문장쌍
+# ... trimmed ...
+```
+
+### 멀티헤드 블록
+
+`멀티헤드 블록`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 멀티 헤드, Fee Forward, 정규화 흐름이 주석과 함께 드러납니다.
+
+```python
+class MTBlock(nn.Module):
+    def __init__(self, em_dim, nhead, feed_dim=512, gelu=False, dropout=0.):
+        super(MTBlock, self).__init__()
+
+        # 멀티 헤드
+        self.mha = nn.MultiheadAttention(em_dim, nhead, dropout=dropout, batch_first=True) # batch_first=True -> (batch, seq_len, embed)
+        self.nhead = nhead
+
+        # Fee Forward
+        if gelu:
+            self.active = nn.GELU()
+        else:
+            self.active = nn.ReLU()
+
+        self.ffn = nn.Sequential(
+            nn.Linear(em_dim, feed_dim),
+            self.active,
+            nn.Dropout(dropout),
+            nn.Linear(feed_dim, em_dim)
+        )
+
+        # 정규화
+        self.norm1 = nn.LayerNorm(em_dim, eps=1e-6)
+        self.norm2 = nn.LayerNorm(em_dim, eps=1e-6)
+        self.dropout1 = nn.Dropout(dropout)
+        self.dropout2 = nn.Dropout(dropout)
+
+    def forward(self, x, mask=None):
 # ... trimmed ...
 ```
 

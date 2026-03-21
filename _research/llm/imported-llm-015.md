@@ -67,6 +67,26 @@ Causal Mask(look-ahead)는 Transformer에서 구현한 방식과 동일하게 bo
 
 GPT는 Transformer의 디코더 구조의 아케텍처를 기반으로 합니다. 정확하게는 Transformer디코더는 두개의 멀티헤드 어텐션이 있지만, GPT는 셀프어텐션만 진행하는 하나의 멀티헤드 어텐션만 활용합니다.
 
+## Why This Matters
+
+### 임베딩과 표현 학습
+
+- 왜 필요한가: 텍스트나 토큰을 그대로는 모델이 다룰 수 없기 때문에, 의미를 담은 수치 벡터 표현으로 바꾸는 단계가 필요합니다.
+- 왜 이 방식을 쓰는가: Word2Vec, FastText, GloVe 같은 방식은 같은 단어라도 주변 문맥이나 서브워드 정보를 반영해 비교 가능한 표현 공간을 만듭니다.
+- 원리: 자주 함께 등장하는 단어는 가까운 벡터가 되도록 학습해, 의미적으로 비슷한 표현이 공간에서도 가까워지게 합니다.
+
+### 데이터 파이프라인
+
+- 왜 필요한가: 모델 성능 이전에 입력이 일정한 형식으로 잘 들어가야 학습과 평가가 안정적으로 반복됩니다.
+- 왜 이 방식을 쓰는가: Dataset/DataLoader 구조는 데이터 읽기, 변환, 배치 처리를 분리해 코드 재사용성과 실험 반복성을 높여줍니다.
+- 원리: 각 샘플을 Dataset이 제공하고, DataLoader가 이를 배치로 묶어 셔플·병렬 로딩·collate를 담당합니다.
+
+### 클래스와 객체 모델링
+
+- 왜 필요한가: 코드를 기능별로 나누고 상태를 함께 관리하려면 변수와 함수를 흩어두기보다 객체 단위로 묶는 연습이 필요합니다.
+- 왜 이 방식을 쓰는가: 클래스 기반 구조는 같은 패턴의 동작을 여러 인스턴스에 반복 적용하기 쉬워 기초 문법을 실제 코드 구조로 연결하기 좋습니다.
+- 원리: 클래스는 속성과 메서드를 묶는 설계도이고, 인스턴스는 그 설계도를 바탕으로 생성된 실제 객체입니다.
+
 ## Implementation Flow
 
 1. GPT 학습을 위한 데이터세트 구성: GPT 모델 또한 일반적으로 사전학습과 미세조정 두가지의 학습 단계가 존재합니다.
@@ -109,6 +129,42 @@ class SPDataSet(Dataset):
         # 문장이 끝나면 제로 패딩
         input_ids = self.zero_pad(inp)
 
+# ... trimmed ...
+```
+
+### 멀티헤드 블록
+
+`멀티헤드 블록`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 멀티헤드, Feed Forward, 정규화 흐름이 주석과 함께 드러납니다.
+
+```python
+import math
+import torch
+from torch import nn
+
+class MTBlock (nn.Module):
+    """
+    🏗️ Multi-Head Transformer Block
+    - Transformer의 기본 구성 요소
+    - Self-Attention + Feed Forward Network
+    """
+    def __init__(self, em_dim, nhead, feed_dim=512, gelu=False, dropout=0.):
+        super(MTBlock, self).__init__()
+
+        # 멀티헤드
+        self.mha = nn.MultiheadAttention(em_dim, nhead, dropout=dropout, batch_first=True)
+        self.nhead = nhead
+
+        # Feed Forward
+        if gelu:
+            self.active = nn.GELU()
+        else:
+            self.active = nn.ReLU()
+
+        self.ffn = nn.Sequential(
+            nn.Linear(em_dim, feed_dim),
+            self.active,
+            nn.Dropout(dropout),
+            nn.Linear(feed_dim, em_dim)
 # ... trimmed ...
 ```
 

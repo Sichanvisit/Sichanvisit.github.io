@@ -67,6 +67,26 @@ Focal Loss - Cross Entropy Loss의 개선된 버전 - 클래스 불균형 문제
 
 사이즈 확인 (H, W, C)
 
+## Why This Matters
+
+### 객체 탐지와 영역 단위 이해
+
+- 왜 필요한가: 이미지 안에서 무엇이 있는지만이 아니라 어디에 있는지까지 알아야 할 때는 박스 또는 마스크 단위 예측이 필요합니다.
+- 왜 이 방식을 쓰는가: Detection 계열 모델은 분류보다 한 단계 더 나아가 위치 정보를 함께 학습하므로 실제 비전 문제에 더 직접적으로 연결됩니다.
+- 원리: 모델은 후보 영역을 만들고, 각 영역의 클래스와 좌표 또는 마스크를 동시에 예측해 장면을 해석합니다.
+
+### 데이터 파이프라인
+
+- 왜 필요한가: 모델 성능 이전에 입력이 일정한 형식으로 잘 들어가야 학습과 평가가 안정적으로 반복됩니다.
+- 왜 이 방식을 쓰는가: Dataset/DataLoader 구조는 데이터 읽기, 변환, 배치 처리를 분리해 코드 재사용성과 실험 반복성을 높여줍니다.
+- 원리: 각 샘플을 Dataset이 제공하고, DataLoader가 이를 배치로 묶어 셔플·병렬 로딩·collate를 담당합니다.
+
+### 픽셀 단위 분할
+
+- 왜 필요한가: 객체의 경계를 세밀하게 다뤄야 할 때는 이미지 전체를 한 번에 분류하는 방식만으로는 부족합니다.
+- 왜 이 방식을 쓰는가: Segmentation은 픽셀마다 클래스를 붙여주기 때문에 의료영상, 장면 이해, 배경 제거처럼 경계가 중요한 문제에 잘 맞습니다.
+- 원리: 이미지 특징을 추출한 뒤 해상도를 복원하면서 각 픽셀 위치에 대한 클래스 확률을 예측합니다.
+
 ## Implementation Flow
 
 1. 4.모델 학습 및 평가: Focal Loss - Cross Entropy Loss의 개선된 버전 - 클래스 불균형 문제 해결을 위해 도입 - 쉽게 맞추는 샘플보다 어려운 샘플에 더 큰 가중치를 부여하여 모델이 어려운 샘플을 더 학습하도록 유도
@@ -109,6 +129,42 @@ def get_unique_colors(image_folder, mask_files, max_classes=11):
         unique_colors, _ = np.unique(mask.reshape(-1, 3), axis=0, return_counts=True)   # 고유한 색상 추출 (H * W, 3)
 
         for color in unique_colors:
+# ... trimmed ...
+```
+
+### 데이터셋
+
+`데이터셋`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 데이터셋 클래스 정의, 원본 이미지 로드, 마스크 로드 (RGB 모드) 흐름이 주석과 함께 드러납니다.
+
+```python
+# 데이터셋 클래스 정의
+class FootballDataset(Dataset):
+    def __init__(self, image_files, mask_files, image_folder, color_to_label, transform=None):
+        self.image_files = image_files
+        self.mask_files = mask_files
+        self.image_folder = image_folder
+        self.color_to_label = color_to_label  # 고정된 클래스 매핑
+        self.transform = transform
+
+    def __len__(self):
+        return len(self.image_files)
+
+    def __getitem__(self, idx):
+        img_path = os.path.join(self.image_folder, self.image_files[idx])
+        mask_path = os.path.join(self.image_folder, self.mask_files[idx])
+
+        # 원본 이미지 로드
+        img = cv2.imread(img_path)
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
+        # 마스크 로드 (RGB 모드)
+        mask = cv2.imread(mask_path, cv2.IMREAD_COLOR)
+        mask = cv2.cvtColor(mask, cv2.COLOR_BGR2RGB)
+
+        # 트랜스폼 분기
+        if self.transform is None:
+            img = cv2.resize(img, (256, 256)) / 255.0  # 정규화
+            img = torch.tensor(img, dtype=torch.float32).permute(2, 0, 1)  # (H, W, C) → (C, H, W)
 # ... trimmed ...
 ```
 

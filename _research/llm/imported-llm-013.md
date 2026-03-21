@@ -67,6 +67,26 @@ BPE :바이트 페어 인코딩(Byte Pair Encoding, BPE)
 
 추가 쓰기모드로 텍스트 파일 열기
 
+## Why This Matters
+
+### 임베딩과 표현 학습
+
+- 왜 필요한가: 텍스트나 토큰을 그대로는 모델이 다룰 수 없기 때문에, 의미를 담은 수치 벡터 표현으로 바꾸는 단계가 필요합니다.
+- 왜 이 방식을 쓰는가: Word2Vec, FastText, GloVe 같은 방식은 같은 단어라도 주변 문맥이나 서브워드 정보를 반영해 비교 가능한 표현 공간을 만듭니다.
+- 원리: 자주 함께 등장하는 단어는 가까운 벡터가 되도록 학습해, 의미적으로 비슷한 표현이 공간에서도 가까워지게 합니다.
+
+### 데이터 파이프라인
+
+- 왜 필요한가: 모델 성능 이전에 입력이 일정한 형식으로 잘 들어가야 학습과 평가가 안정적으로 반복됩니다.
+- 왜 이 방식을 쓰는가: Dataset/DataLoader 구조는 데이터 읽기, 변환, 배치 처리를 분리해 코드 재사용성과 실험 반복성을 높여줍니다.
+- 원리: 각 샘플을 Dataset이 제공하고, DataLoader가 이를 배치로 묶어 셔플·병렬 로딩·collate를 담당합니다.
+
+### 클래스와 객체 모델링
+
+- 왜 필요한가: 코드를 기능별로 나누고 상태를 함께 관리하려면 변수와 함수를 흩어두기보다 객체 단위로 묶는 연습이 필요합니다.
+- 왜 이 방식을 쓰는가: 클래스 기반 구조는 같은 패턴의 동작을 여러 인스턴스에 반복 적용하기 쉬워 기초 문법을 실제 코드 구조로 연결하기 좋습니다.
+- 원리: 클래스는 속성과 메서드를 묶는 설계도이고, 인스턴스는 그 설계도를 바탕으로 생성된 실제 객체입니다.
+
 ## Implementation Flow
 
 1. ALBERT 모델: 기본 적으로 BERT 모델은 인코딩 블록이 깊어질 수 록 파라미터의 규모가 매우 커질 뿐만 아니라, 매우 큰 어휘 사전(vocab)과 임베딩 길이를 사용할 때, 임베딩 매트릭스가 차지하는 파라미터가 너무 커져 버리는 문제가 생깁니다.
@@ -109,6 +129,42 @@ class SPDataSet(Dataset):
         if len(tok) >= self.max_len:
             return tok[:self.max_len]
         else:
+# ... trimmed ...
+```
+
+### 모델링
+
+`모델링`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 작은 차원의 단어 임베딩, 임베딩 프로젝션 → hidden_dim, 위치 인코딩 흐름이 주석과 함께 드러납니다.
+
+```python
+class SimpleALBERT(nn.Module):
+    def __init__(
+        self,
+        vocab_size,
+        embedding_dim=64,
+        hidden_dim=256,
+        num_heads=4,
+        feed_dim=512,
+        num_layers=4,
+        num_classes=2,   # SOP 또한 이진 분류
+        dropout=0.1
+    ):
+        super().__init__()
+
+        # 작은 차원의 단어 임베딩
+        self.word_embeddings = nn.Embedding(vocab_size, embedding_dim)
+
+        # 임베딩 프로젝션 → hidden_dim
+        self.embedding_proj = nn.Linear(embedding_dim, hidden_dim)
+
+        # 위치 인코딩
+        self.pos_encoding = PositionalEncoding(hidden_dim)
+        self.dropout = nn.Dropout(dropout)
+
+        # ALBERT: 모든 레이어 가중치 공유
+        self.transformer_block = MTBlock(hidden_dim, num_heads, feed_dim, dropout=dropout)
+        self.num_layers = num_layers
+
 # ... trimmed ...
 ```
 

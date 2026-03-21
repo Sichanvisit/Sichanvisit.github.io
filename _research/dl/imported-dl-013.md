@@ -67,6 +67,26 @@ tags:
 
 pycocotools 라이브러리: - COCO 데이터를 쉽게 로드하고 탐색, 시각화할 수 있도록 도와주는 API 제공 - 설치 시 pip보다 conda 또는 GitHub 소스코드를 이용하는 방법 추천
 
+## Why This Matters
+
+### 객체 탐지와 영역 단위 이해
+
+- 왜 필요한가: 이미지 안에서 무엇이 있는지만이 아니라 어디에 있는지까지 알아야 할 때는 박스 또는 마스크 단위 예측이 필요합니다.
+- 왜 이 방식을 쓰는가: Detection 계열 모델은 분류보다 한 단계 더 나아가 위치 정보를 함께 학습하므로 실제 비전 문제에 더 직접적으로 연결됩니다.
+- 원리: 모델은 후보 영역을 만들고, 각 영역의 클래스와 좌표 또는 마스크를 동시에 예측해 장면을 해석합니다.
+
+### 데이터 파이프라인
+
+- 왜 필요한가: 모델 성능 이전에 입력이 일정한 형식으로 잘 들어가야 학습과 평가가 안정적으로 반복됩니다.
+- 왜 이 방식을 쓰는가: Dataset/DataLoader 구조는 데이터 읽기, 변환, 배치 처리를 분리해 코드 재사용성과 실험 반복성을 높여줍니다.
+- 원리: 각 샘플을 Dataset이 제공하고, DataLoader가 이를 배치로 묶어 셔플·병렬 로딩·collate를 담당합니다.
+
+### 픽셀 단위 분할
+
+- 왜 필요한가: 객체의 경계를 세밀하게 다뤄야 할 때는 이미지 전체를 한 번에 분류하는 방식만으로는 부족합니다.
+- 왜 이 방식을 쓰는가: Segmentation은 픽셀마다 클래스를 붙여주기 때문에 의료영상, 장면 이해, 배경 제거처럼 경계가 중요한 문제에 잘 맞습니다.
+- 원리: 이미지 특징을 추출한 뒤 해상도를 복원하면서 각 픽셀 위치에 대한 클래스 확률을 예측합니다.
+
 ## Implementation Flow
 
 1. 데이터 구조 이해: 하나의 JSON 파일 - 모든 이미지 메타데이터, 객체 Annotation, 카테고리, 라이선스 정보가 하나의 JSON 파일(예: instances_train2017.json 또는 instances_val2017.json)에 저장됨
@@ -105,6 +125,25 @@ print(type(data))
 
 with open('output2.json', 'w', encoding='utf-8') as f:
     json.dump(data, f, ensure_ascii=False, indent=2)
+```
+
+### polylines- open cv
+
+`polylines- open cv`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 설명: - cv2.polylines 함수는 이미지에 다각형의 외곽선을 그리는 OpenCV 함수입니다. - 인자 설명: - 첫 번째 인자 draw_img: 외곽선을 그릴 대상 이미지입니다. - 두 번째 인자 [polygon_xy]: 다각형의 좌표 배열을 리스트 형태로 전달합니다. (여러 개의 다각형을 동시에 그릴 수 있음) - 세 번째 인자 True: 다각형을 닫힌(closed) 형태로 그릴지 여부를 지정합니다. True이면 마지막 점과 첫 번째 점이 자동으로 연결되어 닫힌 도형이 됩니다. - 네 번째 인자 (0, 255, 0): 외곽선의 색상(BGR 포맷)입니다. 여기서는 녹색으로 지정되어 있습니다. - 이 함수 호출로 draw_img에 다각형 외곽선이 그려진 결과를 저장합니다.
+
+```python
+import numpy as np
+
+g_color = (0,255,0)
+
+draw_img = image_array.copy()
+polygon_xy = np.array(polygon_xy, np.int32)
+
+draw_img = cv2.polylines(draw_img, [polygon_xy], True, g_color)
+
+plt.figure(figsize=(10,12))
+plt.imshow(draw_img)
+plt.axis('off')
 ```
 
 ### OpenCV의 fillPoly
