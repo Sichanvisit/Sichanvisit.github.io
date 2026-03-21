@@ -27,83 +27,106 @@ tags:
   - practice
 ---
 
-<div class="research-doc-hero">
-  <div class="research-doc-summary">
-    <p class="research-doc-summary__label">문제 설정</p>
-    <p class="research-doc-summary__body">https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_california_housing.html</p>
-  </div>
-  <div class="research-doc-meta">
-<div class="research-doc-card">
-  <p class="research-doc-card__label">데이터 맥락</p>
-  <p class="research-doc-card__value">https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_california_housing.html</p>
-</div>
-<div class="research-doc-card">
-  <p class="research-doc-card__label">핵심 개념</p>
-  <p class="research-doc-card__value">회귀 문제 · 피처 엔지니어링 · 평가 지표 해석</p>
-</div>
-<div class="research-doc-card">
-  <p class="research-doc-card__label">구현 포인트</p>
-  <p class="research-doc-card__value">1990년 캘리포니아 주택 데이터 · from sklearn.datasets import fetch_california_hou...</p>
-</div>
-  </div>
-  <div class="research-doc-stats">
-<div class="research-doc-stat">
-  <span>소스</span>
-  <strong>ipynb / md</strong>
-</div>
-<div class="research-doc-stat">
-  <span>자료</span>
-  <strong>코드 7 · 실행 6</strong>
-</div>
-<div class="research-doc-stat">
-  <span>주요 스택</span>
-  <strong>sklearn, numpy</strong>
-</div>
-  </div>
+<div class="research-compact-wrap research-compact-wrap--intro">
+  <table class="research-compact-table research-compact-table--intro">
+    <tbody>
+    <tr>
+      <th scope="row">문제 설정</th>
+      <td>https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_california_housing.html</td>
+    </tr>
+    <tr>
+      <th scope="row">데이터 맥락</th>
+      <td>https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_california_housing.html</td>
+    </tr>
+    <tr>
+      <th scope="row">핵심 개념</th>
+      <td>회귀 문제 · 피처 엔지니어링 · 평가 지표 해석</td>
+    </tr>
+    <tr>
+      <th scope="row">구현 흐름</th>
+      <td>1990년 캘리포니아 주택 데이터 -&gt; from sklearn.datasets import fetch_california_hou...</td>
+    </tr>
+    <tr>
+      <th scope="row">자료</th>
+      <td>ipynb / md · 코드 7 · 실행 6</td>
+    </tr>
+    <tr>
+      <th scope="row">주요 스택</th>
+      <td>sklearn, numpy</td>
+    </tr>
+    </tbody>
+  </table>
 </div>
 
 ## What I Studied
 
-<div class="research-note-grid">
-<div class="research-note-card">
-  <p class="research-note-card__label">회귀 문제</p>
-  <p class="research-note-card__body">회귀는 연속적인 수치를 예측하는 문제입니다. 예측값과 실제값의 차이를 오차로 계산해 모델 성능을 판단합니다.</p>
-  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>이 글에서는 수요량, 가격, 점수처럼 숫자 타깃을 예측하는 실습과 이어집니다.</p>
-</div>
-<div class="research-note-card">
-  <p class="research-note-card__label">피처 엔지니어링</p>
-  <p class="research-note-card__body">피처 엔지니어링은 원본 컬럼을 그대로 쓰지 않고 문제에 맞는 새 특징을 설계해 모델이 더 유용한 패턴을 학습하도록 돕는 과정입니다.</p>
-  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>이 글에서는 시간 파생 변수, 조건식 기반 플래그, 도메인 규칙을 반영한 새 컬럼 생성 코드가 여기에 해당합니다.</p>
-</div>
-<div class="research-note-card">
-  <p class="research-note-card__label">평가 지표 해석</p>
-  <p class="research-note-card__body">평가 지표는 예측 결과를 수치화해 모델의 강점과 약점을 읽게 해주는 기준입니다. 문제 유형에 맞는 지표를 골라야 실험 비교가 가능합니다.</p>
-  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>이 글에서는 F1, Recall, Accuracy, RMSLE 같은 지표를 실제 코드에서 계산하는 흐름으로 연결됩니다.</p>
-</div>
-<div class="research-note-card">
-  <p class="research-note-card__label">함수 분해와 로직 구성</p>
-  <p class="research-note-card__body">함수는 입력, 처리, 반환을 분리해 로직을 재사용하기 쉽게 만들고, 문제를 작은 단위로 나누는 기본 도구입니다.</p>
-  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>이 글에서는 문제 풀이를 함수 단위로 쪼개고 입출력을 나눠 보는 실습과 연결됩니다.</p>
-</div>
+<div class="research-compact-wrap">
+  <table class="research-compact-table research-compact-table--notes">
+    <thead>
+      <tr>
+        <th>개념</th>
+        <th>핵심 설명</th>
+        <th>코드에서 확인한 것</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th scope="row">회귀 문제</th>
+      <td>회귀는 연속적인 수치를 예측하는 문제입니다. 예측값과 실제값의 차이를 오차로 계산해 모델 성능을 판단합니다.</td>
+      <td>이 글에서는 수요량, 가격, 점수처럼 숫자 타깃을 예측하는 실습과 이어집니다.</td>
+    </tr>
+    <tr>
+      <th scope="row">피처 엔지니어링</th>
+      <td>피처 엔지니어링은 원본 컬럼을 그대로 쓰지 않고 문제에 맞는 새 특징을 설계해 모델이 더 유용한 패턴을 학습하도록 돕는 과정입니다.</td>
+      <td>이 글에서는 시간 파생 변수, 조건식 기반 플래그, 도메인 규칙을 반영한 새 컬럼 생성 코드가 여기에 해당합니다.</td>
+    </tr>
+    <tr>
+      <th scope="row">평가 지표 해석</th>
+      <td>평가 지표는 예측 결과를 수치화해 모델의 강점과 약점을 읽게 해주는 기준입니다. 문제 유형에 맞는 지표를 골라야 실험 비교가 가능합니다.</td>
+      <td>이 글에서는 F1, Recall, Accuracy, RMSLE 같은 지표를 실제 코드에서 계산하는 흐름으로 연결됩니다.</td>
+    </tr>
+    <tr>
+      <th scope="row">함수 분해와 로직 구성</th>
+      <td>함수는 입력, 처리, 반환을 분리해 로직을 재사용하기 쉽게 만들고, 문제를 작은 단위로 나누는 기본 도구입니다.</td>
+      <td>이 글에서는 문제 풀이를 함수 단위로 쪼개고 입출력을 나눠 보는 실습과 연결됩니다.</td>
+    </tr>
+    </tbody>
+  </table>
 </div>
 
 ## How I Implemented It
 
-<div class="research-step-list">
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 1 · 데이터 불러오기</p>
-  <p class="research-step-card__title">1990년 캘리포니아 주택 데이터</p>
-  <p class="research-step-card__body">실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.</p>
-
-  <p class="research-step-card__meta"><span>코드 포인트</span> 데이터 로드</p>
-</div>
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 2 · 환경 준비</p>
-  <p class="research-step-card__title">from sklearn.datasets import fetch_california_housing</p>
-  <p class="research-step-card__body">지표를 계산해 성능을 비교하고 결과를 해석하는 평가 단계입니다.</p>
-  <p class="research-step-card__meta"><span>핵심 API</span> <code>GridSearchCV</code> <code>RMSE</code></p>
-
-</div>
+<div class="research-compact-wrap">
+  <table class="research-compact-table research-compact-table--steps">
+    <thead>
+      <tr>
+        <th>단계</th>
+        <th>구현 내용</th>
+        <th>핵심 API</th>
+        <th>코드 포인트</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th scope="row">Step 1 · 데이터 불러오기</th>
+      <td>
+        <strong class="research-compact-table__main">1990년 캘리포니아 주택 데이터</strong>
+        <span class="research-compact-table__sub">실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.</span>
+      </td>
+      <td><span class="research-compact-table__muted">-</span></td>
+      <td>데이터 로드</td>
+    </tr>
+    <tr>
+      <th scope="row">Step 2 · 환경 준비</th>
+      <td>
+        <strong class="research-compact-table__main">from sklearn.datasets import fetch_california_housing</strong>
+        <span class="research-compact-table__sub">지표를 계산해 성능을 비교하고 결과를 해석하는 평가 단계입니다.</span>
+      </td>
+      <td><code>GridSearchCV</code> <code>RMSE</code></td>
+      <td><span class="research-compact-table__muted">-</span></td>
+    </tr>
+    </tbody>
+  </table>
 </div>
 
 ## Code Evidence

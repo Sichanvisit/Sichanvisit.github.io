@@ -30,111 +30,142 @@ tags:
   - archive-note
 ---
 
-<div class="research-doc-hero">
-  <div class="research-doc-summary">
-    <p class="research-doc-summary__label">문제 설정</p>
-    <p class="research-doc-summary__body">자전거 대여 시스템의 운영 담당자. 자전거 대여 패턴을 분석하여 자전거 배치 및 운영 전략을 최적화하고, 대여 수요를 정확하게 예측하는 것</p>
-  </div>
-  <div class="research-doc-meta">
-<div class="research-doc-card">
-  <p class="research-doc-card__label">데이터 맥락</p>
-  <p class="research-doc-card__value">train.csv - 자전거 대여 수요를 예측하기 위한 데이터 포함 - 종속 변수: count</p>
-</div>
-<div class="research-doc-card">
-  <p class="research-doc-card__label">핵심 개념</p>
-  <p class="research-doc-card__value">회귀 문제 · 선형 모델과 정규화 · 전처리와 입력 정리</p>
-</div>
-<div class="research-doc-card">
-  <p class="research-doc-card__label">구현 포인트</p>
-  <p class="research-doc-card__value">train/test CSV 불러오기 · StandardScaler 스케일링 · 파생 변수 추가</p>
-</div>
-  </div>
-  <div class="research-doc-stats">
-<div class="research-doc-stat">
-  <span>소스</span>
-  <strong>ipynb / md</strong>
-</div>
-<div class="research-doc-stat">
-  <span>자료</span>
-  <strong>코드 108 · 실행 107</strong>
-</div>
-<div class="research-doc-stat">
-  <span>주요 스택</span>
-  <strong>matplotlib, warnings, numpy, pandas 외 1</strong>
-</div>
-  </div>
+<div class="research-compact-wrap research-compact-wrap--intro">
+  <table class="research-compact-table research-compact-table--intro">
+    <tbody>
+    <tr>
+      <th scope="row">문제 설정</th>
+      <td>자전거 대여 시스템의 운영 담당자. 자전거 대여 패턴을 분석하여 자전거 배치 및 운영 전략을 최적화하고, 대여 수요를 정확하게 예측하는 것</td>
+    </tr>
+    <tr>
+      <th scope="row">데이터 맥락</th>
+      <td>train.csv - 자전거 대여 수요를 예측하기 위한 데이터 포함 - 종속 변수: count</td>
+    </tr>
+    <tr>
+      <th scope="row">핵심 개념</th>
+      <td>회귀 문제 · 선형 모델과 정규화 · 전처리와 입력 정리</td>
+    </tr>
+    <tr>
+      <th scope="row">구현 흐름</th>
+      <td>train/test CSV 불러오기 -&gt; StandardScaler 스케일링 -&gt; 파생 변수 추가</td>
+    </tr>
+    <tr>
+      <th scope="row">자료</th>
+      <td>ipynb / md · 코드 108 · 실행 107</td>
+    </tr>
+    <tr>
+      <th scope="row">주요 스택</th>
+      <td>matplotlib, warnings, numpy, pandas 외 1</td>
+    </tr>
+    </tbody>
+  </table>
 </div>
 
 ## What I Studied
 
-<div class="research-note-grid">
-<div class="research-note-card">
-  <p class="research-note-card__label">회귀 문제</p>
-  <p class="research-note-card__body">회귀는 연속적인 수치를 예측하는 문제입니다. 예측값과 실제값의 차이를 오차로 계산해 모델 성능을 판단합니다.</p>
-  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>이 글에서는 수요량, 가격, 점수처럼 숫자 타깃을 예측하는 실습과 이어집니다.</p>
-</div>
-<div class="research-note-card">
-  <p class="research-note-card__label">선형 모델과 정규화</p>
-  <p class="research-note-card__body">선형 모델은 입력 특성의 선형 결합으로 예측을 만들고, 정규화는 가중치 크기를 제어해 과적합을 줄이는 역할을 합니다.</p>
-  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>이 글에서는 LinearRegression, LogisticRegression, Ridge, Lasso 실습과 연결해 해석할 수 있습니다.</p>
-</div>
-<div class="research-note-card">
-  <p class="research-note-card__label">전처리와 입력 정리</p>
-  <p class="research-note-card__body">머신러닝 모델은 입력 형식에 민감하기 때문에 결측치 처리, 인코딩, 스케일링 같은 전처리 단계가 성능을 크게 좌우합니다.</p>
-  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>이 글에서는 범주형 값을 숫자로 바꾸거나 학습/검증을 분리하는 코드가 이 개념에 해당합니다.</p>
-</div>
-<div class="research-note-card">
-  <p class="research-note-card__label">피처 엔지니어링</p>
-  <p class="research-note-card__body">피처 엔지니어링은 원본 컬럼을 그대로 쓰지 않고 문제에 맞는 새 특징을 설계해 모델이 더 유용한 패턴을 학습하도록 돕는 과정입니다.</p>
-  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>이 글에서는 시간 파생 변수, 조건식 기반 플래그, 도메인 규칙을 반영한 새 컬럼 생성 코드가 여기에 해당합니다.</p>
-</div>
+<div class="research-compact-wrap">
+  <table class="research-compact-table research-compact-table--notes">
+    <thead>
+      <tr>
+        <th>개념</th>
+        <th>핵심 설명</th>
+        <th>코드에서 확인한 것</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th scope="row">회귀 문제</th>
+      <td>회귀는 연속적인 수치를 예측하는 문제입니다. 예측값과 실제값의 차이를 오차로 계산해 모델 성능을 판단합니다.</td>
+      <td>이 글에서는 수요량, 가격, 점수처럼 숫자 타깃을 예측하는 실습과 이어집니다.</td>
+    </tr>
+    <tr>
+      <th scope="row">선형 모델과 정규화</th>
+      <td>선형 모델은 입력 특성의 선형 결합으로 예측을 만들고, 정규화는 가중치 크기를 제어해 과적합을 줄이는 역할을 합니다.</td>
+      <td>이 글에서는 LinearRegression, LogisticRegression, Ridge, Lasso 실습과 연결해 해석할 수 있습니다.</td>
+    </tr>
+    <tr>
+      <th scope="row">전처리와 입력 정리</th>
+      <td>머신러닝 모델은 입력 형식에 민감하기 때문에 결측치 처리, 인코딩, 스케일링 같은 전처리 단계가 성능을 크게 좌우합니다.</td>
+      <td>이 글에서는 범주형 값을 숫자로 바꾸거나 학습/검증을 분리하는 코드가 이 개념에 해당합니다.</td>
+    </tr>
+    <tr>
+      <th scope="row">피처 엔지니어링</th>
+      <td>피처 엔지니어링은 원본 컬럼을 그대로 쓰지 않고 문제에 맞는 새 특징을 설계해 모델이 더 유용한 패턴을 학습하도록 돕는 과정입니다.</td>
+      <td>이 글에서는 시간 파생 변수, 조건식 기반 플래그, 도메인 규칙을 반영한 새 컬럼 생성 코드가 여기에 해당합니다.</td>
+    </tr>
+    </tbody>
+  </table>
 </div>
 
 ## How I Implemented It
 
-<div class="research-step-list">
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 1 · 데이터 불러오기</p>
-  <p class="research-step-card__title">train/test CSV 불러오기</p>
-  <p class="research-step-card__body">실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.</p>
-  <p class="research-step-card__meta"><span>핵심 API</span> <code>pd.read_csv</code></p>
-
-</div>
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 2 · 전처리</p>
-  <p class="research-step-card__title">StandardScaler 스케일링</p>
-  <p class="research-step-card__body">결측치 처리, 인코딩, 스케일링처럼 모델이 바로 사용할 수 있도록 입력 형태를 다듬는 단계입니다.</p>
-  <p class="research-step-card__meta"><span>핵심 API</span> <code>StandardScaler</code></p>
-  <p class="research-step-card__meta"><span>코드 포인트</span> 표준화 - from sklearn.preprocessin...</p>
-</div>
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 3 · 피처 가공</p>
-  <p class="research-step-card__title">파생 변수 추가</p>
-  <p class="research-step-card__body">원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다.</p>
-  <p class="research-step-card__meta"><span>핵심 API</span> <code>matplotlib</code> <code>seaborn</code></p>
-  <p class="research-step-card__meta"><span>코드 포인트</span> 시간대별 정보로 다시 시각화 · 오전 여부</p>
-</div>
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 4 · 모델 구성</p>
-  <p class="research-step-card__title">XGBoost 모델 구성</p>
-  <p class="research-step-card__body">XGBoost 같은 모델을 올려 두고 어떤 알고리즘이 문제에 더 잘 맞는지 비교해 보는 구간입니다.</p>
-  <p class="research-step-card__meta"><span>핵심 API</span> <code>XGBoost</code></p>
-
-</div>
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 5 · 학습</p>
-  <p class="research-step-card__title">GridSearchCV 모델 학습</p>
-  <p class="research-step-card__body">하이퍼파라미터 탐색이나 교차검증을 통해 단순 실행이 아니라 성능 비교까지 해본 학습 코드입니다.</p>
-  <p class="research-step-card__meta"><span>핵심 API</span> <code>GridSearchCV</code> <code>RMSLE</code> <code>RMSE</code></p>
-  <p class="research-step-card__meta"><span>코드 포인트</span> 최종 모델 결과 저장 리스트 · 모델별 학습 및 평가</p>
-</div>
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 6 · 평가</p>
-  <p class="research-step-card__title">RMSLE 기준 성능 평가</p>
-  <p class="research-step-card__body">예측 결과를 지표로 계산해 어떤 모델과 전처리가 더 잘 맞았는지 확인하는 평가 코드입니다.</p>
-  <p class="research-step-card__meta"><span>핵심 API</span> <code>RMSLE</code> <code>RMSE</code></p>
-
-</div>
+<div class="research-compact-wrap">
+  <table class="research-compact-table research-compact-table--steps">
+    <thead>
+      <tr>
+        <th>단계</th>
+        <th>구현 내용</th>
+        <th>핵심 API</th>
+        <th>코드 포인트</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th scope="row">Step 1 · 데이터 불러오기</th>
+      <td>
+        <strong class="research-compact-table__main">train/test CSV 불러오기</strong>
+        <span class="research-compact-table__sub">실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.</span>
+      </td>
+      <td><code>pd.read_csv</code></td>
+      <td><span class="research-compact-table__muted">-</span></td>
+    </tr>
+    <tr>
+      <th scope="row">Step 2 · 전처리</th>
+      <td>
+        <strong class="research-compact-table__main">StandardScaler 스케일링</strong>
+        <span class="research-compact-table__sub">결측치 처리, 인코딩, 스케일링처럼 모델이 바로 사용할 수 있도록 입력 형태를 다듬는 단계입니다.</span>
+      </td>
+      <td><code>StandardScaler</code></td>
+      <td>표준화 - from sklearn.preprocessin...</td>
+    </tr>
+    <tr>
+      <th scope="row">Step 3 · 피처 가공</th>
+      <td>
+        <strong class="research-compact-table__main">파생 변수 추가</strong>
+        <span class="research-compact-table__sub">원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다.</span>
+      </td>
+      <td><code>matplotlib</code> <code>seaborn</code></td>
+      <td>시간대별 정보로 다시 시각화 · 오전 여부</td>
+    </tr>
+    <tr>
+      <th scope="row">Step 4 · 모델 구성</th>
+      <td>
+        <strong class="research-compact-table__main">XGBoost 모델 구성</strong>
+        <span class="research-compact-table__sub">XGBoost 같은 모델을 올려 두고 어떤 알고리즘이 문제에 더 잘 맞는지 비교해 보는 구간입니다.</span>
+      </td>
+      <td><code>XGBoost</code></td>
+      <td><span class="research-compact-table__muted">-</span></td>
+    </tr>
+    <tr>
+      <th scope="row">Step 5 · 학습</th>
+      <td>
+        <strong class="research-compact-table__main">GridSearchCV 모델 학습</strong>
+        <span class="research-compact-table__sub">하이퍼파라미터 탐색이나 교차검증을 통해 단순 실행이 아니라 성능 비교까지 해본 학습 코드입니다.</span>
+      </td>
+      <td><code>GridSearchCV</code> <code>RMSLE</code> <code>RMSE</code></td>
+      <td>최종 모델 결과 저장 리스트 · 모델별 학습 및 평가</td>
+    </tr>
+    <tr>
+      <th scope="row">Step 6 · 평가</th>
+      <td>
+        <strong class="research-compact-table__main">RMSLE 기준 성능 평가</strong>
+        <span class="research-compact-table__sub">예측 결과를 지표로 계산해 어떤 모델과 전처리가 더 잘 맞았는지 확인하는 평가 코드입니다.</span>
+      </td>
+      <td><code>RMSLE</code> <code>RMSE</code></td>
+      <td><span class="research-compact-table__muted">-</span></td>
+    </tr>
+    </tbody>
+  </table>
 </div>
 
 ## Code Evidence

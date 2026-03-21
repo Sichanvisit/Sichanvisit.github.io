@@ -1775,54 +1775,32 @@ def build_ml_intro_html(
     library_summary = ", ".join(libraries[:4]) if libraries else "Not detected"
     if len(libraries) > 4:
         library_summary += f" 외 {len(libraries) - 4}"
-
-    context_cards = []
-    if data_summary:
-        context_cards.append(("데이터 맥락", data_summary))
-    context_cards.append(("핵심 개념", " · ".join(concept_labels) if concept_labels else "이 글에서 필요한 개념을 먼저 읽고 코드로 이어갈 수 있게 정리했습니다."))
-    context_cards.append(("구현 포인트", " · ".join(implementation_focus) if implementation_focus else "데이터 처리부터 학습과 평가까지의 핵심 코드 흐름을 단계별로 보여줍니다."))
-
-    context_html = "\n".join(
-        "\n".join(
-            [
-                '<div class="research-doc-card">',
-                f'  <p class="research-doc-card__label">{html.escape(label)}</p>',
-                f'  <p class="research-doc-card__value">{html.escape(value)}</p>',
-                "</div>",
-            ]
-        )
-        for label, value in context_cards
-    )
-
-    stat_items = [
-        ("소스", " / ".join(source_formats) if source_formats else "source"),
-        ("자료", f"코드 {code_block_count} · 실행 {execution_block_count}"),
+    rows = [
+        ("문제 설정", problem_summary or "이 글에서 다룬 문제 설정과 목표를 짧게 요약했습니다."),
+        ("데이터 맥락", data_summary or "원본 노트에서 데이터를 설명한 부분을 기준으로 실습 맥락을 정리했습니다."),
+        ("핵심 개념", " · ".join(concept_labels) if concept_labels else "이 글에서 필요한 개념을 먼저 읽고 코드로 이어갈 수 있게 정리했습니다."),
+        ("구현 흐름", " -> ".join(implementation_focus) if implementation_focus else "데이터 처리부터 학습과 평가까지의 핵심 코드 흐름을 단계별로 보여줍니다."),
+        ("자료", f'{" / ".join(source_formats) if source_formats else "source"} · 코드 {code_block_count} · 실행 {execution_block_count}'),
         ("주요 스택", library_summary),
     ]
-    stat_html = "\n".join(
+    row_html = "\n".join(
         "\n".join(
             [
-                '<div class="research-doc-stat">',
-                f'  <span>{html.escape(label)}</span>',
-                f'  <strong>{html.escape(value)}</strong>',
-                "</div>",
+                "    <tr>",
+                f'      <th scope="row">{html.escape(label)}</th>',
+                f'      <td>{html.escape(value)}</td>',
+                "    </tr>",
             ]
         )
-        for label, value in stat_items
+        for label, value in rows
     )
-
     return f"""
-<div class="research-doc-hero">
-  <div class="research-doc-summary">
-    <p class="research-doc-summary__label">문제 설정</p>
-    <p class="research-doc-summary__body">{html.escape(problem_summary or "이 글에서 다룬 문제 설정과 목표를 짧게 요약했습니다.")}</p>
-  </div>
-  <div class="research-doc-meta">
-{context_html}
-  </div>
-  <div class="research-doc-stats">
-{stat_html}
-  </div>
+<div class="research-compact-wrap research-compact-wrap--intro">
+  <table class="research-compact-table research-compact-table--intro">
+    <tbody>
+{row_html}
+    </tbody>
+  </table>
 </div>
 """.strip()
 
@@ -1831,45 +1809,74 @@ def build_ml_study_section(
     *,
     study_notes: list[dict[str, str]],
 ) -> str:
-    cards = []
+    rows = []
     for note in study_notes:
-        cards.append(
+        rows.append(
             "\n".join(
                 [
-                    '<div class="research-note-card">',
-                    f'  <p class="research-note-card__label">{html.escape(note["label"])}</p>',
-                    f'  <p class="research-note-card__body">{html.escape(note["summary"])}</p>',
-                    f'  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>{html.escape(note["practice"])}</p>',
-                    "</div>",
+                    "    <tr>",
+                    f'      <th scope="row">{html.escape(note["label"])}</th>',
+                    f'      <td>{html.escape(note["summary"])}</td>',
+                    f'      <td>{html.escape(note["practice"])}</td>',
+                    "    </tr>",
                 ]
             )
         )
-    return '<div class="research-note-grid">\n' + "\n".join(cards) + "\n</div>"
+    return (
+        '<div class="research-compact-wrap">\n'
+        '  <table class="research-compact-table research-compact-table--notes">\n'
+        "    <thead>\n"
+        "      <tr>\n"
+        "        <th>개념</th>\n"
+        "        <th>핵심 설명</th>\n"
+        "        <th>코드에서 확인한 것</th>\n"
+        "      </tr>\n"
+        "    </thead>\n"
+        "    <tbody>\n"
+        + "\n".join(rows)
+        + "\n    </tbody>\n"
+        "  </table>\n"
+        "</div>"
+    )
 
 
 def build_ml_implementation_section(steps: list[dict[str, object]]) -> str:
-    cards = []
+    rows = []
     for step in steps:
-        api_html = ""
-        clue_html = ""
-        if step["apis"]:
-            api_html = f'  <p class="research-step-card__meta"><span>핵심 API</span> {format_html_code_list(step["apis"])}</p>'
-        if step["clues"]:
-            clue_html = f'  <p class="research-step-card__meta"><span>코드 포인트</span> {html.escape(" · ".join(step["clues"]))}</p>'
-        cards.append(
+        api_html = format_html_code_list(step["apis"]) if step["apis"] else '<span class="research-compact-table__muted">-</span>'
+        clue_html = html.escape(" · ".join(step["clues"])) if step["clues"] else '<span class="research-compact-table__muted">-</span>'
+        rows.append(
             "\n".join(
                 [
-                    '<div class="research-step-card">',
-                    f'  <p class="research-step-card__kicker">Step {step["index"]} · {html.escape(str(step["stage"]))}</p>',
-                    f'  <p class="research-step-card__title">{html.escape(str(step["title"]))}</p>',
-                    f'  <p class="research-step-card__body">{html.escape(str(step["purpose"]))}</p>',
-                    api_html,
-                    clue_html,
-                    "</div>",
+                    "    <tr>",
+                    f'      <th scope="row">Step {step["index"]} · {html.escape(str(step["stage"]))}</th>',
+                    '      <td>',
+                    f'        <strong class="research-compact-table__main">{html.escape(str(step["title"]))}</strong>',
+                    f'        <span class="research-compact-table__sub">{html.escape(str(step["purpose"]))}</span>',
+                    "      </td>",
+                    f"      <td>{api_html}</td>",
+                    f"      <td>{clue_html}</td>",
+                    "    </tr>",
                 ]
             )
         )
-    return '<div class="research-step-list">\n' + "\n".join(card for card in cards if card.strip()) + "\n</div>"
+    return (
+        '<div class="research-compact-wrap">\n'
+        '  <table class="research-compact-table research-compact-table--steps">\n'
+        "    <thead>\n"
+        "      <tr>\n"
+        "        <th>단계</th>\n"
+        "        <th>구현 내용</th>\n"
+        "        <th>핵심 API</th>\n"
+        "        <th>코드 포인트</th>\n"
+        "      </tr>\n"
+        "    </thead>\n"
+        "    <tbody>\n"
+        + "\n".join(row for row in rows if row.strip())
+        + "\n    </tbody>\n"
+        "  </table>\n"
+        "</div>"
+    )
 
 
 def build_ml_learning_notes(code_samples: list[dict[str, object]]) -> list[dict[str, str]]:

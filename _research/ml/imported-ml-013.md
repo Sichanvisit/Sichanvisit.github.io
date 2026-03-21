@@ -27,79 +27,106 @@ tags:
   - practice
 ---
 
-<div class="research-doc-hero">
-  <div class="research-doc-summary">
-    <p class="research-doc-summary__label">문제 설정</p>
-    <p class="research-doc-summary__body">코딩실습13 10.결정트리와 앙상블(XGBoost)를 중심으로 학습한 내용을 정리한 ML 실습입니다.</p>
-  </div>
-  <div class="research-doc-meta">
-<div class="research-doc-card">
-  <p class="research-doc-card__label">핵심 개념</p>
-  <p class="research-doc-card__value">분류 문제 · 회귀 문제 · 결정 트리와 앙상블</p>
-</div>
-<div class="research-doc-card">
-  <p class="research-doc-card__label">구현 포인트</p>
-  <p class="research-doc-card__value">XGBoost 회귀 · XGBoost 분류</p>
-</div>
-  </div>
-  <div class="research-doc-stats">
-<div class="research-doc-stat">
-  <span>소스</span>
-  <strong>ipynb / md</strong>
-</div>
-<div class="research-doc-stat">
-  <span>자료</span>
-  <strong>코드 12 · 실행 11</strong>
-</div>
-<div class="research-doc-stat">
-  <span>주요 스택</span>
-  <strong>sklearn, xgboost, numpy</strong>
-</div>
-  </div>
+<div class="research-compact-wrap research-compact-wrap--intro">
+  <table class="research-compact-table research-compact-table--intro">
+    <tbody>
+    <tr>
+      <th scope="row">문제 설정</th>
+      <td>코딩실습13 10.결정트리와 앙상블(XGBoost)를 중심으로 학습한 내용을 정리한 ML 실습입니다.</td>
+    </tr>
+    <tr>
+      <th scope="row">데이터 맥락</th>
+      <td>원본 노트에서 데이터를 설명한 부분을 기준으로 실습 맥락을 정리했습니다.</td>
+    </tr>
+    <tr>
+      <th scope="row">핵심 개념</th>
+      <td>분류 문제 · 회귀 문제 · 결정 트리와 앙상블</td>
+    </tr>
+    <tr>
+      <th scope="row">구현 흐름</th>
+      <td>XGBoost 회귀 -&gt; XGBoost 분류</td>
+    </tr>
+    <tr>
+      <th scope="row">자료</th>
+      <td>ipynb / md · 코드 12 · 실행 11</td>
+    </tr>
+    <tr>
+      <th scope="row">주요 스택</th>
+      <td>sklearn, xgboost, numpy</td>
+    </tr>
+    </tbody>
+  </table>
 </div>
 
 ## What I Studied
 
-<div class="research-note-grid">
-<div class="research-note-card">
-  <p class="research-note-card__label">분류 문제</p>
-  <p class="research-note-card__body">분류는 입력 특성으로 클래스나 반응 여부를 예측하는 문제입니다. 모델은 각 샘플이 어떤 범주에 속하는지 확률 또는 라벨로 출력합니다.</p>
-  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>이 글에서는 가입 여부, 품종, 레이블 예측처럼 범주형 타깃을 다루는 실습 맥락으로 연결됩니다.</p>
-</div>
-<div class="research-note-card">
-  <p class="research-note-card__label">회귀 문제</p>
-  <p class="research-note-card__body">회귀는 연속적인 수치를 예측하는 문제입니다. 예측값과 실제값의 차이를 오차로 계산해 모델 성능을 판단합니다.</p>
-  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>이 글에서는 수요량, 가격, 점수처럼 숫자 타깃을 예측하는 실습과 이어집니다.</p>
-</div>
-<div class="research-note-card">
-  <p class="research-note-card__label">결정 트리와 앙상블</p>
-  <p class="research-note-card__body">결정 트리는 조건 분기로 예측 규칙을 만들고, 앙상블은 여러 모델의 예측을 묶어 편향과 분산을 함께 줄이는 접근입니다.</p>
-  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>이 글에서는 Decision Tree, RandomForest, XGBoost, Voting, Stacking 코드를 통해 여러 모델을 비교해 볼 수 있습니다.</p>
-</div>
-<div class="research-note-card">
-  <p class="research-note-card__label">전처리와 입력 정리</p>
-  <p class="research-note-card__body">머신러닝 모델은 입력 형식에 민감하기 때문에 결측치 처리, 인코딩, 스케일링 같은 전처리 단계가 성능을 크게 좌우합니다.</p>
-  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>이 글에서는 범주형 값을 숫자로 바꾸거나 학습/검증을 분리하는 코드가 이 개념에 해당합니다.</p>
-</div>
+<div class="research-compact-wrap">
+  <table class="research-compact-table research-compact-table--notes">
+    <thead>
+      <tr>
+        <th>개념</th>
+        <th>핵심 설명</th>
+        <th>코드에서 확인한 것</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th scope="row">분류 문제</th>
+      <td>분류는 입력 특성으로 클래스나 반응 여부를 예측하는 문제입니다. 모델은 각 샘플이 어떤 범주에 속하는지 확률 또는 라벨로 출력합니다.</td>
+      <td>이 글에서는 가입 여부, 품종, 레이블 예측처럼 범주형 타깃을 다루는 실습 맥락으로 연결됩니다.</td>
+    </tr>
+    <tr>
+      <th scope="row">회귀 문제</th>
+      <td>회귀는 연속적인 수치를 예측하는 문제입니다. 예측값과 실제값의 차이를 오차로 계산해 모델 성능을 판단합니다.</td>
+      <td>이 글에서는 수요량, 가격, 점수처럼 숫자 타깃을 예측하는 실습과 이어집니다.</td>
+    </tr>
+    <tr>
+      <th scope="row">결정 트리와 앙상블</th>
+      <td>결정 트리는 조건 분기로 예측 규칙을 만들고, 앙상블은 여러 모델의 예측을 묶어 편향과 분산을 함께 줄이는 접근입니다.</td>
+      <td>이 글에서는 Decision Tree, RandomForest, XGBoost, Voting, Stacking 코드를 통해 여러 모델을 비교해 볼 수 있습니다.</td>
+    </tr>
+    <tr>
+      <th scope="row">전처리와 입력 정리</th>
+      <td>머신러닝 모델은 입력 형식에 민감하기 때문에 결측치 처리, 인코딩, 스케일링 같은 전처리 단계가 성능을 크게 좌우합니다.</td>
+      <td>이 글에서는 범주형 값을 숫자로 바꾸거나 학습/검증을 분리하는 코드가 이 개념에 해당합니다.</td>
+    </tr>
+    </tbody>
+  </table>
 </div>
 
 ## How I Implemented It
 
-<div class="research-step-list">
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 1 · 데이터 불러오기</p>
-  <p class="research-step-card__title">XGBoost 회귀</p>
-  <p class="research-step-card__body">실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.</p>
-
-
-</div>
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 2 · 모델 구성</p>
-  <p class="research-step-card__title">XGBoost 분류</p>
-  <p class="research-step-card__body">XGBoost 같은 모델을 올려 두고 어떤 알고리즘이 문제에 더 잘 맞는지 비교해 보는 구간입니다.</p>
-  <p class="research-step-card__meta"><span>핵심 API</span> <code>XGBoost</code></p>
-
-</div>
+<div class="research-compact-wrap">
+  <table class="research-compact-table research-compact-table--steps">
+    <thead>
+      <tr>
+        <th>단계</th>
+        <th>구현 내용</th>
+        <th>핵심 API</th>
+        <th>코드 포인트</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th scope="row">Step 1 · 데이터 불러오기</th>
+      <td>
+        <strong class="research-compact-table__main">XGBoost 회귀</strong>
+        <span class="research-compact-table__sub">실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.</span>
+      </td>
+      <td><span class="research-compact-table__muted">-</span></td>
+      <td><span class="research-compact-table__muted">-</span></td>
+    </tr>
+    <tr>
+      <th scope="row">Step 2 · 모델 구성</th>
+      <td>
+        <strong class="research-compact-table__main">XGBoost 분류</strong>
+        <span class="research-compact-table__sub">XGBoost 같은 모델을 올려 두고 어떤 알고리즘이 문제에 더 잘 맞는지 비교해 보는 구간입니다.</span>
+      </td>
+      <td><code>XGBoost</code></td>
+      <td><span class="research-compact-table__muted">-</span></td>
+    </tr>
+    </tbody>
+  </table>
 </div>
 
 ## Code Evidence

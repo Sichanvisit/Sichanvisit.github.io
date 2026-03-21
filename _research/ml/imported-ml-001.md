@@ -25,76 +25,105 @@ tags:
   - practice
 ---
 
-<div class="research-doc-hero">
-  <div class="research-doc-summary">
-    <p class="research-doc-summary__label">문제 설정</p>
-    <p class="research-doc-summary__body">코드실습2 2.객체와 클래스를 중심으로 학습한 내용을 정리한 ML 실습입니다.</p>
-  </div>
-  <div class="research-doc-meta">
-<div class="research-doc-card">
-  <p class="research-doc-card__label">핵심 개념</p>
-  <p class="research-doc-card__value">객체지향 설계 · 함수 분해와 로직 구성</p>
-</div>
-<div class="research-doc-card">
-  <p class="research-doc-card__label">구현 포인트</p>
-  <p class="research-doc-card__value">은행 클래스 · 다양한 메소드 · 클래스 코드 연습</p>
-</div>
-  </div>
-  <div class="research-doc-stats">
-<div class="research-doc-stat">
-  <span>소스</span>
-  <strong>ipynb / md</strong>
-</div>
-<div class="research-doc-stat">
-  <span>자료</span>
-  <strong>코드 28 · 실행 18</strong>
-</div>
-<div class="research-doc-stat">
-  <span>주요 스택</span>
-  <strong>Not detected</strong>
-</div>
-  </div>
+<div class="research-compact-wrap research-compact-wrap--intro">
+  <table class="research-compact-table research-compact-table--intro">
+    <tbody>
+    <tr>
+      <th scope="row">문제 설정</th>
+      <td>코드실습2 2.객체와 클래스를 중심으로 학습한 내용을 정리한 ML 실습입니다.</td>
+    </tr>
+    <tr>
+      <th scope="row">데이터 맥락</th>
+      <td>원본 노트에서 데이터를 설명한 부분을 기준으로 실습 맥락을 정리했습니다.</td>
+    </tr>
+    <tr>
+      <th scope="row">핵심 개념</th>
+      <td>객체지향 설계 · 함수 분해와 로직 구성</td>
+    </tr>
+    <tr>
+      <th scope="row">구현 흐름</th>
+      <td>은행 클래스 -&gt; 다양한 메소드 -&gt; 클래스 코드 연습</td>
+    </tr>
+    <tr>
+      <th scope="row">자료</th>
+      <td>ipynb / md · 코드 28 · 실행 18</td>
+    </tr>
+    <tr>
+      <th scope="row">주요 스택</th>
+      <td>Not detected</td>
+    </tr>
+    </tbody>
+  </table>
 </div>
 
 ## What I Studied
 
-<div class="research-note-grid">
-<div class="research-note-card">
-  <p class="research-note-card__label">객체지향 설계</p>
-  <p class="research-note-card__body">객체지향은 관련 데이터와 동작을 하나의 객체로 묶어 문제를 구조적으로 표현하는 방식입니다.</p>
-  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>이 글에서는 클래스, 메서드, 상태 관리 같은 코드가 핵심 학습 포인트로 드러납니다.</p>
-</div>
-<div class="research-note-card">
-  <p class="research-note-card__label">함수 분해와 로직 구성</p>
-  <p class="research-note-card__body">함수는 입력, 처리, 반환을 분리해 로직을 재사용하기 쉽게 만들고, 문제를 작은 단위로 나누는 기본 도구입니다.</p>
-  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>이 글에서는 문제 풀이를 함수 단위로 쪼개고 입출력을 나눠 보는 실습과 연결됩니다.</p>
-</div>
+<div class="research-compact-wrap">
+  <table class="research-compact-table research-compact-table--notes">
+    <thead>
+      <tr>
+        <th>개념</th>
+        <th>핵심 설명</th>
+        <th>코드에서 확인한 것</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th scope="row">객체지향 설계</th>
+      <td>객체지향은 관련 데이터와 동작을 하나의 객체로 묶어 문제를 구조적으로 표현하는 방식입니다.</td>
+      <td>이 글에서는 클래스, 메서드, 상태 관리 같은 코드가 핵심 학습 포인트로 드러납니다.</td>
+    </tr>
+    <tr>
+      <th scope="row">함수 분해와 로직 구성</th>
+      <td>함수는 입력, 처리, 반환을 분리해 로직을 재사용하기 쉽게 만들고, 문제를 작은 단위로 나누는 기본 도구입니다.</td>
+      <td>이 글에서는 문제 풀이를 함수 단위로 쪼개고 입출력을 나눠 보는 실습과 연결됩니다.</td>
+    </tr>
+    </tbody>
+  </table>
 </div>
 
 ## How I Implemented It
 
-<div class="research-step-list">
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 1 · 클래스 설계</p>
-  <p class="research-step-card__title">은행 클래스</p>
-  <p class="research-step-card__body">문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.</p>
-
-  <p class="research-step-card__meta"><span>코드 포인트</span> 입금 기능 구현 · 출금 기능 구현</p>
-</div>
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 2 · 클래스 설계</p>
-  <p class="research-step-card__title">다양한 메소드</p>
-  <p class="research-step-card__body">문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.</p>
-
-  <p class="research-step-card__meta"><span>코드 포인트</span> str메소드</p>
-</div>
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 3 · 클래스 설계</p>
-  <p class="research-step-card__title">클래스 코드 연습</p>
-  <p class="research-step-card__body">문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.</p>
-
-  <p class="research-step-card__meta"><span>코드 포인트</span> Person 클래스 연습</p>
-</div>
+<div class="research-compact-wrap">
+  <table class="research-compact-table research-compact-table--steps">
+    <thead>
+      <tr>
+        <th>단계</th>
+        <th>구현 내용</th>
+        <th>핵심 API</th>
+        <th>코드 포인트</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th scope="row">Step 1 · 클래스 설계</th>
+      <td>
+        <strong class="research-compact-table__main">은행 클래스</strong>
+        <span class="research-compact-table__sub">문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.</span>
+      </td>
+      <td><span class="research-compact-table__muted">-</span></td>
+      <td>입금 기능 구현 · 출금 기능 구현</td>
+    </tr>
+    <tr>
+      <th scope="row">Step 2 · 클래스 설계</th>
+      <td>
+        <strong class="research-compact-table__main">다양한 메소드</strong>
+        <span class="research-compact-table__sub">문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.</span>
+      </td>
+      <td><span class="research-compact-table__muted">-</span></td>
+      <td>str메소드</td>
+    </tr>
+    <tr>
+      <th scope="row">Step 3 · 클래스 설계</th>
+      <td>
+        <strong class="research-compact-table__main">클래스 코드 연습</strong>
+        <span class="research-compact-table__sub">문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.</span>
+      </td>
+      <td><span class="research-compact-table__muted">-</span></td>
+      <td>Person 클래스 연습</td>
+    </tr>
+    </tbody>
+  </table>
 </div>
 
 ## Code Evidence

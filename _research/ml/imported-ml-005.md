@@ -30,96 +30,127 @@ tags:
   - practice
 ---
 
-<div class="research-doc-hero">
-  <div class="research-doc-summary">
-    <p class="research-doc-summary__label">문제 설정</p>
-    <p class="research-doc-summary__body">Sample Superstore 데이터 설명 (교육·실습용으로 자주 쓰이는 판매 주문 데이터셋)</p>
-  </div>
-  <div class="research-doc-meta">
-<div class="research-doc-card">
-  <p class="research-doc-card__label">데이터 맥락</p>
-  <p class="research-doc-card__value">Sample Superstore 데이터 설명 (교육·실습용으로 자주 쓰이는 판매 주문 데이터셋)</p>
-</div>
-<div class="research-doc-card">
-  <p class="research-doc-card__label">핵심 개념</p>
-  <p class="research-doc-card__value">객체지향 설계</p>
-</div>
-<div class="research-doc-card">
-  <p class="research-doc-card__label">구현 포인트</p>
-  <p class="research-doc-card__value">CSV 데이터 불러오기 · 데이터 전처리 · 정규화/표준화</p>
-</div>
-  </div>
-  <div class="research-doc-stats">
-<div class="research-doc-stat">
-  <span>소스</span>
-  <strong>ipynb / md</strong>
-</div>
-<div class="research-doc-stat">
-  <span>자료</span>
-  <strong>코드 83 · 실행 69</strong>
-</div>
-<div class="research-doc-stat">
-  <span>주요 스택</span>
-  <strong>google, pandas, seaborn, matplotlib 외 1</strong>
-</div>
-  </div>
+<div class="research-compact-wrap research-compact-wrap--intro">
+  <table class="research-compact-table research-compact-table--intro">
+    <tbody>
+    <tr>
+      <th scope="row">문제 설정</th>
+      <td>Sample Superstore 데이터 설명 (교육·실습용으로 자주 쓰이는 판매 주문 데이터셋)</td>
+    </tr>
+    <tr>
+      <th scope="row">데이터 맥락</th>
+      <td>Sample Superstore 데이터 설명 (교육·실습용으로 자주 쓰이는 판매 주문 데이터셋)</td>
+    </tr>
+    <tr>
+      <th scope="row">핵심 개념</th>
+      <td>객체지향 설계</td>
+    </tr>
+    <tr>
+      <th scope="row">구현 흐름</th>
+      <td>CSV 데이터 불러오기 -&gt; 데이터 전처리 -&gt; 정규화/표준화</td>
+    </tr>
+    <tr>
+      <th scope="row">자료</th>
+      <td>ipynb / md · 코드 83 · 실행 69</td>
+    </tr>
+    <tr>
+      <th scope="row">주요 스택</th>
+      <td>google, pandas, seaborn, matplotlib 외 1</td>
+    </tr>
+    </tbody>
+  </table>
 </div>
 
 ## What I Studied
 
-<div class="research-note-grid">
-<div class="research-note-card">
-  <p class="research-note-card__label">객체지향 설계</p>
-  <p class="research-note-card__body">객체지향은 관련 데이터와 동작을 하나의 객체로 묶어 문제를 구조적으로 표현하는 방식입니다.</p>
-  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>이 글에서는 클래스, 메서드, 상태 관리 같은 코드가 핵심 학습 포인트로 드러납니다.</p>
-</div>
+<div class="research-compact-wrap">
+  <table class="research-compact-table research-compact-table--notes">
+    <thead>
+      <tr>
+        <th>개념</th>
+        <th>핵심 설명</th>
+        <th>코드에서 확인한 것</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th scope="row">객체지향 설계</th>
+      <td>객체지향은 관련 데이터와 동작을 하나의 객체로 묶어 문제를 구조적으로 표현하는 방식입니다.</td>
+      <td>이 글에서는 클래스, 메서드, 상태 관리 같은 코드가 핵심 학습 포인트로 드러납니다.</td>
+    </tr>
+    </tbody>
+  </table>
 </div>
 
 ## How I Implemented It
 
-<div class="research-step-list">
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 1 · 데이터 불러오기</p>
-  <p class="research-step-card__title">CSV 데이터 불러오기</p>
-  <p class="research-step-card__body">실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.</p>
-  <p class="research-step-card__meta"><span>핵심 API</span> <code>pd.read_csv</code></p>
-
-</div>
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 2 · 전처리</p>
-  <p class="research-step-card__title">데이터 전처리</p>
-  <p class="research-step-card__body">결측치 처리, 인코딩, 스케일링처럼 모델이 바로 사용할 수 있도록 입력 형태를 다듬는 단계입니다.</p>
-  <p class="research-step-card__meta"><span>핵심 API</span> <code>matplotlib</code></p>
-  <p class="research-step-card__meta"><span>코드 포인트</span> 여러 변수 박스플롯 그리기</p>
-</div>
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 3 · 피처 가공</p>
-  <p class="research-step-card__title">정규화/표준화</p>
-  <p class="research-step-card__body">원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다.</p>
-
-  <p class="research-step-card__meta"><span>코드 포인트</span> 날짜로 변환된 데이터 타입 기준 월, 요일 파생변수 생성</p>
-</div>
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 4 · 구현 코드</p>
-  <p class="research-step-card__title">추가 - 컬럼명 변경</p>
-  <p class="research-step-card__body">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</p>
-
-  <p class="research-step-card__meta"><span>코드 포인트</span> 위와 같은 코드 - 딕셔너리 따로 지정</p>
-</div>
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 5 · 구현 코드</p>
-  <p class="research-step-card__title">문자 데이터 가공</p>
-  <p class="research-step-card__body">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</p>
-
-  <p class="research-step-card__meta"><span>코드 포인트</span> 문자열 분리 · n=1</p>
-</div>
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 6 · 구현 코드</p>
-  <p class="research-step-card__title">데이터 합치기</p>
-  <p class="research-step-card__body">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</p>
-
-
-</div>
+<div class="research-compact-wrap">
+  <table class="research-compact-table research-compact-table--steps">
+    <thead>
+      <tr>
+        <th>단계</th>
+        <th>구현 내용</th>
+        <th>핵심 API</th>
+        <th>코드 포인트</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th scope="row">Step 1 · 데이터 불러오기</th>
+      <td>
+        <strong class="research-compact-table__main">CSV 데이터 불러오기</strong>
+        <span class="research-compact-table__sub">실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.</span>
+      </td>
+      <td><code>pd.read_csv</code></td>
+      <td><span class="research-compact-table__muted">-</span></td>
+    </tr>
+    <tr>
+      <th scope="row">Step 2 · 전처리</th>
+      <td>
+        <strong class="research-compact-table__main">데이터 전처리</strong>
+        <span class="research-compact-table__sub">결측치 처리, 인코딩, 스케일링처럼 모델이 바로 사용할 수 있도록 입력 형태를 다듬는 단계입니다.</span>
+      </td>
+      <td><code>matplotlib</code></td>
+      <td>여러 변수 박스플롯 그리기</td>
+    </tr>
+    <tr>
+      <th scope="row">Step 3 · 피처 가공</th>
+      <td>
+        <strong class="research-compact-table__main">정규화/표준화</strong>
+        <span class="research-compact-table__sub">원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다.</span>
+      </td>
+      <td><span class="research-compact-table__muted">-</span></td>
+      <td>날짜로 변환된 데이터 타입 기준 월, 요일 파생변수 생성</td>
+    </tr>
+    <tr>
+      <th scope="row">Step 4 · 구현 코드</th>
+      <td>
+        <strong class="research-compact-table__main">추가 - 컬럼명 변경</strong>
+        <span class="research-compact-table__sub">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</span>
+      </td>
+      <td><span class="research-compact-table__muted">-</span></td>
+      <td>위와 같은 코드 - 딕셔너리 따로 지정</td>
+    </tr>
+    <tr>
+      <th scope="row">Step 5 · 구현 코드</th>
+      <td>
+        <strong class="research-compact-table__main">문자 데이터 가공</strong>
+        <span class="research-compact-table__sub">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</span>
+      </td>
+      <td><span class="research-compact-table__muted">-</span></td>
+      <td>문자열 분리 · n=1</td>
+    </tr>
+    <tr>
+      <th scope="row">Step 6 · 구현 코드</th>
+      <td>
+        <strong class="research-compact-table__main">데이터 합치기</strong>
+        <span class="research-compact-table__sub">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</span>
+      </td>
+      <td><span class="research-compact-table__muted">-</span></td>
+      <td><span class="research-compact-table__muted">-</span></td>
+    </tr>
+    </tbody>
+  </table>
 </div>
 
 ## Code Evidence

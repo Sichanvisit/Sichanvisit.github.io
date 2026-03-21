@@ -30,96 +30,127 @@ tags:
   - archive-note
 ---
 
-<div class="research-doc-hero">
-  <div class="research-doc-summary">
-    <p class="research-doc-summary__label">문제 설정</p>
-    <p class="research-doc-summary__body">2015.07.01부터 2017.08.31까지의 Resort Hotel과 City Hotel의 예약 데이터</p>
-  </div>
-  <div class="research-doc-meta">
-<div class="research-doc-card">
-  <p class="research-doc-card__label">데이터 맥락</p>
-  <p class="research-doc-card__value">2015.07.01부터 2017.08.31까지의 Resort Hotel과 City Hotel의 예약 데이터</p>
-</div>
-<div class="research-doc-card">
-  <p class="research-doc-card__label">핵심 개념</p>
-  <p class="research-doc-card__value">피처 엔지니어링</p>
-</div>
-<div class="research-doc-card">
-  <p class="research-doc-card__label">구현 포인트</p>
-  <p class="research-doc-card__value">데이터 불러오고 확인하기 · (2) 결측치 · (2) 시각화</p>
-</div>
-  </div>
-  <div class="research-doc-stats">
-<div class="research-doc-stat">
-  <span>소스</span>
-  <strong>ipynb / md</strong>
-</div>
-<div class="research-doc-stat">
-  <span>자료</span>
-  <strong>코드 95 · 실행 95</strong>
-</div>
-<div class="research-doc-stat">
-  <span>주요 스택</span>
-  <strong>matplotlib, warnings, pandas, numpy 외 1</strong>
-</div>
-  </div>
+<div class="research-compact-wrap research-compact-wrap--intro">
+  <table class="research-compact-table research-compact-table--intro">
+    <tbody>
+    <tr>
+      <th scope="row">문제 설정</th>
+      <td>2015.07.01부터 2017.08.31까지의 Resort Hotel과 City Hotel의 예약 데이터</td>
+    </tr>
+    <tr>
+      <th scope="row">데이터 맥락</th>
+      <td>2015.07.01부터 2017.08.31까지의 Resort Hotel과 City Hotel의 예약 데이터</td>
+    </tr>
+    <tr>
+      <th scope="row">핵심 개념</th>
+      <td>피처 엔지니어링</td>
+    </tr>
+    <tr>
+      <th scope="row">구현 흐름</th>
+      <td>데이터 불러오고 확인하기 -&gt; (2) 결측치 -&gt; (2) 시각화</td>
+    </tr>
+    <tr>
+      <th scope="row">자료</th>
+      <td>ipynb / md · 코드 95 · 실행 95</td>
+    </tr>
+    <tr>
+      <th scope="row">주요 스택</th>
+      <td>matplotlib, warnings, pandas, numpy 외 1</td>
+    </tr>
+    </tbody>
+  </table>
 </div>
 
 ## What I Studied
 
-<div class="research-note-grid">
-<div class="research-note-card">
-  <p class="research-note-card__label">피처 엔지니어링</p>
-  <p class="research-note-card__body">피처 엔지니어링은 원본 컬럼을 그대로 쓰지 않고 문제에 맞는 새 특징을 설계해 모델이 더 유용한 패턴을 학습하도록 돕는 과정입니다.</p>
-  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>이 글에서는 시간 파생 변수, 조건식 기반 플래그, 도메인 규칙을 반영한 새 컬럼 생성 코드가 여기에 해당합니다.</p>
-</div>
+<div class="research-compact-wrap">
+  <table class="research-compact-table research-compact-table--notes">
+    <thead>
+      <tr>
+        <th>개념</th>
+        <th>핵심 설명</th>
+        <th>코드에서 확인한 것</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th scope="row">피처 엔지니어링</th>
+      <td>피처 엔지니어링은 원본 컬럼을 그대로 쓰지 않고 문제에 맞는 새 특징을 설계해 모델이 더 유용한 패턴을 학습하도록 돕는 과정입니다.</td>
+      <td>이 글에서는 시간 파생 변수, 조건식 기반 플래그, 도메인 규칙을 반영한 새 컬럼 생성 코드가 여기에 해당합니다.</td>
+    </tr>
+    </tbody>
+  </table>
 </div>
 
 ## How I Implemented It
 
-<div class="research-step-list">
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 1 · 데이터 불러오기</p>
-  <p class="research-step-card__title">데이터 불러오고 확인하기</p>
-  <p class="research-step-card__body">실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.</p>
-  <p class="research-step-card__meta"><span>핵심 API</span> <code>pd.read_csv</code></p>
-
-</div>
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 2 · 전처리</p>
-  <p class="research-step-card__title">(2) 결측치</p>
-  <p class="research-step-card__body">결측치 처리, 인코딩, 스케일링처럼 모델이 바로 사용할 수 있도록 입력 형태를 다듬는 단계입니다.</p>
-
-  <p class="research-step-card__meta"><span>코드 포인트</span> 결측치 행 제거 - company</p>
-</div>
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 3 · 피처 가공</p>
-  <p class="research-step-card__title">(2) 시각화</p>
-  <p class="research-step-card__body">원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다.</p>
-  <p class="research-step-card__meta"><span>핵심 API</span> <code>matplotlib</code> <code>seaborn</code></p>
-  <p class="research-step-card__meta"><span>코드 포인트</span> 상관행렬 계산 · 히트맵 시각화</p>
-</div>
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 4 · 시각화</p>
-  <p class="research-step-card__title">🧪 분석 방향</p>
-  <p class="research-step-card__body">데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.</p>
-  <p class="research-step-card__meta"><span>핵심 API</span> <code>matplotlib</code> <code>seaborn</code></p>
-  <p class="research-step-card__meta"><span>코드 포인트</span> lead_time 시각화 · 단위 구간으로 나누어 범주형 변수 생성</p>
-</div>
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 5 · 시각화</p>
-  <p class="research-step-card__title">데이터 분포 시각화</p>
-  <p class="research-step-card__body">데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.</p>
-  <p class="research-step-card__meta"><span>핵심 API</span> <code>matplotlib</code></p>
-
-</div>
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 6 · 구현 코드</p>
-  <p class="research-step-card__title">(3) 이상치</p>
-  <p class="research-step-card__body">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</p>
-
-  <p class="research-step-card__meta"><span>코드 포인트</span> babies 이상치 최빈값으로 채우기</p>
-</div>
+<div class="research-compact-wrap">
+  <table class="research-compact-table research-compact-table--steps">
+    <thead>
+      <tr>
+        <th>단계</th>
+        <th>구현 내용</th>
+        <th>핵심 API</th>
+        <th>코드 포인트</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th scope="row">Step 1 · 데이터 불러오기</th>
+      <td>
+        <strong class="research-compact-table__main">데이터 불러오고 확인하기</strong>
+        <span class="research-compact-table__sub">실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.</span>
+      </td>
+      <td><code>pd.read_csv</code></td>
+      <td><span class="research-compact-table__muted">-</span></td>
+    </tr>
+    <tr>
+      <th scope="row">Step 2 · 전처리</th>
+      <td>
+        <strong class="research-compact-table__main">(2) 결측치</strong>
+        <span class="research-compact-table__sub">결측치 처리, 인코딩, 스케일링처럼 모델이 바로 사용할 수 있도록 입력 형태를 다듬는 단계입니다.</span>
+      </td>
+      <td><span class="research-compact-table__muted">-</span></td>
+      <td>결측치 행 제거 - company</td>
+    </tr>
+    <tr>
+      <th scope="row">Step 3 · 피처 가공</th>
+      <td>
+        <strong class="research-compact-table__main">(2) 시각화</strong>
+        <span class="research-compact-table__sub">원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다.</span>
+      </td>
+      <td><code>matplotlib</code> <code>seaborn</code></td>
+      <td>상관행렬 계산 · 히트맵 시각화</td>
+    </tr>
+    <tr>
+      <th scope="row">Step 4 · 시각화</th>
+      <td>
+        <strong class="research-compact-table__main">🧪 분석 방향</strong>
+        <span class="research-compact-table__sub">데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.</span>
+      </td>
+      <td><code>matplotlib</code> <code>seaborn</code></td>
+      <td>lead_time 시각화 · 단위 구간으로 나누어 범주형 변수 생성</td>
+    </tr>
+    <tr>
+      <th scope="row">Step 5 · 시각화</th>
+      <td>
+        <strong class="research-compact-table__main">데이터 분포 시각화</strong>
+        <span class="research-compact-table__sub">데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.</span>
+      </td>
+      <td><code>matplotlib</code></td>
+      <td><span class="research-compact-table__muted">-</span></td>
+    </tr>
+    <tr>
+      <th scope="row">Step 6 · 구현 코드</th>
+      <td>
+        <strong class="research-compact-table__main">(3) 이상치</strong>
+        <span class="research-compact-table__sub">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</span>
+      </td>
+      <td><span class="research-compact-table__muted">-</span></td>
+      <td>babies 이상치 최빈값으로 채우기</td>
+    </tr>
+    </tbody>
+  </table>
 </div>
 
 ## Code Evidence

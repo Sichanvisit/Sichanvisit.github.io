@@ -29,92 +29,127 @@ tags:
   - archive-note
 ---
 
-<div class="research-doc-hero">
-  <div class="research-doc-summary">
-    <p class="research-doc-summary__label">문제 설정</p>
-    <p class="research-doc-summary__body">문제 설명 1부터 n까지의 숫자 중에서 3의 배수만 출력하는 함수를 작성하세요.</p>
-  </div>
-  <div class="research-doc-meta">
-<div class="research-doc-card">
-  <p class="research-doc-card__label">핵심 개념</p>
-  <p class="research-doc-card__value">함수 분해와 로직 구성</p>
-</div>
-<div class="research-doc-card">
-  <p class="research-doc-card__label">구현 포인트</p>
-  <p class="research-doc-card__value">문제1. 투표 시스템 클래스 · 문제1. 시간 관리 프로그램 · 문제3. 도서관 관리 시스템</p>
-</div>
-  </div>
-  <div class="research-doc-stats">
-<div class="research-doc-stat">
-  <span>소스</span>
-  <strong>ipynb / md</strong>
-</div>
-<div class="research-doc-stat">
-  <span>자료</span>
-  <strong>코드 114 · 실행 61</strong>
-</div>
-<div class="research-doc-stat">
-  <span>주요 스택</span>
-  <strong>itertools, time, datetime, csv</strong>
-</div>
-  </div>
+<div class="research-compact-wrap research-compact-wrap--intro">
+  <table class="research-compact-table research-compact-table--intro">
+    <tbody>
+    <tr>
+      <th scope="row">문제 설정</th>
+      <td>문제 설명 1부터 n까지의 숫자 중에서 3의 배수만 출력하는 함수를 작성하세요.</td>
+    </tr>
+    <tr>
+      <th scope="row">데이터 맥락</th>
+      <td>원본 노트에서 데이터를 설명한 부분을 기준으로 실습 맥락을 정리했습니다.</td>
+    </tr>
+    <tr>
+      <th scope="row">핵심 개념</th>
+      <td>함수 분해와 로직 구성</td>
+    </tr>
+    <tr>
+      <th scope="row">구현 흐름</th>
+      <td>문제1. 투표 시스템 클래스 -&gt; 문제1. 시간 관리 프로그램 -&gt; 문제3. 도서관 관리 시스템</td>
+    </tr>
+    <tr>
+      <th scope="row">자료</th>
+      <td>ipynb / md · 코드 114 · 실행 61</td>
+    </tr>
+    <tr>
+      <th scope="row">주요 스택</th>
+      <td>itertools, time, datetime, csv</td>
+    </tr>
+    </tbody>
+  </table>
 </div>
 
 ## What I Studied
 
-<div class="research-note-grid">
-<div class="research-note-card">
-  <p class="research-note-card__label">함수 분해와 로직 구성</p>
-  <p class="research-note-card__body">함수는 입력, 처리, 반환을 분리해 로직을 재사용하기 쉽게 만들고, 문제를 작은 단위로 나누는 기본 도구입니다.</p>
-  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>이 글에서는 문제 풀이를 함수 단위로 쪼개고 입출력을 나눠 보는 실습과 연결됩니다.</p>
-</div>
+<div class="research-compact-wrap">
+  <table class="research-compact-table research-compact-table--notes">
+    <thead>
+      <tr>
+        <th>개념</th>
+        <th>핵심 설명</th>
+        <th>코드에서 확인한 것</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th scope="row">함수 분해와 로직 구성</th>
+      <td>함수는 입력, 처리, 반환을 분리해 로직을 재사용하기 쉽게 만들고, 문제를 작은 단위로 나누는 기본 도구입니다.</td>
+      <td>이 글에서는 문제 풀이를 함수 단위로 쪼개고 입출력을 나눠 보는 실습과 연결됩니다.</td>
+    </tr>
+    </tbody>
+  </table>
 </div>
 
 ## How I Implemented It
 
-<div class="research-step-list">
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 1 · 클래스 설계</p>
-  <p class="research-step-card__title">문제1. 투표 시스템 클래스</p>
-  <p class="research-step-card__body">문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.</p>
-
-  <p class="research-step-card__meta"><span>코드 포인트</span> 기본 답안</p>
-</div>
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 2 · 함수 실습</p>
-  <p class="research-step-card__title">문제1. 시간 관리 프로그램</p>
-  <p class="research-step-card__body">입력과 반환값을 분리해 문제 해결 과정을 함수로 정리하는 기초 구현 실습 코드입니다.</p>
-
-  <p class="research-step-card__meta"><span>코드 포인트</span> 기본 답안 · CSV 파일에서 할 일을 불러오는 함수</p>
-</div>
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 3 · 구현 코드</p>
-  <p class="research-step-card__title">문제3. 도서관 관리 시스템</p>
-  <p class="research-step-card__body">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</p>
-
-  <p class="research-step-card__meta"><span>코드 포인트</span> 도서관 관리 시스템 초기화 · 도서 추가</p>
-</div>
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 4 · 클래스 설계</p>
-  <p class="research-step-card__title">문제4. 프랜차이즈 레스토랑 관리 클래스</p>
-  <p class="research-step-card__body">문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.</p>
-
-  <p class="research-step-card__meta"><span>코드 포인트</span> 기본 답안</p>
-</div>
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 5 · 함수 실습</p>
-  <p class="research-step-card__title">문제2. 수학 퍼즐: 소수의 합</p>
-  <p class="research-step-card__body">입력과 반환값을 분리해 문제 해결 과정을 함수로 정리하는 기초 구현 실습 코드입니다.</p>
-
-  <p class="research-step-card__meta"><span>코드 포인트</span> 에라토스테네스의 체로 구현한 버전 · 소수인지 판별 =&gt; 보통 루트값만 확인</p>
-</div>
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 6 · 클래스 설계</p>
-  <p class="research-step-card__title">문제2. 은행 계좌 클래스</p>
-  <p class="research-step-card__body">문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.</p>
-
-  <p class="research-step-card__meta"><span>코드 포인트</span> 기본 답안</p>
-</div>
+<div class="research-compact-wrap">
+  <table class="research-compact-table research-compact-table--steps">
+    <thead>
+      <tr>
+        <th>단계</th>
+        <th>구현 내용</th>
+        <th>핵심 API</th>
+        <th>코드 포인트</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th scope="row">Step 1 · 클래스 설계</th>
+      <td>
+        <strong class="research-compact-table__main">문제1. 투표 시스템 클래스</strong>
+        <span class="research-compact-table__sub">문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.</span>
+      </td>
+      <td><span class="research-compact-table__muted">-</span></td>
+      <td>기본 답안</td>
+    </tr>
+    <tr>
+      <th scope="row">Step 2 · 함수 실습</th>
+      <td>
+        <strong class="research-compact-table__main">문제1. 시간 관리 프로그램</strong>
+        <span class="research-compact-table__sub">입력과 반환값을 분리해 문제 해결 과정을 함수로 정리하는 기초 구현 실습 코드입니다.</span>
+      </td>
+      <td><span class="research-compact-table__muted">-</span></td>
+      <td>기본 답안 · CSV 파일에서 할 일을 불러오는 함수</td>
+    </tr>
+    <tr>
+      <th scope="row">Step 3 · 구현 코드</th>
+      <td>
+        <strong class="research-compact-table__main">문제3. 도서관 관리 시스템</strong>
+        <span class="research-compact-table__sub">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</span>
+      </td>
+      <td><span class="research-compact-table__muted">-</span></td>
+      <td>도서관 관리 시스템 초기화 · 도서 추가</td>
+    </tr>
+    <tr>
+      <th scope="row">Step 4 · 클래스 설계</th>
+      <td>
+        <strong class="research-compact-table__main">문제4. 프랜차이즈 레스토랑 관리 클래스</strong>
+        <span class="research-compact-table__sub">문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.</span>
+      </td>
+      <td><span class="research-compact-table__muted">-</span></td>
+      <td>기본 답안</td>
+    </tr>
+    <tr>
+      <th scope="row">Step 5 · 함수 실습</th>
+      <td>
+        <strong class="research-compact-table__main">문제2. 수학 퍼즐: 소수의 합</strong>
+        <span class="research-compact-table__sub">입력과 반환값을 분리해 문제 해결 과정을 함수로 정리하는 기초 구현 실습 코드입니다.</span>
+      </td>
+      <td><span class="research-compact-table__muted">-</span></td>
+      <td>에라토스테네스의 체로 구현한 버전 · 소수인지 판별 =&gt; 보통 루트값만 확인</td>
+    </tr>
+    <tr>
+      <th scope="row">Step 6 · 클래스 설계</th>
+      <td>
+        <strong class="research-compact-table__main">문제2. 은행 계좌 클래스</strong>
+        <span class="research-compact-table__sub">문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.</span>
+      </td>
+      <td><span class="research-compact-table__muted">-</span></td>
+      <td>기본 답안</td>
+    </tr>
+    </tbody>
+  </table>
 </div>
 
 ## Code Evidence

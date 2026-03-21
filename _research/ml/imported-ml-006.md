@@ -30,94 +30,123 @@ tags:
   - practice
 ---
 
-<div class="research-doc-hero">
-  <div class="research-doc-summary">
-    <p class="research-doc-summary__label">문제 설정</p>
-    <p class="research-doc-summary__body">해석 1. 나이가 1살 많을 수록 소득은 4.41 증가 2</p>
-  </div>
-  <div class="research-doc-meta">
-<div class="research-doc-card">
-  <p class="research-doc-card__label">데이터 맥락</p>
-  <p class="research-doc-card__value">Salary 데이터로 선형회귀 기본 코딩 (사이킷런 사용 X)</p>
-</div>
-<div class="research-doc-card">
-  <p class="research-doc-card__label">핵심 개념</p>
-  <p class="research-doc-card__value">회귀 문제 · 함수 분해와 로직 구성</p>
-</div>
-<div class="research-doc-card">
-  <p class="research-doc-card__label">구현 포인트</p>
-  <p class="research-doc-card__value">Salary 데이터로 선형회귀 기본 코딩 (사이킷런 사용 X) · 선형회귀 · Salary 데이터로 선형회귀 - 사이킷런 이용 코딩</p>
-</div>
-  </div>
-  <div class="research-doc-stats">
-<div class="research-doc-stat">
-  <span>소스</span>
-  <strong>ipynb / md</strong>
-</div>
-<div class="research-doc-stat">
-  <span>자료</span>
-  <strong>코드 35 · 실행 35</strong>
-</div>
-<div class="research-doc-stat">
-  <span>주요 스택</span>
-  <strong>matplotlib, warnings, numpy, sklearn 외 1</strong>
-</div>
-  </div>
+<div class="research-compact-wrap research-compact-wrap--intro">
+  <table class="research-compact-table research-compact-table--intro">
+    <tbody>
+    <tr>
+      <th scope="row">문제 설정</th>
+      <td>해석 1. 나이가 1살 많을 수록 소득은 4.41 증가 2</td>
+    </tr>
+    <tr>
+      <th scope="row">데이터 맥락</th>
+      <td>Salary 데이터로 선형회귀 기본 코딩 (사이킷런 사용 X)</td>
+    </tr>
+    <tr>
+      <th scope="row">핵심 개념</th>
+      <td>회귀 문제 · 함수 분해와 로직 구성</td>
+    </tr>
+    <tr>
+      <th scope="row">구현 흐름</th>
+      <td>Salary 데이터로 선형회귀 기본 코딩 (사이킷런 사용 X) -&gt; 선형회귀 -&gt; Salary 데이터로 선형회귀 - 사이킷런 이용 코딩</td>
+    </tr>
+    <tr>
+      <th scope="row">자료</th>
+      <td>ipynb / md · 코드 35 · 실행 35</td>
+    </tr>
+    <tr>
+      <th scope="row">주요 스택</th>
+      <td>matplotlib, warnings, numpy, sklearn 외 1</td>
+    </tr>
+    </tbody>
+  </table>
 </div>
 
 ## What I Studied
 
-<div class="research-note-grid">
-<div class="research-note-card">
-  <p class="research-note-card__label">회귀 문제</p>
-  <p class="research-note-card__body">회귀는 연속적인 수치를 예측하는 문제입니다. 예측값과 실제값의 차이를 오차로 계산해 모델 성능을 판단합니다.</p>
-  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>이 글에서는 수요량, 가격, 점수처럼 숫자 타깃을 예측하는 실습과 이어집니다.</p>
-</div>
-<div class="research-note-card">
-  <p class="research-note-card__label">함수 분해와 로직 구성</p>
-  <p class="research-note-card__body">함수는 입력, 처리, 반환을 분리해 로직을 재사용하기 쉽게 만들고, 문제를 작은 단위로 나누는 기본 도구입니다.</p>
-  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>이 글에서는 문제 풀이를 함수 단위로 쪼개고 입출력을 나눠 보는 실습과 연결됩니다.</p>
-</div>
+<div class="research-compact-wrap">
+  <table class="research-compact-table research-compact-table--notes">
+    <thead>
+      <tr>
+        <th>개념</th>
+        <th>핵심 설명</th>
+        <th>코드에서 확인한 것</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th scope="row">회귀 문제</th>
+      <td>회귀는 연속적인 수치를 예측하는 문제입니다. 예측값과 실제값의 차이를 오차로 계산해 모델 성능을 판단합니다.</td>
+      <td>이 글에서는 수요량, 가격, 점수처럼 숫자 타깃을 예측하는 실습과 이어집니다.</td>
+    </tr>
+    <tr>
+      <th scope="row">함수 분해와 로직 구성</th>
+      <td>함수는 입력, 처리, 반환을 분리해 로직을 재사용하기 쉽게 만들고, 문제를 작은 단위로 나누는 기본 도구입니다.</td>
+      <td>이 글에서는 문제 풀이를 함수 단위로 쪼개고 입출력을 나눠 보는 실습과 연결됩니다.</td>
+    </tr>
+    </tbody>
+  </table>
 </div>
 
 ## How I Implemented It
 
-<div class="research-step-list">
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 1 · 데이터 불러오기</p>
-  <p class="research-step-card__title">Salary 데이터로 선형회귀 기본 코딩 (사이킷런 사용 X)</p>
-  <p class="research-step-card__body">실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.</p>
-  <p class="research-step-card__meta"><span>핵심 API</span> <code>pd.read_csv</code></p>
-
-</div>
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 2 · 모델 구성</p>
-  <p class="research-step-card__title">선형회귀</p>
-  <p class="research-step-card__body">LinearRegression 같은 모델을 올려 두고 어떤 알고리즘이 문제에 더 잘 맞는지 비교해 보는 구간입니다.</p>
-  <p class="research-step-card__meta"><span>핵심 API</span> <code>LinearRegression</code> <code>matplotlib</code></p>
-  <p class="research-step-card__meta"><span>코드 포인트</span> 추가 - 다중 선형 회귀 실습 코드 예시 (Python... · 데이터 정의</p>
-</div>
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 3 · 평가</p>
-  <p class="research-step-card__title">Salary 데이터로 선형회귀 - 사이킷런 이용 코딩</p>
-  <p class="research-step-card__body">예측 결과를 지표로 계산해 어떤 모델과 전처리가 더 잘 맞았는지 확인하는 평가 코드입니다.</p>
-
-
-</div>
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 4 · 구현 코드</p>
-  <p class="research-step-card__title">(1) 첫번째 모델 - 절편 없음</p>
-  <p class="research-step-card__body">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</p>
-
-  <p class="research-step-card__meta"><span>코드 포인트</span> np.linalg.inv(X.T @ X) =&gt; (X^T*... · T@y =&gt;X^T*y</p>
-</div>
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 5 · 구현 코드</p>
-  <p class="research-step-card__title">(2) 두번째 모델링 - 절편 추가</p>
-  <p class="research-step-card__body">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</p>
-
-
-</div>
+<div class="research-compact-wrap">
+  <table class="research-compact-table research-compact-table--steps">
+    <thead>
+      <tr>
+        <th>단계</th>
+        <th>구현 내용</th>
+        <th>핵심 API</th>
+        <th>코드 포인트</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th scope="row">Step 1 · 데이터 불러오기</th>
+      <td>
+        <strong class="research-compact-table__main">Salary 데이터로 선형회귀 기본 코딩 (사이킷런 사용 X)</strong>
+        <span class="research-compact-table__sub">실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.</span>
+      </td>
+      <td><code>pd.read_csv</code></td>
+      <td><span class="research-compact-table__muted">-</span></td>
+    </tr>
+    <tr>
+      <th scope="row">Step 2 · 모델 구성</th>
+      <td>
+        <strong class="research-compact-table__main">선형회귀</strong>
+        <span class="research-compact-table__sub">LinearRegression 같은 모델을 올려 두고 어떤 알고리즘이 문제에 더 잘 맞는지 비교해 보는 구간입니다.</span>
+      </td>
+      <td><code>LinearRegression</code> <code>matplotlib</code></td>
+      <td>추가 - 다중 선형 회귀 실습 코드 예시 (Python... · 데이터 정의</td>
+    </tr>
+    <tr>
+      <th scope="row">Step 3 · 평가</th>
+      <td>
+        <strong class="research-compact-table__main">Salary 데이터로 선형회귀 - 사이킷런 이용 코딩</strong>
+        <span class="research-compact-table__sub">예측 결과를 지표로 계산해 어떤 모델과 전처리가 더 잘 맞았는지 확인하는 평가 코드입니다.</span>
+      </td>
+      <td><span class="research-compact-table__muted">-</span></td>
+      <td><span class="research-compact-table__muted">-</span></td>
+    </tr>
+    <tr>
+      <th scope="row">Step 4 · 구현 코드</th>
+      <td>
+        <strong class="research-compact-table__main">(1) 첫번째 모델 - 절편 없음</strong>
+        <span class="research-compact-table__sub">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</span>
+      </td>
+      <td><span class="research-compact-table__muted">-</span></td>
+      <td>np.linalg.inv(X.T @ X) =&gt; (X^T*... · T@y =&gt;X^T*y</td>
+    </tr>
+    <tr>
+      <th scope="row">Step 5 · 구현 코드</th>
+      <td>
+        <strong class="research-compact-table__main">(2) 두번째 모델링 - 절편 추가</strong>
+        <span class="research-compact-table__sub">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</span>
+      </td>
+      <td><span class="research-compact-table__muted">-</span></td>
+      <td><span class="research-compact-table__muted">-</span></td>
+    </tr>
+    </tbody>
+  </table>
 </div>
 
 ## Code Evidence

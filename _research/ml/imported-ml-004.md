@@ -30,92 +30,127 @@ tags:
   - practice
 ---
 
-<div class="research-doc-hero">
-  <div class="research-doc-summary">
-    <p class="research-doc-summary__label">문제 설정</p>
-    <p class="research-doc-summary__body">박스 프롯. 커스터마이징 (1)</p>
-  </div>
-  <div class="research-doc-meta">
-<div class="research-doc-card">
-  <p class="research-doc-card__label">핵심 개념</p>
-  <p class="research-doc-card__value">구현 중심 학습</p>
-</div>
-<div class="research-doc-card">
-  <p class="research-doc-card__label">구현 포인트</p>
-  <p class="research-doc-card__value">CSV 데이터 불러오기 · 씨본 스타일 · import numpy as np</p>
-</div>
-  </div>
-  <div class="research-doc-stats">
-<div class="research-doc-stat">
-  <span>소스</span>
-  <strong>ipynb / md</strong>
-</div>
-<div class="research-doc-stat">
-  <span>자료</span>
-  <strong>코드 37 · 실행 35</strong>
-</div>
-<div class="research-doc-stat">
-  <span>주요 스택</span>
-  <strong>matplotlib, warnings, numpy, seaborn 외 1</strong>
-</div>
-  </div>
+<div class="research-compact-wrap research-compact-wrap--intro">
+  <table class="research-compact-table research-compact-table--intro">
+    <tbody>
+    <tr>
+      <th scope="row">문제 설정</th>
+      <td>박스 프롯. 커스터마이징 (1)</td>
+    </tr>
+    <tr>
+      <th scope="row">데이터 맥락</th>
+      <td>원본 노트에서 데이터를 설명한 부분을 기준으로 실습 맥락을 정리했습니다.</td>
+    </tr>
+    <tr>
+      <th scope="row">핵심 개념</th>
+      <td>구현 중심 학습</td>
+    </tr>
+    <tr>
+      <th scope="row">구현 흐름</th>
+      <td>CSV 데이터 불러오기 -&gt; 씨본 스타일 -&gt; import numpy as np</td>
+    </tr>
+    <tr>
+      <th scope="row">자료</th>
+      <td>ipynb / md · 코드 37 · 실행 35</td>
+    </tr>
+    <tr>
+      <th scope="row">주요 스택</th>
+      <td>matplotlib, warnings, numpy, seaborn 외 1</td>
+    </tr>
+    </tbody>
+  </table>
 </div>
 
 ## What I Studied
 
-<div class="research-note-grid">
-<div class="research-note-card">
-  <p class="research-note-card__label">구현 중심 학습</p>
-  <p class="research-note-card__body">이 글은 개념 설명과 함께 실제 코드를 통해 학습 흐름을 다시 따라가도록 정리된 ML 실습 기록입니다.</p>
-  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>데이터 입력, 처리, 모델링, 평가 가운데 실제로 손댄 단계를 중심으로 읽을 수 있습니다.</p>
-</div>
+<div class="research-compact-wrap">
+  <table class="research-compact-table research-compact-table--notes">
+    <thead>
+      <tr>
+        <th>개념</th>
+        <th>핵심 설명</th>
+        <th>코드에서 확인한 것</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th scope="row">구현 중심 학습</th>
+      <td>이 글은 개념 설명과 함께 실제 코드를 통해 학습 흐름을 다시 따라가도록 정리된 ML 실습 기록입니다.</td>
+      <td>데이터 입력, 처리, 모델링, 평가 가운데 실제로 손댄 단계를 중심으로 읽을 수 있습니다.</td>
+    </tr>
+    </tbody>
+  </table>
 </div>
 
 ## How I Implemented It
 
-<div class="research-step-list">
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 1 · 데이터 불러오기</p>
-  <p class="research-step-card__title">CSV 데이터 불러오기</p>
-  <p class="research-step-card__body">실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.</p>
-  <p class="research-step-card__meta"><span>핵심 API</span> <code>pd.read_csv</code></p>
-
-</div>
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 2 · 시각화</p>
-  <p class="research-step-card__title">씨본 스타일</p>
-  <p class="research-step-card__body">데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.</p>
-  <p class="research-step-card__meta"><span>핵심 API</span> <code>matplotlib</code> <code>seaborn</code></p>
-
-</div>
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 3 · 구현 코드</p>
-  <p class="research-step-card__title">import numpy as np</p>
-  <p class="research-step-card__body">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</p>
-
-
-</div>
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 4 · 시각화</p>
-  <p class="research-step-card__title">데이터 분포 시각화</p>
-  <p class="research-step-card__body">데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.</p>
-  <p class="research-step-card__meta"><span>핵심 API</span> <code>matplotlib</code></p>
-  <p class="research-step-card__meta"><span>코드 포인트</span> 박스 프롯 - 커스터마이징 (2)</p>
-</div>
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 5 · 구현 코드</p>
-  <p class="research-step-card__title">x = [-100, 5, 7, 8, 9, 10, 12, 13, 14, 20, 79]</p>
-  <p class="research-step-card__body">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</p>
-
-
-</div>
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 6 · 시각화</p>
-  <p class="research-step-card__title">Seaborn 실습</p>
-  <p class="research-step-card__body">데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.</p>
-  <p class="research-step-card__meta"><span>핵심 API</span> <code>matplotlib</code> <code>seaborn</code></p>
-  <p class="research-step-card__meta"><span>코드 포인트</span> barplot</p>
-</div>
+<div class="research-compact-wrap">
+  <table class="research-compact-table research-compact-table--steps">
+    <thead>
+      <tr>
+        <th>단계</th>
+        <th>구현 내용</th>
+        <th>핵심 API</th>
+        <th>코드 포인트</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th scope="row">Step 1 · 데이터 불러오기</th>
+      <td>
+        <strong class="research-compact-table__main">CSV 데이터 불러오기</strong>
+        <span class="research-compact-table__sub">실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.</span>
+      </td>
+      <td><code>pd.read_csv</code></td>
+      <td><span class="research-compact-table__muted">-</span></td>
+    </tr>
+    <tr>
+      <th scope="row">Step 2 · 시각화</th>
+      <td>
+        <strong class="research-compact-table__main">씨본 스타일</strong>
+        <span class="research-compact-table__sub">데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.</span>
+      </td>
+      <td><code>matplotlib</code> <code>seaborn</code></td>
+      <td><span class="research-compact-table__muted">-</span></td>
+    </tr>
+    <tr>
+      <th scope="row">Step 3 · 구현 코드</th>
+      <td>
+        <strong class="research-compact-table__main">import numpy as np</strong>
+        <span class="research-compact-table__sub">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</span>
+      </td>
+      <td><span class="research-compact-table__muted">-</span></td>
+      <td><span class="research-compact-table__muted">-</span></td>
+    </tr>
+    <tr>
+      <th scope="row">Step 4 · 시각화</th>
+      <td>
+        <strong class="research-compact-table__main">데이터 분포 시각화</strong>
+        <span class="research-compact-table__sub">데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.</span>
+      </td>
+      <td><code>matplotlib</code></td>
+      <td>박스 프롯 - 커스터마이징 (2)</td>
+    </tr>
+    <tr>
+      <th scope="row">Step 5 · 구현 코드</th>
+      <td>
+        <strong class="research-compact-table__main">x = [-100, 5, 7, 8, 9, 10, 12, 13, 14, 20, 79]</strong>
+        <span class="research-compact-table__sub">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</span>
+      </td>
+      <td><span class="research-compact-table__muted">-</span></td>
+      <td><span class="research-compact-table__muted">-</span></td>
+    </tr>
+    <tr>
+      <th scope="row">Step 6 · 시각화</th>
+      <td>
+        <strong class="research-compact-table__main">Seaborn 실습</strong>
+        <span class="research-compact-table__sub">데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.</span>
+      </td>
+      <td><code>matplotlib</code> <code>seaborn</code></td>
+      <td>barplot</td>
+    </tr>
+    </tbody>
+  </table>
 </div>
 
 ## Code Evidence
