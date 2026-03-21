@@ -5,8 +5,8 @@ research_tab: "ML"
 research_kind: "Practice"
 source_title: "250822_코딩실습9_9.기본 지도학습 알고리즘들 (K-fold & 그리드서치)"
 source_path: "11_Machine_Learning/Code_Snippets/250822_코딩실습9_9.기본 지도학습 알고리즘들 (K-fold & 그리드서치).md"
-excerpt: "코딩실습9 9.기본 지도학습 알고리즘들 (K-fold & 그리드서치)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다"
-research_summary: "코딩실습9 9.기본 지도학습 알고리즘들 (K-fold & 그리드서치)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 회귀 문제, 피처 엔지니어링, 평가 지표 해석 순서로 큰 장을 먼저 훑고, 1990년 캘리포니아 주택 데이터, from sklearn.datasets... 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 7개 코드 블록, 6개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 sklearn, numpy입니다."
+excerpt: "코딩실습9 9.기본 지도학습 알고리즘들 (K-fold & 그리드서치)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 1990년 캘리포니아 주택 데이터 순서로 큰 장을 먼저 훑고, 1990년 캘리포니아 주택 데이터, from sklearn.datasets...."
+research_summary: "코딩실습9 9.기본 지도학습 알고리즘들 (K-fold & 그리드서치)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 1990년 캘리포니아 주택 데이터 순서로 큰 장을 먼저 훑고, 1990년 캘리포니아 주택 데이터, from sklearn.datasets... 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 7개 코드 블록, 6개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 sklearn, numpy입니다."
 research_artifacts: "ipynb/md · 코드 7개 · 실행 6개"
 code_block_count: 7
 execution_block_count: 6
@@ -31,10 +31,10 @@ tags:
 
 | 항목 | 내용 |
 |------|------|
-| 문제 설정 | https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_california_housing.html 데이터 피쳐 설명 |
+| 문제 설정 | 코딩실습9 9.기본 지도학습 알고리즘들 (K-fold & 그리드서치)에서 1990년 캘리포니아 주택 데이터 흐름을 직접 따라가며 구현했습니다. |
 | 원본 구조 | 1990년 캘리포니아 주택 데이터 |
 | 데이터 맥락 | https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_california_housing.html 데이터 피쳐 설명 |
-| 핵심 주제 | 회귀 문제 · 피처 엔지니어링 · 평가 지표 해석 |
+| 주요 장 | 1990년 캘리포니아 주택 데이터 |
 | 구현 흐름 | 1990년 캘리포니아 주택 데이터 -> from sklearn.datasets import fetch_california_hou... |
 | 자료 | ipynb / md · 코드 7 · 실행 6 |
 | 주요 스택 | sklearn, numpy |
@@ -45,7 +45,19 @@ tags:
 
 https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_california_housing.html 데이터 피쳐 설명
 
-- 읽을 포인트: 데이터 구조와 주의할 변수부터 읽고 실험 방향을 정리하는 구간입니다.
+- 읽을 포인트: 세부 흐름: 데이터 로드, RMSE 함수 정의, 파라미터 그리드 정의
+
+#### 데이터 로드
+
+실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.
+
+#### RMSE 함수 정의
+
+예측 결과를 지표로 계산해 어떤 모델과 전처리가 더 잘 맞았는지 확인하는 평가 코드입니다.
+
+#### 파라미터 그리드 정의
+
+1990년 캘리포니아 주택 데이터 코드를 직접 실행하며 이 장의 구현 흐름을 확인했습니다.
 
 ## 구현 흐름
 
@@ -59,7 +71,7 @@ https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_califor
 ### 2. from sklearn.datasets import fetch_california_housing
 
 - 단계: 환경 준비
-- 구현 의도: 지표를 계산해 성능을 비교하고 결과를 해석하는 평가 단계입니다.
+- 구현 의도: 넘파이 배열 생성, 인덱싱, 수치 연산을 손으로 익히는 기초 실습 코드입니다.
 - 핵심 API: `GridSearchCV`, `RMSE`
 - 코드 포인트: -
 
@@ -82,7 +94,7 @@ X, y = fetch_california_housing(return_X_y=True)
 
 **핵심 API**: `GridSearchCV`, `RMSE`
 
-지표를 계산해 성능을 비교하고 결과를 해석하는 평가 단계입니다.
+넘파이 배열 생성, 인덱싱, 수치 연산을 손으로 익히는 기초 실습 코드입니다.
 
 ```python
 from sklearn.datasets import fetch_california_housing

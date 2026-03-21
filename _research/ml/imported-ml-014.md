@@ -5,7 +5,7 @@ research_tab: "ML"
 research_kind: "Practice"
 source_title: "250827_코딩실습14_10.결정트리와 앙상블(보팅배깅부스팅스태킹)"
 source_path: "11_Machine_Learning/Code_Snippets/250827_코딩실습14_10.결정트리와 앙상블(보팅배깅부스팅스태킹).md"
-excerpt: "코딩실습14 10.결정트리와 앙상블(보팅배깅부스팅스태킹)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다"
+excerpt: "코딩실습14 10.결정트리와 앙상블(보팅배깅부스팅스태킹)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 분류 문제, 결정 트리와 앙상블, 전처리와 입력 정리 순서로 큰 장을 먼저 훑고, 파생 변수 추가, DecisionTree / Logist... 같은..."
 research_summary: "코딩실습14 10.결정트리와 앙상블(보팅배깅부스팅스태킹)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 분류 문제, 결정 트리와 앙상블, 전처리와 입력 정리 순서로 큰 장을 먼저 훑고, 파생 변수 추가, DecisionTree / Logist... 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 8개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, matplotlib, sklearn입니다."
 research_artifacts: "ipynb/md · 코드 8개 · 실행 7개"
 code_block_count: 8
@@ -35,7 +35,7 @@ tags:
 | 문제 설정 | 시각화를 위한 헬퍼 함수 (이전 실습에서 사용한 것과 동일) |
 | 원본 구조 | 원본 마크다운의 큰 섹션 흐름을 기준으로 이 실습을 다시 읽을 수 있게 정리했습니다. |
 | 데이터 맥락 | 원본 노트에서 데이터를 설명한 부분을 기준으로 실습 맥락을 정리했습니다. |
-| 핵심 주제 | 분류 문제 · 결정 트리와 앙상블 · 전처리와 입력 정리 |
+| 주요 장 | 분류 문제 · 결정 트리와 앙상블 · 전처리와 입력 정리 · 피처 엔지니어링 |
 | 구현 흐름 | 파생 변수 추가 -> DecisionTree / LogisticRegression 모델 구성 -> import numpy as np |
 | 자료 | ipynb / md · 코드 8 · 실행 7 |
 | 주요 스택 | numpy, matplotlib, sklearn |
@@ -85,28 +85,28 @@ tags:
 ### 3. import numpy as np
 
 - 단계: 환경 준비
-- 구현 의도: 전처리와 학습/검증 분리를 담당해 전체 파이프라인의 출발점을 정리하는 코드입니다.
+- 구현 의도: 넘파이 배열 생성, 인덱싱, 수치 연산을 손으로 익히는 기초 실습 코드입니다.
 - 핵심 API: `train_test_split`, `DecisionTree`, `RandomForest`, `Bagging`
 - 코드 포인트: -
 
 ### 4. 모델별 정확도 저장 딕셔너리
 
 - 단계: 구현 코드
-- 구현 의도: 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+- 구현 의도: 모델별 정확도 저장 딕셔너리 코드를 직접 실행하며 이 장의 구현 흐름을 확인했습니다.
 - 핵심 API: -
 - 코드 포인트: 모델별 정확도 저장 딕셔너리
 
 ### 5. for model_name, acc in accuracies.items():
 
 - 단계: 구현 코드
-- 구현 의도: 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+- 구현 의도: for model_name, acc in accuracies... 코드를 직접 실행하며 이 장의 구현 흐름을 확인했습니다.
 - 핵심 API: -
 - 코드 포인트: -
 
 ### 6. X, y = make_moons(n_samples=1000, noise=0.3, random_state=42)
 
 - 단계: 구현 코드
-- 구현 의도: 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+- 구현 의도: X, y = make_moons(n_samples=1000,... 코드를 직접 실행하며 이 장의 구현 흐름을 확인했습니다.
 - 핵심 API: -
 - 코드 포인트: -
 
@@ -196,7 +196,7 @@ gb_clf = GradientBoostingClassifier(
 
 **핵심 API**: `train_test_split`, `DecisionTree`, `RandomForest`, `Bagging`
 
-전처리와 학습/검증 분리를 담당해 전체 파이프라인의 출발점을 정리하는 코드입니다.
+넘파이 배열 생성, 인덱싱, 수치 연산을 손으로 익히는 기초 실습 코드입니다.
 
 ```python
 import numpy as np
@@ -215,7 +215,7 @@ from matplotlib.colors import ListedColormap
 
 **직접 해본 단계**: 구현 코드
 
-원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+모델별 정확도 저장 딕셔너리 코드를 직접 실행하며 이 장의 구현 흐름을 확인했습니다.
 
 ```python
 # 모델별 정확도 저장 딕셔너리
@@ -226,7 +226,7 @@ accuracies ={}
 
 **직접 해본 단계**: 구현 코드
 
-원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+for model_name, acc in accuracies... 코드를 직접 실행하며 이 장의 구현 흐름을 확인했습니다.
 
 ```python
 for model_name, acc in accuracies.items():
@@ -237,7 +237,7 @@ for model_name, acc in accuracies.items():
 
 **직접 해본 단계**: 구현 코드
 
-원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+X, y = make_moons(n_samples=1000,... 코드를 직접 실행하며 이 장의 구현 흐름을 확인했습니다.
 
 ```python
 X, y = make_moons(n_samples=1000, noise=0.3, random_state=42)

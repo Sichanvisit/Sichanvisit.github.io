@@ -5,7 +5,7 @@ research_tab: "ML"
 research_kind: "Practice"
 source_title: "250821_코딩실습7_9.기본 지도학습 알고리즘들 (Lasso, Ridge)"
 source_path: "11_Machine_Learning/Code_Snippets/250821_코딩실습7_9.기본 지도학습 알고리즘들 (Lasso, Ridge).md"
-excerpt: "코딩실습7 9.기본 지도학습 알고리즘들 (Lasso, Ridge)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다"
+excerpt: "코딩실습7 9.기본 지도학습 알고리즘들 (Lasso, Ridge)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 선형 모델과 정규화, 전처리와 입력 정리 순서로 큰 장을 먼저 훑고, 데이터 불러오기, LinearRegression 모델 구성 같은 코드로..."
 research_summary: "코딩실습7 9.기본 지도학습 알고리즘들 (Lasso, Ridge)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 선형 모델과 정규화, 전처리와 입력 정리 순서로 큰 장을 먼저 훑고, 데이터 불러오기, LinearRegression 모델 구성 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 19개 코드 블록, 18개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 sklearn입니다."
 research_artifacts: "ipynb/md · 코드 19개 · 실행 18개"
 code_block_count: 19
@@ -33,7 +33,7 @@ tags:
 | 문제 설정 | 테스트 데이터 트레이닝 데이터 분할 |
 | 원본 구조 | 원본 마크다운의 큰 섹션 흐름을 기준으로 이 실습을 다시 읽을 수 있게 정리했습니다. |
 | 데이터 맥락 | 테스트 데이터 트레이닝 데이터 분할 |
-| 핵심 주제 | 선형 모델과 정규화 · 전처리와 입력 정리 |
+| 주요 장 | 선형 모델과 정규화 · 전처리와 입력 정리 |
 | 구현 흐름 | 데이터 불러오기 -> LinearRegression 모델 구성 -> Ridge 모델 학습 |
 | 자료 | ipynb / md · 코드 19 · 실행 18 |
 | 주요 스택 | sklearn |
@@ -85,7 +85,7 @@ tags:
 ### 5. from sklearn.datasets import fetch_california_housing
 
 - 단계: 환경 준비
-- 구현 의도: 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+- 구현 의도: from sklearn.datasets import fetc... 코드를 직접 실행하며 이 장의 구현 흐름을 확인했습니다.
 - 핵심 API: -
 - 코드 포인트: -
 
@@ -156,7 +156,7 @@ print("Elastic MSE: ", mean_squared_error(y_test, model_elastic.predict(X_test))
 
 **직접 해본 단계**: 환경 준비
 
-원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+from sklearn.datasets import fetc... 코드를 직접 실행하며 이 장의 구현 흐름을 확인했습니다.
 
 ```python
 from sklearn.datasets import fetch_california_housing

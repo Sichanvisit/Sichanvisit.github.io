@@ -5,8 +5,8 @@ research_tab: "ML"
 research_kind: "Practice"
 source_title: "250822_코딩실습8_9.기본 지도학습 알고리즘들 (로지스틱 회귀)"
 source_path: "11_Machine_Learning/Code_Snippets/250822_코딩실습8_9.기본 지도학습 알고리즘들 (로지스틱 회귀).md"
-excerpt: "코딩실습8 9.기본 지도학습 알고리즘들 (로지스틱 회귀)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다"
-research_summary: "코딩실습8 9.기본 지도학습 알고리즘들 (로지스틱 회귀)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 구현 중심 학습 순서로 큰 장을 먼저 훑고, Iris 데이터로 이진 분류, Iris 데이터로 다중 분류 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 19개 코드 블록, 18개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 sklearn, matplotlib, numpy입니다."
+excerpt: "코딩실습8 9.기본 지도학습 알고리즘들 (로지스틱 회귀)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 Iris 데이터로 이진 분류, Iris 데이터로 다중 분류, Softmax 이용한 다중 분류 순서로 큰 장을 먼저 훑고, Iris 데이터로 이진 분류,..."
+research_summary: "코딩실습8 9.기본 지도학습 알고리즘들 (로지스틱 회귀)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 Iris 데이터로 이진 분류, Iris 데이터로 다중 분류, Softmax 이용한 다중 분류 순서로 큰 장을 먼저 훑고, Iris 데이터로 이진 분류, Iris 데이터로 다중 분류 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 19개 코드 블록, 18개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 sklearn, matplotlib, numpy입니다."
 research_artifacts: "ipynb/md · 코드 19개 · 실행 18개"
 code_block_count: 19
 execution_block_count: 18
@@ -32,21 +32,61 @@ tags:
 
 | 항목 | 내용 |
 |------|------|
-| 문제 설정 | legend_elements(). (handles, label) 두 값을 반환 |
+| 문제 설정 | 코딩실습8 9.기본 지도학습 알고리즘들 (로지스틱 회귀)에서 Iris 데이터로 이진 분류, Iris 데이터로 다중 분류, Softmax 이용한 다중 분류 흐름을 직접 따라가며 구현했습니다. |
 | 원본 구조 | Iris 데이터로 이진 분류 -> Iris 데이터로 다중 분류 -> Softmax 이용한 다중 분류 |
 | 데이터 맥락 | Iris 데이터로 이진 분류 |
-| 핵심 주제 | 구현 중심 학습 |
+| 주요 장 | Iris 데이터로 이진 분류 · Iris 데이터로 다중 분류 · Softmax 이용한 다중 분류 |
 | 구현 흐름 | Iris 데이터로 이진 분류 -> Iris 데이터로 다중 분류 -> Softmax 이용한 다중 분류 |
 | 자료 | ipynb / md · 코드 19 · 실행 18 |
 | 주요 스택 | sklearn, matplotlib, numpy |
 
 ## 원본 노트 흐름
 
+### Iris 데이터로 이진 분류
+
+데이터 로드, 모델 학습, 시각화용 격자 생성 코드 같은 코드를 직접 따라가며 Iris 데이터로 이진 분류 흐름을 확인했습니다.
+
+- 읽을 포인트: 세부 흐름: 데이터 로드, 모델 학습, 시각화용 격자 생성 코드
+
+#### 데이터 로드
+
+실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.
+
+#### 모델 학습
+
+LogisticRegression 같은 모델을 올려 두고 어떤 알고리즘이 문제에 더 잘 맞는지 비교해 보는 구간입니다.
+
+#### 시각화용 격자 생성 코드
+
+예측 결과를 지표로 계산해 어떤 모델과 전처리가 더 잘 맞았는지 확인하는 평가 코드입니다.
+
+### Iris 데이터로 다중 분류
+
+데이터 로드, 시각화용 격자 생성 코드, 모델링 & 시각화 같은 코드를 직접 따라가며 Iris 데이터로 다중 분류 흐름을 확인했습니다.
+
+- 읽을 포인트: 세부 흐름: 데이터 로드, 시각화용 격자 생성 코드, 모델링 & 시각화
+
+#### 데이터 로드
+
+실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.
+
+#### 시각화용 격자 생성 코드
+
+Iris 데이터로 다중 분류 코드를 직접 실행하며 이 장의 구현 흐름을 확인했습니다.
+
+#### 모델링 & 시각화
+
+LogisticRegression 같은 모델을 올려 두고 어떤 알고리즘이 문제에 더 잘 맞는지 비교해 보는 구간입니다.
+
 ### Softmax 이용한 다중 분류
 
 legend_elements() - (handles, label) 두 값을 반환 - https://matplotlib.org/stable/gallery/lines_bars_and_markers/scatter_with_legend.html - scatter plot이 튜플 반환 - handles: 스캐터 플롯에 표현되는 작은 점 - l...
 
-- 읽을 포인트: 하위 구간: handles, _ = scatter.legend_elements() 코드 설명
+- 읽을 포인트: 세부 흐름: handles, _ = scatter.legend_elements() 코드 설명
+
+#### handles, _ = scatter.legend_elements() 코드 설명
+
+legend_elements() - (handles, label) 두 값을 반환 - https://matplotlib.org/stable/gallery/lines_bars_and_markers/scatter_with_legend.html - scatter plot이 튜플 반환 -...
 
 ## 구현 흐름
 
@@ -74,7 +114,7 @@ legend_elements() - (handles, label) 두 값을 반환 - https://matplotlib.org/
 ### 4. handles, _ = scatter.legend_elements() 코드 설명
 
 - 단계: 구현 코드
-- 구현 의도: 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+- 구현 의도: handles, _ = scatter.legend_eleme... 코드를 직접 실행하며 이 장의 구현 흐름을 확인했습니다.
 - 핵심 API: -
 - 코드 포인트: -
 
@@ -150,7 +190,7 @@ plt.show()
 
 **직접 해본 단계**: 구현 코드
 
-원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+handles, _ = scatter.legend_eleme... 코드를 직접 실행하며 이 장의 구현 흐름을 확인했습니다.
 
 ```python
 

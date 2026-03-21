@@ -5,7 +5,7 @@ research_tab: "ML"
 research_kind: "Practice"
 source_title: "250901_코딩실습17_11.차원축소(KMeans+PCA)"
 source_path: "11_Machine_Learning/Code_Snippets/250901_코딩실습17_11.차원축소(KMeans+PCA).md"
-excerpt: "코딩실습17 11.차원축소(KMeans+PCA)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다"
+excerpt: "코딩실습17 11.차원축소(KMeans+PCA)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 군집화, 차원 축소, 전처리와 입력 정리 순서로 큰 장을 먼저 훑고, wine = load_wine(), StandardScaler 스케일링 같은 코드로 실제..."
 research_summary: "코딩실습17 11.차원축소(KMeans+PCA)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 군집화, 차원 축소, 전처리와 입력 정리 순서로 큰 장을 먼저 훑고, wine = load_wine(), StandardScaler 스케일링 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 12개 코드 블록, 11개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 sklearn, matplotlib, pandas입니다."
 research_artifacts: "ipynb/md · 코드 12개 · 실행 11개"
 code_block_count: 12
@@ -35,7 +35,7 @@ tags:
 | 문제 설정 | => K=3일때 실루엣 스코어가 가장 높다! |
 | 원본 구조 | 원본 마크다운의 큰 섹션 흐름을 기준으로 이 실습을 다시 읽을 수 있게 정리했습니다. |
 | 데이터 맥락 | 원본 노트에서 데이터를 설명한 부분을 기준으로 실습 맥락을 정리했습니다. |
-| 핵심 주제 | 군집화 · 차원 축소 · 전처리와 입력 정리 |
+| 주요 장 | 군집화 · 차원 축소 · 전처리와 입력 정리 |
 | 구현 흐름 | wine = load_wine() -> StandardScaler 스케일링 -> KMeans 모델 학습 |
 | 자료 | ipynb / md · 코드 12 · 실행 11 |
 | 주요 스택 | sklearn, matplotlib, pandas |
@@ -93,7 +93,7 @@ tags:
 ### 5. from sklearn.datasets import load_wine
 
 - 단계: 환경 준비
-- 구현 의도: 전처리와 학습/검증 분리를 담당해 전체 파이프라인의 출발점을 정리하는 코드입니다.
+- 구현 의도: 판다스 DataFrame을 불러오고 열과 행을 다루는 기본 조작을 익히는 실습 코드입니다.
 - 핵심 API: `StandardScaler`
 - 코드 포인트: -
 
@@ -187,7 +187,7 @@ plt.show()
 
 **핵심 API**: `StandardScaler`
 
-전처리와 학습/검증 분리를 담당해 전체 파이프라인의 출발점을 정리하는 코드입니다.
+판다스 DataFrame을 불러오고 열과 행을 다루는 기본 조작을 익히는 실습 코드입니다.
 
 ```python
 from sklearn.datasets import load_wine

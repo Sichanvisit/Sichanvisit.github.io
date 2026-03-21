@@ -1498,6 +1498,65 @@ a {
   letter-spacing: 0.01em;
 }
 
+.collection-doc-page--research .page__title {
+  font-size: clamp(1.42rem, 2.05vw, 1.78rem);
+}
+
+.collection-doc-page--research .page__content {
+  font-size: 0.91rem;
+  line-height: 1.66;
+}
+
+.collection-doc-page--research .page__content h2 {
+  font-size: clamp(1.12rem, 1.38vw, 1.28rem);
+  margin-top: 1.34rem !important;
+  margin-bottom: 0.58rem !important;
+  padding-bottom: 0.22rem;
+}
+
+.collection-doc-page--research .page__content h3 {
+  font-size: clamp(0.98rem, 1.06vw, 1.1rem);
+  margin-top: 0.94rem !important;
+  margin-bottom: 0.36rem !important;
+  padding-inline-start: 0.36rem;
+}
+
+.collection-doc-page--research .page__content h4 {
+  font-size: 0.85rem;
+  margin-top: 0.52rem !important;
+  margin-bottom: 0.16rem !important;
+  color: var(--photo-link);
+  font-weight: 700;
+}
+
+.collection-doc-page--research .page__content p,
+.collection-doc-page--research .page__content li,
+.collection-doc-page--research .page__content blockquote,
+.collection-doc-page--research .page__content table {
+  font-size: 0.92rem;
+  line-height: 1.62;
+}
+
+.collection-doc-page--research .page__content ul,
+.collection-doc-page--research .page__content ol {
+  margin-top: 0.45rem;
+  margin-bottom: 0.8rem;
+  padding-inline-start: 1.28rem;
+}
+
+.collection-doc-page--research .page__content li {
+  margin: 0.22rem 0;
+}
+
+.collection-doc-page--research .page__content pre {
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+
+.collection-doc-page--research .page__content code {
+  font-size: 0.88em;
+}
+
 .collection-doc-page .page__content {
   margin-top: 0.35rem !important;
 }

@@ -5,7 +5,7 @@ research_tab: "ML"
 research_kind: "Archive Note"
 source_title: "250901_SVM"
 source_path: "11_Machine_Learning/Code_Snippets/250901_SVM.md"
-excerpt: "SVM의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다"
+excerpt: "SVM의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 객체지향 설계, 함수 분해와 로직 구성 순서로 큰 장을 먼저 훑고, 파생 변수 추가, SVM 모델 학습 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 8개 코드 블록,..."
 research_summary: "SVM의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 객체지향 설계, 함수 분해와 로직 구성 순서로 큰 장을 먼저 훑고, 파생 변수 추가, SVM 모델 학습 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 8개 코드 블록, 8개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, matplotlib, sklearn입니다."
 research_artifacts: "ipynb/md · 코드 8개 · 실행 8개"
 code_block_count: 8
@@ -34,7 +34,7 @@ tags:
 | 문제 설정 | C: cost (오분류에 대한 패널티 강도), gamma: 커널 곡률 조절 |
 | 원본 구조 | 원본 마크다운의 큰 섹션 흐름을 기준으로 이 실습을 다시 읽을 수 있게 정리했습니다. |
 | 데이터 맥락 | 원본 노트에서 데이터를 설명한 부분을 기준으로 실습 맥락을 정리했습니다. |
-| 핵심 주제 | 객체지향 설계 · 함수 분해와 로직 구성 |
+| 주요 장 | 객체지향 설계 · 함수 분해와 로직 구성 |
 | 구현 흐름 | 파생 변수 추가 -> SVM 모델 학습 -> 데이터 분포 시각화 |
 | 자료 | ipynb / md · 코드 8 · 실행 8 |
 | 주요 스택 | numpy, matplotlib, sklearn |
@@ -79,21 +79,21 @@ tags:
 ### 4. import numpy as np
 
 - 단계: 환경 준비
-- 구현 의도: 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+- 구현 의도: 넘파이 배열 생성, 인덱싱, 수치 연산을 손으로 익히는 기초 실습 코드입니다.
 - 핵심 API: -
 - 코드 포인트: -
 
 ### 5. X_blob, y_blob = make_blobs(n_samples=50, centers=2, random_state=6)
 
 - 단계: 구현 코드
-- 구현 의도: 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+- 구현 의도: X_blob, y_blob = make_blobs(n_sam... 코드를 직접 실행하며 이 장의 구현 흐름을 확인했습니다.
 - 핵심 API: -
 - 코드 포인트: centers=2
 
 ### 6. xx, yy = np.meshgrid(np.linspace(X_blob[:, 0].min()-1, X_blob[:, 0].max()+1,...
 
 - 단계: 구현 코드
-- 구현 의도: 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+- 구현 의도: xx, yy = np.meshgrid(np.linspace(... 코드를 직접 실행하며 이 장의 구현 흐름을 확인했습니다.
 - 핵심 API: -
 - 코드 포인트: -
 
@@ -161,7 +161,7 @@ plt.show()
 
 **직접 해본 단계**: 환경 준비
 
-원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+넘파이 배열 생성, 인덱싱, 수치 연산을 손으로 익히는 기초 실습 코드입니다.
 
 ```python
 import numpy as np
@@ -175,7 +175,7 @@ from matplotlib.colors import ListedColormap
 
 **직접 해본 단계**: 구현 코드
 
-원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+X_blob, y_blob = make_blobs(n_sam... 코드를 직접 실행하며 이 장의 구현 흐름을 확인했습니다.
 
 ```python
 X_blob, y_blob = make_blobs(n_samples=50, centers=2, random_state=6)
@@ -186,7 +186,7 @@ X_blob, y_blob = make_blobs(n_samples=50, centers=2, random_state=6)
 
 **직접 해본 단계**: 구현 코드
 
-원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+xx, yy = np.meshgrid(np.linspace(... 코드를 직접 실행하며 이 장의 구현 흐름을 확인했습니다.
 
 ```python
 xx, yy = np.meshgrid(np.linspace(X_blob[:, 0].min()-1, X_blob[:, 0].max()+1, 500),

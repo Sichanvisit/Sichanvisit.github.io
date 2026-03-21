@@ -5,7 +5,7 @@ research_tab: "ML"
 research_kind: "Practice"
 source_title: "250828_코딩실습15_9.기본 지도학습 알고리즘들(KNN)"
 source_path: "11_Machine_Learning/Code_Snippets/250828_코딩실습15_9.기본 지도학습 알고리즘들(KNN).md"
-excerpt: "코딩실습15 9.기본 지도학습 알고리즘들(KNN)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다"
+excerpt: "코딩실습15 9.기본 지도학습 알고리즘들(KNN)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 분류 문제, 전처리와 입력 정리, 평가 지표 해석 순서로 큰 장을 먼저 훑고, wine = load_wine(), StandardScaler 스케일링 같은 코..."
 research_summary: "코딩실습15 9.기본 지도학습 알고리즘들(KNN)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 분류 문제, 전처리와 입력 정리, 평가 지표 해석 순서로 큰 장을 먼저 훑고, wine = load_wine(), StandardScaler 스케일링 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 13개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 sklearn입니다."
 research_artifacts: "ipynb/md · 코드 13개 · 실행 13개"
 code_block_count: 13
@@ -33,7 +33,7 @@ tags:
 | 문제 설정 | 사이킷런 링크: https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_wine.html 클래스 수: 3개. 샘플 수: 총 178개 (class_0... |
 | 원본 구조 | 원본 마크다운의 큰 섹션 흐름을 기준으로 이 실습을 다시 읽을 수 있게 정리했습니다. |
 | 데이터 맥락 | 사이킷런 링크: https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_wine.html 클래스 수: 3개 - 샘플 수: 총 178개 (class_... |
-| 핵심 주제 | 분류 문제 · 전처리와 입력 정리 · 평가 지표 해석 |
+| 주요 장 | 분류 문제 · 전처리와 입력 정리 · 평가 지표 해석 |
 | 구현 흐름 | wine = load_wine() -> StandardScaler 스케일링 -> KNN 모델 구성 |
 | 자료 | ipynb / md · 코드 13 · 실행 13 |
 | 주요 스택 | sklearn |
@@ -98,7 +98,7 @@ tags:
 ### 6. best_k = grid.best_params_['n_neighbors']
 
 - 단계: 구현 코드
-- 구현 의도: 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+- 구현 의도: best_k = grid.best_params_['n_nei... 코드를 직접 실행하며 이 장의 구현 흐름을 확인했습니다.
 - 핵심 API: -
 - 코드 포인트: -
 
@@ -176,7 +176,7 @@ from sklearn.metrics import accuracy_score, classification_report
 
 **직접 해본 단계**: 구현 코드
 
-원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+best_k = grid.best_params_['n_nei... 코드를 직접 실행하며 이 장의 구현 흐름을 확인했습니다.
 
 ```python
 best_k = grid.best_params_['n_neighbors']

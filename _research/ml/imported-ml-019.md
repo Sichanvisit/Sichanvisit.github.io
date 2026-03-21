@@ -5,8 +5,8 @@ research_tab: "ML"
 research_kind: "Archive Note"
 source_title: "[스프린트미션]1_Python_연습(문제) - AI5 강사 답안"
 source_path: "11_Machine_Learning/Code_Snippets/[스프린트미션]1_Python_연습(문제) - AI5 강사 답안.md"
-excerpt: "Python 연습(문제)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다"
-research_summary: "Python 연습(문제)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 함수 분해와 로직 구성 순서로 큰 장을 먼저 훑고, 문제1. 투표 시스템 클래스, 문제1. 시간 관리 프로그램 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 114개 코드 블록, 61개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 itertools, time, datetime, csv입니다."
+excerpt: "Python 연습(문제)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 파이썬 연습, 객체와 클래스, 심화 문제 순서로 큰 장을 먼저 훑고, 문제1. 투표 시스템 클래스, 문제1. 시간 관리 프로그램 같은 코드로 실제 구현을 이어서 확인할 수 있습니다...."
+research_summary: "Python 연습(문제)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 파이썬 연습, 객체와 클래스, 심화 문제 순서로 큰 장을 먼저 훑고, 문제1. 투표 시스템 클래스, 문제1. 시간 관리 프로그램 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 114개 코드 블록, 61개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 itertools, time, datetime, csv입니다."
 research_artifacts: "ipynb/md · 코드 114개 · 실행 61개"
 code_block_count: 114
 execution_block_count: 61
@@ -33,11 +33,11 @@ tags:
 
 | 항목 | 내용 |
 |------|------|
-| 문제 설정 | 심화 문제는 채점에 포함되지 않습니다. 편한 마음으로 도전해 보세요. |
+| 문제 설정 | Python 연습(문제)에서 파이썬 연습, 객체와 클래스, 심화 문제 흐름을 직접 따라가며 구현했습니다. |
 | 원본 구조 | 파이썬 연습 -> 객체와 클래스 -> 심화 문제 |
-| 데이터 맥락 | 원본 노트에서 데이터를 설명한 부분을 기준으로 실습 맥락을 정리했습니다. |
-| 핵심 주제 | 함수 분해와 로직 구성 |
-| 구현 흐름 | 문제1. 투표 시스템 클래스 -> 문제1. 시간 관리 프로그램 -> 문제3. 도서관 관리 시스템 |
+| 데이터 맥락 | 특정 데이터셋 설명보다 파이썬 연습, 객체와 클래스, 심화 문제 같은 실습 흐름을 직접 익히는 데 초점을 둔 노트입니다. |
+| 주요 장 | 파이썬 연습 · 객체와 클래스 · 심화 문제 |
+| 구현 흐름 | 문제1. 투표 시스템 클래스 -> 문제1. 시간 관리 프로그램 -> 문제1. 시간 추적 클래스(TimeTracker) |
 | 자료 | ipynb / md · 코드 114 · 실행 61 |
 | 주요 스택 | itertools, time, datetime, csv |
 
@@ -47,19 +47,55 @@ tags:
 
 문제 설명 1부터 n까지의 숫자 중에서 3의 배수만 출력하는 함수를 작성하세요. 함수 설명 print_multiples_of_three(n: int) -> int: - n: 3의 배수를 구하고자 하는 범위의 최대값입니다.
 
-- 읽을 포인트: 하위 구간: 기초(7문제), 기초(7문제) > 문제1. 3의 배수 출력, 기초(7문제) > 문제2. 모음 제거하기
+- 읽을 포인트: 세부 흐름: 기초(7문제), 기초(7문제) > 문제1. 3의 배수 출력, 응용(3문제)
+
+#### 기초(7문제)
+
+파이썬 연습 > 기초(7문제) 아래 세부 항목들을 묶어 보는 구간입니다.
+
+#### 기초(7문제) > 문제1. 3의 배수 출력
+
+문제 설명 1부터 n까지의 숫자 중에서 3의 배수만 출력하는 함수를 작성하세요. 함수 설명 print_multiples_of_three(n: int) -> int: - n: 3의 배수를 구하고자 하는 범위의 최대값입니다.
+
+#### 응용(3문제)
+
+파이썬 연습 > 응용(3문제) 아래 세부 항목들을 묶어 보는 구간입니다.
 
 ### 객체와 클래스
 
 당신은 여러 지점을 가진 레스토랑 체인의 IT 팀에서 일하며, 각 지점의 예약을 관리하고 중앙에서 예약 현황을 파악할 수 있는 시스템을 개발할 임무를 맡았습니다. 이 시스템은 각 지점의 예약 상황을 관리하고, 고객의 예약 요청을 효과적으로 처리할 수 있는 기능을 제공해야 합니다. ReservationSystem 클래스는 각 레스토랑...
 
-- 읽을 포인트: 하위 구간: 기초(2문제), 기초(2문제) > 문제1. 시간 추적 클래스(TimeTracker), 기초(2문제) > 문제2. 주소록 클래스
+- 읽을 포인트: 세부 흐름: 기초(2문제), 응용(4문제), 응용(4문제) > 문제4. 프랜차이즈 레스토랑 관리 클래스
+
+#### 기초(2문제)
+
+객체와 클래스 > 기초(2문제) 아래 세부 항목들을 묶어 보는 구간입니다.
+
+#### 응용(4문제)
+
+객체와 클래스 > 응용(4문제) 아래 세부 항목들을 묶어 보는 구간입니다.
+
+#### 응용(4문제) > 문제4. 프랜차이즈 레스토랑 관리 클래스
+
+당신은 여러 지점을 가진 레스토랑 체인의 IT 팀에서 일하며, 각 지점의 예약을 관리하고 중앙에서 예약 현황을 파악할 수 있는 시스템을 개발할 임무를 맡았습니다. 이 시스템은 각 지점의 예약 상황을 관리하고, 고객의 예약 요청을 효과적으로 처리할 수 있는 기능을 제공해야 합니다....
 
 ### 심화 문제
 
 심화 문제는 채점에 포함되지 않습니다. 편한 마음으로 도전해 보세요.
 
-- 읽을 포인트: 하위 구간: 심화(4문제), 심화(4문제) > 문제1. 시간 관리 프로그램, 심화(4문제) > 문제2. 수학 퍼즐: 소수의 합
+- 읽을 포인트: 세부 흐름: 심화(4문제), 심화(4문제) > 문제1. 시간 관리 프로그램, 심화(4문제) > 문제2. 수학 퍼즐: 소수의 합
+
+#### 심화(4문제)
+
+심화 문제 > 심화(4문제) 아래 세부 항목들을 묶어 보는 구간입니다.
+
+#### 심화(4문제) > 문제1. 시간 관리 프로그램
+
+이 프로그램은 사용자가 제한된 시간 내에 최대한 많은 일을 수행할 수 있도록 돕습니다. 할 일과 각각의 소요 시간이 CSV 파일에 저장되어 있으며, 사용자는 이 데이터와 자신에게 남은 시간을 입력하여 이용할 수 있습니다. 프로그램은 사용자가 입력한 시간 내에서 가능한 최대한 많은...
+
+#### 심화(4문제) > 문제2. 수학 퍼즐: 소수의 합
+
+실습 설명 이 프로그램은 사용자로부터 어떤 수 이하의 소수의 합을 구할 것인지 입력 받아, 해당 수까지의 모든 소수의 합을 계산하여 출력합니다. 소수(prime number)는 1과 자기 자신만을 약수로 가지는 자연수를 말합니다. 소수를 찾는 방법은 자유롭게 선택할 수 있지만, 효...
 
 ## 구현 흐름
 
@@ -77,12 +113,12 @@ tags:
 - 핵심 API: -
 - 코드 포인트: 기본 답안 · CSV 파일에서 할 일을 불러오는 함수
 
-### 3. 문제3. 도서관 관리 시스템
+### 3. 문제1. 시간 추적 클래스(TimeTracker)
 
 - 단계: 구현 코드
-- 구현 의도: 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+- 구현 의도: 파이썬 표준 라이브러리를 사용해 시간 계산, 난수 생성, 실행 흐름을 직접 확인하는 실습 코드입니다.
 - 핵심 API: -
-- 코드 포인트: 도서관 관리 시스템 초기화 · 도서 추가
+- 코드 포인트: 기본 답안 · 문제
 
 ### 4. 문제4. 프랜차이즈 레스토랑 관리 클래스
 
@@ -91,19 +127,19 @@ tags:
 - 핵심 API: -
 - 코드 포인트: 기본 답안
 
-### 5. 문제2. 수학 퍼즐: 소수의 합
+### 5. 문제3. 도서관 관리 시스템
+
+- 단계: 클래스 설계
+- 구현 의도: 문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.
+- 핵심 API: -
+- 코드 포인트: 기본 답안 · Book 클래스
+
+### 6. 문제2. 수학 퍼즐: 소수의 합
 
 - 단계: 함수 실습
 - 구현 의도: 입력과 반환값을 분리해 문제 해결 과정을 함수로 정리하는 기초 구현 실습 코드입니다.
 - 핵심 API: -
 - 코드 포인트: 에라토스테네스의 체로 구현한 버전 · 소수인지 판별 => 보통 루트값만 확인
-
-### 6. 문제2. 은행 계좌 클래스
-
-- 단계: 클래스 설계
-- 구현 의도: 문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.
-- 핵심 API: -
-- 코드 포인트: 기본 답안
 
 ## 코드로 확인한 내용
 
@@ -196,42 +232,34 @@ def main():
 # ... trimmed ...
 ```
 
-### 문제3. 도서관 관리 시스템
+### 문제1. 시간 추적 클래스(TimeTracker)
 
 **직접 해본 단계**: 구현 코드
 
-원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+파이썬 표준 라이브러리를 사용해 시간 계산, 난수 생성, 실행 흐름을 직접 확인하는 실습 코드입니다.
 
 ```python
-      # 도서관 관리 시스템 초기화
-      library_system = LibraryManagement()
+# 기본 답안
+from datetime import datetime
 
-      # 도서 추가
-      library_system.add_book("1984", "조지 오웰", 1949, "978-0451524935")
-      library_system.add_book("앵무새 죽이기", "하퍼 리", 1960, "978-0446310789")
-      print()
+# 문제
+class TimeTracker:
+    def __init__(self):
+        self.start_time = None                             # 시작 시간 초기화
+        self.end_time = None                               # 종료 시간 초기화
 
-      # 회원 등록
-      library_system.add_member("홍길동")
-      print()
+    def start(self):
+        self.start_time = datetime.now()                   # 현재 시간을 시작 시간으로 설정
 
-      # 도서 대여
-      library_system.rent_book("978-0451524935", "홍길동")
-      print()
+    def stop(self):
+        self.end_time = datetime.now()                     # 현재 시간을 종료 시간으로 설정
 
-      # 도서 정보 출력
-      library_system.print_books()
-      print()
-
-      # 회원 정보 출력
-      library_system.print_members()
-
-      # 도서 반납
-      library_system.return_book("978-0451524935", "홍길동")
-      print()
-
-      # 회원 정보 출력
-      library_system.print_members()
+    def get_elapsed_time(self):
+        if self.start_time and self.end_time:
+            elapsed = self.end_time - self.start_time      # 시간 차이 계산 (timedelta 객체)
+            return round(elapsed.total_seconds() / 60)     # 분 단위로 반환
+        else:
+            return "시간이 충분히 기록되지 않았습니다."
 ```
 
 ### 문제4. 프랜차이즈 레스토랑 관리 클래스
@@ -280,6 +308,52 @@ class ReservationSystem:
 # ... trimmed ...
 ```
 
+### 문제3. 도서관 관리 시스템
+
+**직접 해본 단계**: 클래스 설계
+
+문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.
+
+```python
+# 기본 답안
+
+# Book 클래스: 도서 정보 저장
+class Book:
+    def __init__(self, title, author, year, isbn):
+        self.title = title
+        self.author = author
+        self.year = year
+        self.isbn = isbn
+
+# Member 클래스: 회원 정보 및 대여 기록 저장
+class Member:
+    def __init__(self, name):
+        self.name = name
+        self.borrowed_books = []                           # 대여 중인 도서 제목 리스트
+
+# Rental 클래스: 대여 내역 기록
+class Rental:
+    def __init__(self, member_name, isbn):
+        self.member_name = member_name
+        self.isbn = isbn
+
+# LibraryManagement 클래스: 도서관 전체 관리 시스템
+class LibraryManagement:
+    def __init__(self):
+        self.books = {}                                    # ISBN -> Book 객체
+        self.members = {}                                  # 이름 -> Member 객체
+
+    # 도서 추가 메서드
+    def add_book(self, title, author, year, isbn):
+        if isbn in self.books:
+            print("이미 등록된 ISBN입니다.")
+        else:
+            self.books[isbn] = Book(title, author, year, isbn)
+            print(f"'{title}' (저자: {author}, 출판년도: {year}) 도서가 추가되었습니다.")
+
+# ... trimmed ...
+```
+
 ### 문제2. 수학 퍼즐: 소수의 합
 
 **직접 해본 단계**: 함수 실습
@@ -318,36 +392,6 @@ def main():
     n = int(input("어떤 수까지의 소수의 합을 구하시겠습니까?: "))
     total = sum_of_primes(n)
     print(f"{n} 이하 소수의 합은 {total}입니다.")
-```
-
-### 문제2. 은행 계좌 클래스
-
-**직접 해본 단계**: 클래스 설계
-
-문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.
-
-```python
-# 기본 답안
-class BankAccount:
-    def __init__(self, account_number, account_holder, initial_balance):
-        self.account_number = account_number
-        self.account_holder = account_holder
-        self.balance = initial_balance
-        print(f"{self.account_holder}님의 계좌 {self.account_number}가 개설되었습니다. 초기 잔액: {self.balance:.0f}원")
-
-    def deposit(self, amount: float):
-        self.balance += amount
-        print(f"{amount:.0f}원이 입금되었습니다. 현재 잔액: {self.balance:.0f}원")
-
-    def withdraw(self, amount: float):
-        if self.balance < amount:
-            print("잔액이 부족하여 출금할 수 없습니다.")
-        else:
-            self.balance -= amount
-            print(f"{amount:.0f}원이 출금되었습니다. 현재 잔액: {self.balance:.0f}원")
-
-    def get_balance(self):
-        return self.balance
 ```
 
 ## 참고 자료
