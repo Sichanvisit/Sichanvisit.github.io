@@ -5,8 +5,8 @@ research_tab: "ML"
 research_kind: "Practice"
 source_title: "250827_코딩실습14_10.결정트리와 앙상블(보팅배깅부스팅스태킹)"
 source_path: "11_Machine_Learning/Code_Snippets/250827_코딩실습14_10.결정트리와 앙상블(보팅배깅부스팅스태킹).md"
-excerpt: "코딩실습14 10.결정트리와 앙상블(보팅배깅부스팅스태킹)를 중심으로 분류 문제, 결정 트리와 앙상블 개념과 구현 흐름을 함께 정리한 ML 실습 기록입니다"
-research_summary: "코딩실습14 10.결정트리와 앙상블(보팅배깅부스팅스태킹)를 중심으로 분류 문제, 결정 트리와 앙상블 개념과 구현 흐름을 함께 정리한 ML 실습 기록입니다. 본문에서는 파생 변수 추가, DecisionTree / Logist... 같은 코드를 따라가며 실제 실습 과정을 확인할 수 있습니다. `ipynb/md` 원본과 8개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, matplotlib, sklearn입니다."
+excerpt: "코딩실습14 10.결정트리와 앙상블(보팅배깅부스팅스태킹)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다"
+research_summary: "코딩실습14 10.결정트리와 앙상블(보팅배깅부스팅스태킹)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 분류 문제, 결정 트리와 앙상블, 전처리와 입력 정리 순서로 큰 장을 먼저 훑고, 파생 변수 추가, DecisionTree / Logist... 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 8개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, matplotlib, sklearn입니다."
 research_artifacts: "ipynb/md · 코드 8개 · 실행 7개"
 code_block_count: 8
 execution_block_count: 7
@@ -28,145 +28,89 @@ tags:
   - practice
 ---
 
-<div class="research-compact-wrap research-compact-wrap--intro">
-  <table class="research-compact-table research-compact-table--intro">
-    <tbody>
-    <tr>
-      <th scope="row">문제 설정</th>
-      <td>시각화를 위한 헬퍼 함수 (이전 실습에서 사용한 것과 동일)</td>
-    </tr>
-    <tr>
-      <th scope="row">데이터 맥락</th>
-      <td>원본 노트에서 데이터를 설명한 부분을 기준으로 실습 맥락을 정리했습니다.</td>
-    </tr>
-    <tr>
-      <th scope="row">핵심 개념</th>
-      <td>분류 문제 · 결정 트리와 앙상블 · 전처리와 입력 정리</td>
-    </tr>
-    <tr>
-      <th scope="row">구현 흐름</th>
-      <td>파생 변수 추가 -&gt; DecisionTree / LogisticRegression 모델 구성 -&gt; import numpy as np</td>
-    </tr>
-    <tr>
-      <th scope="row">자료</th>
-      <td>ipynb / md · 코드 8 · 실행 7</td>
-    </tr>
-    <tr>
-      <th scope="row">주요 스택</th>
-      <td>numpy, matplotlib, sklearn</td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+## 글 한눈에 보기
 
-## What I Studied
+| 항목 | 내용 |
+|------|------|
+| 문제 설정 | 시각화를 위한 헬퍼 함수 (이전 실습에서 사용한 것과 동일) |
+| 원본 구조 | 원본 마크다운의 큰 섹션 흐름을 기준으로 이 실습을 다시 읽을 수 있게 정리했습니다. |
+| 데이터 맥락 | 원본 노트에서 데이터를 설명한 부분을 기준으로 실습 맥락을 정리했습니다. |
+| 핵심 주제 | 분류 문제 · 결정 트리와 앙상블 · 전처리와 입력 정리 |
+| 구현 흐름 | 파생 변수 추가 -> DecisionTree / LogisticRegression 모델 구성 -> import numpy as np |
+| 자료 | ipynb / md · 코드 8 · 실행 7 |
+| 주요 스택 | numpy, matplotlib, sklearn |
 
-<div class="research-compact-wrap">
-  <table class="research-compact-table research-compact-table--notes">
-    <thead>
-      <tr>
-        <th>개념</th>
-        <th>핵심 설명</th>
-        <th>코드에서 확인한 것</th>
-      </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <th scope="row">분류 문제</th>
-      <td>분류는 입력 특성으로 클래스나 반응 여부를 예측하는 문제입니다. 모델은 각 샘플이 어떤 범주에 속하는지 확률 또는 라벨로 출력합니다.</td>
-      <td>이 글에서는 가입 여부, 품종, 레이블 예측처럼 범주형 타깃을 다루는 실습 맥락으로 연결됩니다.</td>
-    </tr>
-    <tr>
-      <th scope="row">결정 트리와 앙상블</th>
-      <td>결정 트리는 조건 분기로 예측 규칙을 만들고, 앙상블은 여러 모델의 예측을 묶어 편향과 분산을 함께 줄이는 접근입니다.</td>
-      <td>이 글에서는 Decision Tree, RandomForest, XGBoost, Voting, Stacking 코드를 통해 여러 모델을 비교해 볼 수 있습니다.</td>
-    </tr>
-    <tr>
-      <th scope="row">전처리와 입력 정리</th>
-      <td>머신러닝 모델은 입력 형식에 민감하기 때문에 결측치 처리, 인코딩, 스케일링 같은 전처리 단계가 성능을 크게 좌우합니다.</td>
-      <td>이 글에서는 범주형 값을 숫자로 바꾸거나 학습/검증을 분리하는 코드가 이 개념에 해당합니다.</td>
-    </tr>
-    <tr>
-      <th scope="row">피처 엔지니어링</th>
-      <td>피처 엔지니어링은 원본 컬럼을 그대로 쓰지 않고 문제에 맞는 새 특징을 설계해 모델이 더 유용한 패턴을 학습하도록 돕는 과정입니다.</td>
-      <td>이 글에서는 시간 파생 변수, 조건식 기반 플래그, 도메인 규칙을 반영한 새 컬럼 생성 코드가 여기에 해당합니다.</td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+## 원본 노트 흐름
 
-## How I Implemented It
+### 분류 문제
 
-<div class="research-compact-wrap">
-  <table class="research-compact-table research-compact-table--steps">
-    <thead>
-      <tr>
-        <th>단계</th>
-        <th>구현 내용</th>
-        <th>핵심 API</th>
-        <th>코드 포인트</th>
-      </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <th scope="row">Step 1 · 피처 가공</th>
-      <td>
-        <strong class="research-compact-table__main">파생 변수 추가</strong>
-        <span class="research-compact-table__sub">원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다.</span>
-      </td>
-      <td><span class="research-compact-table__muted">-</span></td>
-      <td>시각화를 위한 헬퍼 함수 (이전 실습에서 사용한 것과 동일)</td>
-    </tr>
-    <tr>
-      <th scope="row">Step 2 · 모델 구성</th>
-      <td>
-        <strong class="research-compact-table__main">DecisionTree / LogisticRegression 모델 구성</strong>
-        <span class="research-compact-table__sub">DecisionTree / LogisticRegression 같은 모델을 올려 두고 어떤 알고리즘이 문제에 더 잘 맞는지 비교해 보는 구간입니다.</span>
-      </td>
-      <td><code>DecisionTree</code> <code>Bagging</code> <code>Voting</code> <code>Stacking</code></td>
-      <td>보팅 · 1-1. 기본 모델 세팅</td>
-    </tr>
-    <tr>
-      <th scope="row">Step 3 · 환경 준비</th>
-      <td>
-        <strong class="research-compact-table__main">import numpy as np</strong>
-        <span class="research-compact-table__sub">전처리와 학습/검증 분리를 담당해 전체 파이프라인의 출발점을 정리하는 코드입니다.</span>
-      </td>
-      <td><code>train_test_split</code> <code>DecisionTree</code> <code>RandomForest</code> <code>Bagging</code></td>
-      <td><span class="research-compact-table__muted">-</span></td>
-    </tr>
-    <tr>
-      <th scope="row">Step 4 · 구현 코드</th>
-      <td>
-        <strong class="research-compact-table__main">모델별 정확도 저장 딕셔너리</strong>
-        <span class="research-compact-table__sub">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</span>
-      </td>
-      <td><span class="research-compact-table__muted">-</span></td>
-      <td>모델별 정확도 저장 딕셔너리</td>
-    </tr>
-    <tr>
-      <th scope="row">Step 5 · 구현 코드</th>
-      <td>
-        <strong class="research-compact-table__main">for model_name, acc in accuracies.items():</strong>
-        <span class="research-compact-table__sub">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</span>
-      </td>
-      <td><span class="research-compact-table__muted">-</span></td>
-      <td><span class="research-compact-table__muted">-</span></td>
-    </tr>
-    <tr>
-      <th scope="row">Step 6 · 구현 코드</th>
-      <td>
-        <strong class="research-compact-table__main">X, y = make_moons(n_samples=1000, noise=0.3, random_state=42)</strong>
-        <span class="research-compact-table__sub">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</span>
-      </td>
-      <td><span class="research-compact-table__muted">-</span></td>
-      <td><span class="research-compact-table__muted">-</span></td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+분류는 입력 특성으로 클래스나 반응 여부를 예측하는 문제입니다. 모델은 각 샘플이 어떤 범주에 속하는지 확률 또는 라벨로 출력합니다.
 
-## Code Evidence
+- 읽을 포인트: 이 글에서는 가입 여부, 품종, 레이블 예측처럼 범주형 타깃을 다루는 실습 맥락으로 연결됩니다.
+
+### 결정 트리와 앙상블
+
+결정 트리는 조건 분기로 예측 규칙을 만들고, 앙상블은 여러 모델의 예측을 묶어 편향과 분산을 함께 줄이는 접근입니다.
+
+- 읽을 포인트: 이 글에서는 Decision Tree, RandomForest, XGBoost, Voting, Stacking 코드를 통해 여러 모델을 비교해 볼 수 있습니다.
+
+### 전처리와 입력 정리
+
+머신러닝 모델은 입력 형식에 민감하기 때문에 결측치 처리, 인코딩, 스케일링 같은 전처리 단계가 성능을 크게 좌우합니다.
+
+- 읽을 포인트: 이 글에서는 범주형 값을 숫자로 바꾸거나 학습/검증을 분리하는 코드가 이 개념에 해당합니다.
+
+### 피처 엔지니어링
+
+피처 엔지니어링은 원본 컬럼을 그대로 쓰지 않고 문제에 맞는 새 특징을 설계해 모델이 더 유용한 패턴을 학습하도록 돕는 과정입니다.
+
+- 읽을 포인트: 이 글에서는 시간 파생 변수, 조건식 기반 플래그, 도메인 규칙을 반영한 새 컬럼 생성 코드가 여기에 해당합니다.
+
+## 구현 흐름
+
+### 1. 파생 변수 추가
+
+- 단계: 피처 가공
+- 구현 의도: 원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다.
+- 핵심 API: -
+- 코드 포인트: 시각화를 위한 헬퍼 함수 (이전 실습에서 사용한 것과 동일)
+
+### 2. DecisionTree / LogisticRegression 모델 구성
+
+- 단계: 모델 구성
+- 구현 의도: DecisionTree / LogisticRegression 같은 모델을 올려 두고 어떤 알고리즘이 문제에 더 잘 맞는지 비교해 보는 구간입니다.
+- 핵심 API: `DecisionTree`, `Bagging`, `Voting`, `Stacking`
+- 코드 포인트: 보팅 · 1-1. 기본 모델 세팅
+
+### 3. import numpy as np
+
+- 단계: 환경 준비
+- 구현 의도: 전처리와 학습/검증 분리를 담당해 전체 파이프라인의 출발점을 정리하는 코드입니다.
+- 핵심 API: `train_test_split`, `DecisionTree`, `RandomForest`, `Bagging`
+- 코드 포인트: -
+
+### 4. 모델별 정확도 저장 딕셔너리
+
+- 단계: 구현 코드
+- 구현 의도: 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+- 핵심 API: -
+- 코드 포인트: 모델별 정확도 저장 딕셔너리
+
+### 5. for model_name, acc in accuracies.items():
+
+- 단계: 구현 코드
+- 구현 의도: 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+- 핵심 API: -
+- 코드 포인트: -
+
+### 6. X, y = make_moons(n_samples=1000, noise=0.3, random_state=42)
+
+- 단계: 구현 코드
+- 구현 의도: 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+- 핵심 API: -
+- 코드 포인트: -
+
+## 코드로 확인한 내용
 
 ### 파생 변수 추가
 
@@ -299,7 +243,7 @@ for model_name, acc in accuracies.items():
 X, y = make_moons(n_samples=1000, noise=0.3, random_state=42)
 ```
 
-## Source Bundle
+## 참고 자료
 
 - Source path: `11_Machine_Learning/Code_Snippets/250827_코딩실습14_10.결정트리와 앙상블(보팅배깅부스팅스태킹).md`
 - Source formats: `ipynb`, `md`
@@ -309,6 +253,6 @@ X, y = make_moons(n_samples=1000, noise=0.3, random_state=42)
 - Related notes: `11_Machine_Learning_Code_Summary.md`
 - External references: `localhost`
 
-## Note Preview
+## 원문 미리보기
 
 > 원본 노트에 별도 설명 문단이 많지 않아 코드 중심으로 보존했습니다.

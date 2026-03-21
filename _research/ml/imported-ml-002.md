@@ -6,7 +6,7 @@ research_kind: "Practice"
 source_title: "250807_코드실습1_1. 파이썬 응용하기"
 source_path: "11_Machine_Learning/Code_Snippets/250807_코드실습1_1. 파이썬 응용하기.md"
 excerpt: "코드실습1 1"
-research_summary: "코드실습1 1. 파이썬 응용하기를 중심으로 구현 중심 학습 개념과 구현 흐름을 함께 정리한 ML 실습 기록입니다. 본문에서는 (2) datetime, 파일 입력과 문자 수정 같은 코드를 따라가며 실제 실습 과정을 확인할 수 있습니다. `ipynb/md` 원본과 26개 코드 블록, 25개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 time, datetime, random, google입니다."
+research_summary: "코드실습1 1. 파이썬 응용하기의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 구현 중심 학습 순서로 큰 장을 먼저 훑고, (2) datetime, 파일 입력과 문자 수정 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 26개 코드 블록, 25개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 time, datetime, random, google입니다."
 research_artifacts: "ipynb/md · 코드 26개 · 실행 25개"
 code_block_count: 26
 execution_block_count: 25
@@ -29,121 +29,64 @@ tags:
   - practice
 ---
 
-<div class="research-compact-wrap research-compact-wrap--intro">
-  <table class="research-compact-table research-compact-table--intro">
-    <tbody>
-    <tr>
-      <th scope="row">문제 설정</th>
-      <td>기타 인코딩 방식 =&gt; EUC-KR, CP949</td>
-    </tr>
-    <tr>
-      <th scope="row">데이터 맥락</th>
-      <td>기타 인코딩 방식 =&gt; EUC-KR, CP949</td>
-    </tr>
-    <tr>
-      <th scope="row">핵심 개념</th>
-      <td>구현 중심 학습</td>
-    </tr>
-    <tr>
-      <th scope="row">구현 흐름</th>
-      <td>(2) datetime -&gt; 파일 입력과 문자 수정 -&gt; (1) time</td>
-    </tr>
-    <tr>
-      <th scope="row">자료</th>
-      <td>ipynb / md · 코드 26 · 실행 25</td>
-    </tr>
-    <tr>
-      <th scope="row">주요 스택</th>
-      <td>time, datetime, random, google</td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+## 글 한눈에 보기
 
-## What I Studied
+| 항목 | 내용 |
+|------|------|
+| 문제 설정 | 기타 인코딩 방식 => EUC-KR, CP949 |
+| 원본 구조 | 파일 입력과 문자 수정 |
+| 데이터 맥락 | 기타 인코딩 방식 => EUC-KR, CP949 |
+| 핵심 주제 | 구현 중심 학습 |
+| 구현 흐름 | (2) datetime -> 파일 입력과 문자 수정 -> (1) time |
+| 자료 | ipynb / md · 코드 26 · 실행 25 |
+| 주요 스택 | time, datetime, random, google |
 
-<div class="research-compact-wrap">
-  <table class="research-compact-table research-compact-table--notes">
-    <thead>
-      <tr>
-        <th>개념</th>
-        <th>핵심 설명</th>
-        <th>코드에서 확인한 것</th>
-      </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <th scope="row">구현 중심 학습</th>
-      <td>이 글은 개념 설명과 함께 실제 코드를 통해 학습 흐름을 다시 따라가도록 정리된 ML 실습 기록입니다.</td>
-      <td>데이터 입력, 처리, 모델링, 평가 가운데 실제로 손댄 단계를 중심으로 읽을 수 있습니다.</td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+## 원본 노트 흐름
 
-## How I Implemented It
+### 파일 입력과 문자 수정
 
-<div class="research-compact-wrap">
-  <table class="research-compact-table research-compact-table--steps">
-    <thead>
-      <tr>
-        <th>단계</th>
-        <th>구현 내용</th>
-        <th>핵심 API</th>
-        <th>코드 포인트</th>
-      </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <th scope="row">Step 1 · 피처 가공</th>
-      <td>
-        <strong class="research-compact-table__main">(2) datetime</strong>
-        <span class="research-compact-table__sub">원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다.</span>
-      </td>
-      <td><span class="research-compact-table__muted">-</span></td>
-      <td>timedelta 활용 · 현재 시간</td>
-    </tr>
-    <tr>
-      <th scope="row">Step 2 · 구현 코드</th>
-      <td>
-        <strong class="research-compact-table__main">파일 입력과 문자 수정</strong>
-        <span class="research-compact-table__sub">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</span>
-      </td>
-      <td><span class="research-compact-table__muted">-</span></td>
-      <td><span class="research-compact-table__muted">-</span></td>
-    </tr>
-    <tr>
-      <th scope="row">Step 3 · 구현 코드</th>
-      <td>
-        <strong class="research-compact-table__main">(1) time</strong>
-        <span class="research-compact-table__sub">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</span>
-      </td>
-      <td><span class="research-compact-table__muted">-</span></td>
-      <td>strftime() 응용</td>
-    </tr>
-    <tr>
-      <th scope="row">Step 4 · 구현 코드</th>
-      <td>
-        <strong class="research-compact-table__main">(3) random</strong>
-        <span class="research-compact-table__sub">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</span>
-      </td>
-      <td><span class="research-compact-table__muted">-</span></td>
-      <td>shuffle()</td>
-    </tr>
-    <tr>
-      <th scope="row">Step 5 · 구현 코드</th>
-      <td>
-        <strong class="research-compact-table__main">구글 드라이브에서 직접 불러오기</strong>
-        <span class="research-compact-table__sub">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</span>
-      </td>
-      <td><span class="research-compact-table__muted">-</span></td>
-      <td><span class="research-compact-table__muted">-</span></td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+기타 인코딩 방식 => EUC-KR, CP949
 
-## Code Evidence
+- 읽을 포인트: 하위 구간: 구글 드라이브에서 직접 불러오기
+
+## 구현 흐름
+
+### 1. (2) datetime
+
+- 단계: 피처 가공
+- 구현 의도: 원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다.
+- 핵심 API: -
+- 코드 포인트: timedelta 활용 · 현재 시간
+
+### 2. 파일 입력과 문자 수정
+
+- 단계: 구현 코드
+- 구현 의도: 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+- 핵심 API: -
+- 코드 포인트: -
+
+### 3. (1) time
+
+- 단계: 구현 코드
+- 구현 의도: 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+- 핵심 API: -
+- 코드 포인트: strftime() 응용
+
+### 4. (3) random
+
+- 단계: 구현 코드
+- 구현 의도: 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+- 핵심 API: -
+- 코드 포인트: shuffle()
+
+### 5. 구글 드라이브에서 직접 불러오기
+
+- 단계: 구현 코드
+- 구현 의도: 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+- 핵심 API: -
+- 코드 포인트: -
+
+## 코드로 확인한 내용
 
 ### (2) datetime
 
@@ -227,7 +170,7 @@ with open(path, 'r') as f:
     print(f.read())
 ```
 
-## Source Bundle
+## 참고 자료
 
 - Source path: `11_Machine_Learning/Code_Snippets/250807_코드실습1_1. 파이썬 응용하기.md`
 - Source formats: `ipynb`, `md`
@@ -237,6 +180,6 @@ with open(path, 'r') as f:
 - Related notes: `11_Machine_Learning_Code_Summary.md`
 - External references: `localhost`
 
-## Note Preview
+## 원문 미리보기
 
 > 기타 인코딩 방식 => EUC-KR, CP949

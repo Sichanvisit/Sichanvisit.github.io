@@ -5,8 +5,8 @@ research_tab: "ML"
 research_kind: "Practice"
 source_title: "250821_코딩실습6_9.기본 지도학습 알고리즘들 (선형회귀 - 사이킷런)"
 source_path: "11_Machine_Learning/Code_Snippets/250821_코딩실습6_9.기본 지도학습 알고리즘들 (선형회귀 - 사이킷런).md"
-excerpt: "코딩실습6 9.기본 지도학습 알고리즘들 (선형회귀 - 사이킷런)를 중심으로 회귀 문제, 함수 분해와 로직 구성 개념과 구현 흐름을 함께 정리한 ML 실습 기록입니다"
-research_summary: "코딩실습6 9.기본 지도학습 알고리즘들 (선형회귀 - 사이킷런)를 중심으로 회귀 문제, 함수 분해와 로직 구성 개념과 구현 흐름을 함께 정리한 ML 실습 기록입니다. 본문에서는 Salary 데이터로 선형회귀 기본 코..., 선형회귀 같은 코드를 따라가며 실제 실습 과정을 확인할 수 있습니다. `ipynb/md` 원본과 35개 코드 블록, 35개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 matplotlib, warnings, numpy, sklearn입니다."
+excerpt: "코딩실습6 9.기본 지도학습 알고리즘들 (선형회귀 - 사이킷런)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다"
+research_summary: "코딩실습6 9.기본 지도학습 알고리즘들 (선형회귀 - 사이킷런)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 회귀 문제, 함수 분해와 로직 구성 순서로 큰 장을 먼저 훑고, Salary 데이터로 선형회귀 기본 코..., 선형회귀 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 35개 코드 블록, 35개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 matplotlib, warnings, numpy, sklearn입니다."
 research_artifacts: "ipynb/md · 코드 35개 · 실행 35개"
 code_block_count: 35
 execution_block_count: 35
@@ -30,126 +30,64 @@ tags:
   - practice
 ---
 
-<div class="research-compact-wrap research-compact-wrap--intro">
-  <table class="research-compact-table research-compact-table--intro">
-    <tbody>
-    <tr>
-      <th scope="row">문제 설정</th>
-      <td>해석 1. 나이가 1살 많을 수록 소득은 4.41 증가 2</td>
-    </tr>
-    <tr>
-      <th scope="row">데이터 맥락</th>
-      <td>Salary 데이터로 선형회귀 기본 코딩 (사이킷런 사용 X)</td>
-    </tr>
-    <tr>
-      <th scope="row">핵심 개념</th>
-      <td>회귀 문제 · 함수 분해와 로직 구성</td>
-    </tr>
-    <tr>
-      <th scope="row">구현 흐름</th>
-      <td>Salary 데이터로 선형회귀 기본 코딩 (사이킷런 사용 X) -&gt; 선형회귀 -&gt; Salary 데이터로 선형회귀 - 사이킷런 이용 코딩</td>
-    </tr>
-    <tr>
-      <th scope="row">자료</th>
-      <td>ipynb / md · 코드 35 · 실행 35</td>
-    </tr>
-    <tr>
-      <th scope="row">주요 스택</th>
-      <td>matplotlib, warnings, numpy, sklearn 외 1</td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+## 글 한눈에 보기
 
-## What I Studied
+| 항목 | 내용 |
+|------|------|
+| 문제 설정 | 해석 1. 나이가 1살 많을 수록 소득은 4.41 증가 2 |
+| 원본 구조 | 선형회귀 -> Salary 데이터로 선형회귀 기본 코딩 (사이킷런 사용 X) -> Salary 데이터로 선형회귀 - 사이킷런 이용 코딩 |
+| 데이터 맥락 | 해석 1. 나이가 1살 많을 수록 소득은 4.41 증가 2. 성별 1->2 바뀌면 소득이 8.71 증가 3. 경력이 1년 늘어나면 소득은 2.83 하락 |
+| 핵심 주제 | 회귀 문제 · 함수 분해와 로직 구성 |
+| 구현 흐름 | Salary 데이터로 선형회귀 기본 코딩 (사이킷런 사용 X) -> 선형회귀 -> Salary 데이터로 선형회귀 - 사이킷런 이용 코딩 |
+| 자료 | ipynb / md · 코드 35 · 실행 35 |
+| 주요 스택 | matplotlib, warnings, numpy, sklearn 외 1 |
 
-<div class="research-compact-wrap">
-  <table class="research-compact-table research-compact-table--notes">
-    <thead>
-      <tr>
-        <th>개념</th>
-        <th>핵심 설명</th>
-        <th>코드에서 확인한 것</th>
-      </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <th scope="row">회귀 문제</th>
-      <td>회귀는 연속적인 수치를 예측하는 문제입니다. 예측값과 실제값의 차이를 오차로 계산해 모델 성능을 판단합니다.</td>
-      <td>이 글에서는 수요량, 가격, 점수처럼 숫자 타깃을 예측하는 실습과 이어집니다.</td>
-    </tr>
-    <tr>
-      <th scope="row">함수 분해와 로직 구성</th>
-      <td>함수는 입력, 처리, 반환을 분리해 로직을 재사용하기 쉽게 만들고, 문제를 작은 단위로 나누는 기본 도구입니다.</td>
-      <td>이 글에서는 문제 풀이를 함수 단위로 쪼개고 입출력을 나눠 보는 실습과 연결됩니다.</td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+## 원본 노트 흐름
 
-## How I Implemented It
+### Salary 데이터로 선형회귀 기본 코딩 (사이킷런 사용 X)
 
-<div class="research-compact-wrap">
-  <table class="research-compact-table research-compact-table--steps">
-    <thead>
-      <tr>
-        <th>단계</th>
-        <th>구현 내용</th>
-        <th>핵심 API</th>
-        <th>코드 포인트</th>
-      </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <th scope="row">Step 1 · 데이터 불러오기</th>
-      <td>
-        <strong class="research-compact-table__main">Salary 데이터로 선형회귀 기본 코딩 (사이킷런 사용 X)</strong>
-        <span class="research-compact-table__sub">실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.</span>
-      </td>
-      <td><code>pd.read_csv</code></td>
-      <td><span class="research-compact-table__muted">-</span></td>
-    </tr>
-    <tr>
-      <th scope="row">Step 2 · 모델 구성</th>
-      <td>
-        <strong class="research-compact-table__main">선형회귀</strong>
-        <span class="research-compact-table__sub">LinearRegression 같은 모델을 올려 두고 어떤 알고리즘이 문제에 더 잘 맞는지 비교해 보는 구간입니다.</span>
-      </td>
-      <td><code>LinearRegression</code> <code>matplotlib</code></td>
-      <td>추가 - 다중 선형 회귀 실습 코드 예시 (Python... · 데이터 정의</td>
-    </tr>
-    <tr>
-      <th scope="row">Step 3 · 평가</th>
-      <td>
-        <strong class="research-compact-table__main">Salary 데이터로 선형회귀 - 사이킷런 이용 코딩</strong>
-        <span class="research-compact-table__sub">예측 결과를 지표로 계산해 어떤 모델과 전처리가 더 잘 맞았는지 확인하는 평가 코드입니다.</span>
-      </td>
-      <td><span class="research-compact-table__muted">-</span></td>
-      <td><span class="research-compact-table__muted">-</span></td>
-    </tr>
-    <tr>
-      <th scope="row">Step 4 · 구현 코드</th>
-      <td>
-        <strong class="research-compact-table__main">(1) 첫번째 모델 - 절편 없음</strong>
-        <span class="research-compact-table__sub">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</span>
-      </td>
-      <td><span class="research-compact-table__muted">-</span></td>
-      <td>np.linalg.inv(X.T @ X) =&gt; (X^T*... · T@y =&gt;X^T*y</td>
-    </tr>
-    <tr>
-      <th scope="row">Step 5 · 구현 코드</th>
-      <td>
-        <strong class="research-compact-table__main">(2) 두번째 모델링 - 절편 추가</strong>
-        <span class="research-compact-table__sub">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</span>
-      </td>
-      <td><span class="research-compact-table__muted">-</span></td>
-      <td><span class="research-compact-table__muted">-</span></td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+해석 1. 나이가 1살 많을 수록 소득은 4.41 증가 2. 성별 1->2 바뀌면 소득이 8.71 증가 3. 경력이 1년 늘어나면 소득은 2.83 하락
 
-## Code Evidence
+- 읽을 포인트: 하위 구간: (1) 첫번째 모델 - 절편 없음, (2) 두번째 모델링 - 절편 추가
+
+## 구현 흐름
+
+### 1. Salary 데이터로 선형회귀 기본 코딩 (사이킷런 사용 X)
+
+- 단계: 데이터 불러오기
+- 구현 의도: 실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.
+- 핵심 API: `pd.read_csv`
+- 코드 포인트: -
+
+### 2. 선형회귀
+
+- 단계: 모델 구성
+- 구현 의도: LinearRegression 같은 모델을 올려 두고 어떤 알고리즘이 문제에 더 잘 맞는지 비교해 보는 구간입니다.
+- 핵심 API: `LinearRegression`, `matplotlib`
+- 코드 포인트: 추가 - 다중 선형 회귀 실습 코드 예시 (Python... · 데이터 정의
+
+### 3. Salary 데이터로 선형회귀 - 사이킷런 이용 코딩
+
+- 단계: 평가
+- 구현 의도: 예측 결과를 지표로 계산해 어떤 모델과 전처리가 더 잘 맞았는지 확인하는 평가 코드입니다.
+- 핵심 API: -
+- 코드 포인트: -
+
+### 4. (1) 첫번째 모델 - 절편 없음
+
+- 단계: 구현 코드
+- 구현 의도: 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+- 핵심 API: -
+- 코드 포인트: np.linalg.inv(X.T @ X) => (X^T*... · T@y =>X^T*y
+
+### 5. (2) 두번째 모델링 - 절편 추가
+
+- 단계: 구현 코드
+- 구현 의도: 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+- 핵심 API: -
+- 코드 포인트: -
+
+## 코드로 확인한 내용
 
 ### Salary 데이터로 선형회귀 기본 코딩 (사이킷런 사용 X)
 
@@ -246,7 +184,7 @@ X2 = np.c_[np.ones(100), X]
 X2
 ```
 
-## Source Bundle
+## 참고 자료
 
 - Source path: `11_Machine_Learning/Code_Snippets/250821_코딩실습6_9.기본 지도학습 알고리즘들 (선형회귀 - 사이킷런).md`
 - Source formats: `ipynb`, `md`
@@ -256,7 +194,7 @@ X2
 - Related notes: `11_Machine_Learning_Code_Summary.md`
 - External references: `localhost`
 
-## Note Preview
+## 원문 미리보기
 
 > +
 > **해석** 1. 나이가 1살 많을 수록 소득은 4.41 증가 2. 성별 1->2 바뀌면 소득이 8.71 증가 3. 경력이 1년 늘어나면 소득은 2.83 하락

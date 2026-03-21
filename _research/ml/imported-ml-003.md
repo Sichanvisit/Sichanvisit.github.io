@@ -5,8 +5,8 @@ research_tab: "ML"
 research_kind: "Practice"
 source_title: "250812_코드실습3_4.데이터사이언스 Toolkit"
 source_path: "11_Machine_Learning/Code_Snippets/250812_코드실습3_4.데이터사이언스 Toolkit.md"
-excerpt: "코드실습3 4.데이터사이언스 Toolkit를 중심으로 구현 중심 학습 개념과 구현 흐름을 함께 정리한 ML 실습 기록입니다"
-research_summary: "코드실습3 4.데이터사이언스 Toolkit를 중심으로 구현 중심 학습 개념과 구현 흐름을 함께 정리한 ML 실습 기록입니다. 본문에서는 csv파일 불러오는 실습, matplotlib 실습 같은 코드를 따라가며 실제 실습 과정을 확인할 수 있습니다. `ipynb/md` 원본과 60개 코드 블록, 59개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, google, pandas, matplotlib입니다."
+excerpt: "코드실습3 4.데이터사이언스 Toolkit의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다"
+research_summary: "코드실습3 4.데이터사이언스 Toolkit의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 구현 중심 학습 순서로 큰 장을 먼저 훑고, csv파일 불러오는 실습, matplotlib 실습 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 60개 코드 블록, 59개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, google, pandas, matplotlib입니다."
 research_artifacts: "ipynb/md · 코드 60개 · 실행 59개"
 code_block_count: 60
 execution_block_count: 59
@@ -30,112 +30,57 @@ tags:
   - practice
 ---
 
-<div class="research-compact-wrap research-compact-wrap--intro">
-  <table class="research-compact-table research-compact-table--intro">
-    <tbody>
-    <tr>
-      <th scope="row">문제 설정</th>
-      <td>파이썬 기초 문법. 마크다운 정리법</td>
-    </tr>
-    <tr>
-      <th scope="row">데이터 맥락</th>
-      <td>파이썬 기초 문법 - 마크다운 정리법 - 데이터 시각화 - AI 엔지니어링</td>
-    </tr>
-    <tr>
-      <th scope="row">핵심 개념</th>
-      <td>구현 중심 학습</td>
-    </tr>
-    <tr>
-      <th scope="row">구현 흐름</th>
-      <td>csv파일 불러오는 실습 -&gt; matplotlib 실습 -&gt; 기본 함수들</td>
-    </tr>
-    <tr>
-      <th scope="row">자료</th>
-      <td>ipynb / md · 코드 60 · 실행 59</td>
-    </tr>
-    <tr>
-      <th scope="row">주요 스택</th>
-      <td>numpy, google, pandas, matplotlib 외 1</td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+## 글 한눈에 보기
 
-## What I Studied
+| 항목 | 내용 |
+|------|------|
+| 문제 설정 | 파이썬 기초 문법. 마크다운 정리법 |
+| 원본 구조 | 마크다운 실습 -> Numpy 실습 -> 판다스 실습 -> matplotlib 실습 |
+| 데이터 맥락 | 원본 노트에서 데이터를 설명한 부분을 기준으로 실습 맥락을 정리했습니다. |
+| 핵심 주제 | 구현 중심 학습 |
+| 구현 흐름 | csv파일 불러오는 실습 -> matplotlib 실습 -> 기본 함수들 |
+| 자료 | ipynb / md · 코드 60 · 실행 59 |
+| 주요 스택 | numpy, google, pandas, matplotlib 외 1 |
 
-<div class="research-compact-wrap">
-  <table class="research-compact-table research-compact-table--notes">
-    <thead>
-      <tr>
-        <th>개념</th>
-        <th>핵심 설명</th>
-        <th>코드에서 확인한 것</th>
-      </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <th scope="row">구현 중심 학습</th>
-      <td>이 글은 개념 설명과 함께 실제 코드를 통해 학습 흐름을 다시 따라가도록 정리된 ML 실습 기록입니다.</td>
-      <td>데이터 입력, 처리, 모델링, 평가 가운데 실제로 손댄 단계를 중심으로 읽을 수 있습니다.</td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+## 원본 노트 흐름
 
-## How I Implemented It
+### 마크다운 실습
 
-<div class="research-compact-wrap">
-  <table class="research-compact-table research-compact-table--steps">
-    <thead>
-      <tr>
-        <th>단계</th>
-        <th>구현 내용</th>
-        <th>핵심 API</th>
-        <th>코드 포인트</th>
-      </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <th scope="row">Step 1 · 데이터 불러오기</th>
-      <td>
-        <strong class="research-compact-table__main">csv파일 불러오는 실습</strong>
-        <span class="research-compact-table__sub">실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.</span>
-      </td>
-      <td><code>pd.read_csv</code></td>
-      <td>CSV 파일 불러오기 실습</td>
-    </tr>
-    <tr>
-      <th scope="row">Step 2 · 시각화</th>
-      <td>
-        <strong class="research-compact-table__main">matplotlib 실습</strong>
-        <span class="research-compact-table__sub">데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.</span>
-      </td>
-      <td><code>matplotlib</code></td>
-      <td><span class="research-compact-table__muted">-</span></td>
-    </tr>
-    <tr>
-      <th scope="row">Step 3 · 구현 코드</th>
-      <td>
-        <strong class="research-compact-table__main">기본 함수들</strong>
-        <span class="research-compact-table__sub">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</span>
-      </td>
-      <td><span class="research-compact-table__muted">-</span></td>
-      <td>실습 과제1 - 상품 매출액 계산 답안</td>
-    </tr>
-    <tr>
-      <th scope="row">Step 4 · 구현 코드</th>
-      <td>
-        <strong class="research-compact-table__main">나의 목표</strong>
-        <span class="research-compact-table__sub">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</span>
-      </td>
-      <td><span class="research-compact-table__muted">-</span></td>
-      <td><span class="research-compact-table__muted">-</span></td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+마크다운으로 매일 학습 기록을 남기는 습관 만들기!
 
-## Code Evidence
+- 읽을 포인트: 하위 구간: 자기소개 마크다운 미션, 자기소개 마크다운 미션 > 이름, 자기소개 마크다운 미션 > 요즘 배우는 것
+
+## 구현 흐름
+
+### 1. csv파일 불러오는 실습
+
+- 단계: 데이터 불러오기
+- 구현 의도: 실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.
+- 핵심 API: `pd.read_csv`
+- 코드 포인트: CSV 파일 불러오기 실습
+
+### 2. matplotlib 실습
+
+- 단계: 시각화
+- 구현 의도: 데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.
+- 핵심 API: `matplotlib`
+- 코드 포인트: -
+
+### 3. 기본 함수들
+
+- 단계: 구현 코드
+- 구현 의도: 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+- 핵심 API: -
+- 코드 포인트: 실습 과제1 - 상품 매출액 계산 답안
+
+### 4. 나의 목표
+
+- 단계: 구현 코드
+- 구현 의도: 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+- 핵심 API: -
+- 코드 포인트: -
+
+## 코드로 확인한 내용
 
 ### csv파일 불러오는 실습
 
@@ -222,7 +167,7 @@ arr = np.array([[2, 3, 4,], [5, 6, 7]])
 arr
 ```
 
-## Source Bundle
+## 참고 자료
 
 - Source path: `11_Machine_Learning/Code_Snippets/250812_코드실습3_4.데이터사이언스 Toolkit.md`
 - Source formats: `ipynb`, `md`
@@ -232,7 +177,7 @@ arr
 - Related notes: `11_Machine_Learning_Code_Summary.md`
 - External references: `localhost`
 
-## Note Preview
+## 원문 미리보기
 
 > 조하나
 > - 파이썬 기초 문법 - 마크다운 정리법 - 데이터 시각화 - AI 엔지니어링

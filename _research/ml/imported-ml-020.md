@@ -5,8 +5,8 @@ research_tab: "ML"
 research_kind: "Archive Note"
 source_title: "[스프린트미션]2 Hotel Booking Demand - AI5 강사 답안"
 source_path: "11_Machine_Learning/Code_Snippets/[스프린트미션]2 Hotel Booking Demand - AI5 강사 답안.md"
-excerpt: "Hotel Booking Demand를 중심으로 피처 엔지니어링 개념과 구현 흐름을 함께 정리한 ML 실습 기록입니다"
-research_summary: "Hotel Booking Demand를 중심으로 피처 엔지니어링 개념과 구현 흐름을 함께 정리한 ML 실습 기록입니다. 본문에서는 데이터 불러오고 확인하기, (2) 결측치 같은 코드를 따라가며 실제 실습 과정을 확인할 수 있습니다. `ipynb/md` 원본과 95개 코드 블록, 95개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 matplotlib, warnings, pandas, numpy입니다."
+excerpt: "Hotel Booking Demand의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다"
+research_summary: "Hotel Booking Demand의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 피처 엔지니어링 순서로 큰 장을 먼저 훑고, 데이터 불러오고 확인하기, (2) 결측치 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 95개 코드 블록, 95개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 matplotlib, warnings, pandas, numpy입니다."
 research_artifacts: "ipynb/md · 코드 95개 · 실행 95개"
 code_block_count: 95
 execution_block_count: 95
@@ -30,130 +30,95 @@ tags:
   - archive-note
 ---
 
-<div class="research-compact-wrap research-compact-wrap--intro">
-  <table class="research-compact-table research-compact-table--intro">
-    <tbody>
-    <tr>
-      <th scope="row">문제 설정</th>
-      <td>2015.07.01부터 2017.08.31까지의 Resort Hotel과 City Hotel의 예약 데이터</td>
-    </tr>
-    <tr>
-      <th scope="row">데이터 맥락</th>
-      <td>2015.07.01부터 2017.08.31까지의 Resort Hotel과 City Hotel의 예약 데이터</td>
-    </tr>
-    <tr>
-      <th scope="row">핵심 개념</th>
-      <td>피처 엔지니어링</td>
-    </tr>
-    <tr>
-      <th scope="row">구현 흐름</th>
-      <td>데이터 불러오고 확인하기 -&gt; (2) 결측치 -&gt; (2) 시각화</td>
-    </tr>
-    <tr>
-      <th scope="row">자료</th>
-      <td>ipynb / md · 코드 95 · 실행 95</td>
-    </tr>
-    <tr>
-      <th scope="row">주요 스택</th>
-      <td>matplotlib, warnings, pandas, numpy 외 1</td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+## 글 한눈에 보기
 
-## What I Studied
+| 항목 | 내용 |
+|------|------|
+| 문제 설정 | 2015.07.01부터 2017.08.31까지의 Resort Hotel과 City Hotel의 예약 데이터 관련 링크 1. Kaggle: https://www.kaggle.com/datasets/jessemostipak/... |
+| 원본 구조 | 데이터 설명 -> 데이터 불러오고 확인하기 -> 데이터 전처리 -> 데이터 시각화 |
+| 데이터 맥락 | 2015.07.01부터 2017.08.31까지의 Resort Hotel과 City Hotel의 예약 데이터 관련 링크 1. Kaggle: https://www.kaggle.com/datasets/jessemostipak/... |
+| 핵심 주제 | 피처 엔지니어링 |
+| 구현 흐름 | 데이터 불러오고 확인하기 -> (2) 결측치 -> (2) 시각화 |
+| 자료 | ipynb / md · 코드 95 · 실행 95 |
+| 주요 스택 | matplotlib, warnings, pandas, numpy 외 1 |
 
-<div class="research-compact-wrap">
-  <table class="research-compact-table research-compact-table--notes">
-    <thead>
-      <tr>
-        <th>개념</th>
-        <th>핵심 설명</th>
-        <th>코드에서 확인한 것</th>
-      </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <th scope="row">피처 엔지니어링</th>
-      <td>피처 엔지니어링은 원본 컬럼을 그대로 쓰지 않고 문제에 맞는 새 특징을 설계해 모델이 더 유용한 패턴을 학습하도록 돕는 과정입니다.</td>
-      <td>이 글에서는 시간 파생 변수, 조건식 기반 플래그, 도메인 규칙을 반영한 새 컬럼 생성 코드가 여기에 해당합니다.</td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+## 원본 노트 흐름
 
-## How I Implemented It
+### 데이터 설명
 
-<div class="research-compact-wrap">
-  <table class="research-compact-table research-compact-table--steps">
-    <thead>
-      <tr>
-        <th>단계</th>
-        <th>구현 내용</th>
-        <th>핵심 API</th>
-        <th>코드 포인트</th>
-      </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <th scope="row">Step 1 · 데이터 불러오기</th>
-      <td>
-        <strong class="research-compact-table__main">데이터 불러오고 확인하기</strong>
-        <span class="research-compact-table__sub">실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.</span>
-      </td>
-      <td><code>pd.read_csv</code></td>
-      <td><span class="research-compact-table__muted">-</span></td>
-    </tr>
-    <tr>
-      <th scope="row">Step 2 · 전처리</th>
-      <td>
-        <strong class="research-compact-table__main">(2) 결측치</strong>
-        <span class="research-compact-table__sub">결측치 처리, 인코딩, 스케일링처럼 모델이 바로 사용할 수 있도록 입력 형태를 다듬는 단계입니다.</span>
-      </td>
-      <td><span class="research-compact-table__muted">-</span></td>
-      <td>결측치 행 제거 - company</td>
-    </tr>
-    <tr>
-      <th scope="row">Step 3 · 피처 가공</th>
-      <td>
-        <strong class="research-compact-table__main">(2) 시각화</strong>
-        <span class="research-compact-table__sub">원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다.</span>
-      </td>
-      <td><code>matplotlib</code> <code>seaborn</code></td>
-      <td>상관행렬 계산 · 히트맵 시각화</td>
-    </tr>
-    <tr>
-      <th scope="row">Step 4 · 시각화</th>
-      <td>
-        <strong class="research-compact-table__main">🧪 분석 방향</strong>
-        <span class="research-compact-table__sub">데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.</span>
-      </td>
-      <td><code>matplotlib</code> <code>seaborn</code></td>
-      <td>lead_time 시각화 · 단위 구간으로 나누어 범주형 변수 생성</td>
-    </tr>
-    <tr>
-      <th scope="row">Step 5 · 시각화</th>
-      <td>
-        <strong class="research-compact-table__main">데이터 분포 시각화</strong>
-        <span class="research-compact-table__sub">데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.</span>
-      </td>
-      <td><code>matplotlib</code></td>
-      <td><span class="research-compact-table__muted">-</span></td>
-    </tr>
-    <tr>
-      <th scope="row">Step 6 · 구현 코드</th>
-      <td>
-        <strong class="research-compact-table__main">(3) 이상치</strong>
-        <span class="research-compact-table__sub">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</span>
-      </td>
-      <td><span class="research-compact-table__muted">-</span></td>
-      <td>babies 이상치 최빈값으로 채우기</td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+2015.07.01부터 2017.08.31까지의 Resort Hotel과 City Hotel의 예약 데이터 관련 링크 1. Kaggle: https://www.kaggle.com/datasets/jessemostipak/hotel-booking-demand 2. https://www.sciencedirect.com/science/ar...
 
-## Code Evidence
+- 읽을 포인트: 데이터 구조와 주의할 변수부터 읽고 실험 방향을 정리하는 구간입니다.
+
+### 데이터 불러오고 확인하기
+
+전체 119390행 29열의 구조 - company 열에 결측치가 많음 (agent도 일부 결측치 확인) - 8월에 여행을 많이 함 => (arrival_date_month의 top 참조) canceled는 0과 1의 값으로 이루어져 있는데, 평균이 0.370416인 것으로 보아 취소된 예약건이 적은 데이터로 추정 - reservat...
+
+- 읽을 포인트: 데이터 구조와 주의할 변수부터 읽고 실험 방향을 정리하는 구간입니다.
+
+### 데이터 전처리
+
+유럽에서 가장 큰 스위트룸 중 하나인 "Royal Residence" 설명 - Basque Luxury - The Royal Residence: the largest suite in Europe: https://basqueluxury.com/en/the-royal-residence-the-largest-suite-in-europe/...
+
+- 읽을 포인트: 하위 구간: (1) 중복값, (2) 결측치, (3) 이상치
+
+### 데이터 시각화
+
+is_canceled와 연관도가 있다고 의심할 수 있는 컬럼 (상대적으로 절댓값이 높은 값) - lead_time - arrival_date_day_of_year - arrival_date_day_of_year은 상대적 상관도는 높으나 의미있는 데이터는 아닐거라고 판단해 is_canceled와 따로 분석 실시하진 X - stays_i...
+
+- 읽을 포인트: 하위 구간: (1) 시각화 위한 데이터 탐색, (2) 시각화, (2) 시각화 > 상관관계 해석
+
+### 분석 방향
+
+is_canceled와 연관이 높은 컬럼들을 다루고, 취소에 영향을 미치는 요인이 뭔지 알아본다! stays_in_week_nights
+
+- 읽을 포인트: 설명 뒤에 이어지는 코드와 함께 읽으면 구현 의도가 더 잘 보이는 구간입니다.
+
+## 구현 흐름
+
+### 1. 데이터 불러오고 확인하기
+
+- 단계: 데이터 불러오기
+- 구현 의도: 실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.
+- 핵심 API: `pd.read_csv`
+- 코드 포인트: -
+
+### 2. (2) 결측치
+
+- 단계: 전처리
+- 구현 의도: 결측치 처리, 인코딩, 스케일링처럼 모델이 바로 사용할 수 있도록 입력 형태를 다듬는 단계입니다.
+- 핵심 API: -
+- 코드 포인트: 결측치 행 제거 - company
+
+### 3. (2) 시각화
+
+- 단계: 피처 가공
+- 구현 의도: 원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다.
+- 핵심 API: `matplotlib`, `seaborn`
+- 코드 포인트: 상관행렬 계산 · 히트맵 시각화
+
+### 4. 🧪 분석 방향
+
+- 단계: 시각화
+- 구현 의도: 데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.
+- 핵심 API: `matplotlib`, `seaborn`
+- 코드 포인트: lead_time 시각화 · 단위 구간으로 나누어 범주형 변수 생성
+
+### 5. 데이터 분포 시각화
+
+- 단계: 시각화
+- 구현 의도: 데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.
+- 핵심 API: `matplotlib`
+- 코드 포인트: -
+
+### 6. (3) 이상치
+
+- 단계: 구현 코드
+- 구현 의도: 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+- 핵심 API: -
+- 코드 포인트: babies 이상치 최빈값으로 채우기
+
+## 코드로 확인한 내용
 
 ### 데이터 불러오고 확인하기
 
@@ -276,7 +241,7 @@ most_common_babies = df['babies'].mode()[0]
 df.loc[df['babies'] > 8, 'babies'] = most_common_babies
 ```
 
-## Source Bundle
+## 참고 자료
 
 - Source path: `11_Machine_Learning/Code_Snippets/[스프린트미션]2 Hotel Booking Demand - AI5 강사 답안.md`
 - Source formats: `ipynb`, `md`
@@ -286,7 +251,7 @@ df.loc[df['babies'] > 8, 'babies'] = most_common_babies
 - Related notes: `"adults", "booking_changes", "children", "babies","required_car_parking_spaces",`
 - External references: `localhost`, `www.kaggle.com`, `www.sciencedirect.com`, `basqueluxury.com`, `www.dayuse.com`
 
-## Note Preview
+## 원문 미리보기
 
 > 2015.07.01부터 2017.08.31까지의 Resort Hotel과 City Hotel의 예약 데이터
 > **관련 링크** 1. Kaggle: https://www.kaggle.com/datasets/jessemostipak/hotel-booking-demand 2. https://www.sciencedirect.com/science/article/pii/S2352340918315191

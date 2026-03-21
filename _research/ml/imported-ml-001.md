@@ -5,8 +5,8 @@ research_tab: "ML"
 research_kind: "Practice"
 source_title: "250807-08_코드실습2_2.객체와 클래스"
 source_path: "11_Machine_Learning/Code_Snippets/250807-08_코드실습2_2.객체와 클래스.md"
-excerpt: "코드실습2 2.객체와 클래스를 중심으로 객체지향 설계, 함수 분해와 로직 구성 개념과 구현 흐름을 함께 정리한 ML 실습 기록입니다"
-research_summary: "코드실습2 2.객체와 클래스를 중심으로 객체지향 설계, 함수 분해와 로직 구성 개념과 구현 흐름을 함께 정리한 ML 실습 기록입니다. 본문에서는 은행 클래스, 다양한 메소드 같은 코드를 따라가며 실제 실습 과정을 확인할 수 있습니다. `ipynb/md` 원본과 28개 코드 블록, 18개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다."
+excerpt: "코드실습2 2.객체와 클래스의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다"
+research_summary: "코드실습2 2.객체와 클래스의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 객체지향 설계, 함수 분해와 로직 구성 순서로 큰 장을 먼저 훑고, 은행 클래스, 다양한 메소드 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 28개 코드 블록, 18개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다."
 research_artifacts: "ipynb/md · 코드 28개 · 실행 18개"
 code_block_count: 28
 execution_block_count: 18
@@ -25,108 +25,56 @@ tags:
   - practice
 ---
 
-<div class="research-compact-wrap research-compact-wrap--intro">
-  <table class="research-compact-table research-compact-table--intro">
-    <tbody>
-    <tr>
-      <th scope="row">문제 설정</th>
-      <td>코드실습2 2.객체와 클래스를 중심으로 학습한 내용을 정리한 ML 실습입니다.</td>
-    </tr>
-    <tr>
-      <th scope="row">데이터 맥락</th>
-      <td>원본 노트에서 데이터를 설명한 부분을 기준으로 실습 맥락을 정리했습니다.</td>
-    </tr>
-    <tr>
-      <th scope="row">핵심 개념</th>
-      <td>객체지향 설계 · 함수 분해와 로직 구성</td>
-    </tr>
-    <tr>
-      <th scope="row">구현 흐름</th>
-      <td>은행 클래스 -&gt; 다양한 메소드 -&gt; 클래스 코드 연습</td>
-    </tr>
-    <tr>
-      <th scope="row">자료</th>
-      <td>ipynb / md · 코드 28 · 실행 18</td>
-    </tr>
-    <tr>
-      <th scope="row">주요 스택</th>
-      <td>Not detected</td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+## 글 한눈에 보기
 
-## What I Studied
+| 항목 | 내용 |
+|------|------|
+| 문제 설정 | 코드실습2 2.객체와 클래스를 중심으로 학습한 내용을 정리한 ML 실습입니다. |
+| 원본 구조 | 클래스 코드 연습 -> 은행 클래스 -> 다양한 메소드 |
+| 데이터 맥락 | 원본 노트에서 데이터를 설명한 부분을 기준으로 실습 맥락을 정리했습니다. |
+| 핵심 주제 | 객체지향 설계 · 함수 분해와 로직 구성 |
+| 구현 흐름 | 은행 클래스 -> 다양한 메소드 -> 클래스 코드 연습 |
+| 자료 | ipynb / md · 코드 28 · 실행 18 |
+| 주요 스택 | 미확인 |
 
-<div class="research-compact-wrap">
-  <table class="research-compact-table research-compact-table--notes">
-    <thead>
-      <tr>
-        <th>개념</th>
-        <th>핵심 설명</th>
-        <th>코드에서 확인한 것</th>
-      </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <th scope="row">객체지향 설계</th>
-      <td>객체지향은 관련 데이터와 동작을 하나의 객체로 묶어 문제를 구조적으로 표현하는 방식입니다.</td>
-      <td>이 글에서는 클래스, 메서드, 상태 관리 같은 코드가 핵심 학습 포인트로 드러납니다.</td>
-    </tr>
-    <tr>
-      <th scope="row">함수 분해와 로직 구성</th>
-      <td>함수는 입력, 처리, 반환을 분리해 로직을 재사용하기 쉽게 만들고, 문제를 작은 단위로 나누는 기본 도구입니다.</td>
-      <td>이 글에서는 문제 풀이를 함수 단위로 쪼개고 입출력을 나눠 보는 실습과 연결됩니다.</td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+## 원본 노트 흐름
 
-## How I Implemented It
+### 객체지향 설계
 
-<div class="research-compact-wrap">
-  <table class="research-compact-table research-compact-table--steps">
-    <thead>
-      <tr>
-        <th>단계</th>
-        <th>구현 내용</th>
-        <th>핵심 API</th>
-        <th>코드 포인트</th>
-      </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <th scope="row">Step 1 · 클래스 설계</th>
-      <td>
-        <strong class="research-compact-table__main">은행 클래스</strong>
-        <span class="research-compact-table__sub">문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.</span>
-      </td>
-      <td><span class="research-compact-table__muted">-</span></td>
-      <td>입금 기능 구현 · 출금 기능 구현</td>
-    </tr>
-    <tr>
-      <th scope="row">Step 2 · 클래스 설계</th>
-      <td>
-        <strong class="research-compact-table__main">다양한 메소드</strong>
-        <span class="research-compact-table__sub">문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.</span>
-      </td>
-      <td><span class="research-compact-table__muted">-</span></td>
-      <td>str메소드</td>
-    </tr>
-    <tr>
-      <th scope="row">Step 3 · 클래스 설계</th>
-      <td>
-        <strong class="research-compact-table__main">클래스 코드 연습</strong>
-        <span class="research-compact-table__sub">문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.</span>
-      </td>
-      <td><span class="research-compact-table__muted">-</span></td>
-      <td>Person 클래스 연습</td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+객체지향은 관련 데이터와 동작을 하나의 객체로 묶어 문제를 구조적으로 표현하는 방식입니다.
 
-## Code Evidence
+- 읽을 포인트: 이 글에서는 클래스, 메서드, 상태 관리 같은 코드가 핵심 학습 포인트로 드러납니다.
+
+### 함수 분해와 로직 구성
+
+함수는 입력, 처리, 반환을 분리해 로직을 재사용하기 쉽게 만들고, 문제를 작은 단위로 나누는 기본 도구입니다.
+
+- 읽을 포인트: 이 글에서는 문제 풀이를 함수 단위로 쪼개고 입출력을 나눠 보는 실습과 연결됩니다.
+
+## 구현 흐름
+
+### 1. 은행 클래스
+
+- 단계: 클래스 설계
+- 구현 의도: 문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.
+- 핵심 API: -
+- 코드 포인트: 입금 기능 구현 · 출금 기능 구현
+
+### 2. 다양한 메소드
+
+- 단계: 클래스 설계
+- 구현 의도: 문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.
+- 핵심 API: -
+- 코드 포인트: str메소드
+
+### 3. 클래스 코드 연습
+
+- 단계: 클래스 설계
+- 구현 의도: 문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.
+- 핵심 API: -
+- 코드 포인트: Person 클래스 연습
+
+## 코드로 확인한 내용
 
 ### 은행 클래스
 
@@ -202,7 +150,7 @@ class Person:
         print(f'Hello {self.name}')
 ```
 
-## Source Bundle
+## 참고 자료
 
 - Source path: `11_Machine_Learning/Code_Snippets/250807-08_코드실습2_2.객체와 클래스.md`
 - Source formats: `ipynb`, `md`
@@ -212,6 +160,6 @@ class Person:
 - Related notes: `11_Machine_Learning_Code_Summary.md`
 - External references: `localhost`
 
-## Note Preview
+## 원문 미리보기
 
 > 원본 노트에 별도 설명 문단이 많지 않아 코드 중심으로 보존했습니다.

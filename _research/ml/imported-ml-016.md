@@ -5,8 +5,8 @@ research_tab: "ML"
 research_kind: "Archive Note"
 source_title: "250901_SVM"
 source_path: "11_Machine_Learning/Code_Snippets/250901_SVM.md"
-excerpt: "SVM를 중심으로 객체지향 설계, 함수 분해와 로직 구성 개념과 구현 흐름을 함께 정리한 ML 실습 기록입니다"
-research_summary: "SVM를 중심으로 객체지향 설계, 함수 분해와 로직 구성 개념과 구현 흐름을 함께 정리한 ML 실습 기록입니다. 본문에서는 파생 변수 추가, SVM 모델 학습 같은 코드를 따라가며 실제 실습 과정을 확인할 수 있습니다. `ipynb/md` 원본과 8개 코드 블록, 8개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, matplotlib, sklearn입니다."
+excerpt: "SVM의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다"
+research_summary: "SVM의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 객체지향 설계, 함수 분해와 로직 구성 순서로 큰 장을 먼저 훑고, 파생 변수 추가, SVM 모델 학습 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 8개 코드 블록, 8개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, matplotlib, sklearn입니다."
 research_artifacts: "ipynb/md · 코드 8개 · 실행 8개"
 code_block_count: 8
 execution_block_count: 8
@@ -27,135 +27,77 @@ tags:
   - archive-note
 ---
 
-<div class="research-compact-wrap research-compact-wrap--intro">
-  <table class="research-compact-table research-compact-table--intro">
-    <tbody>
-    <tr>
-      <th scope="row">문제 설정</th>
-      <td>C: cost (오분류에 대한 패널티 강도), gamma: 커널 곡률 조절</td>
-    </tr>
-    <tr>
-      <th scope="row">데이터 맥락</th>
-      <td>원본 노트에서 데이터를 설명한 부분을 기준으로 실습 맥락을 정리했습니다.</td>
-    </tr>
-    <tr>
-      <th scope="row">핵심 개념</th>
-      <td>객체지향 설계 · 함수 분해와 로직 구성</td>
-    </tr>
-    <tr>
-      <th scope="row">구현 흐름</th>
-      <td>파생 변수 추가 -&gt; SVM 모델 학습 -&gt; 데이터 분포 시각화</td>
-    </tr>
-    <tr>
-      <th scope="row">자료</th>
-      <td>ipynb / md · 코드 8 · 실행 8</td>
-    </tr>
-    <tr>
-      <th scope="row">주요 스택</th>
-      <td>numpy, matplotlib, sklearn</td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+## 글 한눈에 보기
 
-## What I Studied
+| 항목 | 내용 |
+|------|------|
+| 문제 설정 | C: cost (오분류에 대한 패널티 강도), gamma: 커널 곡률 조절 |
+| 원본 구조 | 원본 마크다운의 큰 섹션 흐름을 기준으로 이 실습을 다시 읽을 수 있게 정리했습니다. |
+| 데이터 맥락 | 원본 노트에서 데이터를 설명한 부분을 기준으로 실습 맥락을 정리했습니다. |
+| 핵심 주제 | 객체지향 설계 · 함수 분해와 로직 구성 |
+| 구현 흐름 | 파생 변수 추가 -> SVM 모델 학습 -> 데이터 분포 시각화 |
+| 자료 | ipynb / md · 코드 8 · 실행 8 |
+| 주요 스택 | numpy, matplotlib, sklearn |
 
-<div class="research-compact-wrap">
-  <table class="research-compact-table research-compact-table--notes">
-    <thead>
-      <tr>
-        <th>개념</th>
-        <th>핵심 설명</th>
-        <th>코드에서 확인한 것</th>
-      </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <th scope="row">객체지향 설계</th>
-      <td>객체지향은 관련 데이터와 동작을 하나의 객체로 묶어 문제를 구조적으로 표현하는 방식입니다.</td>
-      <td>이 글에서는 클래스, 메서드, 상태 관리 같은 코드가 핵심 학습 포인트로 드러납니다.</td>
-    </tr>
-    <tr>
-      <th scope="row">함수 분해와 로직 구성</th>
-      <td>함수는 입력, 처리, 반환을 분리해 로직을 재사용하기 쉽게 만들고, 문제를 작은 단위로 나누는 기본 도구입니다.</td>
-      <td>이 글에서는 문제 풀이를 함수 단위로 쪼개고 입출력을 나눠 보는 실습과 연결됩니다.</td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+## 원본 노트 흐름
 
-## How I Implemented It
+### 객체지향 설계
 
-<div class="research-compact-wrap">
-  <table class="research-compact-table research-compact-table--steps">
-    <thead>
-      <tr>
-        <th>단계</th>
-        <th>구현 내용</th>
-        <th>핵심 API</th>
-        <th>코드 포인트</th>
-      </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <th scope="row">Step 1 · 피처 가공</th>
-      <td>
-        <strong class="research-compact-table__main">파생 변수 추가</strong>
-        <span class="research-compact-table__sub">원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다.</span>
-      </td>
-      <td><span class="research-compact-table__muted">-</span></td>
-      <td><span class="research-compact-table__muted">-</span></td>
-    </tr>
-    <tr>
-      <th scope="row">Step 2 · 학습</th>
-      <td>
-        <strong class="research-compact-table__main">SVM 모델 학습</strong>
-        <span class="research-compact-table__sub">훈련 데이터를 기준으로 모델을 실제로 fitting 하며 성능을 끌어올리는 학습 단계입니다.</span>
-      </td>
-      <td><span class="research-compact-table__muted">-</span></td>
-      <td>C: cost (오분류에 대한 패널티 강도), gamma...</td>
-    </tr>
-    <tr>
-      <th scope="row">Step 3 · 시각화</th>
-      <td>
-        <strong class="research-compact-table__main">데이터 분포 시각화</strong>
-        <span class="research-compact-table__sub">데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.</span>
-      </td>
-      <td><code>matplotlib</code></td>
-      <td><span class="research-compact-table__muted">-</span></td>
-    </tr>
-    <tr>
-      <th scope="row">Step 4 · 환경 준비</th>
-      <td>
-        <strong class="research-compact-table__main">import numpy as np</strong>
-        <span class="research-compact-table__sub">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</span>
-      </td>
-      <td><span class="research-compact-table__muted">-</span></td>
-      <td><span class="research-compact-table__muted">-</span></td>
-    </tr>
-    <tr>
-      <th scope="row">Step 5 · 구현 코드</th>
-      <td>
-        <strong class="research-compact-table__main">X_blob, y_blob = make_blobs(n_samples=50, centers=2, random_state=6)</strong>
-        <span class="research-compact-table__sub">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</span>
-      </td>
-      <td><span class="research-compact-table__muted">-</span></td>
-      <td>centers=2</td>
-    </tr>
-    <tr>
-      <th scope="row">Step 6 · 구현 코드</th>
-      <td>
-        <strong class="research-compact-table__main">xx, yy = np.meshgrid(np.linspace(X_blob[:, 0].min()-1, X_blob[:, 0].max()+1,...</strong>
-        <span class="research-compact-table__sub">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</span>
-      </td>
-      <td><span class="research-compact-table__muted">-</span></td>
-      <td><span class="research-compact-table__muted">-</span></td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+객체지향은 관련 데이터와 동작을 하나의 객체로 묶어 문제를 구조적으로 표현하는 방식입니다.
 
-## Code Evidence
+- 읽을 포인트: 이 글에서는 클래스, 메서드, 상태 관리 같은 코드가 핵심 학습 포인트로 드러납니다.
+
+### 함수 분해와 로직 구성
+
+함수는 입력, 처리, 반환을 분리해 로직을 재사용하기 쉽게 만들고, 문제를 작은 단위로 나누는 기본 도구입니다.
+
+- 읽을 포인트: 이 글에서는 문제 풀이를 함수 단위로 쪼개고 입출력을 나눠 보는 실습과 연결됩니다.
+
+## 구현 흐름
+
+### 1. 파생 변수 추가
+
+- 단계: 피처 가공
+- 구현 의도: 원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다.
+- 핵심 API: -
+- 코드 포인트: -
+
+### 2. SVM 모델 학습
+
+- 단계: 학습
+- 구현 의도: 훈련 데이터를 기준으로 모델을 실제로 fitting 하며 성능을 끌어올리는 학습 단계입니다.
+- 핵심 API: -
+- 코드 포인트: C: cost (오분류에 대한 패널티 강도), gamma...
+
+### 3. 데이터 분포 시각화
+
+- 단계: 시각화
+- 구현 의도: 데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.
+- 핵심 API: `matplotlib`
+- 코드 포인트: -
+
+### 4. import numpy as np
+
+- 단계: 환경 준비
+- 구현 의도: 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+- 핵심 API: -
+- 코드 포인트: -
+
+### 5. X_blob, y_blob = make_blobs(n_samples=50, centers=2, random_state=6)
+
+- 단계: 구현 코드
+- 구현 의도: 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+- 핵심 API: -
+- 코드 포인트: centers=2
+
+### 6. xx, yy = np.meshgrid(np.linspace(X_blob[:, 0].min()-1, X_blob[:, 0].max()+1,...
+
+- 단계: 구현 코드
+- 구현 의도: 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+- 핵심 API: -
+- 코드 포인트: -
+
+## 코드로 확인한 내용
 
 ### 파생 변수 추가
 
@@ -251,7 +193,7 @@ xx, yy = np.meshgrid(np.linspace(X_blob[:, 0].min()-1, X_blob[:, 0].max()+1, 500
                      np.linspace(X_blob[:, 1].min()-1, X_blob[:, 1].max()+1, 500))
 ```
 
-## Source Bundle
+## 참고 자료
 
 - Source path: `11_Machine_Learning/Code_Snippets/250901_SVM.md`
 - Source formats: `ipynb`, `md`
@@ -261,6 +203,6 @@ xx, yy = np.meshgrid(np.linspace(X_blob[:, 0].min()-1, X_blob[:, 0].max()+1, 500
 - Related notes: `11_Machine_Learning_Code_Summary.md`
 - External references: `localhost`
 
-## Note Preview
+## 원문 미리보기
 
 > 원본 노트에 별도 설명 문단이 많지 않아 코드 중심으로 보존했습니다.
