@@ -30,34 +30,34 @@ tags:
 ---
 
 <div class="research-doc-hero">
-  <div class="research-doc-hero__meta">
-<div class="research-doc-hero__meta-item">
-  <span>Source</span>
-  <strong>ipynb / md</strong>
-</div>
-<div class="research-doc-hero__meta-item">
-  <span>Artifacts</span>
-  <strong>코드 114 · 실행 61</strong>
-</div>
-<div class="research-doc-hero__meta-item">
-  <span>Libraries</span>
-  <strong>itertools, time, datetime, csv</strong>
-</div>
+  <div class="research-doc-summary">
+    <p class="research-doc-summary__label">문제 설정</p>
+    <p class="research-doc-summary__body">문제 설명 1부터 n까지의 숫자 중에서 3의 배수만 출력하는 함수를 작성하세요.</p>
   </div>
-</div>
-<div class="research-doc-grid">
+  <div class="research-doc-meta">
 <div class="research-doc-card">
-  <p class="research-doc-card__label">Study Topic</p>
-  <p class="research-doc-card__value">문제 설명 1부터 n까지의 숫자 중에서 3의 배수만 출력하는 함수를 작성하세요.</p>
-</div>
-<div class="research-doc-card">
-  <p class="research-doc-card__label">Core Concepts</p>
+  <p class="research-doc-card__label">핵심 개념</p>
   <p class="research-doc-card__value">함수 분해와 로직 구성</p>
 </div>
 <div class="research-doc-card">
-  <p class="research-doc-card__label">Implementation Focus</p>
-  <p class="research-doc-card__value">클래스 설계 -&gt; 함수 실습 -&gt; 구현 코드</p>
+  <p class="research-doc-card__label">구현 포인트</p>
+  <p class="research-doc-card__value">문제1. 투표 시스템 클래스 · 문제1. 시간 관리 프로그램 · 문제3. 도서관 관리 시스템</p>
 </div>
+  </div>
+  <div class="research-doc-stats">
+<div class="research-doc-stat">
+  <span>소스</span>
+  <strong>ipynb / md</strong>
+</div>
+<div class="research-doc-stat">
+  <span>자료</span>
+  <strong>코드 114 · 실행 61</strong>
+</div>
+<div class="research-doc-stat">
+  <span>주요 스택</span>
+  <strong>itertools, time, datetime, csv</strong>
+</div>
+  </div>
 </div>
 
 ## What I Studied
@@ -66,13 +66,13 @@ tags:
 <div class="research-note-card">
   <p class="research-note-card__label">함수 분해와 로직 구성</p>
   <p class="research-note-card__body">함수는 입력, 처리, 반환을 분리해 로직을 재사용하기 쉽게 만들고, 문제를 작은 단위로 나누는 기본 도구입니다.</p>
-  <p class="research-note-card__meta">이 글에서는 문제 풀이를 함수 단위로 쪼개고 입출력을 나눠 보는 실습과 연결됩니다.</p>
+  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>이 글에서는 문제 풀이를 함수 단위로 쪼개고 입출력을 나눠 보는 실습과 연결됩니다.</p>
 </div>
 </div>
 
 ## How I Implemented It
 
-<div class="research-step-grid">
+<div class="research-step-list">
 <div class="research-step-card">
   <p class="research-step-card__kicker">Step 1 · 클래스 설계</p>
   <p class="research-step-card__title">문제1. 투표 시스템 클래스</p>
@@ -102,18 +102,18 @@ tags:
   <p class="research-step-card__meta"><span>코드 포인트</span> 기본 답안</p>
 </div>
 <div class="research-step-card">
-  <p class="research-step-card__kicker">Step 5 · 클래스 설계</p>
-  <p class="research-step-card__title">문제4. 프랜차이즈 레스토랑 관리 클래스</p>
-  <p class="research-step-card__body">문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.</p>
+  <p class="research-step-card__kicker">Step 5 · 함수 실습</p>
+  <p class="research-step-card__title">문제2. 수학 퍼즐: 소수의 합</p>
+  <p class="research-step-card__body">입력과 반환값을 분리해 문제 해결 과정을 함수로 정리하는 기초 구현 실습 코드입니다.</p>
 
-  <p class="research-step-card__meta"><span>코드 포인트</span> 응용 버전 1 - cancel_reservation 추가 · 고객 이름과 예약 일시를 기준으로 해당 예약을 찾아 삭제...</p>
+  <p class="research-step-card__meta"><span>코드 포인트</span> 에라토스테네스의 체로 구현한 버전 · 소수인지 판별 =&gt; 보통 루트값만 확인</p>
 </div>
 <div class="research-step-card">
   <p class="research-step-card__kicker">Step 6 · 클래스 설계</p>
-  <p class="research-step-card__title">문제4. 프랜차이즈 레스토랑 관리 클래스</p>
+  <p class="research-step-card__title">문제2. 은행 계좌 클래스</p>
   <p class="research-step-card__body">문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.</p>
 
-  <p class="research-step-card__meta"><span>코드 포인트</span> 응용 버전 2 - classmethod 사용 대신 sta... · sum_reservations은 인스턴스를 인자로 받기...</p>
+  <p class="research-step-card__meta"><span>코드 포인트</span> 기본 답안</p>
 </div>
 </div>
 
@@ -292,96 +292,74 @@ class ReservationSystem:
 # ... trimmed ...
 ```
 
-### 문제4. 프랜차이즈 레스토랑 관리 클래스
+### 문제2. 수학 퍼즐: 소수의 합
 
-**직접 해본 단계**: 클래스 설계
+**직접 해본 단계**: 함수 실습
 
-문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.
+입력과 반환값을 분리해 문제 해결 과정을 함수로 정리하는 기초 구현 실습 코드입니다.
 
 ```python
-# 응용 버전 1 - cancel_reservation 추가
-class ReservationSystem:
-    def __init__(self, branch_name):
-        self.branch_name = branch_name
-        self.reservations = []
+# 에라토스테네스의 체로 구현한 버전
 
-    def add_reservation(self, customer_name, date, num_people):
-        if not customer_name or not date or num_people <= 0:
-            print("잘못된 예약 정보입니다.")
-            return
-        self.reservations.append({
-            "name": customer_name,
-            "date": date,
-            "num_people": num_people
-        })
+# 소수인지 판별 => 보통 루트값만 확인
+def is_prime(num):
+    if num < 2:
+        return False
+    for i in range(2, int(num**0.5) + 1):  # √num 까지만 확인
+        if num % i == 0:
+            return False
+    return True
 
-    def list_reservations(self):
-        print(f"{self.branch_name} 예약 목록:")
-        if not self.reservations:
-            print("현재 예약이 없습니다.")
-        else:
-            for r in self.reservations:
-                print(f"- {r['name']}, {r['date']}, {r['num_people']}명")
+# 에라토스테네스 구현
+def sum_of_primes(n):
+    if n < 2:
+        return 0
 
-    # 고객 이름과 예약 일시를 기준으로 해당 예약을 찾아 삭제하는 함수 정의
-    def cancel_reservation(self, customer_name, date):
-        original_count = len(self.reservations)
-        self.reservations = [
-            r for r in self.reservations
-            if not (r["name"] == customer_name and r["date"] == date)
-        ]
-        if len(self.reservations) < original_count:
-            print(f"{customer_name}님의 예약이 취소되었습니다.")
-        else:
-            print("해당 예약을 찾을 수 없습니다.")
+    is_prime = [True] * (n + 1)
+    is_prime[0] = is_prime[1] = False  # 0과 1은 소수가 아님
 
-# ... trimmed ...
+    for i in range(2, int(n**0.5) + 1):
+        if is_prime[i]:
+            for j in range(i*i, n + 1, i):
+                is_prime[j] = False
+
+    return sum(i for i, prime in enumerate(is_prime) if prime)
+
+# 사용자 입력받고 결과 출력
+def main():
+    n = int(input("어떤 수까지의 소수의 합을 구하시겠습니까?: "))
+    total = sum_of_primes(n)
+    print(f"{n} 이하 소수의 합은 {total}입니다.")
 ```
 
-### 문제4. 프랜차이즈 레스토랑 관리 클래스
+### 문제2. 은행 계좌 클래스
 
 **직접 해본 단계**: 클래스 설계
 
 문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.
 
 ```python
-# 응용 버전 2 - classmethod 사용 대신 staticmethod 사용
-# sum_reservations은 인스턴스를 인자로 받기 때문에 클래스 변수에 접근하지 않음 — 사실 staticmethod로도 충분
-class ReservationSystem:
-    def __init__(self, branch_name):
-        self.branch_name = branch_name
-        self.reservations = []
+# 기본 답안
+class BankAccount:
+    def __init__(self, account_number, account_holder, initial_balance):
+        self.account_number = account_number
+        self.account_holder = account_holder
+        self.balance = initial_balance
+        print(f"{self.account_holder}님의 계좌 {self.account_number}가 개설되었습니다. 초기 잔액: {self.balance:.0f}원")
 
-    def add_reservation(self, customer_name, date, num_people):
-        if not customer_name or not date or num_people <= 0:
-            print("잘못된 예약 정보입니다.")
-            return
-        self.reservations.append({
-            "name": customer_name,
-            "date": date,
-            "num_people": num_people
-        })
+    def deposit(self, amount: float):
+        self.balance += amount
+        print(f"{amount:.0f}원이 입금되었습니다. 현재 잔액: {self.balance:.0f}원")
 
-    def list_reservations(self):
-        print(f"{self.branch_name} 예약 목록:")
-        if not self.reservations:
-            print("현재 예약이 없습니다.")
+    def withdraw(self, amount: float):
+        if self.balance < amount:
+            print("잔액이 부족하여 출금할 수 없습니다.")
         else:
-            for r in self.reservations:
-                print(f"- {r['name']}, {r['date']}, {r['num_people']}명")
+            self.balance -= amount
+            print(f"{amount:.0f}원이 출금되었습니다. 현재 잔액: {self.balance:.0f}원")
 
-    def cancel_reservation(self, customer_name, date):
-        original_count = len(self.reservations)
-        self.reservations = [
-            r for r in self.reservations
-            if not (r["name"] == customer_name and r["date"] == date)
-        ]
-        if len(self.reservations) < original_count:
-            print(f"{customer_name}님의 예약이 취소되었습니다.")
-        else:
-            print("해당 예약을 찾을 수 없습니다.")
-
-# ... trimmed ...
+    def get_balance(self):
+        return self.balance
 ```
 
 ## Source Bundle

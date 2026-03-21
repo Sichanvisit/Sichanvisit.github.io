@@ -31,38 +31,38 @@ tags:
 ---
 
 <div class="research-doc-hero">
-  <div class="research-doc-hero__meta">
-<div class="research-doc-hero__meta-item">
-  <span>Source</span>
-  <strong>ipynb / md</strong>
-</div>
-<div class="research-doc-hero__meta-item">
-  <span>Artifacts</span>
-  <strong>코드 95 · 실행 95</strong>
-</div>
-<div class="research-doc-hero__meta-item">
-  <span>Libraries</span>
-  <strong>matplotlib, warnings, pandas, numpy, seaborn</strong>
-</div>
+  <div class="research-doc-summary">
+    <p class="research-doc-summary__label">문제 설정</p>
+    <p class="research-doc-summary__body">2015.07.01부터 2017.08.31까지의 Resort Hotel과 City Hotel의 예약 데이터</p>
   </div>
-</div>
-<div class="research-doc-grid">
+  <div class="research-doc-meta">
 <div class="research-doc-card">
-  <p class="research-doc-card__label">Study Topic</p>
+  <p class="research-doc-card__label">데이터 맥락</p>
   <p class="research-doc-card__value">2015.07.01부터 2017.08.31까지의 Resort Hotel과 City Hotel의 예약 데이터</p>
 </div>
 <div class="research-doc-card">
-  <p class="research-doc-card__label">Data Context</p>
-  <p class="research-doc-card__value">2015.07.01부터 2017.08.31까지의 Resort Hotel과 City Hotel의 예약 데이터</p>
-</div>
-<div class="research-doc-card">
-  <p class="research-doc-card__label">Core Concepts</p>
+  <p class="research-doc-card__label">핵심 개념</p>
   <p class="research-doc-card__value">피처 엔지니어링</p>
 </div>
 <div class="research-doc-card">
-  <p class="research-doc-card__label">Implementation Focus</p>
-  <p class="research-doc-card__value">데이터 불러오기 -&gt; 전처리 -&gt; 피처 가공</p>
+  <p class="research-doc-card__label">구현 포인트</p>
+  <p class="research-doc-card__value">데이터 불러오고 확인하기 · (2) 결측치 · (2) 시각화</p>
 </div>
+  </div>
+  <div class="research-doc-stats">
+<div class="research-doc-stat">
+  <span>소스</span>
+  <strong>ipynb / md</strong>
+</div>
+<div class="research-doc-stat">
+  <span>자료</span>
+  <strong>코드 95 · 실행 95</strong>
+</div>
+<div class="research-doc-stat">
+  <span>주요 스택</span>
+  <strong>matplotlib, warnings, pandas, numpy 외 1</strong>
+</div>
+  </div>
 </div>
 
 ## What I Studied
@@ -71,13 +71,13 @@ tags:
 <div class="research-note-card">
   <p class="research-note-card__label">피처 엔지니어링</p>
   <p class="research-note-card__body">피처 엔지니어링은 원본 컬럼을 그대로 쓰지 않고 문제에 맞는 새 특징을 설계해 모델이 더 유용한 패턴을 학습하도록 돕는 과정입니다.</p>
-  <p class="research-note-card__meta">이 글에서는 시간 파생 변수, 조건식 기반 플래그, 도메인 규칙을 반영한 새 컬럼 생성 코드가 여기에 해당합니다.</p>
+  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>이 글에서는 시간 파생 변수, 조건식 기반 플래그, 도메인 규칙을 반영한 새 컬럼 생성 코드가 여기에 해당합니다.</p>
 </div>
 </div>
 
 ## How I Implemented It
 
-<div class="research-step-grid">
+<div class="research-step-list">
 <div class="research-step-card">
   <p class="research-step-card__kicker">Step 1 · 데이터 불러오기</p>
   <p class="research-step-card__title">데이터 불러오고 확인하기</p>
@@ -107,18 +107,18 @@ tags:
   <p class="research-step-card__meta"><span>코드 포인트</span> lead_time 시각화 · 단위 구간으로 나누어 범주형 변수 생성</p>
 </div>
 <div class="research-step-card">
-  <p class="research-step-card__kicker">Step 5 · 환경 준비</p>
-  <p class="research-step-card__title">데이터 불러오고 확인하기</p>
-  <p class="research-step-card__body">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</p>
+  <p class="research-step-card__kicker">Step 5 · 시각화</p>
+  <p class="research-step-card__title">데이터 분포 시각화</p>
+  <p class="research-step-card__body">데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.</p>
+  <p class="research-step-card__meta"><span>핵심 API</span> <code>matplotlib</code></p>
 
-  <p class="research-step-card__meta"><span>코드 포인트</span> 라이브러리 임포트</p>
 </div>
 <div class="research-step-card">
   <p class="research-step-card__kicker">Step 6 · 구현 코드</p>
-  <p class="research-step-card__title">🧪 분석 방향</p>
+  <p class="research-step-card__title">(3) 이상치</p>
   <p class="research-step-card__body">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</p>
 
-  <p class="research-step-card__meta"><span>코드 포인트</span> is_repeated_guest 시각화 · 그룹별 평균 취소율</p>
+  <p class="research-step-card__meta"><span>코드 포인트</span> babies 이상치 최빈값으로 채우기</p>
 </div>
 </div>
 
@@ -205,32 +205,44 @@ plt.xticks(rotation=45)
 plt.show()
 ```
 
-### 데이터 불러오고 확인하기
+### 데이터 분포 시각화
 
-**직접 해본 단계**: 환경 준비
+**직접 해본 단계**: 시각화
 
-원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+**핵심 API**: `matplotlib`
+
+데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.
 
 ```python
-# 라이브러리 임포트
-import pandas as pd
-import numpy as np
-import seaborn as sns
+!sudo apt-get install -y fonts-nanum
+!sudo fc-cache -fv
+!rm ~/.cache/matplotlib -rf
+
+!apt-get update -qq
+!apt-get install fonts-nanum* -qq
+
+import matplotlib.pyplot as plt
+import matplotlib.font_manager as fm
+import warnings
+warnings.filterwarnings(action='ignore')
+
+path = '/usr/share/fonts/truetype/nanum/NanumBarunGothic.ttf' # 나눔 고딕
+font_name = fm.FontProperties(fname=path, size=10).get_name() # 기본 폰트 사이즈 : 10
+plt.rc('font', family=font_name)
+
+fm.fontManager.addfont(path)
 ```
 
-### 🧪 분석 방향
+### (3) 이상치
 
 **직접 해본 단계**: 구현 코드
 
 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
 
 ```python
-# is_repeated_guest 시각화
-
-# 그룹별 평균 취소율
-repeat_cancel = df.groupby('is_repeated_guest')['is_canceled'].mean().reset_index()
-repeat_cancel['is_repeated_guest'] = repeat_cancel['is_repeated_guest'].map({0: '신규 고객', 1: '재방문 고객'})
-repeat_cancel.columns = ['고객 유형', '평균 취소율']
+# babies 이상치 최빈값으로 채우기
+most_common_babies = df['babies'].mode()[0]
+df.loc[df['babies'] > 8, 'babies'] = most_common_babies
 ```
 
 ## Source Bundle

@@ -30,34 +30,34 @@ tags:
 ---
 
 <div class="research-doc-hero">
-  <div class="research-doc-hero__meta">
-<div class="research-doc-hero__meta-item">
-  <span>Source</span>
-  <strong>ipynb / md</strong>
-</div>
-<div class="research-doc-hero__meta-item">
-  <span>Artifacts</span>
-  <strong>코드 26 · 실행 25</strong>
-</div>
-<div class="research-doc-hero__meta-item">
-  <span>Libraries</span>
-  <strong>matplotlib, warnings, sklearn, pandas</strong>
-</div>
+  <div class="research-doc-summary">
+    <p class="research-doc-summary__label">문제 설정</p>
+    <p class="research-doc-summary__body">_reg: 회귀의 관례적 표현. _clf: 분류의 관례적 표현</p>
   </div>
-</div>
-<div class="research-doc-grid">
+  <div class="research-doc-meta">
 <div class="research-doc-card">
-  <p class="research-doc-card__label">Study Topic</p>
-  <p class="research-doc-card__value">_reg: 회귀의 관례적 표현. _clf: 분류의 관례적 표현</p>
-</div>
-<div class="research-doc-card">
-  <p class="research-doc-card__label">Core Concepts</p>
+  <p class="research-doc-card__label">핵심 개념</p>
   <p class="research-doc-card__value">회귀 문제 · 결정 트리와 앙상블 · 전처리와 입력 정리</p>
 </div>
 <div class="research-doc-card">
-  <p class="research-doc-card__label">Implementation Focus</p>
-  <p class="research-doc-card__value">데이터 불러오기 -&gt; 피처 가공 -&gt; 모델 구성</p>
+  <p class="research-doc-card__label">구현 포인트</p>
+  <p class="research-doc-card__value">DT 회귀 실습 · DT 분류 실습 · 데이터 분포 시각화</p>
 </div>
+  </div>
+  <div class="research-doc-stats">
+<div class="research-doc-stat">
+  <span>소스</span>
+  <strong>ipynb / md</strong>
+</div>
+<div class="research-doc-stat">
+  <span>자료</span>
+  <strong>코드 26 · 실행 25</strong>
+</div>
+<div class="research-doc-stat">
+  <span>주요 스택</span>
+  <strong>matplotlib, warnings, sklearn, pandas</strong>
+</div>
+  </div>
 </div>
 
 ## What I Studied
@@ -66,28 +66,28 @@ tags:
 <div class="research-note-card">
   <p class="research-note-card__label">회귀 문제</p>
   <p class="research-note-card__body">회귀는 연속적인 수치를 예측하는 문제입니다. 예측값과 실제값의 차이를 오차로 계산해 모델 성능을 판단합니다.</p>
-  <p class="research-note-card__meta">이 글에서는 수요량, 가격, 점수처럼 숫자 타깃을 예측하는 실습과 이어집니다.</p>
+  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>이 글에서는 수요량, 가격, 점수처럼 숫자 타깃을 예측하는 실습과 이어집니다.</p>
 </div>
 <div class="research-note-card">
   <p class="research-note-card__label">결정 트리와 앙상블</p>
   <p class="research-note-card__body">결정 트리는 조건 분기로 예측 규칙을 만들고, 앙상블은 여러 모델의 예측을 묶어 편향과 분산을 함께 줄이는 접근입니다.</p>
-  <p class="research-note-card__meta">이 글에서는 Decision Tree, RandomForest, XGBoost, Voting, Stacking 코드를 통해 여러 모델을 비교해 볼 수 있습니다.</p>
+  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>이 글에서는 Decision Tree, RandomForest, XGBoost, Voting, Stacking 코드를 통해 여러 모델을 비교해 볼 수 있습니다.</p>
 </div>
 <div class="research-note-card">
   <p class="research-note-card__label">전처리와 입력 정리</p>
   <p class="research-note-card__body">머신러닝 모델은 입력 형식에 민감하기 때문에 결측치 처리, 인코딩, 스케일링 같은 전처리 단계가 성능을 크게 좌우합니다.</p>
-  <p class="research-note-card__meta">이 글에서는 범주형 값을 숫자로 바꾸거나 학습/검증을 분리하는 코드가 이 개념에 해당합니다.</p>
+  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>이 글에서는 범주형 값을 숫자로 바꾸거나 학습/검증을 분리하는 코드가 이 개념에 해당합니다.</p>
 </div>
 <div class="research-note-card">
   <p class="research-note-card__label">피처 엔지니어링</p>
   <p class="research-note-card__body">피처 엔지니어링은 원본 컬럼을 그대로 쓰지 않고 문제에 맞는 새 특징을 설계해 모델이 더 유용한 패턴을 학습하도록 돕는 과정입니다.</p>
-  <p class="research-note-card__meta">이 글에서는 시간 파생 변수, 조건식 기반 플래그, 도메인 규칙을 반영한 새 컬럼 생성 코드가 여기에 해당합니다.</p>
+  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>이 글에서는 시간 파생 변수, 조건식 기반 플래그, 도메인 규칙을 반영한 새 컬럼 생성 코드가 여기에 해당합니다.</p>
 </div>
 </div>
 
 ## How I Implemented It
 
-<div class="research-step-grid">
+<div class="research-step-list">
 <div class="research-step-card">
   <p class="research-step-card__kicker">Step 1 · 데이터 불러오기</p>
   <p class="research-step-card__title">DT 회귀 실습</p>
@@ -103,31 +103,24 @@ tags:
 
 </div>
 <div class="research-step-card">
-  <p class="research-step-card__kicker">Step 3 · 모델 구성</p>
-  <p class="research-step-card__title">DT 회귀 실습</p>
-  <p class="research-step-card__body">DecisionTree 같은 모델을 올려 두고 어떤 알고리즘이 문제에 더 잘 맞는지 비교해 보는 구간입니다.</p>
-  <p class="research-step-card__meta"><span>핵심 API</span> <code>DecisionTree</code></p>
-
-</div>
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 4 · 평가</p>
-  <p class="research-step-card__title">DT 회귀 실습</p>
-  <p class="research-step-card__body">예측 결과를 지표로 계산해 어떤 모델과 전처리가 더 잘 맞았는지 확인하는 평가 코드입니다.</p>
-  <p class="research-step-card__meta"><span>핵심 API</span> <code>RMSE</code></p>
-
-</div>
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 5 · 시각화</p>
+  <p class="research-step-card__kicker">Step 3 · 시각화</p>
   <p class="research-step-card__title">데이터 분포 시각화</p>
   <p class="research-step-card__body">데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.</p>
   <p class="research-step-card__meta"><span>핵심 API</span> <code>matplotlib</code></p>
 
 </div>
 <div class="research-step-card">
-  <p class="research-step-card__kicker">Step 6 · 환경 준비</p>
-  <p class="research-step-card__title">DT 회귀 실습</p>
-  <p class="research-step-card__body">전처리와 학습/검증 분리를 담당해 전체 파이프라인의 출발점을 정리하는 코드입니다.</p>
-  <p class="research-step-card__meta"><span>핵심 API</span> <code>train_test_split</code> <code>DecisionTree</code> <code>RMSE</code></p>
+  <p class="research-step-card__kicker">Step 4 · 피처 가공</p>
+  <p class="research-step-card__title">사전 가지치기 실습</p>
+  <p class="research-step-card__body">원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다.</p>
+  <p class="research-step-card__meta"><span>핵심 API</span> <code>DecisionTree</code></p>
+  <p class="research-step-card__meta"><span>코드 포인트</span> 하이퍼 파라미터 조합</p>
+</div>
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 5 · 피처 가공</p>
+  <p class="research-step-card__title">속성 중요도 실습</p>
+  <p class="research-step-card__body">원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다.</p>
+
 
 </div>
 </div>
@@ -176,34 +169,6 @@ plt.title("결정 트리 분류")
 plt.show()
 ```
 
-### DT 회귀 실습
-
-**직접 해본 단계**: 모델 구성
-
-**핵심 API**: `DecisionTree`
-
-DecisionTree 같은 모델을 올려 두고 어떤 알고리즘이 문제에 더 잘 맞는지 비교해 보는 구간입니다.
-
-```python
-dt_reg = DecisionTreeRegressor()    # max_depth를 지정할 수 있음
-dt_reg.fit(X_train, y_train)
-```
-
-### DT 회귀 실습
-
-**직접 해본 단계**: 평가
-
-**핵심 API**: `RMSE`
-
-예측 결과를 지표로 계산해 어떤 모델과 전처리가 더 잘 맞았는지 확인하는 평가 코드입니다.
-
-```python
-y_pred = dt_reg.predict(X_test)
-mse = mean_squared_error(y_test, y_pred)
-
-print("평균 제곱 오차(MSE): ", mse)
-```
-
 ### 데이터 분포 시각화
 
 **직접 해본 단계**: 시각화
@@ -232,20 +197,38 @@ plt.rc('font', family=font_name)
 fm.fontManager.addfont(path)
 ```
 
-### DT 회귀 실습
+### 사전 가지치기 실습
 
-**직접 해본 단계**: 환경 준비
+**직접 해본 단계**: 피처 가공
 
-**핵심 API**: `train_test_split`, `DecisionTree`, `RMSE`
+**핵심 API**: `DecisionTree`
 
-전처리와 학습/검증 분리를 담당해 전체 파이프라인의 출발점을 정리하는 코드입니다.
+원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다.
 
 ```python
-from sklearn.datasets import fetch_california_housing
-from sklearn.model_selection import train_test_split
-from sklearn.tree import DecisionTreeRegressor
-from sklearn.metrics import mean_squared_error
-import pandas as pd
+# 하이퍼 파라미터 조합
+dt_model_2 = DecisionTreeClassifier(
+    max_depth=5,
+    min_samples_split=10,
+    min_samples_leaf=5,
+    max_features='sqrt'
+)
+dt_model_2.fit(X_train, y_train)
+```
+
+### 속성 중요도 실습
+
+**직접 해본 단계**: 피처 가공
+
+원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다.
+
+```python
+importance_df = pd.DataFrame({
+    'Feature' : feature_names,
+    'Importance' : importances
+    })
+importance_df = importance_df.sort_values(by='Importance', ascending=False)
+importance_df
 ```
 
 ## Source Bundle

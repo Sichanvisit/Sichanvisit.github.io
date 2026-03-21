@@ -1109,17 +1109,29 @@ def select_ml_code_blocks(code_blocks: list[dict[str, object]], limit: int) -> l
             stage_best[stage] = (index, block, stage_score)
 
     selected_indexes: list[int] = []
+    used_labels: set[str] = set()
     for stage in ML_STAGE_PRIORITY:
         if stage in stage_best:
-            selected_indexes.append(stage_best[stage][0])
+            index, block, _ = stage_best[stage]
+            label_key = normalize_display_text(get_code_label(block, "ML")).lower()
+            if label_key and label_key in used_labels:
+                continue
+            selected_indexes.append(index)
+            if label_key:
+                used_labels.add(label_key)
         if len(selected_indexes) >= limit:
             break
 
     if len(selected_indexes) < limit:
-        for index, _ in ranked:
+        for index, block in ranked:
             if index in selected_indexes:
                 continue
+            label_key = normalize_display_text(get_code_label(block, "ML")).lower()
+            if label_key and label_key in used_labels:
+                continue
             selected_indexes.append(index)
+            if label_key:
+                used_labels.add(label_key)
             if len(selected_indexes) >= limit:
                 break
 
@@ -1683,7 +1695,7 @@ def build_ml_research_summary(
 ) -> str:
     cleaned_title = clean_ml_title_for_summary(title) or title
     concept_labels = [note["label"] for note in study_notes[:2]]
-    code_labels = [get_code_label(block, "ML") for block in code_samples[:2]]
+    code_labels = unique_preserve_order([get_code_label(block, "ML") for block in code_samples])[:2]
 
     if concept_labels:
         lead = f"{cleaned_title}를 중심으로 {format_korean_list(concept_labels, limit=2, max_item_len=20)} 개념과 구현 흐름을 함께 정리한 ML 실습 기록입니다"
@@ -1755,17 +1767,22 @@ def build_ml_intro_html(
     execution_block_count: int,
     libraries: list[str],
 ) -> str:
-    concept_labels = [note["label"] for note in study_notes[:3]]
-    implementation_focus = [condense_focus_item(item, max_len=34) for item in flow_items[:3]]
-    cards = [
-        ("Study Topic", problem_summary or "이 글에서 다룬 문제 설정과 목표를 짧게 요약했습니다."),
-        ("Core Concepts", " · ".join(concept_labels) if concept_labels else "핵심 개념 설명을 이 글 안에서 바로 읽을 수 있게 정리했습니다."),
-        ("Implementation Focus", " -> ".join(implementation_focus) if implementation_focus else "데이터 처리부터 학습과 평가까지의 핵심 코드 흐름을 단계별로 보여줍니다."),
-    ]
-    if data_summary:
-        cards.insert(1, ("Data Context", data_summary))
+    concept_labels = unique_preserve_order([note["label"] for note in study_notes])[:3]
+    implementation_focus = []
+    for item in flow_items:
+        implementation_focus.append(item.split(": ", 1)[1] if ": " in item else item)
+    implementation_focus = unique_preserve_order(implementation_focus)[:3]
+    library_summary = ", ".join(libraries[:4]) if libraries else "Not detected"
+    if len(libraries) > 4:
+        library_summary += f" 외 {len(libraries) - 4}"
 
-    card_html = "\n".join(
+    context_cards = []
+    if data_summary:
+        context_cards.append(("데이터 맥락", data_summary))
+    context_cards.append(("핵심 개념", " · ".join(concept_labels) if concept_labels else "이 글에서 필요한 개념을 먼저 읽고 코드로 이어갈 수 있게 정리했습니다."))
+    context_cards.append(("구현 포인트", " · ".join(implementation_focus) if implementation_focus else "데이터 처리부터 학습과 평가까지의 핵심 코드 흐름을 단계별로 보여줍니다."))
+
+    context_html = "\n".join(
         "\n".join(
             [
                 '<div class="research-doc-card">',
@@ -1774,34 +1791,38 @@ def build_ml_intro_html(
                 "</div>",
             ]
         )
-        for label, value in cards
+        for label, value in context_cards
     )
 
-    meta_items = [
-        ("Source", " / ".join(source_formats) if source_formats else "source"),
-        ("Artifacts", f"코드 {code_block_count} · 실행 {execution_block_count}"),
-        ("Libraries", ", ".join(libraries[:5]) if libraries else "Not detected"),
+    stat_items = [
+        ("소스", " / ".join(source_formats) if source_formats else "source"),
+        ("자료", f"코드 {code_block_count} · 실행 {execution_block_count}"),
+        ("주요 스택", library_summary),
     ]
-    meta_html = "\n".join(
+    stat_html = "\n".join(
         "\n".join(
             [
-                '<div class="research-doc-hero__meta-item">',
+                '<div class="research-doc-stat">',
                 f'  <span>{html.escape(label)}</span>',
                 f'  <strong>{html.escape(value)}</strong>',
                 "</div>",
             ]
         )
-        for label, value in meta_items
+        for label, value in stat_items
     )
 
     return f"""
 <div class="research-doc-hero">
-  <div class="research-doc-hero__meta">
-{meta_html}
+  <div class="research-doc-summary">
+    <p class="research-doc-summary__label">문제 설정</p>
+    <p class="research-doc-summary__body">{html.escape(problem_summary or "이 글에서 다룬 문제 설정과 목표를 짧게 요약했습니다.")}</p>
   </div>
-</div>
-<div class="research-doc-grid">
-{card_html}
+  <div class="research-doc-meta">
+{context_html}
+  </div>
+  <div class="research-doc-stats">
+{stat_html}
+  </div>
 </div>
 """.strip()
 
@@ -1818,7 +1839,7 @@ def build_ml_study_section(
                     '<div class="research-note-card">',
                     f'  <p class="research-note-card__label">{html.escape(note["label"])}</p>',
                     f'  <p class="research-note-card__body">{html.escape(note["summary"])}</p>',
-                    f'  <p class="research-note-card__meta">{html.escape(note["practice"])}</p>',
+                    f'  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>{html.escape(note["practice"])}</p>',
                     "</div>",
                 ]
             )
@@ -1848,7 +1869,7 @@ def build_ml_implementation_section(steps: list[dict[str, object]]) -> str:
                 ]
             )
         )
-    return '<div class="research-step-grid">\n' + "\n".join(card for card in cards if card.strip()) + "\n</div>"
+    return '<div class="research-step-list">\n' + "\n".join(card for card in cards if card.strip()) + "\n</div>"
 
 
 def build_ml_learning_notes(code_samples: list[dict[str, object]]) -> list[dict[str, str]]:

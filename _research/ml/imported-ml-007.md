@@ -27,38 +27,38 @@ tags:
 ---
 
 <div class="research-doc-hero">
-  <div class="research-doc-hero__meta">
-<div class="research-doc-hero__meta-item">
-  <span>Source</span>
-  <strong>ipynb / md</strong>
-</div>
-<div class="research-doc-hero__meta-item">
-  <span>Artifacts</span>
-  <strong>코드 19 · 실행 18</strong>
-</div>
-<div class="research-doc-hero__meta-item">
-  <span>Libraries</span>
-  <strong>sklearn</strong>
-</div>
+  <div class="research-doc-summary">
+    <p class="research-doc-summary__label">문제 설정</p>
+    <p class="research-doc-summary__body">테스트 데이터 트레이닝 데이터 분할</p>
   </div>
-</div>
-<div class="research-doc-grid">
+  <div class="research-doc-meta">
 <div class="research-doc-card">
-  <p class="research-doc-card__label">Study Topic</p>
+  <p class="research-doc-card__label">데이터 맥락</p>
   <p class="research-doc-card__value">테스트 데이터 트레이닝 데이터 분할</p>
 </div>
 <div class="research-doc-card">
-  <p class="research-doc-card__label">Data Context</p>
-  <p class="research-doc-card__value">테스트 데이터 트레이닝 데이터 분할</p>
-</div>
-<div class="research-doc-card">
-  <p class="research-doc-card__label">Core Concepts</p>
+  <p class="research-doc-card__label">핵심 개념</p>
   <p class="research-doc-card__value">선형 모델과 정규화 · 전처리와 입력 정리</p>
 </div>
 <div class="research-doc-card">
-  <p class="research-doc-card__label">Implementation Focus</p>
-  <p class="research-doc-card__value">데이터 불러오기 -&gt; 모델 구성 -&gt; 학습</p>
+  <p class="research-doc-card__label">구현 포인트</p>
+  <p class="research-doc-card__value">데이터 불러오기 · LinearRegression 모델 구성 · Ridge 모델 학습</p>
 </div>
+  </div>
+  <div class="research-doc-stats">
+<div class="research-doc-stat">
+  <span>소스</span>
+  <strong>ipynb / md</strong>
+</div>
+<div class="research-doc-stat">
+  <span>자료</span>
+  <strong>코드 19 · 실행 18</strong>
+</div>
+<div class="research-doc-stat">
+  <span>주요 스택</span>
+  <strong>sklearn</strong>
+</div>
+  </div>
 </div>
 
 ## What I Studied
@@ -67,18 +67,18 @@ tags:
 <div class="research-note-card">
   <p class="research-note-card__label">선형 모델과 정규화</p>
   <p class="research-note-card__body">선형 모델은 입력 특성의 선형 결합으로 예측을 만들고, 정규화는 가중치 크기를 제어해 과적합을 줄이는 역할을 합니다.</p>
-  <p class="research-note-card__meta">이 글에서는 LinearRegression, LogisticRegression, Ridge, Lasso 실습과 연결해 해석할 수 있습니다.</p>
+  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>이 글에서는 LinearRegression, LogisticRegression, Ridge, Lasso 실습과 연결해 해석할 수 있습니다.</p>
 </div>
 <div class="research-note-card">
   <p class="research-note-card__label">전처리와 입력 정리</p>
   <p class="research-note-card__body">머신러닝 모델은 입력 형식에 민감하기 때문에 결측치 처리, 인코딩, 스케일링 같은 전처리 단계가 성능을 크게 좌우합니다.</p>
-  <p class="research-note-card__meta">이 글에서는 범주형 값을 숫자로 바꾸거나 학습/검증을 분리하는 코드가 이 개념에 해당합니다.</p>
+  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>이 글에서는 범주형 값을 숫자로 바꾸거나 학습/검증을 분리하는 코드가 이 개념에 해당합니다.</p>
 </div>
 </div>
 
 ## How I Implemented It
 
-<div class="research-step-grid">
+<div class="research-step-list">
 <div class="research-step-card">
   <p class="research-step-card__kicker">Step 1 · 데이터 불러오기</p>
   <p class="research-step-card__title">데이터 불러오기</p>

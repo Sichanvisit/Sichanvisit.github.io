@@ -31,38 +31,38 @@ tags:
 ---
 
 <div class="research-doc-hero">
-  <div class="research-doc-hero__meta">
-<div class="research-doc-hero__meta-item">
-  <span>Source</span>
-  <strong>ipynb / md</strong>
-</div>
-<div class="research-doc-hero__meta-item">
-  <span>Artifacts</span>
-  <strong>코드 83 · 실행 69</strong>
-</div>
-<div class="research-doc-hero__meta-item">
-  <span>Libraries</span>
-  <strong>google, pandas, seaborn, matplotlib, numpy</strong>
-</div>
+  <div class="research-doc-summary">
+    <p class="research-doc-summary__label">문제 설정</p>
+    <p class="research-doc-summary__body">Sample Superstore 데이터 설명 (교육·실습용으로 자주 쓰이는 판매 주문 데이터셋)</p>
   </div>
-</div>
-<div class="research-doc-grid">
+  <div class="research-doc-meta">
 <div class="research-doc-card">
-  <p class="research-doc-card__label">Study Topic</p>
+  <p class="research-doc-card__label">데이터 맥락</p>
   <p class="research-doc-card__value">Sample Superstore 데이터 설명 (교육·실습용으로 자주 쓰이는 판매 주문 데이터셋)</p>
 </div>
 <div class="research-doc-card">
-  <p class="research-doc-card__label">Data Context</p>
-  <p class="research-doc-card__value">Sample Superstore 데이터 설명 (교육·실습용으로 자주 쓰이는 판매 주문 데이터셋)</p>
-</div>
-<div class="research-doc-card">
-  <p class="research-doc-card__label">Core Concepts</p>
+  <p class="research-doc-card__label">핵심 개념</p>
   <p class="research-doc-card__value">객체지향 설계</p>
 </div>
 <div class="research-doc-card">
-  <p class="research-doc-card__label">Implementation Focus</p>
-  <p class="research-doc-card__value">데이터 불러오기 -&gt; 전처리 -&gt; 피처 가공</p>
+  <p class="research-doc-card__label">구현 포인트</p>
+  <p class="research-doc-card__value">CSV 데이터 불러오기 · 데이터 전처리 · 정규화/표준화</p>
 </div>
+  </div>
+  <div class="research-doc-stats">
+<div class="research-doc-stat">
+  <span>소스</span>
+  <strong>ipynb / md</strong>
+</div>
+<div class="research-doc-stat">
+  <span>자료</span>
+  <strong>코드 83 · 실행 69</strong>
+</div>
+<div class="research-doc-stat">
+  <span>주요 스택</span>
+  <strong>google, pandas, seaborn, matplotlib 외 1</strong>
+</div>
+  </div>
 </div>
 
 ## What I Studied
@@ -71,13 +71,13 @@ tags:
 <div class="research-note-card">
   <p class="research-note-card__label">객체지향 설계</p>
   <p class="research-note-card__body">객체지향은 관련 데이터와 동작을 하나의 객체로 묶어 문제를 구조적으로 표현하는 방식입니다.</p>
-  <p class="research-note-card__meta">이 글에서는 클래스, 메서드, 상태 관리 같은 코드가 핵심 학습 포인트로 드러납니다.</p>
+  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>이 글에서는 클래스, 메서드, 상태 관리 같은 코드가 핵심 학습 포인트로 드러납니다.</p>
 </div>
 </div>
 
 ## How I Implemented It
 
-<div class="research-step-grid">
+<div class="research-step-list">
 <div class="research-step-card">
   <p class="research-step-card__kicker">Step 1 · 데이터 불러오기</p>
   <p class="research-step-card__title">CSV 데이터 불러오기</p>
@@ -100,25 +100,25 @@ tags:
   <p class="research-step-card__meta"><span>코드 포인트</span> 날짜로 변환된 데이터 타입 기준 월, 요일 파생변수 생성</p>
 </div>
 <div class="research-step-card">
-  <p class="research-step-card__kicker">Step 4 · 시각화</p>
-  <p class="research-step-card__title">데이터 전처리</p>
-  <p class="research-step-card__body">데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.</p>
-  <p class="research-step-card__meta"><span>핵심 API</span> <code>matplotlib</code> <code>seaborn</code></p>
+  <p class="research-step-card__kicker">Step 4 · 구현 코드</p>
+  <p class="research-step-card__title">추가 - 컬럼명 변경</p>
+  <p class="research-step-card__body">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</p>
 
+  <p class="research-step-card__meta"><span>코드 포인트</span> 위와 같은 코드 - 딕셔너리 따로 지정</p>
 </div>
 <div class="research-step-card">
   <p class="research-step-card__kicker">Step 5 · 구현 코드</p>
-  <p class="research-step-card__title">데이터 전처리</p>
+  <p class="research-step-card__title">문자 데이터 가공</p>
   <p class="research-step-card__body">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</p>
 
-  <p class="research-step-card__meta"><span>코드 포인트</span> 이상치 - IQR 단일 변수</p>
+  <p class="research-step-card__meta"><span>코드 포인트</span> 문자열 분리 · n=1</p>
 </div>
 <div class="research-step-card">
-  <p class="research-step-card__kicker">Step 6 · 전처리</p>
-  <p class="research-step-card__title">정규화/표준화</p>
-  <p class="research-step-card__body">결측치 처리, 인코딩, 스케일링처럼 모델이 바로 사용할 수 있도록 입력 형태를 다듬는 단계입니다.</p>
-  <p class="research-step-card__meta"><span>핵심 API</span> <code>MinMaxScaler</code></p>
-  <p class="research-step-card__meta"><span>코드 포인트</span> 위와 같은 코드</p>
+  <p class="research-step-card__kicker">Step 6 · 구현 코드</p>
+  <p class="research-step-card__title">데이터 합치기</p>
+  <p class="research-step-card__body">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</p>
+
+
 </div>
 </div>
 
@@ -178,57 +178,55 @@ df['order_year'] = df['order_date'].dt.year
 df[['order_date', 'order_year', 'order_month', 'order_weekday']].head(2)
 ```
 
-### 데이터 전처리
-
-**직접 해본 단계**: 시각화
-
-**핵심 API**: `matplotlib`, `seaborn`
-
-데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.
-
-```python
-import seaborn as sns
-import matplotlib.pyplot as plt
-
-plt.figure(figsize=(4,3))
-sns.heatmap(df.isnull(), cbar=False, yticklabels=False)
-plt.show()
-```
-
-### 데이터 전처리
+### 추가 - 컬럼명 변경
 
 **직접 해본 단계**: 구현 코드
 
 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
 
 ```python
-# 이상치 - IQR 단일 변수
-import numpy as np
-
-q1 = np.percentile(df['Quantity'],25)
-q2 = np.percentile(df['Quantity'],50)
-q3 = np.percentile(df['Quantity'],75)
-iqr = q3 - q1
-
-print("Q1: ", q1)
-print("Q2: ", q2)
-print("Q3: ", q3)
+# 위와 같은 코드 - 딕셔너리 따로 지정
+rename_dict = {
+    'Order Date': 'order_date',
+    'Ship Date': 'ship_date'
+    }
+df = df.rename(columns = rename_dict)
+df.head(2)
 ```
 
-### 정규화/표준화
+### 문자 데이터 가공
 
-**직접 해본 단계**: 전처리
+**직접 해본 단계**: 구현 코드
 
-**핵심 API**: `MinMaxScaler`
-
-결측치 처리, 인코딩, 스케일링처럼 모델이 바로 사용할 수 있도록 입력 형태를 다듬는 단계입니다.
+원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
 
 ```python
-# 위와 같은 코드
-from sklearn.preprocessing import MinMaxScaler
+# 문자열 분리
 
-scaler = MinMaxScaler()
-df['sales_norm'] = scaler.fit_transform(df[['sales']])
+name_split = df['Ship Mode'].str.split(' ', n=1, expand=True)
+# n=1: ' '기준 한 번 나눈다// expand=True: 두 개의 새로운 컬럼(0, 1)
+df['grade'] = name_split[0]
+df['status'] = name_split[1]
+
+df[['Ship Mode', 'grade', 'status']].head(2)
+```
+
+### 데이터 합치기
+
+**직접 해본 단계**: 구현 코드
+
+원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+
+```python
+data1 = pd.DataFrame({
+    "id": [1, 2, 3],
+    "name": ["Alice", "Bob", "Charlie"]
+})
+
+data2 = pd.DataFrame({
+    "id": [4, 5, 6],
+    "name": ["David", "Ella", "Frank"]
+})
 ```
 
 ## Source Bundle

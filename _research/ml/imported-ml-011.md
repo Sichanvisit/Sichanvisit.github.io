@@ -30,38 +30,38 @@ tags:
 ---
 
 <div class="research-doc-hero">
-  <div class="research-doc-hero__meta">
-<div class="research-doc-hero__meta-item">
-  <span>Source</span>
-  <strong>ipynb / md</strong>
-</div>
-<div class="research-doc-hero__meta-item">
-  <span>Artifacts</span>
-  <strong>코드 16 · 실행 16</strong>
-</div>
-<div class="research-doc-hero__meta-item">
-  <span>Libraries</span>
-  <strong>numpy, matplotlib, sklearn, graphviz</strong>
-</div>
+  <div class="research-doc-summary">
+    <p class="research-doc-summary__label">문제 설정</p>
+    <p class="research-doc-summary__body">make_moons 데이터 불러오기. 암기 X</p>
   </div>
-</div>
-<div class="research-doc-grid">
+  <div class="research-doc-meta">
 <div class="research-doc-card">
-  <p class="research-doc-card__label">Study Topic</p>
-  <p class="research-doc-card__value">make_moons 데이터 불러오기. 암기 X</p>
-</div>
-<div class="research-doc-card">
-  <p class="research-doc-card__label">Data Context</p>
+  <p class="research-doc-card__label">데이터 맥락</p>
   <p class="research-doc-card__value">make_moons 데이터 불러오기 - 암기 X</p>
 </div>
 <div class="research-doc-card">
-  <p class="research-doc-card__label">Core Concepts</p>
+  <p class="research-doc-card__label">핵심 개념</p>
   <p class="research-doc-card__value">분류 문제 · 결정 트리와 앙상블 · 전처리와 입력 정리</p>
 </div>
 <div class="research-doc-card">
-  <p class="research-doc-card__label">Implementation Focus</p>
-  <p class="research-doc-card__value">피처 가공 -&gt; 모델 구성 -&gt; 평가</p>
+  <p class="research-doc-card__label">구현 포인트</p>
+  <p class="research-doc-card__value">단일 디시전 트리 실습 · 랜덤 포레스트 실습 · import numpy as np</p>
 </div>
+  </div>
+  <div class="research-doc-stats">
+<div class="research-doc-stat">
+  <span>소스</span>
+  <strong>ipynb / md</strong>
+</div>
+<div class="research-doc-stat">
+  <span>자료</span>
+  <strong>코드 16 · 실행 16</strong>
+</div>
+<div class="research-doc-stat">
+  <span>주요 스택</span>
+  <strong>numpy, matplotlib, sklearn, graphviz</strong>
+</div>
+  </div>
 </div>
 
 ## What I Studied
@@ -70,28 +70,28 @@ tags:
 <div class="research-note-card">
   <p class="research-note-card__label">분류 문제</p>
   <p class="research-note-card__body">분류는 입력 특성으로 클래스나 반응 여부를 예측하는 문제입니다. 모델은 각 샘플이 어떤 범주에 속하는지 확률 또는 라벨로 출력합니다.</p>
-  <p class="research-note-card__meta">이 글에서는 가입 여부, 품종, 레이블 예측처럼 범주형 타깃을 다루는 실습 맥락으로 연결됩니다.</p>
+  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>이 글에서는 가입 여부, 품종, 레이블 예측처럼 범주형 타깃을 다루는 실습 맥락으로 연결됩니다.</p>
 </div>
 <div class="research-note-card">
   <p class="research-note-card__label">결정 트리와 앙상블</p>
   <p class="research-note-card__body">결정 트리는 조건 분기로 예측 규칙을 만들고, 앙상블은 여러 모델의 예측을 묶어 편향과 분산을 함께 줄이는 접근입니다.</p>
-  <p class="research-note-card__meta">이 글에서는 Decision Tree, RandomForest, XGBoost, Voting, Stacking 코드를 통해 여러 모델을 비교해 볼 수 있습니다.</p>
+  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>이 글에서는 Decision Tree, RandomForest, XGBoost, Voting, Stacking 코드를 통해 여러 모델을 비교해 볼 수 있습니다.</p>
 </div>
 <div class="research-note-card">
   <p class="research-note-card__label">전처리와 입력 정리</p>
   <p class="research-note-card__body">머신러닝 모델은 입력 형식에 민감하기 때문에 결측치 처리, 인코딩, 스케일링 같은 전처리 단계가 성능을 크게 좌우합니다.</p>
-  <p class="research-note-card__meta">이 글에서는 범주형 값을 숫자로 바꾸거나 학습/검증을 분리하는 코드가 이 개념에 해당합니다.</p>
+  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>이 글에서는 범주형 값을 숫자로 바꾸거나 학습/검증을 분리하는 코드가 이 개념에 해당합니다.</p>
 </div>
 <div class="research-note-card">
   <p class="research-note-card__label">피처 엔지니어링</p>
   <p class="research-note-card__body">피처 엔지니어링은 원본 컬럼을 그대로 쓰지 않고 문제에 맞는 새 특징을 설계해 모델이 더 유용한 패턴을 학습하도록 돕는 과정입니다.</p>
-  <p class="research-note-card__meta">이 글에서는 시간 파생 변수, 조건식 기반 플래그, 도메인 규칙을 반영한 새 컬럼 생성 코드가 여기에 해당합니다.</p>
+  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>이 글에서는 시간 파생 변수, 조건식 기반 플래그, 도메인 규칙을 반영한 새 컬럼 생성 코드가 여기에 해당합니다.</p>
 </div>
 </div>
 
 ## How I Implemented It
 
-<div class="research-step-grid">
+<div class="research-step-list">
 <div class="research-step-card">
   <p class="research-step-card__kicker">Step 1 · 피처 가공</p>
   <p class="research-step-card__title">단일 디시전 트리 실습</p>
@@ -107,32 +107,11 @@ tags:
   <p class="research-step-card__meta"><span>코드 포인트</span> n_estimators 중요!</p>
 </div>
 <div class="research-step-card">
-  <p class="research-step-card__kicker">Step 3 · 평가</p>
-  <p class="research-step-card__title">단일 디시전 트리 실습</p>
-  <p class="research-step-card__body">예측 결과를 지표로 계산해 어떤 모델과 전처리가 더 잘 맞았는지 확인하는 평가 코드입니다.</p>
-  <p class="research-step-card__meta"><span>핵심 API</span> <code>accuracy_score</code></p>
-  <p class="research-step-card__meta"><span>코드 포인트</span> 정확도 계산</p>
-</div>
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 4 · 환경 준비</p>
+  <p class="research-step-card__kicker">Step 3 · 환경 준비</p>
   <p class="research-step-card__title">import numpy as np</p>
   <p class="research-step-card__body">전처리와 학습/검증 분리를 담당해 전체 파이프라인의 출발점을 정리하는 코드입니다.</p>
   <p class="research-step-card__meta"><span>핵심 API</span> <code>train_test_split</code> <code>DecisionTree</code> <code>RandomForest</code> <code>accuracy_score</code></p>
 
-</div>
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 5 · 구현 코드</p>
-  <p class="research-step-card__title">단일 디시전 트리 실습</p>
-  <p class="research-step-card__body">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</p>
-
-  <p class="research-step-card__meta"><span>코드 포인트</span> make_moons 데이터 불러오기 - 암기 X</p>
-</div>
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 6 · 피처 가공</p>
-  <p class="research-step-card__title">단일 디시전 트리 실습</p>
-  <p class="research-step-card__body">원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다.</p>
-
-  <p class="research-step-card__meta"><span>코드 포인트</span> 추가 - 보기 좋은 시각화</p>
 </div>
 </div>
 
@@ -189,20 +168,6 @@ rf_clf = RandomForestClassifier(n_estimators=100, max_depth=5, n_jobs=-1)
 rf_clf.fit(X_train, y_train)
 ```
 
-### 단일 디시전 트리 실습
-
-**직접 해본 단계**: 평가
-
-**핵심 API**: `accuracy_score`
-
-예측 결과를 지표로 계산해 어떤 모델과 전처리가 더 잘 맞았는지 확인하는 평가 코드입니다.
-
-```python
-# 정확도 계산
-accuracy_dt = accuracy_score(y_test, y_pred_dt)
-accuracy_dt
-```
-
 ### import numpy as np
 
 **직접 해본 단계**: 환경 준비
@@ -220,42 +185,6 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 from matplotlib.colors import ListedColormap              # 결정 경계 시각화위한 라이브러리
-```
-
-### 단일 디시전 트리 실습
-
-**직접 해본 단계**: 구현 코드
-
-원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
-
-```python
-# make_moons 데이터 불러오기 - 암기 X
-X, y = make_moons(n_samples=1000, noise=0.3, random_state=42)
-```
-
-### 단일 디시전 트리 실습
-
-**직접 해본 단계**: 피처 가공
-
-원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다.
-
-```python
-# 추가 - 보기 좋은 시각화
-
-from sklearn.tree import export_graphviz
-import graphviz
-
-dot_data = export_graphviz(
-    dt_clf,
-    feature_names=['Feature1', 'Feature2'],
-    class_names=['Class0', 'Class1'],
-    filled=True,
-    rounded=True
-)
-
-graph = graphviz.Source(dot_data)
-
-graph
 ```
 
 ## Source Bundle

@@ -29,34 +29,34 @@ tags:
 ---
 
 <div class="research-doc-hero">
-  <div class="research-doc-hero__meta">
-<div class="research-doc-hero__meta-item">
-  <span>Source</span>
-  <strong>ipynb / md</strong>
-</div>
-<div class="research-doc-hero__meta-item">
-  <span>Artifacts</span>
-  <strong>코드 12 · 실행 11</strong>
-</div>
-<div class="research-doc-hero__meta-item">
-  <span>Libraries</span>
-  <strong>sklearn, matplotlib, pandas</strong>
-</div>
+  <div class="research-doc-summary">
+    <p class="research-doc-summary__label">문제 설정</p>
+    <p class="research-doc-summary__body">=&gt; K=3일때 실루엣 스코어가 가장 높다!</p>
   </div>
-</div>
-<div class="research-doc-grid">
+  <div class="research-doc-meta">
 <div class="research-doc-card">
-  <p class="research-doc-card__label">Study Topic</p>
-  <p class="research-doc-card__value">=&gt; K=3일때 실루엣 스코어가 가장 높다!</p>
-</div>
-<div class="research-doc-card">
-  <p class="research-doc-card__label">Core Concepts</p>
+  <p class="research-doc-card__label">핵심 개념</p>
   <p class="research-doc-card__value">군집화 · 차원 축소 · 전처리와 입력 정리</p>
 </div>
 <div class="research-doc-card">
-  <p class="research-doc-card__label">Implementation Focus</p>
-  <p class="research-doc-card__value">데이터 불러오기 -&gt; 전처리 -&gt; 학습</p>
+  <p class="research-doc-card__label">구현 포인트</p>
+  <p class="research-doc-card__value">wine = load_wine() · StandardScaler 스케일링 · KMeans 모델 학습</p>
 </div>
+  </div>
+  <div class="research-doc-stats">
+<div class="research-doc-stat">
+  <span>소스</span>
+  <strong>ipynb / md</strong>
+</div>
+<div class="research-doc-stat">
+  <span>자료</span>
+  <strong>코드 12 · 실행 11</strong>
+</div>
+<div class="research-doc-stat">
+  <span>주요 스택</span>
+  <strong>sklearn, matplotlib, pandas</strong>
+</div>
+  </div>
 </div>
 
 ## What I Studied
@@ -65,23 +65,23 @@ tags:
 <div class="research-note-card">
   <p class="research-note-card__label">군집화</p>
   <p class="research-note-card__body">군집화는 정답 라벨 없이 비슷한 샘플끼리 묶어 데이터 구조를 탐색하는 비지도 학습 방법입니다.</p>
-  <p class="research-note-card__meta">이 글에서는 KMeans, 군집 시각화, 클러스터 품질 점검 같은 흐름과 연결됩니다.</p>
+  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>이 글에서는 KMeans, 군집 시각화, 클러스터 품질 점검 같은 흐름과 연결됩니다.</p>
 </div>
 <div class="research-note-card">
   <p class="research-note-card__label">차원 축소</p>
   <p class="research-note-card__body">차원 축소는 많은 변수의 정보를 더 적은 축으로 압축해 시각화, 노이즈 감소, 계산 효율 개선에 활용하는 기법입니다.</p>
-  <p class="research-note-card__meta">이 글에서는 PCA처럼 분산을 최대한 보존하는 축을 찾아 데이터를 다시 표현하는 실습과 이어집니다.</p>
+  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>이 글에서는 PCA처럼 분산을 최대한 보존하는 축을 찾아 데이터를 다시 표현하는 실습과 이어집니다.</p>
 </div>
 <div class="research-note-card">
   <p class="research-note-card__label">전처리와 입력 정리</p>
   <p class="research-note-card__body">머신러닝 모델은 입력 형식에 민감하기 때문에 결측치 처리, 인코딩, 스케일링 같은 전처리 단계가 성능을 크게 좌우합니다.</p>
-  <p class="research-note-card__meta">이 글에서는 범주형 값을 숫자로 바꾸거나 학습/검증을 분리하는 코드가 이 개념에 해당합니다.</p>
+  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>이 글에서는 범주형 값을 숫자로 바꾸거나 학습/검증을 분리하는 코드가 이 개념에 해당합니다.</p>
 </div>
 </div>
 
 ## How I Implemented It
 
-<div class="research-step-grid">
+<div class="research-step-list">
 <div class="research-step-card">
   <p class="research-step-card__kicker">Step 1 · 데이터 불러오기</p>
   <p class="research-step-card__title">wine = load_wine()</p>

@@ -30,38 +30,38 @@ tags:
 ---
 
 <div class="research-doc-hero">
-  <div class="research-doc-hero__meta">
-<div class="research-doc-hero__meta-item">
-  <span>Source</span>
-  <strong>ipynb / md</strong>
-</div>
-<div class="research-doc-hero__meta-item">
-  <span>Artifacts</span>
-  <strong>코드 26 · 실행 25</strong>
-</div>
-<div class="research-doc-hero__meta-item">
-  <span>Libraries</span>
-  <strong>time, datetime, random, google</strong>
-</div>
+  <div class="research-doc-summary">
+    <p class="research-doc-summary__label">문제 설정</p>
+    <p class="research-doc-summary__body">기타 인코딩 방식 =&gt; EUC-KR, CP949</p>
   </div>
-</div>
-<div class="research-doc-grid">
+  <div class="research-doc-meta">
 <div class="research-doc-card">
-  <p class="research-doc-card__label">Study Topic</p>
+  <p class="research-doc-card__label">데이터 맥락</p>
   <p class="research-doc-card__value">기타 인코딩 방식 =&gt; EUC-KR, CP949</p>
 </div>
 <div class="research-doc-card">
-  <p class="research-doc-card__label">Data Context</p>
-  <p class="research-doc-card__value">기타 인코딩 방식 =&gt; EUC-KR, CP949</p>
-</div>
-<div class="research-doc-card">
-  <p class="research-doc-card__label">Core Concepts</p>
+  <p class="research-doc-card__label">핵심 개념</p>
   <p class="research-doc-card__value">구현 중심 학습</p>
 </div>
 <div class="research-doc-card">
-  <p class="research-doc-card__label">Implementation Focus</p>
-  <p class="research-doc-card__value">피처 가공 -&gt; 구현 코드 -&gt; 구현 코드</p>
+  <p class="research-doc-card__label">구현 포인트</p>
+  <p class="research-doc-card__value">(2) datetime · 파일 입력과 문자 수정 · (1) time</p>
 </div>
+  </div>
+  <div class="research-doc-stats">
+<div class="research-doc-stat">
+  <span>소스</span>
+  <strong>ipynb / md</strong>
+</div>
+<div class="research-doc-stat">
+  <span>자료</span>
+  <strong>코드 26 · 실행 25</strong>
+</div>
+<div class="research-doc-stat">
+  <span>주요 스택</span>
+  <strong>time, datetime, random, google</strong>
+</div>
+  </div>
 </div>
 
 ## What I Studied
@@ -70,13 +70,13 @@ tags:
 <div class="research-note-card">
   <p class="research-note-card__label">구현 중심 학습</p>
   <p class="research-note-card__body">이 글은 개념 설명과 함께 실제 코드를 통해 학습 흐름을 다시 따라가도록 정리된 ML 실습 기록입니다.</p>
-  <p class="research-note-card__meta">데이터 입력, 처리, 모델링, 평가 가운데 실제로 손댄 단계를 중심으로 읽을 수 있습니다.</p>
+  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>데이터 입력, 처리, 모델링, 평가 가운데 실제로 손댄 단계를 중심으로 읽을 수 있습니다.</p>
 </div>
 </div>
 
 ## How I Implemented It
 
-<div class="research-step-grid">
+<div class="research-step-list">
 <div class="research-step-card">
   <p class="research-step-card__kicker">Step 1 · 피처 가공</p>
   <p class="research-step-card__title">(2) datetime</p>
@@ -100,24 +100,17 @@ tags:
 </div>
 <div class="research-step-card">
   <p class="research-step-card__kicker">Step 4 · 구현 코드</p>
-  <p class="research-step-card__title">(2) datetime</p>
-  <p class="research-step-card__body">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</p>
-
-  <p class="research-step-card__meta"><span>코드 포인트</span> 실제 시간 연산방법</p>
-</div>
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 5 · 구현 코드</p>
   <p class="research-step-card__title">(3) random</p>
   <p class="research-step-card__body">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</p>
 
   <p class="research-step-card__meta"><span>코드 포인트</span> shuffle()</p>
 </div>
 <div class="research-step-card">
-  <p class="research-step-card__kicker">Step 6 · 구현 코드</p>
-  <p class="research-step-card__title">파일 입력과 문자 수정</p>
+  <p class="research-step-card__kicker">Step 5 · 구현 코드</p>
+  <p class="research-step-card__title">구글 드라이브에서 직접 불러오기</p>
   <p class="research-step-card__body">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</p>
 
-  <p class="research-step-card__meta"><span>코드 포인트</span> 업로드한 파일 읽기</p>
+
 </div>
 </div>
 
@@ -178,21 +171,6 @@ formatted = time.strftime('%Y-%m-%d %H:%M:%S', local_time)
 print(formatted)
 ```
 
-### (2) datetime
-
-**직접 해본 단계**: 구현 코드
-
-원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
-
-```python
-# 실제 시간 연산방법
-
-past_time = datetime.strptime(formatted, '%Y-%m-%d %H:%M:%S')
-now = datetime.now()
-
-print(now - past_time)
-```
-
 ### (3) random
 
 **직접 해본 단계**: 구현 코드
@@ -207,18 +185,17 @@ random.shuffle(deck)
 print(deck)
 ```
 
-### 파일 입력과 문자 수정
+### 구글 드라이브에서 직접 불러오기
 
 **직접 해본 단계**: 구현 코드
 
 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
 
 ```python
-# 업로드한 파일 읽기
+path = '/content/drive/MyDrive/코드잇/AI 엔지니어 5기/공유폴더/Data/sample_fruits.txt'
 
-with open('sample_fruits.txt', 'r', encoding='utf-8') as f:
-    content = f.read()
-    print(content)
+with open(path, 'r') as f:
+    print(f.read())
 ```
 
 ## Source Bundle

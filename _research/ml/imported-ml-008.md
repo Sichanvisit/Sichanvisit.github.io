@@ -29,38 +29,38 @@ tags:
 ---
 
 <div class="research-doc-hero">
-  <div class="research-doc-hero__meta">
-<div class="research-doc-hero__meta-item">
-  <span>Source</span>
-  <strong>ipynb / md</strong>
-</div>
-<div class="research-doc-hero__meta-item">
-  <span>Artifacts</span>
-  <strong>코드 19 · 실행 18</strong>
-</div>
-<div class="research-doc-hero__meta-item">
-  <span>Libraries</span>
-  <strong>sklearn, matplotlib, numpy</strong>
-</div>
+  <div class="research-doc-summary">
+    <p class="research-doc-summary__label">문제 설정</p>
+    <p class="research-doc-summary__body">legend_elements(). (handles, label) 두 값을 반환</p>
   </div>
-</div>
-<div class="research-doc-grid">
+  <div class="research-doc-meta">
 <div class="research-doc-card">
-  <p class="research-doc-card__label">Study Topic</p>
-  <p class="research-doc-card__value">legend_elements(). (handles, label) 두 값을 반환</p>
-</div>
-<div class="research-doc-card">
-  <p class="research-doc-card__label">Data Context</p>
+  <p class="research-doc-card__label">데이터 맥락</p>
   <p class="research-doc-card__value">Iris 데이터로 이진 분류</p>
 </div>
 <div class="research-doc-card">
-  <p class="research-doc-card__label">Core Concepts</p>
+  <p class="research-doc-card__label">핵심 개념</p>
   <p class="research-doc-card__value">구현 중심 학습</p>
 </div>
 <div class="research-doc-card">
-  <p class="research-doc-card__label">Implementation Focus</p>
-  <p class="research-doc-card__value">데이터 불러오기 -&gt; 모델 구성 -&gt; 평가</p>
+  <p class="research-doc-card__label">구현 포인트</p>
+  <p class="research-doc-card__value">Iris 데이터로 이진 분류 · Iris 데이터로 다중 분류 · Softmax 이용한 다중 분류</p>
 </div>
+  </div>
+  <div class="research-doc-stats">
+<div class="research-doc-stat">
+  <span>소스</span>
+  <strong>ipynb / md</strong>
+</div>
+<div class="research-doc-stat">
+  <span>자료</span>
+  <strong>코드 19 · 실행 18</strong>
+</div>
+<div class="research-doc-stat">
+  <span>주요 스택</span>
+  <strong>sklearn, matplotlib, numpy</strong>
+</div>
+  </div>
 </div>
 
 ## What I Studied
@@ -69,13 +69,13 @@ tags:
 <div class="research-note-card">
   <p class="research-note-card__label">구현 중심 학습</p>
   <p class="research-note-card__body">이 글은 개념 설명과 함께 실제 코드를 통해 학습 흐름을 다시 따라가도록 정리된 ML 실습 기록입니다.</p>
-  <p class="research-note-card__meta">데이터 입력, 처리, 모델링, 평가 가운데 실제로 손댄 단계를 중심으로 읽을 수 있습니다.</p>
+  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>데이터 입력, 처리, 모델링, 평가 가운데 실제로 손댄 단계를 중심으로 읽을 수 있습니다.</p>
 </div>
 </div>
 
 ## How I Implemented It
 
-<div class="research-step-grid">
+<div class="research-step-list">
 <div class="research-step-card">
   <p class="research-step-card__kicker">Step 1 · 데이터 불러오기</p>
   <p class="research-step-card__title">Iris 데이터로 이진 분류</p>
@@ -91,32 +91,18 @@ tags:
   <p class="research-step-card__meta"><span>코드 포인트</span> 모델링 &amp; 시각화</p>
 </div>
 <div class="research-step-card">
-  <p class="research-step-card__kicker">Step 3 · 평가</p>
-  <p class="research-step-card__title">Iris 데이터로 이진 분류</p>
-  <p class="research-step-card__body">예측 결과를 지표로 계산해 어떤 모델과 전처리가 더 잘 맞았는지 확인하는 평가 코드입니다.</p>
-
-  <p class="research-step-card__meta"><span>코드 포인트</span> 시각화용 격자 생성 코드</p>
-</div>
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 4 · 시각화</p>
+  <p class="research-step-card__kicker">Step 3 · 시각화</p>
   <p class="research-step-card__title">Softmax 이용한 다중 분류</p>
   <p class="research-step-card__body">데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.</p>
   <p class="research-step-card__meta"><span>핵심 API</span> <code>matplotlib</code></p>
   <p class="research-step-card__meta"><span>코드 포인트</span> 시각화 · legend 지정 위한 코드</p>
 </div>
 <div class="research-step-card">
-  <p class="research-step-card__kicker">Step 5 · 환경 준비</p>
-  <p class="research-step-card__title">Iris 데이터로 이진 분류</p>
-  <p class="research-step-card__body">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</p>
-  <p class="research-step-card__meta"><span>핵심 API</span> <code>LogisticRegression</code></p>
-
-</div>
-<div class="research-step-card">
-  <p class="research-step-card__kicker">Step 6 · 구현 코드</p>
-  <p class="research-step-card__title">Iris 데이터로 다중 분류</p>
+  <p class="research-step-card__kicker">Step 4 · 구현 코드</p>
+  <p class="research-step-card__title">handles, _ = scatter.legend_elements() 코드 설명</p>
   <p class="research-step-card__body">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</p>
 
-  <p class="research-step-card__meta"><span>코드 포인트</span> 시각화용 격자 생성 코드</p>
+
 </div>
 </div>
 
@@ -164,23 +150,6 @@ plt.tight_layout()
 plt.show()
 ```
 
-### Iris 데이터로 이진 분류
-
-**직접 해본 단계**: 평가
-
-예측 결과를 지표로 계산해 어떤 모델과 전처리가 더 잘 맞았는지 확인하는 평가 코드입니다.
-
-```python
-# 시각화용 격자 생성 코드
-
-x_min, x_max = X[:, 0].min() - .5, X[:, 0].max() + .5          # x축
-y_min, y_max = X[:, 1].min() - .5, X[:, 1].max() + .5          # y축
-xx, yy = np.meshgrid(np.linspace(x_min, x_max, 200),
-                     np.linspace(y_min, y_max, 200))           # 200X200 격자 생성
-Z = model.predict(np.c_[xx.ravel(), yy.ravel()])               # 모델이 예측한 클래스 라벨 계산
-Z = Z.reshape(xx.shape)                                        # Z를 격자 형태로 변형 -> 2D
-```
-
 ### Softmax 이용한 다중 분류
 
 **직접 해본 단계**: 시각화
@@ -205,35 +174,14 @@ plt.grid(True)
 plt.show()
 ```
 
-### Iris 데이터로 이진 분류
-
-**직접 해본 단계**: 환경 준비
-
-**핵심 API**: `LogisticRegression`
-
-원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
-
-```python
-from sklearn.datasets import load_iris
-from sklearn.linear_model import LogisticRegression
-import matplotlib.pyplot as plt
-import numpy as np
-```
-
-### Iris 데이터로 다중 분류
+### handles, _ = scatter.legend_elements() 코드 설명
 
 **직접 해본 단계**: 구현 코드
 
 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
 
 ```python
-# 시각화용 격자 생성 코드
 
-x_min, x_max = X[:, 0].min() - .5, X[:, 0].max() + .5          # x축
-y_min, y_max = X[:, 1].min() - .5, X[:, 1].max() + .5          # y축
-xx, yy = np.meshgrid(np.linspace(x_min, x_max, 200),
-                     np.linspace(y_min, y_max, 200))           # 200X200 격자 생성
-grid = np.c_[xx.ravel(), yy.ravel()]
 ```
 
 ## Source Bundle

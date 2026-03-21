@@ -28,34 +28,34 @@ tags:
 ---
 
 <div class="research-doc-hero">
-  <div class="research-doc-hero__meta">
-<div class="research-doc-hero__meta-item">
-  <span>Source</span>
-  <strong>ipynb / md</strong>
-</div>
-<div class="research-doc-hero__meta-item">
-  <span>Artifacts</span>
-  <strong>코드 8 · 실행 8</strong>
-</div>
-<div class="research-doc-hero__meta-item">
-  <span>Libraries</span>
-  <strong>numpy, matplotlib, sklearn</strong>
-</div>
+  <div class="research-doc-summary">
+    <p class="research-doc-summary__label">문제 설정</p>
+    <p class="research-doc-summary__body">C: cost (오분류에 대한 패널티 강도), gamma: 커널 곡률 조절</p>
   </div>
-</div>
-<div class="research-doc-grid">
+  <div class="research-doc-meta">
 <div class="research-doc-card">
-  <p class="research-doc-card__label">Study Topic</p>
-  <p class="research-doc-card__value">C: cost (오분류에 대한 패널티 강도), gamma: 커널 곡률 조절</p>
-</div>
-<div class="research-doc-card">
-  <p class="research-doc-card__label">Core Concepts</p>
+  <p class="research-doc-card__label">핵심 개념</p>
   <p class="research-doc-card__value">객체지향 설계 · 함수 분해와 로직 구성</p>
 </div>
 <div class="research-doc-card">
-  <p class="research-doc-card__label">Implementation Focus</p>
-  <p class="research-doc-card__value">피처 가공 -&gt; 학습 -&gt; 시각화</p>
+  <p class="research-doc-card__label">구현 포인트</p>
+  <p class="research-doc-card__value">파생 변수 추가 · SVM 모델 학습 · 데이터 분포 시각화</p>
 </div>
+  </div>
+  <div class="research-doc-stats">
+<div class="research-doc-stat">
+  <span>소스</span>
+  <strong>ipynb / md</strong>
+</div>
+<div class="research-doc-stat">
+  <span>자료</span>
+  <strong>코드 8 · 실행 8</strong>
+</div>
+<div class="research-doc-stat">
+  <span>주요 스택</span>
+  <strong>numpy, matplotlib, sklearn</strong>
+</div>
+  </div>
 </div>
 
 ## What I Studied
@@ -64,18 +64,18 @@ tags:
 <div class="research-note-card">
   <p class="research-note-card__label">객체지향 설계</p>
   <p class="research-note-card__body">객체지향은 관련 데이터와 동작을 하나의 객체로 묶어 문제를 구조적으로 표현하는 방식입니다.</p>
-  <p class="research-note-card__meta">이 글에서는 클래스, 메서드, 상태 관리 같은 코드가 핵심 학습 포인트로 드러납니다.</p>
+  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>이 글에서는 클래스, 메서드, 상태 관리 같은 코드가 핵심 학습 포인트로 드러납니다.</p>
 </div>
 <div class="research-note-card">
   <p class="research-note-card__label">함수 분해와 로직 구성</p>
   <p class="research-note-card__body">함수는 입력, 처리, 반환을 분리해 로직을 재사용하기 쉽게 만들고, 문제를 작은 단위로 나누는 기본 도구입니다.</p>
-  <p class="research-note-card__meta">이 글에서는 문제 풀이를 함수 단위로 쪼개고 입출력을 나눠 보는 실습과 연결됩니다.</p>
+  <p class="research-note-card__meta"><span>코드에서 확인한 것</span>이 글에서는 문제 풀이를 함수 단위로 쪼개고 입출력을 나눠 보는 실습과 연결됩니다.</p>
 </div>
 </div>
 
 ## How I Implemented It
 
-<div class="research-step-grid">
+<div class="research-step-list">
 <div class="research-step-card">
   <p class="research-step-card__kicker">Step 1 · 피처 가공</p>
   <p class="research-step-card__title">파생 변수 추가</p>
