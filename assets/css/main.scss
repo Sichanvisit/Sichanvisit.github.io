@@ -2010,6 +2010,26 @@ a {
     -webkit-overflow-scrolling: touch;
   }
 
+  .collection-doc-page--research .page__content .research-compact-table {
+    display: table !important;
+    width: max-content;
+    min-width: 100%;
+    max-width: none;
+  }
+
+  .collection-doc-page--research .page__content .research-compact-wrap {
+    overflow-x: auto;
+  }
+
+  .collection-doc-page--research .page__content .research-compact-table--intro tbody th {
+    width: 152px !important;
+    min-width: 152px;
+  }
+
+  .collection-doc-page--research .page__content .research-compact-table--intro td {
+    font-size: 0.56rem;
+  }
+
   .page__content img,
   .page__content video {
     max-width: 100%;
