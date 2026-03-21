@@ -32,15 +32,46 @@ tags:
 
 ## 글 한눈에 보기
 
-| 항목 | 내용 |
-|------|------|
-| 문제 설정 | Hotel Booking Demand에서 데이터 설명, 데이터 불러오고 확인하기, 데이터 전처리 흐름을 직접 따라가며 구현했습니다. |
-| 원본 구조 | 데이터 설명 -> 데이터 불러오고 확인하기 -> 데이터 전처리 -> 데이터 시각화 -> 분석 방향 |
-| 데이터 맥락 | 2015.07.01부터 2017.08.31까지의 Resort Hotel과 City Hotel의 예약 데이터 관련 링크 1. Kaggle: https://www.kaggle.com/datasets/jessemostipak/... |
-| 주요 장 | 데이터 설명 · 데이터 불러오고 확인하기 · 데이터 전처리 · 데이터 시각화 |
-| 구현 흐름 | 데이터 불러오고 확인하기 -> (2) 결측치 -> (2) 시각화 |
-| 자료 | ipynb / md · 코드 95 · 실행 95 |
-| 주요 스택 | matplotlib, warnings, pandas, numpy 외 1 |
+<div class="research-compact-wrap research-compact-wrap--intro">
+  <table class="research-compact-table research-compact-table--intro">
+    <thead>
+      <tr>
+        <th>항목</th>
+        <th>내용</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">문제 설정</th>
+        <td>Hotel Booking Demand에서 데이터 설명, 데이터 불러오고 확인하기, 데이터 전처리 흐름을 직접 따라가며 구현했습니다.</td>
+      </tr>
+      <tr>
+        <th scope="row">원본 구조</th>
+        <td>데이터 설명 -&gt; 데이터 불러오고 확인하기 -&gt; 데이터 전처리 -&gt; 데이터 시각화 -&gt; 분석 방향</td>
+      </tr>
+      <tr>
+        <th scope="row">데이터 맥락</th>
+        <td>2015.07.01부터 2017.08.31까지의 Resort Hotel과 City Hotel의 예약 데이터 관련 링크 1. Kaggle: https://www.kaggle.com/datasets/jessemostipak/...</td>
+      </tr>
+      <tr>
+        <th scope="row">주요 장</th>
+        <td>데이터 설명 · 데이터 불러오고 확인하기 · 데이터 전처리 · 데이터 시각화</td>
+      </tr>
+      <tr>
+        <th scope="row">구현 흐름</th>
+        <td>데이터 불러오고 확인하기 -&gt; (2) 결측치 -&gt; (2) 시각화</td>
+      </tr>
+      <tr>
+        <th scope="row">자료</th>
+        <td>ipynb / md · 코드 95 · 실행 95</td>
+      </tr>
+      <tr>
+        <th scope="row">주요 스택</th>
+        <td>matplotlib, warnings, pandas, numpy 외 1</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ## 원본 노트 흐름
 

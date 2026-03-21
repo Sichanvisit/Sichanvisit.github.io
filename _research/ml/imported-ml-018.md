@@ -30,15 +30,46 @@ tags:
 
 ## 글 한눈에 보기
 
-| 항목 | 내용 |
-|------|------|
-| 문제 설정 | => K=3일때 실루엣 스코어가 가장 높다! |
-| 원본 구조 | 원본 마크다운의 큰 섹션 흐름을 기준으로 이 실습을 다시 읽을 수 있게 정리했습니다. |
-| 데이터 맥락 | 원본 노트에서 데이터를 설명한 부분을 기준으로 실습 맥락을 정리했습니다. |
-| 주요 장 | 군집화 · 차원 축소 · 전처리와 입력 정리 |
-| 구현 흐름 | wine = load_wine() -> StandardScaler 스케일링 -> KMeans 모델 학습 |
-| 자료 | ipynb / md · 코드 12 · 실행 11 |
-| 주요 스택 | sklearn, matplotlib, pandas |
+<div class="research-compact-wrap research-compact-wrap--intro">
+  <table class="research-compact-table research-compact-table--intro">
+    <thead>
+      <tr>
+        <th>항목</th>
+        <th>내용</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">문제 설정</th>
+        <td>=&gt; K=3일때 실루엣 스코어가 가장 높다!</td>
+      </tr>
+      <tr>
+        <th scope="row">원본 구조</th>
+        <td>원본 마크다운의 큰 섹션 흐름을 기준으로 이 실습을 다시 읽을 수 있게 정리했습니다.</td>
+      </tr>
+      <tr>
+        <th scope="row">데이터 맥락</th>
+        <td>원본 노트에서 데이터를 설명한 부분을 기준으로 실습 맥락을 정리했습니다.</td>
+      </tr>
+      <tr>
+        <th scope="row">주요 장</th>
+        <td>군집화 · 차원 축소 · 전처리와 입력 정리</td>
+      </tr>
+      <tr>
+        <th scope="row">구현 흐름</th>
+        <td>wine = load_wine() -&gt; StandardScaler 스케일링 -&gt; KMeans 모델 학습</td>
+      </tr>
+      <tr>
+        <th scope="row">자료</th>
+        <td>ipynb / md · 코드 12 · 실행 11</td>
+      </tr>
+      <tr>
+        <th scope="row">주요 스택</th>
+        <td>sklearn, matplotlib, pandas</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ## 원본 노트 흐름
 

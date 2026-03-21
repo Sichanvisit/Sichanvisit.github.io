@@ -28,15 +28,46 @@ tags:
 
 ## 글 한눈에 보기
 
-| 항목 | 내용 |
-|------|------|
-| 문제 설정 | 사이킷런 링크: https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_wine.html 클래스 수: 3개. 샘플 수: 총 178개 (class_0... |
-| 원본 구조 | 원본 마크다운의 큰 섹션 흐름을 기준으로 이 실습을 다시 읽을 수 있게 정리했습니다. |
-| 데이터 맥락 | 사이킷런 링크: https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_wine.html 클래스 수: 3개 - 샘플 수: 총 178개 (class_... |
-| 주요 장 | 분류 문제 · 전처리와 입력 정리 · 평가 지표 해석 |
-| 구현 흐름 | wine = load_wine() -> StandardScaler 스케일링 -> KNN 모델 구성 |
-| 자료 | ipynb / md · 코드 13 · 실행 13 |
-| 주요 스택 | sklearn |
+<div class="research-compact-wrap research-compact-wrap--intro">
+  <table class="research-compact-table research-compact-table--intro">
+    <thead>
+      <tr>
+        <th>항목</th>
+        <th>내용</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">문제 설정</th>
+        <td>사이킷런 링크: https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_wine.html 클래스 수: 3개. 샘플 수: 총 178개 (class_0...</td>
+      </tr>
+      <tr>
+        <th scope="row">원본 구조</th>
+        <td>원본 마크다운의 큰 섹션 흐름을 기준으로 이 실습을 다시 읽을 수 있게 정리했습니다.</td>
+      </tr>
+      <tr>
+        <th scope="row">데이터 맥락</th>
+        <td>사이킷런 링크: https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_wine.html 클래스 수: 3개 - 샘플 수: 총 178개 (class_...</td>
+      </tr>
+      <tr>
+        <th scope="row">주요 장</th>
+        <td>분류 문제 · 전처리와 입력 정리 · 평가 지표 해석</td>
+      </tr>
+      <tr>
+        <th scope="row">구현 흐름</th>
+        <td>wine = load_wine() -&gt; StandardScaler 스케일링 -&gt; KNN 모델 구성</td>
+      </tr>
+      <tr>
+        <th scope="row">자료</th>
+        <td>ipynb / md · 코드 13 · 실행 13</td>
+      </tr>
+      <tr>
+        <th scope="row">주요 스택</th>
+        <td>sklearn</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ## 원본 노트 흐름
 

@@ -2177,14 +2177,34 @@ def build_ml_intro_html(
         ("자료", f'{" / ".join(source_formats) if source_formats else "source"} · 코드 {code_block_count} · 실행 {execution_block_count}'),
         ("주요 스택", library_summary),
     ]
-    table = "\n".join(f"| {label} | {value} |" for label, value in rows)
+    row_html = "\n".join(
+        "\n".join(
+            [
+                "      <tr>",
+                f'        <th scope="row">{html.escape(label)}</th>',
+                f'        <td>{html.escape(value)}</td>',
+                "      </tr>",
+            ]
+        )
+        for label, value in rows
+    )
     return "\n".join(
         [
             "## 글 한눈에 보기",
             "",
-            "| 항목 | 내용 |",
-            "|------|------|",
-            table,
+            '<div class="research-compact-wrap research-compact-wrap--intro">',
+            '  <table class="research-compact-table research-compact-table--intro">',
+            "    <thead>",
+            "      <tr>",
+            "        <th>항목</th>",
+            "        <th>내용</th>",
+            "      </tr>",
+            "    </thead>",
+            "    <tbody>",
+            row_html,
+            "    </tbody>",
+            "  </table>",
+            "</div>",
         ]
     )
 

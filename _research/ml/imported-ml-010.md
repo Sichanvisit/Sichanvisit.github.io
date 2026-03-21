@@ -31,15 +31,46 @@ tags:
 
 ## 글 한눈에 보기
 
-| 항목 | 내용 |
-|------|------|
-| 문제 설정 | 코딩실습10 10.결정트리와 앙상블(DT)에서 DT 회귀 실습, DT 분류 실습, 속성 중요도 실습 흐름을 직접 따라가며 구현했습니다. |
-| 원본 구조 | DT 회귀 실습 -> DT 분류 실습 -> 속성 중요도 실습 -> 사전 가지치기 실습 |
-| 데이터 맥락 | 특정 데이터셋 설명보다 DT 회귀 실습, DT 분류 실습, 속성 중요도 실습 같은 실습 흐름을 직접 익히는 데 초점을 둔 노트입니다. |
-| 주요 장 | DT 회귀 실습 · DT 분류 실습 · 속성 중요도 실습 · 사전 가지치기 실습 |
-| 구현 흐름 | DT 회귀 실습 -> DT 분류 실습 -> 데이터 분포 시각화 |
-| 자료 | ipynb / md · 코드 26 · 실행 25 |
-| 주요 스택 | matplotlib, warnings, sklearn, pandas |
+<div class="research-compact-wrap research-compact-wrap--intro">
+  <table class="research-compact-table research-compact-table--intro">
+    <thead>
+      <tr>
+        <th>항목</th>
+        <th>내용</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">문제 설정</th>
+        <td>코딩실습10 10.결정트리와 앙상블(DT)에서 DT 회귀 실습, DT 분류 실습, 속성 중요도 실습 흐름을 직접 따라가며 구현했습니다.</td>
+      </tr>
+      <tr>
+        <th scope="row">원본 구조</th>
+        <td>DT 회귀 실습 -&gt; DT 분류 실습 -&gt; 속성 중요도 실습 -&gt; 사전 가지치기 실습</td>
+      </tr>
+      <tr>
+        <th scope="row">데이터 맥락</th>
+        <td>특정 데이터셋 설명보다 DT 회귀 실습, DT 분류 실습, 속성 중요도 실습 같은 실습 흐름을 직접 익히는 데 초점을 둔 노트입니다.</td>
+      </tr>
+      <tr>
+        <th scope="row">주요 장</th>
+        <td>DT 회귀 실습 · DT 분류 실습 · 속성 중요도 실습 · 사전 가지치기 실습</td>
+      </tr>
+      <tr>
+        <th scope="row">구현 흐름</th>
+        <td>DT 회귀 실습 -&gt; DT 분류 실습 -&gt; 데이터 분포 시각화</td>
+      </tr>
+      <tr>
+        <th scope="row">자료</th>
+        <td>ipynb / md · 코드 26 · 실행 25</td>
+      </tr>
+      <tr>
+        <th scope="row">주요 스택</th>
+        <td>matplotlib, warnings, sklearn, pandas</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ## 원본 노트 흐름
 

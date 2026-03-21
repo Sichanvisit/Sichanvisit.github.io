@@ -29,15 +29,46 @@ tags:
 
 ## 글 한눈에 보기
 
-| 항목 | 내용 |
-|------|------|
-| 문제 설정 | 코딩실습16 11.차원축소(PCA)에서 데이터 설명 흐름을 직접 따라가며 구현했습니다. |
-| 원본 구조 | 데이터 설명 |
-| 데이터 맥락 | 64차원의 손글씨 데이터 사이킷런: https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_digits.html |
-| 주요 장 | 데이터 설명 |
-| 구현 흐름 | 데이터 설명 -> StandardScaler 스케일링 -> 데이터 분포 시각화 |
-| 자료 | ipynb / md · 코드 11 · 실행 10 |
-| 주요 스택 | sklearn, matplotlib |
+<div class="research-compact-wrap research-compact-wrap--intro">
+  <table class="research-compact-table research-compact-table--intro">
+    <thead>
+      <tr>
+        <th>항목</th>
+        <th>내용</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">문제 설정</th>
+        <td>코딩실습16 11.차원축소(PCA)에서 데이터 설명 흐름을 직접 따라가며 구현했습니다.</td>
+      </tr>
+      <tr>
+        <th scope="row">원본 구조</th>
+        <td>데이터 설명</td>
+      </tr>
+      <tr>
+        <th scope="row">데이터 맥락</th>
+        <td>64차원의 손글씨 데이터 사이킷런: https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_digits.html</td>
+      </tr>
+      <tr>
+        <th scope="row">주요 장</th>
+        <td>데이터 설명</td>
+      </tr>
+      <tr>
+        <th scope="row">구현 흐름</th>
+        <td>데이터 설명 -&gt; StandardScaler 스케일링 -&gt; 데이터 분포 시각화</td>
+      </tr>
+      <tr>
+        <th scope="row">자료</th>
+        <td>ipynb / md · 코드 11 · 실행 10</td>
+      </tr>
+      <tr>
+        <th scope="row">주요 스택</th>
+        <td>sklearn, matplotlib</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ## 원본 노트 흐름
 

@@ -32,15 +32,46 @@ tags:
 
 ## 글 한눈에 보기
 
-| 항목 | 내용 |
-|------|------|
-| 문제 설정 | 코딩실습6 9.기본 지도학습 알고리즘들 (선형회귀 - 사이킷런)에서 선형회귀, Salary 데이터로 선형회..., Salary 데이터로 선형회... 흐름을 직접 따라가며 구현했습니다. |
-| 원본 구조 | 선형회귀 -> Salary 데이터로 선형회귀 기본 코딩 (사이킷런 사용 X) -> Salary 데이터로 선형회귀 - 사이킷런 이용 코딩 |
-| 데이터 맥락 | Salary 데이터로 선형회귀 기본 코딩 (사이킷런 사용 X) |
-| 주요 장 | 선형회귀 · Salary 데이터로 선형회귀 기본 코딩 (사이킷런 사용 X) · Salary 데이터로 선형회귀 - 사이킷런 이용 코딩 |
-| 구현 흐름 | Salary 데이터로 선형회귀 기본 코딩 (사이킷런 사용 X) -> 선형회귀 -> Salary 데이터로 선형회귀 - 사이킷런 이용 코딩 |
-| 자료 | ipynb / md · 코드 35 · 실행 35 |
-| 주요 스택 | matplotlib, warnings, numpy, sklearn 외 1 |
+<div class="research-compact-wrap research-compact-wrap--intro">
+  <table class="research-compact-table research-compact-table--intro">
+    <thead>
+      <tr>
+        <th>항목</th>
+        <th>내용</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">문제 설정</th>
+        <td>코딩실습6 9.기본 지도학습 알고리즘들 (선형회귀 - 사이킷런)에서 선형회귀, Salary 데이터로 선형회..., Salary 데이터로 선형회... 흐름을 직접 따라가며 구현했습니다.</td>
+      </tr>
+      <tr>
+        <th scope="row">원본 구조</th>
+        <td>선형회귀 -&gt; Salary 데이터로 선형회귀 기본 코딩 (사이킷런 사용 X) -&gt; Salary 데이터로 선형회귀 - 사이킷런 이용 코딩</td>
+      </tr>
+      <tr>
+        <th scope="row">데이터 맥락</th>
+        <td>Salary 데이터로 선형회귀 기본 코딩 (사이킷런 사용 X)</td>
+      </tr>
+      <tr>
+        <th scope="row">주요 장</th>
+        <td>선형회귀 · Salary 데이터로 선형회귀 기본 코딩 (사이킷런 사용 X) · Salary 데이터로 선형회귀 - 사이킷런 이용 코딩</td>
+      </tr>
+      <tr>
+        <th scope="row">구현 흐름</th>
+        <td>Salary 데이터로 선형회귀 기본 코딩 (사이킷런 사용 X) -&gt; 선형회귀 -&gt; Salary 데이터로 선형회귀 - 사이킷런 이용 코딩</td>
+      </tr>
+      <tr>
+        <th scope="row">자료</th>
+        <td>ipynb / md · 코드 35 · 실행 35</td>
+      </tr>
+      <tr>
+        <th scope="row">주요 스택</th>
+        <td>matplotlib, warnings, numpy, sklearn 외 1</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ## 원본 노트 흐름
 

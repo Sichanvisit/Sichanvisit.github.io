@@ -27,15 +27,46 @@ tags:
 
 ## 글 한눈에 보기
 
-| 항목 | 내용 |
-|------|------|
-| 문제 설정 | 코딩실습12 10.결정트리와 앙상블(AdaBoost)를 중심으로 학습한 내용을 정리한 ML 실습입니다. |
-| 원본 구조 | 원본 마크다운의 큰 섹션 흐름을 기준으로 이 실습을 다시 읽을 수 있게 정리했습니다. |
-| 데이터 맥락 | 원본 노트에서 데이터를 설명한 부분을 기준으로 실습 맥락을 정리했습니다. |
-| 주요 장 | 분류 문제 · 결정 트리와 앙상블 · 전처리와 입력 정리 · 피처 엔지니어링 |
-| 구현 흐름 | 파생 변수 추가 -> DecisionTree / AdaBoost 모델 구성 -> 분류 성능 평가 |
-| 자료 | ipynb / md · 코드 8 · 실행 7 |
-| 주요 스택 | sklearn, matplotlib, numpy |
+<div class="research-compact-wrap research-compact-wrap--intro">
+  <table class="research-compact-table research-compact-table--intro">
+    <thead>
+      <tr>
+        <th>항목</th>
+        <th>내용</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">문제 설정</th>
+        <td>코딩실습12 10.결정트리와 앙상블(AdaBoost)를 중심으로 학습한 내용을 정리한 ML 실습입니다.</td>
+      </tr>
+      <tr>
+        <th scope="row">원본 구조</th>
+        <td>원본 마크다운의 큰 섹션 흐름을 기준으로 이 실습을 다시 읽을 수 있게 정리했습니다.</td>
+      </tr>
+      <tr>
+        <th scope="row">데이터 맥락</th>
+        <td>원본 노트에서 데이터를 설명한 부분을 기준으로 실습 맥락을 정리했습니다.</td>
+      </tr>
+      <tr>
+        <th scope="row">주요 장</th>
+        <td>분류 문제 · 결정 트리와 앙상블 · 전처리와 입력 정리 · 피처 엔지니어링</td>
+      </tr>
+      <tr>
+        <th scope="row">구현 흐름</th>
+        <td>파생 변수 추가 -&gt; DecisionTree / AdaBoost 모델 구성 -&gt; 분류 성능 평가</td>
+      </tr>
+      <tr>
+        <th scope="row">자료</th>
+        <td>ipynb / md · 코드 8 · 실행 7</td>
+      </tr>
+      <tr>
+        <th scope="row">주요 스택</th>
+        <td>sklearn, matplotlib, numpy</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ## 원본 노트 흐름
 

@@ -32,15 +32,46 @@ tags:
 
 ## 글 한눈에 보기
 
-| 항목 | 내용 |
-|------|------|
-| 문제 설정 | 코드실습3 4.데이터사이언스 Toolkit에서 마크다운 실습, Numpy 실습, 판다스 실습 흐름을 직접 따라가며 구현했습니다. |
-| 원본 구조 | 마크다운 실습 -> Numpy 실습 -> 판다스 실습 -> matplotlib 실습 |
-| 데이터 맥락 | 특정 데이터셋 설명보다 마크다운 실습, Numpy 실습, 판다스 실습 같은 실습 흐름을 직접 익히는 데 초점을 둔 노트입니다. |
-| 주요 장 | 마크다운 실습 · Numpy 실습 · 판다스 실습 · matplotlib 실습 |
-| 구현 흐름 | csv파일 불러오는 실습 -> matplotlib 실습 -> 기본 함수들 |
-| 자료 | ipynb / md · 코드 60 · 실행 59 |
-| 주요 스택 | numpy, google, pandas, matplotlib 외 1 |
+<div class="research-compact-wrap research-compact-wrap--intro">
+  <table class="research-compact-table research-compact-table--intro">
+    <thead>
+      <tr>
+        <th>항목</th>
+        <th>내용</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">문제 설정</th>
+        <td>코드실습3 4.데이터사이언스 Toolkit에서 마크다운 실습, Numpy 실습, 판다스 실습 흐름을 직접 따라가며 구현했습니다.</td>
+      </tr>
+      <tr>
+        <th scope="row">원본 구조</th>
+        <td>마크다운 실습 -&gt; Numpy 실습 -&gt; 판다스 실습 -&gt; matplotlib 실습</td>
+      </tr>
+      <tr>
+        <th scope="row">데이터 맥락</th>
+        <td>특정 데이터셋 설명보다 마크다운 실습, Numpy 실습, 판다스 실습 같은 실습 흐름을 직접 익히는 데 초점을 둔 노트입니다.</td>
+      </tr>
+      <tr>
+        <th scope="row">주요 장</th>
+        <td>마크다운 실습 · Numpy 실습 · 판다스 실습 · matplotlib 실습</td>
+      </tr>
+      <tr>
+        <th scope="row">구현 흐름</th>
+        <td>csv파일 불러오는 실습 -&gt; matplotlib 실습 -&gt; 기본 함수들</td>
+      </tr>
+      <tr>
+        <th scope="row">자료</th>
+        <td>ipynb / md · 코드 60 · 실행 59</td>
+      </tr>
+      <tr>
+        <th scope="row">주요 스택</th>
+        <td>numpy, google, pandas, matplotlib 외 1</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ## 원본 노트 흐름
 

@@ -32,15 +32,46 @@ tags:
 
 ## 글 한눈에 보기
 
-| 항목 | 내용 |
-|------|------|
-| 문제 설정 | 결정 트리와 앙상블 기법을 사용하여 분류 모델을 구축. 마케팅 캠페인의 효율성을 높이는 전략을 도출 |
-| 원본 구조 | 미션 설명 -> 데이터 확인 -> 데이터 전처리 -> 데이터 시각화 -> 모델링 |
-| 데이터 맥락 | 2008년부터 2010년까지 포르투갈 은행 마케팅 캠페인 데이터 2. 데이터 설명 txt에 따르면, duration은 종속변수와 연관이 큰 데이터 3. 결측치는 unknown으로 표기 |
-| 주요 장 | 미션 설명 · 데이터 확인 · 데이터 전처리 · 데이터 시각화 |
-| 구현 흐름 | CSV 데이터 불러오기 -> (7) 범주형 변수 처리 -> 데이터 시각화 후 추가 파생변수 생성 |
-| 자료 | ipynb / md · 코드 88 · 실행 45 |
-| 주요 스택 | urllib, helper_c0z0c_dev, time, pandas 외 1 |
+<div class="research-compact-wrap research-compact-wrap--intro">
+  <table class="research-compact-table research-compact-table--intro">
+    <thead>
+      <tr>
+        <th>항목</th>
+        <th>내용</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">문제 설정</th>
+        <td>결정 트리와 앙상블 기법을 사용하여 분류 모델을 구축. 마케팅 캠페인의 효율성을 높이는 전략을 도출</td>
+      </tr>
+      <tr>
+        <th scope="row">원본 구조</th>
+        <td>미션 설명 -&gt; 데이터 확인 -&gt; 데이터 전처리 -&gt; 데이터 시각화 -&gt; 모델링</td>
+      </tr>
+      <tr>
+        <th scope="row">데이터 맥락</th>
+        <td>2008년부터 2010년까지 포르투갈 은행 마케팅 캠페인 데이터 2. 데이터 설명 txt에 따르면, duration은 종속변수와 연관이 큰 데이터 3. 결측치는 unknown으로 표기</td>
+      </tr>
+      <tr>
+        <th scope="row">주요 장</th>
+        <td>미션 설명 · 데이터 확인 · 데이터 전처리 · 데이터 시각화</td>
+      </tr>
+      <tr>
+        <th scope="row">구현 흐름</th>
+        <td>CSV 데이터 불러오기 -&gt; (7) 범주형 변수 처리 -&gt; 데이터 시각화 후 추가 파생변수 생성</td>
+      </tr>
+      <tr>
+        <th scope="row">자료</th>
+        <td>ipynb / md · 코드 88 · 실행 45</td>
+      </tr>
+      <tr>
+        <th scope="row">주요 스택</th>
+        <td>urllib, helper_c0z0c_dev, time, pandas 외 1</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ## 원본 노트 흐름
 

@@ -30,15 +30,46 @@ tags:
 
 ## 글 한눈에 보기
 
-| 항목 | 내용 |
-|------|------|
-| 문제 설정 | 코딩실습8 9.기본 지도학습 알고리즘들 (로지스틱 회귀)에서 Iris 데이터로 이진 분류, Iris 데이터로 다중 분류, Softmax 이용한 다중 분류 흐름을 직접 따라가며 구현했습니다. |
-| 원본 구조 | Iris 데이터로 이진 분류 -> Iris 데이터로 다중 분류 -> Softmax 이용한 다중 분류 |
-| 데이터 맥락 | Iris 데이터로 이진 분류 |
-| 주요 장 | Iris 데이터로 이진 분류 · Iris 데이터로 다중 분류 · Softmax 이용한 다중 분류 |
-| 구현 흐름 | Iris 데이터로 이진 분류 -> Iris 데이터로 다중 분류 -> Softmax 이용한 다중 분류 |
-| 자료 | ipynb / md · 코드 19 · 실행 18 |
-| 주요 스택 | sklearn, matplotlib, numpy |
+<div class="research-compact-wrap research-compact-wrap--intro">
+  <table class="research-compact-table research-compact-table--intro">
+    <thead>
+      <tr>
+        <th>항목</th>
+        <th>내용</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">문제 설정</th>
+        <td>코딩실습8 9.기본 지도학습 알고리즘들 (로지스틱 회귀)에서 Iris 데이터로 이진 분류, Iris 데이터로 다중 분류, Softmax 이용한 다중 분류 흐름을 직접 따라가며 구현했습니다.</td>
+      </tr>
+      <tr>
+        <th scope="row">원본 구조</th>
+        <td>Iris 데이터로 이진 분류 -&gt; Iris 데이터로 다중 분류 -&gt; Softmax 이용한 다중 분류</td>
+      </tr>
+      <tr>
+        <th scope="row">데이터 맥락</th>
+        <td>Iris 데이터로 이진 분류</td>
+      </tr>
+      <tr>
+        <th scope="row">주요 장</th>
+        <td>Iris 데이터로 이진 분류 · Iris 데이터로 다중 분류 · Softmax 이용한 다중 분류</td>
+      </tr>
+      <tr>
+        <th scope="row">구현 흐름</th>
+        <td>Iris 데이터로 이진 분류 -&gt; Iris 데이터로 다중 분류 -&gt; Softmax 이용한 다중 분류</td>
+      </tr>
+      <tr>
+        <th scope="row">자료</th>
+        <td>ipynb / md · 코드 19 · 실행 18</td>
+      </tr>
+      <tr>
+        <th scope="row">주요 스택</th>
+        <td>sklearn, matplotlib, numpy</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ## 원본 노트 흐름
 

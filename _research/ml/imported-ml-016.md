@@ -29,15 +29,46 @@ tags:
 
 ## 글 한눈에 보기
 
-| 항목 | 내용 |
-|------|------|
-| 문제 설정 | C: cost (오분류에 대한 패널티 강도), gamma: 커널 곡률 조절 |
-| 원본 구조 | 원본 마크다운의 큰 섹션 흐름을 기준으로 이 실습을 다시 읽을 수 있게 정리했습니다. |
-| 데이터 맥락 | 원본 노트에서 데이터를 설명한 부분을 기준으로 실습 맥락을 정리했습니다. |
-| 주요 장 | 객체지향 설계 · 함수 분해와 로직 구성 |
-| 구현 흐름 | 파생 변수 추가 -> SVM 모델 학습 -> 데이터 분포 시각화 |
-| 자료 | ipynb / md · 코드 8 · 실행 8 |
-| 주요 스택 | numpy, matplotlib, sklearn |
+<div class="research-compact-wrap research-compact-wrap--intro">
+  <table class="research-compact-table research-compact-table--intro">
+    <thead>
+      <tr>
+        <th>항목</th>
+        <th>내용</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">문제 설정</th>
+        <td>C: cost (오분류에 대한 패널티 강도), gamma: 커널 곡률 조절</td>
+      </tr>
+      <tr>
+        <th scope="row">원본 구조</th>
+        <td>원본 마크다운의 큰 섹션 흐름을 기준으로 이 실습을 다시 읽을 수 있게 정리했습니다.</td>
+      </tr>
+      <tr>
+        <th scope="row">데이터 맥락</th>
+        <td>원본 노트에서 데이터를 설명한 부분을 기준으로 실습 맥락을 정리했습니다.</td>
+      </tr>
+      <tr>
+        <th scope="row">주요 장</th>
+        <td>객체지향 설계 · 함수 분해와 로직 구성</td>
+      </tr>
+      <tr>
+        <th scope="row">구현 흐름</th>
+        <td>파생 변수 추가 -&gt; SVM 모델 학습 -&gt; 데이터 분포 시각화</td>
+      </tr>
+      <tr>
+        <th scope="row">자료</th>
+        <td>ipynb / md · 코드 8 · 실행 8</td>
+      </tr>
+      <tr>
+        <th scope="row">주요 스택</th>
+        <td>numpy, matplotlib, sklearn</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ## 원본 노트 흐름
 

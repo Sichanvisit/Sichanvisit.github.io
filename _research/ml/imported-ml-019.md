@@ -31,15 +31,46 @@ tags:
 
 ## 글 한눈에 보기
 
-| 항목 | 내용 |
-|------|------|
-| 문제 설정 | Python 연습(문제)에서 파이썬 연습, 객체와 클래스, 심화 문제 흐름을 직접 따라가며 구현했습니다. |
-| 원본 구조 | 파이썬 연습 -> 객체와 클래스 -> 심화 문제 |
-| 데이터 맥락 | 특정 데이터셋 설명보다 파이썬 연습, 객체와 클래스, 심화 문제 같은 실습 흐름을 직접 익히는 데 초점을 둔 노트입니다. |
-| 주요 장 | 파이썬 연습 · 객체와 클래스 · 심화 문제 |
-| 구현 흐름 | 문제1. 투표 시스템 클래스 -> 문제1. 시간 관리 프로그램 -> 문제1. 시간 추적 클래스(TimeTracker) |
-| 자료 | ipynb / md · 코드 114 · 실행 61 |
-| 주요 스택 | itertools, time, datetime, csv |
+<div class="research-compact-wrap research-compact-wrap--intro">
+  <table class="research-compact-table research-compact-table--intro">
+    <thead>
+      <tr>
+        <th>항목</th>
+        <th>내용</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">문제 설정</th>
+        <td>Python 연습(문제)에서 파이썬 연습, 객체와 클래스, 심화 문제 흐름을 직접 따라가며 구현했습니다.</td>
+      </tr>
+      <tr>
+        <th scope="row">원본 구조</th>
+        <td>파이썬 연습 -&gt; 객체와 클래스 -&gt; 심화 문제</td>
+      </tr>
+      <tr>
+        <th scope="row">데이터 맥락</th>
+        <td>특정 데이터셋 설명보다 파이썬 연습, 객체와 클래스, 심화 문제 같은 실습 흐름을 직접 익히는 데 초점을 둔 노트입니다.</td>
+      </tr>
+      <tr>
+        <th scope="row">주요 장</th>
+        <td>파이썬 연습 · 객체와 클래스 · 심화 문제</td>
+      </tr>
+      <tr>
+        <th scope="row">구현 흐름</th>
+        <td>문제1. 투표 시스템 클래스 -&gt; 문제1. 시간 관리 프로그램 -&gt; 문제1. 시간 추적 클래스(TimeTracker)</td>
+      </tr>
+      <tr>
+        <th scope="row">자료</th>
+        <td>ipynb / md · 코드 114 · 실행 61</td>
+      </tr>
+      <tr>
+        <th scope="row">주요 스택</th>
+        <td>itertools, time, datetime, csv</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ## 원본 노트 흐름
 
