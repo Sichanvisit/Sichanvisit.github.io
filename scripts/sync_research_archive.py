@@ -548,6 +548,18 @@ def build_flow_items(
     return unique_cleaned_items(items, limit=limit)
 
 
+def build_ml_flow_items_from_code_samples(code_samples: list[dict[str, object]]) -> list[str]:
+    steps: list[str] = []
+    for block in code_samples:
+        stage = get_code_stage_label(block, "ML")
+        label = condense_focus_item(get_code_label(block, "ML"), max_len=52)
+        if stage and label:
+            steps.append(f"{stage}: {label}")
+        elif label:
+            steps.append(label)
+    return unique_cleaned_items(steps, limit=6)
+
+
 def build_artifact_summary(
     source_formats: list[str],
     code_block_count: int,
@@ -580,6 +592,8 @@ def build_research_summary(
 
     if len(intro_paragraphs) > 1:
         detail = intro_paragraphs[1]
+    elif track == "ML":
+        detail = "이 글은 개념 요약보다 전처리, 피처 가공, 모델링, 평가 코드를 직접 다시 볼 수 있게 구성한 ML 실습 기록입니다"
     elif condensed_focus:
         detail = f"페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다"
     else:
@@ -640,8 +654,180 @@ def score_code_block(block: dict[str, object]) -> int:
     return score
 
 
-def get_code_label(block: dict[str, object]) -> str:
+GENERIC_ML_HEADINGS = {
+    "overview",
+    "archive note",
+    "미션 설명",
+    "파일 설명",
+    "데이터 설명",
+    "데이터 확인",
+    "공유 시스템 이해",
+    "기본 답안",
+    "예시",
+    "예제",
+    "실습",
+}
+
+MODEL_NAME_PATTERNS = [
+    ("XGBoost", ("xgbregressor", "xgbclassifier", "xgboost")),
+    ("RandomForest", ("randomforestregressor", "randomforestclassifier")),
+    ("DecisionTree", ("decisiontreeclassifier", "decisiontreeregressor")),
+    ("LogisticRegression", ("logisticregression",)),
+    ("LinearRegression", ("linearregression",)),
+    ("Ridge", ("ridge(", "ridgecv")),
+    ("Lasso", ("lasso(", "lassocv")),
+    ("SVM", ("svc(", "svr(", "linearsvc", "linearsvr", "svm")),
+    ("KNN", ("kneighborsclassifier", "kneighborsregressor", "knn")),
+    ("Bagging", ("baggingclassifier", "baggingregressor")),
+    ("AdaBoost", ("adaboostclassifier", "adaboostregressor")),
+    ("Voting", ("votingclassifier", "votingregressor")),
+    ("Stacking", ("stackingclassifier", "stackingregressor")),
+    ("LightGBM", ("lgbmclassifier", "lgbmregressor", "lightgbm")),
+    ("CatBoost", ("catboostclassifier", "catboostregressor", "catboost")),
+    ("PCA", ("pca(", "principalcomponentanalysis")),
+    ("KMeans", ("kmeans(",)),
+]
+
+
+def is_generic_ml_heading(heading: str) -> bool:
+    normalized = normalize_display_text(heading).lower()
+    if not normalized:
+        return True
+    if normalized in GENERIC_ML_HEADINGS:
+        return True
+    if re.fullmatch(r"\(?\d+\)?\s*\d+차 모델링", normalized):
+        return True
+    if re.fullmatch(r"\(?\d+\)?\s*차 모델링", normalized):
+        return True
+    if normalized.startswith("(") and any(token in normalized for token in ("모델링", "파생변수", "데이터 타입 변환", "전처리")):
+        return True
+    if normalized.endswith("의미") or normalized.endswith("정리") or normalized.endswith("결과"):
+        return True
+    if re.fullmatch(r"\(\d+\)\s*.+", normalized):
+        return False
+    return normalized.endswith("이해") or normalized.endswith("설명")
+
+
+def is_basic_python_practice_block(body: str) -> bool:
+    lower = body.lower()
+    advanced_tokens = (
+        "pd.read_csv",
+        "pandas",
+        "dataframe",
+        "train_test_split",
+        "sklearn",
+        "randomforest",
+        "decisiontree",
+        "logisticregression",
+        "linearregression",
+        "labelencoder",
+        "standardscaler",
+        "minmaxscaler",
+        "xgb",
+        "lightgbm",
+        "catboost",
+        "np.",
+        "numpy",
+        "plt.",
+        "sns.",
+        "kmeans",
+        "pca(",
+        "roc_auc",
+        "accuracy_score",
+        "mean_squared_error",
+    )
+    if any(token in lower for token in advanced_tokens):
+        return False
+    return any(token in lower for token in ("class ", "def ", "with open(", "import csv", "import datetime", "import time"))
+
+
+def extract_first_symbol_name(body: str, symbol: str) -> str:
+    pattern = r"class\s+([A-Za-z_][A-Za-z0-9_]*)" if symbol == "class" else r"def\s+([A-Za-z_][A-Za-z0-9_]*)\s*\("
+    match = re.search(pattern, body)
+    return match.group(1) if match else ""
+
+
+def detect_model_names(body: str) -> list[str]:
+    lower = body.lower()
+    models: list[str] = []
+    for label, patterns in MODEL_NAME_PATTERNS:
+        if any(pattern in lower for pattern in patterns):
+            models.append(label)
+    return unique_preserve_order(models)
+
+
+def infer_ml_code_label(block: dict[str, object]) -> str:
+    body = str(block["body"])
+    lower = body.lower()
+    stage = get_ml_stage(block)
+    models = detect_model_names(body)
+    function_name = extract_first_symbol_name(body, "def")
+    class_name = extract_first_symbol_name(body, "class")
+
+    if stage == "data_load":
+        if "train" in lower and "test" in lower and "read_csv" in lower:
+            return "train/test CSV 불러오기"
+        if "read_csv" in lower:
+            return "CSV 데이터 불러오기"
+        if "read_excel" in lower:
+            return "엑셀 데이터 불러오기"
+    if stage == "preprocessing":
+        if "labelencoder" in lower:
+            return "LabelEncoder 전처리"
+        if "standardscaler" in lower:
+            return "StandardScaler 스케일링"
+        if "minmaxscaler" in lower:
+            return "MinMaxScaler 스케일링"
+        if "train_test_split" in lower:
+            return "학습/검증 데이터 분리"
+        if "fillna" in lower or "dropna" in lower:
+            return "결측치 정리"
+    if stage == "feature_engineering":
+        if "pd.to_datetime" in lower or ".dt." in lower:
+            return "datetime 파생 변수 생성"
+        if "get_dummies" in lower:
+            return "범주형 원-핫 인코딩"
+        return "파생 변수 추가"
+    if stage == "modeling":
+        if models:
+            return f"{' / '.join(models[:2])} 모델 구성"
+        return "모델 정의"
+    if stage == "training":
+        if "gridsearchcv" in lower:
+            return "GridSearchCV 모델 학습"
+        if models:
+            return f"{models[0]} 모델 학습"
+        return "모델 학습 루프"
+    if stage == "evaluation":
+        if "rmsle" in lower:
+            return "RMSLE 기준 성능 평가"
+        if any(token in lower for token in ("accuracy_score", "f1_score", "roc_auc", "classification_report", "confusion_matrix")):
+            return "분류 성능 평가"
+        if any(token in lower for token in ("mean_squared_error", "rmse", "mae")):
+            return "회귀 성능 평가"
+        return "예측 결과 점검"
+    if stage == "visualization":
+        return "데이터 분포 시각화"
+    if stage == "class_design" and class_name:
+        return f"{class_name} 클래스 구현"
+    if stage == "function_practice" and function_name:
+        return f"{function_name} 함수 구현"
+    if class_name:
+        return f"{class_name} 클래스 구현"
+    if function_name:
+        return f"{function_name} 함수 구현"
+    return ""
+
+
+def get_code_label(block: dict[str, object], research_tab: str = "") -> str:
     heading = normalize_display_text(str(block["heading"]))
+    if research_tab == "ML":
+        inferred_label = infer_ml_code_label(block)
+        if heading and heading.lower() not in {"overview", "archive note"} and not is_generic_ml_heading(heading):
+            return trim_text(heading, 80)
+        if inferred_label:
+            return trim_text(inferred_label, 80)
+
     if heading and heading.lower() not in {"overview", "archive note"}:
         return heading
 
@@ -712,15 +898,51 @@ def infer_code_purpose(block: dict[str, object]) -> str:
     return "원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다."
 
 
-def describe_code_block(block: dict[str, object]) -> str:
-    label = get_code_label(block)
+def infer_ml_code_purpose(block: dict[str, object]) -> str:
+    body = str(block["body"])
+    lower = body.lower()
+    stage = get_ml_stage(block)
+    models = detect_model_names(body)
+
+    if stage == "data_load":
+        return "실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다."
+    if stage == "preprocessing":
+        return "결측치 처리, 인코딩, 스케일링처럼 모델이 바로 사용할 수 있도록 입력 형태를 다듬는 단계입니다."
+    if stage == "feature_engineering":
+        return "원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다."
+    if stage == "modeling":
+        if models:
+            return f"{' / '.join(models[:2])} 같은 모델을 올려 두고 어떤 알고리즘이 문제에 더 잘 맞는지 비교해 보는 구간입니다."
+        return "실험의 중심이 되는 모델 구조를 정의하고 비교 기준을 세우는 코드입니다."
+    if stage == "training":
+        if "gridsearchcv" in lower or "cross_val_score" in lower:
+            return "하이퍼파라미터 탐색이나 교차검증을 통해 단순 실행이 아니라 성능 비교까지 해본 학습 코드입니다."
+        return "훈련 데이터를 기준으로 모델을 실제로 fitting 하며 성능을 끌어올리는 학습 단계입니다."
+    if stage == "evaluation":
+        return "예측 결과를 지표로 계산해 어떤 모델과 전처리가 더 잘 맞았는지 확인하는 평가 코드입니다."
+    if stage == "visualization":
+        return "데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다."
+    if stage == "class_design":
+        return "문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다."
+    if stage == "function_practice":
+        return "입력과 반환값을 분리해 문제 해결 과정을 함수로 정리하는 기초 구현 실습 코드입니다."
+    return infer_code_purpose(block)
+
+
+def describe_code_block(block: dict[str, object], research_tab: str = "") -> str:
+    label = get_code_label(block, research_tab)
     comments = extract_comment_clues(str(block["body"]))
     context = normalize_display_text(str(block.get("context", "")))
     intro = ""
     if label and label.lower() not in {"code highlight", "overview"}:
         intro = f"`{label}`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다."
 
-    if comments:
+    if research_tab == "ML":
+        comment_clues = [condense_focus_item(item, max_len=34) for item in comments[:2]]
+        detail = infer_ml_code_purpose(block)
+        if comment_clues:
+            detail = f"{detail} 코드에는 {format_korean_list(comment_clues, limit=2, max_item_len=34)} 같은 처리 포인트도 함께 남아 있습니다."
+    elif comments:
         detail = f"코드 안에서는 {format_korean_list(comments[:3])} 흐름이 주석과 함께 드러납니다."
     elif context and is_meaningful_sentence(context):
         detail = ensure_sentence(context)
@@ -755,7 +977,158 @@ def trim_code_block(body: str, lang: str, max_lines: int = 28) -> str:
     return "\n".join(trimmed)
 
 
-def select_code_blocks(code_blocks: list[dict[str, object]], limit: int = 2) -> list[dict[str, object]]:
+ML_STAGE_LABELS = {
+    "setup": "환경 준비",
+    "data_load": "데이터 불러오기",
+    "preprocessing": "전처리",
+    "feature_engineering": "피처 가공",
+    "modeling": "모델 구성",
+    "training": "학습",
+    "evaluation": "평가",
+    "visualization": "시각화",
+    "class_design": "클래스 설계",
+    "function_practice": "함수 실습",
+    "other": "구현 코드",
+}
+
+ML_STAGE_PRIORITY = [
+    "data_load",
+    "preprocessing",
+    "feature_engineering",
+    "modeling",
+    "training",
+    "evaluation",
+    "visualization",
+    "class_design",
+    "function_practice",
+    "setup",
+    "other",
+]
+
+
+def get_code_lines(body: str) -> list[str]:
+    return [line.strip() for line in body.splitlines() if line.strip()]
+
+
+def is_import_heavy_block(body: str) -> bool:
+    lines = get_code_lines(body)
+    if not lines:
+        return False
+    import_like = 0
+    for line in lines:
+        if IMPORT_RE.match(line) or FROM_IMPORT_RE.match(line):
+            import_like += 1
+        elif line.startswith("!pip install") or line.startswith("pip install"):
+            import_like += 1
+    return import_like / max(len(lines), 1) >= 0.6
+
+
+def get_ml_stage(block: dict[str, object]) -> str:
+    body = str(block["body"]).lower()
+    heading = normalize_display_text(str(block["heading"])).lower()
+    combined = f"{heading}\n{body}"
+
+    if is_import_heavy_block(str(block["body"])):
+        return "setup"
+    if "class " in body and is_basic_python_practice_block(str(block["body"])):
+        return "class_design"
+    if "def " in body and is_basic_python_practice_block(str(block["body"])):
+        return "function_practice"
+    if any(token in combined for token in ("pd.read_csv", "read_csv(", "fetch_", "load_", "dataset_path", "train.csv", "test.csv")):
+        return "data_load"
+    if any(token in combined for token in ("fillna", "dropna", "labelencoder", "standardscaler", "minmaxscaler", "clean_text", "stopwords", "tokenize")):
+        return "preprocessing"
+    if any(token in combined for token in ("get_dummies", "feature", ".dt.", "pd.to_datetime", "hour", "month", "dayofweek", "engineer")):
+        return "feature_engineering"
+    if any(token in combined for token in ("randomforest", "xgb", "lightgbm", "catboost", "linearregression", "logisticregression", "decisiontree", "classifier(", "regressor(", "pipeline(")):
+        return "modeling"
+    if any(token in combined for token in (".fit(", "gridsearchcv", "cross_val_score", "train_model", "optimizer", "epoch")):
+        return "training"
+    if any(token in combined for token in (".predict(", "accuracy_score", "f1_score", "roc_auc", "classification_report", "confusion_matrix", "rmsle", "mean_squared_error", "rmse")):
+        return "evaluation"
+    if any(token in combined for token in ("plt.", "sns.", "heatmap", "histplot", "boxplot", "scatterplot", "barplot")):
+        return "visualization"
+    if "class " in body and "__init__" in body:
+        return "class_design"
+    if "def " in body:
+        return "function_practice"
+    return "other"
+
+
+def get_code_stage_label(block: dict[str, object], research_tab: str) -> str:
+    if research_tab == "ML":
+        return ML_STAGE_LABELS.get(get_ml_stage(block), "구현 코드")
+    return ""
+
+
+def score_ml_block_for_stage(block: dict[str, object], stage: str) -> int:
+    body = str(block["body"]).lower()
+    score = score_code_block(block)
+
+    bonus_map = {
+        "setup": ("import ", "from ", "!pip install", "warnings.filterwarnings"),
+        "data_load": ("read_csv(", "pd.read_csv", "fetch_", "train.csv", "test.csv"),
+        "preprocessing": ("fillna", "dropna", "labelencoder", "standardscaler", "minmaxscaler", "clean_text", "astype("),
+        "feature_engineering": ("get_dummies", "pd.to_datetime", ".dt.", "hour", "month", "dayofweek", "feature"),
+        "modeling": ("randomforest", "xgb", "lightgbm", "catboost", "linearregression", "logisticregression", "decisiontree", "classifier(", "regressor("),
+        "training": (".fit(", "gridsearchcv", "cross_val_score", "train_", "cv="),
+        "evaluation": (".predict(", "accuracy_score", "f1_score", "roc_auc", "classification_report", "confusion_matrix", "rmsle", "mean_squared_error", "rmse"),
+        "visualization": ("plt.", "sns.", "heatmap", "histplot", "boxplot", "scatterplot", "barplot"),
+        "class_design": ("class ", "__init__", "self."),
+        "function_practice": ("def ", "return "),
+    }
+    for token in bonus_map.get(stage, ()):
+        if token in body:
+            score += 10
+
+    if stage == "preprocessing" and "import " in body and is_import_heavy_block(str(block["body"])):
+        score -= 20
+    if stage == "feature_engineering" and "datetime" in body and "pd.to_datetime" not in body and ".dt." not in body:
+        score -= 10
+
+    return score
+
+
+def select_ml_code_blocks(code_blocks: list[dict[str, object]], limit: int) -> list[dict[str, object]]:
+    stage_best: dict[str, tuple[int, dict[str, object], int]] = {}
+    ranked = sorted(
+        enumerate(code_blocks),
+        key=lambda item: (-score_code_block(item[1]), item[0]),
+    )
+
+    for index, block in ranked:
+        stage = get_ml_stage(block)
+        stage_score = score_ml_block_for_stage(block, stage)
+        existing = stage_best.get(stage)
+        if existing is None or stage_score > existing[2]:
+            stage_best[stage] = (index, block, stage_score)
+
+    selected_indexes: list[int] = []
+    for stage in ML_STAGE_PRIORITY:
+        if stage in stage_best:
+            selected_indexes.append(stage_best[stage][0])
+        if len(selected_indexes) >= limit:
+            break
+
+    if len(selected_indexes) < limit:
+        for index, _ in ranked:
+            if index in selected_indexes:
+                continue
+            selected_indexes.append(index)
+            if len(selected_indexes) >= limit:
+                break
+
+    ordered_unique_indexes: list[int] = []
+    for index in selected_indexes:
+        if index not in ordered_unique_indexes:
+            ordered_unique_indexes.append(index)
+    return [code_blocks[index] for index in ordered_unique_indexes]
+
+
+def select_code_blocks(code_blocks: list[dict[str, object]], research_tab: str, limit: int = 2) -> list[dict[str, object]]:
+    if research_tab == "ML":
+        return select_ml_code_blocks(code_blocks, limit=limit)
+
     ranked = sorted(
         enumerate(code_blocks),
         key=lambda item: (-score_code_block(item[1]), item[0]),
@@ -811,7 +1184,11 @@ def extract_libraries(code_blocks: list[dict[str, object]]) -> list[str]:
 
 
 def get_companion_files(path: Path) -> list[Path]:
-    files = sorted(candidate for candidate in path.parent.glob(f"{path.stem}.*") if candidate.is_file())
+    files = sorted(
+        candidate
+        for candidate in path.parent.iterdir()
+        if candidate.is_file() and candidate.stem == path.stem
+    )
     if path not in files:
         files.append(path)
         files.sort()
@@ -976,6 +1353,116 @@ CONCEPT_PRIORITY = {
 }
 
 
+TRACK_ALLOWED_CONCEPTS = {
+    "ML": {"embedding", "rnn", "dataset", "preprocessing", "training", "evaluation", "oop"},
+    "DL": {"detection", "segmentation", "cnn", "dataset", "training", "evaluation", "preprocessing"},
+    "LLM": {"rag", "agent", "lora", "embedding", "rnn", "llmchain", "dataset", "preprocessing", "training", "evaluation"},
+}
+
+
+ML_STAGE_NOTE_TEMPLATES = {
+    "data_load": {
+        "label": "데이터 입력부터 다시 보기",
+        "need": "실습을 다시 따라가려면 어떤 데이터 파일에서 출발했는지부터 분명해야 전체 흐름이 재현됩니다.",
+        "choice": "이 글에서는 `{label}` 코드를 앞쪽에 배치해 train/test 또는 원본 테이블이 어디서 올라오는지 바로 확인할 수 있게 했습니다.",
+        "principle": "표 형태 원본을 DataFrame으로 읽어와야 전처리, 피처 가공, 모델 학습이 같은 입력 기준 위에서 이어집니다.",
+    },
+    "preprocessing": {
+        "label": "전처리 코드를 남기는 이유",
+        "need": "머신러닝에선 모델보다 먼저 입력 데이터의 결측치, 범주형 값, 스케일을 어떻게 다뤘는지가 성능을 크게 바꿉니다.",
+        "choice": "그래서 `{label}` 같은 코드를 통해 실제로 어떤 정제 규칙을 적용했는지 문장보다 코드로 먼저 보여주도록 정리했습니다.",
+        "principle": "원본 데이터를 모델이 다루기 쉬운 수치 형태로 바꾸면 같은 알고리즘이어도 학습 안정성과 해석 가능성이 함께 올라갑니다.",
+    },
+    "feature_engineering": {
+        "label": "파생 변수를 직접 만든 부분",
+        "need": "원본 컬럼만으로는 숨겨진 패턴이 잘 드러나지 않아 도메인 정보를 반영한 새 특징이 필요할 때가 많습니다.",
+        "choice": "이 글에서는 `{label}` 코드를 통해 시간, 범주, 조건식을 어떻게 새로운 feature로 바꿨는지 바로 볼 수 있게 했습니다.",
+        "principle": "좋은 feature engineering은 데이터 분포를 다시 표현해 모델이 더 유용한 경계나 관계를 학습하도록 돕습니다.",
+    },
+    "modeling": {
+        "label": "모델을 바꿔가며 비교한 이유",
+        "need": "한 가지 모델만 보면 데이터에 맞는 편향과 분산 특성을 놓치기 쉬워서 여러 알고리즘을 비교해 보는 과정이 중요합니다.",
+        "choice": "그래서 `{label}`처럼 실제로 올려본 모델 코드를 남겨 어떤 후보를 실험했는지 바로 확인할 수 있게 했습니다.",
+        "principle": "모델마다 가정과 표현력이 달라 같은 데이터라도 잡아내는 패턴이 다르기 때문에 비교 실험이 필수입니다.",
+    },
+    "training": {
+        "label": "학습 코드를 따로 보는 이유",
+        "need": "모델 선언만으로는 끝나지 않고 fitting, 검증 분리, 하이퍼파라미터 탐색까지 봐야 실제로 해본 실습으로 읽힙니다.",
+        "choice": "이 글에서는 `{label}` 코드를 남겨 학습 루프나 GridSearchCV처럼 성능을 끌어올리기 위해 손댄 지점을 보여줍니다.",
+        "principle": "훈련 과정은 데이터에서 패턴을 찾도록 파라미터를 조정하는 단계이며, 검증이 함께 있어야 과적합 여부도 판단할 수 있습니다.",
+    },
+    "evaluation": {
+        "label": "지표 계산까지 남긴 이유",
+        "need": "예측을 했더라도 어떤 기준으로 잘했는지 판단하지 않으면 실험 비교가 성립하지 않습니다.",
+        "choice": "그래서 `{label}` 코드를 통해 정확도, F1, RMSLE 같은 지표를 실제로 어떻게 계산했는지 함께 남겼습니다.",
+        "principle": "평가 지표는 예측 결과를 수치화해 모델 선택과 개선 방향을 정하는 기준점 역할을 합니다.",
+    },
+    "class_design": {
+        "label": "클래스로 문제를 쪼개 본 이유",
+        "need": "상태와 동작이 함께 움직이는 문제는 함수만 나열하기보다 객체 단위로 묶어야 구조가 더 선명해집니다.",
+        "choice": "이 글에서는 `{label}` 코드를 통해 생성자와 메서드를 어떻게 나눠 문제를 모델링했는지 바로 보이게 했습니다.",
+        "principle": "클래스는 관련 데이터와 동작을 한 단위로 캡슐화해 재사용성과 확장성을 높여 줍니다.",
+    },
+    "function_practice": {
+        "label": "함수 단위로 연습한 이유",
+        "need": "기초 문제 풀이도 입력, 처리, 반환을 함수로 분리해 봐야 로직을 재사용하고 테스트하기 쉬워집니다.",
+        "choice": "그래서 `{label}` 같은 코드를 앞쪽에 두고, 문제 해결 흐름이 함수 단위로 어떻게 정리됐는지 보여주도록 만들었습니다.",
+        "principle": "함수는 반복되는 로직을 한 번 정의해 여러 입력에 적용할 수 있게 하며, 문제를 작은 단위로 나누는 기본 도구입니다.",
+    },
+    "visualization": {
+        "label": "시각화를 같이 남긴 이유",
+        "need": "숫자만 보면 놓치기 쉬운 분포와 이상치를 그래프로 확인해야 다음 전처리나 feature engineering 방향이 또렷해집니다.",
+        "choice": "이 글에서는 `{label}` 코드를 통해 어떤 그래프를 보고 판단했는지 실습 흔적을 남겼습니다.",
+        "principle": "시각화는 데이터 분포를 직관적으로 드러내 모델 선택과 변수 설계의 근거를 만들어 줍니다.",
+    },
+    "other": {
+        "label": "구현 흐름을 코드로 남긴 이유",
+        "need": "설명만으로는 내가 실제로 어디까지 손댔는지 전달되기 어려워 핵심 구현 코드를 직접 보여줄 필요가 있습니다.",
+        "choice": "그래서 `{label}` 블록을 포함해 문제를 풀 때 건드린 핵심 로직이 그대로 보이도록 정리했습니다.",
+        "principle": "코드는 학습한 내용을 실행 가능한 형태로 옮긴 결과물이기 때문에, 가장 직접적인 실습 증거가 됩니다.",
+    },
+}
+
+
+def build_ml_learning_notes(code_samples: list[dict[str, object]]) -> list[dict[str, str]]:
+    stage_to_block: dict[str, dict[str, object]] = {}
+    for block in code_samples:
+        stage = get_ml_stage(block)
+        stage_to_block.setdefault(stage, block)
+
+    notes: list[dict[str, str]] = []
+    for stage in ML_STAGE_PRIORITY:
+        template = ML_STAGE_NOTE_TEMPLATES.get(stage)
+        block = stage_to_block.get(stage)
+        if template is None or block is None:
+            continue
+
+        code_label = clean_markdown_text(get_code_label(block, "ML"))
+        notes.append(
+            {
+                "label": template["label"],
+                "need": template["need"],
+                "choice": template["choice"].format(label=code_label),
+                "principle": template["principle"],
+            }
+        )
+        if len(notes) >= 4:
+            break
+
+    if notes:
+        return notes
+
+    fallback = ML_STAGE_NOTE_TEMPLATES["other"]
+    return [
+        {
+            "label": fallback["label"],
+            "need": fallback["need"],
+            "choice": fallback["choice"].format(label="핵심 구현 코드"),
+            "principle": fallback["principle"],
+        }
+    ]
+
+
 def build_concept_notes(
     *,
     research_tab: str,
@@ -997,7 +1484,10 @@ def build_concept_notes(
     corpus = "\n".join(corpus_parts).lower()
 
     notes: list[dict[str, str]] = []
+    allowed = TRACK_ALLOWED_CONCEPTS.get(research_tab, set())
     for rule in CONCEPT_RULES:
+        if allowed and rule["key"] not in allowed:
+            continue
         if any(pattern.lower() in corpus for pattern in rule["patterns"]):
             notes.append(
                 {
@@ -1079,6 +1569,10 @@ def build_content(
     updated_at: str,
 ) -> str:
     focus_display_items = unique_cleaned_items([condense_focus_item(item, max_len=60) for item in focus_items], limit=5)
+    coverage_title = "What I Studied" if research_tab == "ML" else "What This Note Covers"
+    flow_title = "What I Tried in Code" if research_tab == "ML" else "Implementation Flow"
+    code_title = "Code Evidence" if research_tab == "ML" else "Code Highlights"
+    concept_title = "Why These Steps Matter" if research_tab == "ML" else "Why This Matters"
     snapshot_rows = [
         ("Track", research_tab),
         ("Type", research_kind),
@@ -1129,10 +1623,13 @@ def build_content(
         code_sections = []
         for block in code_samples:
             lang = str(block["lang"])
-            label = get_code_label(block)
-            body = trim_code_block(str(block["body"]), lang)
-            explanation = describe_code_block(block)
-            code_sections.append(f"### {label}\n\n{explanation}\n\n```{lang}\n{body}\n```")
+            label = get_code_label(block, research_tab)
+            max_code_lines = 36 if research_tab == "ML" else 28
+            body = trim_code_block(str(block["body"]), lang, max_lines=max_code_lines)
+            explanation = describe_code_block(block, research_tab)
+            stage_label = get_code_stage_label(block, research_tab)
+            stage_line = f"**직접 해본 단계**: {stage_label}\n\n" if stage_label else ""
+            code_sections.append(f"### {label}\n\n{stage_line}{explanation}\n\n```{lang}\n{body}\n```")
         code_section = "\n\n".join(code_sections)
     else:
         code_section = "실행 가능한 코드 블록은 없지만, 개념 정리나 참고 노트로서 맥락을 보존하고 있습니다."
@@ -1164,6 +1661,38 @@ def build_content(
     intro_block = "\n\n".join(intro_lines)
     artifact_line = "/".join(source_formats) if source_formats else "source"
     artifact_line = f"{artifact_line} · 코드 {code_block_count}개 · 실행 {execution_block_count}개"
+    if research_tab == "ML":
+        body_sections = f"""## {coverage_title}
+
+{coverage_section}
+
+## {flow_title}
+
+{flow_section}
+
+## {code_title}
+
+{code_section}
+
+## {concept_title}
+
+{concept_section}"""
+    else:
+        body_sections = f"""## {coverage_title}
+
+{coverage_section}
+
+## {concept_title}
+
+{concept_section}
+
+## {flow_title}
+
+{flow_section}
+
+## {code_title}
+
+{code_section}"""
 
     return f"""---
 title: "{escape_yaml(title)}"
@@ -1195,21 +1724,7 @@ tags:
 |------|-------|
 {snapshot_table}
 
-## What This Note Covers
-
-{coverage_section}
-
-## Why This Matters
-
-{concept_section}
-
-## Implementation Flow
-
-{flow_section}
-
-## Code Highlights
-
-{code_section}
+{body_sections}
 
 ## Source Bundle
 
@@ -1242,18 +1757,26 @@ def build_note_payload(track: dict[str, str], file_path: Path) -> str:
     focus_items = select_focus_items(sections, metadata_sections, headings, clean_title, limit=5)
     section_summaries = build_section_summaries(sections, metadata_sections, limit=4)
     flow_items = build_flow_items(section_summaries, focus_items, metadata_sections, limit=6)
-    code_limit = 3 if len(code_blocks) >= 3 else max(len(code_blocks), 1)
-    code_samples = select_code_blocks(code_blocks, limit=code_limit)
+    if track["tab"] == "ML":
+        code_limit = min(max(len(code_blocks), 1), 6)
+    else:
+        code_limit = min(max(len(code_blocks), 1), 3)
+    code_samples = select_code_blocks(code_blocks, research_tab=track["tab"], limit=code_limit)
+    if track["tab"] == "ML":
+        flow_items = build_ml_flow_items_from_code_samples(code_samples)
     libraries = extract_libraries(code_blocks)
-    concept_notes = build_concept_notes(
-        research_tab=track["tab"],
-        title=clean_title,
-        focus_items=focus_items,
-        section_summaries=section_summaries,
-        paragraphs=paragraphs,
-        code_blocks=code_blocks,
-        libraries=libraries,
-    )
+    if track["tab"] == "ML":
+        concept_notes = build_ml_learning_notes(code_samples)
+    else:
+        concept_notes = build_concept_notes(
+            research_tab=track["tab"],
+            title=clean_title,
+            focus_items=focus_items,
+            section_summaries=section_summaries,
+            paragraphs=paragraphs,
+            code_blocks=code_blocks,
+            libraries=libraries,
+        )
 
     companion_files = get_companion_files(file_path)
     source_formats = [candidate.suffix.lstrip(".").lower() or candidate.name.lower() for candidate in companion_files]

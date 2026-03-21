@@ -6,7 +6,7 @@ research_kind: "Practice"
 source_title: "250827_코딩실습14_10.결정트리와 앙상블(보팅배깅부스팅스태킹)"
 source_path: "11_Machine_Learning/Code_Snippets/250827_코딩실습14_10.결정트리와 앙상블(보팅배깅부스팅스태킹).md"
 excerpt: "시각화를 위한 헬퍼 함수 (이전 실습에서 사용..., 모델별 정확도 저장 딕셔너리, 보팅 중심으로 구현 과정을 정리한 코딩실습14 10.결정트리와 앙상블(보팅배깅부스팅스태킹) 기록입니다"
-research_summary: "시각화를 위한 헬퍼 함수 (이전 실습에서 사용..., 모델별 정확도 저장 딕셔너리, 보팅 중심으로 구현 과정을 정리한 코딩실습14 10.결정트리와 앙상블(보팅배깅부스팅스태킹) 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `ipynb/md` 원본과 8개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, matplotlib, sklearn입니다."
+research_summary: "시각화를 위한 헬퍼 함수 (이전 실습에서 사용..., 모델별 정확도 저장 딕셔너리, 보팅 중심으로 구현 과정을 정리한 코딩실습14 10.결정트리와 앙상블(보팅배깅부스팅스태킹) 기록입니다. 이 글은 개념 요약보다 전처리, 피처 가공, 모델링, 평가 코드를 직접 다시 볼 수 있게 구성한 ML 실습 기록입니다. `ipynb/md` 원본과 8개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, matplotlib, sklearn입니다."
 research_artifacts: "ipynb/md · 코드 8개 · 실행 7개"
 code_block_count: 8
 execution_block_count: 7
@@ -28,7 +28,7 @@ tags:
   - practice
 ---
 
-시각화를 위한 헬퍼 함수 (이전 실습에서 사용..., 모델별 정확도 저장 딕셔너리, 보팅 중심으로 구현 과정을 정리한 코딩실습14 10.결정트리와 앙상블(보팅배깅부스팅스태킹) 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `ipynb/md` 원본과 8개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, matplotlib, sklearn입니다.
+시각화를 위한 헬퍼 함수 (이전 실습에서 사용..., 모델별 정확도 저장 딕셔너리, 보팅 중심으로 구현 과정을 정리한 코딩실습14 10.결정트리와 앙상블(보팅배깅부스팅스태킹) 기록입니다. 이 글은 개념 요약보다 전처리, 피처 가공, 모델링, 평가 코드를 직접 다시 볼 수 있게 구성한 ML 실습 기록입니다. `ipynb/md` 원본과 8개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, matplotlib, sklearn입니다.
 
 **빠르게 볼 수 있는 포인트**: 시각화를 위한 헬퍼 함수 (이전 실습에서 사용한 것과 동일), 모델별 정확도 저장 딕셔너리, 보팅.
 
@@ -48,7 +48,7 @@ tags:
 | Libraries | `numpy`, `matplotlib`, `sklearn` |
 | Source Note | `250827_코딩실습14_10.결정트리와 앙상블(보팅배깅부스팅스태킹)` |
 
-## What This Note Covers
+## What I Studied
 
 - 시각화를 위한 헬퍼 함수 (이전 실습에서 사용한 것과 동일)
 - 모델별 정확도 저장 딕셔너리
@@ -56,52 +56,22 @@ tags:
 - 1-1. 기본 모델 세팅
 - 1-2. 소프트 보팅
 
-## Why This Matters
+## What I Tried in Code
 
-### 데이터 파이프라인
+1. 피처 가공: 파생 변수 추가
+2. 모델 구성: DecisionTree / LogisticRegression 모델 구성
+3. 환경 준비: import numpy as np
+4. 구현 코드: 모델별 정확도 저장 딕셔너리
+5. 구현 코드: for model_name, acc in accuracies.items()
+6. 구현 코드: X, y = make_moons(n_samples=1000, noise=0.3, rand...
 
-- 왜 필요한가: 모델 성능 이전에 입력이 일정한 형식으로 잘 들어가야 학습과 평가가 안정적으로 반복됩니다.
-- 왜 이 방식을 쓰는가: Dataset/DataLoader 구조는 데이터 읽기, 변환, 배치 처리를 분리해 코드 재사용성과 실험 반복성을 높여줍니다.
-- 원리: 각 샘플을 Dataset이 제공하고, DataLoader가 이를 배치로 묶어 셔플·병렬 로딩·collate를 담당합니다.
+## Code Evidence
 
-### 평가 지표 해석
+### 파생 변수 추가
 
-- 왜 필요한가: 정확도 하나만으로는 모델이 실제로 무엇을 잘하고 무엇을 놓치는지 충분히 설명할 수 없습니다.
-- 왜 이 방식을 쓰는가: 문제 유형에 맞는 지표를 함께 보면 불균형 데이터, 오차 크기, 재현율 같은 중요한 관점을 놓치지 않을 수 있습니다.
-- 원리: 예측 결과를 정답과 비교해 오차나 클래스별 성능을 수치화하고, 그 수치로 모델 선택과 개선 방향을 판단합니다.
+**직접 해본 단계**: 피처 가공
 
-### 클래스와 객체 모델링
-
-- 왜 필요한가: 코드를 기능별로 나누고 상태를 함께 관리하려면 변수와 함수를 흩어두기보다 객체 단위로 묶는 연습이 필요합니다.
-- 왜 이 방식을 쓰는가: 클래스 기반 구조는 같은 패턴의 동작을 여러 인스턴스에 반복 적용하기 쉬워 기초 문법을 실제 코드 구조로 연결하기 좋습니다.
-- 원리: 클래스는 속성과 메서드를 묶는 설계도이고, 인스턴스는 그 설계도를 바탕으로 생성된 실제 객체입니다.
-
-## Implementation Flow
-
-1. Key Step: 시각화를 위한 헬퍼 함수 (이전 실습에서 사용한 것과 동일)
-
-## Code Highlights
-
-### import numpy as np
-
-`import numpy as np`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 전처리와 학습/검증 분리를 담당해 전체 파이프라인의 출발점을 정리하는 코드입니다.
-
-```python
-import numpy as np
-import matplotlib.pyplot as plt
-from sklearn.datasets import make_moons
-from sklearn.model_selection import train_test_split
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier, BaggingClassifier, VotingClassifier, StackingClassifier
-from sklearn.linear_model import LogisticRegression
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import accuracy_score
-from matplotlib.colors import ListedColormap
-```
-
-### 시각화를 위한 헬퍼 함수 (이전 실습에서 사용한 것과 동일)
-
-`시각화를 위한 헬퍼 함수 (이전 실습에서 사용한 것과 동일)`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 시각화를 위한 헬퍼 함수 (이전 실습에서 사용한 것과 동일) 흐름이 주석과 함께 드러납니다.
+`파생 변수 추가`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다. 코드에는 시각화를 위한 헬퍼 함수 (이전 실습에서 사용한 것과 동일) 같은 처리 포인트도 함께 남아 있습니다.
 
 ```python
 # 시각화를 위한 헬퍼 함수 (이전 실습에서 사용한 것과 동일)
@@ -127,9 +97,11 @@ def plot_decision_boundary(clf, X, y, ax, title):
     ax.grid(True)
 ```
 
-### fig, axes = plt.subplots(2, 2, figsize=(12,11))
+### DecisionTree / LogisticRegression 모델 구성
 
-`fig, axes = plt.subplots(2, 2, figsize=(12,11))`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 보팅, 1-1. 기본 모델 세팅, 1-2. 소프트 보팅 흐름이 주석과 함께 드러납니다.
+**직접 해본 단계**: 모델 구성
+
+`DecisionTree / LogisticRegression 모델 구성`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. DecisionTree / LogisticRegression 같은 모델을 올려 두고 어떤 알고리즘이 문제에 더 잘 맞는지 비교해 보는 구간입니다. 코드에는 보팅, 1-1. 기본 모델 세팅 같은 처리 포인트도 함께 남아 있습니다.
 
 ```python
 fig, axes = plt.subplots(2, 2, figsize=(12,11))
@@ -160,8 +132,87 @@ bagging_clf = BaggingClassifier(
     bootstrap=True
 )
 bagging_clf.fit(X_train, y_train)
+y_pred_bagging = bagging_clf.predict(X_test)
+accuracy_bagging = accuracy_score(y_test, y_pred_bagging)
+accuracies['Bagging'] = accuracy_bagging
+plot_decision_boundary(bagging_clf, X_test, y_test, axes[1], f'Bagging (Acc:{accuracy_bagging:.4f})')
+
+# 3. 부스팅
+gb_clf = GradientBoostingClassifier(
+    n_estimators=100,
 # ... trimmed ...
 ```
+
+### import numpy as np
+
+**직접 해본 단계**: 환경 준비
+
+`import numpy as np`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 전처리와 학습/검증 분리를 담당해 전체 파이프라인의 출발점을 정리하는 코드입니다.
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.datasets import make_moons
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier, BaggingClassifier, VotingClassifier, StackingClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score
+from matplotlib.colors import ListedColormap
+```
+
+### 모델별 정확도 저장 딕셔너리
+
+**직접 해본 단계**: 구현 코드
+
+`모델별 정확도 저장 딕셔너리`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다. 코드에는 모델별 정확도 저장 딕셔너리 같은 처리 포인트도 함께 남아 있습니다.
+
+```python
+# 모델별 정확도 저장 딕셔너리
+accuracies ={}
+```
+
+### for model_name, acc in accuracies.items():
+
+**직접 해본 단계**: 구현 코드
+
+`for model_name, acc in accuracies.items():`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+
+```python
+for model_name, acc in accuracies.items():
+    print(f'{model_name}: {acc:.4f}')
+```
+
+### X, y = make_moons(n_samples=1000, noise=0.3, random_state=42)
+
+**직접 해본 단계**: 구현 코드
+
+`X, y = make_moons(n_samples=1000, noise=0.3, random_state=42)`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+
+```python
+X, y = make_moons(n_samples=1000, noise=0.3, random_state=42)
+```
+
+## Why These Steps Matter
+
+### 파생 변수를 직접 만든 부분
+
+- 왜 필요한가: 원본 컬럼만으로는 숨겨진 패턴이 잘 드러나지 않아 도메인 정보를 반영한 새 특징이 필요할 때가 많습니다.
+- 왜 이 방식을 쓰는가: 이 글에서는 `파생 변수 추가` 코드를 통해 시간, 범주, 조건식을 어떻게 새로운 feature로 바꿨는지 바로 볼 수 있게 했습니다.
+- 원리: 좋은 feature engineering은 데이터 분포를 다시 표현해 모델이 더 유용한 경계나 관계를 학습하도록 돕습니다.
+
+### 모델을 바꿔가며 비교한 이유
+
+- 왜 필요한가: 한 가지 모델만 보면 데이터에 맞는 편향과 분산 특성을 놓치기 쉬워서 여러 알고리즘을 비교해 보는 과정이 중요합니다.
+- 왜 이 방식을 쓰는가: 그래서 `DecisionTree / LogisticRegression 모델 구성`처럼 실제로 올려본 모델 코드를 남겨 어떤 후보를 실험했는지 바로 확인할 수 있게 했습니다.
+- 원리: 모델마다 가정과 표현력이 달라 같은 데이터라도 잡아내는 패턴이 다르기 때문에 비교 실험이 필수입니다.
+
+### 구현 흐름을 코드로 남긴 이유
+
+- 왜 필요한가: 설명만으로는 내가 실제로 어디까지 손댔는지 전달되기 어려워 핵심 구현 코드를 직접 보여줄 필요가 있습니다.
+- 왜 이 방식을 쓰는가: 그래서 `모델별 정확도 저장 딕셔너리` 블록을 포함해 문제를 풀 때 건드린 핵심 로직이 그대로 보이도록 정리했습니다.
+- 원리: 코드는 학습한 내용을 실행 가능한 형태로 옮긴 결과물이기 때문에, 가장 직접적인 실습 증거가 됩니다.
 
 ## Source Bundle
 
