@@ -5,8 +5,8 @@ research_tab: "ML"
 research_kind: "Practice"
 source_title: "250807-08_코드실습2_2.객체와 클래스"
 source_path: "11_Machine_Learning/Code_Snippets/250807-08_코드실습2_2.객체와 클래스.md"
-excerpt: "클래스 코드 연습, 은행 클래스, 다양한 메소드 중심으로 구현 과정을 정리한 08 코드실습2 2.객체와 클래스 기록입니다"
-research_summary: "클래스 코드 연습, 은행 클래스, 다양한 메소드 중심으로 구현 과정을 정리한 08 코드실습2 2.객체와 클래스 기록입니다. 이 글은 개념 요약보다 전처리, 피처 가공, 모델링, 평가 코드를 직접 다시 볼 수 있게 구성한 ML 실습 기록입니다. `ipynb/md` 원본과 28개 코드 블록, 18개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다."
+excerpt: "코드실습2 2.객체와 클래스를 중심으로 객체지향 설계, 함수 분해와 로직 구성 개념과 구현 흐름을 함께 정리한 ML 실습 기록입니다"
+research_summary: "코드실습2 2.객체와 클래스를 중심으로 객체지향 설계, 함수 분해와 로직 구성 개념과 구현 흐름을 함께 정리한 ML 실습 기록입니다. 본문에서는 은행 클래스, 은행 클래스 같은 코드를 따라가며 실제 실습 과정을 확인할 수 있습니다. `ipynb/md` 원본과 28개 코드 블록, 18개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다."
 research_artifacts: "ipynb/md · 코드 28개 · 실행 18개"
 code_block_count: 28
 execution_block_count: 18
@@ -25,37 +25,98 @@ tags:
   - practice
 ---
 
-클래스 코드 연습, 은행 클래스, 다양한 메소드 중심으로 구현 과정을 정리한 08 코드실습2 2.객체와 클래스 기록입니다. 이 글은 개념 요약보다 전처리, 피처 가공, 모델링, 평가 코드를 직접 다시 볼 수 있게 구성한 ML 실습 기록입니다. `ipynb/md` 원본과 28개 코드 블록, 18개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다.
-
-**빠르게 볼 수 있는 포인트**: 클래스 코드 연습, 은행 클래스, 다양한 메소드.
-
-**남겨둔 자료**: `ipynb/md` 원본과 28개 코드 블록, 18개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다.
-
-## Snapshot
-
-| Item | Value |
-|------|-------|
-| Track | ML |
-| Type | Practice |
-| Source Files | `ipynb`, `md` |
-| Code Blocks | 28 |
-| Execution Cells | 18 |
-| Libraries | Not detected |
-| Source Note | `250807-08_코드실습2_2.객체와 클래스` |
+<div class="research-doc-hero">
+  <div class="research-doc-hero__meta">
+<div class="research-doc-hero__meta-item">
+  <span>Source</span>
+  <strong>ipynb / md</strong>
+</div>
+<div class="research-doc-hero__meta-item">
+  <span>Artifacts</span>
+  <strong>코드 28 · 실행 18</strong>
+</div>
+<div class="research-doc-hero__meta-item">
+  <span>Libraries</span>
+  <strong>Not detected</strong>
+</div>
+  </div>
+</div>
+<div class="research-doc-grid">
+<div class="research-doc-card">
+  <p class="research-doc-card__label">Study Topic</p>
+  <p class="research-doc-card__value">코드실습2 2.객체와 클래스를 중심으로 학습한 내용을 정리한 ML 실습입니다.</p>
+</div>
+<div class="research-doc-card">
+  <p class="research-doc-card__label">Core Concepts</p>
+  <p class="research-doc-card__value">객체지향 설계 · 함수 분해와 로직 구성</p>
+</div>
+<div class="research-doc-card">
+  <p class="research-doc-card__label">Implementation Focus</p>
+  <p class="research-doc-card__value">클래스 설계 -&gt; 구현 코드 -&gt; 클래스 설계</p>
+</div>
+</div>
 
 ## What I Studied
 
-- 클래스 코드 연습
-- 은행 클래스
-- 다양한 메소드
-- Person 클래스 연습
-- 두 명 추가하기
+<div class="research-note-grid">
+<div class="research-note-card">
+  <p class="research-note-card__label">객체지향 설계</p>
+  <p class="research-note-card__body">객체지향은 관련 데이터와 동작을 하나의 객체로 묶어 문제를 구조적으로 표현하는 방식입니다.</p>
+  <p class="research-note-card__meta">이 글에서는 클래스, 메서드, 상태 관리 같은 코드가 핵심 학습 포인트로 드러납니다.</p>
+</div>
+<div class="research-note-card">
+  <p class="research-note-card__label">함수 분해와 로직 구성</p>
+  <p class="research-note-card__body">함수는 입력, 처리, 반환을 분리해 로직을 재사용하기 쉽게 만들고, 문제를 작은 단위로 나누는 기본 도구입니다.</p>
+  <p class="research-note-card__meta">이 글에서는 문제 풀이를 함수 단위로 쪼개고 입출력을 나눠 보는 실습과 연결됩니다.</p>
+</div>
+</div>
 
-## What I Tried in Code
+## How I Implemented It
 
-1. 클래스 설계: 은행 클래스
-2. 구현 코드: 은행 클래스
-3. 클래스 설계: 다양한 메소드
+<div class="research-step-grid">
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 1 · 클래스 설계</p>
+  <p class="research-step-card__title">은행 클래스</p>
+  <p class="research-step-card__body">문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.</p>
+
+  <p class="research-step-card__meta"><span>코드 포인트</span> 입금 기능 구현 · 출금 기능 구현</p>
+</div>
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 2 · 구현 코드</p>
+  <p class="research-step-card__title">은행 클래스</p>
+  <p class="research-step-card__body">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</p>
+
+
+</div>
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 3 · 클래스 설계</p>
+  <p class="research-step-card__title">은행 클래스</p>
+  <p class="research-step-card__body">문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.</p>
+
+  <p class="research-step-card__meta"><span>코드 포인트</span> 위의 은행 클래스 init없이 구현 · 입금 기능 구현</p>
+</div>
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 4 · 클래스 설계</p>
+  <p class="research-step-card__title">은행 클래스</p>
+  <p class="research-step-card__body">문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.</p>
+
+  <p class="research-step-card__meta"><span>코드 포인트</span> 실습문제1 상품 클래스 구현하기 문제</p>
+</div>
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 5 · 클래스 설계</p>
+  <p class="research-step-card__title">다양한 메소드</p>
+  <p class="research-step-card__body">문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.</p>
+
+  <p class="research-step-card__meta"><span>코드 포인트</span> str메소드</p>
+</div>
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 6 · 클래스 설계</p>
+  <p class="research-step-card__title">은행 클래스</p>
+  <p class="research-step-card__body">문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.</p>
+
+  <p class="research-step-card__meta"><span>코드 포인트</span> 실습2 문제 - 인스턴스 변수 초기화 예외 처리</p>
+</div>
+</div>
 
 ## Code Evidence
 
@@ -63,7 +124,7 @@ tags:
 
 **직접 해본 단계**: 클래스 설계
 
-`은행 클래스`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다. 코드에는 입금 기능 구현, 출금 기능 구현 같은 처리 포인트도 함께 남아 있습니다.
+문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.
 
 ```python
 class BankAccount:
@@ -97,7 +158,7 @@ class BankAccount:
 
 **직접 해본 단계**: 구현 코드
 
-`은행 클래스`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
 
 ```python
 a1 = BankAccount()
@@ -113,7 +174,7 @@ a2.balance = 5000
 
 **직접 해본 단계**: 클래스 설계
 
-`은행 클래스`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다. 코드에는 위의 은행 클래스 init없이 구현, 입금 기능 구현 같은 처리 포인트도 함께 남아 있습니다.
+문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.
 
 ```python
 # 위의 은행 클래스 init없이 구현
@@ -145,7 +206,7 @@ class BankAccount:
 
 **직접 해본 단계**: 클래스 설계
 
-`은행 클래스`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다. 코드에는 실습문제1 상품 클래스 구현하기 문제 같은 처리 포인트도 함께 남아 있습니다.
+문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.
 
 ```python
 # 실습문제1 상품 클래스 구현하기 문제
@@ -173,7 +234,7 @@ class Product:
 
 **직접 해본 단계**: 클래스 설계
 
-`다양한 메소드`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다. 코드에는 str메소드 같은 처리 포인트도 함께 남아 있습니다.
+문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.
 
 ```python
 # __str__메소드
@@ -195,7 +256,7 @@ class Book:
 
 **직접 해본 단계**: 클래스 설계
 
-`은행 클래스`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다. 코드에는 실습2 문제 - 인스턴스 변수 초기화 예외 처리 같은 처리 포인트도 함께 남아 있습니다.
+문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.
 
 ```python
 # 실습2 문제 - 인스턴스 변수 초기화 예외 처리
@@ -210,20 +271,6 @@ class Person:
     def greet(self):
         print(f"{self.name} ({self.age}세) - {self.email} 님, 안녕하세요!")
 ```
-
-## Why These Steps Matter
-
-### 클래스로 문제를 쪼개 본 이유
-
-- 왜 필요한가: 상태와 동작이 함께 움직이는 문제는 함수만 나열하기보다 객체 단위로 묶어야 구조가 더 선명해집니다.
-- 왜 이 방식을 쓰는가: 이 글에서는 `은행 클래스` 코드를 통해 생성자와 메서드를 어떻게 나눠 문제를 모델링했는지 바로 보이게 했습니다.
-- 원리: 클래스는 관련 데이터와 동작을 한 단위로 캡슐화해 재사용성과 확장성을 높여 줍니다.
-
-### 구현 흐름을 코드로 남긴 이유
-
-- 왜 필요한가: 설명만으로는 내가 실제로 어디까지 손댔는지 전달되기 어려워 핵심 구현 코드를 직접 보여줄 필요가 있습니다.
-- 왜 이 방식을 쓰는가: 그래서 `은행 클래스` 블록을 포함해 문제를 풀 때 건드린 핵심 로직이 그대로 보이도록 정리했습니다.
-- 원리: 코드는 학습한 내용을 실행 가능한 형태로 옮긴 결과물이기 때문에, 가장 직접적인 실습 증거가 됩니다.
 
 ## Source Bundle
 

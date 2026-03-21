@@ -5,8 +5,8 @@ research_tab: "ML"
 research_kind: "Practice"
 source_title: "250827_코딩실습12_10.결정트리와 앙상블(AdaBoost)"
 source_path: "11_Machine_Learning/Code_Snippets/250827_코딩실습12_10.결정트리와 앙상블(AdaBoost).md"
-excerpt: "코딩실습12 10.결정트리와 앙상블(AdaBoost)에서 다룬 구현 흐름과 참고 소스를 다시 볼 수 있게 정리한 ML 아카이브 노트입니다"
-research_summary: "코딩실습12 10.결정트리와 앙상블(AdaBoost)에서 다룬 구현 흐름과 참고 소스를 다시 볼 수 있게 정리한 ML 아카이브 노트입니다. 이 글은 개념 요약보다 전처리, 피처 가공, 모델링, 평가 코드를 직접 다시 볼 수 있게 구성한 ML 실습 기록입니다. `ipynb/md` 원본과 8개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 sklearn, matplotlib, numpy입니다."
+excerpt: "코딩실습12 10.결정트리와 앙상블(AdaBoost)를 중심으로 분류 문제, 결정 트리와 앙상블 개념과 구현 흐름을 함께 정리한 ML 실습 기록입니다"
+research_summary: "코딩실습12 10.결정트리와 앙상블(AdaBoost)를 중심으로 분류 문제, 결정 트리와 앙상블 개념과 구현 흐름을 함께 정리한 ML 실습 기록입니다. 본문에서는 파생 변수 추가, DecisionTree / AdaBoo... 같은 코드를 따라가며 실제 실습 과정을 확인할 수 있습니다. `ipynb/md` 원본과 8개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 sklearn, matplotlib, numpy입니다."
 research_artifacts: "ipynb/md · 코드 8개 · 실행 7개"
 code_block_count: 8
 execution_block_count: 7
@@ -25,36 +25,108 @@ tags:
   - practice
 ---
 
-코딩실습12 10.결정트리와 앙상블(AdaBoost)에서 다룬 구현 흐름과 참고 소스를 다시 볼 수 있게 정리한 ML 아카이브 노트입니다. 이 글은 개념 요약보다 전처리, 피처 가공, 모델링, 평가 코드를 직접 다시 볼 수 있게 구성한 ML 실습 기록입니다. `ipynb/md` 원본과 8개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 sklearn, matplotlib, numpy입니다.
-
-**남겨둔 자료**: `ipynb/md` 원본과 8개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 sklearn, matplotlib, numpy입니다.
-
-**주요 스택**: `sklearn`, `matplotlib`, `numpy`
-
-## Snapshot
-
-| Item | Value |
-|------|-------|
-| Track | ML |
-| Type | Practice |
-| Source Files | `ipynb`, `md` |
-| Code Blocks | 8 |
-| Execution Cells | 7 |
-| Libraries | `sklearn`, `matplotlib`, `numpy` |
-| Source Note | `250827_코딩실습12_10.결정트리와 앙상블(AdaBoost)` |
+<div class="research-doc-hero">
+  <div class="research-doc-hero__meta">
+<div class="research-doc-hero__meta-item">
+  <span>Source</span>
+  <strong>ipynb / md</strong>
+</div>
+<div class="research-doc-hero__meta-item">
+  <span>Artifacts</span>
+  <strong>코드 8 · 실행 7</strong>
+</div>
+<div class="research-doc-hero__meta-item">
+  <span>Libraries</span>
+  <strong>sklearn, matplotlib, numpy</strong>
+</div>
+  </div>
+</div>
+<div class="research-doc-grid">
+<div class="research-doc-card">
+  <p class="research-doc-card__label">Study Topic</p>
+  <p class="research-doc-card__value">코딩실습12 10.결정트리와 앙상블(AdaBoost)를 중심으로 학습한 내용을 정리한 ML 실습입니다.</p>
+</div>
+<div class="research-doc-card">
+  <p class="research-doc-card__label">Core Concepts</p>
+  <p class="research-doc-card__value">분류 문제 · 결정 트리와 앙상블 · 전처리와 입력 정리</p>
+</div>
+<div class="research-doc-card">
+  <p class="research-doc-card__label">Implementation Focus</p>
+  <p class="research-doc-card__value">피처 가공 -&gt; 모델 구성 -&gt; 평가</p>
+</div>
+</div>
 
 ## What I Studied
 
-- 이 기록은 `ML` 트랙의 `Practice` 아카이브로 정리되어 있습니다.
+<div class="research-note-grid">
+<div class="research-note-card">
+  <p class="research-note-card__label">분류 문제</p>
+  <p class="research-note-card__body">분류는 입력 특성으로 클래스나 반응 여부를 예측하는 문제입니다. 모델은 각 샘플이 어떤 범주에 속하는지 확률 또는 라벨로 출력합니다.</p>
+  <p class="research-note-card__meta">이 글에서는 가입 여부, 품종, 레이블 예측처럼 범주형 타깃을 다루는 실습 맥락으로 연결됩니다.</p>
+</div>
+<div class="research-note-card">
+  <p class="research-note-card__label">결정 트리와 앙상블</p>
+  <p class="research-note-card__body">결정 트리는 조건 분기로 예측 규칙을 만들고, 앙상블은 여러 모델의 예측을 묶어 편향과 분산을 함께 줄이는 접근입니다.</p>
+  <p class="research-note-card__meta">이 글에서는 Decision Tree, RandomForest, XGBoost, Voting, Stacking 코드를 통해 여러 모델을 비교해 볼 수 있습니다.</p>
+</div>
+<div class="research-note-card">
+  <p class="research-note-card__label">전처리와 입력 정리</p>
+  <p class="research-note-card__body">머신러닝 모델은 입력 형식에 민감하기 때문에 결측치 처리, 인코딩, 스케일링 같은 전처리 단계가 성능을 크게 좌우합니다.</p>
+  <p class="research-note-card__meta">이 글에서는 범주형 값을 숫자로 바꾸거나 학습/검증을 분리하는 코드가 이 개념에 해당합니다.</p>
+</div>
+<div class="research-note-card">
+  <p class="research-note-card__label">피처 엔지니어링</p>
+  <p class="research-note-card__body">피처 엔지니어링은 원본 컬럼을 그대로 쓰지 않고 문제에 맞는 새 특징을 설계해 모델이 더 유용한 패턴을 학습하도록 돕는 과정입니다.</p>
+  <p class="research-note-card__meta">이 글에서는 시간 파생 변수, 조건식 기반 플래그, 도메인 규칙을 반영한 새 컬럼 생성 코드가 여기에 해당합니다.</p>
+</div>
+</div>
 
-## What I Tried in Code
+## How I Implemented It
 
-1. 피처 가공: 파생 변수 추가
-2. 모델 구성: DecisionTree / AdaBoost 모델 구성
-3. 평가: 분류 성능 평가
-4. 환경 준비: from sklearn.ensemble import AdaBoostClassifier
-5. 구현 코드: X, y = make_moons(n_samples=1000, noise=0.3, rand...
-6. 구현 코드: X_train, X_test, y_train, y_test = train_test_spl...
+<div class="research-step-grid">
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 1 · 피처 가공</p>
+  <p class="research-step-card__title">파생 변수 추가</p>
+  <p class="research-step-card__body">원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다.</p>
+  <p class="research-step-card__meta"><span>핵심 API</span> <code>matplotlib</code></p>
+
+</div>
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 2 · 모델 구성</p>
+  <p class="research-step-card__title">DecisionTree / AdaBoost 모델 구성</p>
+  <p class="research-step-card__body">DecisionTree / AdaBoost 같은 모델을 올려 두고 어떤 알고리즘이 문제에 더 잘 맞는지 비교해 보는 구간입니다.</p>
+  <p class="research-step-card__meta"><span>핵심 API</span> <code>DecisionTree</code> <code>AdaBoost</code></p>
+
+</div>
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 3 · 평가</p>
+  <p class="research-step-card__title">분류 성능 평가</p>
+  <p class="research-step-card__body">예측 결과를 지표로 계산해 어떤 모델과 전처리가 더 잘 맞았는지 확인하는 평가 코드입니다.</p>
+  <p class="research-step-card__meta"><span>핵심 API</span> <code>accuracy_score</code></p>
+
+</div>
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 4 · 환경 준비</p>
+  <p class="research-step-card__title">from sklearn.ensemble import AdaBoostClassifier</p>
+  <p class="research-step-card__body">전처리와 학습/검증 분리를 담당해 전체 파이프라인의 출발점을 정리하는 코드입니다.</p>
+  <p class="research-step-card__meta"><span>핵심 API</span> <code>train_test_split</code> <code>DecisionTree</code> <code>AdaBoost</code> <code>accuracy_score</code></p>
+
+</div>
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 5 · 구현 코드</p>
+  <p class="research-step-card__title">X, y = make_moons(n_samples=1000, noise=0.3, random_state=42)</p>
+  <p class="research-step-card__body">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</p>
+
+
+</div>
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 6 · 구현 코드</p>
+  <p class="research-step-card__title">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, rand...</p>
+  <p class="research-step-card__body">전처리와 학습/검증 분리를 담당해 전체 파이프라인의 출발점을 정리하는 코드입니다.</p>
+  <p class="research-step-card__meta"><span>핵심 API</span> <code>train_test_split</code></p>
+
+</div>
+</div>
 
 ## Code Evidence
 
@@ -62,7 +134,9 @@ tags:
 
 **직접 해본 단계**: 피처 가공
 
-`파생 변수 추가`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다.
+**핵심 API**: `matplotlib`
+
+원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다.
 
 ```python
 def plot_decision_boundary(model, X, y, title="Decision Boundary"):
@@ -90,7 +164,9 @@ def plot_decision_boundary(model, X, y, title="Decision Boundary"):
 
 **직접 해본 단계**: 모델 구성
 
-`DecisionTree / AdaBoost 모델 구성`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. DecisionTree / AdaBoost 같은 모델을 올려 두고 어떤 알고리즘이 문제에 더 잘 맞는지 비교해 보는 구간입니다.
+**핵심 API**: `DecisionTree`, `AdaBoost`
+
+DecisionTree / AdaBoost 같은 모델을 올려 두고 어떤 알고리즘이 문제에 더 잘 맞는지 비교해 보는 구간입니다.
 
 ```python
 base_estimator = DecisionTreeClassifier(max_depth=1)      # Stump생성
@@ -106,7 +182,9 @@ ada_clf.fit(X_train, y_train)
 
 **직접 해본 단계**: 평가
 
-`분류 성능 평가`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 예측 결과를 지표로 계산해 어떤 모델과 전처리가 더 잘 맞았는지 확인하는 평가 코드입니다.
+**핵심 API**: `accuracy_score`
+
+예측 결과를 지표로 계산해 어떤 모델과 전처리가 더 잘 맞았는지 확인하는 평가 코드입니다.
 
 ```python
 y_pred = ada_clf.predict(X_test)
@@ -118,7 +196,9 @@ acc
 
 **직접 해본 단계**: 환경 준비
 
-`from sklearn.ensemble import AdaBoostClassifier`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 전처리와 학습/검증 분리를 담당해 전체 파이프라인의 출발점을 정리하는 코드입니다.
+**핵심 API**: `train_test_split`, `DecisionTree`, `AdaBoost`, `accuracy_score`
+
+전처리와 학습/검증 분리를 담당해 전체 파이프라인의 출발점을 정리하는 코드입니다.
 
 ```python
 from sklearn.ensemble import AdaBoostClassifier
@@ -135,7 +215,7 @@ from matplotlib.colors import ListedColormap           # 결정 경계 시각화
 
 **직접 해본 단계**: 구현 코드
 
-`X, y = make_moons(n_samples=1000, noise=0.3, random_state=42)`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
 
 ```python
 X, y = make_moons(n_samples=1000, noise=0.3, random_state=42)
@@ -145,37 +225,13 @@ X, y = make_moons(n_samples=1000, noise=0.3, random_state=42)
 
 **직접 해본 단계**: 구현 코드
 
-`X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, rand...`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 전처리와 학습/검증 분리를 담당해 전체 파이프라인의 출발점을 정리하는 코드입니다.
+**핵심 API**: `train_test_split`
+
+전처리와 학습/검증 분리를 담당해 전체 파이프라인의 출발점을 정리하는 코드입니다.
 
 ```python
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 ```
-
-## Why These Steps Matter
-
-### 파생 변수를 직접 만든 부분
-
-- 왜 필요한가: 원본 컬럼만으로는 숨겨진 패턴이 잘 드러나지 않아 도메인 정보를 반영한 새 특징이 필요할 때가 많습니다.
-- 왜 이 방식을 쓰는가: 이 글에서는 `파생 변수 추가` 코드를 통해 시간, 범주, 조건식을 어떻게 새로운 feature로 바꿨는지 바로 볼 수 있게 했습니다.
-- 원리: 좋은 feature engineering은 데이터 분포를 다시 표현해 모델이 더 유용한 경계나 관계를 학습하도록 돕습니다.
-
-### 모델을 바꿔가며 비교한 이유
-
-- 왜 필요한가: 한 가지 모델만 보면 데이터에 맞는 편향과 분산 특성을 놓치기 쉬워서 여러 알고리즘을 비교해 보는 과정이 중요합니다.
-- 왜 이 방식을 쓰는가: 그래서 `DecisionTree / AdaBoost 모델 구성`처럼 실제로 올려본 모델 코드를 남겨 어떤 후보를 실험했는지 바로 확인할 수 있게 했습니다.
-- 원리: 모델마다 가정과 표현력이 달라 같은 데이터라도 잡아내는 패턴이 다르기 때문에 비교 실험이 필수입니다.
-
-### 지표 계산까지 남긴 이유
-
-- 왜 필요한가: 예측을 했더라도 어떤 기준으로 잘했는지 판단하지 않으면 실험 비교가 성립하지 않습니다.
-- 왜 이 방식을 쓰는가: 그래서 `분류 성능 평가` 코드를 통해 정확도, F1, RMSLE 같은 지표를 실제로 어떻게 계산했는지 함께 남겼습니다.
-- 원리: 평가 지표는 예측 결과를 수치화해 모델 선택과 개선 방향을 정하는 기준점 역할을 합니다.
-
-### 구현 흐름을 코드로 남긴 이유
-
-- 왜 필요한가: 설명만으로는 내가 실제로 어디까지 손댔는지 전달되기 어려워 핵심 구현 코드를 직접 보여줄 필요가 있습니다.
-- 왜 이 방식을 쓰는가: 그래서 `X, y = make_moons(n_samples=1000, noise=0.3, random_state=42)` 블록을 포함해 문제를 풀 때 건드린 핵심 로직이 그대로 보이도록 정리했습니다.
-- 원리: 코드는 학습한 내용을 실행 가능한 형태로 옮긴 결과물이기 때문에, 가장 직접적인 실습 증거가 됩니다.
 
 ## Source Bundle
 

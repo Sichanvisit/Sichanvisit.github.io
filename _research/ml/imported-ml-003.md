@@ -5,8 +5,8 @@ research_tab: "ML"
 research_kind: "Practice"
 source_title: "250812_코드실습3_4.데이터사이언스 Toolkit"
 source_path: "11_Machine_Learning/Code_Snippets/250812_코드실습3_4.데이터사이언스 Toolkit.md"
-excerpt: "파이썬 기초 문법 - 마크다운 정리법 - 데이터 시각화 - AI 엔지니어링"
-research_summary: "파이썬 기초 문법 - 마크다운 정리법 - 데이터 시각화 - AI 엔지니어링. 마크다운으로 매일 학습 기록을 남기는 습관 만들기! `ipynb/md` 원본과 60개 코드 블록, 59개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, google, pandas, matplotlib입니다."
+excerpt: "코드실습3 4.데이터사이언스 Toolkit를 중심으로 구현 중심 학습 개념과 구현 흐름을 함께 정리한 ML 실습 기록입니다"
+research_summary: "코드실습3 4.데이터사이언스 Toolkit를 중심으로 구현 중심 학습 개념과 구현 흐름을 함께 정리한 ML 실습 기록입니다. 본문에서는 csv파일 불러오는 실습, matplotlib 실습 같은 코드를 따라가며 실제 실습 과정을 확인할 수 있습니다. `ipynb/md` 원본과 60개 코드 블록, 59개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, google, pandas, matplotlib입니다."
 research_artifacts: "ipynb/md · 코드 60개 · 실행 59개"
 code_block_count: 60
 execution_block_count: 59
@@ -30,49 +30,97 @@ tags:
   - practice
 ---
 
-파이썬 기초 문법 - 마크다운 정리법 - 데이터 시각화 - AI 엔지니어링. 마크다운으로 매일 학습 기록을 남기는 습관 만들기! `ipynb/md` 원본과 60개 코드 블록, 59개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, google, pandas, matplotlib입니다.
-
-**빠르게 볼 수 있는 포인트**: 마크다운 실습, 자기소개 마크다운 미션, 이름.
-
-**남겨둔 자료**: `ipynb/md` 원본과 60개 코드 블록, 59개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, google, pandas, matplotlib입니다.
-
-**주요 스택**: `numpy`, `google`, `pandas`, `matplotlib`, `warnings`
-
-## Snapshot
-
-| Item | Value |
-|------|-------|
-| Track | ML |
-| Type | Practice |
-| Source Files | `ipynb`, `md` |
-| Code Blocks | 60 |
-| Execution Cells | 59 |
-| Libraries | `numpy`, `google`, `pandas`, `matplotlib`, `warnings` |
-| Source Note | `250812_코드실습3_4.데이터사이언스 Toolkit` |
+<div class="research-doc-hero">
+  <div class="research-doc-hero__meta">
+<div class="research-doc-hero__meta-item">
+  <span>Source</span>
+  <strong>ipynb / md</strong>
+</div>
+<div class="research-doc-hero__meta-item">
+  <span>Artifacts</span>
+  <strong>코드 60 · 실행 59</strong>
+</div>
+<div class="research-doc-hero__meta-item">
+  <span>Libraries</span>
+  <strong>numpy, google, pandas, matplotlib, warnings</strong>
+</div>
+  </div>
+</div>
+<div class="research-doc-grid">
+<div class="research-doc-card">
+  <p class="research-doc-card__label">Study Topic</p>
+  <p class="research-doc-card__value">파이썬 기초 문법. 마크다운 정리법</p>
+</div>
+<div class="research-doc-card">
+  <p class="research-doc-card__label">Data Context</p>
+  <p class="research-doc-card__value">파이썬 기초 문법 - 마크다운 정리법 - 데이터 시각화 - AI 엔지니어링</p>
+</div>
+<div class="research-doc-card">
+  <p class="research-doc-card__label">Core Concepts</p>
+  <p class="research-doc-card__value">구현 중심 학습</p>
+</div>
+<div class="research-doc-card">
+  <p class="research-doc-card__label">Implementation Focus</p>
+  <p class="research-doc-card__value">데이터 불러오기 -&gt; 시각화 -&gt; 구현 코드</p>
+</div>
+</div>
 
 ## What I Studied
 
-### 요즘 배우는 것
+<div class="research-note-grid">
+<div class="research-note-card">
+  <p class="research-note-card__label">구현 중심 학습</p>
+  <p class="research-note-card__body">이 글은 개념 설명과 함께 실제 코드를 통해 학습 흐름을 다시 따라가도록 정리된 ML 실습 기록입니다.</p>
+  <p class="research-note-card__meta">데이터 입력, 처리, 모델링, 평가 가운데 실제로 손댄 단계를 중심으로 읽을 수 있습니다.</p>
+</div>
+</div>
 
-파이썬 기초 문법 - 마크다운 정리법 - 데이터 시각화 - AI 엔지니어링
+## How I Implemented It
 
-### 나의 목표
+<div class="research-step-grid">
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 1 · 데이터 불러오기</p>
+  <p class="research-step-card__title">csv파일 불러오는 실습</p>
+  <p class="research-step-card__body">실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.</p>
+  <p class="research-step-card__meta"><span>핵심 API</span> <code>pd.read_csv</code></p>
+  <p class="research-step-card__meta"><span>코드 포인트</span> CSV 파일 불러오기 실습</p>
+</div>
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 2 · 시각화</p>
+  <p class="research-step-card__title">matplotlib 실습</p>
+  <p class="research-step-card__body">데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.</p>
+  <p class="research-step-card__meta"><span>핵심 API</span> <code>matplotlib</code></p>
 
-마크다운으로 매일 학습 기록을 남기는 습관 만들기!
+</div>
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 3 · 구현 코드</p>
+  <p class="research-step-card__title">기본 함수들</p>
+  <p class="research-step-card__body">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</p>
 
-### matplotlib 실습
+  <p class="research-step-card__meta"><span>코드 포인트</span> 실습 과제1 - 상품 매출액 계산 답안</p>
+</div>
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 4 · 시각화</p>
+  <p class="research-step-card__title">matplotlib 실습</p>
+  <p class="research-step-card__body">데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.</p>
+  <p class="research-step-card__meta"><span>핵심 API</span> <code>matplotlib</code></p>
+  <p class="research-step-card__meta"><span>코드 포인트</span> 실습3 - 여러 그래프 시각화 · 키 분포</p>
+</div>
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 5 · 시각화</p>
+  <p class="research-step-card__title">matplotlib 실습</p>
+  <p class="research-step-card__body">데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.</p>
+  <p class="research-step-card__meta"><span>핵심 API</span> <code>matplotlib</code></p>
 
-/ 포맷 문자열 / 설명 / 예시 출력 / / --------- / -------- / -------- / / %1.0f%% / 정수로 표시 / 25% / / %1.1f%% / 소수점 한 자리 / 25.0% / / %1.2f%% / 소수점 두 자리 / 25.00% /
-
-### Key Step
-
-np.array(): 넘파이 배열로 바꿔주는 함수
-
-## What I Tried in Code
-
-1. 데이터 불러오기: csv파일 불러오는 실습
-2. 시각화: matplotlib 실습
-3. 구현 코드: 기본 함수들
+</div>
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 6 · 시각화</p>
+  <p class="research-step-card__title">matplotlib 실습</p>
+  <p class="research-step-card__body">데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.</p>
+  <p class="research-step-card__meta"><span>핵심 API</span> <code>matplotlib</code></p>
+  <p class="research-step-card__meta"><span>코드 포인트</span> 다중 레이아웃 - subplot(행, 열, 순번) 응용 · plt.xticks([])</p>
+</div>
+</div>
 
 ## Code Evidence
 
@@ -80,7 +128,9 @@ np.array(): 넘파이 배열로 바꿔주는 함수
 
 **직접 해본 단계**: 데이터 불러오기
 
-`csv파일 불러오는 실습`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다. 코드에는 CSV 파일 불러오기 실습 같은 처리 포인트도 함께 남아 있습니다.
+**핵심 API**: `pd.read_csv`
+
+실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.
 
 ```python
 # CSV 파일 불러오기 실습
@@ -95,7 +145,9 @@ df
 
 **직접 해본 단계**: 시각화
 
-`matplotlib 실습`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.
+**핵심 API**: `matplotlib`
+
+데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.
 
 ```python
 labels = ['A', 'B', 'C', 'D']
@@ -123,7 +175,7 @@ plt.show()
 
 **직접 해본 단계**: 구현 코드
 
-`기본 함수들`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다. 코드에는 실습 과제1 - 상품 매출액 계산 답안 같은 처리 포인트도 함께 남아 있습니다.
+원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
 
 ```python
 #실습 과제1 - 상품 매출액 계산 답안
@@ -147,7 +199,9 @@ print("전체 매출액: ", sales.sum())
 
 **직접 해본 단계**: 시각화
 
-`matplotlib 실습`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다. 코드에는 실습3 - 여러 그래프 시각화, 키 분포 같은 처리 포인트도 함께 남아 있습니다.
+**핵심 API**: `matplotlib`
+
+데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.
 
 ```python
 # 실습3 - 여러 그래프 시각화
@@ -177,7 +231,9 @@ plt.show()
 
 **직접 해본 단계**: 시각화
 
-`matplotlib 실습`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.
+**핵심 API**: `matplotlib`
+
+데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.
 
 ```python
 !sudo apt-get install -y fonts-nanum
@@ -203,7 +259,9 @@ fm.fontManager.addfont(path)
 
 **직접 해본 단계**: 시각화
 
-`matplotlib 실습`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다. 코드에는 다중 레이아웃 - subplot(행, 열, 순번) 응용, plt.xticks([]) 같은 처리 포인트도 함께 남아 있습니다.
+**핵심 API**: `matplotlib`
+
+데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.
 
 ```python
 # 다중 레이아웃 - subplot(행, 열, 순번) 응용
@@ -223,26 +281,6 @@ for i in range(9):
 plt.tight_layout()
 plt.show()
 ```
-
-## Why These Steps Matter
-
-### 데이터 입력부터 다시 보기
-
-- 왜 필요한가: 실습을 다시 따라가려면 어떤 데이터 파일에서 출발했는지부터 분명해야 전체 흐름이 재현됩니다.
-- 왜 이 방식을 쓰는가: 이 글에서는 `csv파일 불러오는 실습` 코드를 앞쪽에 배치해 train/test 또는 원본 테이블이 어디서 올라오는지 바로 확인할 수 있게 했습니다.
-- 원리: 표 형태 원본을 DataFrame으로 읽어와야 전처리, 피처 가공, 모델 학습이 같은 입력 기준 위에서 이어집니다.
-
-### 시각화를 같이 남긴 이유
-
-- 왜 필요한가: 숫자만 보면 놓치기 쉬운 분포와 이상치를 그래프로 확인해야 다음 전처리나 feature engineering 방향이 또렷해집니다.
-- 왜 이 방식을 쓰는가: 이 글에서는 `matplotlib 실습` 코드를 통해 어떤 그래프를 보고 판단했는지 실습 흔적을 남겼습니다.
-- 원리: 시각화는 데이터 분포를 직관적으로 드러내 모델 선택과 변수 설계의 근거를 만들어 줍니다.
-
-### 구현 흐름을 코드로 남긴 이유
-
-- 왜 필요한가: 설명만으로는 내가 실제로 어디까지 손댔는지 전달되기 어려워 핵심 구현 코드를 직접 보여줄 필요가 있습니다.
-- 왜 이 방식을 쓰는가: 그래서 `기본 함수들` 블록을 포함해 문제를 풀 때 건드린 핵심 로직이 그대로 보이도록 정리했습니다.
-- 원리: 코드는 학습한 내용을 실행 가능한 형태로 옮긴 결과물이기 때문에, 가장 직접적인 실습 증거가 됩니다.
 
 ## Source Bundle
 

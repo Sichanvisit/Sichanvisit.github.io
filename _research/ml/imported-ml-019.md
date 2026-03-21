@@ -5,8 +5,8 @@ research_tab: "ML"
 research_kind: "Archive Note"
 source_title: "[스프린트미션]1_Python_연습(문제) - AI5 강사 답안"
 source_path: "11_Machine_Learning/Code_Snippets/[스프린트미션]1_Python_연습(문제) - AI5 강사 답안.md"
-excerpt: "문제 설명 1부터 n까지의 숫자 중에서 3의 배수만 출력하는 함수를 작성하세요"
-research_summary: "문제 설명 1부터 n까지의 숫자 중에서 3의 배수만 출력하는 함수를 작성하세요. 문제 설명 문자열에서 모음(a, e, i, o, u)을 제거한 문자열을 반환하는 함수를 작성하세요. `ipynb/md` 원본과 114개 코드 블록, 61개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 itertools, time, datetime, csv입니다."
+excerpt: "Python 연습(문제)를 중심으로 함수 분해와 로직 구성 개념과 구현 흐름을 함께 정리한 ML 실습 기록입니다"
+research_summary: "Python 연습(문제)를 중심으로 함수 분해와 로직 구성 개념과 구현 흐름을 함께 정리한 ML 실습 기록입니다. 본문에서는 문제1. 투표 시스템 클래스, 문제1. 시간 관리 프로그램 같은 코드를 따라가며 실제 실습 과정을 확인할 수 있습니다. `ipynb/md` 원본과 114개 코드 블록, 61개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 itertools, time, datetime, csv입니다."
 research_artifacts: "ipynb/md · 코드 114개 · 실행 61개"
 code_block_count: 114
 execution_block_count: 61
@@ -29,50 +29,93 @@ tags:
   - archive-note
 ---
 
-문제 설명 1부터 n까지의 숫자 중에서 3의 배수만 출력하는 함수를 작성하세요. 문제 설명 문자열에서 모음(a, e, i, o, u)을 제거한 문자열을 반환하는 함수를 작성하세요. `ipynb/md` 원본과 114개 코드 블록, 61개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 itertools, time, datetime, csv입니다.
-
-**빠르게 볼 수 있는 포인트**: 파이썬 연습, 기초(7문제), 문제 설명 1부터 n까지의 숫자 중에서 3의 배수만 출력하는 함수를 작....
-
-**남겨둔 자료**: `ipynb/md` 원본과 114개 코드 블록, 61개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 itertools, time, datetime, csv입니다.
-
-**주요 스택**: `itertools`, `time`, `datetime`, `csv`
-
-## Snapshot
-
-| Item | Value |
-|------|-------|
-| Track | ML |
-| Type | Archive Note |
-| Source Files | `ipynb`, `md` |
-| Code Blocks | 114 |
-| Execution Cells | 61 |
-| Libraries | `itertools`, `time`, `datetime`, `csv` |
-| Source Note | `[스프린트미션]1_Python_연습(문제) - AI5 강사 답안` |
+<div class="research-doc-hero">
+  <div class="research-doc-hero__meta">
+<div class="research-doc-hero__meta-item">
+  <span>Source</span>
+  <strong>ipynb / md</strong>
+</div>
+<div class="research-doc-hero__meta-item">
+  <span>Artifacts</span>
+  <strong>코드 114 · 실행 61</strong>
+</div>
+<div class="research-doc-hero__meta-item">
+  <span>Libraries</span>
+  <strong>itertools, time, datetime, csv</strong>
+</div>
+  </div>
+</div>
+<div class="research-doc-grid">
+<div class="research-doc-card">
+  <p class="research-doc-card__label">Study Topic</p>
+  <p class="research-doc-card__value">문제 설명 1부터 n까지의 숫자 중에서 3의 배수만 출력하는 함수를 작성하세요.</p>
+</div>
+<div class="research-doc-card">
+  <p class="research-doc-card__label">Core Concepts</p>
+  <p class="research-doc-card__value">함수 분해와 로직 구성</p>
+</div>
+<div class="research-doc-card">
+  <p class="research-doc-card__label">Implementation Focus</p>
+  <p class="research-doc-card__value">클래스 설계 -&gt; 함수 실습 -&gt; 구현 코드</p>
+</div>
+</div>
 
 ## What I Studied
 
-### 문제1. 3의 배수 출력
+<div class="research-note-grid">
+<div class="research-note-card">
+  <p class="research-note-card__label">함수 분해와 로직 구성</p>
+  <p class="research-note-card__body">함수는 입력, 처리, 반환을 분리해 로직을 재사용하기 쉽게 만들고, 문제를 작은 단위로 나누는 기본 도구입니다.</p>
+  <p class="research-note-card__meta">이 글에서는 문제 풀이를 함수 단위로 쪼개고 입출력을 나눠 보는 실습과 연결됩니다.</p>
+</div>
+</div>
 
-문제 설명 1부터 n까지의 숫자 중에서 3의 배수만 출력하는 함수를 작성하세요.
+## How I Implemented It
 
-### 문제2. 모음 제거하기
+<div class="research-step-grid">
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 1 · 클래스 설계</p>
+  <p class="research-step-card__title">문제1. 투표 시스템 클래스</p>
+  <p class="research-step-card__body">문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.</p>
 
-문제 설명 문자열에서 모음(a, e, i, o, u)을 제거한 문자열을 반환하는 함수를 작성하세요.
+  <p class="research-step-card__meta"><span>코드 포인트</span> 기본 답안</p>
+</div>
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 2 · 함수 실습</p>
+  <p class="research-step-card__title">문제1. 시간 관리 프로그램</p>
+  <p class="research-step-card__body">입력과 반환값을 분리해 문제 해결 과정을 함수로 정리하는 기초 구현 실습 코드입니다.</p>
 
-### 문제3. 수 크기 비교하기
+  <p class="research-step-card__meta"><span>코드 포인트</span> 기본 답안 · CSV 파일에서 할 일을 불러오는 함수</p>
+</div>
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 3 · 구현 코드</p>
+  <p class="research-step-card__title">문제3. 도서관 관리 시스템</p>
+  <p class="research-step-card__body">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</p>
 
-문제 설명 두 개의 숫자를 입력받아, 큰 숫자와 작은 숫자를 각각 반환하는 함수를 작성하세요. (단, 동일한 숫자를 2회 입력하는 경우에는 순서 없이 한 번만 출력되도록 해 주세요.)
+  <p class="research-step-card__meta"><span>코드 포인트</span> 도서관 관리 시스템 초기화 · 도서 추가</p>
+</div>
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 4 · 클래스 설계</p>
+  <p class="research-step-card__title">문제4. 프랜차이즈 레스토랑 관리 클래스</p>
+  <p class="research-step-card__body">문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.</p>
 
-### 문제4. 문자열 길이 반환하기
+  <p class="research-step-card__meta"><span>코드 포인트</span> 기본 답안</p>
+</div>
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 5 · 클래스 설계</p>
+  <p class="research-step-card__title">문제4. 프랜차이즈 레스토랑 관리 클래스</p>
+  <p class="research-step-card__body">문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.</p>
 
-문제 설명 문자열의 길이를 반환하되, 문자열이 빈 문자열이면 “문자열이 비어 있습니다.“를 반환하는 함수를 작성하세요.
+  <p class="research-step-card__meta"><span>코드 포인트</span> 응용 버전 1 - cancel_reservation 추가 · 고객 이름과 예약 일시를 기준으로 해당 예약을 찾아 삭제...</p>
+</div>
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 6 · 클래스 설계</p>
+  <p class="research-step-card__title">문제4. 프랜차이즈 레스토랑 관리 클래스</p>
+  <p class="research-step-card__body">문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.</p>
 
-## What I Tried in Code
-
-1. 클래스 설계: 문제1. 투표 시스템 클래스
-2. 함수 실습: 문제1. 시간 관리 프로그램
-3. 구현 코드: 문제3. 도서관 관리 시스템
-4. 클래스 설계: 문제4. 프랜차이즈 레스토랑 관리 클래스
+  <p class="research-step-card__meta"><span>코드 포인트</span> 응용 버전 2 - classmethod 사용 대신 sta... · sum_reservations은 인스턴스를 인자로 받기...</p>
+</div>
+</div>
 
 ## Code Evidence
 
@@ -80,7 +123,7 @@ tags:
 
 **직접 해본 단계**: 클래스 설계
 
-`문제1. 투표 시스템 클래스`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다. 코드에는 기본 답안 같은 처리 포인트도 함께 남아 있습니다.
+문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.
 
 ```python
 # 기본 답안
@@ -123,7 +166,7 @@ class VoteSystem:
 
 **직접 해본 단계**: 함수 실습
 
-`문제1. 시간 관리 프로그램`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 입력과 반환값을 분리해 문제 해결 과정을 함수로 정리하는 기초 구현 실습 코드입니다. 코드에는 기본 답안, CSV 파일에서 할 일을 불러오는 함수 같은 처리 포인트도 함께 남아 있습니다.
+입력과 반환값을 분리해 문제 해결 과정을 함수로 정리하는 기초 구현 실습 코드입니다.
 
 ```python
 # 기본 답안
@@ -169,7 +212,7 @@ def main():
 
 **직접 해본 단계**: 구현 코드
 
-`문제3. 도서관 관리 시스템`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다. 코드에는 도서관 관리 시스템 초기화, 도서 추가 같은 처리 포인트도 함께 남아 있습니다.
+원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
 
 ```python
       # 도서관 관리 시스템 초기화
@@ -207,7 +250,7 @@ def main():
 
 **직접 해본 단계**: 클래스 설계
 
-`문제4. 프랜차이즈 레스토랑 관리 클래스`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다. 코드에는 기본 답안 같은 처리 포인트도 함께 남아 있습니다.
+문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.
 
 ```python
 # 기본 답안
@@ -253,7 +296,7 @@ class ReservationSystem:
 
 **직접 해본 단계**: 클래스 설계
 
-`문제4. 프랜차이즈 레스토랑 관리 클래스`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다. 코드에는 응용 버전 1 - cancel_reservation 추가, 고객 이름과 예약 일시를 기준으로 해당 예약을 찾아 삭제... 같은 처리 포인트도 함께 남아 있습니다.
+문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.
 
 ```python
 # 응용 버전 1 - cancel_reservation 추가
@@ -299,7 +342,7 @@ class ReservationSystem:
 
 **직접 해본 단계**: 클래스 설계
 
-`문제4. 프랜차이즈 레스토랑 관리 클래스`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다. 코드에는 응용 버전 2 - classmethod 사용 대신 sta..., sum_reservations은 인스턴스를 인자로 받기... 같은 처리 포인트도 함께 남아 있습니다.
+문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.
 
 ```python
 # 응용 버전 2 - classmethod 사용 대신 staticmethod 사용
@@ -340,26 +383,6 @@ class ReservationSystem:
 
 # ... trimmed ...
 ```
-
-## Why These Steps Matter
-
-### 클래스로 문제를 쪼개 본 이유
-
-- 왜 필요한가: 상태와 동작이 함께 움직이는 문제는 함수만 나열하기보다 객체 단위로 묶어야 구조가 더 선명해집니다.
-- 왜 이 방식을 쓰는가: 이 글에서는 `문제1. 투표 시스템 클래스` 코드를 통해 생성자와 메서드를 어떻게 나눠 문제를 모델링했는지 바로 보이게 했습니다.
-- 원리: 클래스는 관련 데이터와 동작을 한 단위로 캡슐화해 재사용성과 확장성을 높여 줍니다.
-
-### 함수 단위로 연습한 이유
-
-- 왜 필요한가: 기초 문제 풀이도 입력, 처리, 반환을 함수로 분리해 봐야 로직을 재사용하고 테스트하기 쉬워집니다.
-- 왜 이 방식을 쓰는가: 그래서 `문제1. 시간 관리 프로그램` 같은 코드를 앞쪽에 두고, 문제 해결 흐름이 함수 단위로 어떻게 정리됐는지 보여주도록 만들었습니다.
-- 원리: 함수는 반복되는 로직을 한 번 정의해 여러 입력에 적용할 수 있게 하며, 문제를 작은 단위로 나누는 기본 도구입니다.
-
-### 구현 흐름을 코드로 남긴 이유
-
-- 왜 필요한가: 설명만으로는 내가 실제로 어디까지 손댔는지 전달되기 어려워 핵심 구현 코드를 직접 보여줄 필요가 있습니다.
-- 왜 이 방식을 쓰는가: 그래서 `문제3. 도서관 관리 시스템` 블록을 포함해 문제를 풀 때 건드린 핵심 로직이 그대로 보이도록 정리했습니다.
-- 원리: 코드는 학습한 내용을 실행 가능한 형태로 옮긴 결과물이기 때문에, 가장 직접적인 실습 증거가 됩니다.
 
 ## Source Bundle
 

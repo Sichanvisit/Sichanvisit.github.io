@@ -5,8 +5,8 @@ research_tab: "ML"
 research_kind: "Practice"
 source_title: "250807_코드실습1_1. 파이썬 응용하기"
 source_path: "11_Machine_Learning/Code_Snippets/250807_코드실습1_1. 파이썬 응용하기.md"
-excerpt: "기타 인코딩 방식 => EUC-KR, CP949"
-research_summary: "기타 인코딩 방식 => EUC-KR, CP949. 이 글은 개념 요약보다 전처리, 피처 가공, 모델링, 평가 코드를 직접 다시 볼 수 있게 구성한 ML 실습 기록입니다. `ipynb/md` 원본과 26개 코드 블록, 25개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 time, datetime, random, google입니다."
+excerpt: "코드실습1 1"
+research_summary: "코드실습1 1. 파이썬 응용하기를 중심으로 구현 중심 학습 개념과 구현 흐름을 함께 정리한 ML 실습 기록입니다. 본문에서는 (2) datetime, 파일 입력과 문자 수정 같은 코드를 따라가며 실제 실습 과정을 확인할 수 있습니다. `ipynb/md` 원본과 26개 코드 블록, 25개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 time, datetime, random, google입니다."
 research_artifacts: "ipynb/md · 코드 26개 · 실행 25개"
 code_block_count: 26
 execution_block_count: 25
@@ -29,47 +29,97 @@ tags:
   - practice
 ---
 
-기타 인코딩 방식 => EUC-KR, CP949. 이 글은 개념 요약보다 전처리, 피처 가공, 모델링, 평가 코드를 직접 다시 볼 수 있게 구성한 ML 실습 기록입니다. `ipynb/md` 원본과 26개 코드 블록, 25개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 time, datetime, random, google입니다.
-
-**빠르게 볼 수 있는 포인트**: 모듈 기본 3가지, (1) time, (2) datetime.
-
-**남겨둔 자료**: `ipynb/md` 원본과 26개 코드 블록, 25개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 time, datetime, random, google입니다.
-
-**주요 스택**: `time`, `datetime`, `random`, `google`
-
-## Snapshot
-
-| Item | Value |
-|------|-------|
-| Track | ML |
-| Type | Practice |
-| Source Files | `ipynb`, `md` |
-| Code Blocks | 26 |
-| Execution Cells | 25 |
-| Libraries | `time`, `datetime`, `random`, `google` |
-| Source Note | `250807_코드실습1_1. 파이썬 응용하기` |
+<div class="research-doc-hero">
+  <div class="research-doc-hero__meta">
+<div class="research-doc-hero__meta-item">
+  <span>Source</span>
+  <strong>ipynb / md</strong>
+</div>
+<div class="research-doc-hero__meta-item">
+  <span>Artifacts</span>
+  <strong>코드 26 · 실행 25</strong>
+</div>
+<div class="research-doc-hero__meta-item">
+  <span>Libraries</span>
+  <strong>time, datetime, random, google</strong>
+</div>
+  </div>
+</div>
+<div class="research-doc-grid">
+<div class="research-doc-card">
+  <p class="research-doc-card__label">Study Topic</p>
+  <p class="research-doc-card__value">기타 인코딩 방식 =&gt; EUC-KR, CP949</p>
+</div>
+<div class="research-doc-card">
+  <p class="research-doc-card__label">Data Context</p>
+  <p class="research-doc-card__value">기타 인코딩 방식 =&gt; EUC-KR, CP949</p>
+</div>
+<div class="research-doc-card">
+  <p class="research-doc-card__label">Core Concepts</p>
+  <p class="research-doc-card__value">구현 중심 학습</p>
+</div>
+<div class="research-doc-card">
+  <p class="research-doc-card__label">Implementation Focus</p>
+  <p class="research-doc-card__value">피처 가공 -&gt; 구현 코드 -&gt; 구현 코드</p>
+</div>
+</div>
 
 ## What I Studied
 
-### 파일 입력과 문자 수정
+<div class="research-note-grid">
+<div class="research-note-card">
+  <p class="research-note-card__label">구현 중심 학습</p>
+  <p class="research-note-card__body">이 글은 개념 설명과 함께 실제 코드를 통해 학습 흐름을 다시 따라가도록 정리된 ML 실습 기록입니다.</p>
+  <p class="research-note-card__meta">데이터 입력, 처리, 모델링, 평가 가운데 실제로 손댄 단계를 중심으로 읽을 수 있습니다.</p>
+</div>
+</div>
 
-기타 인코딩 방식 => EUC-KR, CP949
+## How I Implemented It
 
-### Key Step
+<div class="research-step-grid">
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 1 · 피처 가공</p>
+  <p class="research-step-card__title">(2) datetime</p>
+  <p class="research-step-card__body">원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다.</p>
 
-현재 시간에서 좀전에 정의한 formatted를 빼주기 (시간끼리 연산 확인)
+  <p class="research-step-card__meta"><span>코드 포인트</span> timedelta 활용 · 현재 시간</p>
+</div>
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 2 · 구현 코드</p>
+  <p class="research-step-card__title">파일 입력과 문자 수정</p>
+  <p class="research-step-card__body">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</p>
 
-### Key Step
 
-3시간 45분 전의 시간 계산
+</div>
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 3 · 구현 코드</p>
+  <p class="research-step-card__title">(1) time</p>
+  <p class="research-step-card__body">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</p>
 
-## What I Tried in Code
+  <p class="research-step-card__meta"><span>코드 포인트</span> strftime() 응용</p>
+</div>
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 4 · 구현 코드</p>
+  <p class="research-step-card__title">(2) datetime</p>
+  <p class="research-step-card__body">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</p>
 
-1. 피처 가공: (2) datetime
-2. 구현 코드: 파일 입력과 문자 수정
-3. 구현 코드: (1) time
-4. 구현 코드: (2) datetime
-5. 구현 코드: (3) random
+  <p class="research-step-card__meta"><span>코드 포인트</span> 실제 시간 연산방법</p>
+</div>
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 5 · 구현 코드</p>
+  <p class="research-step-card__title">(3) random</p>
+  <p class="research-step-card__body">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</p>
+
+  <p class="research-step-card__meta"><span>코드 포인트</span> shuffle()</p>
+</div>
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 6 · 구현 코드</p>
+  <p class="research-step-card__title">파일 입력과 문자 수정</p>
+  <p class="research-step-card__body">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</p>
+
+  <p class="research-step-card__meta"><span>코드 포인트</span> 업로드한 파일 읽기</p>
+</div>
+</div>
 
 ## Code Evidence
 
@@ -77,7 +127,7 @@ tags:
 
 **직접 해본 단계**: 피처 가공
 
-`(2) datetime`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다. 코드에는 timedelta 활용, 현재 시간 같은 처리 포인트도 함께 남아 있습니다.
+원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다.
 
 ```python
 # timedelta 활용
@@ -101,7 +151,7 @@ print("3시간 45분 전: ", before_time)
 
 **직접 해본 단계**: 구현 코드
 
-`파일 입력과 문자 수정`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
 
 ```python
 with open('sample_fruits.txt', 'r', encoding='utf-8') as f:
@@ -116,7 +166,7 @@ with open('sample_fruits.txt', 'r', encoding='utf-8') as f:
 
 **직접 해본 단계**: 구현 코드
 
-`(1) time`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다. 코드에는 strftime() 응용 같은 처리 포인트도 함께 남아 있습니다.
+원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
 
 ```python
 # strftime() 응용
@@ -132,7 +182,7 @@ print(formatted)
 
 **직접 해본 단계**: 구현 코드
 
-`(2) datetime`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다. 코드에는 실제 시간 연산방법 같은 처리 포인트도 함께 남아 있습니다.
+원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
 
 ```python
 # 실제 시간 연산방법
@@ -147,7 +197,7 @@ print(now - past_time)
 
 **직접 해본 단계**: 구현 코드
 
-`(3) random`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다. 코드에는 shuffle() 같은 처리 포인트도 함께 남아 있습니다.
+원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
 
 ```python
 # shuffle(): 섞기
@@ -161,7 +211,7 @@ print(deck)
 
 **직접 해본 단계**: 구현 코드
 
-`파일 입력과 문자 수정`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다. 코드에는 업로드한 파일 읽기 같은 처리 포인트도 함께 남아 있습니다.
+원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
 
 ```python
 # 업로드한 파일 읽기
@@ -170,20 +220,6 @@ with open('sample_fruits.txt', 'r', encoding='utf-8') as f:
     content = f.read()
     print(content)
 ```
-
-## Why These Steps Matter
-
-### 파생 변수를 직접 만든 부분
-
-- 왜 필요한가: 원본 컬럼만으로는 숨겨진 패턴이 잘 드러나지 않아 도메인 정보를 반영한 새 특징이 필요할 때가 많습니다.
-- 왜 이 방식을 쓰는가: 이 글에서는 `(2) datetime` 코드를 통해 시간, 범주, 조건식을 어떻게 새로운 feature로 바꿨는지 바로 볼 수 있게 했습니다.
-- 원리: 좋은 feature engineering은 데이터 분포를 다시 표현해 모델이 더 유용한 경계나 관계를 학습하도록 돕습니다.
-
-### 구현 흐름을 코드로 남긴 이유
-
-- 왜 필요한가: 설명만으로는 내가 실제로 어디까지 손댔는지 전달되기 어려워 핵심 구현 코드를 직접 보여줄 필요가 있습니다.
-- 왜 이 방식을 쓰는가: 그래서 `파일 입력과 문자 수정` 블록을 포함해 문제를 풀 때 건드린 핵심 로직이 그대로 보이도록 정리했습니다.
-- 원리: 코드는 학습한 내용을 실행 가능한 형태로 옮긴 결과물이기 때문에, 가장 직접적인 실습 증거가 됩니다.
 
 ## Source Bundle
 

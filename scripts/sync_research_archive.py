@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from datetime import datetime
+import html
 from pathlib import Path
 import re
 
@@ -69,6 +70,10 @@ def normalize_display_text(text: str) -> str:
     cleaned = re.sub(r"^[A-Za-z]\.\s*", "", cleaned)
     cleaned = cleaned.strip(":- ")
     return compact_spaces(cleaned)
+
+
+def escape_html_text(text: str) -> str:
+    return html.escape(normalize_display_text(text), quote=True)
 
 
 def is_meaningful_sentence(text: str) -> bool:
@@ -1424,6 +1429,428 @@ ML_STAGE_NOTE_TEMPLATES = {
 }
 
 
+ML_STUDY_RULES = [
+    {
+        "key": "classification",
+        "patterns": ("classifier", "accuracy_score", "precision_score", "recall_score", "f1_score", "roc_auc", "confusion_matrix", "logloss"),
+        "label": "분류 문제",
+        "summary": "분류는 입력 특성으로 클래스나 반응 여부를 예측하는 문제입니다. 모델은 각 샘플이 어떤 범주에 속하는지 확률 또는 라벨로 출력합니다.",
+        "practice": "이 글에서는 가입 여부, 품종, 레이블 예측처럼 범주형 타깃을 다루는 실습 맥락으로 연결됩니다.",
+    },
+    {
+        "key": "regression",
+        "patterns": ("regressor", "rmsle", "rmse", "mae", "mse", "mean_squared_error", "mean_absolute_error", "r2_score"),
+        "label": "회귀 문제",
+        "summary": "회귀는 연속적인 수치를 예측하는 문제입니다. 예측값과 실제값의 차이를 오차로 계산해 모델 성능을 판단합니다.",
+        "practice": "이 글에서는 수요량, 가격, 점수처럼 숫자 타깃을 예측하는 실습과 이어집니다.",
+    },
+    {
+        "key": "tree_ensemble",
+        "patterns": ("decisiontree", "randomforest", "bagging", "adaboost", "xgb", "xgboost", "votingclassifier", "stackingclassifier", "stackingregressor"),
+        "label": "결정 트리와 앙상블",
+        "summary": "결정 트리는 조건 분기로 예측 규칙을 만들고, 앙상블은 여러 모델의 예측을 묶어 편향과 분산을 함께 줄이는 접근입니다.",
+        "practice": "이 글에서는 Decision Tree, RandomForest, XGBoost, Voting, Stacking 코드를 통해 여러 모델을 비교해 볼 수 있습니다.",
+    },
+    {
+        "key": "linear_model",
+        "patterns": ("linearregression", "logisticregression", "ridge", "lasso", "elasticnet"),
+        "min_hits": 2,
+        "label": "선형 모델과 정규화",
+        "summary": "선형 모델은 입력 특성의 선형 결합으로 예측을 만들고, 정규화는 가중치 크기를 제어해 과적합을 줄이는 역할을 합니다.",
+        "practice": "이 글에서는 LinearRegression, LogisticRegression, Ridge, Lasso 실습과 연결해 해석할 수 있습니다.",
+    },
+    {
+        "key": "preprocessing",
+        "patterns": ("labelencoder", "onehotencoder", "get_dummies", "fillna", "dropna", "standardscaler", "minmaxscaler", "train_test_split"),
+        "label": "전처리와 입력 정리",
+        "summary": "머신러닝 모델은 입력 형식에 민감하기 때문에 결측치 처리, 인코딩, 스케일링 같은 전처리 단계가 성능을 크게 좌우합니다.",
+        "practice": "이 글에서는 범주형 값을 숫자로 바꾸거나 학습/검증을 분리하는 코드가 이 개념에 해당합니다.",
+    },
+    {
+        "key": "feature_engineering",
+        "patterns": ("pd.to_datetime", ".dt.", "feature", "is_", "engineer", "groupby(", "weekday", "hour", "month"),
+        "label": "피처 엔지니어링",
+        "summary": "피처 엔지니어링은 원본 컬럼을 그대로 쓰지 않고 문제에 맞는 새 특징을 설계해 모델이 더 유용한 패턴을 학습하도록 돕는 과정입니다.",
+        "practice": "이 글에서는 시간 파생 변수, 조건식 기반 플래그, 도메인 규칙을 반영한 새 컬럼 생성 코드가 여기에 해당합니다.",
+    },
+    {
+        "key": "evaluation",
+        "patterns": ("accuracy_score", "precision_score", "recall_score", "f1_score", "roc_auc", "classification_report", "rmsle", "rmse", "mae", "mean_squared_error"),
+        "label": "평가 지표 해석",
+        "summary": "평가 지표는 예측 결과를 수치화해 모델의 강점과 약점을 읽게 해주는 기준입니다. 문제 유형에 맞는 지표를 골라야 실험 비교가 가능합니다.",
+        "practice": "이 글에서는 F1, Recall, Accuracy, RMSLE 같은 지표를 실제 코드에서 계산하는 흐름으로 연결됩니다.",
+    },
+    {
+        "key": "dimensionality_reduction",
+        "patterns": ("pca(", "principalcomponentanalysis", "explained_variance_ratio_", "svd"),
+        "label": "차원 축소",
+        "summary": "차원 축소는 많은 변수의 정보를 더 적은 축으로 압축해 시각화, 노이즈 감소, 계산 효율 개선에 활용하는 기법입니다.",
+        "practice": "이 글에서는 PCA처럼 분산을 최대한 보존하는 축을 찾아 데이터를 다시 표현하는 실습과 이어집니다.",
+    },
+    {
+        "key": "clustering",
+        "patterns": ("kmeans(", "cluster", "silhouette", "elbow", "centroid"),
+        "label": "군집화",
+        "summary": "군집화는 정답 라벨 없이 비슷한 샘플끼리 묶어 데이터 구조를 탐색하는 비지도 학습 방법입니다.",
+        "practice": "이 글에서는 KMeans, 군집 시각화, 클러스터 품질 점검 같은 흐름과 연결됩니다.",
+    },
+    {
+        "key": "oop",
+        "patterns": ("class ", "__init__", "self."),
+        "label": "객체지향 설계",
+        "summary": "객체지향은 관련 데이터와 동작을 하나의 객체로 묶어 문제를 구조적으로 표현하는 방식입니다.",
+        "practice": "이 글에서는 클래스, 메서드, 상태 관리 같은 코드가 핵심 학습 포인트로 드러납니다.",
+    },
+    {
+        "key": "function_design",
+        "patterns": ("def ", "return ", "with open(", "import csv"),
+        "label": "함수 분해와 로직 구성",
+        "summary": "함수는 입력, 처리, 반환을 분리해 로직을 재사용하기 쉽게 만들고, 문제를 작은 단위로 나누는 기본 도구입니다.",
+        "practice": "이 글에서는 문제 풀이를 함수 단위로 쪼개고 입출력을 나눠 보는 실습과 연결됩니다.",
+    },
+]
+
+ML_STUDY_PRIORITY = {
+    "classification": 1,
+    "regression": 1,
+    "tree_ensemble": 2,
+    "linear_model": 2,
+    "dimensionality_reduction": 2,
+    "clustering": 2,
+    "preprocessing": 3,
+    "feature_engineering": 4,
+    "evaluation": 5,
+    "oop": 6,
+    "function_design": 7,
+}
+
+ML_API_PATTERNS = [
+    ("pd.read_csv", ("pd.read_csv", "read_csv(")),
+    ("train_test_split", ("train_test_split",)),
+    ("LabelEncoder", ("labelencoder",)),
+    ("get_dummies", ("get_dummies",)),
+    ("StandardScaler", ("standardscaler",)),
+    ("MinMaxScaler", ("minmaxscaler",)),
+    ("GridSearchCV", ("gridsearchcv",)),
+    ("cross_val_score", ("cross_val_score",)),
+    ("DecisionTree", ("decisiontree",)),
+    ("RandomForest", ("randomforest",)),
+    ("XGBoost", ("xgb", "xgboost")),
+    ("AdaBoost", ("adaboost",)),
+    ("Bagging", ("bagging",)),
+    ("Voting", ("votingclassifier", "votingregressor")),
+    ("Stacking", ("stackingclassifier", "stackingregressor")),
+    ("LinearRegression", ("linearregression",)),
+    ("LogisticRegression", ("logisticregression",)),
+    ("Ridge", ("ridge(", "ridgecv")),
+    ("Lasso", ("lasso(", "lassocv")),
+    ("PCA", ("pca(",)),
+    ("KMeans", ("kmeans(",)),
+    ("accuracy_score", ("accuracy_score",)),
+    ("precision_score", ("precision_score",)),
+    ("recall_score", ("recall_score",)),
+    ("f1_score", ("f1_score",)),
+    ("RMSLE", ("mean_squared_log_error", "rmsle")),
+    ("RMSE", ("rmse", "mean_squared_error")),
+    ("matplotlib", ("plt.",)),
+    ("seaborn", ("sns.",)),
+]
+
+
+def clean_ml_title_for_summary(title: str) -> str:
+    cleaned = normalize_display_text(title)
+    cleaned = re.sub(r"^\d+\s+", "", cleaned)
+    cleaned = re.sub(r"\s*-\s*AI\s*\d.*$", "", cleaned)
+    return compact_spaces(cleaned)
+
+
+def condense_ml_problem_text(text: str, max_len: int = 120) -> str:
+    normalized = normalize_display_text(text)
+    if not normalized:
+        return ""
+    normalized = re.sub(r"[\U00010000-\U0010ffff]", "", normalized)
+    normalized = re.sub(r"[📌🎯🚲🏦🧪]", "", normalized)
+    parts = [compact_spaces(part) for part in re.split(r"\s+-\s+|\.\s+", normalized) if compact_spaces(part)]
+    if not parts:
+        return trim_text(normalized, max_len)
+    condensed = ". ".join(parts[:2])
+    return trim_text(condensed, max_len)
+
+
+def build_ml_problem_summary(
+    title: str,
+    intro_paragraphs: list[str],
+    focus_items: list[str],
+) -> str:
+    for candidate in intro_paragraphs + focus_items:
+        if is_meaningful_sentence(candidate):
+            return condense_ml_problem_text(candidate, max_len=126)
+    cleaned_title = clean_ml_title_for_summary(title)
+    return f"{cleaned_title}를 중심으로 학습한 내용을 정리한 ML 실습입니다." if cleaned_title else "이 ML 실습에서 다룬 문제 설정을 정리했습니다."
+
+
+def build_ml_data_summary(
+    section_summaries: list[dict[str, str]],
+    intro_paragraphs: list[str],
+    focus_items: list[str],
+) -> str:
+    for entry in section_summaries:
+        title = normalize_display_text(entry["title"]).lower()
+        summary = normalize_display_text(entry["summary"])
+        if any(token in title for token in ("데이터", "파일", "dataset")):
+            return trim_text(summary, 126)
+    for entry in section_summaries:
+        title = normalize_display_text(entry["title"]).lower()
+        summary = normalize_display_text(entry["summary"])
+        if any(token in title for token in ("공식", "미션", "tip", "참고")):
+            continue
+        if any(token in summary.lower() for token in ("데이터", "csv", "dataset", "train", "test")):
+            return trim_text(summary, 126)
+    for candidate in intro_paragraphs[1:] + focus_items:
+        normalized = condense_ml_problem_text(candidate, max_len=126)
+        if any(token in normalized.lower() for token in ("데이터", "csv", "dataset", "train", "test")):
+            return trim_text(normalized, 126)
+    return ""
+
+
+def build_ml_study_notes(
+    *,
+    title: str,
+    focus_items: list[str],
+    section_summaries: list[dict[str, str]],
+    paragraphs: list[str],
+    code_blocks: list[dict[str, object]],
+    libraries: list[str],
+) -> list[dict[str, str]]:
+    corpus_parts = [title]
+    corpus_parts.extend(focus_items[:8])
+    corpus_parts.extend(entry["title"] for entry in section_summaries[:6])
+    corpus_parts.extend(entry["summary"] for entry in section_summaries[:6])
+    corpus_parts.extend(paragraphs[:8])
+    corpus_parts.extend(libraries[:8])
+    corpus_parts.extend(str(block["heading"]) for block in code_blocks[:10])
+    corpus_parts.extend(str(block["body"])[:900] for block in code_blocks[:8])
+    corpus = "\n".join(corpus_parts).lower()
+
+    notes: list[dict[str, str]] = []
+    for rule in ML_STUDY_RULES:
+        hit_count = sum(1 for pattern in rule["patterns"] if pattern in corpus)
+        if hit_count >= int(rule.get("min_hits", 1)):
+            notes.append(
+                {
+                    "key": rule["key"],
+                    "label": rule["label"],
+                    "summary": rule["summary"],
+                    "practice": rule["practice"],
+                }
+            )
+
+    if not notes:
+        return [
+            {
+                "label": "구현 중심 학습",
+                "summary": "이 글은 개념 설명과 함께 실제 코드를 통해 학습 흐름을 다시 따라가도록 정리된 ML 실습 기록입니다.",
+                "practice": "데이터 입력, 처리, 모델링, 평가 가운데 실제로 손댄 단계를 중심으로 읽을 수 있습니다.",
+            }
+        ]
+
+    notes.sort(key=lambda note: (ML_STUDY_PRIORITY.get(note["key"], 999), note["label"]))
+    deduped: list[dict[str, str]] = []
+    seen_labels: set[str] = set()
+    for note in notes:
+        label_key = note["label"].lower()
+        if label_key in seen_labels:
+            continue
+        seen_labels.add(label_key)
+        deduped.append(
+            {
+                "label": note["label"],
+                "summary": note["summary"],
+                "practice": note["practice"],
+            }
+        )
+        if len(deduped) >= 4:
+            break
+    return deduped
+
+
+def build_ml_research_summary(
+    *,
+    title: str,
+    study_notes: list[dict[str, str]],
+    code_samples: list[dict[str, object]],
+    artifact_summary: str,
+) -> str:
+    cleaned_title = clean_ml_title_for_summary(title) or title
+    concept_labels = [note["label"] for note in study_notes[:2]]
+    code_labels = [get_code_label(block, "ML") for block in code_samples[:2]]
+
+    if concept_labels:
+        lead = f"{cleaned_title}를 중심으로 {format_korean_list(concept_labels, limit=2, max_item_len=20)} 개념과 구현 흐름을 함께 정리한 ML 실습 기록입니다"
+    else:
+        lead = f"{cleaned_title}에서 다룬 구현 흐름과 핵심 코드를 다시 볼 수 있게 정리한 ML 실습 기록입니다"
+
+    if code_labels:
+        detail = f"본문에서는 {format_korean_list(code_labels, limit=2, max_item_len=24)} 같은 코드를 따라가며 실제 실습 과정을 확인할 수 있습니다"
+    else:
+        detail = "본문에서는 개념 설명과 함께 실제로 실행해 본 코드 흐름을 단계별로 확인할 수 있습니다"
+
+    return " ".join(
+        part
+        for part in (
+            ensure_sentence(lead),
+            ensure_sentence(detail),
+            artifact_summary,
+        )
+        if part
+    )
+
+
+def extract_ml_api_terms(body: str, limit: int = 4) -> list[str]:
+    lower = body.lower()
+    items: list[str] = []
+    for label, patterns in ML_API_PATTERNS:
+        if any(pattern in lower for pattern in patterns):
+            items.append(label)
+        if len(items) >= limit:
+            break
+    return unique_preserve_order(items)[:limit]
+
+
+def build_ml_implementation_steps(code_samples: list[dict[str, object]]) -> list[dict[str, object]]:
+    steps: list[dict[str, object]] = []
+    for index, block in enumerate(code_samples, start=1):
+        stage_label = get_code_stage_label(block, "ML") or "구현 코드"
+        title = get_code_label(block, "ML")
+        purpose = infer_ml_code_purpose(block)
+        apis = extract_ml_api_terms(str(block["body"]))
+        clues = [condense_focus_item(item, max_len=34) for item in extract_comment_clues(str(block["body"]), limit=2)]
+        steps.append(
+            {
+                "index": index,
+                "stage": stage_label,
+                "title": title,
+                "purpose": purpose,
+                "apis": apis,
+                "clues": clues,
+            }
+        )
+    return steps
+
+
+def format_html_code_list(items: list[str]) -> str:
+    if not items:
+        return ""
+    return " ".join(f"<code>{html.escape(item)}</code>" for item in items)
+
+
+def build_ml_intro_html(
+    *,
+    problem_summary: str,
+    data_summary: str,
+    study_notes: list[dict[str, str]],
+    flow_items: list[str],
+    source_formats: list[str],
+    code_block_count: int,
+    execution_block_count: int,
+    libraries: list[str],
+) -> str:
+    concept_labels = [note["label"] for note in study_notes[:3]]
+    implementation_focus = [condense_focus_item(item, max_len=34) for item in flow_items[:3]]
+    cards = [
+        ("Study Topic", problem_summary or "이 글에서 다룬 문제 설정과 목표를 짧게 요약했습니다."),
+        ("Core Concepts", " · ".join(concept_labels) if concept_labels else "핵심 개념 설명을 이 글 안에서 바로 읽을 수 있게 정리했습니다."),
+        ("Implementation Focus", " -> ".join(implementation_focus) if implementation_focus else "데이터 처리부터 학습과 평가까지의 핵심 코드 흐름을 단계별로 보여줍니다."),
+    ]
+    if data_summary:
+        cards.insert(1, ("Data Context", data_summary))
+
+    card_html = "\n".join(
+        "\n".join(
+            [
+                '<div class="research-doc-card">',
+                f'  <p class="research-doc-card__label">{html.escape(label)}</p>',
+                f'  <p class="research-doc-card__value">{html.escape(value)}</p>',
+                "</div>",
+            ]
+        )
+        for label, value in cards
+    )
+
+    meta_items = [
+        ("Source", " / ".join(source_formats) if source_formats else "source"),
+        ("Artifacts", f"코드 {code_block_count} · 실행 {execution_block_count}"),
+        ("Libraries", ", ".join(libraries[:5]) if libraries else "Not detected"),
+    ]
+    meta_html = "\n".join(
+        "\n".join(
+            [
+                '<div class="research-doc-hero__meta-item">',
+                f'  <span>{html.escape(label)}</span>',
+                f'  <strong>{html.escape(value)}</strong>',
+                "</div>",
+            ]
+        )
+        for label, value in meta_items
+    )
+
+    return f"""
+<div class="research-doc-hero">
+  <div class="research-doc-hero__meta">
+{meta_html}
+  </div>
+</div>
+<div class="research-doc-grid">
+{card_html}
+</div>
+""".strip()
+
+
+def build_ml_study_section(
+    *,
+    study_notes: list[dict[str, str]],
+) -> str:
+    cards = []
+    for note in study_notes:
+        cards.append(
+            "\n".join(
+                [
+                    '<div class="research-note-card">',
+                    f'  <p class="research-note-card__label">{html.escape(note["label"])}</p>',
+                    f'  <p class="research-note-card__body">{html.escape(note["summary"])}</p>',
+                    f'  <p class="research-note-card__meta">{html.escape(note["practice"])}</p>',
+                    "</div>",
+                ]
+            )
+        )
+    return '<div class="research-note-grid">\n' + "\n".join(cards) + "\n</div>"
+
+
+def build_ml_implementation_section(steps: list[dict[str, object]]) -> str:
+    cards = []
+    for step in steps:
+        api_html = ""
+        clue_html = ""
+        if step["apis"]:
+            api_html = f'  <p class="research-step-card__meta"><span>핵심 API</span> {format_html_code_list(step["apis"])}</p>'
+        if step["clues"]:
+            clue_html = f'  <p class="research-step-card__meta"><span>코드 포인트</span> {html.escape(" · ".join(step["clues"]))}</p>'
+        cards.append(
+            "\n".join(
+                [
+                    '<div class="research-step-card">',
+                    f'  <p class="research-step-card__kicker">Step {step["index"]} · {html.escape(str(step["stage"]))}</p>',
+                    f'  <p class="research-step-card__title">{html.escape(str(step["title"]))}</p>',
+                    f'  <p class="research-step-card__body">{html.escape(str(step["purpose"]))}</p>',
+                    api_html,
+                    clue_html,
+                    "</div>",
+                ]
+            )
+        )
+    return '<div class="research-step-grid">\n' + "\n".join(card for card in cards if card.strip()) + "\n</div>"
+
+
 def build_ml_learning_notes(code_samples: list[dict[str, object]]) -> list[dict[str, str]]:
     stage_to_block: dict[str, dict[str, object]] = {}
     for block in code_samples:
@@ -1559,6 +1986,10 @@ def build_content(
     focus_items: list[str],
     section_summaries: list[dict[str, str]],
     concept_notes: list[dict[str, str]],
+    ml_problem_summary: str,
+    ml_data_summary: str,
+    ml_study_notes: list[dict[str, str]],
+    ml_implementation_steps: list[dict[str, object]],
     flow_items: list[str],
     code_samples: list[dict[str, object]],
     libraries: list[str],
@@ -1570,7 +2001,7 @@ def build_content(
 ) -> str:
     focus_display_items = unique_cleaned_items([condense_focus_item(item, max_len=60) for item in focus_items], limit=5)
     coverage_title = "What I Studied" if research_tab == "ML" else "What This Note Covers"
-    flow_title = "What I Tried in Code" if research_tab == "ML" else "Implementation Flow"
+    flow_title = "How I Implemented It" if research_tab == "ML" else "Implementation Flow"
     code_title = "Code Evidence" if research_tab == "ML" else "Code Highlights"
     concept_title = "Why These Steps Matter" if research_tab == "ML" else "Why This Matters"
     snapshot_rows = [
@@ -1590,7 +2021,9 @@ def build_content(
     else:
         focus_section = f"- 이 기록은 `{research_tab}` 트랙의 `{research_kind}` 아카이브로 정리되어 있습니다."
 
-    if section_summaries and any(entry["title"] != "Key Step" for entry in section_summaries):
+    if research_tab == "ML" and ml_study_notes:
+        coverage_section = build_ml_study_section(study_notes=ml_study_notes)
+    elif section_summaries and any(entry["title"] != "Key Step" for entry in section_summaries):
         coverage_section = "\n\n".join(
             f"### {entry['title']}\n\n{entry['summary']}"
             for entry in section_summaries
@@ -1598,7 +2031,9 @@ def build_content(
     else:
         coverage_section = focus_section
 
-    if flow_items:
+    if research_tab == "ML" and ml_implementation_steps:
+        flow_section = build_ml_implementation_section(ml_implementation_steps)
+    elif flow_items:
         flow_section = "\n".join(f"{index}. {item}" for index, item in enumerate(flow_items, start=1))
     else:
         flow_section = "1. 원본 노트의 문제 정의를 먼저 확인합니다.\n2. 핵심 코드 블록과 구현 단계를 따라갑니다.\n3. 필요하면 이 흐름을 별도 케이스 스터디로 확장합니다."
@@ -1626,10 +2061,16 @@ def build_content(
             label = get_code_label(block, research_tab)
             max_code_lines = 36 if research_tab == "ML" else 28
             body = trim_code_block(str(block["body"]), lang, max_lines=max_code_lines)
-            explanation = describe_code_block(block, research_tab)
             stage_label = get_code_stage_label(block, research_tab)
             stage_line = f"**직접 해본 단계**: {stage_label}\n\n" if stage_label else ""
-            code_sections.append(f"### {label}\n\n{stage_line}{explanation}\n\n```{lang}\n{body}\n```")
+            if research_tab == "ML":
+                api_terms = extract_ml_api_terms(str(block["body"]))
+                api_line = f"**핵심 API**: {format_inline_code_list(api_terms)}\n\n" if api_terms else ""
+                explanation = infer_ml_code_purpose(block)
+                code_sections.append(f"### {label}\n\n{stage_line}{api_line}{explanation}\n\n```{lang}\n{body}\n```")
+            else:
+                explanation = describe_code_block(block, research_tab)
+                code_sections.append(f"### {label}\n\n{stage_line}{explanation}\n\n```{lang}\n{body}\n```")
         code_section = "\n\n".join(code_sections)
     else:
         code_section = "실행 가능한 코드 블록은 없지만, 개념 정리나 참고 노트로서 맥락을 보존하고 있습니다."
@@ -1652,13 +2093,25 @@ def build_content(
     bundle_section = "\n".join(bundle_lines)
     top_focus = focus_display_items[:3]
     top_libraries = libraries[:5]
-    intro_lines = [research_summary]
-    if top_focus:
-        intro_lines.append(f"**빠르게 볼 수 있는 포인트**: {format_korean_list(top_focus, limit=3, max_item_len=42)}.")
-    intro_lines.append(f"**남겨둔 자료**: {artifact_summary}")
-    if top_libraries:
-        intro_lines.append(f"**주요 스택**: {format_inline_code_list(top_libraries)}")
-    intro_block = "\n\n".join(intro_lines)
+    if research_tab == "ML":
+        intro_block = build_ml_intro_html(
+            problem_summary=ml_problem_summary,
+            data_summary=ml_data_summary,
+            study_notes=ml_study_notes,
+            flow_items=flow_items,
+            source_formats=source_formats,
+            code_block_count=code_block_count,
+            execution_block_count=execution_block_count,
+            libraries=top_libraries,
+        )
+    else:
+        intro_lines = [research_summary]
+        if top_focus:
+            intro_lines.append(f"**빠르게 볼 수 있는 포인트**: {format_korean_list(top_focus, limit=3, max_item_len=42)}.")
+        intro_lines.append(f"**남겨둔 자료**: {artifact_summary}")
+        if top_libraries:
+            intro_lines.append(f"**주요 스택**: {format_inline_code_list(top_libraries)}")
+        intro_block = "\n\n".join(intro_lines)
     artifact_line = "/".join(source_formats) if source_formats else "source"
     artifact_line = f"{artifact_line} · 코드 {code_block_count}개 · 실행 {execution_block_count}개"
     if research_tab == "ML":
@@ -1672,11 +2125,7 @@ def build_content(
 
 ## {code_title}
 
-{code_section}
-
-## {concept_title}
-
-{concept_section}"""
+{code_section}"""
     else:
         body_sections = f"""## {coverage_title}
 
@@ -1693,6 +2142,42 @@ def build_content(
 ## {code_title}
 
 {code_section}"""
+
+    if research_tab == "ML":
+        return f"""---
+title: "{escape_yaml(title)}"
+date: {date}
+research_tab: "{research_tab}"
+research_kind: "{research_kind}"
+source_title: "{escape_yaml(source_title)}"
+source_path: "{escape_yaml(source_path)}"
+excerpt: "{escape_yaml(excerpt)}"
+research_summary: "{escape_yaml(research_summary)}"
+research_artifacts: "{escape_yaml(artifact_line)}"
+code_block_count: {code_block_count}
+execution_block_count: {execution_block_count}
+{format_yaml_list("research_focus", top_focus)}
+{format_yaml_list("research_stack", top_libraries)}
+{format_yaml_list("source_formats", source_formats)}
+tags:
+  - research-archive
+  - imported-note
+  - {track_tag}
+  - {kind_tag}
+---
+
+{intro_block}
+
+{body_sections}
+
+## Source Bundle
+
+{bundle_section}
+
+## Note Preview
+
+{preview_block}
+"""
 
     return f"""---
 title: "{escape_yaml(title)}"
@@ -1766,8 +2251,23 @@ def build_note_payload(track: dict[str, str], file_path: Path) -> str:
         flow_items = build_ml_flow_items_from_code_samples(code_samples)
     libraries = extract_libraries(code_blocks)
     if track["tab"] == "ML":
-        concept_notes = build_ml_learning_notes(code_samples)
+        ml_problem_summary = build_ml_problem_summary(clean_title, intro_paragraphs, focus_items)
+        ml_data_summary = build_ml_data_summary(section_summaries, intro_paragraphs, focus_items)
+        ml_study_notes = build_ml_study_notes(
+            title=clean_title,
+            focus_items=focus_items,
+            section_summaries=section_summaries,
+            paragraphs=paragraphs,
+            code_blocks=code_blocks,
+            libraries=libraries,
+        )
+        ml_implementation_steps = build_ml_implementation_steps(code_samples)
+        concept_notes = []
     else:
+        ml_problem_summary = ""
+        ml_data_summary = ""
+        ml_study_notes = []
+        ml_implementation_steps = []
         concept_notes = build_concept_notes(
             research_tab=track["tab"],
             title=clean_title,
@@ -1800,14 +2300,22 @@ def build_note_payload(track: dict[str, str], file_path: Path) -> str:
         sum(1 for block in code_blocks if bool(block["has_output"])),
         libraries,
     )
-    research_summary = build_research_summary(
-        clean_title,
-        track["tab"],
-        research_kind,
-        intro_paragraphs,
-        focus_items,
-        artifact_summary,
-    )
+    if track["tab"] == "ML":
+        research_summary = build_ml_research_summary(
+            title=clean_title,
+            study_notes=ml_study_notes,
+            code_samples=code_samples,
+            artifact_summary=artifact_summary,
+        )
+    else:
+        research_summary = build_research_summary(
+            clean_title,
+            track["tab"],
+            research_kind,
+            intro_paragraphs,
+            focus_items,
+            artifact_summary,
+        )
     excerpt = build_excerpt(research_summary, focus_items, clean_title)
     source_path = file_path.relative_to(KNOWLEDGE_ROOT).as_posix()
 
@@ -1830,6 +2338,10 @@ def build_note_payload(track: dict[str, str], file_path: Path) -> str:
         focus_items=focus_items,
         section_summaries=section_summaries,
         concept_notes=concept_notes,
+        ml_problem_summary=ml_problem_summary,
+        ml_data_summary=ml_data_summary,
+        ml_study_notes=ml_study_notes,
+        ml_implementation_steps=ml_implementation_steps,
         flow_items=flow_items,
         code_samples=code_samples,
         libraries=libraries,

@@ -5,8 +5,8 @@ research_tab: "ML"
 research_kind: "Practice"
 source_title: "250822_코딩실습8_9.기본 지도학습 알고리즘들 (로지스틱 회귀)"
 source_path: "11_Machine_Learning/Code_Snippets/250822_코딩실습8_9.기본 지도학습 알고리즘들 (로지스틱 회귀).md"
-excerpt: "legend_elements() - (handles, label) 두 값을 반환 - https://matplotlib.org/stable/gallery/lines_bars_and_markers/scatter_with_legend.html - scatter plot이 튜플 반환 - handles: 스..."
-research_summary: "legend_elements() - (handles, label) 두 값을 반환 - https://matplotlib.org/stable/gallery/lines_bars_and_markers/scatter_with_legend.html - scatter plot이 튜플 반환 - handles: 스캐터 플롯에 표현되는 작은 점 - l... 이 글은 개념 요약보다 전처리, 피처 가공, 모델링, 평가 코드를 직접 다시 볼 수 있게 구성한 ML 실습 기록입니다. `ipynb/md` 원본과 19개 코드 블록, 18개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 sklearn, matplotlib, numpy입니다."
+excerpt: "코딩실습8 9.기본 지도학습 알고리즘들 (로지스틱 회귀)를 중심으로 구현 중심 학습 개념과 구현 흐름을 함께 정리한 ML 실습 기록입니다"
+research_summary: "코딩실습8 9.기본 지도학습 알고리즘들 (로지스틱 회귀)를 중심으로 구현 중심 학습 개념과 구현 흐름을 함께 정리한 ML 실습 기록입니다. 본문에서는 Iris 데이터로 이진 분류, Iris 데이터로 다중 분류 같은 코드를 따라가며 실제 실습 과정을 확인할 수 있습니다. `ipynb/md` 원본과 19개 코드 블록, 18개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 sklearn, matplotlib, numpy입니다."
 research_artifacts: "ipynb/md · 코드 19개 · 실행 18개"
 code_block_count: 19
 execution_block_count: 18
@@ -28,44 +28,97 @@ tags:
   - practice
 ---
 
-legend_elements() - (handles, label) 두 값을 반환 - https://matplotlib.org/stable/gallery/lines_bars_and_markers/scatter_with_legend.html - scatter plot이 튜플 반환 - handles: 스캐터 플롯에 표현되는 작은 점 - l... 이 글은 개념 요약보다 전처리, 피처 가공, 모델링, 평가 코드를 직접 다시 볼 수 있게 구성한 ML 실습 기록입니다. `ipynb/md` 원본과 19개 코드 블록, 18개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 sklearn, matplotlib, numpy입니다.
-
-**빠르게 볼 수 있는 포인트**: Iris 데이터로 이진 분류, Iris 데이터로 다중 분류, Softmax 이용한 다중 분류.
-
-**남겨둔 자료**: `ipynb/md` 원본과 19개 코드 블록, 18개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 sklearn, matplotlib, numpy입니다.
-
-**주요 스택**: `sklearn`, `matplotlib`, `numpy`
-
-## Snapshot
-
-| Item | Value |
-|------|-------|
-| Track | ML |
-| Type | Practice |
-| Source Files | `ipynb`, `md` |
-| Code Blocks | 19 |
-| Execution Cells | 18 |
-| Libraries | `sklearn`, `matplotlib`, `numpy` |
-| Source Note | `250822_코딩실습8_9.기본 지도학습 알고리즘들 (로지스틱 회귀)` |
+<div class="research-doc-hero">
+  <div class="research-doc-hero__meta">
+<div class="research-doc-hero__meta-item">
+  <span>Source</span>
+  <strong>ipynb / md</strong>
+</div>
+<div class="research-doc-hero__meta-item">
+  <span>Artifacts</span>
+  <strong>코드 19 · 실행 18</strong>
+</div>
+<div class="research-doc-hero__meta-item">
+  <span>Libraries</span>
+  <strong>sklearn, matplotlib, numpy</strong>
+</div>
+  </div>
+</div>
+<div class="research-doc-grid">
+<div class="research-doc-card">
+  <p class="research-doc-card__label">Study Topic</p>
+  <p class="research-doc-card__value">legend_elements(). (handles, label) 두 값을 반환</p>
+</div>
+<div class="research-doc-card">
+  <p class="research-doc-card__label">Data Context</p>
+  <p class="research-doc-card__value">Iris 데이터로 이진 분류</p>
+</div>
+<div class="research-doc-card">
+  <p class="research-doc-card__label">Core Concepts</p>
+  <p class="research-doc-card__value">구현 중심 학습</p>
+</div>
+<div class="research-doc-card">
+  <p class="research-doc-card__label">Implementation Focus</p>
+  <p class="research-doc-card__value">데이터 불러오기 -&gt; 모델 구성 -&gt; 평가</p>
+</div>
+</div>
 
 ## What I Studied
 
-### handles, _ = scatter.legend_elements() 코드 설명
+<div class="research-note-grid">
+<div class="research-note-card">
+  <p class="research-note-card__label">구현 중심 학습</p>
+  <p class="research-note-card__body">이 글은 개념 설명과 함께 실제 코드를 통해 학습 흐름을 다시 따라가도록 정리된 ML 실습 기록입니다.</p>
+  <p class="research-note-card__meta">데이터 입력, 처리, 모델링, 평가 가운데 실제로 손댄 단계를 중심으로 읽을 수 있습니다.</p>
+</div>
+</div>
 
-legend_elements() - (handles, label) 두 값을 반환 - https://matplotlib.org/stable/gallery/lines_bars_and_markers/scatter_with_legend.html - scatter plot이 튜플 반환 - handles: 스캐터 플롯에 표현되는 작은 점 - label: 0, 1, 2처럼 자동 생성된 클래스 이름...
+## How I Implemented It
 
-### Key Step
+<div class="research-step-grid">
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 1 · 데이터 불러오기</p>
+  <p class="research-step-card__title">Iris 데이터로 이진 분류</p>
+  <p class="research-step-card__body">실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.</p>
 
-Softmax 이용한 다중 분류
+  <p class="research-step-card__meta"><span>코드 포인트</span> 데이터 로드</p>
+</div>
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 2 · 모델 구성</p>
+  <p class="research-step-card__title">Iris 데이터로 다중 분류</p>
+  <p class="research-step-card__body">LogisticRegression 같은 모델을 올려 두고 어떤 알고리즘이 문제에 더 잘 맞는지 비교해 보는 구간입니다.</p>
+  <p class="research-step-card__meta"><span>핵심 API</span> <code>LogisticRegression</code> <code>matplotlib</code></p>
+  <p class="research-step-card__meta"><span>코드 포인트</span> 모델링 &amp; 시각화</p>
+</div>
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 3 · 평가</p>
+  <p class="research-step-card__title">Iris 데이터로 이진 분류</p>
+  <p class="research-step-card__body">예측 결과를 지표로 계산해 어떤 모델과 전처리가 더 잘 맞았는지 확인하는 평가 코드입니다.</p>
 
-## What I Tried in Code
+  <p class="research-step-card__meta"><span>코드 포인트</span> 시각화용 격자 생성 코드</p>
+</div>
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 4 · 시각화</p>
+  <p class="research-step-card__title">Softmax 이용한 다중 분류</p>
+  <p class="research-step-card__body">데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.</p>
+  <p class="research-step-card__meta"><span>핵심 API</span> <code>matplotlib</code></p>
+  <p class="research-step-card__meta"><span>코드 포인트</span> 시각화 · legend 지정 위한 코드</p>
+</div>
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 5 · 환경 준비</p>
+  <p class="research-step-card__title">Iris 데이터로 이진 분류</p>
+  <p class="research-step-card__body">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</p>
+  <p class="research-step-card__meta"><span>핵심 API</span> <code>LogisticRegression</code></p>
 
-1. 데이터 불러오기: Iris 데이터로 이진 분류
-2. 모델 구성: Iris 데이터로 다중 분류
-3. 평가: Iris 데이터로 이진 분류
-4. 시각화: Softmax 이용한 다중 분류
-5. 환경 준비: Iris 데이터로 이진 분류
-6. 구현 코드: Iris 데이터로 다중 분류
+</div>
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 6 · 구현 코드</p>
+  <p class="research-step-card__title">Iris 데이터로 다중 분류</p>
+  <p class="research-step-card__body">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</p>
+
+  <p class="research-step-card__meta"><span>코드 포인트</span> 시각화용 격자 생성 코드</p>
+</div>
+</div>
 
 ## Code Evidence
 
@@ -73,7 +126,7 @@ Softmax 이용한 다중 분류
 
 **직접 해본 단계**: 데이터 불러오기
 
-`Iris 데이터로 이진 분류`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다. 코드에는 데이터 로드 같은 처리 포인트도 함께 남아 있습니다.
+실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.
 
 ```python
 # 데이터 로드
@@ -84,7 +137,9 @@ iris = load_iris()
 
 **직접 해본 단계**: 모델 구성
 
-`Iris 데이터로 다중 분류`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. LogisticRegression 같은 모델을 올려 두고 어떤 알고리즘이 문제에 더 잘 맞는지 비교해 보는 구간입니다. 코드에는 모델링 & 시각화 같은 처리 포인트도 함께 남아 있습니다.
+**핵심 API**: `LogisticRegression`, `matplotlib`
+
+LogisticRegression 같은 모델을 올려 두고 어떤 알고리즘이 문제에 더 잘 맞는지 비교해 보는 구간입니다.
 
 ```python
 # 모델링 & 시각화
@@ -113,7 +168,7 @@ plt.show()
 
 **직접 해본 단계**: 평가
 
-`Iris 데이터로 이진 분류`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 예측 결과를 지표로 계산해 어떤 모델과 전처리가 더 잘 맞았는지 확인하는 평가 코드입니다. 코드에는 시각화용 격자 생성 코드 같은 처리 포인트도 함께 남아 있습니다.
+예측 결과를 지표로 계산해 어떤 모델과 전처리가 더 잘 맞았는지 확인하는 평가 코드입니다.
 
 ```python
 # 시각화용 격자 생성 코드
@@ -130,7 +185,9 @@ Z = Z.reshape(xx.shape)                                        # Z를 격자 형
 
 **직접 해본 단계**: 시각화
 
-`Softmax 이용한 다중 분류`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다. 코드에는 시각화, legend 지정 위한 코드 같은 처리 포인트도 함께 남아 있습니다.
+**핵심 API**: `matplotlib`
+
+데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.
 
 ```python
 # 시각화
@@ -152,7 +209,9 @@ plt.show()
 
 **직접 해본 단계**: 환경 준비
 
-`Iris 데이터로 이진 분류`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+**핵심 API**: `LogisticRegression`
+
+원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
 
 ```python
 from sklearn.datasets import load_iris
@@ -165,7 +224,7 @@ import numpy as np
 
 **직접 해본 단계**: 구현 코드
 
-`Iris 데이터로 다중 분류`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다. 코드에는 시각화용 격자 생성 코드 같은 처리 포인트도 함께 남아 있습니다.
+원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
 
 ```python
 # 시각화용 격자 생성 코드
@@ -176,32 +235,6 @@ xx, yy = np.meshgrid(np.linspace(x_min, x_max, 200),
                      np.linspace(y_min, y_max, 200))           # 200X200 격자 생성
 grid = np.c_[xx.ravel(), yy.ravel()]
 ```
-
-## Why These Steps Matter
-
-### 데이터 입력부터 다시 보기
-
-- 왜 필요한가: 실습을 다시 따라가려면 어떤 데이터 파일에서 출발했는지부터 분명해야 전체 흐름이 재현됩니다.
-- 왜 이 방식을 쓰는가: 이 글에서는 `Iris 데이터로 이진 분류` 코드를 앞쪽에 배치해 train/test 또는 원본 테이블이 어디서 올라오는지 바로 확인할 수 있게 했습니다.
-- 원리: 표 형태 원본을 DataFrame으로 읽어와야 전처리, 피처 가공, 모델 학습이 같은 입력 기준 위에서 이어집니다.
-
-### 모델을 바꿔가며 비교한 이유
-
-- 왜 필요한가: 한 가지 모델만 보면 데이터에 맞는 편향과 분산 특성을 놓치기 쉬워서 여러 알고리즘을 비교해 보는 과정이 중요합니다.
-- 왜 이 방식을 쓰는가: 그래서 `Iris 데이터로 다중 분류`처럼 실제로 올려본 모델 코드를 남겨 어떤 후보를 실험했는지 바로 확인할 수 있게 했습니다.
-- 원리: 모델마다 가정과 표현력이 달라 같은 데이터라도 잡아내는 패턴이 다르기 때문에 비교 실험이 필수입니다.
-
-### 지표 계산까지 남긴 이유
-
-- 왜 필요한가: 예측을 했더라도 어떤 기준으로 잘했는지 판단하지 않으면 실험 비교가 성립하지 않습니다.
-- 왜 이 방식을 쓰는가: 그래서 `Iris 데이터로 이진 분류` 코드를 통해 정확도, F1, RMSLE 같은 지표를 실제로 어떻게 계산했는지 함께 남겼습니다.
-- 원리: 평가 지표는 예측 결과를 수치화해 모델 선택과 개선 방향을 정하는 기준점 역할을 합니다.
-
-### 시각화를 같이 남긴 이유
-
-- 왜 필요한가: 숫자만 보면 놓치기 쉬운 분포와 이상치를 그래프로 확인해야 다음 전처리나 feature engineering 방향이 또렷해집니다.
-- 왜 이 방식을 쓰는가: 이 글에서는 `Softmax 이용한 다중 분류` 코드를 통해 어떤 그래프를 보고 판단했는지 실습 흔적을 남겼습니다.
-- 원리: 시각화는 데이터 분포를 직관적으로 드러내 모델 선택과 변수 설계의 근거를 만들어 줍니다.
 
 ## Source Bundle
 

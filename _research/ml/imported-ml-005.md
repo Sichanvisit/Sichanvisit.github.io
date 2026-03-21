@@ -5,8 +5,8 @@ research_tab: "ML"
 research_kind: "Practice"
 source_title: "250814_코드실습5_7.DF 마스터하기"
 source_path: "11_Machine_Learning/Code_Snippets/250814_코드실습5_7.DF 마스터하기.md"
-excerpt: "Sample Superstore 데이터 설명 (교육·실습용으로 자주 쓰이는 판매 주문 데이터셋)"
-research_summary: "Sample Superstore 데이터 설명 (교육·실습용으로 자주 쓰이는 판매 주문 데이터셋). loc: 레이블기반 데이터 선택 - df.loc[행 레이블, 열 레이블]. `ipynb/md` 원본과 83개 코드 블록, 69개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 google, pandas, seaborn, matplotlib입니다."
+excerpt: "코드실습5 7.DF 마스터하기를 중심으로 객체지향 설계 개념과 구현 흐름을 함께 정리한 ML 실습 기록입니다"
+research_summary: "코드실습5 7.DF 마스터하기를 중심으로 객체지향 설계 개념과 구현 흐름을 함께 정리한 ML 실습 기록입니다. 본문에서는 CSV 데이터 불러오기, 데이터 전처리 같은 코드를 따라가며 실제 실습 과정을 확인할 수 있습니다. `ipynb/md` 원본과 83개 코드 블록, 69개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 google, pandas, seaborn, matplotlib입니다."
 research_artifacts: "ipynb/md · 코드 83개 · 실행 69개"
 code_block_count: 83
 execution_block_count: 69
@@ -30,44 +30,97 @@ tags:
   - practice
 ---
 
-Sample Superstore 데이터 설명 (교육·실습용으로 자주 쓰이는 판매 주문 데이터셋). loc: 레이블기반 데이터 선택 - df.loc[행 레이블, 열 레이블]. `ipynb/md` 원본과 83개 코드 블록, 69개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 google, pandas, seaborn, matplotlib입니다.
-
-**빠르게 볼 수 있는 포인트**: Sample Superstore 데이터 설명 (교육·실습용으로 자주 쓰..., 데이터 확인, df 기본기.
-
-**남겨둔 자료**: `ipynb/md` 원본과 83개 코드 블록, 69개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 google, pandas, seaborn, matplotlib입니다.
-
-**주요 스택**: `google`, `pandas`, `seaborn`, `matplotlib`, `numpy`
-
-## Snapshot
-
-| Item | Value |
-|------|-------|
-| Track | ML |
-| Type | Practice |
-| Source Files | `ipynb`, `md` |
-| Code Blocks | 83 |
-| Execution Cells | 69 |
-| Libraries | `google`, `pandas`, `seaborn`, `matplotlib`, `numpy`, `sklearn` |
-| Source Note | `250814_코드실습5_7.DF 마스터하기` |
+<div class="research-doc-hero">
+  <div class="research-doc-hero__meta">
+<div class="research-doc-hero__meta-item">
+  <span>Source</span>
+  <strong>ipynb / md</strong>
+</div>
+<div class="research-doc-hero__meta-item">
+  <span>Artifacts</span>
+  <strong>코드 83 · 실행 69</strong>
+</div>
+<div class="research-doc-hero__meta-item">
+  <span>Libraries</span>
+  <strong>google, pandas, seaborn, matplotlib, numpy</strong>
+</div>
+  </div>
+</div>
+<div class="research-doc-grid">
+<div class="research-doc-card">
+  <p class="research-doc-card__label">Study Topic</p>
+  <p class="research-doc-card__value">Sample Superstore 데이터 설명 (교육·실습용으로 자주 쓰이는 판매 주문 데이터셋)</p>
+</div>
+<div class="research-doc-card">
+  <p class="research-doc-card__label">Data Context</p>
+  <p class="research-doc-card__value">Sample Superstore 데이터 설명 (교육·실습용으로 자주 쓰이는 판매 주문 데이터셋)</p>
+</div>
+<div class="research-doc-card">
+  <p class="research-doc-card__label">Core Concepts</p>
+  <p class="research-doc-card__value">객체지향 설계</p>
+</div>
+<div class="research-doc-card">
+  <p class="research-doc-card__label">Implementation Focus</p>
+  <p class="research-doc-card__value">데이터 불러오기 -&gt; 전처리 -&gt; 피처 가공</p>
+</div>
+</div>
 
 ## What I Studied
 
-### 데이터 확인
+<div class="research-note-grid">
+<div class="research-note-card">
+  <p class="research-note-card__label">객체지향 설계</p>
+  <p class="research-note-card__body">객체지향은 관련 데이터와 동작을 하나의 객체로 묶어 문제를 구조적으로 표현하는 방식입니다.</p>
+  <p class="research-note-card__meta">이 글에서는 클래스, 메서드, 상태 관리 같은 코드가 핵심 학습 포인트로 드러납니다.</p>
+</div>
+</div>
 
-Sample Superstore 데이터 설명 (교육·실습용으로 자주 쓰이는 판매 주문 데이터셋)
+## How I Implemented It
 
-### loc/iloc
+<div class="research-step-grid">
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 1 · 데이터 불러오기</p>
+  <p class="research-step-card__title">CSV 데이터 불러오기</p>
+  <p class="research-step-card__body">실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.</p>
+  <p class="research-step-card__meta"><span>핵심 API</span> <code>pd.read_csv</code></p>
 
-loc: 레이블기반 데이터 선택 - df.loc[행 레이블, 열 레이블]
+</div>
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 2 · 전처리</p>
+  <p class="research-step-card__title">데이터 전처리</p>
+  <p class="research-step-card__body">결측치 처리, 인코딩, 스케일링처럼 모델이 바로 사용할 수 있도록 입력 형태를 다듬는 단계입니다.</p>
+  <p class="research-step-card__meta"><span>핵심 API</span> <code>matplotlib</code></p>
+  <p class="research-step-card__meta"><span>코드 포인트</span> 여러 변수 박스플롯 그리기</p>
+</div>
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 3 · 피처 가공</p>
+  <p class="research-step-card__title">정규화/표준화</p>
+  <p class="research-step-card__body">원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다.</p>
 
-## What I Tried in Code
+  <p class="research-step-card__meta"><span>코드 포인트</span> 날짜로 변환된 데이터 타입 기준 월, 요일 파생변수 생성</p>
+</div>
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 4 · 시각화</p>
+  <p class="research-step-card__title">데이터 전처리</p>
+  <p class="research-step-card__body">데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.</p>
+  <p class="research-step-card__meta"><span>핵심 API</span> <code>matplotlib</code> <code>seaborn</code></p>
 
-1. 데이터 불러오기: CSV 데이터 불러오기
-2. 전처리: 데이터 전처리
-3. 피처 가공: 정규화/표준화
-4. 시각화: 데이터 전처리
-5. 구현 코드: 데이터 전처리
-6. 전처리: 정규화/표준화
+</div>
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 5 · 구현 코드</p>
+  <p class="research-step-card__title">데이터 전처리</p>
+  <p class="research-step-card__body">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</p>
+
+  <p class="research-step-card__meta"><span>코드 포인트</span> 이상치 - IQR 단일 변수</p>
+</div>
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 6 · 전처리</p>
+  <p class="research-step-card__title">정규화/표준화</p>
+  <p class="research-step-card__body">결측치 처리, 인코딩, 스케일링처럼 모델이 바로 사용할 수 있도록 입력 형태를 다듬는 단계입니다.</p>
+  <p class="research-step-card__meta"><span>핵심 API</span> <code>MinMaxScaler</code></p>
+  <p class="research-step-card__meta"><span>코드 포인트</span> 위와 같은 코드</p>
+</div>
+</div>
 
 ## Code Evidence
 
@@ -75,7 +128,9 @@ loc: 레이블기반 데이터 선택 - df.loc[행 레이블, 열 레이블]
 
 **직접 해본 단계**: 데이터 불러오기
 
-`CSV 데이터 불러오기`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.
+**핵심 API**: `pd.read_csv`
+
+실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.
 
 ```python
 import pandas as pd
@@ -88,7 +143,9 @@ df
 
 **직접 해본 단계**: 전처리
 
-`데이터 전처리`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 결측치 처리, 인코딩, 스케일링처럼 모델이 바로 사용할 수 있도록 입력 형태를 다듬는 단계입니다. 코드에는 여러 변수 박스플롯 그리기 같은 처리 포인트도 함께 남아 있습니다.
+**핵심 API**: `matplotlib`
+
+결측치 처리, 인코딩, 스케일링처럼 모델이 바로 사용할 수 있도록 입력 형태를 다듬는 단계입니다.
 
 ```python
 # 여러 변수 박스플롯 그리기
@@ -109,7 +166,7 @@ plt.show()
 
 **직접 해본 단계**: 피처 가공
 
-`정규화/표준화`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다. 코드에는 날짜로 변환된 데이터 타입 기준 월, 요일 파생변수 생성 같은 처리 포인트도 함께 남아 있습니다.
+원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다.
 
 ```python
 # 날짜로 변환된 데이터 타입 기준 월, 요일 파생변수 생성
@@ -125,7 +182,9 @@ df[['order_date', 'order_year', 'order_month', 'order_weekday']].head(2)
 
 **직접 해본 단계**: 시각화
 
-`데이터 전처리`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.
+**핵심 API**: `matplotlib`, `seaborn`
+
+데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.
 
 ```python
 import seaborn as sns
@@ -140,7 +199,7 @@ plt.show()
 
 **직접 해본 단계**: 구현 코드
 
-`데이터 전처리`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다. 코드에는 이상치 - IQR 단일 변수 같은 처리 포인트도 함께 남아 있습니다.
+원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
 
 ```python
 # 이상치 - IQR 단일 변수
@@ -160,7 +219,9 @@ print("Q3: ", q3)
 
 **직접 해본 단계**: 전처리
 
-`정규화/표준화`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 결측치 처리, 인코딩, 스케일링처럼 모델이 바로 사용할 수 있도록 입력 형태를 다듬는 단계입니다. 코드에는 위와 같은 코드 같은 처리 포인트도 함께 남아 있습니다.
+**핵심 API**: `MinMaxScaler`
+
+결측치 처리, 인코딩, 스케일링처럼 모델이 바로 사용할 수 있도록 입력 형태를 다듬는 단계입니다.
 
 ```python
 # 위와 같은 코드
@@ -169,32 +230,6 @@ from sklearn.preprocessing import MinMaxScaler
 scaler = MinMaxScaler()
 df['sales_norm'] = scaler.fit_transform(df[['sales']])
 ```
-
-## Why These Steps Matter
-
-### 데이터 입력부터 다시 보기
-
-- 왜 필요한가: 실습을 다시 따라가려면 어떤 데이터 파일에서 출발했는지부터 분명해야 전체 흐름이 재현됩니다.
-- 왜 이 방식을 쓰는가: 이 글에서는 `CSV 데이터 불러오기` 코드를 앞쪽에 배치해 train/test 또는 원본 테이블이 어디서 올라오는지 바로 확인할 수 있게 했습니다.
-- 원리: 표 형태 원본을 DataFrame으로 읽어와야 전처리, 피처 가공, 모델 학습이 같은 입력 기준 위에서 이어집니다.
-
-### 전처리 코드를 남기는 이유
-
-- 왜 필요한가: 머신러닝에선 모델보다 먼저 입력 데이터의 결측치, 범주형 값, 스케일을 어떻게 다뤘는지가 성능을 크게 바꿉니다.
-- 왜 이 방식을 쓰는가: 그래서 `데이터 전처리` 같은 코드를 통해 실제로 어떤 정제 규칙을 적용했는지 문장보다 코드로 먼저 보여주도록 정리했습니다.
-- 원리: 원본 데이터를 모델이 다루기 쉬운 수치 형태로 바꾸면 같은 알고리즘이어도 학습 안정성과 해석 가능성이 함께 올라갑니다.
-
-### 파생 변수를 직접 만든 부분
-
-- 왜 필요한가: 원본 컬럼만으로는 숨겨진 패턴이 잘 드러나지 않아 도메인 정보를 반영한 새 특징이 필요할 때가 많습니다.
-- 왜 이 방식을 쓰는가: 이 글에서는 `정규화/표준화` 코드를 통해 시간, 범주, 조건식을 어떻게 새로운 feature로 바꿨는지 바로 볼 수 있게 했습니다.
-- 원리: 좋은 feature engineering은 데이터 분포를 다시 표현해 모델이 더 유용한 경계나 관계를 학습하도록 돕습니다.
-
-### 시각화를 같이 남긴 이유
-
-- 왜 필요한가: 숫자만 보면 놓치기 쉬운 분포와 이상치를 그래프로 확인해야 다음 전처리나 feature engineering 방향이 또렷해집니다.
-- 왜 이 방식을 쓰는가: 이 글에서는 `데이터 전처리` 코드를 통해 어떤 그래프를 보고 판단했는지 실습 흔적을 남겼습니다.
-- 원리: 시각화는 데이터 분포를 직관적으로 드러내 모델 선택과 변수 설계의 근거를 만들어 줍니다.
 
 ## Source Bundle
 

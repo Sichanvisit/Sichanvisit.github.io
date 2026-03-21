@@ -5,8 +5,8 @@ research_tab: "ML"
 research_kind: "Practice"
 source_title: "250827_코딩실습14_10.결정트리와 앙상블(보팅배깅부스팅스태킹)"
 source_path: "11_Machine_Learning/Code_Snippets/250827_코딩실습14_10.결정트리와 앙상블(보팅배깅부스팅스태킹).md"
-excerpt: "시각화를 위한 헬퍼 함수 (이전 실습에서 사용..., 모델별 정확도 저장 딕셔너리, 보팅 중심으로 구현 과정을 정리한 코딩실습14 10.결정트리와 앙상블(보팅배깅부스팅스태킹) 기록입니다"
-research_summary: "시각화를 위한 헬퍼 함수 (이전 실습에서 사용..., 모델별 정확도 저장 딕셔너리, 보팅 중심으로 구현 과정을 정리한 코딩실습14 10.결정트리와 앙상블(보팅배깅부스팅스태킹) 기록입니다. 이 글은 개념 요약보다 전처리, 피처 가공, 모델링, 평가 코드를 직접 다시 볼 수 있게 구성한 ML 실습 기록입니다. `ipynb/md` 원본과 8개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, matplotlib, sklearn입니다."
+excerpt: "코딩실습14 10.결정트리와 앙상블(보팅배깅부스팅스태킹)를 중심으로 분류 문제, 결정 트리와 앙상블 개념과 구현 흐름을 함께 정리한 ML 실습 기록입니다"
+research_summary: "코딩실습14 10.결정트리와 앙상블(보팅배깅부스팅스태킹)를 중심으로 분류 문제, 결정 트리와 앙상블 개념과 구현 흐름을 함께 정리한 ML 실습 기록입니다. 본문에서는 파생 변수 추가, DecisionTree / Logist... 같은 코드를 따라가며 실제 실습 과정을 확인할 수 있습니다. `ipynb/md` 원본과 8개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, matplotlib, sklearn입니다."
 research_artifacts: "ipynb/md · 코드 8개 · 실행 7개"
 code_block_count: 8
 execution_block_count: 7
@@ -28,42 +28,108 @@ tags:
   - practice
 ---
 
-시각화를 위한 헬퍼 함수 (이전 실습에서 사용..., 모델별 정확도 저장 딕셔너리, 보팅 중심으로 구현 과정을 정리한 코딩실습14 10.결정트리와 앙상블(보팅배깅부스팅스태킹) 기록입니다. 이 글은 개념 요약보다 전처리, 피처 가공, 모델링, 평가 코드를 직접 다시 볼 수 있게 구성한 ML 실습 기록입니다. `ipynb/md` 원본과 8개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, matplotlib, sklearn입니다.
-
-**빠르게 볼 수 있는 포인트**: 시각화를 위한 헬퍼 함수 (이전 실습에서 사용한 것과 동일), 모델별 정확도 저장 딕셔너리, 보팅.
-
-**남겨둔 자료**: `ipynb/md` 원본과 8개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, matplotlib, sklearn입니다.
-
-**주요 스택**: `numpy`, `matplotlib`, `sklearn`
-
-## Snapshot
-
-| Item | Value |
-|------|-------|
-| Track | ML |
-| Type | Practice |
-| Source Files | `ipynb`, `md` |
-| Code Blocks | 8 |
-| Execution Cells | 7 |
-| Libraries | `numpy`, `matplotlib`, `sklearn` |
-| Source Note | `250827_코딩실습14_10.결정트리와 앙상블(보팅배깅부스팅스태킹)` |
+<div class="research-doc-hero">
+  <div class="research-doc-hero__meta">
+<div class="research-doc-hero__meta-item">
+  <span>Source</span>
+  <strong>ipynb / md</strong>
+</div>
+<div class="research-doc-hero__meta-item">
+  <span>Artifacts</span>
+  <strong>코드 8 · 실행 7</strong>
+</div>
+<div class="research-doc-hero__meta-item">
+  <span>Libraries</span>
+  <strong>numpy, matplotlib, sklearn</strong>
+</div>
+  </div>
+</div>
+<div class="research-doc-grid">
+<div class="research-doc-card">
+  <p class="research-doc-card__label">Study Topic</p>
+  <p class="research-doc-card__value">시각화를 위한 헬퍼 함수 (이전 실습에서 사용한 것과 동일)</p>
+</div>
+<div class="research-doc-card">
+  <p class="research-doc-card__label">Core Concepts</p>
+  <p class="research-doc-card__value">분류 문제 · 결정 트리와 앙상블 · 전처리와 입력 정리</p>
+</div>
+<div class="research-doc-card">
+  <p class="research-doc-card__label">Implementation Focus</p>
+  <p class="research-doc-card__value">피처 가공 -&gt; 모델 구성 -&gt; 환경 준비</p>
+</div>
+</div>
 
 ## What I Studied
 
-- 시각화를 위한 헬퍼 함수 (이전 실습에서 사용한 것과 동일)
-- 모델별 정확도 저장 딕셔너리
-- 보팅
-- 1-1. 기본 모델 세팅
-- 1-2. 소프트 보팅
+<div class="research-note-grid">
+<div class="research-note-card">
+  <p class="research-note-card__label">분류 문제</p>
+  <p class="research-note-card__body">분류는 입력 특성으로 클래스나 반응 여부를 예측하는 문제입니다. 모델은 각 샘플이 어떤 범주에 속하는지 확률 또는 라벨로 출력합니다.</p>
+  <p class="research-note-card__meta">이 글에서는 가입 여부, 품종, 레이블 예측처럼 범주형 타깃을 다루는 실습 맥락으로 연결됩니다.</p>
+</div>
+<div class="research-note-card">
+  <p class="research-note-card__label">결정 트리와 앙상블</p>
+  <p class="research-note-card__body">결정 트리는 조건 분기로 예측 규칙을 만들고, 앙상블은 여러 모델의 예측을 묶어 편향과 분산을 함께 줄이는 접근입니다.</p>
+  <p class="research-note-card__meta">이 글에서는 Decision Tree, RandomForest, XGBoost, Voting, Stacking 코드를 통해 여러 모델을 비교해 볼 수 있습니다.</p>
+</div>
+<div class="research-note-card">
+  <p class="research-note-card__label">전처리와 입력 정리</p>
+  <p class="research-note-card__body">머신러닝 모델은 입력 형식에 민감하기 때문에 결측치 처리, 인코딩, 스케일링 같은 전처리 단계가 성능을 크게 좌우합니다.</p>
+  <p class="research-note-card__meta">이 글에서는 범주형 값을 숫자로 바꾸거나 학습/검증을 분리하는 코드가 이 개념에 해당합니다.</p>
+</div>
+<div class="research-note-card">
+  <p class="research-note-card__label">피처 엔지니어링</p>
+  <p class="research-note-card__body">피처 엔지니어링은 원본 컬럼을 그대로 쓰지 않고 문제에 맞는 새 특징을 설계해 모델이 더 유용한 패턴을 학습하도록 돕는 과정입니다.</p>
+  <p class="research-note-card__meta">이 글에서는 시간 파생 변수, 조건식 기반 플래그, 도메인 규칙을 반영한 새 컬럼 생성 코드가 여기에 해당합니다.</p>
+</div>
+</div>
 
-## What I Tried in Code
+## How I Implemented It
 
-1. 피처 가공: 파생 변수 추가
-2. 모델 구성: DecisionTree / LogisticRegression 모델 구성
-3. 환경 준비: import numpy as np
-4. 구현 코드: 모델별 정확도 저장 딕셔너리
-5. 구현 코드: for model_name, acc in accuracies.items()
-6. 구현 코드: X, y = make_moons(n_samples=1000, noise=0.3, rand...
+<div class="research-step-grid">
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 1 · 피처 가공</p>
+  <p class="research-step-card__title">파생 변수 추가</p>
+  <p class="research-step-card__body">원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다.</p>
+
+  <p class="research-step-card__meta"><span>코드 포인트</span> 시각화를 위한 헬퍼 함수 (이전 실습에서 사용한 것과 동일)</p>
+</div>
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 2 · 모델 구성</p>
+  <p class="research-step-card__title">DecisionTree / LogisticRegression 모델 구성</p>
+  <p class="research-step-card__body">DecisionTree / LogisticRegression 같은 모델을 올려 두고 어떤 알고리즘이 문제에 더 잘 맞는지 비교해 보는 구간입니다.</p>
+  <p class="research-step-card__meta"><span>핵심 API</span> <code>DecisionTree</code> <code>Bagging</code> <code>Voting</code> <code>Stacking</code></p>
+  <p class="research-step-card__meta"><span>코드 포인트</span> 보팅 · 1-1. 기본 모델 세팅</p>
+</div>
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 3 · 환경 준비</p>
+  <p class="research-step-card__title">import numpy as np</p>
+  <p class="research-step-card__body">전처리와 학습/검증 분리를 담당해 전체 파이프라인의 출발점을 정리하는 코드입니다.</p>
+  <p class="research-step-card__meta"><span>핵심 API</span> <code>train_test_split</code> <code>DecisionTree</code> <code>RandomForest</code> <code>Bagging</code></p>
+
+</div>
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 4 · 구현 코드</p>
+  <p class="research-step-card__title">모델별 정확도 저장 딕셔너리</p>
+  <p class="research-step-card__body">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</p>
+
+  <p class="research-step-card__meta"><span>코드 포인트</span> 모델별 정확도 저장 딕셔너리</p>
+</div>
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 5 · 구현 코드</p>
+  <p class="research-step-card__title">for model_name, acc in accuracies.items():</p>
+  <p class="research-step-card__body">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</p>
+
+
+</div>
+<div class="research-step-card">
+  <p class="research-step-card__kicker">Step 6 · 구현 코드</p>
+  <p class="research-step-card__title">X, y = make_moons(n_samples=1000, noise=0.3, random_state=42)</p>
+  <p class="research-step-card__body">원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.</p>
+
+
+</div>
+</div>
 
 ## Code Evidence
 
@@ -71,7 +137,7 @@ tags:
 
 **직접 해본 단계**: 피처 가공
 
-`파생 변수 추가`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다. 코드에는 시각화를 위한 헬퍼 함수 (이전 실습에서 사용한 것과 동일) 같은 처리 포인트도 함께 남아 있습니다.
+원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다.
 
 ```python
 # 시각화를 위한 헬퍼 함수 (이전 실습에서 사용한 것과 동일)
@@ -101,7 +167,9 @@ def plot_decision_boundary(clf, X, y, ax, title):
 
 **직접 해본 단계**: 모델 구성
 
-`DecisionTree / LogisticRegression 모델 구성`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. DecisionTree / LogisticRegression 같은 모델을 올려 두고 어떤 알고리즘이 문제에 더 잘 맞는지 비교해 보는 구간입니다. 코드에는 보팅, 1-1. 기본 모델 세팅 같은 처리 포인트도 함께 남아 있습니다.
+**핵심 API**: `DecisionTree`, `Bagging`, `Voting`, `Stacking`
+
+DecisionTree / LogisticRegression 같은 모델을 올려 두고 어떤 알고리즘이 문제에 더 잘 맞는지 비교해 보는 구간입니다.
 
 ```python
 fig, axes = plt.subplots(2, 2, figsize=(12,11))
@@ -147,7 +215,9 @@ gb_clf = GradientBoostingClassifier(
 
 **직접 해본 단계**: 환경 준비
 
-`import numpy as np`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 전처리와 학습/검증 분리를 담당해 전체 파이프라인의 출발점을 정리하는 코드입니다.
+**핵심 API**: `train_test_split`, `DecisionTree`, `RandomForest`, `Bagging`
+
+전처리와 학습/검증 분리를 담당해 전체 파이프라인의 출발점을 정리하는 코드입니다.
 
 ```python
 import numpy as np
@@ -166,7 +236,7 @@ from matplotlib.colors import ListedColormap
 
 **직접 해본 단계**: 구현 코드
 
-`모델별 정확도 저장 딕셔너리`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다. 코드에는 모델별 정확도 저장 딕셔너리 같은 처리 포인트도 함께 남아 있습니다.
+원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
 
 ```python
 # 모델별 정확도 저장 딕셔너리
@@ -177,7 +247,7 @@ accuracies ={}
 
 **직접 해본 단계**: 구현 코드
 
-`for model_name, acc in accuracies.items():`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
 
 ```python
 for model_name, acc in accuracies.items():
@@ -188,31 +258,11 @@ for model_name, acc in accuracies.items():
 
 **직접 해본 단계**: 구현 코드
 
-`X, y = make_moons(n_samples=1000, noise=0.3, random_state=42)`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
 
 ```python
 X, y = make_moons(n_samples=1000, noise=0.3, random_state=42)
 ```
-
-## Why These Steps Matter
-
-### 파생 변수를 직접 만든 부분
-
-- 왜 필요한가: 원본 컬럼만으로는 숨겨진 패턴이 잘 드러나지 않아 도메인 정보를 반영한 새 특징이 필요할 때가 많습니다.
-- 왜 이 방식을 쓰는가: 이 글에서는 `파생 변수 추가` 코드를 통해 시간, 범주, 조건식을 어떻게 새로운 feature로 바꿨는지 바로 볼 수 있게 했습니다.
-- 원리: 좋은 feature engineering은 데이터 분포를 다시 표현해 모델이 더 유용한 경계나 관계를 학습하도록 돕습니다.
-
-### 모델을 바꿔가며 비교한 이유
-
-- 왜 필요한가: 한 가지 모델만 보면 데이터에 맞는 편향과 분산 특성을 놓치기 쉬워서 여러 알고리즘을 비교해 보는 과정이 중요합니다.
-- 왜 이 방식을 쓰는가: 그래서 `DecisionTree / LogisticRegression 모델 구성`처럼 실제로 올려본 모델 코드를 남겨 어떤 후보를 실험했는지 바로 확인할 수 있게 했습니다.
-- 원리: 모델마다 가정과 표현력이 달라 같은 데이터라도 잡아내는 패턴이 다르기 때문에 비교 실험이 필수입니다.
-
-### 구현 흐름을 코드로 남긴 이유
-
-- 왜 필요한가: 설명만으로는 내가 실제로 어디까지 손댔는지 전달되기 어려워 핵심 구현 코드를 직접 보여줄 필요가 있습니다.
-- 왜 이 방식을 쓰는가: 그래서 `모델별 정확도 저장 딕셔너리` 블록을 포함해 문제를 풀 때 건드린 핵심 로직이 그대로 보이도록 정리했습니다.
-- 원리: 코드는 학습한 내용을 실행 가능한 형태로 옮긴 결과물이기 때문에, 가장 직접적인 실습 증거가 됩니다.
 
 ## Source Bundle
 

@@ -1543,6 +1543,115 @@ a {
   text-indent: 0.5em;
 }
 
+.research-doc-hero,
+.research-doc-grid,
+.research-note-grid,
+.research-step-grid {
+  margin-inline-start: 0 !important;
+}
+
+.research-doc-hero {
+  margin: 0.15rem 0 0.95rem !important;
+}
+
+.research-doc-hero__meta,
+.research-doc-grid,
+.research-note-grid,
+.research-step-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.72rem;
+}
+
+.research-doc-hero__meta-item,
+.research-doc-card,
+.research-note-card,
+.research-step-card {
+  border: 1px solid var(--photo-line);
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(20, 31, 47, 0.92), rgba(10, 17, 28, 0.98));
+  padding: 0.92rem 1rem;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+}
+
+.research-doc-hero__meta-item span,
+.research-doc-card__label,
+.research-note-card__label,
+.research-step-card__kicker,
+.research-step-card__meta span {
+  display: block;
+  margin: 0 0 0.28rem !important;
+  color: var(--photo-link);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-indent: 0 !important;
+}
+
+.research-doc-hero__meta-item strong,
+.research-doc-card__value,
+.research-note-card__body,
+.research-note-card__meta,
+.research-step-card__title,
+.research-step-card__body,
+.research-step-card__meta {
+  margin: 0 !important;
+  color: var(--photo-text);
+  line-height: 1.65;
+  text-indent: 0 !important;
+}
+
+.research-doc-hero__meta-item strong,
+.research-step-card__title {
+  font-size: 0.96rem;
+  font-weight: 700;
+}
+
+.research-doc-card__value,
+.research-note-card__body,
+.research-step-card__body {
+  font-size: 0.92rem;
+}
+
+.research-note-card__meta,
+.research-step-card__meta,
+.research-doc-hero__meta-item strong {
+  overflow-wrap: anywhere;
+}
+
+.research-note-card__meta,
+.research-step-card__meta {
+  margin-top: 0.52rem !important;
+  color: var(--photo-muted);
+  font-size: 0.82rem;
+}
+
+.research-step-card__body {
+  margin-top: 0.18rem !important;
+}
+
+.collection-doc-page .page__content .research-doc-hero p,
+.collection-doc-page .page__content .research-doc-grid p,
+.collection-doc-page .page__content .research-note-grid p,
+.collection-doc-page .page__content .research-step-grid p {
+  margin-inline-start: 0 !important;
+  text-indent: 0 !important;
+}
+
+.collection-doc-page .page__content .research-doc-hero,
+.collection-doc-page .page__content .research-doc-grid,
+.collection-doc-page .page__content .research-note-grid,
+.collection-doc-page .page__content .research-step-grid {
+  margin-top: 0.4rem !important;
+  margin-bottom: 0.8rem !important;
+}
+
+.collection-doc-page .page__content .research-step-card code,
+.collection-doc-page .page__content .research-doc-card code,
+.collection-doc-page .page__content .research-note-card code {
+  font-size: 0.78rem;
+}
+
 @media (min-width: 1280px) {
   #main.collection-doc-layout {
     max-width: 1700px;
