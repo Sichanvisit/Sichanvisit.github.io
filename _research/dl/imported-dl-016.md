@@ -5,15 +5,15 @@ research_tab: "DL"
 research_kind: "Archive Note"
 source_title: "(실습)VGGNet"
 source_path: "12_Deep_Learning/Code_Snippets/(실습)VGGNet.md"
-excerpt: "데이터 전처리 - 이미지 변환은 이미지 데이터의 크기를 256으로 키웠다가 224로 중앙 자르기 수행 - 탐지하려는 객체가 중앙에 위치할 확률이 높으므로 불필요한 지역특징을 제거하기 위한 전처리 방법 입력 이미지 크기를 224로 바로 리사이즈 할 수도 있지만, 그러면 검출하려는 객체의 크기가 더 작..."
-research_summary: "데이터 전처리 - 이미지 변환은 이미지 데이터의 크기를 256으로 키웠다가 224로 중앙 자르기 수행 - 탐지하려는 객체가 중앙에 위치할 확률이 높으므로 불필요한 지역특징을 제거하기 위한 전처리 방법 입력 이미지 크기를 224로 바로 리사이즈 할 수도 있지만, 그러면 검출하려는 객체의 크기가 더 작아질 수 있음. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 25개 코드 블록, 25개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchinfo, os, torchvision입니다."
+excerpt: "실습, VGG Network 중심의 DL 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 실습, VGG Network, 사전 훈련 모델 활용 순서로 핵심 장면을 먼저 훑고, VGG Network, 사전 훈련 모델 활용, Dataset 확인 같은..."
+research_summary: "실습, VGG Network 중심의 DL 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 실습, VGG Network, 사전 훈련 모델 활용 순서로 핵심 장면을 먼저 훑고, VGG Network, 사전 훈련 모델 활용, Dataset 확인 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 25개 코드 블록, 25개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchinfo, os, torchvision입니다."
 research_artifacts: "md · 코드 25개 · 실행 25개"
 code_block_count: 25
 execution_block_count: 25
 research_focus:
+  - "실습"
   - "VGG Network"
   - "사전 훈련 모델 활용"
-  - "데이터 전처리 - 이미지 변환은 이미지 데이터의 크기를 256으로 키웠다가 224로 중앙 자르기 수행..."
 research_stack:
   - "torch"
   - "torchinfo"
@@ -29,9 +29,9 @@ tags:
   - archive-note
 ---
 
-데이터 전처리 - 이미지 변환은 이미지 데이터의 크기를 256으로 키웠다가 224로 중앙 자르기 수행 - 탐지하려는 객체가 중앙에 위치할 확률이 높으므로 불필요한 지역특징을 제거하기 위한 전처리 방법 입력 이미지 크기를 224로 바로 리사이즈 할 수도 있지만, 그러면 검출하려는 객체의 크기가 더 작아질 수 있음. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 25개 코드 블록, 25개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchinfo, os, torchvision입니다.
+실습, VGG Network 중심의 DL 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 실습, VGG Network, 사전 훈련 모델 활용 순서로 핵심 장면을 먼저 훑고, VGG Network, 사전 훈련 모델 활용, Dataset 확인 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 25개 코드 블록, 25개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchinfo, os, torchvision입니다.
 
-**빠르게 볼 수 있는 포인트**: VGG Network, 사전 훈련 모델 활용, 데이터 전처리 - 이미지 변환은 이미지 데이터의 크기를 256으로 키웠....
+**빠르게 볼 수 있는 포인트**: 실습, VGG Network, 사전 훈련 모델 활용.
 
 **남겨둔 자료**: `md` 원본과 25개 코드 블록, 25개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchinfo, os, torchvision입니다.
 
@@ -55,9 +55,27 @@ tags:
 
 데이터 전처리 - 이미지 변환은 이미지 데이터의 크기를 256으로 키웠다가 224로 중앙 자르기 수행 - 탐지하려는 객체가 중앙에 위치할 확률이 높으므로 불필요한 지역특징을 제거하기 위한 전처리 방법 입력 이미지 크기를 224로 바로 리사이즈 할 수도 있지만, 그러면 검출하려는 객체의 크기가 더 작아질 수 있음
 
-### Key Step
+- 읽을 포인트: 세부 흐름: Dataset 확인, 모델 활용
 
-'''D'': [64, 64, ''M'', 128, 128, ''M'', 256, 256, 256, ''M'', 512, 512, 512, ''M'',
+#### Dataset 확인
+
+이미지 입력을 배치로 묶고 증강하며 학습 가능한 형태로 만드는 구간입니다.
+
+#### 모델 활용
+
+모델 정의, 손실, 최적화 흐름을 코드로 연결해 보는 구간입니다.
+
+### VGG Network
+
+VGG Network 코드를 직접 따라가며 VGG Network 흐름을 확인했습니다.
+
+- 읽을 포인트: VGG Network 아래 코드와 함께 읽으면 구현 포인트가 더 또렷해지는 구간입니다.
+
+### 사전 훈련 모델 활용
+
+사전 훈련 모델 활용 코드를 직접 따라가며 사전 훈련 모델 활용 흐름을 확인했습니다.
+
+- 읽을 포인트: 모델 정의, 손실, 최적화 흐름을 코드로 연결해 보는 구간입니다.
 
 ## Why This Matters
 
@@ -75,8 +93,9 @@ tags:
 
 ## Implementation Flow
 
-1. 실습: 데이터 전처리 - 이미지 변환은 이미지 데이터의 크기를 256으로 키웠다가 224로 중앙 자르기 수행 - 탐지하려는 객체가 중앙에 위치할 확률이 높으므로 불필요한 지역특징을 제거하기 위한 전처리 방법 입력 이미지 크기를 224로 바로 리사이즈 할 수도 있지만, 그러면 검출하려는 객체의 크기가...
-2. Key Step: '''D'': [64, 64, ''M'', 128, 128, ''M'', 256, 256, 256, ''M'', 512, 512, 512, ''M'',
+1. 실습: Dataset 확인, 모델 활용
+2. VGG Network: VGG Network 코드를 직접 따라가며 VGG Network 흐름을 확인했습니다.
+3. 사전 훈련 모델 활용: 사전 훈련 모델 활용 코드를 직접 따라가며 사전 훈련 모델 활용 흐름을 확인했습니다.
 
 ## Code Highlights
 
@@ -116,35 +135,34 @@ class VGG(nn.Module):
 # ... trimmed ...
 ```
 
-### Dataset 확인
+### 사전 훈련 모델 활용
 
-`Dataset 확인`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 라벨이 0이면 고양이, 1이면 강아지, 데이터셋을 순회하면서 각 카테로리별로 n_samples만큼 이미지를 수집, "Cat" : [i1, i2, i3, i4, i5], "Dog" : [j1, j2, j3... 흐름이 주석과 함께 드러납니다.
+`사전 훈련 모델 활용`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 모델, 'D': [64, 64, 'M', 128, 128, 'M', 256, 256, 256,..., model = torchvision.models.vgg16_bn(pretrained =... 흐름이 주석과 함께 드러납니다.
 
 ```python
-from collections import defaultdict
+# 모델
+# 'D': [64, 64, 'M', 128, 128, 'M', 256, 256, 256, 'M', 512, 512, 512, 'M', 512, 512, 512, 'M'],
+# model = torchvision.models.vgg16_bn(pretrained = True)
+model = torchvision.models.vgg16_bn(weights="VGG16_BN_Weights.IMAGENET1K_V1")
+summary(model, input_size = (2,3,224,224), device='cpu')
+```
 
-# 라벨이 0이면 고양이, 1이면 강아지
-def label_to_str(label):
-    return "Cat" if label == 0 else "Dog"
+### Dataset 확인
 
-def visualize_by_category(dataset, n_samples=5, cmap=None):
-    samples = defaultdict(list)
-    # 데이터셋을 순회하면서 각 카테로리별로 n_samples만큼 이미지를 수집
-    for img, label in dataset:
-        if len(samples[label]) < n_samples:
-            samples[label].append(img)
-        if len(samples) == 2 and all(len(imgs) >= n_samples for imgs in samples.values()):
-            # "Cat" : [i1, i2, i3, i4, i5], "Dog" : [j1, j2, j3, j4, j5]
-            # i, j == image data
-            break
+`Dataset 확인`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 OxfordIIITPet 데이터셋 로드 흐름이 주석과 함께 드러납니다.
 
-    for label, imgs in samples.items():
-        grid_img = torchvision.utils.make_grid(imgs, nrow=n_samples, padding=2)
-        plt.figure(figsize=(n_samples*2, 4))
-        plt.imshow(grid_img.permute(1,2,0).numpy(), cmap=cmap)
-        plt.title(f"Category: {label_to_str(label)}")
-        plt.axis('off')
-        plt.show()
+```python
+#OxfordIIITPet 데이터셋 로드
+dataset = torchvision.datasets.OxfordIIITPet(
+    root='data',
+    download=True,
+    target_types="binary-category", # 0:Cat, 1:Dog
+    split='trainval',
+    transform=transforms.Compose([
+        transforms.Resize((256,256)),
+        transforms.ToTensor()
+    ])
+)
 ```
 
 ### 모델 활용

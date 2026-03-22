@@ -2,11 +2,11 @@
 title: "9.기본 지도학습 알고리즘들(KNN)"
 date: 2026-03-08
 research_tab: "ML"
-research_kind: "Practice"
+research_kind: "Archive Note"
 source_title: "250828_코딩실습15_9.기본 지도학습 알고리즘들(KNN)"
 source_path: "11_Machine_Learning/Code_Snippets/250828_코딩실습15_9.기본 지도학습 알고리즘들(KNN).md"
-excerpt: "코딩실습15 9.기본 지도학습 알고리즘들(KNN)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 분류 문제, 전처리와 입력 정리, 평가 지표 해석 순서로 큰 장을 먼저 훑고, wine = load_wine(), StandardScaler 스케일링 같은 코..."
-research_summary: "코딩실습15 9.기본 지도학습 알고리즘들(KNN)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 분류 문제, 전처리와 입력 정리, 평가 지표 해석 순서로 큰 장을 먼저 훑고, wine = load_wine(), StandardScaler 스케일링 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 13개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 sklearn입니다."
+excerpt: "9.기본 지도학습 알고리즘들(KNN)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 분류 문제, 전처리와 입력 정리, 평가 지표 해석 순서로 큰 장을 먼저 훑고, KNN 모델 구성, 예측 결과 점검 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `..."
+research_summary: "9.기본 지도학습 알고리즘들(KNN)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 분류 문제, 전처리와 입력 정리, 평가 지표 해석 순서로 큰 장을 먼저 훑고, KNN 모델 구성, 예측 결과 점검 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 13개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 sklearn입니다."
 research_artifacts: "ipynb/md · 코드 13개 · 실행 13개"
 code_block_count: 13
 execution_block_count: 13
@@ -23,7 +23,7 @@ tags:
   - research-archive
   - imported-note
   - ml
-  - practice
+  - archive-note
 ---
 
 ## 글 한눈에 보기
@@ -31,7 +31,7 @@ tags:
 <div class="research-overview research-overview--intro">
   <div class="research-overview__row">
     <div class="research-overview__label">문제 설정</div>
-    <div class="research-overview__value">사이킷런 링크: https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_wine.html 클래스 수: 3개. 샘플 수: 총 178개 (class_0...</div>
+    <div class="research-overview__value">사이킷런 링크: https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_wine.html 클래스 수: 3개. 샘플 수: 총 178개 (class_...</div>
   </div>
   <div class="research-overview__row">
     <div class="research-overview__label">원본 구조</div>
@@ -47,7 +47,7 @@ tags:
   </div>
   <div class="research-overview__row">
     <div class="research-overview__label">구현 흐름</div>
-    <div class="research-overview__value">wine = load_wine() -&gt; StandardScaler 스케일링 -&gt; KNN 모델 구성</div>
+    <div class="research-overview__value">KNN 모델 구성 -&gt; 예측 결과 점검 -&gt; StandardScaler 스케일링</div>
   </div>
   <div class="research-overview__row">
     <div class="research-overview__label">자료</div>
@@ -81,77 +81,49 @@ tags:
 
 ## 구현 흐름
 
-### 1. wine = load_wine()
-
-- 단계: 데이터 불러오기
-- 구현 의도: 실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.
-- 핵심 API: -
-- 코드 포인트: -
-
-### 2. StandardScaler 스케일링
-
-- 단계: 전처리
-- 구현 의도: 결측치 처리, 인코딩, 스케일링처럼 모델이 바로 사용할 수 있도록 입력 형태를 다듬는 단계입니다.
-- 핵심 API: `StandardScaler`
-- 코드 포인트: 표준화
-
-### 3. KNN 모델 구성
+### 1. KNN 모델 구성
 
 - 단계: 모델 구성
 - 구현 의도: KNN 같은 모델을 올려 두고 어떤 알고리즘이 문제에 더 잘 맞는지 비교해 보는 구간입니다.
 - 핵심 API: -
 - 코드 포인트: -
 
-### 4. 예측 결과 점검
+### 2. 예측 결과 점검
 
 - 단계: 평가
 - 구현 의도: 예측 결과를 지표로 계산해 어떤 모델과 전처리가 더 잘 맞았는지 확인하는 평가 코드입니다.
 - 핵심 API: -
 - 코드 포인트: 최적의 K값으로 학습 및 평가
 
-### 5. from sklearn.datasets import load_wine
+### 3. StandardScaler 스케일링
 
-- 단계: 환경 준비
-- 구현 의도: 전처리와 학습/검증 분리를 담당해 전체 파이프라인의 출발점을 정리하는 코드입니다.
-- 핵심 API: `train_test_split`, `StandardScaler`, `accuracy_score`
+- 단계: 전처리
+- 구현 의도: 결측치 처리, 인코딩, 스케일링처럼 모델이 바로 사용할 수 있도록 입력 형태를 다듬는 단계입니다.
+- 핵심 API: `StandardScaler`
+- 코드 포인트: 표준화
+
+### 4. wine = load_wine()
+
+- 단계: 데이터 불러오기
+- 구현 의도: 실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.
+- 핵심 API: -
 - 코드 포인트: -
 
-### 6. best_k = grid.best_params_['n_neighbors']
+### 5. best_k = grid.best_params_['n_neighbors']
 
 - 단계: 구현 코드
 - 구현 의도: best_k = grid.best_params_['n_nei... 코드를 직접 실행하며 이 장의 구현 흐름을 확인했습니다.
 - 핵심 API: -
 - 코드 포인트: -
 
+### 6. from sklearn.datasets import load_wine
+
+- 단계: 환경 준비
+- 구현 의도: 전처리와 학습/검증 분리를 담당해 전체 파이프라인의 출발점을 정리하는 코드입니다.
+- 핵심 API: `train_test_split`, `StandardScaler`, `accuracy_score`
+- 코드 포인트: -
+
 ## 코드로 확인한 내용
-
-### wine = load_wine()
-
-**직접 해본 단계**: 데이터 불러오기
-
-실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.
-
-```python
-wine = load_wine()
-X, y = wine.data, wine.target
-target_names = wine.target_names
-```
-
-### StandardScaler 스케일링
-
-**직접 해본 단계**: 전처리
-
-**핵심 API**: `StandardScaler`
-
-결측치 처리, 인코딩, 스케일링처럼 모델이 바로 사용할 수 있도록 입력 형태를 다듬는 단계입니다.
-
-```python
-# 표준화
-
-scaler = StandardScaler()
-X_train_scaled = scaler.fit_transform(X_train)
-X_test_scaled = scaler.fit_transform(X_test)
-```
 
 ### KNN 모델 구성
 
@@ -177,6 +149,45 @@ best_model = grid.best_estimator_
 y_pred_best = best_model.predict(X_test_scaled)
 ```
 
+### StandardScaler 스케일링
+
+**직접 해본 단계**: 전처리
+
+**핵심 API**: `StandardScaler`
+
+결측치 처리, 인코딩, 스케일링처럼 모델이 바로 사용할 수 있도록 입력 형태를 다듬는 단계입니다.
+
+```python
+# 표준화
+
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.fit_transform(X_test)
+```
+
+### wine = load_wine()
+
+**직접 해본 단계**: 데이터 불러오기
+
+실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.
+
+```python
+wine = load_wine()
+X, y = wine.data, wine.target
+target_names = wine.target_names
+```
+
+### best_k = grid.best_params_['n_neighbors']
+
+**직접 해본 단계**: 구현 코드
+
+best_k = grid.best_params_['n_nei... 코드를 직접 실행하며 이 장의 구현 흐름을 확인했습니다.
+
+```python
+best_k = grid.best_params_['n_neighbors']
+best_k
+```
+
 ### from sklearn.datasets import load_wine
 
 **직접 해본 단계**: 환경 준비
@@ -191,17 +202,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score, classification_report
-```
-
-### best_k = grid.best_params_['n_neighbors']
-
-**직접 해본 단계**: 구현 코드
-
-best_k = grid.best_params_['n_nei... 코드를 직접 실행하며 이 장의 구현 흐름을 확인했습니다.
-
-```python
-best_k = grid.best_params_['n_neighbors']
-best_k
 ```
 
 ## 참고 자료

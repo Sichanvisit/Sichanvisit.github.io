@@ -5,8 +5,8 @@ research_tab: "LLM"
 research_kind: "Archive Note"
 source_title: "3-2 (실습)Seq2Seq_Attention_Transformer"
 source_path: "13_LLM_GenAI/Code_Snippets/3-2 (실습)Seq2Seq_Attention_Transformer.md"
-excerpt: "데이터 전처리, Seq2Seq, Attention 중심으로 구현 과정을 정리한 Seq2Seq Attention Transformer 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 15개 코..."
-research_summary: "데이터 전처리, Seq2Seq, Attention 중심으로 구현 과정을 정리한 Seq2Seq Attention Transformer 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 15개 코드 블록, 9개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 kagglehub, pandas, torch, sklearn입니다."
+excerpt: "Seq2Seq Attention Transformer에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 LLM 학습 기록입니다. 본문은 데이터 전처리, Seq2Seq, Attention 순서로 핵심 장면을 먼저 훑고, 데이터 전처리, Seq2Seq, Attention 같은 코드로 실..."
+research_summary: "Seq2Seq Attention Transformer에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 LLM 학습 기록입니다. 본문은 데이터 전처리, Seq2Seq, Attention 순서로 핵심 장면을 먼저 훑고, 데이터 전처리, Seq2Seq, Attention 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 15개 코드 블록, 9개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 kagglehub, pandas, torch, sklearn입니다."
 research_artifacts: "md · 코드 15개 · 실행 9개"
 code_block_count: 15
 execution_block_count: 9
@@ -29,7 +29,7 @@ tags:
   - archive-note
 ---
 
-데이터 전처리, Seq2Seq, Attention 중심으로 구현 과정을 정리한 Seq2Seq Attention Transformer 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 15개 코드 블록, 9개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 kagglehub, pandas, torch, sklearn입니다.
+Seq2Seq Attention Transformer에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 LLM 학습 기록입니다. 본문은 데이터 전처리, Seq2Seq, Attention 순서로 핵심 장면을 먼저 훑고, 데이터 전처리, Seq2Seq, Attention 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 15개 코드 블록, 9개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 kagglehub, pandas, torch, sklearn입니다.
 
 **빠르게 볼 수 있는 포인트**: 데이터 전처리, Seq2Seq, Attention.
 
@@ -51,11 +51,29 @@ tags:
 
 ## What This Note Covers
 
-- 데이터 전처리
-- Seq2Seq
-- Attention
-- Transformer
-- Download latest version
+### 데이터 전처리
+
+데이터 전처리 코드를 직접 따라가며 데이터 전처리 흐름을 확인했습니다.
+
+- 읽을 포인트: 텍스트 정제와 토큰 구성을 바꾸며 입력 품질을 비교하는 구간입니다.
+
+### Seq2Seq
+
+Seq2Seq 코드를 직접 따라가며 Seq2Seq 흐름을 확인했습니다.
+
+- 읽을 포인트: Seq2Seq 아래 코드와 함께 읽으면 구현 포인트가 더 또렷해지는 구간입니다.
+
+### Attention
+
+Attention 코드를 직접 따라가며 Attention 흐름을 확인했습니다.
+
+- 읽을 포인트: Attention 아래 코드와 함께 읽으면 구현 포인트가 더 또렷해지는 구간입니다.
+
+### Transformer
+
+Transformer 코드를 직접 따라가며 Transformer 흐름을 확인했습니다.
+
+- 읽을 포인트: Transformer 아래 코드와 함께 읽으면 구현 포인트가 더 또렷해지는 구간입니다.
 
 ## Why This Matters
 
@@ -79,10 +97,10 @@ tags:
 
 ## Implementation Flow
 
-1. Key Step: Reviews.csv 파일에서 'Text'와 'Summary' 컬럼을 50000줄만 불러오기
-2. Key Step: Reviews.csv 파일에서 "Text"와 "Summary" 컬럼 추출하여 리스트로 변환
-3. Key Step: 하이퍼파라미터 및 전역 변수 정의
-4. Key Step: 특수 토큰 정의 (텍스트 요약에서는 target에 SOS, EOS가 필요)
+1. 데이터 전처리: 데이터 전처리 코드를 직접 따라가며 데이터 전처리 흐름을 확인했습니다.
+2. Seq2Seq: Seq2Seq 코드를 직접 따라가며 Seq2Seq 흐름을 확인했습니다.
+3. Attention: Attention 코드를 직접 따라가며 Attention 흐름을 확인했습니다.
+4. Transformer: Transformer 코드를 직접 따라가며 Transformer 흐름을 확인했습니다.
 
 ## Code Highlights
 
@@ -124,74 +142,107 @@ class Lang:
 
 ### Seq2Seq
 
-`Seq2Seq`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 Teacher forcing: Feed the target as the next input, Without teacher forcing: use its own predictions... 흐름이 주석과 함께 드러납니다.
+`Seq2Seq`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 teacher forcing 여부에 따라 target_tensor 전달 흐름이 주석과 함께 드러납니다.
+
+```python
+def train_epoch(dataloader, encoder, decoder, encoder_optimizer, decoder_optimizer, criterion, teacher_forcing_ratio=0.3):
+    total_loss = 0
+    for input_batch, target_batch in dataloader:
+        encoder_optimizer.zero_grad()
+        decoder_optimizer.zero_grad()
+
+        batch_size = input_batch.size(0)
+
+        encoder_hidden = torch.zeros(1, batch_size, encoder.hidden_size, device=device)
+        encoder_outputs, encoder_hidden = encoder(input_batch, encoder_hidden)
+
+        # teacher forcing 여부에 따라 target_tensor 전달
+        if random.random() < teacher_forcing_ratio:
+            decoder_outputs, _, _ = decoder(encoder_outputs, encoder_hidden, target_tensor=target_batch)
+        else:
+            decoder_outputs, _, _ = decoder(encoder_outputs, encoder_hidden)
+
+        loss = criterion(
+            decoder_outputs.view(-1, decoder_outputs.size(-1)),  # [B*T, vocab]
+            target_batch.view(-1)                                # [B*T]
+        )
+        loss.backward()
+        encoder_optimizer.step()
+        decoder_optimizer.step()
+
+        total_loss += loss.item()
+
+    return total_loss / len(dataloader)
+# ... trimmed ...
+```
+
+### Attention
+
+`Attention`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 Luong Attention 정의, query: (1, B, H), keys: (B, T, H), 내적 기반 스코어 계산 흐름이 주석과 함께 드러납니다.
 
 ```python
 import torch
 import torch.nn as nn
-import torch.optim as optim
-import random
 import torch.nn.functional as F
 
-class EncoderRNN(nn.Module):
-    def __init__(self, input_size, hidden_size, dropout_p=0.1):
-        super(EncoderRNN, self).__init__()
-        self.hidden_size = hidden_size
+# Luong Attention 정의
+class LuongAttention(nn.Module):
+    def __init__(self, hidden_size):
+        super(LuongAttention, self).__init__()
+        self.attn = nn.Linear(hidden_size, hidden_size)
 
-        self.embedding = nn.Embedding(input_size, hidden_size)
-        self.gru = nn.GRU(hidden_size, hidden_size, batch_first=True)
-        self.dropout = nn.Dropout(dropout_p)
+    def forward(self, query, keys):
+        # query: (1, B, H), keys: (B, T, H)
+        # 내적 기반 스코어 계산
+        query = query.permute(1, 0, 2)  # (B, 1, H)
+        keys_proj = self.attn(keys)     # (B, T, H)
+        scores = torch.bmm(query, keys_proj.transpose(1, 2))  # (B, 1, T)
+        weights = F.softmax(scores, dim=-1)  # (B, 1, T)
+        context = torch.bmm(weights, keys)  # (B, 1, H)
+        return context, weights
 
-    def forward(self, input, hidden):
-        embedded = self.dropout(self.embedding(input))  # [batch_size, seq_len, hidden_size]
-        output, hidden = self.gru(embedded, hidden)
-        return output, hidden
-
-class DecoderRNN(nn.Module):
-    def __init__(self, hidden_size, output_size):
-        super(DecoderRNN, self).__init__()
+# Attn 기반 디코더
+class AttnDecoderRNN(nn.Module):
+    def __init__(self, hidden_size, output_size, dropout_p=0.1):
+        super(AttnDecoderRNN, self).__init__()
         self.embedding = nn.Embedding(output_size, hidden_size)
-        self.gru = nn.GRU(hidden_size, hidden_size, batch_first=True)
+        self.attention = LuongAttention(hidden_size)
+        self.gru = nn.GRU(hidden_size * 2, hidden_size, batch_first=True)
         self.out = nn.Linear(hidden_size, output_size)
-
-    def forward(self, encoder_outputs, encoder_hidden, target_tensor=None):
 # ... trimmed ...
 ```
 
 ### Transformer
 
-`Transformer`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 포지셔널 인코딩 정의 (단어 위치 정보 반영), 인코더 정의, 디코더 정의 흐름이 주석과 함께 드러납니다.
+`Transformer`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 모델 초기화, 옵티마이저와 손실함수, 학습 실행 흐름이 주석과 함께 드러납니다.
 
 ```python
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
+# 모델 초기화
+input_dim = input_lang.n_words
+output_dim = output_lang.n_words
+emb_dim = 256
+n_heads = 8
+ff_dim = 512
+num_layers = 3
 
-# 포지셔널 인코딩 정의 (단어 위치 정보 반영)
-class PositionalEncoding(nn.Module):
-    def __init__(self, d_model, max_len=5000):
-        super().__init__()
-        pe = torch.zeros(max_len, d_model)
-        position = torch.arange(0, max_len).unsqueeze(1)
-        div_term = torch.exp(torch.arange(0, d_model, 2) * (-torch.log(torch.tensor(10000.0)) / d_model))
-        pe[:, 0::2] = torch.sin(position * div_term)
-        pe[:, 1::2] = torch.cos(position * div_term)
-        self.register_buffer('pe', pe.unsqueeze(0))
+tf_encoder = TransformerEncoder(input_dim, emb_dim, n_heads, ff_dim, num_layers).to(device)
+tf_decoder = TransformerDecoder(output_dim, emb_dim, n_heads, ff_dim, num_layers).to(device)
 
-    def forward(self, x):
-        return x + self.pe[:, :x.size(1)]
+# 옵티마이저와 손실함수
+optimizer_enc = torch.optim.Adam(tf_encoder.parameters(), lr=0.0005)
+optimizer_dec = torch.optim.Adam(tf_decoder.parameters(), lr=0.0005)
+criterion = nn.CrossEntropyLoss(ignore_index=PAD_token)
 
-# 인코더 정의
-class TransformerEncoder(nn.Module):
-    def __init__(self, vocab_size, emb_size, n_heads, ff_dim, num_layers, dropout=0.1):
-        super().__init__()
-        self.embedding = nn.Embedding(vocab_size, emb_size, padding_idx=PAD_token)
-        self.pos_encoding = PositionalEncoding(emb_size)
-        encoder_layer = nn.TransformerEncoderLayer(d_model=emb_size, nhead=n_heads, dim_feedforward=ff_dim, dropout=dropout, batch_first=True)
-        self.encoder = nn.TransformerEncoder(encoder_layer, num_layers=num_layers)
-        self.hidden_size = emb_size
-
-# ... trimmed ...
+# 학습 실행
+train_transformer(
+    encoder=tf_encoder,
+    decoder=tf_decoder,
+    dataloader=train_dataloader,
+    optimizer_enc=optimizer_enc,
+    optimizer_dec=optimizer_dec,
+    criterion=criterion,
+    num_epochs=10
+)
 ```
 
 ## Source Bundle

@@ -5,15 +5,15 @@ research_tab: "LLM"
 research_kind: "Mission"
 source_title: "미션14_1팀_박시찬"
 source_path: "13_LLM_GenAI/Code_Snippets/미션14_1팀_박시찬.md"
-excerpt: "미션 소개 LLM이 외부 문서의 정보를 참고하여 답변할 수 있도록 RAG(Retrieval-Augmented Generation)를 구현하는 프로젝트입니다. LangChain 프레임워크를 사용하여, 2024년 국세청 연말정산 안내 문서를 기반으로 사용자의 질문에 정확하게 답변하는 시스템을 구축합니다..."
-research_summary: "미션 소개 LLM이 외부 문서의 정보를 참고하여 답변할 수 있도록 RAG(Retrieval-Augmented Generation)를 구현하는 프로젝트입니다. LangChain 프레임워크를 사용하여, 2024년 국세청 연말정산 안내 문서를 기반으로 사용자의 질문에 정확하게 답변하는 시스템을 구축합니다. 사용 데이터셋 * 데이터: 국세청... 작성자: [팀명/성함] 프로젝트 기간: 202X.XX.XX ~ 202X.XX.XX 환경: Google Colab (T4 GPU), LangChain, HuggingFace 프로젝트 개요 (Executive Summary). `ipynb/md` 원본과 19개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 google, langchain_community, os, random입니다."
+excerpt: "[미션] 2024년 연말정산 가이드..., 가이드코드 중심의 LLM 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 LLM 학습 기록입니다. 본문은 [미션] 2024년 연말정산 가이드..., 가이드코드, [Final Report] 2024... 순서로 핵심 장면을 먼저 훑고,..."
+research_summary: "[미션] 2024년 연말정산 가이드..., 가이드코드 중심의 LLM 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 LLM 학습 기록입니다. 본문은 [미션] 2024년 연말정산 가이드..., 가이드코드, [Final Report] 2024... 순서로 핵심 장면을 먼저 훑고, 구글 드라이브 마운트, 가이드코드 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 19개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 google, langchain_community, os, random입니다."
 research_artifacts: "ipynb/md · 코드 19개 · 실행 13개"
 code_block_count: 19
 execution_block_count: 13
 research_focus:
-  - "미션 소개 LLM이 외부 문서의 정보를 참고하여 답변할 수 있도록 RAG(Retrieval-Augmen..."
   - "[미션] 2024년 연말정산 가이드 RAG 시스템 구축"
-  - "구글 드라이브 마운트"
+  - "가이드코드"
+  - "[Final Report] 2024년 연말정산 지능형 QA 시스템 구축 결과 보고서"
 research_stack:
   - "google"
   - "langchain_community"
@@ -30,9 +30,9 @@ tags:
   - mission
 ---
 
-미션 소개 LLM이 외부 문서의 정보를 참고하여 답변할 수 있도록 RAG(Retrieval-Augmented Generation)를 구현하는 프로젝트입니다. LangChain 프레임워크를 사용하여, 2024년 국세청 연말정산 안내 문서를 기반으로 사용자의 질문에 정확하게 답변하는 시스템을 구축합니다. 사용 데이터셋 * 데이터: 국세청... 작성자: [팀명/성함] 프로젝트 기간: 202X.XX.XX ~ 202X.XX.XX 환경: Google Colab (T4 GPU), LangChain, HuggingFace 프로젝트 개요 (Executive Summary). `ipynb/md` 원본과 19개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 google, langchain_community, os, random입니다.
+[미션] 2024년 연말정산 가이드..., 가이드코드 중심의 LLM 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 LLM 학습 기록입니다. 본문은 [미션] 2024년 연말정산 가이드..., 가이드코드, [Final Report] 2024... 순서로 핵심 장면을 먼저 훑고, 구글 드라이브 마운트, 가이드코드 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 19개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 google, langchain_community, os, random입니다.
 
-**빠르게 볼 수 있는 포인트**: 미션 소개 LLM이 외부 문서의 정보를 참고하여 답변할 수 있도록 RA..., [미션] 2024년 연말정산 가이드 RAG 시스템 구축, 구글 드라이브 마운트.
+**빠르게 볼 수 있는 포인트**: [미션] 2024년 연말정산 가이드 RAG 시스템 구축, 가이드코드, [Final Report] 2024년 연말정산 지능형 QA 시스템 구축....
 
 **남겨둔 자료**: `ipynb/md` 원본과 19개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 google, langchain_community, os, random입니다.
 
@@ -54,19 +54,21 @@ tags:
 
 ### [미션] 2024년 연말정산 가이드 RAG 시스템 구축
 
-미션 소개 LLM이 외부 문서의 정보를 참고하여 답변할 수 있도록 RAG(Retrieval-Augmented Generation)를 구현하는 프로젝트입니다. LangChain 프레임워크를 사용하여, 2024년 국세청 연말정산 안내 문서를 기반으로 사용자의 질문에 정확하게 답변하는 시스템을 구축합니다. 사용 데이터셋 * 데이터: 국세청 발간 [2024년 연말정산 신고 안내] * 내용: 연...
+미션 소개 LLM이 외부 문서의 정보를 참고하여 답변할 수 있도록 RAG(Retrieval-Augmented Generation)를 구현하는 프로젝트입니다. LangChain 프레임워크를 사용하여, 2024년 국세청 연말정산 안내 문서를 기반으로 사용자의 질문에 정확하게 답변하는 시스템을 구축합니다. 사용 데이터셋 * 데이터: 국세청...
 
-### [Final Report] 2024년 연말정산 지능형 QA 시스템 구축 결과 보고서
-
-작성자: [팀명/성함] 프로젝트 기간: 202X.XX.XX ~ 202X.XX.XX 환경: Google Colab (T4 GPU), LangChain, HuggingFace 프로젝트 개요 (Executive Summary)
+- 읽을 포인트: 검색과 컨텍스트 주입 단계를 실제 코드로 묶어 보는 구간입니다.
 
 ### 가이드코드
 
 문서 파일 불러오기 Vector DB에 저장
 
-### Key Step
+- 읽을 포인트: 가이드코드 아래 코드와 함께 읽으면 구현 포인트가 더 또렷해지는 구간입니다.
 
-langchain 계열: RAG 체인 구성
+### [Final Report] 2024년 연말정산 지능형 QA 시스템 구축 결과 보고서
+
+작성자: [팀명/성함] 프로젝트 기간: 202X.XX.XX ~ 202X.XX.XX 환경: Google Colab (T4 GPU), LangChain, HuggingFace 프로젝트 개요 (Executive Summary)
+
+- 읽을 포인트: 실험 조건을 바꾸고 지표를 비교하며 어떤 설정이 맞는지 확인하는 구간입니다.
 
 ## Why This Matters
 
@@ -90,10 +92,9 @@ langchain 계열: RAG 체인 구성
 
 ## Implementation Flow
 
-1. [미션] 2024년 연말정산 가이드 RAG 시스템 구축: 미션 소개 LLM이 외부 문서의 정보를 참고하여 답변할 수 있도록 RAG(Retrieval-Augmented Generation)를 구현하는 프로젝트입니다. LangChain 프레임워크를 사용하여, 2024년 국세청 연말정산 안내 문서를 기반...
-2. [Final Report] 2024년 연말정산 지능형 QA 시스템 구축 결과 보고서: 작성자: [팀명/성함] 프로젝트 기간: 202X.XX.XX ~ 202X.XX.XX 환경: Google Colab (T4 GPU), LangChain, HuggingFace 프로젝트 개요 (Executive Summ...
-3. 가이드코드: 문서 파일 불러오기 Vector DB에 저장
-4. Key Step: langchain 계열: RAG 체인 구성
+1. [미션] 2024년 연말정산 가이드 RAG 시스템 구축: 미션 소개 LLM이 외부 문서의 정보를 참고하여 답변할 수 있도록 RAG(Retrieval-Augmented Generation)를 구현하는 프로젝트입니다. LangChain 프레임워크를 사용하여, 2024...
+2. 가이드코드: 문서 파일 불러오기 Vector DB에 저장
+3. [Final Report] 2024년 연말정산 지능형 QA 시스템 구축 결과 보고서: 작성자: [팀명/성함] 프로젝트 기간: 202X.XX.XX ~ 202X.XX.XX 환경: Google Colab (T4 GPU), LangChain, HuggingFace 프로젝...
 
 ## Code Highlights
 
@@ -130,6 +131,42 @@ def set_seed(seed=42):
     torch.backends.cudnn.deterministic = True
     torch.backends.cudnn.benchmark = False
 
+# ... trimmed ...
+```
+
+### 구글 드라이브 마운트
+
+`구글 드라이브 마운트`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 ==========================================, PHASE 1. 데이터 파이프라인 및 위생 처리 (Implementation) 흐름이 주석과 함께 드러납니다.
+
+```python
+# ==========================================
+# PHASE 1. 데이터 파이프라인 및 위생 처리 (Implementation)
+# ==========================================
+
+from langchain_community.document_loaders import PyPDFLoader
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_community.vectorstores import FAISS
+from langchain_community.docstore.in_memory import InMemoryDocstore
+import faiss
+import time
+import torch
+
+# ⚠️ [USER CHECK] 사용하실 PDF 파일 경로를 여기에 정확히 입력하세요.
+# 같은 폴더에 있다면 "2024.pdf"만 적으셔도 됩니다.
+FILE_PATH = "2024.pdf"
+
+# ------------------------------------------
+# 1-1. 문서 로드 및 무결성 검증 (Extract)
+# ------------------------------------------
+print(f"🔄 [1-1] Loading Document from '{FILE_PATH}'...")
+
+try:
+    loader = PyPDFLoader(FILE_PATH)
+    pages = loader.load() # 전체 로드
+
+    # ✅ Sanity Check: 데이터가 비어있지 않은지 확인
+    assert len(pages) > 0, "❌ 문서가 비어있거나 로드되지 않았습니다."
 # ... trimmed ...
 ```
 

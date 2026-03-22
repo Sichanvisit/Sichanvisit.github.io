@@ -2,17 +2,17 @@
 title: "2.객체와 클래스"
 date: 2026-03-08
 research_tab: "ML"
-research_kind: "Practice"
+research_kind: "Archive Note"
 source_title: "250807-08_코드실습2_2.객체와 클래스"
 source_path: "11_Machine_Learning/Code_Snippets/250807-08_코드실습2_2.객체와 클래스.md"
-excerpt: "코드실습2 2.객체와 클래스의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 클래스 코드 연습, 은행 클래스, 다양한 메소드 순서로 큰 장을 먼저 훑고, 은행 클래스, 다양한 메소드 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md`..."
-research_summary: "코드실습2 2.객체와 클래스의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 클래스 코드 연습, 은행 클래스, 다양한 메소드 순서로 큰 장을 먼저 훑고, 은행 클래스, 다양한 메소드 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 28개 코드 블록, 18개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다."
+excerpt: "2.객체와 클래스의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 클래스 코드 연습, 은행 클래스, 다양한 메소드 순서로 큰 장을 먼저 훑고, 은행 클래스, 클래스 코드 연습 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과..."
+research_summary: "2.객체와 클래스의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 클래스 코드 연습, 은행 클래스, 다양한 메소드 순서로 큰 장을 먼저 훑고, 은행 클래스, 클래스 코드 연습 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 28개 코드 블록, 18개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다."
 research_artifacts: "ipynb/md · 코드 28개 · 실행 18개"
 code_block_count: 28
 execution_block_count: 18
 research_focus:
-  - "클래스 코드 연습"
   - "은행 클래스"
+  - "클래스 코드 연습"
   - "다양한 메소드"
 research_stack: []
 source_formats:
@@ -22,7 +22,7 @@ tags:
   - research-archive
   - imported-note
   - ml
-  - practice
+  - archive-note
 ---
 
 ## 글 한눈에 보기
@@ -30,7 +30,7 @@ tags:
 <div class="research-overview research-overview--intro">
   <div class="research-overview__row">
     <div class="research-overview__label">문제 설정</div>
-    <div class="research-overview__value">코드실습2 2.객체와 클래스에서 클래스 코드 연습, 은행 클래스, 다양한 메소드 흐름을 직접 따라가며 구현했습니다.</div>
+    <div class="research-overview__value">2.객체와 클래스에서 클래스 코드 연습, 은행 클래스, 다양한 메소드 흐름을 직접 따라가며 구현했습니다.</div>
   </div>
   <div class="research-overview__row">
     <div class="research-overview__label">원본 구조</div>
@@ -46,7 +46,7 @@ tags:
   </div>
   <div class="research-overview__row">
     <div class="research-overview__label">구현 흐름</div>
-    <div class="research-overview__value">은행 클래스 -&gt; 다양한 메소드 -&gt; 클래스 코드 연습</div>
+    <div class="research-overview__value">은행 클래스 -&gt; 클래스 코드 연습 -&gt; 다양한 메소드</div>
   </div>
   <div class="research-overview__row">
     <div class="research-overview__label">자료</div>
@@ -111,19 +111,19 @@ str메소드 같은 코드를 직접 따라가며 다양한 메소드 흐름을 
 - 핵심 API: -
 - 코드 포인트: 입금 기능 구현 · 출금 기능 구현
 
-### 2. 다양한 메소드
-
-- 단계: 클래스 설계
-- 구현 의도: 문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.
-- 핵심 API: -
-- 코드 포인트: str메소드
-
-### 3. 클래스 코드 연습
+### 2. 클래스 코드 연습
 
 - 단계: 클래스 설계
 - 구현 의도: 문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.
 - 핵심 API: -
 - 코드 포인트: Person 클래스 연습
+
+### 3. 다양한 메소드
+
+- 단계: 클래스 설계
+- 구현 의도: 문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.
+- 핵심 API: -
+- 코드 포인트: str메소드
 
 ## 코드로 확인한 내용
 
@@ -161,6 +161,24 @@ class BankAccount:
                 f'내 잔액: {self.balance}원')
 ```
 
+### 클래스 코드 연습
+
+**직접 해본 단계**: 클래스 설계
+
+문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.
+
+```python
+# Person 클래스 연습
+
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def greet(self):
+        print(f'Hello {self.name}')
+```
+
 ### 다양한 메소드
 
 **직접 해본 단계**: 클래스 설계
@@ -181,24 +199,6 @@ class Book:
 
     def __str__(self):
         return f'{self.title} by {self.author} ({self.year})'
-```
-
-### 클래스 코드 연습
-
-**직접 해본 단계**: 클래스 설계
-
-문제를 객체 단위로 나눠 상태와 동작을 함께 묶어보는 클래스 설계 실습 코드입니다.
-
-```python
-# Person 클래스 연습
-
-class Person:
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-
-    def greet(self):
-        print(f'Hello {self.name}')
 ```
 
 ## 참고 자료

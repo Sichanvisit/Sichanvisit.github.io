@@ -5,8 +5,8 @@ research_tab: "DL"
 research_kind: "Sample Code"
 source_title: "AutoEncoder_samplecode"
 source_path: "12_Deep_Learning/Code_Snippets/AutoEncoder_samplecode.md"
-excerpt: "Encoder, Decoder, model = AE() 중심으로 구현 과정을 정리한 AutoEncoder samplecode 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 10개 코드 블록..."
-research_summary: "Encoder, Decoder, model = AE() 중심으로 구현 과정을 정리한 AutoEncoder samplecode 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 10개 코드 블록, 10개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, numpy입니다."
+excerpt: "AutoEncoder samplecode에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 실험의 큰 흐름을 먼저 훑고, trainset = torchvisio..., Encoder : Dense(784 -..., class CNNAE(nn.Module..."
+research_summary: "AutoEncoder samplecode에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 실험의 큰 흐름을 먼저 훑고, trainset = torchvisio..., Encoder : Dense(784 -..., class CNNAE(nn.Module) 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 10개 코드 블록, 10개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, numpy입니다."
 research_artifacts: "md · 코드 10개 · 실행 10개"
 code_block_count: 10
 execution_block_count: 10
@@ -28,7 +28,7 @@ tags:
   - sample-code
 ---
 
-Encoder, Decoder, model = AE() 중심으로 구현 과정을 정리한 AutoEncoder samplecode 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 10개 코드 블록, 10개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, numpy입니다.
+AutoEncoder samplecode에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 실험의 큰 흐름을 먼저 훑고, trainset = torchvisio..., Encoder : Dense(784 -..., class CNNAE(nn.Module) 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 10개 코드 블록, 10개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, numpy입니다.
 
 **빠르게 볼 수 있는 포인트**: Encoder, Decoder, model = AE().
 
@@ -166,6 +166,35 @@ class CNNAE(nn.Module):
         encoded = self.encoder(x)
         decoded = self.decoder(encoded)
         return decoded, encoded
+```
+
+### loss_fn = nn.MSELoss()
+
+`loss_fn = nn.MSELoss()`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 Training, inputs = inputs.view(inputs.size(0), -1) 흐름이 주석과 함께 드러납니다.
+
+```python
+loss_fn = nn.MSELoss()
+optim = opt.Adam(model.parameters(), lr=0.001)
+
+# Training
+epochs = 10
+
+for epoch in range(epochs):
+    for data in trainloader:
+        inputs, _ = data
+        inputs = inputs.to(device)
+        # inputs = inputs.view(inputs.size(0), -1)
+
+        optim.zero_grad()
+
+        outputs, _ = model(inputs)
+        loss = loss_fn(outputs, inputs)
+
+        loss.backward()
+        optim.step()
+
+    print(f"epoch : {epoch}, loss : {loss}")
+print("finish")
 ```
 
 ## Source Bundle

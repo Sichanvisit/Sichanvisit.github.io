@@ -1,19 +1,19 @@
 ---
-title: "1. 파이썬 응용하기"
+title: "파이썬 응용하기"
 date: 2026-03-08
 research_tab: "ML"
-research_kind: "Practice"
+research_kind: "Archive Note"
 source_title: "250807_코드실습1_1. 파이썬 응용하기"
 source_path: "11_Machine_Learning/Code_Snippets/250807_코드실습1_1. 파이썬 응용하기.md"
-excerpt: "코드실습1 1. 파이썬 응용하기의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 모듈 기본 3가지, 파일 입력과 문자 수정 순서로 큰 장을 먼저 훑고, (2) datetime, 파일 입력과 문자 수정 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `..."
-research_summary: "코드실습1 1. 파이썬 응용하기의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 모듈 기본 3가지, 파일 입력과 문자 수정 순서로 큰 장을 먼저 훑고, (2) datetime, 파일 입력과 문자 수정 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 26개 코드 블록, 25개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 time, datetime, random, google입니다."
+excerpt: "파이썬 응용하기의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 파일 입력과 문자 수정, 모듈 기본 3가지 순서로 큰 장을 먼저 훑고, (2) datetime, 파일 입력과 문자 수정 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md`..."
+research_summary: "파이썬 응용하기의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 파일 입력과 문자 수정, 모듈 기본 3가지 순서로 큰 장을 먼저 훑고, (2) datetime, 파일 입력과 문자 수정 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 26개 코드 블록, 25개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 time, datetime, random, google입니다."
 research_artifacts: "ipynb/md · 코드 26개 · 실행 25개"
 code_block_count: 26
 execution_block_count: 25
 research_focus:
+  - "(2) datetime"
   - "모듈 기본 3가지"
   - "(1) time"
-  - "(2) datetime"
 research_stack:
   - "time"
   - "datetime"
@@ -26,7 +26,7 @@ tags:
   - research-archive
   - imported-note
   - ml
-  - practice
+  - archive-note
 ---
 
 ## 글 한눈에 보기
@@ -34,7 +34,7 @@ tags:
 <div class="research-overview research-overview--intro">
   <div class="research-overview__row">
     <div class="research-overview__label">문제 설정</div>
-    <div class="research-overview__value">코드실습1 1. 파이썬 응용하기에서 모듈 기본 3가지, 파일 입력과 문자 수정 흐름을 직접 따라가며 구현했습니다.</div>
+    <div class="research-overview__value">기타 인코딩 방식 =&gt; EUC-KR, CP949</div>
   </div>
   <div class="research-overview__row">
     <div class="research-overview__label">원본 구조</div>
@@ -46,7 +46,7 @@ tags:
   </div>
   <div class="research-overview__row">
     <div class="research-overview__label">주요 장</div>
-    <div class="research-overview__value">모듈 기본 3가지 · 파일 입력과 문자 수정</div>
+    <div class="research-overview__value">파일 입력과 문자 수정 · 모듈 기본 3가지</div>
   </div>
   <div class="research-overview__row">
     <div class="research-overview__label">구현 흐름</div>
@@ -63,6 +63,16 @@ tags:
 </div>
 
 ## 원본 노트 흐름
+
+### 파일 입력과 문자 수정
+
+기타 인코딩 방식 => EUC-KR, CP949
+
+- 읽을 포인트: 세부 흐름: 구글 드라이브에서 직접 불러오기
+
+#### 구글 드라이브에서 직접 불러오기
+
+파일 입력과 문자 수정 > 구글 드라이브에서 직접 불러오기 아래 코드와 함께 읽으면 구현 의도가 더 잘 보이는 구간입니다.
 
 ### 모듈 기본 3가지
 
@@ -81,16 +91,6 @@ tags:
 #### (3) random
 
 파이썬 표준 라이브러리를 사용해 시간 계산, 난수 생성, 실행 흐름을 직접 확인하는 실습 코드입니다.
-
-### 파일 입력과 문자 수정
-
-기타 인코딩 방식 => EUC-KR, CP949
-
-- 읽을 포인트: 세부 흐름: 구글 드라이브에서 직접 불러오기
-
-#### 구글 드라이브에서 직접 불러오기
-
-파일 입력과 문자 수정 > 구글 드라이브에서 직접 불러오기 아래 코드와 함께 읽으면 구현 의도가 더 잘 보이는 구간입니다.
 
 ## 구현 흐름
 

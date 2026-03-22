@@ -5,8 +5,8 @@ research_tab: "DL"
 research_kind: "Shared Note"
 source_title: "8-3_cGAN - 공유"
 source_path: "12_Deep_Learning/Code_Snippets/8-3_cGAN - 공유.md"
-excerpt: "예시를 위한 설정, 임의의 이미지 텐서 (여기서는 값은 임의로 생성), 예시 라벨 중심으로 구현 과정을 정리한 cGAN - 공유 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 5개 코드 블..."
-research_summary: "예시를 위한 설정, 임의의 이미지 텐서 (여기서는 값은 임의로 생성), 예시 라벨 중심으로 구현 과정을 정리한 cGAN - 공유 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 5개 코드 블록, 3개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, numpy입니다."
+excerpt: "cGAN - 공유에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 실험의 큰 흐름을 먼저 훑고, @title ##### 텐서 차원 맞추..., import torch, Code Highlight 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `..."
+research_summary: "cGAN - 공유에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 실험의 큰 흐름을 먼저 훑고, @title ##### 텐서 차원 맞추..., import torch, Code Highlight 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 5개 코드 블록, 3개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, numpy입니다."
 research_artifacts: "md · 코드 5개 · 실행 3개"
 code_block_count: 5
 execution_block_count: 3
@@ -28,7 +28,7 @@ tags:
   - shared-note
 ---
 
-예시를 위한 설정, 임의의 이미지 텐서 (여기서는 값은 임의로 생성), 예시 라벨 중심으로 구현 과정을 정리한 cGAN - 공유 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 5개 코드 블록, 3개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, numpy입니다.
+cGAN - 공유에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 실험의 큰 흐름을 먼저 훑고, @title ##### 텐서 차원 맞추..., import torch, Code Highlight 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 5개 코드 블록, 3개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, numpy입니다.
 
 **빠르게 볼 수 있는 포인트**: 예시를 위한 설정, 임의의 이미지 텐서 (여기서는 값은 임의로 생성), 예시 라벨.
 
@@ -143,6 +143,14 @@ idx_to_class = {i: str(i) for i in range(10)}
 print(idx_to_class)
 
 # ... trimmed ...
+```
+
+### Code Highlight
+
+원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+
+```python
+
 ```
 
 ### generator와 discriminator 작동 확인 및 시각화 (라벨, 판별자 결과 포함)

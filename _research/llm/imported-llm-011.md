@@ -5,15 +5,15 @@ research_tab: "LLM"
 research_kind: "Archive Note"
 source_title: "3-2 11_Seq2Seq_예시1"
 source_path: "13_LLM_GenAI/Code_Snippets/3-2 11_Seq2Seq_예시1.md"
-excerpt: "목적 본 실습의 목적은 한국어 문장을 영어로 번역하는 기계번역 모델을 구현하고 성능을 비교하는 것이다. 이를 위해 전통적인 Seq2Seq 모델, Attention 기법을 적용한 모델을 각각 구현한 후, 동일한 데이터셋을 기반으로 학습시켜 성능을 정량적(BLEU 점수) 및 정성적으로(번역 분석) 평가..."
-research_summary: "목적 본 실습의 목적은 한국어 문장을 영어로 번역하는 기계번역 모델을 구현하고 성능을 비교하는 것이다. 이를 위해 전통적인 Seq2Seq 모델, Attention 기법을 적용한 모델을 각각 구현한 후, 동일한 데이터셋을 기반으로 학습시켜 성능을 정량적(BLEU 점수) 및 정성적으로(번역 분석) 평가할 것이다. 데이터셋 사용한 데이터는... 본 실습에서는 한영 말뭉치 데이터셋을 기반으로 Sequence-to-Sequence 모델을 구축하였다. 이 과정에서 과적합을 개선하기 위해 GRU 양방향 구조, Label Smoothing, Dropout, L2 정규화, Teacher Forcing 스케줄링 등을 적용하였지만, 문장 예측 품질(BLEU)은 0.1217로 낮았다. 이에... `md` 원본과 36개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 json, os, random, re입니다."
+excerpt: "11 Seq2Seq 예시1에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 LLM 학습 기록입니다. 본문은 모델 로딩, ✔ 데이터 설명, 모델 구성 순서로 핵심 장면을 먼저 훑고, 데이터 재구성, 데이터 불러오기, SentencePiece 같은 코드로 실제 구현을 이어서 확인할 수..."
+research_summary: "11 Seq2Seq 예시1에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 LLM 학습 기록입니다. 본문은 모델 로딩, ✔ 데이터 설명, 모델 구성 순서로 핵심 장면을 먼저 훑고, 데이터 재구성, 데이터 불러오기, SentencePiece 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 36개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 json, os, random, re입니다."
 research_artifacts: "md · 코드 36개 · 실행 13개"
 code_block_count: 36
 execution_block_count: 13
 research_focus:
-  - "✔️ 사전 세팅"
-  - "본 실습에서는 한영 말뭉치 데이터셋을 기반으로 Sequence-to-Sequence 모델을 구축하였다...."
-  - "✔️ 요약"
+  - "모델 로딩"
+  - "✔ 데이터 설명"
+  - "모델 구성"
 research_stack:
   - "json"
   - "os"
@@ -29,9 +29,9 @@ tags:
   - archive-note
 ---
 
-목적 본 실습의 목적은 한국어 문장을 영어로 번역하는 기계번역 모델을 구현하고 성능을 비교하는 것이다. 이를 위해 전통적인 Seq2Seq 모델, Attention 기법을 적용한 모델을 각각 구현한 후, 동일한 데이터셋을 기반으로 학습시켜 성능을 정량적(BLEU 점수) 및 정성적으로(번역 분석) 평가할 것이다. 데이터셋 사용한 데이터는... 본 실습에서는 한영 말뭉치 데이터셋을 기반으로 Sequence-to-Sequence 모델을 구축하였다. 이 과정에서 과적합을 개선하기 위해 GRU 양방향 구조, Label Smoothing, Dropout, L2 정규화, Teacher Forcing 스케줄링 등을 적용하였지만, 문장 예측 품질(BLEU)은 0.1217로 낮았다. 이에... `md` 원본과 36개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 json, os, random, re입니다.
+11 Seq2Seq 예시1에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 LLM 학습 기록입니다. 본문은 모델 로딩, ✔ 데이터 설명, 모델 구성 순서로 핵심 장면을 먼저 훑고, 데이터 재구성, 데이터 불러오기, SentencePiece 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 36개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 json, os, random, re입니다.
 
-**빠르게 볼 수 있는 포인트**: ✔️ 사전 세팅, 본 실습에서는 한영 말뭉치 데이터셋을 기반으로 Sequence-to-S..., ✔️ 요약.
+**빠르게 볼 수 있는 포인트**: 모델 로딩, ✔ 데이터 설명, 모델 구성.
 
 **남겨둔 자료**: `md` 원본과 36개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 json, os, random, re입니다.
 
@@ -51,21 +51,41 @@ tags:
 
 ## What This Note Covers
 
-### ✔ 요약
+### 모델 로딩
 
-본 실습에서는 한영 말뭉치 데이터셋을 기반으로 Sequence-to-Sequence 모델을 구축하였다. 이 과정에서 과적합을 개선하기 위해 GRU 양방향 구조, Label Smoothing, Dropout, L2 정규화, Teacher Forcing 스케줄링 등을 적용하였지만, 문장 예측 품질(BLEU)은 0.1217로 낮았다. 이에 따라 Bahdanau Attention을 추가한 모델...
+best_model_path = os.path.join(model_dir, "Seq2Seq_best_model.pt") model.load_state_dict(torch.load(best_model_path, map_location=device)) model.eval() print(f"모델 로드 완료: {best_model_path}...
+
+- 읽을 포인트: 임베딩, 모델 구조, 학습 루프를 실제 코드로 연결하는 구간입니다.
 
 ### ✔ 데이터 설명
 
-목적 본 실습의 목적은 한국어 문장을 영어로 번역하는 기계번역 모델을 구현하고 성능을 비교하는 것이다. 이를 위해 전통적인 Seq2Seq 모델, Attention 기법을 적용한 모델을 각각 구현한 후, 동일한 데이터셋을 기반으로 학습시켜 성능을 정량적(BLEU 점수) 및 정성적으로(번역 분석) 평가할 것이다. 데이터셋 사용한 데이터는 AI Hub에서 공개한 「일상생활 및 구어체 한-영...
+목적 본 실습의 목적은 한국어 문장을 영어로 번역하는 기계번역 모델을 구현하고 성능을 비교하는 것이다. 이를 위해 전통적인 Seq2Seq 모델, Attention 기법을 적용한 모델을 각각 구현한 후, 동일한 데이터셋을 기반으로 학습시켜 성능을 정량적(BLEU 점수) 및 정성적으로(번역 분석) 평가할 것이다. 데이터셋 사용한 데이터는...
 
-### ✔ 1. 데이터 분석 > 데이터 재구성
+- 읽을 포인트: ✔ 데이터 설명에서 다룬 핵심 개념과 구현 흐름을 다시 읽을 수 있게 정리한 구간입니다.
 
-일상생활및구어체_한영_train_set.json의 데이터 개수는 1,200,000개이고, 일상생활및구어체_한영_valid_set.json의 데이터 개수는 150,000개였다. 이번 미션에서 사용하기에는 데이터 개수가 너무 많기 때문에, train_set.json에서 60000, valid_set.json에서 3000개만을 사용하기로 결정했다. 또한, train_set.json의 6000...
+### 모델 구성
 
-### ✔ 1. 데이터 분석 > 불필요한 기호 제거
+encoder = Encoder(input_vocab_size, embed_size, hidden_size, dropout_p).to(device) decoder = Decoder(output_vocab_size, embed_size, hidden_size, dropout_p).to(device) model = Seq2Seq(enco...
 
-데이터에 포함된 불필요한 기호는 제거하였다.
+- 읽을 포인트: 임베딩, 모델 구조, 학습 루프를 실제 코드로 연결하는 구간입니다.
+
+### ✔ 요약
+
+본 실습에서는 한영 말뭉치 데이터셋을 기반으로 Sequence-to-Sequence 모델을 구축하였다. 이 과정에서 과적합을 개선하기 위해 GRU 양방향 구조, Label Smoothing, Dropout, L2 정규화, Teacher Forcing 스케줄링 등을 적용하였지만, 문장 예측 품질(BLEU)은 0.1217로 낮았다. 이에...
+
+- 읽을 포인트: ✔ 요약에서 다룬 핵심 개념과 구현 흐름을 다시 읽을 수 있게 정리한 구간입니다.
+
+### 모댈 저장 경로
+
+model_dir = "/content/drive/MyDrive/코드잇/스프린트 미션/data/미션 11/model" os.makedirs(model_dir, exist_ok=True)
+
+- 읽을 포인트: 모댈 저장 경로에서 다룬 핵심 개념과 구현 흐름을 다시 읽을 수 있게 정리한 구간입니다.
+
+### 저장 경로
+
+model_dir = "/content/drive/MyDrive/코드잇/스프린트 미션/data/미션 11/model" os.makedirs(model_dir, exist_ok=True)
+
+- 읽을 포인트: 저장 경로에서 다룬 핵심 개념과 구현 흐름을 다시 읽을 수 있게 정리한 구간입니다.
 
 ## Why This Matters
 
@@ -89,48 +109,14 @@ tags:
 
 ## Implementation Flow
 
-1. ✔ 요약: 본 실습에서는 한영 말뭉치 데이터셋을 기반으로 Sequence-to-Sequence 모델을 구축하였다. 이 과정에서 과적합을 개선하기 위해 GRU 양방향 구조, Label Smoothing, Dropout, L2 정규화, Teacher Forcing 스케줄링 등을 적용하였지만, 문장 예측...
-2. ✔ 데이터 설명: 목적 본 실습의 목적은 한국어 문장을 영어로 번역하는 기계번역 모델을 구현하고 성능을 비교하는 것이다. 이를 위해 전통적인 Seq2Seq 모델, Attention 기법을 적용한 모델을 각각 구현한 후, 동일한 데이터셋을 기반으로 학습시켜 성능을 정량적(BLEU 점수) 및 정성적으로...
-3. ✔ 1. 데이터 분석 > 데이터 재구성: 일상생활및구어체_한영_train_set.json의 데이터 개수는 1,200,000개이고, 일상생활및구어체_한영_valid_set.json의 데이터 개수는 150,000개였다. 이번 미션에서 사용하기에는 데이터 개수가 너무 많기 때문에, train_set.js...
-4. ✔ 1. 데이터 분석 > 불필요한 기호 제거: 데이터에 포함된 불필요한 기호는 제거하였다.
+1. 모델 로딩: best_model_path = os.path.join(model_dir, "Seq2Seq_best_model.pt") model.load_state_dict(torch.load(best_model_path, map_location=device)) m...
+2. ✔ 데이터 설명: 목적 본 실습의 목적은 한국어 문장을 영어로 번역하는 기계번역 모델을 구현하고 성능을 비교하는 것이다. 이를 위해 전통적인 Seq2Seq 모델, Attention 기법을 적용한 모델을 각각 구현한 후, 동일한 데이터셋을 기반으로 학습시켜 성능을...
+3. 모델 구성: encoder = Encoder(input_vocab_size, embed_size, hidden_size, dropout_p).to(device) decoder = Decoder(output_vocab_size, embed_size, hidden_s...
+4. ✔ 요약: 본 실습에서는 한영 말뭉치 데이터셋을 기반으로 Sequence-to-Sequence 모델을 구축하였다. 이 과정에서 과적합을 개선하기 위해 GRU 양방향 구조, Label Smoothing, Dropout, L2 정규화, Teacher Forcing 스...
+5. 모댈 저장 경로: model_dir = "/content/drive/MyDrive/코드잇/스프린트 미션/data/미션 11/model" os.makedirs(model_dir, exist_ok=True)
+6. 저장 경로: model_dir = "/content/drive/MyDrive/코드잇/스프린트 미션/data/미션 11/model" os.makedirs(model_dir, exist_ok=True)
 
 ## Code Highlights
-
-### ✔️ 사전 세팅
-
-`✔️ 사전 세팅`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 전처리와 학습/검증 분리를 담당해 전체 파이프라인의 출발점을 정리하는 코드입니다.
-
-```python
-import json
-import os
-import random
-import re
-import sys
-import urllib.request
-import warnings
-import zipfile
-
-import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
-import seaborn as sns
-from tqdm import tqdm
-
-import nltk
-from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
-from nltk.translate.bleu_score import sentence_bleu
-from nltk.translate.bleu_score import SmoothingFunction
-
-from sklearn.datasets import fetch_20newsgroups
-from sklearn.metrics import classification_report, confusion_matrix, precision_recall_fscore_support
-from sklearn.model_selection import train_test_split
-from sklearn.utils.class_weight import compute_class_weight
-
-import sentencepiece as spm
-
-# ... trimmed ...
-```
 
 ### 데이터 재구성
 
@@ -168,35 +154,92 @@ with open(out_dir + "mini_val.json", "w", encoding="utf-8") as f:
 # ... trimmed ...
 ```
 
-### SentencePiece
+### 데이터 불러오기
 
-`SentencePiece`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 학습 옵션 (한국어용, 영어용 따로) 흐름이 주석과 함께 드러납니다.
+`데이터 불러오기`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 개수 출력, 샘플 3개 출력 흐름이 주석과 함께 드러납니다.
 
 ```python
-# 학습 옵션 (한국어용, 영어용 따로)
-spm.SentencePieceTrainer.train(
-    input=spm_dir + "ko_corpus.txt",
-    model_prefix=spm_dir + "spm_ko",
-    vocab_size=8000,
-    model_type="unigram",
-    character_coverage=0.999,
-    bos_id=1,
-    eos_id=2,
-    pad_id=0,
-    unk_id=3
-)
+base_path = "/content/drive/MyDrive/코드잇/스프린트 미션/data/미션 11/"
+train_path = base_path + "mini_train.json"
+val_path   = base_path + "mini_val.json"
+test_path  = base_path + "mini_test.json"
 
-spm.SentencePieceTrainer.train(
-    input=spm_dir + "en_corpus.txt",
-    model_prefix=spm_dir + "spm_en",
-    vocab_size=8000,
-    model_type="unigram",
-    character_coverage=1.0,
-    bos_id=1,
-    eos_id=2,
-    pad_id=0,
-    unk_id=3
-)
+with open(train_path, 'r', encoding='utf-8') as f:
+    mini_train = json.load(f)['data']
+
+with open(val_path, 'r', encoding='utf-8') as f:
+    mini_val = json.load(f)['data']
+
+with open(test_path, 'r', encoding='utf-8') as f:
+    mini_test = json.load(f)['data']
+
+# 개수 출력
+print(f"mini_train 개수: {len(mini_train)}개")
+print(f"mini_val 개수: {len(mini_val)}개")
+print(f"mini_test 개수: {len(mini_test)}개\n")
+
+# 샘플 3개 출력
+for i in range(3):
+    print(f"[{i}] ko: {mini_train[i]['ko']}")
+    print(f"    en: {mini_train[i]['en']}\n")
+```
+
+### SentencePiece
+
+`SentencePiece`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 학습용 데이터를 SentencePiece 토크나이저 학습에 사용할 수 있도록, 한국어와 영어 문장을 각각 텍스트 파일로 저장하였다.
+
+```python
+spm_dir = "/content/drive/MyDrive/코드잇/스프린트 미션/data/미션 11/spm/"
+os.makedirs(spm_dir, exist_ok=True)
+
+ko_path = os.path.join(spm_dir, "ko_corpus.txt")
+en_path = os.path.join(spm_dir, "en_corpus.txt")
+
+if not os.path.exists(ko_path) or not os.path.exists(en_path):
+    with open(ko_path, "w", encoding="utf-8") as f_ko, \
+         open(en_path, "w", encoding="utf-8") as f_en:
+        for item in mini_train:
+            f_ko.write(item['ko'].strip() + "\n")
+            f_en.write(item['en'].strip() + "\n")
+    print("학습용 텍스트 파일 생성 완료")
+else:
+    print("학습용 텍스트 파일이 이미 존재합니다.")
+```
+
+### 모델 로딩
+
+`모델 로딩`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 결과 확인 흐름이 주석과 함께 드러납니다.
+
+```text
+<!-- #region id="LJ-pCHkwCPaW" -->
+처음 Seq2Seq 모델을 학습시켰을 때는 **과적합이 발생**했다. <br>
+Train Loss는 계속 감소하는데 비해 Val Loss는 그대로였다.
+<br>
+
+|               | Epoch 1                              | Epoch 20                             |
+|---------------|---------------------------------------|---------------------------------------|
+| 수정 전        | Train Loss: 5.1847 \| Val Loss: 5.7774 | Train Loss: 2.6143 \| Val Loss: 5.6510 |
+
+<br>
+
+<!-- #endregion -->
+
+<!-- #region id="KkFeeh9AD2rX" -->
+이에 따라 과적합을 방지하기 위해 아래와 같은 과정을 거쳐 전반적으로 코드를 수정했다. <br>
+
+| 항목              | 수정 전                 | 수정 후                             |
+|-------------------|--------------------------|--------------------------------------|
+| GRU               | 단방향                   | 양방향                               |
+| 손실 함수         | CrossEntropyLoss         | Label Smoothing                      |
+| Dropout           | 0.1                      | 0.2                                  |
+| 정규화            | 없음                     | L2 정규화      |
+| Teacher Forcing   | 0.6으로 고정             | 에폭이 증가할수록 점진적으로 감소   |
+
+
+<br>
+<!-- #endregion -->
+
+...
 ```
 
 ## Source Bundle

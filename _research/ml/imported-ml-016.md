@@ -5,8 +5,8 @@ research_tab: "ML"
 research_kind: "Archive Note"
 source_title: "250901_SVM"
 source_path: "11_Machine_Learning/Code_Snippets/250901_SVM.md"
-excerpt: "SVM의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 객체지향 설계, 함수 분해와 로직 구성 순서로 큰 장을 먼저 훑고, 파생 변수 추가, SVM 모델 학습 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 8개 코드 블록,..."
-research_summary: "SVM의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 객체지향 설계, 함수 분해와 로직 구성 순서로 큰 장을 먼저 훑고, 파생 변수 추가, SVM 모델 학습 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 8개 코드 블록, 8개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, matplotlib, sklearn입니다."
+excerpt: "SVM의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 객체지향 설계, 함수 분해와 로직 구성 순서로 큰 장을 먼저 훑고, SVM 모델 학습, 파생 변수 추가 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 8개 코드 블록,..."
+research_summary: "SVM의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 객체지향 설계, 함수 분해와 로직 구성 순서로 큰 장을 먼저 훑고, SVM 모델 학습, 파생 변수 추가 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 8개 코드 블록, 8개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, matplotlib, sklearn입니다."
 research_artifacts: "ipynb/md · 코드 8개 · 실행 8개"
 code_block_count: 8
 execution_block_count: 8
@@ -48,7 +48,7 @@ tags:
   </div>
   <div class="research-overview__row">
     <div class="research-overview__label">구현 흐름</div>
-    <div class="research-overview__value">파생 변수 추가 -&gt; SVM 모델 학습 -&gt; 데이터 분포 시각화</div>
+    <div class="research-overview__value">SVM 모델 학습 -&gt; 파생 변수 추가 -&gt; 데이터 분포 시각화</div>
   </div>
   <div class="research-overview__row">
     <div class="research-overview__label">자료</div>
@@ -76,19 +76,19 @@ tags:
 
 ## 구현 흐름
 
-### 1. 파생 변수 추가
-
-- 단계: 피처 가공
-- 구현 의도: 원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다.
-- 핵심 API: -
-- 코드 포인트: -
-
-### 2. SVM 모델 학습
+### 1. SVM 모델 학습
 
 - 단계: 학습
 - 구현 의도: 훈련 데이터를 기준으로 모델을 실제로 fitting 하며 성능을 끌어올리는 학습 단계입니다.
 - 핵심 API: -
 - 코드 포인트: C: cost (오분류에 대한 패널티 강도), gamma...
+
+### 2. 파생 변수 추가
+
+- 단계: 피처 가공
+- 구현 의도: 원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다.
+- 핵심 API: -
+- 코드 포인트: -
 
 ### 3. 데이터 분포 시각화
 
@@ -97,19 +97,19 @@ tags:
 - 핵심 API: `matplotlib`
 - 코드 포인트: -
 
-### 4. import numpy as np
+### 4. Z = model_svc.decision_function(np.c_[xx.ravel(), yy.ravel()])
+
+- 단계: 구현 코드
+- 구현 의도: Z = model_svc.decision_function(n... 코드를 직접 실행하며 이 장의 구현 흐름을 확인했습니다.
+- 핵심 API: -
+- 코드 포인트: -
+
+### 5. import numpy as np
 
 - 단계: 환경 준비
 - 구현 의도: 넘파이 배열 생성, 인덱싱, 수치 연산을 손으로 익히는 기초 실습 코드입니다.
 - 핵심 API: -
 - 코드 포인트: -
-
-### 5. X_blob, y_blob = make_blobs(n_samples=50, centers=2, random_state=6)
-
-- 단계: 구현 코드
-- 구현 의도: X_blob, y_blob = make_blobs(n_sam... 코드를 직접 실행하며 이 장의 구현 흐름을 확인했습니다.
-- 핵심 API: -
-- 코드 포인트: centers=2
 
 ### 6. xx, yy = np.meshgrid(np.linspace(X_blob[:, 0].min()-1, X_blob[:, 0].max()+1,...
 
@@ -119,6 +119,18 @@ tags:
 - 코드 포인트: -
 
 ## 코드로 확인한 내용
+
+### SVM 모델 학습
+
+**직접 해본 단계**: 학습
+
+훈련 데이터를 기준으로 모델을 실제로 fitting 하며 성능을 끌어올리는 학습 단계입니다.
+
+```python
+model_svc = SVC(kernel='rbf', C=10, gamma=0.001)          # C와 gamma설정 중요!
+# C: cost (오분류에 대한 패널티 강도), gamma: 커널 곡률 조절
+model_svc.fit(X_blob, y_blob)
+```
 
 ### 파생 변수 추가
 
@@ -152,18 +164,6 @@ def plot_decision_boundary(clf, X, y, ax, title):
     ax.grid(True)
 ```
 
-### SVM 모델 학습
-
-**직접 해본 단계**: 학습
-
-훈련 데이터를 기준으로 모델을 실제로 fitting 하며 성능을 끌어올리는 학습 단계입니다.
-
-```python
-model_svc = SVC(kernel='rbf', C=10, gamma=0.001)          # C와 gamma설정 중요!
-# C: cost (오분류에 대한 패널티 강도), gamma: 커널 곡률 조절
-model_svc.fit(X_blob, y_blob)
-```
-
 ### 데이터 분포 시각화
 
 **직접 해본 단계**: 시각화
@@ -178,6 +178,17 @@ plot_decision_boundary(model_svc, X_blob, y_blob, ax, "SVM \nC=10, gamma=0.01")
 plt.show()
 ```
 
+### Z = model_svc.decision_function(np.c_[xx.ravel(), yy.ravel()])
+
+**직접 해본 단계**: 구현 코드
+
+Z = model_svc.decision_function(n... 코드를 직접 실행하며 이 장의 구현 흐름을 확인했습니다.
+
+```python
+Z = model_svc.decision_function(np.c_[xx.ravel(), yy.ravel()])
+Z = Z.reshape(xx.shape)
+```
+
 ### import numpy as np
 
 **직접 해본 단계**: 환경 준비
@@ -190,17 +201,6 @@ import matplotlib.pyplot as plt
 from sklearn.datasets import make_blobs
 from sklearn.svm import SVC
 from matplotlib.colors import ListedColormap
-```
-
-### X_blob, y_blob = make_blobs(n_samples=50, centers=2, random_state=6)
-
-**직접 해본 단계**: 구현 코드
-
-X_blob, y_blob = make_blobs(n_sam... 코드를 직접 실행하며 이 장의 구현 흐름을 확인했습니다.
-
-```python
-X_blob, y_blob = make_blobs(n_samples=50, centers=2, random_state=6)
-# centers=2: 2차원으로 만들기 위한 것. centers=3이면 시각화 어려움
 ```
 
 ### xx, yy = np.meshgrid(np.linspace(X_blob[:, 0].min()-1, X_blob[:, 0].max()+1,...

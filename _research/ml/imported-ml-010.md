@@ -2,18 +2,18 @@
 title: "10.결정트리와 앙상블(DT)"
 date: 2026-03-08
 research_tab: "ML"
-research_kind: "Practice"
+research_kind: "Archive Note"
 source_title: "250827_코딩실습10_10.결정트리와 앙상블(DT)"
 source_path: "11_Machine_Learning/Code_Snippets/250827_코딩실습10_10.결정트리와 앙상블(DT).md"
-excerpt: "코딩실습10 10.결정트리와 앙상블(DT)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 DT 회귀 실습, DT 분류 실습, 속성 중요도 실습 순서로 큰 장을 먼저 훑고, DT 회귀 실습, DT 분류 실습 같은 코드로 실제 구현을 이어서 확인할 수 있습니..."
-research_summary: "코딩실습10 10.결정트리와 앙상블(DT)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 DT 회귀 실습, DT 분류 실습, 속성 중요도 실습 순서로 큰 장을 먼저 훑고, DT 회귀 실습, DT 분류 실습 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 26개 코드 블록, 25개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 matplotlib, warnings, sklearn, pandas입니다."
+excerpt: "10.결정트리와 앙상블(DT)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 DT 회귀 실습, DT 분류 실습, 속성 중요도 실습 순서로 큰 장을 먼저 훑고, DT 회귀 실습, DT 분류 실습 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipy..."
+research_summary: "10.결정트리와 앙상블(DT)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 DT 회귀 실습, DT 분류 실습, 속성 중요도 실습 순서로 큰 장을 먼저 훑고, DT 회귀 실습, DT 분류 실습 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 26개 코드 블록, 25개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 matplotlib, warnings, sklearn, pandas입니다."
 research_artifacts: "ipynb/md · 코드 26개 · 실행 25개"
 code_block_count: 26
 execution_block_count: 25
 research_focus:
   - "_reg"
-  - "DT 회귀 실습"
   - "DT 분류 실습"
+  - "DT 회귀 실습"
 research_stack:
   - "matplotlib"
   - "warnings"
@@ -26,7 +26,7 @@ tags:
   - research-archive
   - imported-note
   - ml
-  - practice
+  - archive-note
 ---
 
 ## 글 한눈에 보기
@@ -34,7 +34,7 @@ tags:
 <div class="research-overview research-overview--intro">
   <div class="research-overview__row">
     <div class="research-overview__label">문제 설정</div>
-    <div class="research-overview__value">코딩실습10 10.결정트리와 앙상블(DT)에서 DT 회귀 실습, DT 분류 실습, 속성 중요도 실습 흐름을 직접 따라가며 구현했습니다.</div>
+    <div class="research-overview__value">_reg: 회귀의 관례적 표현. _clf: 분류의 관례적 표현</div>
   </div>
   <div class="research-overview__row">
     <div class="research-overview__label">원본 구조</div>
@@ -116,10 +116,10 @@ _reg: 회귀의 관례적 표현 - _clf: 분류의 관례적 표현
 
 ### 1. DT 회귀 실습
 
-- 단계: 데이터 불러오기
-- 구현 의도: 실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.
-- 핵심 API: -
-- 코드 포인트: 위 코드 판다스로 지정해 불러올 때
+- 단계: 모델 구성
+- 구현 의도: DecisionTree 같은 모델을 올려 두고 어떤 알고리즘이 문제에 더 잘 맞는지 비교해 보는 구간입니다.
+- 핵심 API: `DecisionTree`
+- 코드 포인트: -
 
 ### 2. DT 분류 실습
 
@@ -147,25 +147,21 @@ _reg: 회귀의 관례적 표현 - _clf: 분류의 관례적 표현
 - 단계: 피처 가공
 - 구현 의도: 원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다.
 - 핵심 API: -
-- 코드 포인트: -
+- 코드 포인트: 각 특성의 중요도 값 가져오기
 
 ## 코드로 확인한 내용
 
 ### DT 회귀 실습
 
-**직접 해본 단계**: 데이터 불러오기
+**직접 해본 단계**: 모델 구성
 
-실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.
+**핵심 API**: `DecisionTree`
+
+DecisionTree 같은 모델을 올려 두고 어떤 알고리즘이 문제에 더 잘 맞는지 비교해 보는 구간입니다.
 
 ```python
-# 위 코드 판다스로 지정해 불러올 때
-
-data = fetch_california_housing()
-
-df = pd.DataFrame(data.data, columns=data.feature_names)
-
-X_reg = df.values
-y_reg = data.target
+dt_reg = DecisionTreeRegressor()    # max_depth를 지정할 수 있음
+dt_reg.fit(X_train, y_train)
 ```
 
 ### DT 분류 실습
@@ -247,12 +243,8 @@ dt_model_2.fit(X_train, y_train)
 원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다.
 
 ```python
-importance_df = pd.DataFrame({
-    'Feature' : feature_names,
-    'Importance' : importances
-    })
-importance_df = importance_df.sort_values(by='Importance', ascending=False)
-importance_df
+# 각 특성의 중요도 값 가져오기
+importances = dt_clf.feature_importances_
 ```
 
 ## 참고 자료

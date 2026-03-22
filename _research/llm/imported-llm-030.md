@@ -5,15 +5,13 @@ research_tab: "LLM"
 research_kind: "Archive Note"
 source_title: "3-5 RAG_맛보기"
 source_path: "13_LLM_GenAI/Code_Snippets/3-5 RAG_맛보기.md"
-excerpt: "RAG(Retrieval-Augmented Generation)는 대규모 언어 모델(LLM)이 외부의 지식(데이터)을 참고하여 더 정확하고 풍부한 답변을 생성하도록 만드는 기술입니다. 쉽게 비유하자면, \"시험을 볼 때 교과서를 펼쳐 놓고 답을 찾는 오픈 북 테스트(Open-book Test)\"와 같..."
-research_summary: "RAG(Retrieval-Augmented Generation)는 대규모 언어 모델(LLM)이 외부의 지식(데이터)을 참고하여 더 정확하고 풍부한 답변을 생성하도록 만드는 기술입니다. 쉽게 비유하자면, \"시험을 볼 때 교과서를 펼쳐 놓고 답을 찾는 오픈 북 테스트(Open-book Test)\"와 같습니다. LLM(ChatGPT 등)은 다음과 같은 한계: 1. 최신 정보 부재: 학습 시점 이후의 정보는 알지 못합니다. 2. 환각 현상 (Hallucination): 모르는 내용도 사실인 것처럼 거짓말을 할 수 있습니다. 3. 사내/비공개 데이터 접근 불가: 기업 내부 문서나 개인적인 자료는 학습하지 않았습니다. RAG는 외부 데이터베이스에... `ipynb/md` 원본과 7개 코드 블록, 3개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, langchain_openai, langchain_core, getpass입니다."
+excerpt: "RAG 맛보기에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 LLM 학습 기록입니다. 본문은 RAG (검색 증강 생성) 순서로 핵심 장면을 먼저 훑고, RAG의 작동 원리 (3단계) 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 7개 코드 블록,..."
+research_summary: "RAG 맛보기에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 LLM 학습 기록입니다. 본문은 RAG (검색 증강 생성) 순서로 핵심 장면을 먼저 훑고, RAG의 작동 원리 (3단계) 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 7개 코드 블록, 3개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, langchain_openai, langchain_core, getpass입니다."
 research_artifacts: "ipynb/md · 코드 7개 · 실행 3개"
 code_block_count: 7
 execution_block_count: 3
 research_focus:
-  - "RAG(Retrieval-Augmented Generation)는 대규모 언어 모델(LLM)이 외부의..."
   - "RAG (검색 증강 생성)"
-  - "LLM(ChatGPT 등)은 다음과 같은 한계: 1. 최신 정보 부재: 학습 시점 이후의 정보는 알지..."
 research_stack:
   - "os"
   - "langchain_openai"
@@ -29,9 +27,9 @@ tags:
   - archive-note
 ---
 
-RAG(Retrieval-Augmented Generation)는 대규모 언어 모델(LLM)이 외부의 지식(데이터)을 참고하여 더 정확하고 풍부한 답변을 생성하도록 만드는 기술입니다. 쉽게 비유하자면, "시험을 볼 때 교과서를 펼쳐 놓고 답을 찾는 오픈 북 테스트(Open-book Test)"와 같습니다. LLM(ChatGPT 등)은 다음과 같은 한계: 1. 최신 정보 부재: 학습 시점 이후의 정보는 알지 못합니다. 2. 환각 현상 (Hallucination): 모르는 내용도 사실인 것처럼 거짓말을 할 수 있습니다. 3. 사내/비공개 데이터 접근 불가: 기업 내부 문서나 개인적인 자료는 학습하지 않았습니다. RAG는 외부 데이터베이스에... `ipynb/md` 원본과 7개 코드 블록, 3개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, langchain_openai, langchain_core, getpass입니다.
+RAG 맛보기에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 LLM 학습 기록입니다. 본문은 RAG (검색 증강 생성) 순서로 핵심 장면을 먼저 훑고, RAG의 작동 원리 (3단계) 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 7개 코드 블록, 3개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, langchain_openai, langchain_core, getpass입니다.
 
-**빠르게 볼 수 있는 포인트**: RAG(Retrieval-Augmented Generation)는 대규..., RAG (검색 증강 생성), LLM(ChatGPT 등)은 다음과 같은 한계: 1. 최신 정보 부재:....
+**빠르게 볼 수 있는 포인트**: RAG (검색 증강 생성).
 
 **남겨둔 자료**: `ipynb/md` 원본과 7개 코드 블록, 3개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, langchain_openai, langchain_core, getpass입니다.
 
@@ -55,17 +53,15 @@ RAG(Retrieval-Augmented Generation)는 대규모 언어 모델(LLM)이 외부의
 
 RAG(Retrieval-Augmented Generation)는 대규모 언어 모델(LLM)이 외부의 지식(데이터)을 참고하여 더 정확하고 풍부한 답변을 생성하도록 만드는 기술입니다. 쉽게 비유하자면, "시험을 볼 때 교과서를 펼쳐 놓고 답을 찾는 오픈 북 테스트(Open-book Test)"와 같습니다.
 
-### RAG (검색 증강 생성) > 왜 RAG가 필요한가요?
+- 읽을 포인트: 세부 흐름: 왜 RAG가 필요한가요?, RAG의 작동 원리 (3단계)
 
-LLM(ChatGPT 등)은 다음과 같은 한계: 1. 최신 정보 부재: 학습 시점 이후의 정보는 알지 못합니다. 2. 환각 현상 (Hallucination): 모르는 내용도 사실인 것처럼 거짓말을 할 수 있습니다. 3. 사내/비공개 데이터 접근 불가: 기업 내부 문서나 개인적인 자료는 학습하지 않았습니다. RAG는 외부 데이터베이스에서 "정답의 근거"를 찾아와서 LLM에게 제공함으로써...
+#### 왜 RAG가 필요한가요?
 
-### RAG (검색 증강 생성) > RAG의 작동 원리 (3단계)
+LLM(ChatGPT 등)은 다음과 같은 한계: 1. 최신 정보 부재: 학습 시점 이후의 정보는 알지 못합니다. 2. 환각 현상 (Hallucination): 모르는 내용도 사실인 것처럼 거짓말을 할 수 있습니다. 3. 사내/비공개 데이터 접근 불가: 기업 내부 문서나 개인적인 자...
 
-검색 (Retrieval): 사용자의 질문과 관련된 문서를 벡터 DB(Vector DB) 등에서 찾아옵니다. 2. 증강 (Augmented): 찾아온 정보를 프롬프트에 끼워 넣어(Context) 질문을 보강합니다. 3. 생성 (Generation): LLM은 보강된 정보를 바탕으로 신뢰할 수 있는 답변을 생성합니다. LangChain 없이 직접 모델을 바꾸려면, 모델마다 API 사용 방...
+#### RAG의 작동 원리 (3단계)
 
-### Key Step
-
-RAG의 작동 원리 (3단계)
+검색 (Retrieval): 사용자의 질문과 관련된 문서를 벡터 DB(Vector DB) 등에서 찾아옵니다. 2. 증강 (Augmented): 찾아온 정보를 프롬프트에 끼워 넣어(Context) 질문을 보강합니다. 3. 생성 (Generation): LLM은 보강된 정보를 바탕으로...
 
 ## Why This Matters
 
@@ -83,10 +79,7 @@ RAG의 작동 원리 (3단계)
 
 ## Implementation Flow
 
-1. RAG (검색 증강 생성): RAG(Retrieval-Augmented Generation)는 대규모 언어 모델(LLM)이 외부의 지식(데이터)을 참고하여 더 정확하고 풍부한 답변을 생성하도록 만드는 기술입니다. 쉽게 비유하자면, "시험을 볼 때 교과서를 펼쳐 놓고 답을 찾는 오픈 북 테스트(Ope...
-2. RAG (검색 증강 생성) > 왜 RAG가 필요한가요?: LLM(ChatGPT 등)은 다음과 같은 한계: 1. 최신 정보 부재: 학습 시점 이후의 정보는 알지 못합니다. 2. 환각 현상 (Hallucination): 모르는 내용도 사실인 것처럼 거짓말을 할 수 있습니다. 3. 사내/비공개 데이터 접...
-3. RAG (검색 증강 생성) > RAG의 작동 원리 (3단계): 검색 (Retrieval): 사용자의 질문과 관련된 문서를 벡터 DB(Vector DB) 등에서 찾아옵니다. 2. 증강 (Augmented): 찾아온 정보를 프롬프트에 끼워 넣어(Context) 질문을 보강합니다. 3. 생성 (Gener...
-4. Key Step: RAG의 작동 원리 (3단계)
+1. RAG (검색 증강 생성): 왜 RAG가 필요한가요?, RAG의 작동 원리 (3단계)
 
 ## Code Highlights
 
@@ -127,6 +120,16 @@ template = """
 """
 
 prompt = PromptTemplate.from_template(template)
+```
+
+### RAG의 작동 원리 (3단계)
+
+`RAG의 작동 원리 (3단계)`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 LangChain의 파이프라인: LangChain Expression Language(L..., 프롬프트 -> LLM -> 문자열 변환 흐름이 주석과 함께 드러납니다.
+
+```python
+# 4. LangChain의 파이프라인: LangChain Expression Language(LCEL)
+# 프롬프트 -> LLM -> 문자열 변환
+chain = prompt | llm | StrOutputParser()
 ```
 
 ### RAG의 작동 원리 (3단계)

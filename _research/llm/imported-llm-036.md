@@ -5,15 +5,15 @@ research_tab: "LLM"
 research_kind: "Mission"
 source_title: "미션12_1팀_박시찬"
 source_path: "13_LLM_GenAI/Code_Snippets/미션12_1팀_박시찬.md"
-excerpt: "미션 소개 Hugging Face transformers 라이브러리를 사용하여 실제 한국어 문서 요약 모델을 처음부터 끝까지 구축하는 미션입니다. 데이터 로드 → 전처리 → 모델 Fine-tuning → 요약 생성 → 평가까지 전체 파이프라인을 직접 구현해 봅니다. 사용 데이터셋 - 데이터 출처:..."
-research_summary: "미션 소개 Hugging Face transformers 라이브러리를 사용하여 실제 한국어 문서 요약 모델을 처음부터 끝까지 구축하는 미션입니다. 데이터 로드 → 전처리 → 모델 Fine-tuning → 요약 생성 → 평가까지 전체 파이프라인을 직접 구현해 봅니다. 사용 데이터셋 - 데이터 출처: AI Hub - 문서요약 텍스트 -... 원문 (Text): 95%가 678 토큰 이내. 요약 (Summary): 95%가 74 토큰 이내. 이 숫자가 황금 비율입니다. 보통 BART 기본 설정이 1024인데, 굳이 1024까지 쓸 필요 없이 700~800 정도만 써도 충분하다는 뜻입니다. 이러면 학습 속도도 빨라지고 메모리도 아낄 수 있습니다. 우리는 안전하게 여유를 좀... `ipynb/md` 원본과 22개 코드 블록, 19개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 google, torch, os, json입니다."
+excerpt: "미션: Hugging Face Tr..., EDA 및 데이터 정제 실험 중심의 LLM 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 LLM 학습 기록입니다. 본문은 미션: Hugging Face Tr..., EDA 및 데이터 정제 실험, 데이터 파이프라인 순서로 핵심 장면을..."
+research_summary: "미션: Hugging Face Tr..., EDA 및 데이터 정제 실험 중심의 LLM 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 LLM 학습 기록입니다. 본문은 미션: Hugging Face Tr..., EDA 및 데이터 정제 실험, 데이터 파이프라인 순서로 핵심 장면을 먼저 훑고, 정제비교실험, 토크나이저 정렬 분석, 모델 파이프라인 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 22개 코드 블록, 19개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 google, torch, os, json입니다."
 research_artifacts: "ipynb/md · 코드 22개 · 실행 19개"
 code_block_count: 22
 execution_block_count: 19
 research_focus:
-  - "미션 소개 Hugging Face transformers 라이브러리를 사용하여 실제 한국어 문서 요약..."
-  - "미션"
-  - "원문 (Text)"
+  - "미션: Hugging Face Transformers를 활용한 문서 요약 모델 구현"
+  - "EDA 및 데이터 정제 실험"
+  - "데이터 파이프라인"
 research_stack:
   - "google"
   - "torch"
@@ -30,9 +30,9 @@ tags:
   - mission
 ---
 
-미션 소개 Hugging Face transformers 라이브러리를 사용하여 실제 한국어 문서 요약 모델을 처음부터 끝까지 구축하는 미션입니다. 데이터 로드 → 전처리 → 모델 Fine-tuning → 요약 생성 → 평가까지 전체 파이프라인을 직접 구현해 봅니다. 사용 데이터셋 - 데이터 출처: AI Hub - 문서요약 텍스트 -... 원문 (Text): 95%가 678 토큰 이내. 요약 (Summary): 95%가 74 토큰 이내. 이 숫자가 황금 비율입니다. 보통 BART 기본 설정이 1024인데, 굳이 1024까지 쓸 필요 없이 700~800 정도만 써도 충분하다는 뜻입니다. 이러면 학습 속도도 빨라지고 메모리도 아낄 수 있습니다. 우리는 안전하게 여유를 좀... `ipynb/md` 원본과 22개 코드 블록, 19개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 google, torch, os, json입니다.
+미션: Hugging Face Tr..., EDA 및 데이터 정제 실험 중심의 LLM 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 LLM 학습 기록입니다. 본문은 미션: Hugging Face Tr..., EDA 및 데이터 정제 실험, 데이터 파이프라인 순서로 핵심 장면을 먼저 훑고, 정제비교실험, 토크나이저 정렬 분석, 모델 파이프라인 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 22개 코드 블록, 19개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 google, torch, os, json입니다.
 
-**빠르게 볼 수 있는 포인트**: 미션 소개 Hugging Face transformers 라이브러리를..., 미션, 원문 (Text).
+**빠르게 볼 수 있는 포인트**: 미션: Hugging Face Transformers를 활용한 문서 요..., EDA 및 데이터 정제 실험, 데이터 파이프라인.
 
 **남겨둔 자료**: `ipynb/md` 원본과 22개 코드 블록, 19개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 google, torch, os, json입니다.
 
@@ -54,19 +54,39 @@ tags:
 
 ### 미션: Hugging Face Transformers를 활용한 문서 요약 모델 구현
 
-미션 소개 Hugging Face transformers 라이브러리를 사용하여 실제 한국어 문서 요약 모델을 처음부터 끝까지 구축하는 미션입니다. 데이터 로드 → 전처리 → 모델 Fine-tuning → 요약 생성 → 평가까지 전체 파이프라인을 직접 구현해 봅니다. 사용 데이터셋 - 데이터 출처: AI Hub - 문서요약 텍스트 - 용량: 약 0.4GB - 형식: JSON 파일 - 문서...
+미션 소개 Hugging Face transformers 라이브러리를 사용하여 실제 한국어 문서 요약 모델을 처음부터 끝까지 구축하는 미션입니다. 데이터 로드 → 전처리 → 모델 Fine-tuning → 요약 생성 → 평가까지 전체 파이프라인을 직접 구현해 봅니다. 사용 데이터셋 - 데이터 출처: AI Hub - 문서요약 텍스트 -...
+
+- 읽을 포인트: 임베딩, 모델 구조, 학습 루프를 실제 코드로 연결하는 구간입니다.
 
 ### EDA 및 데이터 정제 실험
 
-원문 (Text): 95%가 678 토큰 이내. 요약 (Summary): 95%가 74 토큰 이내. 이 숫자가 황금 비율입니다. 보통 BART 기본 설정이 1024인데, 굳이 1024까지 쓸 필요 없이 700~800 정도만 써도 충분하다는 뜻입니다. 이러면 학습 속도도 빨라지고 메모리도 아낄 수 있습니다. 우리는 안전하게 여유를 좀 둬서 다음과 같이 설정하겠습니다.
+원문 (Text): 95%가 678 토큰 이내. 요약 (Summary): 95%가 74 토큰 이내. 이 숫자가 황금 비율입니다. 보통 BART 기본 설정이 1024인데, 굳이 1024까지 쓸 필요 없이 700~800 정도만 써도 충분하다는 뜻입니다. 이러면 학습 속도도 빨라지고 메모리도 아낄 수 있습니다. 우리는 안전하게 여유를 좀...
 
-### 데이터 파이프라인 > 토크나이저 정렬 분석
+- 읽을 포인트: 세부 흐름: 정제비교실험
+
+#### 정제비교실험
+
+실험 조건을 바꾸고 지표를 비교하며 어떤 설정이 맞는지 확인하는 구간입니다.
+
+### 데이터 파이프라인
+
+토크나이저 정렬 분석 같은 코드를 직접 따라가며 데이터 파이프라인 흐름을 확인했습니다.
+
+- 읽을 포인트: 세부 흐름: 토크나이저 정렬 분석
+
+#### 토크나이저 정렬 분석
 
 UNK 비율 확인: 모델이 모르는 단어가 1% 미만이어야 안전합니다. - 파편화율 확인: 단어가 너무 잘게 쪼개지면 학습이 어렵습니다. (0.3 ~ 0.6 사이면 양호)
 
-### Key Step
+### 모델 파이프라인
 
-CUDA 사용 가능 여부 체크 및 장치 설정
+학습완료 같은 코드를 직접 따라가며 모델 파이프라인 흐름을 확인했습니다.
+
+- 읽을 포인트: 세부 흐름: 학습완료
+
+#### 학습완료
+
+임베딩, 모델 구조, 학습 루프를 실제 코드로 연결하는 구간입니다.
 
 ## Why This Matters
 
@@ -90,10 +110,10 @@ CUDA 사용 가능 여부 체크 및 장치 설정
 
 ## Implementation Flow
 
-1. 미션: Hugging Face Transformers를 활용한 문서 요약 모델 구현: 미션 소개 Hugging Face transformers 라이브러리를 사용하여 실제 한국어 문서 요약 모델을 처음부터 끝까지 구축하는 미션입니다. 데이터 로드 → 전처리 → 모델 Fine-tuning → 요약 생성...
-2. EDA 및 데이터 정제 실험: 원문 (Text): 95%가 678 토큰 이내. 요약 (Summary): 95%가 74 토큰 이내. 이 숫자가 황금 비율입니다. 보통 BART 기본 설정이 1024인데, 굳이 1024까지 쓸 필요 없이 700~800 정도만 써도 충분하다는 뜻입니다. 이러면 학습 속도도...
-3. 데이터 파이프라인 > 토크나이저 정렬 분석: UNK 비율 확인: 모델이 모르는 단어가 1% 미만이어야 안전합니다. - 파편화율 확인: 단어가 너무 잘게 쪼개지면 학습이 어렵습니다. (0.3 ~ 0.6 사이면 양호)
-4. Key Step: CUDA 사용 가능 여부 체크 및 장치 설정
+1. 미션: Hugging Face Transformers를 활용한 문서 요약 모델 구현: 미션 소개 Hugging Face transformers 라이브러리를 사용하여 실제 한국어 문서 요약 모델을 처음부터 끝까지 구축하는 미션입니다. 데이터 로드 → 전처리 → 모델...
+2. EDA 및 데이터 정제 실험: 정제비교실험
+3. 데이터 파이프라인: 토크나이저 정렬 분석
+4. 모델 파이프라인: 학습완료
 
 ## Code Highlights
 
@@ -202,6 +222,42 @@ BATCH_SIZE = 2           # 6GB VRAM 안전값
 GRAD_ACCUM_STEPS = 16    # 실질적 배치 32
 LEARNING_RATE = 3e-5
 NUM_EPOCHS = 5           # Early Stopping이 있으므로 넉넉하게 설정
+# ... trimmed ...
+```
+
+### 학습완료
+
+`학습완료`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 =================================================..., [경로 설정] 꼬이지 않게 절대 경로로 각각 지정 흐름이 주석과 함께 드러납니다.
+
+```python
+import torch
+from datasets import load_from_disk
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+import evaluate
+import os
+from tqdm import tqdm
+
+# =========================================================
+# [경로 설정] 꼬이지 않게 절대 경로로 각각 지정
+# =========================================================
+
+# 1. 데이터셋 폴더 (final_processed_dataset)
+DATASET_PATH = r"C:\Users\bhs33\PyCharmMiscProject\summarization\summarization\final_processed_dataset"
+
+# 2. 모델 체크포인트 폴더 (checkpoint-xxxx)
+MODEL_PATH = r"C:\Users\bhs33\PyCharmMiscProject\summarization\summarization\bart_summary_model_final\bart_summary_model_final\checkpoint-1774"
+
+# =========================================================
+
+def step3_5_final_evaluation():
+    print(f"\n🚀 [Step 5] 최종 모델 정량 평가 (ROUGE)")
+    print(f"   - 모델 경로: {MODEL_PATH}")
+    print(f"   - 데이터 경로: {DATASET_PATH}")
+
+    if not os.path.exists(MODEL_PATH):
+        print(f"❌ 모델 경로가 잘못되었습니다.")
+        return
+
 # ... trimmed ...
 ```
 

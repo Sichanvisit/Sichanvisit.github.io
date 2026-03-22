@@ -5,15 +5,13 @@ research_tab: "DL"
 research_kind: "Shared Note"
 source_title: "FCN - 공유"
 source_path: "12_Deep_Learning/Code_Snippets/FCN - 공유.md"
-excerpt: "실습, Step 1, Step 2 중심으로 구현 과정을 정리한 FCN - 공유 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 11개 코드 블록, 8개 실행 셀을 함께 남겨 구현 흐름을 다시..."
-research_summary: "실습, Step 1, Step 2 중심으로 구현 과정을 정리한 FCN - 공유 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 11개 코드 블록, 8개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, json, torch, numpy입니다."
+excerpt: "실습 중심의 DL 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 실습 순서로 핵심 장면을 먼저 훑고, import os, 하이퍼파라미터 및 디바이스 설정, mIoU 계산 예시 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과..."
+research_summary: "실습 중심의 DL 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 실습 순서로 핵심 장면을 먼저 훑고, import os, 하이퍼파라미터 및 디바이스 설정, mIoU 계산 예시 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 11개 코드 블록, 8개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, json, torch, numpy입니다."
 research_artifacts: "md · 코드 11개 · 실행 8개"
 code_block_count: 11
 execution_block_count: 8
 research_focus:
   - "실습"
-  - "Step 1"
-  - "Step 2"
 research_stack:
   - "os"
   - "json"
@@ -29,9 +27,9 @@ tags:
   - shared-note
 ---
 
-실습, Step 1, Step 2 중심으로 구현 과정을 정리한 FCN - 공유 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 11개 코드 블록, 8개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, json, torch, numpy입니다.
+실습 중심의 DL 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 실습 순서로 핵심 장면을 먼저 훑고, import os, 하이퍼파라미터 및 디바이스 설정, mIoU 계산 예시 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 11개 코드 블록, 8개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, json, torch, numpy입니다.
 
-**빠르게 볼 수 있는 포인트**: 실습, Step 1, Step 2.
+**빠르게 볼 수 있는 포인트**: 실습.
 
 **남겨둔 자료**: `md` 원본과 11개 코드 블록, 8개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, json, torch, numpy입니다.
 
@@ -51,11 +49,11 @@ tags:
 
 ## What This Note Covers
 
-- 실습
-- Step 1
-- Step 2
-- 이미지 변환
-- PIL 이미지를 tensor로 변환
+### 실습
+
+실습 코드를 직접 따라가며 실습 흐름을 확인했습니다.
+
+- 읽을 포인트: 실습 아래 코드와 함께 읽으면 구현 포인트가 더 또렷해지는 구간입니다.
 
 ## Why This Matters
 
@@ -79,10 +77,7 @@ tags:
 
 ## Implementation Flow
 
-1. Key Step: Step 1: VOCSegmentation 데이터셋 로드 및 클래스 정보 설정하기
-2. Key Step: Step 2: 이미지와 마스크에 적용할 전처리(Transform) 정의하기
-3. Key Step: PIL 이미지를 tensor로 변환
-4. Key Step: tensor의 데이터 타입을 float로 변경
+1. 실습: 실습 코드를 직접 따라가며 실습 흐름을 확인했습니다.
 
 ## Code Highlights
 
@@ -156,6 +151,41 @@ for epoch in range(num_epochs):
         loss.backward()
         optimizer.step()
 # ... trimmed ...
+```
+
+### mIoU 계산 예시
+
+`mIoU 계산 예시`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 mIoU 계산 예시 흐름이 주석과 함께 드러납니다.
+
+```python
+# mIoU 계산 예시
+from collections import defaultdict
+
+def calculate_iou(targets, outputs, ious, class_count, num_classes=21):
+    for i in range(num_classes):
+        intersection = np.float32(np.sum((outputs == targets) * (targets == i)))
+        union = np.sum(targets == i) + np.sum(outputs == i) - intersection
+        if union > 0:
+            ious[i] += intersection / union
+            class_count[i] += 1
+    return ious, class_count
+
+ious = np.zeros(num_classes)
+class_count = defaultdict(int)
+with torch.no_grad():
+    model.eval()
+    for images, targets in tqdm(test_dataloader, desc="Evaluating"):
+        images = images.to(device)
+        outputs = model(images).detach().to("cpu").numpy()  # [B, num_classes, H, W]
+        targets = targets.detach().to("cpu").numpy()          # [B, H, W]
+        outputs = outputs.argmax(axis=1)
+        ious, class_count = calculate_iou(targets, outputs, ious, class_count, num_classes)
+
+miou = 0.0
+for idx in range(1, num_classes):
+    miou += ious[idx] / class_count[idx]
+miou /= (num_classes - 1)
+print(f"mIoU 계산 결과 : {miou}")
 ```
 
 ### 실습

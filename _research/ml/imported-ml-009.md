@@ -2,18 +2,18 @@
 title: "9.기본 지도학습 알고리즘들 (K-fold & 그리드서치)"
 date: 2026-03-08
 research_tab: "ML"
-research_kind: "Practice"
+research_kind: "Archive Note"
 source_title: "250822_코딩실습9_9.기본 지도학습 알고리즘들 (K-fold & 그리드서치)"
 source_path: "11_Machine_Learning/Code_Snippets/250822_코딩실습9_9.기본 지도학습 알고리즘들 (K-fold & 그리드서치).md"
-excerpt: "코딩실습9 9.기본 지도학습 알고리즘들 (K-fold & 그리드서치)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 1990년 캘리포니아 주택 데이터 순서로 큰 장을 먼저 훑고, 1990년 캘리포니아 주택 데이터, from sklearn.datasets...."
-research_summary: "코딩실습9 9.기본 지도학습 알고리즘들 (K-fold & 그리드서치)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 1990년 캘리포니아 주택 데이터 순서로 큰 장을 먼저 훑고, 1990년 캘리포니아 주택 데이터, from sklearn.datasets... 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 7개 코드 블록, 6개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 sklearn, numpy입니다."
+excerpt: "9.기본 지도학습 알고리즘들 (K-fold & 그리드서치)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 1990년 캘리포니아 주택 데이터 순서로 큰 장을 먼저 훑고, 1990년 캘리포니아 주택 데이터, from sklearn.datasets... 같은..."
+research_summary: "9.기본 지도학습 알고리즘들 (K-fold & 그리드서치)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 1990년 캘리포니아 주택 데이터 순서로 큰 장을 먼저 훑고, 1990년 캘리포니아 주택 데이터, from sklearn.datasets... 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 7개 코드 블록, 6개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 sklearn, numpy입니다."
 research_artifacts: "ipynb/md · 코드 7개 · 실행 6개"
 code_block_count: 7
 execution_block_count: 6
 research_focus:
-  - "https"
   - "1990년 캘리포니아 주택 데이터"
-  - "데이터 로드"
+  - "https"
+  - "RMSE 함수 정의"
 research_stack:
   - "sklearn"
   - "numpy"
@@ -24,7 +24,7 @@ tags:
   - research-archive
   - imported-note
   - ml
-  - practice
+  - archive-note
 ---
 
 ## 글 한눈에 보기
@@ -32,7 +32,7 @@ tags:
 <div class="research-overview research-overview--intro">
   <div class="research-overview__row">
     <div class="research-overview__label">문제 설정</div>
-    <div class="research-overview__value">코딩실습9 9.기본 지도학습 알고리즘들 (K-fold &amp; 그리드서치)에서 1990년 캘리포니아 주택 데이터 흐름을 직접 따라가며 구현했습니다.</div>
+    <div class="research-overview__value">https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_california_housing.html 데이터 피쳐 설명</div>
   </div>
   <div class="research-overview__row">
     <div class="research-overview__label">원본 구조</div>
@@ -84,10 +84,10 @@ https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_califor
 
 ### 1. 1990년 캘리포니아 주택 데이터
 
-- 단계: 데이터 불러오기
-- 구현 의도: 실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.
-- 핵심 API: -
-- 코드 포인트: 데이터 로드
+- 단계: 학습
+- 구현 의도: 하이퍼파라미터 탐색이나 교차검증을 통해 단순 실행이 아니라 성능 비교까지 해본 학습 코드입니다.
+- 핵심 API: `GridSearchCV`, `Ridge`, `RMSE`
+- 코드 포인트: 그리드 서치 설정 및 학습
 
 ### 2. from sklearn.datasets import fetch_california_housing
 
@@ -100,13 +100,16 @@ https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_califor
 
 ### 1990년 캘리포니아 주택 데이터
 
-**직접 해본 단계**: 데이터 불러오기
+**직접 해본 단계**: 학습
 
-실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.
+**핵심 API**: `GridSearchCV`, `Ridge`, `RMSE`
+
+하이퍼파라미터 탐색이나 교차검증을 통해 단순 실행이 아니라 성능 비교까지 해본 학습 코드입니다.
 
 ```python
-# 데이터 로드
-X, y = fetch_california_housing(return_X_y=True)
+# 그리드 서치 설정 및 학습
+grid = GridSearchCV(Ridge(), param_grid, scoring=rmse_scorer, cv=5)         # cv=5: cross validation
+grid.fit(X,y)
 ```
 
 ### from sklearn.datasets import fetch_california_housing

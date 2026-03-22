@@ -5,15 +5,13 @@ research_tab: "LLM"
 research_kind: "Practice"
 source_title: "3-5 (실습)여행_가이드_봇_만들기_혼자실습"
 source_path: "13_LLM_GenAI/Code_Snippets/3-5 (실습)여행_가이드_봇_만들기_혼자실습.md"
-excerpt: "여행 가이드 봇 만들기 - 혼자 실습, RAG 실습 준비, 초기 설정 중심으로 구현 과정을 정리한 여행 가이드 봇 만들기 혼자실습 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `ipynb/md` 원본과..."
-research_summary: "여행 가이드 봇 만들기 - 혼자 실습, RAG 실습 준비, 초기 설정 중심으로 구현 과정을 정리한 여행 가이드 봇 만들기 혼자실습 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `ipynb/md` 원본과 10개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, langchain_community, langchain_text_splitters, langchain_openai입니다."
+excerpt: "여행 가이드 봇 만들기 혼자실습에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 LLM 학습 기록입니다. 본문은 여행 가이드 봇 만들기 - 혼자 실습 순서로 핵심 장면을 먼저 훑고, RAG 실습 준비 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과..."
+research_summary: "여행 가이드 봇 만들기 혼자실습에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 LLM 학습 기록입니다. 본문은 여행 가이드 봇 만들기 - 혼자 실습 순서로 핵심 장면을 먼저 훑고, RAG 실습 준비 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 10개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, langchain_community, langchain_text_splitters, langchain_openai입니다."
 research_artifacts: "ipynb/md · 코드 10개 · 실행 7개"
 code_block_count: 10
 execution_block_count: 7
 research_focus:
   - "여행 가이드 봇 만들기 - 혼자 실습"
-  - "RAG 실습 준비"
-  - "초기 설정"
 research_stack:
   - "os"
   - "langchain_community"
@@ -30,9 +28,9 @@ tags:
   - practice
 ---
 
-여행 가이드 봇 만들기 - 혼자 실습, RAG 실습 준비, 초기 설정 중심으로 구현 과정을 정리한 여행 가이드 봇 만들기 혼자실습 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `ipynb/md` 원본과 10개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, langchain_community, langchain_text_splitters, langchain_openai입니다.
+여행 가이드 봇 만들기 혼자실습에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 LLM 학습 기록입니다. 본문은 여행 가이드 봇 만들기 - 혼자 실습 순서로 핵심 장면을 먼저 훑고, RAG 실습 준비 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 10개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, langchain_community, langchain_text_splitters, langchain_openai입니다.
 
-**빠르게 볼 수 있는 포인트**: 여행 가이드 봇 만들기 - 혼자 실습, RAG 실습 준비, 초기 설정.
+**빠르게 볼 수 있는 포인트**: 여행 가이드 봇 만들기 - 혼자 실습.
 
 **남겨둔 자료**: `ipynb/md` 원본과 10개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, langchain_community, langchain_text_splitters, langchain_openai입니다.
 
@@ -52,11 +50,15 @@ tags:
 
 ## What This Note Covers
 
-- 여행 가이드 봇 만들기 - 혼자 실습
-- RAG 실습 준비
-- 초기 설정
-- OpenAI API key
-- API키 설정
+### 여행 가이드 봇 만들기 - 혼자 실습
+
+RAG 실습 준비 같은 코드를 직접 따라가며 여행 가이드 봇 만들기 - 혼자 실습 흐름을 확인했습니다.
+
+- 읽을 포인트: 세부 흐름: RAG 실습 준비
+
+#### RAG 실습 준비
+
+검색과 컨텍스트 주입 단계를 실제 코드로 묶어 보는 구간입니다.
 
 ## Why This Matters
 
@@ -80,9 +82,7 @@ tags:
 
 ## Implementation Flow
 
-1. Key Step: 여행 가이드 봇 만들기 - 혼자 실습
-2. Key Step: 실습용 데이터 (제주도 맛집 가이드)
-3. Key Step: 문서를 불러오고(Load) 자르기(Split)
+1. 여행 가이드 봇 만들기 - 혼자 실습: RAG 실습 준비
 
 ## Code Highlights
 
@@ -108,6 +108,22 @@ jeju_content = """
 with open("jeju_guide.txt", "w", encoding="utf-8") as f:
     f.write(jeju_content)
 print("제주도 가이드북 파일 생성 완료")
+```
+
+### RAG 실습 준비
+
+`RAG 실습 준비`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 ==========================================, 벡터 저장소를 만들기 흐름이 주석과 함께 드러납니다.
+
+```python
+# ==========================================
+# 벡터 저장소를 만들기
+# ==========================================
+print("\n 벡터 DB 저장 중...")
+
+vectorstore = Chroma.from_documents(
+    documents=splits,
+    embedding=OpenAIEmbeddings(model="text-embedding-3-small")
+)
 ```
 
 ### RAG 실습 준비
@@ -140,20 +156,16 @@ prompt = PromptTemplate.from_template(template)
 
 ### RAG 실습 준비
 
-`RAG 실습 준비`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 ==========================================, 테스트 실행 흐름이 주석과 함께 드러납니다.
+`RAG 실습 준비`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 체인 생성 흐름이 주석과 함께 드러납니다.
 
 ```python
-# ==========================================
-# 테스트 실행
-# ==========================================
-# 질문하기
-query = "흑돼지 먹으려면 어디로 가야 해? 그리고 성산일출봉 입장료는 얼마야?"
-print(f"\n 질문: {query}")
-
-# 답변 출력
-response = rag_chain.invoke(query)
-print("\n=== AI 가이드의 답변 ===")
-print(response)
+# 체인 생성
+rag_chain = (
+    {"context": retriever, "question": RunnablePassthrough()}
+    | prompt
+    | llm
+    | StrOutputParser()
+)
 ```
 
 ## Source Bundle

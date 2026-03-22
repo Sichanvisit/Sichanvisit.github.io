@@ -5,14 +5,13 @@ research_tab: "DL"
 research_kind: "Archive Note"
 source_title: "(실습)FCN"
 source_path: "12_Deep_Learning/Code_Snippets/(실습)FCN.md"
-excerpt: "모델, FCN-8s --> backbone 중심으로 구현 과정을 정리한 FCN 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 12개 코드 블록, 12개 실행 셀을 함께 남겨 구현 흐름을 다..."
-research_summary: "모델, FCN-8s --> backbone 중심으로 구현 과정을 정리한 FCN 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 12개 코드 블록, 12개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, json, torch, numpy입니다."
+excerpt: "모델 중심의 DL 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 모델 순서로 핵심 장면을 먼저 훑고, @title VOCSegmentatio..., @title 시각화 함수, 모델 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md`..."
+research_summary: "모델 중심의 DL 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 모델 순서로 핵심 장면을 먼저 훑고, @title VOCSegmentatio..., @title 시각화 함수, 모델 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 12개 코드 블록, 12개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, json, torch, numpy입니다."
 research_artifacts: "md · 코드 12개 · 실행 12개"
 code_block_count: 12
 execution_block_count: 12
 research_focus:
   - "모델"
-  - "FCN-8s --> backbone"
 research_stack:
   - "os"
   - "json"
@@ -28,9 +27,9 @@ tags:
   - archive-note
 ---
 
-모델, FCN-8s --> backbone 중심으로 구현 과정을 정리한 FCN 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 12개 코드 블록, 12개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, json, torch, numpy입니다.
+모델 중심의 DL 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 모델 순서로 핵심 장면을 먼저 훑고, @title VOCSegmentatio..., @title 시각화 함수, 모델 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 12개 코드 블록, 12개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, json, torch, numpy입니다.
 
-**빠르게 볼 수 있는 포인트**: 모델, FCN-8s --> backbone.
+**빠르게 볼 수 있는 포인트**: 모델.
 
 **남겨둔 자료**: `md` 원본과 12개 코드 블록, 12개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, json, torch, numpy입니다.
 
@@ -50,8 +49,11 @@ tags:
 
 ## What This Note Covers
 
-- 모델
-- FCN-8s --> backbone
+### 모델
+
+모델 코드를 직접 따라가며 모델 흐름을 확인했습니다.
+
+- 읽을 포인트: 모델 정의, 손실, 최적화 흐름을 코드로 연결해 보는 구간입니다.
 
 ## Why This Matters
 
@@ -69,7 +71,7 @@ tags:
 
 ## Implementation Flow
 
-1. Key Step: FCN-8s --> backbone : VGG16
+1. 모델: 모델 코드를 직접 따라가며 모델 흐름을 확인했습니다.
 
 ## Code Highlights
 
@@ -106,6 +108,42 @@ class SegmentationDataset(Dataset):
         self.transform = transform
         self.target_transform = target_transform
 
+# ... trimmed ...
+```
+
+### @title 시각화 함수
+
+`@title 시각화 함수`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 시각화 함수, 내부함수 : 마스크에 클래스별 색상을 추가, (1,H,W) --> (H,W) 흐름이 주석과 함께 드러납니다.
+
+```python
+#@title 시각화 함수
+def draw_mask(images, masks, outputs=None, plot_size=4):
+
+    #내부함수 : 마스크에 클래스별 색상을 추가
+    def color_mask(image, target):
+        # (1,H,W) --> (H,W)
+        m = target.squeeze().numpy().astype(np.uint8)
+
+        # image와 같은 크기의 빈(데이터가 0인) 이미지
+        cm = np.zeros_like(image, dtype=np.uint8)
+
+        # 클래스 1~20번 까지 색상을 cm에 적용
+        for i in range(1,21):
+            cm[m == i] = train_dataset.categories.get(str(i),{"color":[0,0,0]})['color']
+
+        classes = [train_dataset.categories.get(str(idx), {"class":f"class_{idx}"})["class"]
+                   for idx in np.unique(m)]
+        return cm, classes
+
+    col = 3 if outputs is not None else 2
+    figsize = 8 if outputs is not None else 12
+    fig, ax = plt.subplots(plot_size, col, figsize=(14, figsize))
+
+    for batch in range(plot_size):
+        im = images[batch].numpy().transpose(1,2,0) # (c,h,w) --> (h,w,c)
+        ax[batch][0].imshow(im)
+        ax[batch][0].set_title("Origin")
+        ax[batch][0].axis('off')
 # ... trimmed ...
 ```
 

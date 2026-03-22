@@ -5,15 +5,14 @@ research_tab: "LLM"
 research_kind: "Archive Note"
 source_title: "3-4 (실습)1_미세조정_Freezing"
 source_path: "13_LLM_GenAI/Code_Snippets/3-4 (실습)1_미세조정_Freezing.md"
-excerpt: "허깅페이스의 사전학습만 진행된 다국어 BERT 모델(bert-base-multilingual-cased)을 활용하여 감성분류를 위한 미세조정 테스크를 만들어 봅니다. 요약 - 데이터가 많고, 성능이 최우선 → Full Fine-tuning - 성능·속도·안정성 골고루 → Partial Freeze..."
-research_summary: "허깅페이스의 사전학습만 진행된 다국어 BERT 모델(bert-base-multilingual-cased)을 활용하여 감성분류를 위한 미세조정 테스크를 만들어 봅니다. 요약 - 데이터가 많고, 성능이 최우선 → Full Fine-tuning - 성능·속도·안정성 골고루 → Partial Freeze Fine-tuning - 적은 GPU로 고성능 확보 → LoRA - 진짜 저렴하게 하고 싶다 → QLoRA. `md` 원본과 11개 코드 블록, 11개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 google, torch, sentencepiece, pandas입니다."
+excerpt: "1 미세조정 Freezing에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 LLM 학습 기록입니다. 본문은 감성 분류를 위한 BERT 미세조정, LLM 파인튜닝 방법 선택 기준 요약표 순서로 핵심 장면을 먼저 훑고, 토크나이져 로드, Dataset 만들기, TrainingArgu..."
+research_summary: "1 미세조정 Freezing에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 LLM 학습 기록입니다. 본문은 감성 분류를 위한 BERT 미세조정, LLM 파인튜닝 방법 선택 기준 요약표 순서로 핵심 장면을 먼저 훑고, 토크나이져 로드, Dataset 만들기, TrainingArguments 하이퍼... 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 11개 코드 블록, 11개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 google, torch, sentencepiece, pandas입니다."
 research_artifacts: "md · 코드 11개 · 실행 11개"
 code_block_count: 11
 execution_block_count: 11
 research_focus:
-  - "허깅페이스의 사전학습만 진행된 다국어 BERT 모델(bert-base-multilingual-cased..."
   - "감성 분류를 위한 BERT 미세조정"
-  - "먼저 감정분류를 위한 데이터세트를 구성합니다. 미세조정도 사전학습과 동일하게 토큰화가 진행되어야 하고,..."
+  - "LLM 파인튜닝 방법 선택 기준 요약표"
 research_stack:
   - "google"
   - "torch"
@@ -29,9 +28,9 @@ tags:
   - archive-note
 ---
 
-허깅페이스의 사전학습만 진행된 다국어 BERT 모델(bert-base-multilingual-cased)을 활용하여 감성분류를 위한 미세조정 테스크를 만들어 봅니다. 요약 - 데이터가 많고, 성능이 최우선 → Full Fine-tuning - 성능·속도·안정성 골고루 → Partial Freeze Fine-tuning - 적은 GPU로 고성능 확보 → LoRA - 진짜 저렴하게 하고 싶다 → QLoRA. `md` 원본과 11개 코드 블록, 11개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 google, torch, sentencepiece, pandas입니다.
+1 미세조정 Freezing에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 LLM 학습 기록입니다. 본문은 감성 분류를 위한 BERT 미세조정, LLM 파인튜닝 방법 선택 기준 요약표 순서로 핵심 장면을 먼저 훑고, 토크나이져 로드, Dataset 만들기, TrainingArguments 하이퍼... 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 11개 코드 블록, 11개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 google, torch, sentencepiece, pandas입니다.
 
-**빠르게 볼 수 있는 포인트**: 허깅페이스의 사전학습만 진행된 다국어 BERT 모델(bert-base-..., 감성 분류를 위한 BERT 미세조정, 먼저 감정분류를 위한 데이터세트를 구성합니다. 미세조정도 사전학습과 동....
+**빠르게 볼 수 있는 포인트**: 감성 분류를 위한 BERT 미세조정, LLM 파인튜닝 방법 선택 기준 요약표.
 
 **남겨둔 자료**: `md` 원본과 11개 코드 블록, 11개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 google, torch, sentencepiece, pandas입니다.
 
@@ -55,17 +54,25 @@ tags:
 
 허깅페이스의 사전학습만 진행된 다국어 BERT 모델(bert-base-multilingual-cased)을 활용하여 감성분류를 위한 미세조정 테스크를 만들어 봅니다.
 
-### 감성 분류를 위한 BERT 미세조정 > 데이터세트 구성
+- 읽을 포인트: 세부 흐름: 데이터세트 구성 > 토크나이져 로드, 전체 파인튜닝을 통한 분류 학습 > Trainer 모델 학습, 프리징 하여 미세조정 > 프리징된 모델 학습
 
-먼저 감정분류를 위한 데이터세트를 구성합니다. 미세조정도 사전학습과 동일하게 토큰화가 진행되어야 하고, 테스크에 맞게 입력과 라벨을 구성하여 만들어 줍니다. 예시에서는 AIHUB 한국어 감성 대화 말뭉치를 부분적으로 활용하여 6개의 감정을 분류하는 데이터세트를 구축합니다.
-
-### 데이터세트 구성 > 토크나이져 로드
+#### 데이터세트 구성 > 토크나이져 로드
 
 허깅페이스를 활용하여 bert-base-multilingual-cased 모델을 로드할것 이므로 이에 맞는 토크나이져를 AutoTokenizer 객체를 통해 로드해 줍니다.
 
-### 데이터세트 구성 > Dataset 만들기
+#### 전체 파인튜닝을 통한 분류 학습 > Trainer 모델 학습
 
-해당 예시에서는 감성분류를 위해 토큰화된 텍스트 - 클래스 번호형태로 매핑된 데이터를 만들어내는 Dataset을 구축합니다. 내부적으로 토큰화를 위해 미리 로드한 AutoTokenizer를 활용합니다. 이때 학습을 위해 max_length(최대길이), truncation(자르기), padding(패딩)을 적용하여 토큰화 합니다.
+허깅페이스는 학습 로직을 직접 구현할 필요없이 TrainingArguments로 만든 하이퍼파라미터를 적용한 학습을 수행하는 Trainer 객체를 제공합니다. 간단하게 Trainer 생성자에 모델과, TrainingArguments, 데이터세트를 입력하여 인스턴스를 만들고 trai...
+
+#### 프리징 하여 미세조정 > 프리징된 모델 학습
+
+학습은 동일하게 Trainer, TrainingArguments를 통해 학습 가능합니다. 총 학습 시간이 BERT를 전체 미세조정한것에 비해 적게 걸린것을 확인할 수 있습니다.
+
+### LLM 파인튜닝 방법 선택 기준 요약표
+
+요약 - 데이터가 많고, 성능이 최우선 → Full Fine-tuning - 성능·속도·안정성 골고루 → Partial Freeze Fine-tuning - 적은 GPU로 고성능 확보 → LoRA - 진짜 저렴하게 하고 싶다 → QLoRA
+
+- 읽을 포인트: LLM 파인튜닝 방법 선택 기준 요약표에서 다룬 핵심 개념과 구현 흐름을 다시 읽을 수 있게 정리한 구간입니다.
 
 ## Why This Matters
 
@@ -89,12 +96,24 @@ tags:
 
 ## Implementation Flow
 
-1. 감성 분류를 위한 BERT 미세조정: 허깅페이스의 사전학습만 진행된 다국어 BERT 모델(bert-base-multilingual-cased)을 활용하여 감성분류를 위한 미세조정 테스크를 만들어 봅니다.
-2. 감성 분류를 위한 BERT 미세조정 > 데이터세트 구성: 먼저 감정분류를 위한 데이터세트를 구성합니다. 미세조정도 사전학습과 동일하게 토큰화가 진행되어야 하고, 테스크에 맞게 입력과 라벨을 구성하여 만들어 줍니다. 예시에서는 AIHUB 한국어 감성 대화 말뭉치를 부분적으로 활용하여 6개의 감정을 분...
-3. 데이터세트 구성 > 토크나이져 로드: 허깅페이스를 활용하여 bert-base-multilingual-cased 모델을 로드할것 이므로 이에 맞는 토크나이져를 AutoTokenizer 객체를 통해 로드해 줍니다.
-4. 데이터세트 구성 > Dataset 만들기: 해당 예시에서는 감성분류를 위해 토큰화된 텍스트 - 클래스 번호형태로 매핑된 데이터를 만들어내는 Dataset을 구축합니다. 내부적으로 토큰화를 위해 미리 로드한 AutoTokenizer를 활용합니다. 이때 학습을 위해 max_length(최대길이), tr...
+1. 감성 분류를 위한 BERT 미세조정: 데이터세트 구성 > 토크나이져 로드, 전체 파인튜닝을 통한 분류 학습 > Trainer 모델 학습
+2. LLM 파인튜닝 방법 선택 기준 요약표: 요약 - 데이터가 많고, 성능이 최우선 → Full Fine-tuning - 성능·속도·안정성 골고루 → Partial Freeze Fine-tuning - 적은 GPU로 고성능 확보 → LoRA - 진짜 저렴하게 하고 싶...
 
 ## Code Highlights
+
+### 토크나이져 로드
+
+`토크나이져 로드`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 토크나이저 로드 흐름이 주석과 함께 드러납니다.
+
+```python
+from transformers import AutoTokenizer
+
+model_name = "google-bert/bert-base-multilingual-cased"
+
+# 토크나이저 로드
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+tokenizer('점심 시간이 30분이 남았습니다')
+```
 
 ### Dataset 만들기
 

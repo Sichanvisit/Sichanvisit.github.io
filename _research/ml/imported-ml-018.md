@@ -2,18 +2,18 @@
 title: "11.차원축소(KMeans+PCA)"
 date: 2026-03-08
 research_tab: "ML"
-research_kind: "Practice"
+research_kind: "Archive Note"
 source_title: "250901_코딩실습17_11.차원축소(KMeans+PCA)"
 source_path: "11_Machine_Learning/Code_Snippets/250901_코딩실습17_11.차원축소(KMeans+PCA).md"
-excerpt: "코딩실습17 11.차원축소(KMeans+PCA)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 군집화, 차원 축소, 전처리와 입력 정리 순서로 큰 장을 먼저 훑고, wine = load_wine(), StandardScaler 스케일링 같은 코드로 실제..."
-research_summary: "코딩실습17 11.차원축소(KMeans+PCA)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 군집화, 차원 축소, 전처리와 입력 정리 순서로 큰 장을 먼저 훑고, wine = load_wine(), StandardScaler 스케일링 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 12개 코드 블록, 11개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 sklearn, matplotlib, pandas입니다."
+excerpt: "11.차원축소(KMeans+PCA)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 군집화, 차원 축소, 전처리와 입력 정리 순서로 큰 장을 먼저 훑고, KMeans 모델 학습, StandardScaler 스케일링 같은 코드로 실제 구현을 이어서 확인할 수..."
+research_summary: "11.차원축소(KMeans+PCA)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 군집화, 차원 축소, 전처리와 입력 정리 순서로 큰 장을 먼저 훑고, KMeans 모델 학습, StandardScaler 스케일링 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 12개 코드 블록, 11개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 sklearn, matplotlib, pandas입니다."
 research_artifacts: "ipynb/md · 코드 12개 · 실행 11개"
 code_block_count: 12
 execution_block_count: 11
 research_focus:
+  - "스크리 플랏"
   - "=> K=3일때 실루엣 스코어가 가장 높다!"
-  - "표준화"
-  - "PCA 적용"
+  - "스크리플롯"
 research_stack:
   - "sklearn"
   - "matplotlib"
@@ -25,7 +25,7 @@ tags:
   - research-archive
   - imported-note
   - ml
-  - practice
+  - archive-note
 ---
 
 ## 글 한눈에 보기
@@ -49,7 +49,7 @@ tags:
   </div>
   <div class="research-overview__row">
     <div class="research-overview__label">구현 흐름</div>
-    <div class="research-overview__value">wine = load_wine() -&gt; StandardScaler 스케일링 -&gt; KMeans 모델 학습</div>
+    <div class="research-overview__value">KMeans 모델 학습 -&gt; StandardScaler 스케일링 -&gt; wine = load_wine()</div>
   </div>
   <div class="research-overview__row">
     <div class="research-overview__label">자료</div>
@@ -83,12 +83,12 @@ tags:
 
 ## 구현 흐름
 
-### 1. wine = load_wine()
+### 1. KMeans 모델 학습
 
-- 단계: 데이터 불러오기
-- 구현 의도: 실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.
-- 핵심 API: -
-- 코드 포인트: -
+- 단계: 학습
+- 구현 의도: 훈련 데이터를 기준으로 모델을 실제로 fitting 하며 성능을 끌어올리는 학습 단계입니다.
+- 핵심 API: `KMeans`, `matplotlib`
+- 코드 포인트: 스크리 플랏
 
 ### 2. StandardScaler 스케일링
 
@@ -97,12 +97,12 @@ tags:
 - 핵심 API: `StandardScaler`
 - 코드 포인트: 표준화
 
-### 3. KMeans 모델 학습
+### 3. wine = load_wine()
 
-- 단계: 학습
-- 구현 의도: 훈련 데이터를 기준으로 모델을 실제로 fitting 하며 성능을 끌어올리는 학습 단계입니다.
-- 핵심 API: `KMeans`, `matplotlib`
-- 코드 포인트: 스크리 플랏
+- 단계: 데이터 불러오기
+- 구현 의도: 실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.
+- 핵심 API: -
+- 코드 포인트: -
 
 ### 4. 데이터 분포 시각화
 
@@ -111,46 +111,21 @@ tags:
 - 핵심 API: `matplotlib`
 - 코드 포인트: 스크리플롯
 
-### 5. from sklearn.datasets import load_wine
-
-- 단계: 환경 준비
-- 구현 의도: 판다스 DataFrame을 불러오고 열과 행을 다루는 기본 조작을 익히는 실습 코드입니다.
-- 핵심 API: `StandardScaler`
-- 코드 포인트: -
-
-### 6. Kmeans
+### 5. Kmeans
 
 - 단계: 구현 코드
 - 구현 의도: 학습된 모델로 추론을 수행하고 예측 결과를 점검하는 코드입니다.
 - 핵심 API: `KMeans`
 - 코드 포인트: Kmeans
 
+### 6. from sklearn.datasets import load_wine
+
+- 단계: 환경 준비
+- 구현 의도: 판다스 DataFrame을 불러오고 열과 행을 다루는 기본 조작을 익히는 실습 코드입니다.
+- 핵심 API: `StandardScaler`
+- 코드 포인트: -
+
 ## 코드로 확인한 내용
-
-### wine = load_wine()
-
-**직접 해본 단계**: 데이터 불러오기
-
-실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.
-
-```python
-wine = load_wine()
-X, y = wine.data, wine.target
-```
-
-### StandardScaler 스케일링
-
-**직접 해본 단계**: 전처리
-
-**핵심 API**: `StandardScaler`
-
-결측치 처리, 인코딩, 스케일링처럼 모델이 바로 사용할 수 있도록 입력 형태를 다듬는 단계입니다.
-
-```python
-# 표준화
-scaler = StandardScaler()
-X_scaled = scaler.fit_transform(X)
-```
 
 ### KMeans 모델 학습
 
@@ -179,6 +154,31 @@ plt.xticks(k_range)
 plt.show()
 ```
 
+### StandardScaler 스케일링
+
+**직접 해본 단계**: 전처리
+
+**핵심 API**: `StandardScaler`
+
+결측치 처리, 인코딩, 스케일링처럼 모델이 바로 사용할 수 있도록 입력 형태를 다듬는 단계입니다.
+
+```python
+# 표준화
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+```
+
+### wine = load_wine()
+
+**직접 해본 단계**: 데이터 불러오기
+
+실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.
+
+```python
+wine = load_wine()
+X, y = wine.data, wine.target
+```
+
 ### 데이터 분포 시각화
 
 **직접 해본 단계**: 시각화
@@ -202,6 +202,23 @@ plt.grid(True)
 plt.show()
 ```
 
+### Kmeans
+
+**직접 해본 단계**: 구현 코드
+
+**핵심 API**: `KMeans`
+
+학습된 모델로 추론을 수행하고 예측 결과를 점검하는 코드입니다.
+
+```python
+# Kmeans
+
+k = 3
+
+kmeans = KMeans(n_clusters=k)
+clusters = kmeans.fit_predict(X_pca_2d)          # fit_predict(): 학습과 동시에 클러스터 라벨 예측을 한번에 해주는 함수
+```
+
 ### from sklearn.datasets import load_wine
 
 **직접 해본 단계**: 환경 준비
@@ -218,23 +235,6 @@ from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.metrics import silhouette_score
-```
-
-### Kmeans
-
-**직접 해본 단계**: 구현 코드
-
-**핵심 API**: `KMeans`
-
-학습된 모델로 추론을 수행하고 예측 결과를 점검하는 코드입니다.
-
-```python
-# Kmeans
-
-k = 3
-
-kmeans = KMeans(n_clusters=k)
-clusters = kmeans.fit_predict(X_pca_2d)          # fit_predict(): 학습과 동시에 클러스터 라벨 예측을 한번에 해주는 함수
 ```
 
 ## 참고 자료

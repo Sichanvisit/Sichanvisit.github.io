@@ -5,15 +5,15 @@ research_tab: "DL"
 research_kind: "Mission"
 source_title: "Mission_8_강사공유"
 source_path: "12_Deep_Learning/Code_Snippets/Mission_8_강사공유.md"
-excerpt: "Focal Loss - Cross Entropy Loss의 개선된 버전 - 클래스 불균형 문제 해결을 위해 도입 - 쉽게 맞추는 샘플보다 어려운 샘플에 더 큰 가중치를 부여하여 모델이 어려운 샘플을 더 학습하도록 유도 Dice Loss - 불균형한 데이터에서 주로 사용되는 Segmentation L..."
-research_summary: "Focal Loss - Cross Entropy Loss의 개선된 버전 - 클래스 불균형 문제 해결을 위해 도입 - 쉽게 맞추는 샘플보다 어려운 샘플에 더 큰 가중치를 부여하여 모델이 어려운 샘플을 더 학습하도록 유도 Dice Loss - 불균형한 데이터에서 주로 사용되는 Segmentation Loss - IoU(Intersecti... 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 28개 코드 블록, 21개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, random, collections, numpy입니다."
+excerpt: "4.모델 학습 및 평가, 사전설정 중심의 DL 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 4.모델 학습 및 평가, 사전설정, 2.데이터 불러오기 순서로 핵심 장면을 먼저 훑고, 증강이 있는 데이터셋, 4.모델 학습 및 평가, UNet 같은..."
+research_summary: "4.모델 학습 및 평가, 사전설정 중심의 DL 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 4.모델 학습 및 평가, 사전설정, 2.데이터 불러오기 순서로 핵심 장면을 먼저 훑고, 증강이 있는 데이터셋, 4.모델 학습 및 평가, UNet 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 28개 코드 블록, 21개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, random, collections, numpy입니다."
 research_artifacts: "md · 코드 28개 · 실행 21개"
 code_block_count: 28
 execution_block_count: 21
 research_focus:
+  - "4.모델 학습 및 평가"
   - "사전설정"
   - "2.데이터 불러오기"
-  - "데이터 시각화"
 research_stack:
   - "os"
   - "random"
@@ -29,9 +29,9 @@ tags:
   - mission
 ---
 
-Focal Loss - Cross Entropy Loss의 개선된 버전 - 클래스 불균형 문제 해결을 위해 도입 - 쉽게 맞추는 샘플보다 어려운 샘플에 더 큰 가중치를 부여하여 모델이 어려운 샘플을 더 학습하도록 유도 Dice Loss - 불균형한 데이터에서 주로 사용되는 Segmentation Loss - IoU(Intersecti... 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 28개 코드 블록, 21개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, random, collections, numpy입니다.
+4.모델 학습 및 평가, 사전설정 중심의 DL 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 4.모델 학습 및 평가, 사전설정, 2.데이터 불러오기 순서로 핵심 장면을 먼저 훑고, 증강이 있는 데이터셋, 4.모델 학습 및 평가, UNet 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 28개 코드 블록, 21개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, random, collections, numpy입니다.
 
-**빠르게 볼 수 있는 포인트**: 사전설정, 2.데이터 불러오기, 데이터 시각화.
+**빠르게 볼 수 있는 포인트**: 4.모델 학습 및 평가, 사전설정, 2.데이터 불러오기.
 
 **남겨둔 자료**: `md` 원본과 28개 코드 블록, 21개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, random, collections, numpy입니다.
 
@@ -53,19 +53,47 @@ Focal Loss - Cross Entropy Loss의 개선된 버전 - 클래스 불균형 문제
 
 ### 4.모델 학습 및 평가
 
-Focal Loss - Cross Entropy Loss의 개선된 버전 - 클래스 불균형 문제 해결을 위해 도입 - 쉽게 맞추는 샘플보다 어려운 샘플에 더 큰 가중치를 부여하여 모델이 어려운 샘플을 더 학습하도록 유도 Dice Loss - 불균형한 데이터에서 주로 사용되는 Segmentation Loss - IoU(Intersection over Union)와 유사한 방식으로 픽셀 간...
+Focal Loss - Cross Entropy Loss의 개선된 버전 - 클래스 불균형 문제 해결을 위해 도입 - 쉽게 맞추는 샘플보다 어려운 샘플에 더 큰 가중치를 부여하여 모델이 어려운 샘플을 더 학습하도록 유도 Dice Loss - 불균형한 데이터에서 주로 사용되는 Segmentation Loss - IoU(Intersecti...
 
-### Key Step
+- 읽을 포인트: 세부 흐름: UNet, Transformed Data
 
-폴더 내부 이미지 모두 가져오기
+#### UNet
 
-### Key Step
+비전 모델이 객체나 픽셀 단위를 어떻게 예측하는지 구현으로 따라가는 구간입니다.
 
-원본이미지와 fuse이미지, save이미지
+#### Transformed Data
 
-### Key Step
+모델 정의, 손실, 최적화 흐름을 코드로 연결해 보는 구간입니다.
 
-사이즈 확인 (H, W, C)
+### 사전설정
+
+사전설정 코드를 직접 따라가며 사전설정 흐름을 확인했습니다.
+
+- 읽을 포인트: 사전설정 아래 코드와 함께 읽으면 구현 포인트가 더 또렷해지는 구간입니다.
+
+### 2.데이터 불러오기
+
+데이터 시각화, 마스크 라벨링, 데이터셋 > 증강이 있는 데이터셋 같은 코드를 직접 따라가며 2.데이터 불러오기 흐름을 확인했습니다.
+
+- 읽을 포인트: 세부 흐름: 데이터 시각화, 마스크 라벨링, 데이터셋 > 증강이 있는 데이터셋
+
+#### 데이터 시각화
+
+2.데이터 불러오기 > 데이터 시각화 아래 코드와 함께 읽으면 구현 포인트가 더 또렷해지는 구간입니다.
+
+#### 마스크 라벨링
+
+2.데이터 불러오기 > 마스크 라벨링 아래 코드와 함께 읽으면 구현 포인트가 더 또렷해지는 구간입니다.
+
+#### 데이터셋 > 증강이 있는 데이터셋
+
+데이터셋 > 증강이 있는 데이터셋 아래 코드와 함께 읽으면 구현 포인트가 더 또렷해지는 구간입니다.
+
+### 3.모델 저장 및 불러오기
+
+3.모델 저장 및 불러오기 코드를 직접 따라가며 3.모델 저장 및 불러오기 흐름을 확인했습니다.
+
+- 읽을 포인트: 모델 정의, 손실, 최적화 흐름을 코드로 연결해 보는 구간입니다.
 
 ## Why This Matters
 
@@ -89,82 +117,46 @@ Focal Loss - Cross Entropy Loss의 개선된 버전 - 클래스 불균형 문제
 
 ## Implementation Flow
 
-1. 4.모델 학습 및 평가: Focal Loss - Cross Entropy Loss의 개선된 버전 - 클래스 불균형 문제 해결을 위해 도입 - 쉽게 맞추는 샘플보다 어려운 샘플에 더 큰 가중치를 부여하여 모델이 어려운 샘플을 더 학습하도록 유도 Dice Loss - 불균형한 데이터에서 주로 사용되는...
-2. Key Step: 폴더 내부 이미지 모두 가져오기
-3. Key Step: 원본이미지와 fuse이미지, save이미지
-4. Key Step: 사이즈 확인 (H, W, C)
+1. 4.모델 학습 및 평가: UNet, Transformed Data
+2. 사전설정: 사전설정 코드를 직접 따라가며 사전설정 흐름을 확인했습니다.
+3. 2.데이터 불러오기: 데이터 시각화, 마스크 라벨링
+4. 3.모델 저장 및 불러오기: 3.모델 저장 및 불러오기 코드를 직접 따라가며 3.모델 저장 및 불러오기 흐름을 확인했습니다.
 
 ## Code Highlights
 
-### 마스크 라벨링
+### 증강이 있는 데이터셋
 
-`마스크 라벨링`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 데이터셋 전체의 고유 색상 수집, 클래스 개수가 max_classes를 넘으면 중단, 모든 마스크에서 등장하는 색상 수집 흐름이 주석과 함께 드러납니다.
-
-```python
-import numpy as np
-import torch
-import torch.nn as nn
-import torch.optim as optim
-from torch.utils.data import Dataset, DataLoader, random_split
-
-# 데이터셋 전체의 고유 색상 수집
-def get_unique_colors(image_folder, mask_files, max_classes=11):
-    """
-    데이터셋의 모든 마스크에서 고유한 색상을 추출하는 함수.
-
-    Args:
-        image_folder (str): 마스크 이미지가 있는 폴더 경로
-        mask_files (list): 마스크 이미지 파일 리스트
-        max_classes (int): 최대 클래스 개수 (기본값: 11)
-
-    Returns:
-        list: 고유한 색상 리스트 (최대 max_classes개)
-    """
-    color_set = set()
-
-    for mask_file in mask_files:
-        mask_path = os.path.join(image_folder, mask_file)
-        mask = cv2.imread(mask_path, cv2.IMREAD_COLOR)
-        mask = cv2.cvtColor(mask, cv2.COLOR_BGR2RGB)
-        unique_colors, _ = np.unique(mask.reshape(-1, 3), axis=0, return_counts=True)   # 고유한 색상 추출 (H * W, 3)
-
-        for color in unique_colors:
-# ... trimmed ...
-```
-
-### 데이터셋
-
-`데이터셋`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 데이터셋 클래스 정의, 원본 이미지 로드, 마스크 로드 (RGB 모드) 흐름이 주석과 함께 드러납니다.
+`증강이 있는 데이터셋`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 시각화, 이미지를 0~1 범위로 변환 (tv_tensors.Image는 일반적으로 정규화되어 있음), 원본 이미지 출력 흐름이 주석과 함께 드러납니다.
 
 ```python
-# 데이터셋 클래스 정의
-class FootballDataset(Dataset):
-    def __init__(self, image_files, mask_files, image_folder, color_to_label, transform=None):
-        self.image_files = image_files
-        self.mask_files = mask_files
-        self.image_folder = image_folder
-        self.color_to_label = color_to_label  # 고정된 클래스 매핑
-        self.transform = transform
+# @title 시각화
+import matplotlib.pyplot as plt
+import torchvision.transforms.v2.functional as F
+from torchvision.utils import draw_segmentation_masks
 
-    def __len__(self):
-        return len(self.image_files)
+def visualize_samples(loader, num_samples=3):
+    """ 데이터 로더에서 샘플을 가져와 이미지, 마스크, 오버레이 확인하는 함수 """
+    data_iter = iter(loader)
+    imgs, masks = next(data_iter)  # 배치에서 첫 번째 샘플 가져오기
 
-    def __getitem__(self, idx):
-        img_path = os.path.join(self.image_folder, self.image_files[idx])
-        mask_path = os.path.join(self.image_folder, self.mask_files[idx])
+    fig, axs = plt.subplots(num_samples, 2, figsize=(9, num_samples * 3))  # (num_samples, 3) 크기의 서브플롯
 
-        # 원본 이미지 로드
-        img = cv2.imread(img_path)
-        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    for i in range(num_samples):
+        img = imgs[i]
+        mask = masks[i]
 
-        # 마스크 로드 (RGB 모드)
-        mask = cv2.imread(mask_path, cv2.IMREAD_COLOR)
-        mask = cv2.cvtColor(mask, cv2.COLOR_BGR2RGB)
+        # 이미지를 0~1 범위로 변환 (tv_tensors.Image는 일반적으로 정규화되어 있음)
+        img = F.to_dtype(img, torch.uint8, scale=True)
 
-        # 트랜스폼 분기
-        if self.transform is None:
-            img = cv2.resize(img, (256, 256)) / 255.0  # 정규화
-            img = torch.tensor(img, dtype=torch.float32).permute(2, 0, 1)  # (H, W, C) → (C, H, W)
+        # 원본 이미지 출력
+        axs[i, 0].imshow(img.permute(1, 2, 0).numpy())  # (C, H, W) → (H, W, C)
+        axs[i, 0].set_title("Original Image")
+        axs[i, 0].axis("off")
+
+        # 마스크 출력 (Grayscale 변환)
+        axs[i, 1].imshow(mask.numpy())
+        axs[i, 1].set_title("Segmentation Mask")
+        axs[i, 1].axis("off")
 # ... trimmed ...
 ```
 
@@ -202,6 +194,40 @@ def train_model(model, model_name, trainloader, valloader, criterion, optimizer,
 
         avg_train_loss = train_loss / len(trainloader)
 # ... trimmed ...
+```
+
+### UNet
+
+`UNet`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 모델 학습 흐름이 주석과 함께 드러납니다.
+
+```python
+# 모델 학습
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+model = UNet(num_classes=11).to(device)
+
+num_epochs = 35
+criterion = HybridLoss(alpha=0.5, num_classes=11)
+optimizer = optim.Adam(model.parameters(), lr=0.005, weight_decay=1e-4)
+scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=num_epochs, eta_min=1e-6)
+
+train_model(model, "Baseline_UNet", train_loader, val_loader, criterion, optimizer, scheduler, num_epochs)
+```
+
+### Transformed Data
+
+`Transformed Data`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 모델 학습 흐름이 주석과 함께 드러납니다.
+
+```python
+# @title 모델 학습
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+model = UNet(num_classes=11).to(device)
+
+num_epochs = 51
+criterion = HybridLoss(alpha=0.5, num_classes=11)
+optimizer = optim.Adam(model.parameters(), lr=0.005, weight_decay=1e-4)
+scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=3, threshold=1e-4, min_lr=1e-6)
+
+train_model(model, "Transformed_UNet", train_transformed_loader, val_transformed_loader, criterion, optimizer, scheduler, num_epochs)
 ```
 
 ## Source Bundle

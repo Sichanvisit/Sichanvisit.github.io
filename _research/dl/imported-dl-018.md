@@ -5,15 +5,15 @@ research_tab: "DL"
 research_kind: "Archive Note"
 source_title: "(실습)사전훈련모델"
 source_path: "12_Deep_Learning/Code_Snippets/(실습)사전훈련모델.md"
-excerpt: "CIFAR-100 사전학습: CIFAR-100 데이터셋을 사용해 SimpleCNN 모델을 5 에폭 동안 학습한 후, 가중치를 저장합니다. MNIST 데이터 전처리: MNIST 이미지를 32×32, 3채널로 변환하여 CIFAR-100 모델에 맞게 전처리합니다. 페이지 상단에서 문제 정의, 구현 범위,..."
-research_summary: "CIFAR-100 사전학습: CIFAR-100 데이터셋을 사용해 SimpleCNN 모델을 5 에폭 동안 학습한 후, 가중치를 저장합니다. MNIST 데이터 전처리: MNIST 이미지를 32×32, 3채널로 변환하여 CIFAR-100 모델에 맞게 전처리합니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 36개 코드 블록, 30개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, numpy입니다."
+excerpt: "코드 설명, 사전 함수 중심의 DL 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 코드 설명, 사전 함수, 1ch --> 3ch 순서로 핵심 장면을 먼저 훑고, 사전 함수, 1ch --> 3ch, 모델 설계 같은 코드로 실제 구현을 이어서 확인..."
+research_summary: "코드 설명, 사전 함수 중심의 DL 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 코드 설명, 사전 함수, 1ch --> 3ch 순서로 핵심 장면을 먼저 훑고, 사전 함수, 1ch --> 3ch, 모델 설계 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 36개 코드 블록, 30개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, numpy입니다."
 research_artifacts: "md · 코드 36개 · 실행 30개"
 code_block_count: 36
 execution_block_count: 30
 research_focus:
-  - "CIFAR-100 사전학습"
   - "코드 설명"
   - "사전 함수"
+  - "1ch --> 3ch"
 research_stack:
   - "torch"
   - "torchvision"
@@ -29,9 +29,9 @@ tags:
   - archive-note
 ---
 
-CIFAR-100 사전학습: CIFAR-100 데이터셋을 사용해 SimpleCNN 모델을 5 에폭 동안 학습한 후, 가중치를 저장합니다. MNIST 데이터 전처리: MNIST 이미지를 32×32, 3채널로 변환하여 CIFAR-100 모델에 맞게 전처리합니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 36개 코드 블록, 30개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, numpy입니다.
+코드 설명, 사전 함수 중심의 DL 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 코드 설명, 사전 함수, 1ch --> 3ch 순서로 핵심 장면을 먼저 훑고, 사전 함수, 1ch --> 3ch, 모델 설계 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 36개 코드 블록, 30개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, numpy입니다.
 
-**빠르게 볼 수 있는 포인트**: CIFAR-100 사전학습, 코드 설명, 사전 함수.
+**빠르게 볼 수 있는 포인트**: 코드 설명, 사전 함수, 1ch --> 3ch.
 
 **남겨둔 자료**: `md` 원본과 36개 코드 블록, 30개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, numpy입니다.
 
@@ -55,17 +55,31 @@ CIFAR-100 사전학습: CIFAR-100 데이터셋을 사용해 SimpleCNN 모델을 
 
 CIFAR-100 사전학습: CIFAR-100 데이터셋을 사용해 SimpleCNN 모델을 5 에폭 동안 학습한 후, 가중치를 저장합니다. MNIST 데이터 전처리: MNIST 이미지를 32×32, 3채널로 변환하여 CIFAR-100 모델에 맞게 전처리합니다.
 
-### Key Step
+- 읽을 포인트: 코드 설명에서 다룬 핵심 개념과 구현 흐름을 다시 읽을 수 있게 정리한 구간입니다.
 
-모델 초기화, 손실함수, 옵티마이저
+### 사전 함수
 
-### Key Step
+사전 함수 코드를 직접 따라가며 사전 함수 흐름을 확인했습니다.
 
-def train(model, dd,,d,d,d,d)
+- 읽을 포인트: 사전 함수 아래 코드와 함께 읽으면 구현 포인트가 더 또렷해지는 구간입니다.
 
-### Key Step
+### 1ch --> 3ch
 
-train_loss, train_acc = train_epoch(model_cifar, cifar_train_loader, loss_fn, optim_cifar)
+1ch --> 3ch 코드를 직접 따라가며 1ch --> 3ch 흐름을 확인했습니다.
+
+- 읽을 포인트: 1ch --> 3ch 아래 코드와 함께 읽으면 구현 포인트가 더 또렷해지는 구간입니다.
+
+### 모델 설계
+
+모델 설계 코드를 직접 따라가며 모델 설계 흐름을 확인했습니다.
+
+- 읽을 포인트: 모델 정의, 손실, 최적화 흐름을 코드로 연결해 보는 구간입니다.
+
+### 학습/검증 함수
+
+학습/검증 함수 코드를 직접 따라가며 학습/검증 함수 흐름을 확인했습니다.
+
+- 읽을 포인트: 모델 정의, 손실, 최적화 흐름을 코드로 연결해 보는 구간입니다.
 
 ## Why This Matters
 
@@ -83,10 +97,11 @@ train_loss, train_acc = train_epoch(model_cifar, cifar_train_loader, loss_fn, op
 
 ## Implementation Flow
 
-1. 코드 설명: CIFAR-100 사전학습: CIFAR-100 데이터셋을 사용해 SimpleCNN 모델을 5 에폭 동안 학습한 후, 가중치를 저장합니다. MNIST 데이터 전처리: MNIST 이미지를 32×32, 3채널로 변환하여 CIFAR-100 모델에 맞게 전처리합니다.
-2. Key Step: 모델 초기화, 손실함수, 옵티마이저
-3. Key Step: def train(model, dd,,d,d,d,d)
-4. Key Step: train_loss, train_acc = train_epoch(model_cifar, cifar_train_loader, loss_fn, optim_cifar)
+1. 코드 설명: CIFAR-100 사전학습: CIFAR-100 데이터셋을 사용해 SimpleCNN 모델을 5 에폭 동안 학습한 후, 가중치를 저장합니다. MNIST 데이터 전처리: MNIST 이미지를 32×32, 3채널로 변환하여 CIFAR-100 모델에 맞게 전처리...
+2. 사전 함수: 사전 함수 코드를 직접 따라가며 사전 함수 흐름을 확인했습니다.
+3. 1ch --> 3ch: 1ch --> 3ch 코드를 직접 따라가며 1ch --> 3ch 흐름을 확인했습니다.
+4. 모델 설계: 모델 설계 코드를 직접 따라가며 모델 설계 흐름을 확인했습니다.
+5. 학습/검증 함수: 학습/검증 함수 코드를 직접 따라가며 학습/검증 함수 흐름을 확인했습니다.
 
 ## Code Highlights
 
@@ -124,6 +139,27 @@ def visualize_one_per_category(dataset, dataset_name="Dataset", cmap=None):
     for i, label in enumerate(sorted(samples.keys())):
         ax = axes[i]
 # ... trimmed ...
+```
+
+### 1ch --> 3ch
+
+`1ch --> 3ch`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+
+```python
+from PIL import Image
+
+gray_img_array = mnist_train.data[0].numpy()
+gray_img_pil = Image.fromarray(gray_img_array, mode="L")
+
+transform_to3 = transforms.Compose([
+    transforms.Grayscale(num_output_channels=3),
+    transforms.ToTensor()
+])
+img_method1 = transform_to3(gray_img_pil)
+print(img_method1.shape)
+
+img_method2 = transforms.ToTensor()(gray_img_pil.convert('RGB'))
+print(img_method2.shape)
 ```
 
 ### 모델 설계

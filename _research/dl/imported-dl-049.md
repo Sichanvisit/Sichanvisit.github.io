@@ -5,15 +5,15 @@ research_tab: "DL"
 research_kind: "Mission"
 source_title: "Mission_6_강사공유"
 source_path: "12_Deep_Learning/Code_Snippets/Mission_6_강사공유.md"
-excerpt: "* ResNet-18 이용하여 전이 학습. * ResNet-18 이용 * ResNet의 마지막 블록(layer4)와 Fully Connected Layer만 학습 하도록 설정. `md` 원본과 38개 코드 블록, 38개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택..."
-research_summary: "* ResNet-18 이용하여 전이 학습. * ResNet-18 이용 * ResNet의 마지막 블록(layer4)와 Fully Connected Layer만 학습 하도록 설정. `md` 원본과 38개 코드 블록, 38개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, math, glob, warnings입니다."
+excerpt: "사전 설정, 데이터 분석 중심의 DL 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 사전 설정, 데이터 분석, 데이터 전처리 순서로 핵심 장면을 먼저 훑고, CNN 모델 정의, 기본 모델 학습, 모델 학습 결과 같은 코드로 실제 구현을 이어서..."
+research_summary: "사전 설정, 데이터 분석 중심의 DL 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 사전 설정, 데이터 분석, 데이터 전처리 순서로 핵심 장면을 먼저 훑고, CNN 모델 정의, 기본 모델 학습, 모델 학습 결과 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 38개 코드 블록, 38개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, math, glob, warnings입니다."
 research_artifacts: "md · 코드 38개 · 실행 38개"
 code_block_count: 38
 execution_block_count: 38
 research_focus:
   - "사전 설정"
-  - "이번 미션에서는 흉부 X-Ray 사진을 바탕으로 폐렴 환자를 구분하는 작업을 수행합니다. 이번 미션의..."
-  - "과제 요약"
+  - "데이터 분석"
+  - "데이터 전처리"
 research_stack:
   - "os"
   - "math"
@@ -29,9 +29,9 @@ tags:
   - mission
 ---
 
-* ResNet-18 이용하여 전이 학습. * ResNet-18 이용 * ResNet의 마지막 블록(layer4)와 Fully Connected Layer만 학습 하도록 설정. `md` 원본과 38개 코드 블록, 38개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, math, glob, warnings입니다.
+사전 설정, 데이터 분석 중심의 DL 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 사전 설정, 데이터 분석, 데이터 전처리 순서로 핵심 장면을 먼저 훑고, CNN 모델 정의, 기본 모델 학습, 모델 학습 결과 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 38개 코드 블록, 38개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, math, glob, warnings입니다.
 
-**빠르게 볼 수 있는 포인트**: 사전 설정, 이번 미션에서는 흉부 X-Ray 사진을 바탕으로 폐렴 환자를 구분하는..., 과제 요약.
+**빠르게 볼 수 있는 포인트**: 사전 설정, 데이터 분석, 데이터 전처리.
 
 **남겨둔 자료**: `md` 원본과 38개 코드 블록, 38개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, math, glob, warnings입니다.
 
@@ -51,21 +51,57 @@ tags:
 
 ## What This Note Covers
 
-### 사전 설정 > 과제 요약
+### 사전 설정
 
-이번 미션에서는 흉부 X-Ray 사진을 바탕으로 폐렴 환자를 구분하는 작업을 수행합니다. 이번 미션의 목표는 X-Ray 사진을 입력으로 받아 폐렴 여부를 구분하는 분류(Classification) 모델을 만드는 것입니다. 아래 데이터셋을 활용하여 다양한 이미지 전처리 및 증강 기법과 Transfer Learning과 Fine-Tuning 기법을 실험해보고, 모델의 성능을 평가해 보세요.
+과제 요약 같은 코드를 직접 따라가며 사전 설정 흐름을 확인했습니다.
 
-### 데이터 > 목적
+- 읽을 포인트: 세부 흐름: 과제 요약
+
+#### 과제 요약
+
+이번 미션에서는 흉부 X-Ray 사진을 바탕으로 폐렴 환자를 구분하는 작업을 수행합니다. 이번 미션의 목표는 X-Ray 사진을 입력으로 받아 폐렴 여부를 구분하는 분류(Classification) 모델을 만드는 것입니다. 아래 데이터셋을 활용하여 다양한 이미지 전처리 및 증강 기법...
+
+### 데이터 분석
+
+데이터, 데이터 > 목적, 데이터 > 데이터셋 같은 코드를 직접 따라가며 데이터 분석 흐름을 확인했습니다.
+
+- 읽을 포인트: 세부 흐름: 데이터, 데이터 > 목적, 데이터 > 데이터셋
+
+#### 데이터
+
+데이터 분석 > 데이터에서 다룬 핵심 개념과 구현 흐름을 다시 읽을 수 있게 정리한 구간입니다.
+
+#### 데이터 > 목적
 
 * 본 프로젝트는 흉부 X-Ray 사진을 바탕으로 폐렴 환자를 구분하는 분류 모델 개발을 목표 * 다양한 이미지 전처리 및 증강 기법을 적용하고, Transfer Learning 및 Fine-Tuning 기법을 활용하여 모델 성능을 평가
 
-### 데이터 > 데이터셋
+#### 데이터 > 데이터셋
 
 * 본 프로젝트에서는 Chest X-Ray Images (Pneumonia) 데이터셋을 사용하며, 데이터는 훈련(train), 검증(val), 테스트(test)로 구성되어 있다.
 
-### Transfer Learning > Feature Extraction
+### 데이터 전처리
 
-* ResNet-18 이용하여 전이 학습
+데이터 전처리 코드를 직접 따라가며 데이터 전처리 흐름을 확인했습니다.
+
+- 읽을 포인트: 이미지 입력을 배치로 묶고 증강하며 학습 가능한 형태로 만드는 구간입니다.
+
+### CNN 모델 정의
+
+CNN 모델 정의 코드를 직접 따라가며 CNN 모델 정의 흐름을 확인했습니다.
+
+- 읽을 포인트: 모델 정의, 손실, 최적화 흐름을 코드로 연결해 보는 구간입니다.
+
+### 기본 모델 학습
+
+기본 모델 학습 코드를 직접 따라가며 기본 모델 학습 흐름을 확인했습니다.
+
+- 읽을 포인트: 모델 정의, 손실, 최적화 흐름을 코드로 연결해 보는 구간입니다.
+
+### 모델 학습 결과
+
+모델 학습 결과 코드를 직접 따라가며 모델 학습 결과 흐름을 확인했습니다.
+
+- 읽을 포인트: 모델 정의, 손실, 최적화 흐름을 코드로 연결해 보는 구간입니다.
 
 ## Why This Matters
 
@@ -89,48 +125,14 @@ tags:
 
 ## Implementation Flow
 
-1. 사전 설정 > 과제 요약: 이번 미션에서는 흉부 X-Ray 사진을 바탕으로 폐렴 환자를 구분하는 작업을 수행합니다. 이번 미션의 목표는 X-Ray 사진을 입력으로 받아 폐렴 여부를 구분하는 분류(Classification) 모델을 만드는 것입니다. 아래 데이터셋을 활용하여 다양한 이미지 전처리 및...
-2. 데이터 > 목적: * 본 프로젝트는 흉부 X-Ray 사진을 바탕으로 폐렴 환자를 구분하는 분류 모델 개발을 목표 * 다양한 이미지 전처리 및 증강 기법을 적용하고, Transfer Learning 및 Fine-Tuning 기법을 활용하여 모델 성능을 평가
-3. 데이터 > 데이터셋: * 본 프로젝트에서는 Chest X-Ray Images (Pneumonia) 데이터셋을 사용하며, 데이터는 훈련(train), 검증(val), 테스트(test)로 구성되어 있다.
-4. Transfer Learning > Feature Extraction: * ResNet-18 이용하여 전이 학습
+1. 사전 설정: 과제 요약
+2. 데이터 분석: 데이터, 데이터 > 목적
+3. 데이터 전처리: 데이터 전처리 코드를 직접 따라가며 데이터 전처리 흐름을 확인했습니다.
+4. CNN 모델 정의: CNN 모델 정의 코드를 직접 따라가며 CNN 모델 정의 흐름을 확인했습니다.
+5. 기본 모델 학습: 기본 모델 학습 코드를 직접 따라가며 기본 모델 학습 흐름을 확인했습니다.
+6. 모델 학습 결과: 모델 학습 결과 코드를 직접 따라가며 모델 학습 결과 흐름을 확인했습니다.
 
 ## Code Highlights
-
-### 과제 요약
-
-`과제 요약`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 지표를 계산해 성능을 비교하고 결과를 해석하는 평가 단계입니다.
-
-```python
-import os
-import math
-import glob
-import warnings
-import random
-import shutil
-
-import numpy as np
-import pandas as pd
-import cv2
-
-import matplotlib.pyplot as plt
-from PIL import Image, ImageEnhance, ImageFilter
-
-from sklearn.metrics import classification_report
-
-import torch
-import torch.nn as nn
-import torch.optim as optim
-import torch.nn.functional as F
-from torch.utils.data import Dataset, DataLoader, random_split
-from torch.utils.data.sampler import WeightedRandomSampler
-from torchinfo import summary
-
-import torchvision
-import torchvision.models as models
-import torchvision.transforms.v2 as v2
-from torchvision import transforms, datasets
-# ... trimmed ...
-```
 
 ### CNN 모델 정의
 
@@ -170,38 +172,102 @@ class CustomCNN(nn.Module):
 
 ### 기본 모델 학습
 
-`기본 모델 학습`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 학습 함수 정의, import torch_xla.distributed.parallel_loader as pl, para_train_loader = pl.ParallelLoader(dataloader,... 흐름이 주석과 함께 드러납니다.
+`기본 모델 학습`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 평가 함수 정의, para_train_loader = pl.ParallelLoader(dataloader,... 흐름이 주석과 함께 드러납니다.
 
 ```python
-# @title 학습 함수 정의
+# @title 평가 함수 정의
 
-from tqdm import tqdm
-# import torch_xla.distributed.parallel_loader as pl
-
-def train_epoch(model, dataloader, criterion, optimizer, device):
-    model.train()
-    model.to(device)
+def elvauation_model(model, dataloader, criterion, device, Test_mode=False):
+    model.eval()
     running_loss = 0.
     correct = 0.
     total = 0.
+    all_preds = []
+    all_labels = []
 
-    # para_train_loader = pl.ParallelLoader(dataloader, [device]).per_device_loader(device)
+    with torch.no_grad():
+        # para_train_loader = pl.ParallelLoader(dataloader, [device]).per_device_loader(device)
+        for inputs, labels in tqdm(dataloader, leave=False, desc="Val"):
+            inputs, labels = inputs.to(device), labels.to(device)
 
-    for inputs, labels in tqdm(dataloader, leave=False, desc="Train"):
-        inputs, labels = inputs.to(device), labels.to(device)
-        optimizer.zero_grad()
-        outputs = model(inputs)
-        loss = criterion(outputs, labels)
-        loss.backward()
-        # xm.optimizer_step(optimizer)  # 이부분이 TPU 쓸때 필요한 코드!!
-        optimizer.step()
+            outputs = model(inputs)
+            loss = criterion(outputs, labels)
+            running_loss += (loss.item() * inputs.size(0))
 
-        running_loss += (loss.item() * inputs.size(0)) # 배치당 평균 손실 x 배치 사이즈 --> 배치 내 모든 샘플의 손실 총합
-        _, preds = torch.max(outputs, 1)
-        correct += (preds == labels).sum().item()
-        total += labels.size(0)
+            _, preds = torch.max(outputs, 1)
+            all_preds.extend(preds.cpu().numpy())
+            all_labels.extend(labels.cpu().numpy())
 
+            correct += (preds == labels).sum().item()
+            total += labels.size(0)
+
+    val_loss = running_loss / total
+    val_acc = correct / total
 # ... trimmed ...
+```
+
+### 모델 학습 결과
+
+`모델 학습 결과`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 성능 비교 Plot 그리기 (Accuracy 및 Loss), Accuracy 비교, Loss 비교 흐름이 주석과 함께 드러납니다.
+
+```python
+# @title 성능 비교 Plot 그리기 (Accuracy 및 Loss)
+
+import matplotlib.pyplot as plt
+
+def plot_acc_loos(num_epochs, train_losses, train_accs, val_losses, val_accs, title=model_basic.__class__.__name__):
+    epochs = range(1, num_epochs + 1)
+
+    fig = plt.figure(figsize=(12, 5))
+
+    # Accuracy 비교
+    plt.subplot(1, 2, 1)
+    plt.plot(epochs, train_accs, 'o-', c='b', label=f'{title} Train Acc')
+    plt.plot(epochs, val_accs, 'o--',c='r', label=f'{title} Val Acc')
+    plt.xlabel('Epoch')
+    plt.ylabel('Accuracy')
+    plt.title('Accuracy Comparison')
+    plt.legend()
+    plt.grid(True)
+
+    # Loss 비교
+    plt.subplot(1, 2, 2)
+    plt.plot(epochs, train_losses, 'o-', c='b', label=f'{title}  Train Loss')
+    plt.plot(epochs, val_losses, 'o--', c='r', label=f'{title}  Val Loss')
+    plt.xlabel('Epoch')
+    plt.ylabel('Loss')
+    plt.title('Loss Comparison')
+    plt.legend()
+    plt.grid(True)
+# ... trimmed ...
+```
+
+### Partial Fine-Tuning
+
+`Partial Fine-Tuning`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 Partial Fine-Tuning Model Train 2 (학습시킬 파라미터만 필터링..., 학습이 필요한 파라미터들만 업데이트되도록 설정, params_to_update = [(n, p) for n, p in model_pft.... 흐름이 주석과 함께 드러납니다.
+
+```python
+# @title Partial Fine-Tuning Model Train 2 (학습시킬 파라미터만 필터링하여 새로운 변수에 저장)
+
+# 학습이 필요한 파라미터들만 업데이트되도록 설정
+# params_to_update = [(n, p) for n, p in model_pft.named_parameters() if p.requires_grad]
+# print([i[0] for i in params_to_update])
+params_to_update = [p for p in model_pft.parameters() if p.requires_grad]
+print([i for i in params_to_update])
+
+# 손실 함수와 Optimizer 설정
+loss_fn = nn.CrossEntropyLoss()
+# 'params_to_update` 변수를 옵티마이저에 전달
+opt = optim.Adam(params_to_update, lr=0.00001)
+
+# 학습 실행
+train_losses_pft, train_accs_pft, val_losses_pft, val_accs_pft = train_model(num_epochs,
+                                                                             model_pft,
+                                                                             loss_fn, opt,
+                                                                             train_loader,
+                                                                             val_loader,
+                                                                             device,
+                                                                             title ='PFT')
 ```
 
 ## Source Bundle

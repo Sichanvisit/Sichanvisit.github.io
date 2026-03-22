@@ -5,15 +5,13 @@ research_tab: "LLM"
 research_kind: "Archive Note"
 source_title: "3-3 (실습)허깅페이스"
 source_path: "13_LLM_GenAI/Code_Snippets/3-3 (실습)허깅페이스.md"
-excerpt: "허깅페이스(Hugging Face)는 자연어 처리(NLP) 분야에서 매우 널리 사용되는 오픈소스 라이브러리와 커뮤니티를 제공하는 플랫폼으로, 모델 공유 HUB, 데이터셋 공유 HUB, 라이브러리(Transformers, Datasets 등)를 통해 손쉽게 NLP 모델들을 학습, 배포하고 활용할 수..."
-research_summary: "허깅페이스(Hugging Face)는 자연어 처리(NLP) 분야에서 매우 널리 사용되는 오픈소스 라이브러리와 커뮤니티를 제공하는 플랫폼으로, 모델 공유 HUB, 데이터셋 공유 HUB, 라이브러리(Transformers, Datasets 등)를 통해 손쉽게 NLP 모델들을 학습, 배포하고 활용할 수 있도록 돕습니다. 허깅페이스 라이브러리. 허깅페이스 사이트에는 허브에 업로드된 Model, Dataset 등을 확인 할수 있으며, 활용을 위한 문서와 각종 커뮤니티가 공유되어 있습니다. `md` 원본과 33개 코드 블록, 14개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 huggingface_hub, transformers, torch입니다."
+excerpt: "허깅페이스를 활용한 BERT/GPT... 중심의 LLM 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 LLM 학습 기록입니다. 본문은 허깅페이스를 활용한 BERT/GPT... 순서로 핵심 장면을 먼저 훑고, AutoModel 모델 로드, 토큰화, 문장 임베딩 출력 같은 코드..."
+research_summary: "허깅페이스를 활용한 BERT/GPT... 중심의 LLM 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 LLM 학습 기록입니다. 본문은 허깅페이스를 활용한 BERT/GPT... 순서로 핵심 장면을 먼저 훑고, AutoModel 모델 로드, 토큰화, 문장 임베딩 출력 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 33개 코드 블록, 14개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 huggingface_hub, transformers, torch입니다."
 research_artifacts: "md · 코드 33개 · 실행 14개"
 code_block_count: 33
 execution_block_count: 14
 research_focus:
-  - "허깅페이스(Hugging Face)는 자연어 처리(NLP) 분야에서 매우 널리 사용되는 오픈소스 라이브..."
   - "허깅페이스를 활용한 BERT/GPT 모델 사용"
-  - "허깅페이스 사이트에는 허브에 업로드된 Model, Dataset 등을 확인 할수 있으며, 활용을 위한..."
 research_stack:
   - "huggingface_hub"
   - "transformers"
@@ -27,9 +25,9 @@ tags:
   - archive-note
 ---
 
-허깅페이스(Hugging Face)는 자연어 처리(NLP) 분야에서 매우 널리 사용되는 오픈소스 라이브러리와 커뮤니티를 제공하는 플랫폼으로, 모델 공유 HUB, 데이터셋 공유 HUB, 라이브러리(Transformers, Datasets 등)를 통해 손쉽게 NLP 모델들을 학습, 배포하고 활용할 수 있도록 돕습니다. 허깅페이스 라이브러리. 허깅페이스 사이트에는 허브에 업로드된 Model, Dataset 등을 확인 할수 있으며, 활용을 위한 문서와 각종 커뮤니티가 공유되어 있습니다. `md` 원본과 33개 코드 블록, 14개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 huggingface_hub, transformers, torch입니다.
+허깅페이스를 활용한 BERT/GPT... 중심의 LLM 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 LLM 학습 기록입니다. 본문은 허깅페이스를 활용한 BERT/GPT... 순서로 핵심 장면을 먼저 훑고, AutoModel 모델 로드, 토큰화, 문장 임베딩 출력 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 33개 코드 블록, 14개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 huggingface_hub, transformers, torch입니다.
 
-**빠르게 볼 수 있는 포인트**: 허깅페이스(Hugging Face)는 자연어 처리(NLP) 분야에서 매..., 허깅페이스를 활용한 BERT/GPT 모델 사용, 허깅페이스 사이트에는 허브에 업로드된 Model, Dataset 등을....
+**빠르게 볼 수 있는 포인트**: 허깅페이스를 활용한 BERT/GPT 모델 사용.
 
 **남겨둔 자료**: `md` 원본과 33개 코드 블록, 14개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 huggingface_hub, transformers, torch입니다.
 
@@ -53,17 +51,19 @@ tags:
 
 허깅페이스(Hugging Face)는 자연어 처리(NLP) 분야에서 매우 널리 사용되는 오픈소스 라이브러리와 커뮤니티를 제공하는 플랫폼으로, 모델 공유 HUB, 데이터셋 공유 HUB, 라이브러리(Transformers, Datasets 등)를 통해 손쉽게 NLP 모델들을 학습, 배포하고 활용할 수 있도록 돕습니다. 허깅페이스 라이브러리
 
-### 허깅페이스를 활용한 BERT/GPT 모델 사용 > 허깅페이스 살펴보기
+- 읽을 포인트: 세부 흐름: GPT 형식 모델 > AutoModelForCausalLM 모델 로드, BERT 형식 모델 > AutoModel 모델 로드, BERT 형식 모델 > 감성 분류가 적용된 BERT
 
-허깅페이스 사이트에는 허브에 업로드된 Model, Dataset 등을 확인 할수 있으며, 활용을 위한 문서와 각종 커뮤니티가 공유되어 있습니다.
+#### GPT 형식 모델 > AutoModelForCausalLM 모델 로드
 
-### 허깅페이스 살펴보기 > 허깅페이스 토큰 생성
+디코더만 사용하여 캐주얼 마스크를 통해 자기회귀방식으로 텍스트를 생성하는 모델은 AutoModelForCausalLM 객체를 사용하여 로드해 줍니다. 위의 Llama 모델 요약 구조
 
-허깅페이스의 특정 모델은 라이센스로인해 인증 과정이 필요할 수 있습니다. 따라서 먼저 허깅페이스에 회원가입을 하고 프로필 정보에서 Access Tokens 메뉴에 접속하여 새로운 토큰을 생성합니다.
+#### BERT 형식 모델 > AutoModel 모델 로드
 
-### 허깅페이스 살펴보기 > 허깅페이스의 모델 객체
+BERT 형식 모델은 AutoModel에서 from_pretrained() 함수에 모델 이름을 입력하여 쉽게 학습된 모델을 불러올 수 있습니다. BERT 모델을 허브에서 찾기 위해서 주로 Fill Mask테스크를 찾아봅니다.
 
-허깅페이스는 모델의 아키텍처에 따라 통일된 모델 객체를 만들어 놓고 허브에 올라온 모델 이름을 통해 쉽게 학습된 모델을 가져 올 수 있습니다. AutoModel: 주로 BERT 계열처럼 마스킹 기반 모델(Encoder)을 불러올 때 사용하는 객체
+#### BERT 형식 모델 > 감성 분류가 적용된 BERT
+
+분류 작업이 추가된 BERT 모델은 AutoModelForSequenceClassification 객체를 활용하여 불러 올 수 있습니다. tabularisai/multilingual-sentiment-analysis
 
 ## Why This Matters
 
@@ -87,65 +87,54 @@ tags:
 
 ## Implementation Flow
 
-1. 허깅페이스를 활용한 BERT/GPT 모델 사용: 허깅페이스(Hugging Face)는 자연어 처리(NLP) 분야에서 매우 널리 사용되는 오픈소스 라이브러리와 커뮤니티를 제공하는 플랫폼으로, 모델 공유 HUB, 데이터셋 공유 HUB, 라이브러리(Transformers, Datasets 등)를 통해 손...
-2. 허깅페이스를 활용한 BERT/GPT 모델 사용 > 허깅페이스 살펴보기: 허깅페이스 사이트에는 허브에 업로드된 Model, Dataset 등을 확인 할수 있으며, 활용을 위한 문서와 각종 커뮤니티가 공유되어 있습니다.
-3. 허깅페이스 살펴보기 > 허깅페이스 토큰 생성: 허깅페이스의 특정 모델은 라이센스로인해 인증 과정이 필요할 수 있습니다. 따라서 먼저 허깅페이스에 회원가입을 하고 프로필 정보에서 Access Tokens 메뉴에 접속하여 새로운 토큰을 생성합니다.
-4. 허깅페이스 살펴보기 > 허깅페이스의 모델 객체: 허깅페이스는 모델의 아키텍처에 따라 통일된 모델 객체를 만들어 놓고 허브에 올라온 모델 이름을 통해 쉽게 학습된 모델을 가져 올 수 있습니다. AutoModel: 주로 BERT 계열처럼 마스킹 기반 모델(Encoder)을 불러올 때 사용하는 객체
+1. 허깅페이스를 활용한 BERT/GPT 모델 사용: GPT 형식 모델 > AutoModelForCausalLM 모델 로드, BERT 형식 모델 > AutoModel 모델 로드
 
 ## Code Highlights
 
-### 기계번역 해보기
+### AutoModel 모델 로드
 
-`기계번역 해보기`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 타겟 언어 설정, 모델 입력 및 출력: 번역 결과 생성하기, input_ids: 번역할 문장의 토큰 ID 흐름이 주석과 함께 드러납니다.
+`AutoModel 모델 로드`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 예시에서는 다국어 지원이 되는 bert-base-multilingual-cased 모델을 활용하여 BERT 모델이 만든 임베딩값을 살펴봅니다.
 
 ```python
+from transformers import AutoTokenizer, AutoModel
 import torch
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+model_name = "google-bert/bert-base-multilingual-cased"
 
-# 타겟 언어 설정
-tar_lang = tokenizer.convert_tokens_to_ids("eng_Latn")
-print(tar_lang)
-
-# 모델 입력 및 출력: 번역 결과 생성하기
-# - input_ids: 번역할 문장의 토큰 ID
-# - forced_bos_token_id: 출력 언어 지정(여기서는 영어: "eng_Latn")
-# - early_stopping=True: 문장의 끝(EOS)이 나오면 즉시 생성 중단
-generated_tokens = model.generate(input_ids.to(device),
-                                  forced_bos_token_id=tar_lang,     # 영어로 번역
-                                  early_stopping=True               # 끝토큰(eos)이 나오면 중단
-                                  )
-print(f'출력 토큰: {generated_tokens}')
-
-generated_text = tokenizer.decode(generated_tokens[0], skip_special_tokens=False)
-print(f'생성 텍스트: {generated_text}')
+model = AutoModel.from_pretrained(model_name, device_map="auto")
+print(model)
 ```
 
-### 텍스트 생성하기
+### 토큰화
 
-`텍스트 생성하기`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 텍스트 생성, 입력 토큰과 어텐션 마스크를 나누어 입력, 생성된 토큰을 사람이 읽을 수 있는 문장으로 디코딩 흐름이 주석과 함께 드러납니다.
+`토큰화`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 토크나이저, 토큰화 흐름이 주석과 함께 드러납니다.
 
 ```python
-import torch
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+model_name = "google-bert/bert-base-multilingual-cased"
 
-input_tensor = tokens['input_ids'].to(device)
-attention_mask = tokens['attention_mask'].to(device)
+# 토크나이저
+tokenizer = AutoTokenizer.from_pretrained(model_name)
 
-# 텍스트 생성
-with torch.no_grad():                   # 생성 단계에서는 그래디언트 계산 비활성화 (속도 ↑, 메모리 ↓)
-    # 입력 토큰과 어텐션 마스크를 나누어 입력
-    outputs = model.generate(
-        input_tensor,                   # 입력 토큰
-        attention_mask=attention_mask,  # 어텐션 마스크: 패딩 토큰은 무시하도록 하는 마스
-        max_length=128,                 # 생성할 최대 토큰(단어) 길이 제한
-        no_repeat_ngram_size=2,         # 2단어 연속 중복 생성을 억제
-        early_stopping=True             # 문장 끝(EOS) 토큰 나오면 즉시 멈추기
-    )
+# 토큰화
+sentence = "오늘 수업은 자연어 분석 수업인가?"
+inputs = tokenizer(sentence, text_pair='아니 오늘 수업은 자연어 분석 수업이 아니다', return_tensors="pt")
+inputs
+```
 
-# 생성된 토큰을 사람이 읽을 수 있는 문장으로 디코딩
-response = tokenizer.decode(outputs[0], skip_special_tokens=True)
-print(response)
+### 문장 임베딩 출력
+
+`문장 임베딩 출력`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 토크나이저 → 딕셔너리 3개, {'input_ids': ..., 'token_type_ids': ..., 'attent..., = 딕셔너리 펼치기 흐름이 주석과 함께 드러납니다.
+
+```text
+# 1. 토크나이저 → 딕셔너리 3개
+inputs = tokenizer(text, return_tensors="pt")
+# {'input_ids': ..., 'token_type_ids': ..., 'attention_mask': ...}
+
+# 2. ** = 딕셔너리 펼치기
+outputs = model(**inputs)
+
+**inputs
+= input_ids=..., token_type_ids=..., attention_mask=...
 ```
 
 ### 감성 분류가 적용된 BERT

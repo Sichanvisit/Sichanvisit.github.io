@@ -5,15 +5,14 @@ research_tab: "LLM"
 research_kind: "Archive Note"
 source_title: "3-2 (실습)Attention_1"
 source_path: "13_LLM_GenAI/Code_Snippets/3-2 (실습)Attention_1.md"
-excerpt: "기존 Embedding + BiLSTM 모델 아키텍처에 Bahdanau Attention(Additive)을 추가 BiLSTM 층을 통과해 나온 특성 벡터를 폴링 하지 않고 Attention을 통해 문장 전체에서 가장 중요한 토큰들의 정보가 압축된 컨텍스트 벡터(context vector)를 만듦...."
-research_summary: "기존 Embedding + BiLSTM 모델 아키텍처에 Bahdanau Attention(Additive)을 추가 BiLSTM 층을 통과해 나온 특성 벡터를 폴링 하지 않고 Attention을 통해 문장 전체에서 가장 중요한 토큰들의 정보가 압축된 컨텍스트 벡터(context vector)를 만듦. 간단한 Seq2seq 모델을 구축하여 질의로 부터 응답을 생성해내는 모델 아케텍처를 만듭니다. 이때 Attention을 추가하여 입력 시퀀스의 각 토큰에 대한 중요도를 계산하여 모든 토큰을 균등하게 처리하는 것이 아니라, 중요한 토큰에 더 집중할 수 있게 합니다. `md` 원본과 14개 코드 블록, 12개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, google, pandas, numpy입니다."
+excerpt: "Seq2seq + Attention..., 감정 분류을 위한 Attention... 중심의 LLM 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 LLM 학습 기록입니다. 본문은 Seq2seq + Attention..., 감정 분류을 위한 Attention... 순서로 핵심..."
+research_summary: "Seq2seq + Attention..., 감정 분류을 위한 Attention... 중심의 LLM 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 LLM 학습 기록입니다. 본문은 Seq2seq + Attention..., 감정 분류을 위한 Attention... 순서로 핵심 장면을 먼저 훑고, 모델링, 모델 학습(train) + 평가(val..., 디코더 구성 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 14개 코드 블록, 12개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, google, pandas, numpy입니다."
 research_artifacts: "md · 코드 14개 · 실행 12개"
 code_block_count: 14
 execution_block_count: 12
 research_focus:
-  - "Embedding + BiLSTM 모델과 추가로 Seq2seq을 구성하여 Attention 층을 추가"
-  - "기존 Embedding + BiLSTM 모델 아키텍처에 Bahdanau Attention(Additiv..."
-  - "감정 분류을 위한 Attention 순환 신경망: BiLSTM + At..."
+  - "Seq2seq + Attention (질의응답 챗봇)"
+  - "감정 분류을 위한 Attention 순환 신경망: BiLSTM + Attention"
 research_stack:
   - "torch"
   - "google"
@@ -29,9 +28,9 @@ tags:
   - archive-note
 ---
 
-기존 Embedding + BiLSTM 모델 아키텍처에 Bahdanau Attention(Additive)을 추가 BiLSTM 층을 통과해 나온 특성 벡터를 폴링 하지 않고 Attention을 통해 문장 전체에서 가장 중요한 토큰들의 정보가 압축된 컨텍스트 벡터(context vector)를 만듦. 간단한 Seq2seq 모델을 구축하여 질의로 부터 응답을 생성해내는 모델 아케텍처를 만듭니다. 이때 Attention을 추가하여 입력 시퀀스의 각 토큰에 대한 중요도를 계산하여 모든 토큰을 균등하게 처리하는 것이 아니라, 중요한 토큰에 더 집중할 수 있게 합니다. `md` 원본과 14개 코드 블록, 12개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, google, pandas, numpy입니다.
+Seq2seq + Attention..., 감정 분류을 위한 Attention... 중심의 LLM 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 LLM 학습 기록입니다. 본문은 Seq2seq + Attention..., 감정 분류을 위한 Attention... 순서로 핵심 장면을 먼저 훑고, 모델링, 모델 학습(train) + 평가(val..., 디코더 구성 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 14개 코드 블록, 12개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, google, pandas, numpy입니다.
 
-**빠르게 볼 수 있는 포인트**: Embedding + BiLSTM 모델과 추가로 Seq2seq을 구성하..., 기존 Embedding + BiLSTM 모델 아키텍처에 Bahdanau..., 감정 분류을 위한 Attention 순환 신경망: BiLSTM + At....
+**빠르게 볼 수 있는 포인트**: Seq2seq + Attention (질의응답 챗봇), 감정 분류을 위한 Attention 순환 신경망: BiLSTM + At....
 
 **남겨둔 자료**: `md` 원본과 14개 코드 블록, 12개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, google, pandas, numpy입니다.
 
@@ -51,21 +50,41 @@ tags:
 
 ## What This Note Covers
 
-### Overview
+### Seq2seq + Attention (질의응답 챗봇)
 
-Attention Embedding + BiLSTM 모델과 추가로 Seq2seq을 구성하여 Attention 층을 추가
+간단한 Seq2seq 모델을 구축하여 질의로 부터 응답을 생성해내는 모델 아케텍처를 만듭니다. 이때 Attention을 추가하여 입력 시퀀스의 각 토큰에 대한 중요도를 계산하여 모든 토큰을 균등하게 처리하는 것이 아니라, 중요한 토큰에 더 집중할 수 있게 합니다.
+
+- 읽을 포인트: 세부 흐름: 모델링 > 인코더 구성, 모델링 > 디코더 구성, 모델링 > 모델 학습
+
+#### 모델링 > 인코더 구성
+
+인코더는 입력된 텍스트에 대한 가중치를 만들어내는 작업만 진행하기 때문에 기존 임베딩+RNN 모델 구조와 유사하게 구현됩니다. 디코더와 연결을 위해 LSTM의 출력 결과와 히든 상태를 전부 return 합니다.
+
+#### 모델링 > 디코더 구성
+
+디코더는 생성 하고자 하는 문장의 직적 토큰으로 부터 다음 토큰을 생성하는 역할을 합니다. 이때 인코더가 만들어낸 입력 텍스트의 순환특성과 함께 직전 토큰을 입력 받아 새로운 토큰을 만들어 냅니다.
+
+#### 모델링 > 모델 학습
+
+Seq2seq 모델은 구성한 Eencoder와 Decoder를 동시학습 합니다. 입력 데이터인 질문 토큰을 인코더에 입력 2. 인코더의 출력과 히든 상태, 셀 상태를 디코더의 초기 입력으로 설정 3. 디코더는 타겟 데이터인 응답 토큰이 모두 생성될 때 까지 반복하여 토큰을 생성 4...
 
 ### 감정 분류을 위한 Attention 순환 신경망: BiLSTM + Attention
 
 기존 Embedding + BiLSTM 모델 아키텍처에 Bahdanau Attention(Additive)을 추가 BiLSTM 층을 통과해 나온 특성 벡터를 폴링 하지 않고 Attention을 통해 문장 전체에서 가장 중요한 토큰들의 정보가 압축된 컨텍스트 벡터(context vector)를 만듦
 
-### 감정 분류을 위한 Attention 순환 신경망: BiLSTM + Attention > 단계
+- 읽을 포인트: 세부 흐름: 모델링, 모델 학습, 모델 학습(train) + 평가(validation) 단계
 
-모델 정의: BiLSTMWithAttention 클래스를 만듭니다. 데이터 준비: AIHUB 감성 대화 데이터를 로드합니다.
+#### 모델링
 
-### 감정 분류을 위한 Attention 순환 신경망: BiLSTM + Attention > 모델링
+임베딩 레이어 사용 - 토큰의 정수 인덱스로 부터 Embedding 레이어를 통 정수를 해당하는 임베딩 벡터로 매핑 Bi-LSTM (Bidirectional LSTM) 레이어 - 입력된 임베딩 벡터를 시간 축을 따라 처리하여, 시퀀스 데이터의 문맥 정보를 학습 - 양방향 LSTM은...
 
-임베딩 레이어 사용 - 토큰의 정수 인덱스로 부터 Embedding 레이어를 통 정수를 해당하는 임베딩 벡터로 매핑 Bi-LSTM (Bidirectional LSTM) 레이어 - 입력된 임베딩 벡터를 시간 축을 따라 처리하여, 시퀀스 데이터의 문맥 정보를 학습 - 양방향 LSTM은 입력 데이터를 과거와 미래 방향으로 모두 처리해 더 풍부한 문맥 정보를 캡처
+#### 모델 학습
+
+AIHUB에서 제공하는 한국어 감성 대화 말뭉치 데이터세트를 부분적으로 활용하여 감정 분류 학습
+
+#### 모델 학습(train) + 평가(validation) 단계
+
+단순 RNN 위에 Attention을 추가했을때 성능 향상은 있지만 여전히 과적합에는 취약하다
 
 ## Why This Matters
 
@@ -89,46 +108,44 @@ Attention Embedding + BiLSTM 모델과 추가로 Seq2seq을 구성하여 Attenti
 
 ## Implementation Flow
 
-1. Overview: Attention Embedding + BiLSTM 모델과 추가로 Seq2seq을 구성하여 Attention 층을 추가
-2. 감정 분류을 위한 Attention 순환 신경망: BiLSTM + Attention: 기존 Embedding + BiLSTM 모델 아키텍처에 Bahdanau Attention(Additive)을 추가 BiLSTM 층을 통과해 나온 특성 벡터를 폴링 하지 않고 Attention을 통해 문장 전체에서...
-3. 감정 분류을 위한 Attention 순환 신경망: BiLSTM + Attention > 단계: 모델 정의: BiLSTMWithAttention 클래스를 만듭니다. 데이터 준비: AIHUB 감성 대화 데이터를 로드합니다.
-4. 감정 분류을 위한 Attention 순환 신경망: BiLSTM + Attention > 모델링: 임베딩 레이어 사용 - 토큰의 정수 인덱스로 부터 Embedding 레이어를 통 정수를 해당하는 임베딩 벡터로 매핑 Bi-LSTM (Bidirectional LSTM) 레이어 - 입력된 임베딩 벡터를 시...
+1. Seq2seq + Attention (질의응답 챗봇): 모델링 > 인코더 구성, 모델링 > 디코더 구성
+2. 감정 분류을 위한 Attention 순환 신경망: BiLSTM + Attention: 모델링, 모델 학습
 
 ## Code Highlights
 
-### SentencePiece 토크나이저를 이용해서 만든 PyTorch Dataset 클래스
+### 모델링
 
-`SentencePiece 토크나이저를 이용해서 만든 PyTorch Dataset 클래스`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 배열을 활용하여 최적화된 패딩함수 구축, 라벨 인코딩, 문장 인코딩 (앞뒤오 시작토큰과 끝 토큰을 붙임) 흐름이 주석과 함께 드러납니다.
+`모델링`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 임베딩 레이어, 양방향 LSTM 레이어, 어텐션 레이어 흐름이 주석과 함께 드러납니다.
 
 ```python
-from torch.utils.data import Dataset
-import pandas as pd
-import numpy as np
-import sentencepiece as spm
 import torch
 import torch.nn as nn
 
+class BiLSTMWithAttention(nn.Module):
+  def __init__(self, vocab_size, embedding_dim, hidden_size=12, num_layers=4, num_classes=2):
+    super(BiLSTMWithAttention, self).__init__()
 
-class SPDataSet(Dataset):
-  """
-  SentencePiece 토크나이저를 이용해서 만든 PyTorch Dataset 클래스
-  모델이 학습할 수 있는 형태로 **문장(text)과 라벨(label)**을 숫자 텐서로 변환하는 역할
-  """
-  def __init__(self, df, sp, max_len):
-    self.max_len = max_len
-    self.df = df
-    self.sp = sp
-    self.class_name = {'E1':0, 'E6':1, 'E3':2, 'E5':3, 'E2':4, 'E4':5}
+    # 임베딩 레이어
+    self.embedding = nn.Embedding(vocab_size, embedding_dim)
 
-  # 배열을 활용하여 최적화된 패딩함수 구축
-  def zero_pad(self, tok):
-    if len(tok) >= self.max_len:
-      return tok[:self.max_len]
-    else:
-      padding = np.zeros(self.max_len)
-      padding[:len(tok)] = tok
-      return padding
+    # 양방향 LSTM 레이어
+    self.lstm = nn.LSTM(
+        input_size=embedding_dim,
+        hidden_size=hidden_size,
+        num_layers=num_layers,
+        batch_first = True,
+        bidirectional = True
+    )
 
+
+    # 어텐션 레이어
+    self.attention = nn.Linear(hidden_size*2, hidden_size*2) # 양방향이므로 hidden_size * 2
+    self.context_vector = nn.Linear(hidden_size * 2, 1, bias=False)
+
+    self.layer_norm = nn.LayerNorm(hidden_size*2)
+    self.dropout = nn.Dropout(p=0.2)
+
+    # 출력 레이어 num_classes로 출력
 # ... trimmed ...
 ```
 
@@ -170,37 +187,73 @@ for epoch in range(num_epochs):
 
 ### 디코더 구성
 
-`디코더 구성`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 제로 패딩, 질의는 단어 토큰만 활용, 응답에는 시작 토큰과 끝 토큰을 추가하여 문장의 시작과 끝을 알림 흐름이 주석과 함께 드러납니다.
+`디코더 구성`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 Bahdanau(가산) 어텐션 레이어와 컨텍스트 벡터 계산, 최종 출력 (단어 분포), 어텐션 가중치 계산 흐름이 주석과 함께 드러납니다.
 
 ```python
-from torch.utils.data import Dataset, DataLoader, random_split
-import sentencepiece as spm
-import numpy as np
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+from math import e
 
-class SPDataSet(Dataset):
-    def __init__(self, sp, max_len):
-        self.max_len = max_len
-        self.df = pd.read_csv(f'train.csv')[['HS01','SS01']]
-        self.sp = sp
+class Decoder(nn.Module):
+    def __init__(self, vocab_size, embedding_dim, hidden_size=128, num_layers=1, dropout=0.1):
+        super(Decoder, self).__init__()
+        self.embedding = nn.Embedding(vocab_size, embedding_dim)
+        self.lstm = nn.LSTM(
+            input_size=embedding_dim + hidden_size,  # 디코더 입력: [이전 단어 임베딩 + 컨텍스트 벡터]
+            hidden_size=hidden_size,
+            num_layers=num_layers,
+            batch_first=True,
+        )
 
-    # 제로 패딩
-    def zero_pad(self, tok):
-        if len(tok) >= self.max_len:
-            return tok[:self.max_len]
-        else:
-            padding = np.zeros(self.max_len)
-            padding[:len(tok)] = tok
-            return padding
+        # Bahdanau(가산) 어텐션 레이어와 컨텍스트 벡터 계산
+        self.attention1 = nn.Linear(hidden_size, hidden_size)
+        self.attention2 = nn.Linear(hidden_size, hidden_size)
+        self.v = nn.Linear(hidden_size, 1, bias=False)
 
-    def __len__(self):
-        return (len(self.df))
+        # 최종 출력 (단어 분포)
+        self.fc_out = nn.Linear(hidden_size, vocab_size)
 
-    def __getitem__(self, i):
-        sent = self.df.iloc[i]
-        sent1 = self.sp.encode_as_ids(sent['HS01'])
-        sent2 = self.sp.encode_as_ids(sent['SS01'])
+        self.dropout = nn.Dropout(dropout)
+        self.hidden_size = hidden_size
 
-        # 질의는 단어 토큰만 활용
+    def forward(self, input_token, hidden, cell, encoder_outputs):
+# ... trimmed ...
+```
+
+### 모델 학습
+
+`모델 학습`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 인코더 순전파, 디코더 초기 hidden을 인코더 hidden으로 설정, 디코더 첫 입력: 토큰 흐름이 주석과 함께 드러납니다.
+
+```python
+for e in range(num_epochs):
+    encoder.train()
+    decoder.train()
+    total_loss = 0.0
+    for i, (inp, tar) in enumerate(dataloader):
+        inp = inp.long().to(device)
+        tar = tar.long().to(device)
+
+        optimizer.zero_grad()
+
+        # ------ 인코더 순전파 ------
+        enc_output, h, c = encoder(inp)
+
+        # 디코더 초기 hidden을 인코더 hidden으로 설정
+
+        # 디코더 첫 입력: <bos> 토큰
+        dec_input = tar[:,0]
+        dec_hidden = h
+        dec_cell = c
+        loss = 0.0
+
+        # 교사 강요(teacher forcing) - 다음 입력으로 타겟을 피딩(feeding)
+        for t in range(1, tar.size(1)):
+            # 디코더 순전파 (dec_input: [batch_size, 1] - 직전 토큰)
+            pred, dec_hidden, dec_cell = decoder(dec_input, dec_hidden, dec_cell, enc_output)
+
+            # 정답 토큰과 손실
+            step_loss = loss_fn(pred, tar[:, t])
 # ... trimmed ...
 ```
 

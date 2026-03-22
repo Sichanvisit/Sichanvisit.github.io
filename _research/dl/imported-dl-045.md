@@ -5,15 +5,13 @@ research_tab: "DL"
 research_kind: "Shared Note"
 source_title: "GAN - 공유"
 source_path: "12_Deep_Learning/Code_Snippets/GAN - 공유.md"
-excerpt: "MNIST, MNIST 데이터셋 준비 및 DataLoade..., Generator 네트워크 정의 (생성기) 중심으로 구현 과정을 정리한 GAN - 공유 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `m..."
-research_summary: "MNIST, MNIST 데이터셋 준비 및 DataLoade..., Generator 네트워크 정의 (생성기) 중심으로 구현 과정을 정리한 GAN - 공유 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 6개 코드 블록, 3개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, os입니다."
+excerpt: "MNIST 중심의 DL 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 MNIST 순서로 핵심 장면을 먼저 훑고, import torch, MNIST 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 6개 코드 블록, 3개 실..."
+research_summary: "MNIST 중심의 DL 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 MNIST 순서로 핵심 장면을 먼저 훑고, import torch, MNIST 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 6개 코드 블록, 3개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, os입니다."
 research_artifacts: "md · 코드 6개 · 실행 3개"
 code_block_count: 6
 execution_block_count: 3
 research_focus:
   - "MNIST"
-  - "MNIST 데이터셋 준비 및 DataLoader 설정"
-  - "Generator 네트워크 정의 (생성기)"
 research_stack:
   - "torch"
   - "torchvision"
@@ -29,9 +27,9 @@ tags:
   - shared-note
 ---
 
-MNIST, MNIST 데이터셋 준비 및 DataLoade..., Generator 네트워크 정의 (생성기) 중심으로 구현 과정을 정리한 GAN - 공유 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 6개 코드 블록, 3개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, os입니다.
+MNIST 중심의 DL 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 MNIST 순서로 핵심 장면을 먼저 훑고, import torch, MNIST 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 6개 코드 블록, 3개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, os입니다.
 
-**빠르게 볼 수 있는 포인트**: MNIST, MNIST 데이터셋 준비 및 DataLoader 설정, Generator 네트워크 정의 (생성기).
+**빠르게 볼 수 있는 포인트**: MNIST.
 
 **남겨둔 자료**: `md` 원본과 6개 코드 블록, 3개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, os입니다.
 
@@ -51,11 +49,11 @@ MNIST, MNIST 데이터셋 준비 및 DataLoade..., Generator 네트워크 정의
 
 ## What This Note Covers
 
-- MNIST
-- MNIST 데이터셋 준비 및 DataLoader 설정
-- Generator 네트워크 정의 (생성기)
-- Discriminator 네트워크 정의 (판별기)
-- 장치 설정 (GPU 사용 가능하면 GPU 사용)
+### MNIST
+
+MNIST 코드를 직접 따라가며 MNIST 흐름을 확인했습니다.
+
+- 읽을 포인트: MNIST 아래 코드와 함께 읽으면 구현 포인트가 더 또렷해지는 구간입니다.
 
 ## Why This Matters
 
@@ -73,10 +71,7 @@ MNIST, MNIST 데이터셋 준비 및 DataLoade..., Generator 네트워크 정의
 
 ## Implementation Flow
 
-1. Key Step: MNIST 데이터셋 준비 및 DataLoader 설정
-2. Key Step: Generator 네트워크 정의 (생성기)
-3. Key Step: Discriminator 네트워크 정의 (판별기)
-4. Key Step: 장치 설정 (GPU 사용 가능하면 GPU 사용)
+1. MNIST: MNIST 코드를 직접 따라가며 MNIST 흐름을 확인했습니다.
 
 ## Code Highlights
 
@@ -93,6 +88,22 @@ from torchvision.utils import save_image
 import matplotlib.pyplot as plt
 import os
 import numpy as np
+```
+
+### MNIST
+
+`MNIST`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 MNIST 데이터셋 준비 및 DataLoader 설정 흐름이 주석과 함께 드러납니다.
+
+```python
+# MNIST 데이터셋 준비 및 DataLoader 설정
+dataloader = torch.utils.data.DataLoader(
+    datasets.MNIST('./data/mnist', train=True, download=True,
+                   transform=transforms.Compose([
+                       transforms.Resize(28),
+                       transforms.ToTensor(),  # 데이터 [0,1]로 정규화
+                       transforms.Normalize([0.5], [0.5])  # [-1, 1] 범위로 변환
+                   ])),
+    batch_size=64, shuffle=True)
 ```
 
 ### MNIST

@@ -5,15 +5,15 @@ research_tab: "DL"
 research_kind: "Shared Note"
 source_title: "8-1_VAE - 공유"
 source_path: "12_Deep_Learning/Code_Snippets/8-1_VAE - 공유.md"
-excerpt: "두 정규분포 $q(z) = {N}(\\mu, \\sigma^2)$와 $p(z) = {N}(0,1)$의 KL 발산을 계산해보면 정의부터 시작합니다. 일반적인 KL 발산의 정의는 $ D_{\\text{KL}}(q(z) \\parallel p(z)) = \\int q(z) \\log \\frac{q(z)}{p(z)}..."
-research_summary: "두 정규분포 $q(z) = {N}(\\mu, \\sigma^2)$와 $p(z) = {N}(0,1)$의 KL 발산을 계산해보면 정의부터 시작합니다. 일반적인 KL 발산의 정의는 $ D_{\\text{KL}}(q(z) \\parallel p(z)) = \\int q(z) \\log \\frac{q(z)}{p(z)} \\, dz $ 입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 10개 코드 블록, 6개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, numpy, os, torchvision입니다."
+excerpt: "VAE - 공유에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 실험의 큰 흐름을 먼저 훑고, VAE (Variational Auto..., 손실 함수 정의 ###, 잠재 공간 차원 확장: 128D로 재학... 같은 코드로 실제 구현을 이어서 확인할..."
+research_summary: "VAE - 공유에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 실험의 큰 흐름을 먼저 훑고, VAE (Variational Auto..., 손실 함수 정의 ###, 잠재 공간 차원 확장: 128D로 재학... 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 10개 코드 블록, 6개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, numpy, os, torchvision입니다."
 research_artifacts: "md · 코드 10개 · 실행 6개"
 code_block_count: 10
 execution_block_count: 6
 research_focus:
-  - "참고"
-  - "두 정규분포 $q(z) = {N}(\\mu, \\sigma^2)$와 $p(z) = {N}(0,1)$의 KL..."
-  - "KL 발산"
+  - "VAE (Variational Autoencoder) 모델 정의 ###"
+  - "모델 학습"
+  - "VAE의 손실 함수는 재구성 손실(BCE)과 KL 발산(KLD) 손실의 합으로 구성됩니다."
 research_stack:
   - "torch"
   - "numpy"
@@ -29,9 +29,9 @@ tags:
   - shared-note
 ---
 
-두 정규분포 $q(z) = {N}(\mu, \sigma^2)$와 $p(z) = {N}(0,1)$의 KL 발산을 계산해보면 정의부터 시작합니다. 일반적인 KL 발산의 정의는 $ D_{\text{KL}}(q(z) \parallel p(z)) = \int q(z) \log \frac{q(z)}{p(z)} \, dz $ 입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 10개 코드 블록, 6개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, numpy, os, torchvision입니다.
+VAE - 공유에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 실험의 큰 흐름을 먼저 훑고, VAE (Variational Auto..., 손실 함수 정의 ###, 잠재 공간 차원 확장: 128D로 재학... 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 10개 코드 블록, 6개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, numpy, os, torchvision입니다.
 
-**빠르게 볼 수 있는 포인트**: 참고, 두 정규분포 $q(z) = {N}(\mu, \sigma^2)$와 $p(..., KL 발산.
+**빠르게 볼 수 있는 포인트**: VAE (Variational Autoencoder) 모델 정의 ###, 모델 학습, VAE의 손실 함수는 재구성 손실(BCE)과 KL 발산(KLD) 손실의....
 
 **남겨둔 자료**: `md` 원본과 10개 코드 블록, 6개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, numpy, os, torchvision입니다.
 
@@ -51,11 +51,11 @@ tags:
 
 ## What This Note Covers
 
-- 참고
-- 두 정규분포 $q(z) = {N}(\mu, \sigma^2)$와 $p(z) = {N}(0,1)$의 KL...
-- KL 발산
+- VAE (Variational Autoencoder) 모델 정의 ###
+- 모델 학습
+- VAE의 손실 함수는 재구성 손실(BCE)과 KL 발산(KLD) 손실의 합으로 구성됩니다.
+- 손실 함수 정의 ###
 - 필요한 라이브러리 임포트
-- device 설정 (GPU가 있으면 GPU 사용)
 
 ## Why This Matters
 
@@ -116,40 +116,52 @@ class VAE(nn.Module):
 # ... trimmed ...
 ```
 
-### 잠재 공간 시각화 (2D) 및 테스트 데이터셋 처리 ###
+### 손실 함수 정의 ###
 
-`잠재 공간 시각화 (2D) 및 테스트 데이터셋 처리 ###`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 잠재 공간 시각화 (2D) 및 테스트 데이터셋 처리 ###, 테스트 데이터셋 다운로드 및 로드 (학습 데이터와는 별개), 테스트 데이터셋에 대해 인코딩 및 잠재 변수 샘플링 진행 흐름이 주석과 함께 드러납니다.
+`손실 함수 정의 ###`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 손실 함수 정의 ###, VAE의 손실 함수는 재구성 손실(BCE)과 KL 발산(KLD) 손실의 합으로 구성됩니다., beta 값은 KL 손실의 가중치를 조절합니다. 흐름이 주석과 함께 드러납니다.
 
 ```python
-### 잠재 공간 시각화 (2D) 및 테스트 데이터셋 처리 ###
-model.eval()  # 평가 모드로 전환
-all_z = []    # 모든 잠재 변수 저장 리스트
-all_labels = []  # 해당 이미지의 레이블 저장 리스트
+### 손실 함수 정의 ###
+# VAE의 손실 함수는 재구성 손실(BCE)과 KL 발산(KLD) 손실의 합으로 구성됩니다.
+# beta 값은 KL 손실의 가중치를 조절합니다.
+beta = 1.0
+def loss_function(recon_x, x, mu, logvar):
+    """
+    손실 함수:
+        - BCE (Binary Cross-Entropy): 입력과 재구성 이미지 간의 차이를 측정.
+        - KLD (Kullback-Leibler Divergence): 잠재 공간 분포와 정규 분포 간의 차이를 측정.
+    최종 손실 = BCE + beta * KLD
+    """
+    BCE = F.binary_cross_entropy(recon_x, x.view(-1, 28 * 28), reduction='sum')
+    KLD = -0.5 * torch.sum(1 + logvar - mu.pow(2) - logvar.exp())
+    return BCE + beta*KLD
+```
 
-# 테스트 데이터셋 다운로드 및 로드 (학습 데이터와는 별개)
-with torch.no_grad():
-    testset = torchvision.datasets.MNIST(root='./data', train=False, download=True, transform=transform)
-    testloader = DataLoader(testset, batch_size=64, shuffle=False)
+### 잠재 공간 차원 확장: 128D로 재학습 ###
 
-    # 테스트 데이터셋에 대해 인코딩 및 잠재 변수 샘플링 진행
-    for data, labels in testloader:
+`잠재 공간 차원 확장: 128D로 재학습 ###`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 잠재 공간 차원 확장: 128D로 재학습 ###, 잠재 공간의 차원을 128로 확장하여 학습하면 재구성 품질이 개선될 수 있습니다. 흐름이 주석과 함께 드러납니다.
+
+```python
+### 잠재 공간 차원 확장: 128D로 재학습 ###
+# 잠재 공간의 차원을 128로 확장하여 학습하면 재구성 품질이 개선될 수 있습니다.
+latent_dim = 128
+model = VAE(latent_dim=latent_dim).to(device)
+optimizer = optim.Adam(model.parameters(), lr=1e-3)
+num_epochs = 100
+
+print("128D 잠재 공간으로 학습 시작...")
+for epoch in range(num_epochs):
+    model.train()
+    train_loss = 0
+    for data, _ in trainloader:
         data = data.to(device)
-        mu, logvar = model.encode(data.view(-1, 28 * 28))
-        z = model.reparameterize(mu, logvar)
-        z = z.cpu().numpy()
-
-        all_z.append(z)
-        all_labels.append(labels)
-
-    all_z = np.concatenate(all_z)
-    all_labels = np.concatenate(all_labels)
-
-    # 2D 잠재 공간에 대해 산점도(scatter plot) 시각화
-    plt.figure(figsize=(10, 8))
-    scatter = plt.scatter(all_z[:, 0], all_z[:, 1], c=all_labels, cmap='tab10', alpha=0.5, edgecolors='k', s=20)
-    plt.colorbar(scatter, ticks=range(10))
-    plt.xlabel('Latent Dimension 1')
-# ... trimmed ...
+        optimizer.zero_grad()
+        recon_batch, mu, logvar = model(data)
+        loss = loss_function(recon_batch, data, mu, logvar)
+        loss.backward()
+        train_loss += loss.item()
+        optimizer.step()
+    print(f'Epoch {epoch + 1}, Loss: {train_loss / len(trainloader.dataset)}')
 ```
 
 ### KL 발산 : N(u, sigma^2), N(0, 1)

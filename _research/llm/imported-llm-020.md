@@ -5,15 +5,14 @@ research_tab: "LLM"
 research_kind: "Archive Note"
 source_title: "3-4 (실습)3_Gemma_QLoRA"
 source_path: "13_LLM_GenAI/Code_Snippets/3-4 (실습)3_Gemma_QLoRA.md"
-excerpt: "LLM과 같은 대규모 모델에서 더욱 효율 적인 미세조정 즉, PEFT(Parameter-Efficient Fine-Tuning)을 하기위한 가장 대표적인 방식이 바로 Lora 방식 입니다. 해당 예시에서는 허깅페이스로 모델을 불러온뒤 LoraConfig를 활용하여 구글의 gemma3 모델을 한국어..."
-research_summary: "LLM과 같은 대규모 모델에서 더욱 효율 적인 미세조정 즉, PEFT(Parameter-Efficient Fine-Tuning)을 하기위한 가장 대표적인 방식이 바로 Lora 방식 입니다. 해당 예시에서는 허깅페이스로 모델을 불러온뒤 LoraConfig를 활용하여 구글의 gemma3 모델을 한국어 뉴스 요약 테스크로 PEFT 진행하는... Gemma3 모델은 구글에서 Gemini 모델을 만드는 데 사용된 것과 동일한 연구 및 기술로 구축한 GPT 기반의 최신 텍스트 생성 모델입니다. Gemma3 모델은 멀티모달로, 텍스트와 이미지 입력을 처리하고 텍스트 출력을 생성가능 합니다. 예시에서는 이미지 입력은 활용하지 않고 텍스트 입력만을 활용하여 문장 요약에 최적화된 모델로... `md` 원본과 20개 코드 블록, 16개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 huggingface_hub, transformers, torch, datasets입니다."
+excerpt: "3 Gemma QLoRA에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 LLM 학습 기록입니다. 본문은 Gemma 모델 PEFT, Lora 기법을 활용한 PEFT 순서로 핵심 장면을 먼저 훑고, 양자화 하여 모델 로드, PEFT 학습 진행, Lora 가중치 합치기 같은 코드로 실..."
+research_summary: "3 Gemma QLoRA에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 LLM 학습 기록입니다. 본문은 Gemma 모델 PEFT, Lora 기법을 활용한 PEFT 순서로 핵심 장면을 먼저 훑고, 양자화 하여 모델 로드, PEFT 학습 진행, Lora 가중치 합치기 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 20개 코드 블록, 16개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 huggingface_hub, transformers, torch, datasets입니다."
 research_artifacts: "md · 코드 20개 · 실행 16개"
 code_block_count: 20
 execution_block_count: 16
 research_focus:
-  - "LLM과 같은 대규모 모델에서 더욱 효율 적인 미세조정 즉, PEFT(Parameter-Efficien..."
+  - "Gemma 모델 PEFT"
   - "Lora 기법을 활용한 PEFT"
-  - "초기화 과정"
 research_stack:
   - "huggingface_hub"
   - "transformers"
@@ -29,9 +28,9 @@ tags:
   - archive-note
 ---
 
-LLM과 같은 대규모 모델에서 더욱 효율 적인 미세조정 즉, PEFT(Parameter-Efficient Fine-Tuning)을 하기위한 가장 대표적인 방식이 바로 Lora 방식 입니다. 해당 예시에서는 허깅페이스로 모델을 불러온뒤 LoraConfig를 활용하여 구글의 gemma3 모델을 한국어 뉴스 요약 테스크로 PEFT 진행하는... Gemma3 모델은 구글에서 Gemini 모델을 만드는 데 사용된 것과 동일한 연구 및 기술로 구축한 GPT 기반의 최신 텍스트 생성 모델입니다. Gemma3 모델은 멀티모달로, 텍스트와 이미지 입력을 처리하고 텍스트 출력을 생성가능 합니다. 예시에서는 이미지 입력은 활용하지 않고 텍스트 입력만을 활용하여 문장 요약에 최적화된 모델로... `md` 원본과 20개 코드 블록, 16개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 huggingface_hub, transformers, torch, datasets입니다.
+3 Gemma QLoRA에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 LLM 학습 기록입니다. 본문은 Gemma 모델 PEFT, Lora 기법을 활용한 PEFT 순서로 핵심 장면을 먼저 훑고, 양자화 하여 모델 로드, PEFT 학습 진행, Lora 가중치 합치기 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 20개 코드 블록, 16개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 huggingface_hub, transformers, torch, datasets입니다.
 
-**빠르게 볼 수 있는 포인트**: LLM과 같은 대규모 모델에서 더욱 효율 적인 미세조정 즉, PEFT(..., Lora 기법을 활용한 PEFT, 초기화 과정.
+**빠르게 볼 수 있는 포인트**: Gemma 모델 PEFT, Lora 기법을 활용한 PEFT.
 
 **남겨둔 자료**: `md` 원본과 20개 코드 블록, 16개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 huggingface_hub, transformers, torch, datasets입니다.
 
@@ -51,21 +50,33 @@ LLM과 같은 대규모 모델에서 더욱 효율 적인 미세조정 즉, PEFT
 
 ## What This Note Covers
 
-### Lora 기법을 활용한 PEFT
-
-LLM과 같은 대규모 모델에서 더욱 효율 적인 미세조정 즉, PEFT(Parameter-Efficient Fine-Tuning)을 하기위한 가장 대표적인 방식이 바로 Lora 방식 입니다. 해당 예시에서는 허깅페이스로 모델을 불러온뒤 LoraConfig를 활용하여 구글의 gemma3 모델을 한국어 뉴스 요약 테스크로 PEFT 진행하는 과정을 살펴봅니다.
-
 ### Gemma 모델 PEFT
 
-Gemma3 모델은 구글에서 Gemini 모델을 만드는 데 사용된 것과 동일한 연구 및 기술로 구축한 GPT 기반의 최신 텍스트 생성 모델입니다. Gemma3 모델은 멀티모달로, 텍스트와 이미지 입력을 처리하고 텍스트 출력을 생성가능 합니다. 예시에서는 이미지 입력은 활용하지 않고 텍스트 입력만을 활용하여 문장 요약에 최적화된 모델로 미세조정 합니다.
+Gemma3 모델은 구글에서 Gemini 모델을 만드는 데 사용된 것과 동일한 연구 및 기술로 구축한 GPT 기반의 최신 텍스트 생성 모델입니다. Gemma3 모델은 멀티모달로, 텍스트와 이미지 입력을 처리하고 텍스트 출력을 생성가능 합니다. 예시에서는 이미지 입력은 활용하지 않고 텍스트 입력만을 활용하여 문장 요약에 최적화된 모델로...
 
-### Gemma 모델 PEFT > 양자화 하여 모델 로드
+- 읽을 포인트: 세부 흐름: 양자화 하여 모델 로드, Lora 모델 통합 > Lora 가중치 합치기, 모델 평가
 
-LLM 모델을 더욱 특정 테스크에 최적화하여 더욱 효율 적으로 사용하기 위해 모델의 크기를 줄이는 경량화 작업을 진행할 수 있습니다. 모델의 경령화 작업중 가장 간단하고 효율적인 방법중 하나가 사용 비트가 큰 실수(float64)타입으로 저장되는 파라미터를 작은 비트의 정수(int4, int8)등으로 줄이는 양자화 입니다.
+#### 양자화 하여 모델 로드
 
-### Gemma 모델 PEFT > 텍스트 생성해보기
+LLM 모델을 더욱 특정 테스크에 최적화하여 더욱 효율 적으로 사용하기 위해 모델의 크기를 줄이는 경량화 작업을 진행할 수 있습니다. 모델의 경령화 작업중 가장 간단하고 효율적인 방법중 하나가 사용 비트가 큰 실수(float64)타입으로 저장되는 파라미터를 작은 비트의 정수(int...
 
-양자화된 모델로 부터 텍스트가 잘 생성되는지 테스트해 봅니다. gemma-3-1b-it 모델은 챗봇 역할로써 한번 미세조정이 된 모델이므로 입력 프롬프트 템플릿에 맞춰 텍스트를 입력해주어 좀더 명확하게 사용할 수 있습니다.
+#### Lora 모델 통합 > Lora 가중치 합치기
+
+기존 모델에 Lora 학습 결과를 통합하는 방법은 먼저 Lora의 저차원 분해 행렬을 행렬곱 하여 Lora가 추가되었던 projection 레이어와 동일한 형상으로 맞춰준다음 더하기 연산을 진행합니다. Lora 가중치 통합을 위해 peft 모듈의 PeftModel 객체에서 기본 모...
+
+#### 모델 평가
+
+학습된 Lora 가중치를 활용하여 뉴스 요약이 잘 진행되는지 확인해 봅니다.
+
+### Lora 기법을 활용한 PEFT
+
+LLM과 같은 대규모 모델에서 더욱 효율 적인 미세조정 즉, PEFT(Parameter-Efficient Fine-Tuning)을 하기위한 가장 대표적인 방식이 바로 Lora 방식 입니다. 해당 예시에서는 허깅페이스로 모델을 불러온뒤 LoraConfig를 활용하여 구글의 gemma3 모델을 한국어 뉴스 요약 테스크로 PEFT 진행하는...
+
+- 읽을 포인트: 세부 흐름: 초기화 과정
+
+#### 초기화 과정
+
+Lora 기법을 활용한 PEFT > 초기화 과정에서 다룬 핵심 개념과 구현 흐름을 다시 읽을 수 있게 정리한 구간입니다.
 
 ## Why This Matters
 
@@ -89,10 +100,8 @@ LLM 모델을 더욱 특정 테스크에 최적화하여 더욱 효율 적으로
 
 ## Implementation Flow
 
-1. Lora 기법을 활용한 PEFT: LLM과 같은 대규모 모델에서 더욱 효율 적인 미세조정 즉, PEFT(Parameter-Efficient Fine-Tuning)을 하기위한 가장 대표적인 방식이 바로 Lora 방식 입니다. 해당 예시에서는 허깅페이스로 모델을 불러온뒤 LoraConfig를 활용하여...
-2. Gemma 모델 PEFT: Gemma3 모델은 구글에서 Gemini 모델을 만드는 데 사용된 것과 동일한 연구 및 기술로 구축한 GPT 기반의 최신 텍스트 생성 모델입니다. Gemma3 모델은 멀티모달로, 텍스트와 이미지 입력을 처리하고 텍스트 출력을 생성가능 합니다. 예시에서는 이미지 입력은 활용...
-3. Gemma 모델 PEFT > 양자화 하여 모델 로드: LLM 모델을 더욱 특정 테스크에 최적화하여 더욱 효율 적으로 사용하기 위해 모델의 크기를 줄이는 경량화 작업을 진행할 수 있습니다. 모델의 경령화 작업중 가장 간단하고 효율적인 방법중 하나가 사용 비트가 큰 실수(float64)타입으로 저장되는...
-4. Gemma 모델 PEFT > 텍스트 생성해보기: 양자화된 모델로 부터 텍스트가 잘 생성되는지 테스트해 봅니다. gemma-3-1b-it 모델은 챗봇 역할로써 한번 미세조정이 된 모델이므로 입력 프롬프트 템플릿에 맞춰 텍스트를 입력해주어 좀더 명확하게 사용할 수 있습니다.
+1. Gemma 모델 PEFT: 양자화 하여 모델 로드, Lora 모델 통합 > Lora 가중치 합치기
+2. Lora 기법을 활용한 PEFT: 초기화 과정
 
 ## Code Highlights
 
@@ -124,37 +133,6 @@ model = AutoModelForCausalLM.from_pretrained(
 tokenizer = AutoTokenizer.from_pretrained(model_id)
 
 print(model)
-```
-
-### 텍스트 생성해보기
-
-`텍스트 생성해보기`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. AutoTokenizer로 토크나이져를 생성한 후 apply_chat_template() 함수를 통해 역할이 지정된 프롬프트 텍스트를 토큰화 하고 모델 입력에 맞게 구성해 줍니다.
-
-```python
-tokenizer = AutoTokenizer.from_pretrained(model_id)
-
-messages = [
-    [
-        {
-            "role": "system",
-            "content": "마크다운 표기 없이 일반 텍스트 형식으로 답변 작성"
-        },
-        {
-            "role": "user",
-            "content": "LLM과 허깅페이스에 대한 간략한 설명"
-        },
-    ],
-]
-
-inputs = tokenizer.apply_chat_template(
-    messages,
-    add_generation_prompt=True,
-    tokenize=True,
-    return_dict=True,
-    return_tensors="pt"
-).to(model.device).to(torch.bfloat16)
-
-inputs
 ```
 
 ### PEFT 학습 진행
@@ -191,6 +169,50 @@ args = SFTConfig(
     max_grad_norm=0.3,                      # 그래디언트 폭주 방지 (최대 0.3까지만)
     weight_decay=2e-4,                      # 과적합 방지 (가중치 조금씩 줄이기)
 # ... trimmed ...
+```
+
+### Lora 가중치 합치기
+
+`Lora 가중치 합치기`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 기본 모델 로드 (이미 로드 되었다면 생략 가능), 기본 모델에 Lora 가중치 결합 (더하기), 단일 모델로 저장 흐름이 주석과 함께 드러납니다.
+
+```python
+from peft import PeftModel
+
+# 기본 모델 로드 (이미 로드 되었다면 생략 가능)
+quantization_config = BitsAndBytesConfig(load_in_8bit=True)
+
+model = AutoModelForCausalLM.from_pretrained(
+    model_id, quantization_config=quantization_config
+).eval()
+
+# 기본 모델에 Lora 가중치 결합 (더하기)
+peft_model = PeftModel.from_pretrained(model, save_model)
+merged_model = peft_model.merge_and_unload()
+
+# 단일 모델로 저장
+merged_model.save_pretrained("merged_model",            # 저장 경로(safetensors)
+                             safe_serialization=True,   # 안정적인 저장방식
+                             max_shard_size="2GB")      # 셰이딩 저장 단위(용량이 큰경우)
+
+# 토크나이져도 함께 저장 (생략 가능)
+processor = AutoTokenizer.from_pretrained(save_model)
+processor.save_pretrained("merged_model")
+```
+
+### 모델 평가
+
+`모델 평가`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 로드된 모델을 활용하는 파이프라인 생성, 테스트 샘플, Gemma 템플릿으로 입력 프롬프트 구성 흐름이 주석과 함께 드러납니다.
+
+```python
+# 로드된 모델을 활용하는 파이프라인 생성
+pipe = pipeline("text-generation", model=my_model, tokenizer=tokenizer)
+
+# 테스트 샘플
+test_sample = test_data[100]
+
+# Gemma 템플릿으로 입력 프롬프트 구성
+prompt = pipe.tokenizer.apply_chat_template(test_sample["messages"][:1], tokenize=False, add_generation_prompt=True)
+prompt
 ```
 
 ## Source Bundle

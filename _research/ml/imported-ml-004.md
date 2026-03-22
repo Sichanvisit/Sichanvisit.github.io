@@ -1,19 +1,19 @@
 ---
-title: "5. 기초 통계와 데이터 시각화"
+title: "기초 통계와 데이터 시각화"
 date: 2026-03-08
 research_tab: "ML"
-research_kind: "Practice"
+research_kind: "Archive Note"
 source_title: "250813_코드실습4_5. 기초 통계와 데이터 시각화"
 source_path: "11_Machine_Learning/Code_Snippets/250813_코드실습4_5. 기초 통계와 데이터 시각화.md"
-excerpt: "코드실습4 5. 기초 통계와 데이터 시각화의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 Seaborn 실습 순서로 큰 장을 먼저 훑고, CSV 데이터 불러오기, 씨본 스타일 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과..."
-research_summary: "코드실습4 5. 기초 통계와 데이터 시각화의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 Seaborn 실습 순서로 큰 장을 먼저 훑고, CSV 데이터 불러오기, 씨본 스타일 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 37개 코드 블록, 35개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 matplotlib, warnings, numpy, seaborn입니다."
+excerpt: "기초 통계와 데이터 시각화의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 Seaborn 실습 순서로 큰 장을 먼저 훑고, CSV 데이터 불러오기, 데이터 분포 시각화 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 37개..."
+research_summary: "기초 통계와 데이터 시각화의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 Seaborn 실습 순서로 큰 장을 먼저 훑고, CSV 데이터 불러오기, 데이터 분포 시각화 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 37개 코드 블록, 35개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 matplotlib, warnings, numpy, seaborn입니다."
 research_artifacts: "ipynb/md · 코드 37개 · 실행 35개"
 code_block_count: 37
 execution_block_count: 35
 research_focus:
+  - "박스 프롯 - 커스터마이징 (1)"
+  - "박스 프롯 - 커스터마이징 (2)"
   - "Seaborn 실습"
-  - "씨본 스타일"
-  - "상관관계"
 research_stack:
   - "matplotlib"
   - "warnings"
@@ -27,7 +27,7 @@ tags:
   - research-archive
   - imported-note
   - ml
-  - practice
+  - archive-note
 ---
 
 ## 글 한눈에 보기
@@ -35,7 +35,7 @@ tags:
 <div class="research-overview research-overview--intro">
   <div class="research-overview__row">
     <div class="research-overview__label">문제 설정</div>
-    <div class="research-overview__value">코드실습4 5. 기초 통계와 데이터 시각화에서 Seaborn 실습 흐름을 직접 따라가며 구현했습니다.</div>
+    <div class="research-overview__value">기초 통계와 데이터 시각화에서 Seaborn 실습 흐름을 직접 따라가며 구현했습니다.</div>
   </div>
   <div class="research-overview__row">
     <div class="research-overview__label">원본 구조</div>
@@ -51,7 +51,7 @@ tags:
   </div>
   <div class="research-overview__row">
     <div class="research-overview__label">구현 흐름</div>
-    <div class="research-overview__value">CSV 데이터 불러오기 -&gt; 씨본 스타일 -&gt; import numpy as np</div>
+    <div class="research-overview__value">CSV 데이터 불러오기 -&gt; 데이터 분포 시각화 -&gt; import numpy as np</div>
   </div>
   <div class="research-overview__row">
     <div class="research-overview__label">자료</div>
@@ -88,12 +88,12 @@ tags:
 - 핵심 API: `pd.read_csv`
 - 코드 포인트: -
 
-### 2. 씨본 스타일
+### 2. 데이터 분포 시각화
 
 - 단계: 시각화
 - 구현 의도: 데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.
-- 핵심 API: `matplotlib`, `seaborn`
-- 코드 포인트: -
+- 핵심 API: `matplotlib`
+- 코드 포인트: 박스 프롯 - 커스터마이징 (2)
 
 ### 3. import numpy as np
 
@@ -102,26 +102,26 @@ tags:
 - 핵심 API: -
 - 코드 포인트: -
 
-### 4. 데이터 분포 시각화
-
-- 단계: 시각화
-- 구현 의도: 데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.
-- 핵심 API: `matplotlib`
-- 코드 포인트: 박스 프롯 - 커스터마이징 (2)
-
-### 5. x = [-100, 5, 7, 8, 9, 10, 12, 13, 14, 20, 79]
-
-- 단계: 구현 코드
-- 구현 의도: x = [-100, 5, 7, 8, 9, 10, 12, 13... 코드를 직접 실행하며 이 장의 구현 흐름을 확인했습니다.
-- 핵심 API: -
-- 코드 포인트: -
-
-### 6. Seaborn 실습
+### 4. Seaborn 실습
 
 - 단계: 시각화
 - 구현 의도: 데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.
 - 핵심 API: `matplotlib`, `seaborn`
-- 코드 포인트: barplot
+- 코드 포인트: 박스 플롯 - 구간별로
+
+### 5. 씨본 스타일
+
+- 단계: 시각화
+- 구현 의도: 데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.
+- 핵심 API: `matplotlib`, `seaborn`
+- 코드 포인트: set_theme()
+
+### 6. 상관관계
+
+- 단계: 시각화
+- 구현 의도: 데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.
+- 핵심 API: `matplotlib`, `seaborn`
+- 코드 포인트: 결측치를 히트맵으로 시각화
 
 ## 코드로 확인한 내용
 
@@ -138,43 +138,6 @@ import pandas as pd
 
 df = pd.read_csv('/content/drive/MyDrive/코드잇/AI 엔지니어 5기/공유폴더/Data/body.csv')
 df
-```
-
-### 씨본 스타일
-
-**직접 해본 단계**: 시각화
-
-**핵심 API**: `matplotlib`, `seaborn`
-
-데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.
-
-```python
-plt.figure(figsize=(4,3))
-sns.set_palette(sns.color_palette("pastel")) # pastel, deep, muted....
-sns.barplot(data=titanic_data, x='age', y='class', errorbar=None)
-plt.show()
-```
-
-### import numpy as np
-
-**직접 해본 단계**: 구현 코드
-
-넘파이 배열 생성, 인덱싱, 수치 연산을 손으로 익히는 기초 실습 코드입니다.
-
-```python
-import numpy as np
-
-x = [5, 7, 8, 9, 10, 12, 13, 14, 20]
-
-q1 = np.percentile(x, 25)
-q2 = np.percentile(x, 50)
-q3 = np.percentile(x, 75)
-iqr = q3 - q1
-
-print("Q1: ", q1)
-print("Q2(중앙값): ", q2)
-print("Q3: ", q3)
-print('IQR: ', iqr)
 ```
 
 ### 데이터 분포 시각화
@@ -209,14 +172,16 @@ plt.yticks([1], ['Group A'])
 plt.show()
 ```
 
-### x = [-100, 5, 7, 8, 9, 10, 12, 13, 14, 20, 79]
+### import numpy as np
 
 **직접 해본 단계**: 구현 코드
 
-x = [-100, 5, 7, 8, 9, 10, 12, 13... 코드를 직접 실행하며 이 장의 구현 흐름을 확인했습니다.
+넘파이 배열 생성, 인덱싱, 수치 연산을 손으로 익히는 기초 실습 코드입니다.
 
 ```python
-x = [-100, 5, 7, 8, 9, 10, 12, 13, 14, 20, 79]
+import numpy as np
+
+x = [5, 7, 8, 9, 10, 12, 13, 14, 20]
 
 q1 = np.percentile(x, 25)
 q2 = np.percentile(x, 50)
@@ -238,12 +203,44 @@ print('IQR: ', iqr)
 데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.
 
 ```python
-# barplot
+# 박스 플롯 - 구간별로
 
 plt.figure(figsize=(6,3))
-sns.barplot(data=df, x='height_bin', y='weight', errorbar=None)
-plt.title("키와 몸무게 평균 비교")
+sns.boxplot(data=df, x='height_bin', y='weight')
+plt.title('키 박스플롯')
 plt.xticks(rotation=45)
+plt.show()
+```
+
+### 씨본 스타일
+
+**직접 해본 단계**: 시각화
+
+**핵심 API**: `matplotlib`, `seaborn`
+
+데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.
+
+```python
+# set_theme()
+
+plt.figure(figsize=(4,3))
+sns.set_theme(style='whitegrid')
+sns.violinplot(data=titanic_data, x='age')
+plt.show()
+```
+
+### 상관관계
+
+**직접 해본 단계**: 시각화
+
+**핵심 API**: `matplotlib`, `seaborn`
+
+데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.
+
+```python
+# 결측치를 히트맵으로 시각화
+
+sns.heatmap(titanic_data.isnull(), cbar=False, yticklabels=False)
 plt.show()
 ```
 

@@ -5,8 +5,8 @@ research_tab: "DL"
 research_kind: "Archive Note"
 source_title: "(실습)YOLOv1"
 source_path: "12_Deep_Learning/Code_Snippets/(실습)YOLOv1.md"
-excerpt: "YOLOv1 클래스는 여섯 개의 컨볼루션 블록과 두 개의 전결합층(fully connected)을 정의합니다. 각 컨볼루션 블록은 nn.Conv2d, nn.LeakyReLU(0.1), nn.MaxPool2d 등을 사용하여 구성되어 있습니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를..."
-research_summary: "YOLOv1 클래스는 여섯 개의 컨볼루션 블록과 두 개의 전결합층(fully connected)을 정의합니다. 각 컨볼루션 블록은 nn.Conv2d, nn.LeakyReLU(0.1), nn.MaxPool2d 등을 사용하여 구성되어 있습니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 9개 코드 블록, 9개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch입니다."
+excerpt: "YOLOv1에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 실험의 큰 흐름을 먼저 훑고, 논문에 제시된 아키텍처 구성 (YOLOv1), class YOLOv1(nn.Module), @title NMS 같은 코드로 실제 구현을 이어서 확인할 수 있습니..."
+research_summary: "YOLOv1에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 실험의 큰 흐름을 먼저 훑고, 논문에 제시된 아키텍처 구성 (YOLOv1), class YOLOv1(nn.Module), @title NMS 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 9개 코드 블록, 9개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch입니다."
 research_artifacts: "md · 코드 9개 · 실행 9개"
 code_block_count: 9
 execution_block_count: 9
@@ -24,7 +24,7 @@ tags:
   - archive-note
 ---
 
-YOLOv1 클래스는 여섯 개의 컨볼루션 블록과 두 개의 전결합층(fully connected)을 정의합니다. 각 컨볼루션 블록은 nn.Conv2d, nn.LeakyReLU(0.1), nn.MaxPool2d 등을 사용하여 구성되어 있습니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 9개 코드 블록, 9개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch입니다.
+YOLOv1에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 실험의 큰 흐름을 먼저 훑고, 논문에 제시된 아키텍처 구성 (YOLOv1), class YOLOv1(nn.Module), @title NMS 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 9개 코드 블록, 9개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch입니다.
 
 **빠르게 볼 수 있는 포인트**: YOLOv1 클래스는 여섯 개의 컨볼루션 블록과 두 개의 전결합층(fu..., 논문에 제시된 아키텍처 구성 (YOLOv1).
 
@@ -75,6 +75,34 @@ YOLOv1 클래스는 여섯 개의 컨볼루션 블록과 두 개의 전결합층
 
 ## Code Highlights
 
+### 논문에 제시된 아키텍처 구성 (YOLOv1)
+
+`논문에 제시된 아키텍처 구성 (YOLOv1)`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 논문에 제시된 아키텍처 구성 (YOLOv1) 흐름이 주석과 함께 드러납니다.
+
+```python
+# 논문에 제시된 아키텍처 구성 (YOLOv1)
+architecture_config = [
+    (7, 64, 2, 3),       # (kernel_size, filters, stride, padding)
+    "M",                 # maxpool
+    (3, 192, 1, 1),
+    "M",
+    (1, 128, 1, 0),
+    (3, 256, 1, 1),
+    (1, 256, 1, 0),
+    (3, 512, 1, 1),
+    "M",
+    [(1, 256, 1, 0), (3, 512, 1, 1), 4],  # 해당 블록을 4번 반복
+    (1, 512, 1, 0),
+    (3, 1024, 1, 1),
+    "M",
+    [(1, 512, 1, 0), (3, 1024, 1, 1), 2],  # 해당 블록을 2번 반복
+    (3, 1024, 1, 1),
+    (3, 1024, 2, 1),
+    (3, 1024, 1, 1),
+    (3, 1024, 1, 1)
+]
+```
+
 ### class YOLOv1(nn.Module)
 
 `class YOLOv1(nn.Module)`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 입력 이미지가 448 인경우 마지막 컨볼루션 feature map 7x7 흐름이 주석과 함께 드러납니다.
@@ -102,39 +130,29 @@ class YOLOv1(nn.Module):
         return x
 ```
 
-### @title IoU
+### @title NMS
 
-`@title IoU`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 IoU, x_center, y_center, w, h, 좌상단 w,h --> 좌상단, 우하단 (다른 예시) 흐름이 주석과 함께 드러납니다.
+`@title NMS`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 NMS 흐름이 주석과 함께 드러납니다.
 
 ```python
-#@title IoU
-def iou(boxes1, boxes2, eps=1e-6):
-    # x_center, y_center, w, h
-    # 좌상단 w,h --> 좌상단, 우하단 (다른 예시)
+#@title NMS
+def nms(bboxes, iou_th, conf_th):
+    """
+    bboxes: 각 요소가 [pred_class, confidence, x1, y1, x2, y2] 형태인 리스트
+    iou_threshold: IoU 임계치
+    conf_threshold: confidence 임계치 이하인 박스 제거
+    """
+    bboxes = [box for box in bboxes if box[1] > conf_th]
+    bboxes = sorted(bboxes, key=lambda x: x[1], reverse=True)
+    bboxes_nms = []
 
-    # xc, yc, w, h --> x1, y1, x2, y2
-    # 중앙좌표 , w,h -> 좌상단, 우하단
-    box1_x1 = boxes1[..., 0:1] - boxes1[..., 2,3] / 2
-    box1_y1 = boxes1[..., 1:2] - boxes1[..., 3,4] / 2
-    box1_x2 = boxes1[..., 0:1] + boxes1[..., 2,3] / 2
-    box1_y2 = boxes1[..., 1:2] + boxes1[..., 3,4] / 2
-
-    box2_x1 = boxes2[..., 0:1] - boxes2[..., 2,3] / 2
-    box2_y1 = boxes2[..., 1:2] - boxes2[..., 3,4] / 2
-    box2_x2 = boxes2[..., 0:1] + boxes2[..., 2,3] / 2
-    box2_y2 = boxes2[..., 1:2] + boxes2[..., 3,4] / 2
-
-    x1 = torch.max(box1_x1, box2_x1)
-    y1 = torch.max(box1_y1, box2_y1)
-    x2 = torch.min(box1_x2, box2_x2)
-    y2 = torch.min(box1_y2, box2_y2)
-
-    inter = torch.clamp(x2-x1, min=0) * torch.clamp(y2-y1, min=0)
-    box1_area = torch.abs((box1_x2-box1_x1) * (box1_y2-box1_y1))
-    box2_area = torch.abs((box2_x2-box2_x1) * (box2_y2-box2_y1))
-    iou_val = inter / (box1_area + box2_area - inter + eps)
-
-    return iou_val
+    while bboxes:
+        chosen_box = bboxes.pop(O)
+        bboxes = [box for box in bboxes
+                  if box[0] != chosen_box[0] or iou(torch.tensor(chosen_box[2:]).unsqueeze(0),
+                                                    torch.tensor(box[2:]).unsqueeze(0)).item()< iou_th]
+        bboxes_nms.append(chosen_box)
+    return bboxes_nms
 ```
 
 ### @title Loss

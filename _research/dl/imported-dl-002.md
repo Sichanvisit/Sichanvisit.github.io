@@ -5,14 +5,13 @@ research_tab: "DL"
 research_kind: "Archive Note"
 source_title: "(실습)AutoEncoder"
 source_path: "12_Deep_Learning/Code_Snippets/(실습)AutoEncoder.md"
-excerpt: "오토인코더 구현 (MNIST), 기본 전처리 + 데이터 로드, 모델 생성 및 학습 중심으로 구현 과정을 정리한 AutoEncoder 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 22개 코..."
-research_summary: "오토인코더 구현 (MNIST), 기본 전처리 + 데이터 로드, 모델 생성 및 학습 중심으로 구현 과정을 정리한 AutoEncoder 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 22개 코드 블록, 21개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, matplotlib, torch, torchvision입니다."
+excerpt: "오토인코더 구현 (MNIST), 모델 생성 및 학습 중심의 DL 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 오토인코더 구현 (MNIST), 모델 생성 및 학습 순서로 핵심 장면을 먼저 훑고, 기본 전처리 + 데이터 로드, Basic Auto..."
+research_summary: "오토인코더 구현 (MNIST), 모델 생성 및 학습 중심의 DL 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 오토인코더 구현 (MNIST), 모델 생성 및 학습 순서로 핵심 장면을 먼저 훑고, 기본 전처리 + 데이터 로드, Basic Auto Encoder, 3D view 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 22개 코드 블록, 21개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, matplotlib, torch, torchvision입니다."
 research_artifacts: "md · 코드 22개 · 실행 21개"
 code_block_count: 22
 execution_block_count: 21
 research_focus:
   - "오토인코더 구현 (MNIST)"
-  - "기본 전처리 + 데이터 로드"
   - "모델 생성 및 학습"
 research_stack:
   - "numpy"
@@ -29,9 +28,9 @@ tags:
   - archive-note
 ---
 
-오토인코더 구현 (MNIST), 기본 전처리 + 데이터 로드, 모델 생성 및 학습 중심으로 구현 과정을 정리한 AutoEncoder 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 22개 코드 블록, 21개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, matplotlib, torch, torchvision입니다.
+오토인코더 구현 (MNIST), 모델 생성 및 학습 중심의 DL 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 오토인코더 구현 (MNIST), 모델 생성 및 학습 순서로 핵심 장면을 먼저 훑고, 기본 전처리 + 데이터 로드, Basic Auto Encoder, 3D view 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 22개 코드 블록, 21개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, matplotlib, torch, torchvision입니다.
 
-**빠르게 볼 수 있는 포인트**: 오토인코더 구현 (MNIST), 기본 전처리 + 데이터 로드, 모델 생성 및 학습.
+**빠르게 볼 수 있는 포인트**: 오토인코더 구현 (MNIST), 모델 생성 및 학습.
 
 **남겨둔 자료**: `md` 원본과 22개 코드 블록, 21개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, matplotlib, torch, torchvision입니다.
 
@@ -51,11 +50,33 @@ tags:
 
 ## What This Note Covers
 
-- 오토인코더 구현 (MNIST)
-- 기본 전처리 + 데이터 로드
-- 모델 생성 및 학습
-- 모델 생성
-- Basic Auto Encoder
+### 오토인코더 구현 (MNIST)
+
+기본 전처리 + 데이터 로드 같은 코드를 직접 따라가며 오토인코더 구현 (MNIST) 흐름을 확인했습니다.
+
+- 읽을 포인트: 세부 흐름: 기본 전처리 + 데이터 로드
+
+#### 기본 전처리 + 데이터 로드
+
+이미지 입력을 배치로 묶고 증강하며 학습 가능한 형태로 만드는 구간입니다.
+
+### 모델 생성 및 학습
+
+Basic Auto Encoder, Basic Auto Encoder..., CNN Auto Encoder 같은 코드를 직접 따라가며 모델 생성 및 학습 흐름을 확인했습니다.
+
+- 읽을 포인트: 세부 흐름: Basic Auto Encoder, Basic Auto Encoder > 3D view, CNN Auto Encoder
+
+#### Basic Auto Encoder
+
+모델 정의, 손실, 최적화 흐름을 코드로 연결해 보는 구간입니다.
+
+#### Basic Auto Encoder > 3D view
+
+모델 정의, 손실, 최적화 흐름을 코드로 연결해 보는 구간입니다.
+
+#### CNN Auto Encoder
+
+모델 정의, 손실, 최적화 흐름을 코드로 연결해 보는 구간입니다.
 
 ## Why This Matters
 
@@ -65,14 +86,38 @@ tags:
 - 왜 이 방식을 쓰는가: Dataset/DataLoader 구조는 데이터 읽기, 변환, 배치 처리를 분리해 코드 재사용성과 실험 반복성을 높여줍니다.
 - 원리: 각 샘플을 Dataset이 제공하고, DataLoader가 이를 배치로 묶어 셔플·병렬 로딩·collate를 담당합니다.
 
+### 합성곱 기반 특징 추출
+
+- 왜 필요한가: 이미지는 인접 픽셀 관계와 지역 패턴이 중요해서, 완전연결층만으로는 공간 구조를 효율적으로 잡기 어렵습니다.
+- 왜 이 방식을 쓰는가: CNN은 필터를 공유하며 지역 특징을 반복적으로 추출할 수 있어 이미지 실습의 기본 뼈대로 적합합니다.
+- 원리: 작은 커널이 이미지 위를 이동하며 특징을 뽑고, 층이 깊어질수록 더 추상적인 패턴을 학습합니다.
+
 ## Implementation Flow
 
-1. Key Step: 오토인코더 구현 (MNIST)
-2. Key Step: latent 공간 시각화를 위한 데이터 추출
-3. Key Step: 전체 latent 벡터를 scatter plot
-4. Key Step: 각 digit별로 일부 포인트에 텍스트 어노테이션 추가
+1. 오토인코더 구현 (MNIST): 기본 전처리 + 데이터 로드
+2. 모델 생성 및 학습: Basic Auto Encoder, Basic Auto Encoder > 3D view
 
 ## Code Highlights
+
+### 기본 전처리 + 데이터 로드
+
+`기본 전처리 + 데이터 로드`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+
+```python
+train_dataset = datasets.FashionMNIST(
+    root='./fmnist',
+    train=True,
+    download=True,
+    transform=transforms
+)
+
+test_dataset = datasets.FashionMNIST(
+    root='./fmnist',
+    train=False,
+    download=True,
+    transform=transforms
+)
+```
 
 ### Basic Auto Encoder
 
@@ -101,37 +146,27 @@ for epoch in range(epochs):
 
 ### 3D view
 
-`3D view`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 BasicAutoEncoder 2 흐름이 주석과 함께 드러납니다.
+`3D view`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 BasicAutoEncoder 2, train 흐름이 주석과 함께 드러납니다.
 
 ```python
 # BasicAutoEncoder 2
-class BasicAutoEncoder2(nn.Module):
-    def __init__(self):
-        super().__init__()
-        self.encoder = nn.Sequential(
-            nn.Linear(28*28, 128),
-            nn.ReLU(),
-            nn.Linear(128, 64),
-            nn.ReLU(),
-            nn.Linear(64, 32),
-            nn.ReLU(),
-            nn.Linear(32, 3),
-            nn.ReLU()
-        )
-        self.decoder = nn.Sequential(
-            nn.Linear(3, 32),
-            nn.ReLU(),
-            nn.Linear(32, 64),
-            nn.ReLU(),
-            nn.Linear(64, 128),
-            nn.ReLU(),
-            nn.Linear(128, 28*28),
-            nn.Sigmoid()
-        )
-    def forward(self, x):
-        latent = self.encoder(x)
-        x = self.decoder(latent)
-        return x
+# train
+epochs = 10
+for epoch in range(epochs):
+    model2.train()
+    total_loss = 0
+    for batch in train_loader:
+        images = batch[0].to(device)
+        images = images.view(images.size(0), -1)
+        outputs = model2(images)
+        loss = loss_fn(outputs, images)
+
+        loss.backward()
+        optimizer2.step()
+        optimizer2.zero_grad()
+
+        total_loss += loss.item()
+    print(f"Epoch : {epoch+1}/{epochs}, Loss : {total_loss/len(train_loader):.4f}")
 ```
 
 ### CNN Auto Encoder

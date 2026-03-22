@@ -5,15 +5,13 @@ research_tab: "LLM"
 research_kind: "Archive Note"
 source_title: "3-5 (실습)사내_규정_챗봇"
 source_path: "13_LLM_GenAI/Code_Snippets/3-5 (실습)사내_규정_챗봇.md"
-excerpt: "사내 규정 챗봇 만들기, RAG 실습 준비, RAG 실습 시작 - LangChain 사용 중심으로 구현 과정을 정리한 사내 규정 챗봇 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `ipynb/md` 원본..."
-research_summary: "사내 규정 챗봇 만들기, RAG 실습 준비, RAG 실습 시작 - LangChain 사용 중심으로 구현 과정을 정리한 사내 규정 챗봇 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `ipynb/md` 원본과 12개 코드 블록, 8개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, langchain_community, langchain_text_splitters, langchain_openai입니다."
+excerpt: "사내 규정 챗봇에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 LLM 학습 기록입니다. 본문은 사내 규정 챗봇 만들기 순서로 핵심 장면을 먼저 훑고, RAG 실습 준비, 임베딩 & 벡터 저장소 생성 (Inde..., 검색기(Retriever) 설정 & 생... 같은 코드로 실제..."
+research_summary: "사내 규정 챗봇에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 LLM 학습 기록입니다. 본문은 사내 규정 챗봇 만들기 순서로 핵심 장면을 먼저 훑고, RAG 실습 준비, 임베딩 & 벡터 저장소 생성 (Inde..., 검색기(Retriever) 설정 & 생... 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 12개 코드 블록, 8개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, langchain_community, langchain_text_splitters, langchain_openai입니다."
 research_artifacts: "ipynb/md · 코드 12개 · 실행 8개"
 code_block_count: 12
 execution_block_count: 8
 research_focus:
   - "사내 규정 챗봇 만들기"
-  - "RAG 실습 준비"
-  - "RAG 실습 시작 - LangChain 사용"
 research_stack:
   - "os"
   - "langchain_community"
@@ -30,9 +28,9 @@ tags:
   - archive-note
 ---
 
-사내 규정 챗봇 만들기, RAG 실습 준비, RAG 실습 시작 - LangChain 사용 중심으로 구현 과정을 정리한 사내 규정 챗봇 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `ipynb/md` 원본과 12개 코드 블록, 8개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, langchain_community, langchain_text_splitters, langchain_openai입니다.
+사내 규정 챗봇에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 LLM 학습 기록입니다. 본문은 사내 규정 챗봇 만들기 순서로 핵심 장면을 먼저 훑고, RAG 실습 준비, 임베딩 & 벡터 저장소 생성 (Inde..., 검색기(Retriever) 설정 & 생... 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 12개 코드 블록, 8개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, langchain_community, langchain_text_splitters, langchain_openai입니다.
 
-**빠르게 볼 수 있는 포인트**: 사내 규정 챗봇 만들기, RAG 실습 준비, RAG 실습 시작 - LangChain 사용.
+**빠르게 볼 수 있는 포인트**: 사내 규정 챗봇 만들기.
 
 **남겨둔 자료**: `ipynb/md` 원본과 12개 코드 블록, 8개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, langchain_community, langchain_text_splitters, langchain_openai입니다.
 
@@ -52,11 +50,23 @@ tags:
 
 ## What This Note Covers
 
-- 사내 규정 챗봇 만들기
-- RAG 실습 준비
-- RAG 실습 시작 - LangChain 사용
-- 문서 로딩 (Loading)
-- 문서 분할 (Splitting)
+### 사내 규정 챗봇 만들기
+
+RAG 실습 준비, RAG 실습 시작 - LangCha..., RAG 실습 시작 - LangCha... 같은 코드를 직접 따라가며 사내 규정 챗봇 만들기 흐름을 확인했습니다.
+
+- 읽을 포인트: 세부 흐름: RAG 실습 준비, RAG 실습 시작 - LangChain 사용, RAG 실습 시작 - LangChain 사용 > 검색기(Retriever) 설정 & 생성 (Generation)
+
+#### RAG 실습 준비
+
+검색과 컨텍스트 주입 단계를 실제 코드로 묶어 보는 구간입니다.
+
+#### RAG 실습 시작 - LangChain 사용
+
+검색과 컨텍스트 주입 단계를 실제 코드로 묶어 보는 구간입니다.
+
+#### RAG 실습 시작 - LangChain 사용 > 검색기(Retriever) 설정 & 생성 (Generation)
+
+검색과 컨텍스트 주입 단계를 실제 코드로 묶어 보는 구간입니다.
 
 ## Why This Matters
 
@@ -80,10 +90,7 @@ tags:
 
 ## Implementation Flow
 
-1. Key Step: 실습용 가상 데이터 생성 (사내 규정 문서)
-2. Key Step: 실제로는 PDF나 txt 파일이 있는 경우가 많지만, 실습 편의를 위해 즉석에서 파일을 만듭니다.
-3. Key Step: RAG 실습 시작 - LangChain 사용
-4. Key Step: 문서 분할 (Splitting)
+1. 사내 규정 챗봇 만들기: RAG 실습 준비, RAG 실습 시작 - LangChain 사용
 
 ## Code Highlights
 
@@ -137,23 +144,39 @@ print("   -> Chroma DB에 저장 완료!")
 
 ### 검색기(Retriever) 설정 & 생성 (Generation)
 
-`검색기(Retriever) 설정 & 생성 (Generation)`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 프롬프트 템플릿 작성, {context}: 검색된 문서 내용이 들어갈 자리, {question}: 사용자 질문이 들어갈 자리 흐름이 주석과 함께 드러납니다.
+`검색기(Retriever) 설정 & 생성 (Generation)`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 ==========================================, 검색기(Retriever) 설정 & 생성 (Generation) 흐름이 주석과 함께 드러납니다.
 
 ```python
-# 프롬프트 템플릿 작성
-# {context}: 검색된 문서 내용이 들어갈 자리
-# {question}: 사용자 질문이 들어갈 자리
-template = """
-당신은 회사의 인사 담당 AI입니다.
-아래 [규정]을 참고하여 직원의 질문에 친절하게 답해주세요.
-규정에 없는 내용은 "규정에 나와있지 않습니다"라고 답하세요.
+# ==========================================
+# 4. 검색기(Retriever) 설정 & 생성 (Generation)
+# ==========================================
+print("\n RAG 체인을 생성합니다...")
 
-[규정]
-{context}
+# 검색기 설정 (가장 유사한 문서 3개를 뽑아오도록 설정)
+retriever = vectorstore.as_retriever(search_kwargs={"k": 3})
 
-[질문]: {question}
-"""
-prompt = PromptTemplate.from_template(template)
+# LLM 모델 설정
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+```
+
+### 실행 (Test)
+
+`실행 (Test)`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 ==========================================, 실행 (Test) 흐름이 주석과 함께 드러납니다.
+
+```python
+# ==========================================
+# 5. 실행 (Test)
+# ==========================================
+question = "입사한 지 3년 되면 어떤 혜택이 있어? 그리고 책 사는 건 얼마나 지원해줘?"
+
+print(f"\n 질문: {question}")
+print("AI 답변 생성 중...\n")
+
+response = rag_chain.invoke(question)
+
+print("="*30)
+print(response)
+print("="*30)
 ```
 
 ## Source Bundle

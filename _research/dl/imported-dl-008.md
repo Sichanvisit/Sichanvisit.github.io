@@ -5,15 +5,13 @@ research_tab: "DL"
 research_kind: "Archive Note"
 source_title: "(실습)PyTorch_DNN기초"
 source_path: "12_Deep_Learning/Code_Snippets/(실습)PyTorch_DNN기초.md"
-excerpt: "실제 데이터 모델링, 이진 분류, 다중 분류 중심으로 구현 과정을 정리한 PyTorch DNN기초 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 25개 코드 블록, 24개 실행 셀을 함께..."
-research_summary: "실제 데이터 모델링, 이진 분류, 다중 분류 중심으로 구현 과정을 정리한 PyTorch DNN기초 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 25개 코드 블록, 24개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, sklearn, matplotlib, torchmetrics입니다."
+excerpt: "PyTorch DNN기초에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 실제 데이터 모델링 순서로 핵심 장면을 먼저 훑고, device = torch.device..., 이진 분류, 다중 분류 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `..."
+research_summary: "PyTorch DNN기초에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 실제 데이터 모델링 순서로 핵심 장면을 먼저 훑고, device = torch.device..., 이진 분류, 다중 분류 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 25개 코드 블록, 24개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, sklearn, matplotlib, torchmetrics입니다."
 research_artifacts: "md · 코드 25개 · 실행 24개"
 code_block_count: 25
 execution_block_count: 24
 research_focus:
   - "실제 데이터 모델링"
-  - "이진 분류"
-  - "다중 분류"
 research_stack:
   - "torch"
   - "sklearn"
@@ -28,9 +26,9 @@ tags:
   - archive-note
 ---
 
-실제 데이터 모델링, 이진 분류, 다중 분류 중심으로 구현 과정을 정리한 PyTorch DNN기초 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 25개 코드 블록, 24개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, sklearn, matplotlib, torchmetrics입니다.
+PyTorch DNN기초에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 실제 데이터 모델링 순서로 핵심 장면을 먼저 훑고, device = torch.device..., 이진 분류, 다중 분류 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 25개 코드 블록, 24개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, sklearn, matplotlib, torchmetrics입니다.
 
-**빠르게 볼 수 있는 포인트**: 실제 데이터 모델링, 이진 분류, 다중 분류.
+**빠르게 볼 수 있는 포인트**: 실제 데이터 모델링.
 
 **남겨둔 자료**: `md` 원본과 25개 코드 블록, 24개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, sklearn, matplotlib, torchmetrics입니다.
 
@@ -50,11 +48,19 @@ tags:
 
 ## What This Note Covers
 
-- 실제 데이터 모델링
-- 이진 분류
-- 다중 분류
-- step 1
-- step 2
+### 실제 데이터 모델링
+
+이진 분류, 다중 분류 같은 코드를 직접 따라가며 실제 데이터 모델링 흐름을 확인했습니다.
+
+- 읽을 포인트: 세부 흐름: 이진 분류, 다중 분류
+
+#### 이진 분류
+
+모델 정의, 손실, 최적화 흐름을 코드로 연결해 보는 구간입니다.
+
+#### 다중 분류
+
+모델 정의, 손실, 최적화 흐름을 코드로 연결해 보는 구간입니다.
 
 ## Why This Matters
 
@@ -72,44 +78,39 @@ tags:
 
 ## Implementation Flow
 
-1. Key Step: 데이터 분할: train, validation, test
+1. 실제 데이터 모델링: 이진 분류, 다중 분류
 
 ## Code Highlights
 
-### import torch
+### device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-`import torch`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 전처리와 학습/검증 분리를 담당해 전체 파이프라인의 출발점을 정리하는 코드입니다.
+`device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
 
 ```python
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-
-from sklearn.datasets import make_classification
-from sklearn.model_selection import train_test_split
-import torch
-from torch.utils.data import DataLoader, TensorDataset
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 ```
 
 ### 이진 분류
 
-`이진 분류`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 step 2 : 모델 만들기 흐름이 주석과 함께 드러납니다.
+`이진 분류`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 print(losses) 흐름이 주석과 함께 드러납니다.
 
 ```python
-# step 2 : 모델 만들기
+losses = []
+for epoch in range(epochs):
+    for batch in dataloader:
+        batch_X, batch_y = batch[0].to(device), batch[1].to(device)
+        preds = model(batch_X).squeeze()
+        loss = loss_fn(preds, batch_y)
+        loss.backward()
+        opt.step()
+        opt.zero_grad()
+    losses.append(loss.item())
 
-class simpleNN(nn.Module):
-    def __init__(self):
-        super().__init__()
-        self.l1 = nn.Linear(2,10)
-        self.l2 = nn.Linear(10,1)
-
-    def forward(self, x):
-        x = F.sigmoid(self.l1(x))
-        x = F.sigmoid(self.l2(x))
-        return x
-model = simpleNN().to(device)
-print(model)
+# print(losses)
+plt.plot(range(1,epochs+1), losses)
+plt.xlabel("epoch")
+plt.ylabel('loss')
+plt.show()
 ```
 
 ### 다중 분류
@@ -143,6 +144,20 @@ for epoch in range(epochs):
         val_losses.append(val_loss / len(val_dataloader))
         print(len(val_dataloader))
         break
+```
+
+### 다중 분류
+
+`다중 분류`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 학습 및 검증 흐름이 주석과 함께 드러납니다.
+
+```python
+# 학습 및 검증
+plt.plot(range(1,epochs+1), losses, label='train loss')
+plt.plot(range(1,epochs+1), val_losses, label="val loss")
+plt.xlabel("Epoch")
+plt.ylabel('Loss')
+plt.legend()
+plt.show()
 ```
 
 ## Source Bundle

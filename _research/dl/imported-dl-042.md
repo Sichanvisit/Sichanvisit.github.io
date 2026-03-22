@@ -5,8 +5,8 @@ research_tab: "DL"
 research_kind: "Archive Note"
 source_title: "[스프린트_미션]7_Object_Detection"
 source_path: "12_Deep_Learning/Code_Snippets/[스프린트_미션]7_Object_Detection.md"
-excerpt: "데이터 탐색 및 불러오기, Object Detection 시각화, 데이터셋 준비 중심으로 구현 과정을 정리한 7 Object Detection 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과..."
-research_summary: "데이터 탐색 및 불러오기, Object Detection 시각화, 데이터셋 준비 중심으로 구현 과정을 정리한 7 Object Detection 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 27개 코드 블록, 17개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 kagglehub, torch, pandas, os입니다."
+excerpt: "7 Object Detection에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 데이터 탐색 및 불러오기, Object Detection 시각화, 데이터셋 준비 순서로 핵심 장면을 먼저 훑고, Object Detection 시각화, 데이터셋 준비,..."
+research_summary: "7 Object Detection에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 데이터 탐색 및 불러오기, Object Detection 시각화, 데이터셋 준비 순서로 핵심 장면을 먼저 훑고, Object Detection 시각화, 데이터셋 준비, 모델 학습 및 평가 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 27개 코드 블록, 17개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 kagglehub, torch, pandas, os입니다."
 research_artifacts: "md · 코드 27개 · 실행 17개"
 code_block_count: 27
 execution_block_count: 17
@@ -29,7 +29,7 @@ tags:
   - archive-note
 ---
 
-데이터 탐색 및 불러오기, Object Detection 시각화, 데이터셋 준비 중심으로 구현 과정을 정리한 7 Object Detection 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 27개 코드 블록, 17개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 kagglehub, torch, pandas, os입니다.
+7 Object Detection에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 데이터 탐색 및 불러오기, Object Detection 시각화, 데이터셋 준비 순서로 핵심 장면을 먼저 훑고, Object Detection 시각화, 데이터셋 준비, 모델 학습 및 평가 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 27개 코드 블록, 17개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 kagglehub, torch, pandas, os입니다.
 
 **빠르게 볼 수 있는 포인트**: 데이터 탐색 및 불러오기, Object Detection 시각화, 데이터셋 준비.
 
@@ -51,11 +51,41 @@ tags:
 
 ## What This Note Covers
 
-- 데이터 탐색 및 불러오기
-- Object Detection 시각화
-- 데이터셋 준비
-- SSD 모델 준비
-- 모델 학습 및 평가
+### 데이터 탐색 및 불러오기
+
+데이터 탐색 및 불러오기 코드를 직접 따라가며 데이터 탐색 및 불러오기 흐름을 확인했습니다.
+
+- 읽을 포인트: 데이터 탐색 및 불러오기 아래 코드와 함께 읽으면 구현 포인트가 더 또렷해지는 구간입니다.
+
+### Object Detection 시각화
+
+Object Detection 시각화 코드를 직접 따라가며 Object Detection 시각화 흐름을 확인했습니다.
+
+- 읽을 포인트: 비전 모델이 객체나 픽셀 단위를 어떻게 예측하는지 구현으로 따라가는 구간입니다.
+
+### 데이터셋 준비
+
+데이터셋 준비 코드를 직접 따라가며 데이터셋 준비 흐름을 확인했습니다.
+
+- 읽을 포인트: 데이터셋 준비 아래 코드와 함께 읽으면 구현 포인트가 더 또렷해지는 구간입니다.
+
+### SSD 모델 준비
+
+SSD 모델 준비 코드를 직접 따라가며 SSD 모델 준비 흐름을 확인했습니다.
+
+- 읽을 포인트: 모델 정의, 손실, 최적화 흐름을 코드로 연결해 보는 구간입니다.
+
+### 모델 학습 및 평가
+
+모델 학습 및 평가 코드를 직접 따라가며 모델 학습 및 평가 흐름을 확인했습니다.
+
+- 읽을 포인트: 모델 정의, 손실, 최적화 흐름을 코드로 연결해 보는 구간입니다.
+
+### 모델 추론 및 시각화
+
+모델 추론 및 시각화 코드를 직접 따라가며 모델 추론 및 시각화 흐름을 확인했습니다.
+
+- 읽을 포인트: 모델 정의, 손실, 최적화 흐름을 코드로 연결해 보는 구간입니다.
 
 ## Why This Matters
 
@@ -67,12 +97,42 @@ tags:
 
 ## Implementation Flow
 
-1. Key Step: 이미지, Annotation 경로 설정
-2. Key Step: Train과 Validation에 사용될 이미지 파일 이름 리스트 생성
-3. Key Step: Test에 사용될 이미지 파일 이름 리스트 생성
-4. Key Step: Train 데이터에서 예제 이미지 불러오기
+1. 데이터 탐색 및 불러오기: 데이터 탐색 및 불러오기 코드를 직접 따라가며 데이터 탐색 및 불러오기 흐름을 확인했습니다.
+2. Object Detection 시각화: Object Detection 시각화 코드를 직접 따라가며 Object Detection 시각화 흐름을 확인했습니다.
+3. 데이터셋 준비: 데이터셋 준비 코드를 직접 따라가며 데이터셋 준비 흐름을 확인했습니다.
+4. SSD 모델 준비: SSD 모델 준비 코드를 직접 따라가며 SSD 모델 준비 흐름을 확인했습니다.
+5. 모델 학습 및 평가: 모델 학습 및 평가 코드를 직접 따라가며 모델 학습 및 평가 흐름을 확인했습니다.
+6. 모델 추론 및 시각화: 모델 추론 및 시각화 코드를 직접 따라가며 모델 추론 및 시각화 흐름을 확인했습니다.
 
 ## Code Highlights
+
+### Object Detection 시각화
+
+`Object Detection 시각화`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 Train 데이터에서 예제 이미지 불러오기, 이미지 읽기, 해당 이미지의 어노테이션 가져오기 흐름이 주석과 함께 드러납니다.
+
+```python
+# Train 데이터에서 예제 이미지 불러오기
+train_example_image_name = df_trainval["Image"].iloc[0]
+train_image_path = os.path.join(image_dir, f"{train_example_image_name}.jpg")
+
+# 이미지 읽기
+image = cv2.imread(train_image_path)
+image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+# 해당 이미지의 어노테이션 가져오기
+annotations = [anno for anno in annotations if anno["image"] == f"{train_example_image_name}.jpg"]
+
+# Bounding Box 그리기
+for anno in annotations:
+    x_min, y_min, x_max, y_max = anno["bbox"]
+    cv2.rectangle(image, (x_min, y_min), (x_max, y_max), (255, 0, 0), 2)  # 빨간색 박스
+    cv2.putText(image, anno["class"], (x_min, y_min - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
+
+# 시각화
+plt.imshow(image)
+plt.axis("off")
+plt.show()
+```
 
 ### 데이터셋 준비
 
@@ -148,38 +208,28 @@ for epoch in range(num_epochs):
 
 ### 모델 추론 및 시각화
 
-`모델 추론 및 시각화`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 Tensor 이미지를 (H, W, C) 형식으로 변환, Matplotlib을 사용한 이미지 시각화, Bounding Box와 클래스 이름 시각화 흐름이 주석과 함께 드러납니다.
+`모델 추론 및 시각화`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 학습된 모델로 추론을 수행하고 예측 결과를 점검하는 코드입니다.
 
 ```python
-import matplotlib.patches as patches
+model.eval()
+max_visualizations = 10  # 최대 시각화 개수 설정
+count = 0
 
-def visualize_prediction(image, prediction, classes):
-    """
-    image (torch.Tensor): 추론에 사용된 이미지 (C, H, W 형식).
-    prediction (dict): 모델의 예측 결과 (boxes, labels, scores 포함).
-    classes (list): 클래스 이름 리스트.
-    """
-    # Tensor 이미지를 (H, W, C) 형식으로 변환
-    image = image.permute(1, 2, 0).numpy()
+with torch.no_grad():
+    for images, image_files in tqdm(test_loader, desc="Test Inference"):
+        images = [img.to(device) for img in images]
+        predictions = model(images)
 
-    # Matplotlib을 사용한 이미지 시각화
-    fig, ax = plt.subplots(1, figsize=(8, 8))
-    ax.imshow(image)
+        for img, pred, file_name in zip(images, predictions, image_files):
+            if count >= max_visualizations:
+                break  # 최대 개수 초과 시 중단
 
-    # Bounding Box와 클래스 이름 시각화
-    for box, label, score in zip(prediction["boxes"], prediction["labels"], prediction["scores"]):
-        if score > 0.5:  # Confidence Score 임계값
-            x_min, y_min, x_max, y_max = box.tolist()
-            width, height = x_max - x_min, y_max - y_min
+            print(f"Processing: {file_name}")
+            visualize_prediction(img.cpu(), pred, classes)
+            count += 1
 
-            # Bounding Box 추가
-            rect = patches.Rectangle(
-                (x_min, y_min), width, height, linewidth=2, edgecolor="red", facecolor="none"
-            )
-            ax.add_patch(rect)
-
-            # 클래스 이름과 Confidence Score 추가
-# ... trimmed ...
+        if count >= max_visualizations:
+            break  # 루프 종료
 ```
 
 ## Source Bundle

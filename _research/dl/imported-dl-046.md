@@ -5,15 +5,15 @@ research_tab: "DL"
 research_kind: "Shared Note"
 source_title: "Mask R-CNN - 공유"
 source_path: "12_Deep_Learning/Code_Snippets/Mask R-CNN - 공유.md"
-excerpt: "TV tensors : https://pytorch.org/vision/main/tv_tensors.html 현재 torchvision.models.detection.maskrcnn_resnet50_fpn 모델은 COCO 데이터셋으로 학습되어 있으나, PennFudanDataset은 배경과 객체만..."
-research_summary: "TV tensors : https://pytorch.org/vision/main/tv_tensors.html 현재 torchvision.models.detection.maskrcnn_resnet50_fpn 모델은 COCO 데이터셋으로 학습되어 있으나, PennFudanDataset은 배경과 객체만 구분하므로 모델을 수정해주어야 합니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 11개 코드 블록, 6개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, torch, torchvision, matplotlib입니다."
+excerpt: "Mask R-CNN - 공유에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 실험의 큰 흐름을 먼저 훑고, import os, 데이터 변환 함수 정의, 모델 정의 (COCO 사전 학습된 Ma... 같은 코드로 실제 구현을 이어서 확인할 수 있습니다...."
+research_summary: "Mask R-CNN - 공유에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 실험의 큰 흐름을 먼저 훑고, import os, 데이터 변환 함수 정의, 모델 정의 (COCO 사전 학습된 Ma... 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 11개 코드 블록, 6개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, torch, torchvision, matplotlib입니다."
 research_artifacts: "md · 코드 11개 · 실행 6개"
 code_block_count: 11
 execution_block_count: 6
 research_focus:
   - "TV tensors"
-  - "데이터셋 정의 (PennFudanDataset)"
-  - "PennFudan 데이터셋은 보행자 이미지와 각 이미지에 대한 마스크(분할 정보)를 포함..."
+  - "torchvision에서 COCO 데이터셋으로 사전 학습된 Mask R-CNN 모델 불러오기"
+  - "모델 정의 (COCO 사전 학습된 Mask R-CNN 사용)"
 research_stack:
   - "os"
   - "torch"
@@ -28,9 +28,9 @@ tags:
   - shared-note
 ---
 
-TV tensors : https://pytorch.org/vision/main/tv_tensors.html 현재 torchvision.models.detection.maskrcnn_resnet50_fpn 모델은 COCO 데이터셋으로 학습되어 있으나, PennFudanDataset은 배경과 객체만 구분하므로 모델을 수정해주어야 합니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 11개 코드 블록, 6개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, torch, torchvision, matplotlib입니다.
+Mask R-CNN - 공유에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 실험의 큰 흐름을 먼저 훑고, import os, 데이터 변환 함수 정의, 모델 정의 (COCO 사전 학습된 Ma... 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 11개 코드 블록, 6개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, torch, torchvision, matplotlib입니다.
 
-**빠르게 볼 수 있는 포인트**: TV tensors, 데이터셋 정의 (PennFudanDataset), PennFudan 데이터셋은 보행자 이미지와 각 이미지에 대한 마스크(....
+**빠르게 볼 수 있는 포인트**: TV tensors, torchvision에서 COCO 데이터셋으로 사전 학습된 Mask R..., 모델 정의 (COCO 사전 학습된 Mask R-CNN 사용).
 
 **남겨둔 자료**: `md` 원본과 11개 코드 블록, 6개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, torch, torchvision, matplotlib입니다.
 
@@ -131,68 +131,94 @@ class PennFudanDataset(torch.utils.data.Dataset):
 # ... trimmed ...
 ```
 
-### 4. DataLoader 및 collate_fn 정의
+### 2. 데이터 변환 함수 정의
 
-`4. DataLoader 및 collate_fn 정의`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 DataLoader 및 collate_fn 정의, 데이터셋 준비: PennFudan 데이터셋의 경로와 변환 함수 지정, 데이터셋을 학습용과 테스트용으로 나눕니다. 흐름이 주석과 함께 드러납니다.
+`2. 데이터 변환 함수 정의`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 데이터 변환 함수 정의, 학습 시 좌우 반전(data augmentation)을 50% 확률로 적용, 이미지를 float형으로 변환하고 0~1 범위로 스케일 조정 흐름이 주석과 함께 드러납니다.
 
 ```python
-# 4. DataLoader 및 collate_fn 정의
+# 2. 데이터 변환 함수 정의
 
-def collate_fn(batch):
+def get_transform(train):
     """
-    DataLoader에서 배치를 생성할 때, 각 이미지와 타겟을 하나의 튜플로 묶어줍니다.
+    train: True이면 학습용 변환을, False이면 검증용 변환을 적용합니다.
     """
-    return tuple(zip(*batch))
-
-# 데이터셋 준비: PennFudan 데이터셋의 경로와 변환 함수 지정
-dataset = PennFudanDataset('./PennFudanPed', get_transform(train=True))
-dataset_test = PennFudanDataset('./PennFudanPed', get_transform(train=False))
-
-# 데이터셋을 학습용과 테스트용으로 나눕니다.
-# 여기서는 무작위로 선택하여 마지막 50개 이미지를 테스트셋으로 사용합니다.
-indices = torch.randperm(len(dataset)).tolist()
-dataset = torch.utils.data.Subset(dataset, indices[:-50])
-dataset_test = torch.utils.data.Subset(dataset_test, indices[-50:])
-
-# DataLoader 생성: 배치 크기, 셔플 여부, 그리고 collate_fn 지정
-data_loader = torch.utils.data.DataLoader(dataset, batch_size=2, shuffle=True, collate_fn=collate_fn)
-data_loader_test = torch.utils.data.DataLoader(dataset_test, batch_size=1, shuffle=False, collate_fn=collate_fn)
+    transforms = []
+    if train:
+        # 학습 시 좌우 반전(data augmentation)을 50% 확률로 적용
+        transforms.append(T.RandomHorizontalFlip(0.5))
+        transfroms.append(T.RandomVerticalFlip(0.5))
+    # 이미지를 float형으로 변환하고 0~1 범위로 스케일 조정
+    transforms.append(T.ToDtype(torch.float, scale=True))
+    # Tensor로 변환 (이미 ToDtype에서 텐서가 유지되지만, 혹시 모를 변환을 위해 추가)
+    transforms.append(T.ToPureTensor())
+    return T.Compose(transforms)
 ```
 
-### 5. 간단한 학습 루프 (2 에폭 예시)
+### 3. 모델 정의 (COCO 사전 학습된 Mask R-CNN 사용)
 
-`5. 간단한 학습 루프 (2 에폭 예시)`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 간단한 학습 루프 (2 에폭 예시), 학습 가능한 파라미터만 모아 옵티마이저에 전달, 학습률 스케줄러: 3 에폭마다 학습률을 0.1배 감소 흐름이 주석과 함께 드러납니다.
+`3. 모델 정의 (COCO 사전 학습된 Mask R-CNN 사용)`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 모델 정의 (COCO 사전 학습된 Mask R-CNN 사용), COCO에서 사전 학습된 Mask R-CNN (ResNet50 FPN 기반) 모델을 사용..., 이 모델은 객체 검출 및 인스턴스 분할을 모두 수행합니다. 흐름이 주석과 함께 드러납니다.
 
 ```python
-# 5. 간단한 학습 루프 (2 에폭 예시)
-# 학습 가능한 파라미터만 모아 옵티마이저에 전달
-params = [p for p in model.parameters() if p.requires_grad]
-optimizer = torch.optim.SGD(params, lr=0.005, momentum=0.9, weight_decay=0.0005)
-# 학습률 스케줄러: 3 에폭마다 학습률을 0.1배 감소
-lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=3, gamma=0.1)
+# 3. 모델 정의 (COCO 사전 학습된 Mask R-CNN 사용)
 
-num_epochs = 2  # 학습 에폭 수
-for epoch in range(num_epochs):
-    model.train()  # 모델을 학습 모드로 전환 (Dropout, BatchNorm 등이 학습 모드로 작동)
-    epoch_loss = 0  # 에폭별 손실 누적 변수
-    for images, targets in data_loader:
-        # 각 이미지와 타겟을 device(GPU 또는 CPU)로 이동
-        images = [img.to(device) for img in images]
-        # 타겟은 dict 형식이며, tensor인 항목만 to(device) 처리
-        targets = [{k: (v.to(device) if torch.is_tensor(v) else v) for k, v in t.items()} for t in targets]
+# COCO에서 사전 학습된 Mask R-CNN (ResNet50 FPN 기반) 모델을 사용하여 파인튜닝합니다.
+# 이 모델은 객체 검출 및 인스턴스 분할을 모두 수행합니다.
+num_classes = 2  # 1 class (person) + background
+device = "cuda" if torch.cuda.is_available() else "cpu"
 
-        # 모델에 이미지와 타겟을 전달하면, 학습 모드에서는 손실(loss) dict를 반환합니다.
-        loss_dict = model(images, targets)
-        # dict의 모든 손실값을 합산하여 총 손실을 계산합니다.
-        losses = sum(loss for loss in loss_dict.values())
-        epoch_loss += losses.item()  # 손실 값을 float로 누적
+# torchvision에서 COCO 데이터셋으로 사전 학습된 Mask R-CNN 모델 불러오기
+model = torchvision.models.detection.maskrcnn_resnet50_fpn(weights="DEFAULT")
 
-        optimizer.zero_grad()  # 이전 배치의 기울기(gradient) 초기화
-        losses.backward()      # 역전파를 통해 기울기 계산
-        optimizer.step()       # 옵티마이저가 파라미터를 업데이트
+# -------------------------
+# 박스 예측기 (classification head) 교체
+# -------------------------
+# 모델의 마지막 계층인 box_predictor의 입력 피처 수를 확인합니다.
+in_features = model.roi_heads.box_predictor.cls_score.in_features
+# FastRCNNPredictor를 사용하여 새롭게 분류기(head)를 생성합니다.
+model.roi_heads.box_predictor = torchvision.models.detection.faster_rcnn.FastRCNNPredictor(in_features, num_classes)
 
-    lr_scheduler.step()  # 에폭마다 학습률 업데이트
+# -------------------------
+# 마스크 예측기 (mask head) 교체
+# -------------------------
+# mask_predictor의 conv5_mask 레이어의 입력 채널 수 확인
+in_features_mask = model.roi_heads.mask_predictor.conv5_mask.in_channels
+hidden_layer = 256  # 마스크 예측기에서 사용할 숨겨진 레이어의 크기
+# MaskRCNNPredictor를 사용하여 마스크 분류기(head)를 새롭게 생성합니다.
+model.roi_heads.mask_predictor = torchvision.models.detection.mask_rcnn.MaskRCNNPredictor(in_features_mask, hidden_layer, num_classes)
+
+# 모델을 선택한 디바이스(CPU 또는 GPU)로 이동
 # ... trimmed ...
+```
+
+### 시각화를 위한 전처리: 이미지의 픽셀 값을 0~255 범위로 정규화하여 uint8 타입으로 변환합니다.
+
+`시각화를 위한 전처리: 이미지의 픽셀 값을 0~255 범위로 정규화하여 uint8 타입으로 변환합니다.`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 시각화를 위한 전처리: 이미지의 픽셀 값을 0~255 범위로 정규화하여 uint8 타입으..., image.min(), image.max()를 이용해 정규화하고 [:3, ...]로 RG..., 예측된 각 박스에 대해, 점수를 포함한 라벨 문자열을 생성합니다. 흐름이 주석과 함께 드러납니다.
+
+```python
+# 시각화를 위한 전처리: 이미지의 픽셀 값을 0~255 범위로 정규화하여 uint8 타입으로 변환합니다.
+
+# image.min(), image.max()를 이용해 정규화하고 [:3, ...]로 RGB 채널만 선택합니다.
+image_vis = (255.0 * (image - image.min()) / (image.max() - image.min())).to(torch.uint8)[:3, ...]
+# 예측된 각 박스에 대해, 점수를 포함한 라벨 문자열을 생성합니다.
+pred_labels = [f"ped: {score:.3f}" for score in pred["scores"]]
+# 예측된 바운딩 박스 좌표를 정수형(long)으로 변환합니다.
+pred_boxes = pred["boxes"].long()
+# draw_bounding_boxes: 이미지 위에 박스를 그림. output_image는 Tensor 형태로 반환됩니다.
+output_image = torchvision.utils.draw_bounding_boxes(image_vis, pred_boxes, pred_labels, colors="red")
+
+
+# 마스크 예측 결과: 0.7 이상의 확률을 가진 픽셀을 True로 설정합니다.
+# squeeze(1)은 마스크 텐서의 차원을 줄여줍니다.
+masks = (pred["masks"] > 0.7).squeeze(1)
+# draw_segmentation_masks: 이미지 위에 반투명한 색상의 마스크를 그림.
+output_image = torchvision.utils.draw_segmentation_masks(output_image, masks, alpha=0.5, colors="blue")
+
+
+# 결과 시각화: plt.imshow()에 전달하기 전에 채널 순서를 (채널, 높이, 너비)에서 (높이, 너비, 채널)로 변경합니다.
+plt.figure(figsize=(12, 12))
+plt.imshow(output_image.permute(1, 2, 0))
+plt.title("Prediction Result")
+plt.show()
 ```
 
 ## Source Bundle

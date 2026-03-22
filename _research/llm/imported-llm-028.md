@@ -5,15 +5,13 @@ research_tab: "LLM"
 research_kind: "Archive Note"
 source_title: "3-5 AI_Agent_맛보기"
 source_path: "13_LLM_GenAI/Code_Snippets/3-5 AI_Agent_맛보기.md"
-excerpt: "단순한 LLM(ChatGPT 등)은 묻는 말에 대답만 할 수 있지만, 에이전트(Agent)는 스스로 계획을 세우고 도구(Tool)를 사용하여 실제 행동을 합니다. 에이전트의 핵심 작동 원리: 에이전트는 ReAct (Reasoning + Acting) 방식을 주로 사용합니다. ReAct (Reason..."
-research_summary: "단순한 LLM(ChatGPT 등)은 묻는 말에 대답만 할 수 있지만, 에이전트(Agent)는 스스로 계획을 세우고 도구(Tool)를 사용하여 실제 행동을 합니다. 에이전트의 핵심 작동 원리: 에이전트는 ReAct (Reasoning + Acting) 방식을 주로 사용합니다. ReAct (Reasoning + Acting)는 AI가 스스로 \"생각(Reasoning)\"하고, 필요한 \"행동(Acting, 도구 사용)\"을 결정하는 패턴입니다. LangGraph 맛보기 실습: 노드와 조건부 엣지를 우리가 직접 연결했습니다. (수동). `ipynb/md` 원본과 6개 코드 블록, 4개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, getpass, langchain_openai, langchain_community입니다."
+excerpt: "AI Agent 맛보기에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 LLM 학습 기록입니다. 본문은 AI Agent: 실시간 웹 검색... 순서로 핵심 장면을 먼저 훑고, ReAct 에이전트란?, 검색 도구 및 에이전트 생성, 에이전트 테스트 (실시간 검색) 같은 코드로 실제..."
+research_summary: "AI Agent 맛보기에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 LLM 학습 기록입니다. 본문은 AI Agent: 실시간 웹 검색... 순서로 핵심 장면을 먼저 훑고, ReAct 에이전트란?, 검색 도구 및 에이전트 생성, 에이전트 테스트 (실시간 검색) 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 6개 코드 블록, 4개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, getpass, langchain_openai, langchain_community입니다."
 research_artifacts: "ipynb/md · 코드 6개 · 실행 4개"
 code_block_count: 6
 execution_block_count: 4
 research_focus:
-  - "AI Agent"
-  - "단순한 LLM(ChatGPT 등)은 묻는 말에 대답만 할 수 있지만, 에이전트(Agent)는 스스로 계..."
-  - "AI 에이전트(AI Agent)란?"
+  - "AI Agent: 실시간 웹 검색 에이전트 (ReAct:Reasoning + Acting)"
 research_stack:
   - "os"
   - "getpass"
@@ -30,9 +28,9 @@ tags:
   - archive-note
 ---
 
-단순한 LLM(ChatGPT 등)은 묻는 말에 대답만 할 수 있지만, 에이전트(Agent)는 스스로 계획을 세우고 도구(Tool)를 사용하여 실제 행동을 합니다. 에이전트의 핵심 작동 원리: 에이전트는 ReAct (Reasoning + Acting) 방식을 주로 사용합니다. ReAct (Reasoning + Acting)는 AI가 스스로 "생각(Reasoning)"하고, 필요한 "행동(Acting, 도구 사용)"을 결정하는 패턴입니다. LangGraph 맛보기 실습: 노드와 조건부 엣지를 우리가 직접 연결했습니다. (수동). `ipynb/md` 원본과 6개 코드 블록, 4개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, getpass, langchain_openai, langchain_community입니다.
+AI Agent 맛보기에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 LLM 학습 기록입니다. 본문은 AI Agent: 실시간 웹 검색... 순서로 핵심 장면을 먼저 훑고, ReAct 에이전트란?, 검색 도구 및 에이전트 생성, 에이전트 테스트 (실시간 검색) 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 6개 코드 블록, 4개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, getpass, langchain_openai, langchain_community입니다.
 
-**빠르게 볼 수 있는 포인트**: AI Agent, 단순한 LLM(ChatGPT 등)은 묻는 말에 대답만 할 수 있지만,..., AI 에이전트(AI Agent)란?.
+**빠르게 볼 수 있는 포인트**: AI Agent: 실시간 웹 검색 에이전트 (ReAct:Reasonin....
 
 **남겨둔 자료**: `ipynb/md` 원본과 6개 코드 블록, 4개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, getpass, langchain_openai, langchain_community입니다.
 
@@ -52,19 +50,21 @@ tags:
 
 ## What This Note Covers
 
-### AI Agent: 실시간 웹 검색 에이전트 (ReAct:Reasoning + Acting) > AI 에이전트(AI Agent)란?
+### AI Agent: 실시간 웹 검색 에이전트 (ReAct:Reasoning + Acting)
+
+AI 에이전트(AI Agent)란?, ReAct 에이전트란?, 에이전트 테스트 (실시간 검색) 같은 코드를 직접 따라가며 AI Agent: 실시간 웹 검색 에이전트 (ReAct:Reasoning + Acting) 흐름을 확인했습니다.
+
+- 읽을 포인트: 세부 흐름: AI 에이전트(AI Agent)란?, ReAct 에이전트란?, 에이전트 테스트 (실시간 검색)
+
+#### AI 에이전트(AI Agent)란?
 
 단순한 LLM(ChatGPT 등)은 묻는 말에 대답만 할 수 있지만, 에이전트(Agent)는 스스로 계획을 세우고 도구(Tool)를 사용하여 실제 행동을 합니다. 에이전트의 핵심 작동 원리: 에이전트는 ReAct (Reasoning + Acting) 방식을 주로 사용합니다.
 
-### AI Agent: 실시간 웹 검색 에이전트 (ReAct:Reasoning + Acting) > ReAct 에이전트란?
+#### ReAct 에이전트란?
 
 ReAct (Reasoning + Acting)는 AI가 스스로 "생각(Reasoning)"하고, 필요한 "행동(Acting, 도구 사용)"을 결정하는 패턴입니다. LangGraph 맛보기 실습: 노드와 조건부 엣지를 우리가 직접 연결했습니다. (수동)
 
-### AI Agent: 실시간 웹 검색 에이전트 (ReAct:Reasoning + Acting) > 검색 도구 및 에이전트 생성
-
-여기서 중요한 점은 그래프를 구성하는 코드가 사라지고, create_react_agent 함수 하나로 대체된다는 점입니다.
-
-### AI Agent: 실시간 웹 검색 에이전트 (ReAct:Reasoning + Acting) > 에이전트 테스트 (실시간 검색)
+#### 에이전트 테스트 (실시간 검색)
 
 LLM은 최신 정보를 모릅니다(예: 오늘 날씨, 최근 뉴스 등). 하지만 이 에이전트는 검색 도구를 사용해 답변해냅니다.
 
@@ -84,24 +84,17 @@ LLM은 최신 정보를 모릅니다(예: 오늘 날씨, 최근 뉴스 등). 하
 
 ## Implementation Flow
 
-1. AI Agent: 실시간 웹 검색 에이전트 (ReAct:Reasoning + Acting) > AI 에이전트(AI Agent)란?: 단순한 LLM(ChatGPT 등)은 묻는 말에 대답만 할 수 있지만, 에이전트(Agent)는 스스로 계획을 세우고 도구(Tool)를 사용하여 실제 행동을 합니다. 에이...
-2. AI Agent: 실시간 웹 검색 에이전트 (ReAct:Reasoning + Acting) > ReAct 에이전트란?: ReAct (Reasoning + Acting)는 AI가 스스로 "생각(Reasoning)"하고, 필요한 "행동(Acting, 도구 사용)"을 결정하는 패턴입니다. LangGrap...
-3. AI Agent: 실시간 웹 검색 에이전트 (ReAct:Reasoning + Acting) > 검색 도구 및 에이전트 생성: 여기서 중요한 점은 그래프를 구성하는 코드가 사라지고, create_react_agent 함수 하나로 대체된다는 점입니다.
-4. AI Agent: 실시간 웹 검색 에이전트 (ReAct:Reasoning + Acting) > 에이전트 테스트 (실시간 검색): LLM은 최신 정보를 모릅니다(예: 오늘 날씨, 최근 뉴스 등). 하지만 이 에이전트는 검색 도구를 사용해 답변해냅니다.
+1. AI Agent: 실시간 웹 검색 에이전트 (ReAct:Reasoning + Acting): AI 에이전트(AI Agent)란?, ReAct 에이전트란?
 
 ## Code Highlights
 
 ### ReAct 에이전트란?
 
-`ReAct 에이전트란?`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 OpenAI API Key 설정 흐름이 주석과 함께 드러납니다.
+`ReAct 에이전트란?`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 라이브러리 설치 흐름이 주석과 함께 드러납니다.
 
 ```python
-import os
-import getpass
-
-# 2. OpenAI API Key 설정
-if "OPENAI_API_KEY" not in os.environ:
-    os.environ["OPENAI_API_KEY"] = getpass.getpass("OpenAI API Key 입력: ")
+# 1. 라이브러리 설치
+!pip install -qU langgraph langchain-openai langchain-community duckduckgo-search ddgs
 ```
 
 ### 검색 도구 및 에이전트 생성
@@ -130,32 +123,22 @@ print("---검색 에이전트 생성 완료!")
 
 ### 에이전트 테스트 (실시간 검색)
 
-`에이전트 테스트 (실시간 검색)`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 에이전트 실행 (스트리밍으로 과정 확인), 메시지의 마지막 내용만 출력, 도구가 실행되거나 답변이 생성될 때 출력 흐름이 주석과 함께 드러납니다.
+`에이전트 테스트 (실시간 검색)`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 테스트 1 실행, 최신 정보가 필요한 질문 (LLM 학습 데이터에 없는 내용) 흐름이 주석과 함께 드러납니다.
 
 ```python
-from langchain_core.messages import HumanMessage
+# --- 테스트 1 실행 ---
+# 1. 최신 정보가 필요한 질문 (LLM 학습 데이터에 없는 내용)
+run_agent("2025년 11월 현재 주요 뉴스는 뭐야?")
+```
 
-def run_agent(question):
-    print(f"\n 질문: {question}")
-    print("-" * 50)
+### 에이전트 테스트 (실시간 검색)
 
-    # 에이전트 실행 (스트리밍으로 과정 확인)
-    inputs = {"messages": [HumanMessage(content=question)]}
+`에이전트 테스트 (실시간 검색)`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 테스트 2 실행, 일반 상식 질문 (검색 없이 대답 가능한지 확인) 흐름이 주석과 함께 드러납니다.
 
-    for chunk in agent_executor.stream(inputs, stream_mode="values"):
-        # 메시지의 마지막 내용만 출력
-        message = chunk["messages"][-1]
-
-        # 도구가 실행되거나 답변이 생성될 때 출력
-        if message.type == "ai":
-            # 도구 호출이 포함된 경우
-            if message.tool_calls:
-                print(f"================[생각] 검색이 필요해! -> '{message.tool_calls[0]['args']}' 검색 시도...")
-            # 최종 답변인 경우
-            else:
-                print(f"================[답변] {message.content}")
-        elif message.type == "tool":
-            print(f"================[결과] 검색 완료 (내용 일부: {message.content[:100]}...)")
+```python
+# --- 테스트 2 실행 ---
+# 2. 일반 상식 질문 (검색 없이 대답 가능한지 확인)
+run_agent("사과는 영어로 뭐야?")
 ```
 
 ## Source Bundle

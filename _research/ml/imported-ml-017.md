@@ -2,18 +2,18 @@
 title: "11.차원축소(PCA)"
 date: 2026-03-08
 research_tab: "ML"
-research_kind: "Practice"
+research_kind: "Archive Note"
 source_title: "250901_코딩실습16_11.차원축소(PCA)"
 source_path: "11_Machine_Learning/Code_Snippets/250901_코딩실습16_11.차원축소(PCA).md"
-excerpt: "코딩실습16 11.차원축소(PCA)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 데이터 설명 순서로 큰 장을 먼저 훑고, 데이터 설명, StandardScaler 스케일링 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과..."
-research_summary: "코딩실습16 11.차원축소(PCA)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 데이터 설명 순서로 큰 장을 먼저 훑고, 데이터 설명, StandardScaler 스케일링 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 11개 코드 블록, 10개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 sklearn, matplotlib입니다."
+excerpt: "11.차원축소(PCA)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 데이터 설명 순서로 큰 장을 먼저 훑고, StandardScaler 스케일링, 데이터 설명 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 11개 코드..."
+research_summary: "11.차원축소(PCA)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 데이터 설명 순서로 큰 장을 먼저 훑고, StandardScaler 스케일링, 데이터 설명 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 11개 코드 블록, 10개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 sklearn, matplotlib입니다."
 research_artifacts: "ipynb/md · 코드 11개 · 실행 10개"
 code_block_count: 11
 execution_block_count: 10
 research_focus:
   - "사이킷런"
   - "데이터 설명"
-  - "데이터 불러오기"
+  - "스크리플롯"
 research_stack:
   - "sklearn"
   - "matplotlib"
@@ -24,7 +24,7 @@ tags:
   - research-archive
   - imported-note
   - ml
-  - practice
+  - archive-note
 ---
 
 ## 글 한눈에 보기
@@ -32,7 +32,7 @@ tags:
 <div class="research-overview research-overview--intro">
   <div class="research-overview__row">
     <div class="research-overview__label">문제 설정</div>
-    <div class="research-overview__value">코딩실습16 11.차원축소(PCA)에서 데이터 설명 흐름을 직접 따라가며 구현했습니다.</div>
+    <div class="research-overview__value">64차원의 손글씨 데이터 사이킷런: https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_digits.html</div>
   </div>
   <div class="research-overview__row">
     <div class="research-overview__label">원본 구조</div>
@@ -48,7 +48,7 @@ tags:
   </div>
   <div class="research-overview__row">
     <div class="research-overview__label">구현 흐름</div>
-    <div class="research-overview__value">데이터 설명 -&gt; StandardScaler 스케일링 -&gt; 데이터 분포 시각화</div>
+    <div class="research-overview__value">StandardScaler 스케일링 -&gt; 데이터 설명 -&gt; 데이터 분포 시각화</div>
   </div>
   <div class="research-overview__row">
     <div class="research-overview__label">자료</div>
@@ -82,19 +82,19 @@ tags:
 
 ## 구현 흐름
 
-### 1. 데이터 설명
-
-- 단계: 데이터 불러오기
-- 구현 의도: 실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.
-- 핵심 API: -
-- 코드 포인트: 데이터 불러오기
-
-### 2. StandardScaler 스케일링
+### 1. StandardScaler 스케일링
 
 - 단계: 전처리
 - 구현 의도: 결측치 처리, 인코딩, 스케일링처럼 모델이 바로 사용할 수 있도록 입력 형태를 다듬는 단계입니다.
 - 핵심 API: `StandardScaler`
 - 코드 포인트: 데이터 표준화
+
+### 2. 데이터 설명
+
+- 단계: 데이터 불러오기
+- 구현 의도: 실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.
+- 핵심 API: -
+- 코드 포인트: 데이터 불러오기
 
 ### 3. 데이터 분포 시각화
 
@@ -104,17 +104,6 @@ tags:
 - 코드 포인트: 스크리플롯
 
 ## 코드로 확인한 내용
-
-### 데이터 설명
-
-**직접 해본 단계**: 데이터 불러오기
-
-실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.
-
-```python
-# 데이터 불러오기
-X, y = load_digits(return_X_y=True)
-```
 
 ### StandardScaler 스케일링
 
@@ -128,6 +117,17 @@ X, y = load_digits(return_X_y=True)
 # 데이터 표준화
 
 X_scaled = StandardScaler().fit_transform(X)
+```
+
+### 데이터 설명
+
+**직접 해본 단계**: 데이터 불러오기
+
+실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.
+
+```python
+# 데이터 불러오기
+X, y = load_digits(return_X_y=True)
 ```
 
 ### 데이터 분포 시각화

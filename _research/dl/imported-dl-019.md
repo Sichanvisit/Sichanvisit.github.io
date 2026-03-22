@@ -5,15 +5,13 @@ research_tab: "DL"
 research_kind: "Shared Note"
 source_title: "10-1_Autoencoder_CNN - 공유"
 source_path: "12_Deep_Learning/Code_Snippets/10-1_Autoencoder_CNN - 공유.md"
-excerpt: "Latent Vactor에 noise 추가, 라이브러리 임포트 및 MNIST 데이터셋 로드, 오토인코더 모델 생성 중심으로 구현 과정을 정리한 Autoencoder CNN - 공유 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈..."
-research_summary: "Latent Vactor에 noise 추가, 라이브러리 임포트 및 MNIST 데이터셋 로드, 오토인코더 모델 생성 중심으로 구현 과정을 정리한 Autoencoder CNN - 공유 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 7개 코드 블록, 6개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, numpy입니다."
+excerpt: "Autoencoder CNN - 공유에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 Latent Vactor에 nois... 순서로 핵심 장면을 먼저 훑고, 오토인코더 모델 생성, 모델 학습, Evaluation and Interm... 같은 코드로..."
+research_summary: "Autoencoder CNN - 공유에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 Latent Vactor에 nois... 순서로 핵심 장면을 먼저 훑고, 오토인코더 모델 생성, 모델 학습, Evaluation and Interm... 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 7개 코드 블록, 6개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, numpy입니다."
 research_artifacts: "md · 코드 7개 · 실행 6개"
 code_block_count: 7
 execution_block_count: 6
 research_focus:
   - "Latent Vactor에 noise 추가"
-  - "라이브러리 임포트 및 MNIST 데이터셋 로드"
-  - "오토인코더 모델 생성"
 research_stack:
   - "torch"
   - "torchvision"
@@ -28,9 +26,9 @@ tags:
   - shared-note
 ---
 
-Latent Vactor에 noise 추가, 라이브러리 임포트 및 MNIST 데이터셋 로드, 오토인코더 모델 생성 중심으로 구현 과정을 정리한 Autoencoder CNN - 공유 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 7개 코드 블록, 6개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, numpy입니다.
+Autoencoder CNN - 공유에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 Latent Vactor에 nois... 순서로 핵심 장면을 먼저 훑고, 오토인코더 모델 생성, 모델 학습, Evaluation and Interm... 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 7개 코드 블록, 6개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, numpy입니다.
 
-**빠르게 볼 수 있는 포인트**: Latent Vactor에 noise 추가, 라이브러리 임포트 및 MNIST 데이터셋 로드, 오토인코더 모델 생성.
+**빠르게 볼 수 있는 포인트**: Latent Vactor에 noise 추가.
 
 **남겨둔 자료**: `md` 원본과 7개 코드 블록, 6개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, numpy입니다.
 
@@ -50,11 +48,11 @@ Latent Vactor에 noise 추가, 라이브러리 임포트 및 MNIST 데이터셋 
 
 ## What This Note Covers
 
-- Latent Vactor에 noise 추가
-- 라이브러리 임포트 및 MNIST 데이터셋 로드
-- 오토인코더 모델 생성
-- CNN 코드
-- 모델 학습
+### Latent Vactor에 noise 추가
+
+Latent Vactor에 noise 추가 코드를 직접 따라가며 Latent Vactor에 noise 추가 흐름을 확인했습니다.
+
+- 읽을 포인트: Latent Vactor에 noise 추가 아래 코드와 함께 읽으면 구현 포인트가 더 또렷해지는 구간입니다.
 
 ## Why This Matters
 
@@ -78,10 +76,7 @@ Latent Vactor에 noise 추가, 라이브러리 임포트 및 MNIST 데이터셋 
 
 ## Implementation Flow
 
-1. Key Step: 라이브러리 임포트 및 MNIST 데이터셋 로드
-2. Key Step: Evaluation and Intermediate Result Visualization
-3. Key Step: Latent Vactor에 noise 추가
-4. Key Step: Function to generate a new image from a random latent vector
+1. Latent Vactor에 noise 추가: Latent Vactor에 noise 추가 코드를 직접 따라가며 Latent Vactor에 noise 추가 흐름을 확인했습니다.
 
 ## Code Highlights
 
@@ -151,6 +146,42 @@ for epoch in range(num_epochs):
         running_loss += loss.item()
 
     for c in range(num_channels_to_show):
+# ... trimmed ...
+```
+
+### Evaluation and Intermediate Result Visualization
+
+`Evaluation and Intermediate Result Visualization`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 Evaluation and Intermediate Result Visualization, Get a batch of test data, Forward pass through the autoencoder 흐름이 주석과 함께 드러납니다.
+
+```python
+# Evaluation and Intermediate Result Visualization
+
+model.eval() # Set the model to evaluation mode
+with torch.no_grad(): # No need to calculate gradients
+    # Get a batch of test data
+    dataiter = iter(testloader)
+    images, labels = next(dataiter)
+
+    # Forward pass through the autoencoder
+    decoded_images, encoded_features = model(images)
+
+    # Compare original images, encoded representations, and decoded images
+    n = 10  # Number of images to display
+    num_channels_to_show = 6 # You can adjust this
+
+    plt.figure(figsize=(20, 10))
+    for i in range(n):
+        # Original Images
+        ax = plt.subplot(num_channels_to_show+2, n, i + 1)
+        # Unnormalize the image for display (reverse the normalization done during preprocessing)
+        img = images[i].cpu().numpy() * 0.5 + 0.5
+        plt.imshow(np.transpose(img.squeeze(), (0, 1)), cmap='gray')
+        ax.get_xaxis().set_visible(False)
+        ax.get_yaxis().set_visible(False)
+        if i == 0:
+            ax.set_title("Original")
+
+        # Intermediate Encoded Feature Maps (Example of visualizing the output of the last encoder layer)
 # ... trimmed ...
 ```
 

@@ -5,15 +5,14 @@ research_tab: "DL"
 research_kind: "Shared Note"
 source_title: "5-5_GoogLeNet - 공유"
 source_path: "12_Deep_Learning/Code_Snippets/5-5_GoogLeNet - 공유.md"
-excerpt: "https://pytorch.org/vision/main/models/generated/torchvision.models.googlenet.html#torchvision.models.GoogLeNet_Weights. https://pytorch.org/vision/0.8/_modules/torchv..."
-research_summary: "https://pytorch.org/vision/main/models/generated/torchvision.models.googlenet.html#torchvision.models.GoogLeNet_Weights. https://pytorch.org/vision/0.8/_modules/torchvision/models/googlenet.html#googlenet - https://pytorch.org/vision/0.8/models.html#id1. `md` 원본과 5개 코드 블록, 3개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, time, copy입니다."
+excerpt: "사전 훈련된 모델, 출처 중심의 DL 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 사전 훈련된 모델, 출처 순서로 핵심 장면을 먼저 훑고, import torch, 사전 훈련된 모델 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md..."
+research_summary: "사전 훈련된 모델, 출처 중심의 DL 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 사전 훈련된 모델, 출처 순서로 핵심 장면을 먼저 훑고, import torch, 사전 훈련된 모델 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 5개 코드 블록, 3개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, time, copy입니다."
 research_artifacts: "md · 코드 5개 · 실행 3개"
 code_block_count: 5
 execution_block_count: 3
 research_focus:
-  - "다음은 GoogLeNet 논문(“Going Deeper with Convolutions”, 2014)과..."
-  - "https"
   - "사전 훈련된 모델"
+  - "출처"
 research_stack:
   - "torch"
   - "torchvision"
@@ -29,9 +28,9 @@ tags:
   - shared-note
 ---
 
-https://pytorch.org/vision/main/models/generated/torchvision.models.googlenet.html#torchvision.models.GoogLeNet_Weights. https://pytorch.org/vision/0.8/_modules/torchvision/models/googlenet.html#googlenet - https://pytorch.org/vision/0.8/models.html#id1. `md` 원본과 5개 코드 블록, 3개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, time, copy입니다.
+사전 훈련된 모델, 출처 중심의 DL 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 사전 훈련된 모델, 출처 순서로 핵심 장면을 먼저 훑고, import torch, 사전 훈련된 모델 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 5개 코드 블록, 3개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, time, copy입니다.
 
-**빠르게 볼 수 있는 포인트**: 다음은 GoogLeNet 논문(“Going Deeper with Con..., https, 사전 훈련된 모델.
+**빠르게 볼 수 있는 포인트**: 사전 훈련된 모델, 출처.
 
 **남겨둔 자료**: `md` 원본과 5개 코드 블록, 3개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, time, copy입니다.
 
@@ -51,21 +50,17 @@ https://pytorch.org/vision/main/models/generated/torchvision.models.googlenet.ht
 
 ## What This Note Covers
 
-### Overview
-
-다음은 GoogLeNet 논문(“Going Deeper with Convolutions”, 2014)과 PyTorch 구현(예: torchvision의 구현) 간의 주요 차이점입니다(일부 항목은 구현에 따라 달라질 수 있음) Batch Normalization 사용
-
 ### 사전 훈련된 모델
 
 https://pytorch.org/vision/main/models/generated/torchvision.models.googlenet.html#torchvision.models.GoogLeNet_Weights
+
+- 읽을 포인트: 모델 정의, 손실, 최적화 흐름을 코드로 연결해 보는 구간입니다.
 
 ### 출처
 
 https://pytorch.org/vision/0.8/_modules/torchvision/models/googlenet.html#googlenet - https://pytorch.org/vision/0.8/models.html#id1
 
-### Key Step
-
-BasicConv2d: 합성곱 + BatchNorm + ReLU (공식 구현 참고)
+- 읽을 포인트: 출처에서 다룬 핵심 개념과 구현 흐름을 다시 읽을 수 있게 정리한 구간입니다.
 
 ## Why This Matters
 
@@ -83,10 +78,8 @@ BasicConv2d: 합성곱 + BatchNorm + ReLU (공식 구현 참고)
 
 ## Implementation Flow
 
-1. Overview: 다음은 GoogLeNet 논문(“Going Deeper with Convolutions”, 2014)과 PyTorch 구현(예: torchvision의 구현) 간의 주요 차이점입니다(일부 항목은 구현에 따라 달라질 수 있음) Batch Normalization 사용
-2. 사전 훈련된 모델: https://pytorch.org/vision/main/models/generated/torchvision.models.googlenet.html#torchvision.models.GoogLeNet_Weights
-3. 출처: https://pytorch.org/vision/0.8/_modules/torchvision/models/googlenet.html#googlenet - https://pytorch.org/vision/0.8/models.html#id1
-4. Key Step: BasicConv2d: 합성곱 + BatchNorm + ReLU (공식 구현 참고)
+1. 사전 훈련된 모델: https://pytorch.org/vision/main/models/generated/torchvision.models.googlenet.html#torchvision.models.GoogLeNet_Weights
+2. 출처: https://pytorch.org/vision/0.8/_modules/torchvision/models/googlenet.html#googlenet - https://pytorch.org/vision/0.8/models.html#id1
 
 ## Code Highlights
 
@@ -171,6 +164,17 @@ from torchinfo import summary
 num_classes = 10
 
 model = GoogLeNet(num_classes=num_classes, aux_logits=False)
+summary(model, input_size=(2,3,224,224), device='cpu')
+```
+
+### 사전 훈련된 모델
+
+`사전 훈련된 모델`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. https://pytorch.org/vision/main/models/generated/torchvision.models.googlenet.html#torchvision.models.GoogLeNet_Weights.
+
+```python
+from torchinfo import summary
+
+model = GoogLeNet(num_classes=num_classes, aux_logits=True)
 summary(model, input_size=(2,3,224,224), device='cpu')
 ```
 

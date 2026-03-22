@@ -5,15 +5,13 @@ research_tab: "DL"
 research_kind: "Shared Note"
 source_title: "4-6_Autoencoder - 공유"
 source_path: "12_Deep_Learning/Code_Snippets/4-6_Autoencoder - 공유.md"
-excerpt: "기본적인 오토인코더 구현 실습(MNIST), 라이브러리 불러오기, 데이터 불러오기 중심으로 구현 과정을 정리한 Autoencoder - 공유 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과..."
-research_summary: "기본적인 오토인코더 구현 실습(MNIST), 라이브러리 불러오기, 데이터 불러오기 중심으로 구현 과정을 정리한 Autoencoder - 공유 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 23개 코드 블록, 23개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, matplotlib, torch, torchvision입니다."
+excerpt: "기본적인 오토인코더 구현 실습(MN... 중심의 DL 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 기본적인 오토인코더 구현 실습(MN... 순서로 핵심 장면을 먼저 훑고, 기본 전처리 후 데이터 불러오기, 모델 생성 및 학습, 모델 평가 같은..."
+research_summary: "기본적인 오토인코더 구현 실습(MN... 중심의 DL 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 기본적인 오토인코더 구현 실습(MN... 순서로 핵심 장면을 먼저 훑고, 기본 전처리 후 데이터 불러오기, 모델 생성 및 학습, 모델 평가 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 23개 코드 블록, 23개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, matplotlib, torch, torchvision입니다."
 research_artifacts: "md · 코드 23개 · 실행 23개"
 code_block_count: 23
 execution_block_count: 23
 research_focus:
   - "기본적인 오토인코더 구현 실습(MNIST)"
-  - "라이브러리 불러오기"
-  - "데이터 불러오기"
 research_stack:
   - "numpy"
   - "matplotlib"
@@ -29,9 +27,9 @@ tags:
   - shared-note
 ---
 
-기본적인 오토인코더 구현 실습(MNIST), 라이브러리 불러오기, 데이터 불러오기 중심으로 구현 과정을 정리한 Autoencoder - 공유 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 23개 코드 블록, 23개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, matplotlib, torch, torchvision입니다.
+기본적인 오토인코더 구현 실습(MN... 중심의 DL 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 기본적인 오토인코더 구현 실습(MN... 순서로 핵심 장면을 먼저 훑고, 기본 전처리 후 데이터 불러오기, 모델 생성 및 학습, 모델 평가 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 23개 코드 블록, 23개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, matplotlib, torch, torchvision입니다.
 
-**빠르게 볼 수 있는 포인트**: 기본적인 오토인코더 구현 실습(MNIST), 라이브러리 불러오기, 데이터 불러오기.
+**빠르게 볼 수 있는 포인트**: 기본적인 오토인코더 구현 실습(MNIST).
 
 **남겨둔 자료**: `md` 원본과 23개 코드 블록, 23개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, matplotlib, torch, torchvision입니다.
 
@@ -51,11 +49,23 @@ tags:
 
 ## What This Note Covers
 
-- 기본적인 오토인코더 구현 실습(MNIST)
-- 라이브러리 불러오기
-- 데이터 불러오기
-- 기본 전처리 후 데이터 불러오기
-- 모델 학습
+### 기본적인 오토인코더 구현 실습(MNIST)
+
+모델 학습 > 모델 생성 및 학습, 모델 학습 > 모델 평가, 모델 학습 > 차원축소와 시각화 같은 코드를 직접 따라가며 기본적인 오토인코더 구현 실습(MNIST) 흐름을 확인했습니다.
+
+- 읽을 포인트: 세부 흐름: 모델 학습 > 모델 생성 및 학습, 모델 학습 > 모델 평가, 모델 학습 > 차원축소와 시각화
+
+#### 모델 학습 > 모델 생성 및 학습
+
+모델 정의, 손실, 최적화 흐름을 코드로 연결해 보는 구간입니다.
+
+#### 모델 학습 > 모델 평가
+
+모델 정의, 손실, 최적화 흐름을 코드로 연결해 보는 구간입니다.
+
+#### 모델 학습 > 차원축소와 시각화
+
+모델 정의, 손실, 최적화 흐름을 코드로 연결해 보는 구간입니다.
 
 ## Why This Matters
 
@@ -67,49 +77,69 @@ tags:
 
 ## Implementation Flow
 
-1. Key Step: 기본적인 오토인코더 구현 실습(MNIST)
-2. Key Step: train_dataset = datasets.MNIST(
-3. Key Step: test_dataset = datasets.MNIST(
-4. Key Step: 기본 전처리 후 데이터 불러오기
+1. 기본적인 오토인코더 구현 실습(MNIST): 모델 학습 > 모델 생성 및 학습, 모델 학습 > 모델 평가
 
 ## Code Highlights
 
-### 라이브러리 불러오기
+### 기본 전처리 후 데이터 불러오기
 
-`라이브러리 불러오기`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 원본 노트에서 구현 흐름을 가장 잘 보여주는 핵심 코드 중 하나입니다.
+`기본 전처리 후 데이터 불러오기`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 train_dataset = datasets.MNIST(, root='./mnist',, train=True, 흐름이 주석과 함께 드러납니다.
 
 ```python
-import numpy as np
-import matplotlib.pyplot as plt
-import torch.nn as nn
-import torch.optim as optim
-import torch
-from torchvision import datasets, transforms
-from torch.utils.data import DataLoader, random_split
-from torchvision.transforms import v2
+# train_dataset = datasets.MNIST(
+#     root='./mnist',
+#     train=True,
+#     download=True,
+#     transform=transforms,
+# )
+
+# test_dataset = datasets.MNIST(
+#     root='./mnist',
+#     train=False,
+#     download=True,
+#     transform=transforms,
+# )
 ```
 
 ### 모델 생성 및 학습
 
-`모델 생성 및 학습`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 Training Loop 흐름이 주석과 함께 드러납니다.
+`모델 생성 및 학습`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 실험의 중심이 되는 모델 아키텍처를 정의하는 코드입니다.
 
 ```python
-# Training Loop
-num_epochs = 10
-for epoch in range(num_epochs):
-    model.train()
-    total_loss = 0
-    for images, _ in train_dataloader:
-        images = images.view(images.size(0), -1).to(device)  # 28x28 -> 784 벡터화
+class BasicAutoencoder(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.encoder = nn.Sequential(
+            nn.Linear(28*28, 128),
+            nn.ReLU(),
+            nn.Linear(128, 64),
+            nn.ReLU()
+        )
+        self.decoder = nn.Sequential(
+            nn.Linear(64, 128),
+            nn.ReLU(),
+            nn.Linear(128, 28*28),
+            nn.Sigmoid()
+        )
+
+    def forward(self, x):
+        x = self.encoder(x)
+        x = self.decoder(x)
+        return x
+```
+
+### 모델 평가
+
+`모델 평가`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 테스트 흐름이 주석과 함께 드러납니다.
+
+```python
+# 테스트
+model.eval()
+with torch.no_grad():
+    for images, _ in test_dataloader:
+        images = images.view(images.size(0), -1).to(device)
         outputs = model(images)
-        loss = loss_fn(outputs, images)
-
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
-
-        total_loss += loss.item()
-    print(f"Epoch [{epoch+1}/{num_epochs}], Loss: {total_loss/len(train_dataloader):.4f}")
+        break
 ```
 
 ### 차원축소와 시각화

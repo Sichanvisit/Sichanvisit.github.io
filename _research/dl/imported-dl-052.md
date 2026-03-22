@@ -5,8 +5,8 @@ research_tab: "DL"
 research_kind: "Sample Code"
 source_title: "MNIST_samplecode"
 source_path: "12_Deep_Learning/Code_Snippets/MNIST_samplecode.md"
-excerpt: "데이터 로더, model = MLP(input_size, h..., input_ch, hidden_size, nu... 중심으로 구현 과정을 정리한 MNIST samplecode 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수..."
-research_summary: "데이터 로더, model = MLP(input_size, h..., input_ch, hidden_size, nu... 중심으로 구현 과정을 정리한 MNIST samplecode 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 11개 코드 블록, 11개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, numpy입니다."
+excerpt: "MNIST samplecode에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 실험의 큰 흐름을 먼저 훑고, MNIST 데이터셋, MLP 모델, class CNN(nn.Module) 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과..."
+research_summary: "MNIST samplecode에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 실험의 큰 흐름을 먼저 훑고, MNIST 데이터셋, MLP 모델, class CNN(nn.Module) 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 11개 코드 블록, 11개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, numpy입니다."
 research_artifacts: "md · 코드 11개 · 실행 11개"
 code_block_count: 11
 execution_block_count: 11
@@ -28,7 +28,7 @@ tags:
   - sample-code
 ---
 
-데이터 로더, model = MLP(input_size, h..., input_ch, hidden_size, nu... 중심으로 구현 과정을 정리한 MNIST samplecode 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 11개 코드 블록, 11개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, numpy입니다.
+MNIST samplecode에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 실험의 큰 흐름을 먼저 훑고, MNIST 데이터셋, MLP 모델, class CNN(nn.Module) 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 11개 코드 블록, 11개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, numpy입니다.
 
 **빠르게 볼 수 있는 포인트**: 데이터 로더, model = MLP(input_size, hidden_size, nu..., input_ch, hidden_size, num_cls.
 
@@ -77,6 +77,48 @@ tags:
 3. Key Step: 테스트 셋에서 20개 샘플 추출
 
 ## Code Highlights
+
+### MNIST 데이터셋
+
+`MNIST 데이터셋`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 MNIST 데이터셋 흐름이 주석과 함께 드러납니다.
+
+```python
+#MNIST 데이터셋
+train_dataset = datasets.MNIST(root='data',
+                               train=True,
+                               transform=transforms.ToTensor(),
+                               download=True)
+test_dataset = datasets.MNIST(root='data',
+                              train=False,
+                              transform=transforms.ToTensor(),
+                              download=True)
+```
+
+### MLP 모델
+
+`MLP 모델`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 MLP 모델 흐름이 주석과 함께 드러납니다.
+
+```python
+#MLP 모델
+class MLP(nn.Module):
+    def __init__(self, input_size, hidden_size, num_cls):
+        super(MLP, self).__init__()
+        self.l1 = nn.Linear(input_size, hidden_size)
+        self.relu1 = nn.ReLU()
+
+        self.l2 = nn.Linear(hidden_size, hidden_size)
+        self.relu2 = nn.ReLU()
+
+        self.output = nn.Linear(hidden_size, num_cls)
+
+    def forward(self, x):
+        x = self.l1(x)
+        x = self.relu1(x)
+        x = self.l2(x)
+        x = self.relu2(x)
+        out = self.output(x)
+        return out
+```
 
 ### class CNN(nn.Module)
 
@@ -146,40 +188,6 @@ for epoch in range(epochs):
         loss.backward()
         optim.step()
 # ... trimmed ...
-```
-
-### import matplotlib.pyplot as plt
-
-`import matplotlib.pyplot as plt`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 테스트 셋에서 20개 샘플 추출, 모델 예측, image = image.reshape(-1, input_size).to(device) 흐름이 주석과 함께 드러납니다.
-
-```python
-import matplotlib.pyplot as plt
-import numpy as np
-
-# 테스트 셋에서 20개 샘플 추출
-sample_indices = np.random.choice(len(test_dataset), 20, replace=False)
-sampled_images = [test_dataset[i][0] for i in sample_indices]
-sampled_labels = [test_dataset[i][1] for i in sample_indices]
-
-# 모델 예측
-model.eval()  # 평가 모드로 설정
-predicted_labels = []
-with torch.no_grad():
-  for image in sampled_images:
-    # image = image.reshape(-1, input_size).to(device)
-    image = image.to(device)
-    output = model(image).argmax()
-    predicted_labels.append(output.item())
-
-# 결과 시각화
-fig, axes = plt.subplots(4, 5, figsize=(10, 8))
-for i, ax in enumerate(axes.flatten()):
-  ax.imshow(sampled_images[i].squeeze().numpy(), cmap='gray')
-  ax.set_title(f'True: {sampled_labels[i]}\nPred: {predicted_labels[i]}',
-               color='green' if sampled_labels[i] == predicted_labels[i] else 'red')
-  ax.axis('off')
-plt.tight_layout()
-plt.show()
 ```
 
 ## Source Bundle

@@ -2,18 +2,18 @@
 title: "4.데이터사이언스 Toolkit"
 date: 2026-03-08
 research_tab: "ML"
-research_kind: "Practice"
+research_kind: "Archive Note"
 source_title: "250812_코드실습3_4.데이터사이언스 Toolkit"
 source_path: "11_Machine_Learning/Code_Snippets/250812_코드실습3_4.데이터사이언스 Toolkit.md"
-excerpt: "코드실습3 4.데이터사이언스 Toolkit의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 마크다운 실습, Numpy 실습, 판다스 실습 순서로 큰 장을 먼저 훑고, csv파일 불러오는 실습, matplotlib 실습 같은 코드로 실제 구현을 이어서 확인할..."
-research_summary: "코드실습3 4.데이터사이언스 Toolkit의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 마크다운 실습, Numpy 실습, 판다스 실습 순서로 큰 장을 먼저 훑고, csv파일 불러오는 실습, matplotlib 실습 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 60개 코드 블록, 59개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, google, pandas, matplotlib입니다."
+excerpt: "4.데이터사이언스 Toolkit의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 마크다운 실습, Numpy 실습, 판다스 실습 순서로 큰 장을 먼저 훑고, csv파일 불러오는 실습, matplotlib 실습 같은 코드로 실제 구현을 이어서 확인할 수 있습니..."
+research_summary: "4.데이터사이언스 Toolkit의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 마크다운 실습, Numpy 실습, 판다스 실습 순서로 큰 장을 먼저 훑고, csv파일 불러오는 실습, matplotlib 실습 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 60개 코드 블록, 59개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, google, pandas, matplotlib입니다."
 research_artifacts: "ipynb/md · 코드 60개 · 실행 59개"
 code_block_count: 60
 execution_block_count: 59
 research_focus:
-  - "마크다운 실습"
-  - "자기소개 마크다운 미션"
-  - "이름"
+  - "matplotlib 실습"
+  - "마크다운으로 매일 학습 기록을 남기는 습관 만들기!"
+  - "나의 목표"
 research_stack:
   - "numpy"
   - "google"
@@ -27,7 +27,7 @@ tags:
   - research-archive
   - imported-note
   - ml
-  - practice
+  - archive-note
 ---
 
 ## 글 한눈에 보기
@@ -35,7 +35,7 @@ tags:
 <div class="research-overview research-overview--intro">
   <div class="research-overview__row">
     <div class="research-overview__label">문제 설정</div>
-    <div class="research-overview__value">코드실습3 4.데이터사이언스 Toolkit에서 마크다운 실습, Numpy 실습, 판다스 실습 흐름을 직접 따라가며 구현했습니다.</div>
+    <div class="research-overview__value">마크다운으로 매일 학습 기록을 남기는 습관 만들기!</div>
   </div>
   <div class="research-overview__row">
     <div class="research-overview__label">원본 구조</div>
@@ -43,7 +43,7 @@ tags:
   </div>
   <div class="research-overview__row">
     <div class="research-overview__label">데이터 맥락</div>
-    <div class="research-overview__value">특정 데이터셋 설명보다 마크다운 실습, Numpy 실습, 판다스 실습 같은 실습 흐름을 직접 익히는 데 초점을 둔 노트입니다.</div>
+    <div class="research-overview__value">csv파일 불러오는 실습</div>
   </div>
   <div class="research-overview__row">
     <div class="research-overview__label">주요 장</div>
@@ -67,7 +67,7 @@ tags:
 
 ### 마크다운 실습
 
-마크다운으로 매일 학습 기록을 남기는 습관 만들기!
+자기소개 마크다운 미션, 자기소개 마크다운 미션 > 이름, 자기소개 마크다운 미션 > 나의 목표 같은 코드를 직접 따라가며 마크다운 실습 흐름을 확인했습니다.
 
 - 읽을 포인트: 세부 흐름: 자기소개 마크다운 미션, 자기소개 마크다운 미션 > 이름, 자기소개 마크다운 미션 > 나의 목표
 

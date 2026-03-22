@@ -5,15 +5,14 @@ research_tab: "DL"
 research_kind: "Shared Note"
 source_title: "5-4_VGGNet - 공유"
 source_path: "12_Deep_Learning/Code_Snippets/5-4_VGGNet - 공유.md"
-excerpt: "파이토치 : https://pytorch.org/vision/main/models.html#table-of-all-available-classification-weights - VGG-16 with ImageNet & BN : https://pytorch.org/vision/main/models/g..."
-research_summary: "파이토치 : https://pytorch.org/vision/main/models.html#table-of-all-available-classification-weights - VGG-16 with ImageNet & BN : https://pytorch.org/vision/main/models/generated/torchvision... 데이터 셋 : https://pytorch.org/vision/main/generated/torchvision.datasets.OxfordIIITPet.html 데이터 전처리 - 이미지 변환은 이미지 데이터의 크기를 256으로 키웠다가 224로 중앙 자르기 수행 - 탐지하려는 객체가 중앙에 위치할 확률이 높으므로 불필요한 지역특징을... `md` 원본과 14개 코드 블록, 11개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchinfo, os, torchvision입니다."
+excerpt: "사전 훈련된 모델 활용, 실습 중심의 DL 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 사전 훈련된 모델 활용, 실습 순서로 핵심 장면을 먼저 훑고, class VGG(nn.Module), 사전 훈련된 모델 활용, 실습 같은 코드로 실제 구현..."
+research_summary: "사전 훈련된 모델 활용, 실습 중심의 DL 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 사전 훈련된 모델 활용, 실습 순서로 핵심 장면을 먼저 훑고, class VGG(nn.Module), 사전 훈련된 모델 활용, 실습 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 14개 코드 블록, 11개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchinfo, os, torchvision입니다."
 research_artifacts: "md · 코드 14개 · 실행 11개"
 code_block_count: 14
 execution_block_count: 11
 research_focus:
-  - "파이토치"
   - "사전 훈련된 모델 활용"
-  - "데이터 셋"
+  - "실습"
 research_stack:
   - "torch"
   - "torchinfo"
@@ -29,9 +28,9 @@ tags:
   - shared-note
 ---
 
-파이토치 : https://pytorch.org/vision/main/models.html#table-of-all-available-classification-weights - VGG-16 with ImageNet & BN : https://pytorch.org/vision/main/models/generated/torchvision... 데이터 셋 : https://pytorch.org/vision/main/generated/torchvision.datasets.OxfordIIITPet.html 데이터 전처리 - 이미지 변환은 이미지 데이터의 크기를 256으로 키웠다가 224로 중앙 자르기 수행 - 탐지하려는 객체가 중앙에 위치할 확률이 높으므로 불필요한 지역특징을... `md` 원본과 14개 코드 블록, 11개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchinfo, os, torchvision입니다.
+사전 훈련된 모델 활용, 실습 중심의 DL 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 사전 훈련된 모델 활용, 실습 순서로 핵심 장면을 먼저 훑고, class VGG(nn.Module), 사전 훈련된 모델 활용, 실습 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 14개 코드 블록, 11개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchinfo, os, torchvision입니다.
 
-**빠르게 볼 수 있는 포인트**: 파이토치, 사전 훈련된 모델 활용, 데이터 셋.
+**빠르게 볼 수 있는 포인트**: 사전 훈련된 모델 활용, 실습.
 
 **남겨둔 자료**: `md` 원본과 14개 코드 블록, 11개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchinfo, os, torchvision입니다.
 
@@ -53,19 +52,19 @@ tags:
 
 ### 사전 훈련된 모델 활용
 
-파이토치 : https://pytorch.org/vision/main/models.html#table-of-all-available-classification-weights - VGG-16 with ImageNet & BN : https://pytorch.org/vision/main/models/generated/torchvision.models.vgg16_bn.html#torchvis...
+파이토치 : https://pytorch.org/vision/main/models.html#table-of-all-available-classification-weights - VGG-16 with ImageNet & BN : https://pytorch.org/vision/main/models/generated/torchvision...
+
+- 읽을 포인트: 모델 정의, 손실, 최적화 흐름을 코드로 연결해 보는 구간입니다.
 
 ### 실습
 
-데이터 셋 : https://pytorch.org/vision/main/generated/torchvision.datasets.OxfordIIITPet.html 데이터 전처리 - 이미지 변환은 이미지 데이터의 크기를 256으로 키웠다가 224로 중앙 자르기 수행 - 탐지하려는 객체가 중앙에 위치할 확률이 높으므로 불필요한 지역특징을 제거하기 위한 전처리 방법
+데이터 셋 : https://pytorch.org/vision/main/generated/torchvision.datasets.OxfordIIITPet.html 데이터 전처리 - 이미지 변환은 이미지 데이터의 크기를 256으로 키웠다가 224로 중앙 자르기 수행 - 탐지하려는 객체가 중앙에 위치할 확률이 높으므로 불필요한 지역특징을...
 
-### 실습 > 출처
+- 읽을 포인트: 세부 흐름: 출처
+
+#### 출처
 
 vgg-16 : https://pytorch.org/vision/0.8/_modules/torchvision/models/vgg.html
-
-### Key Step
-
-model = torchvision.models.vgg16_bn(pretrained=True)
 
 ## Why This Matters
 
@@ -77,10 +76,8 @@ model = torchvision.models.vgg16_bn(pretrained=True)
 
 ## Implementation Flow
 
-1. 사전 훈련된 모델 활용: 파이토치 : https://pytorch.org/vision/main/models.html#table-of-all-available-classification-weights - VGG-16 with ImageNet & BN : https://pytorch.org/vision...
-2. 실습: 데이터 셋 : https://pytorch.org/vision/main/generated/torchvision.datasets.OxfordIIITPet.html 데이터 전처리 - 이미지 변환은 이미지 데이터의 크기를 256으로 키웠다가 224로 중앙 자르기 수행 - 탐지하려는 객체가 중앙에...
-3. 실습 > 출처: vgg-16 : https://pytorch.org/vision/0.8/_modules/torchvision/models/vgg.html
-4. Key Step: model = torchvision.models.vgg16_bn(pretrained=True)
+1. 사전 훈련된 모델 활용: 파이토치 : https://pytorch.org/vision/main/models.html#table-of-all-available-classification-weights - VGG-16 with ImageNet & BN : https:...
+2. 실습: 출처
 
 ## Code Highlights
 
@@ -122,21 +119,48 @@ class VGG(nn.Module):
 
 ### 사전 훈련된 모델 활용
 
-`사전 훈련된 모델 활용`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 GPU 사용 가능 여부 확인 흐름이 주석과 함께 드러납니다.
+`사전 훈련된 모델 활용`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 model = torchvision.models.vgg16_bn(pretrained=True) 흐름이 주석과 함께 드러납니다.
 
 ```python
-import os
-import torch
-import torch.nn as nn
-import torch.optim as optim
-import torchvision
-from torchvision import datasets, transforms, models
-from torch.utils.data import random_split, DataLoader
-import matplotlib.pyplot as plt
+# model = torchvision.models.vgg16_bn(pretrained=True)
+model = torchvision.models.vgg16_bn(weights='VGG16_BN_Weights.IMAGENET1K_V1')
+model
+```
 
-# GPU 사용 가능 여부 확인
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-print("Using device:", device)
+### 실습
+
+`실습`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 라벨 해석 함수: 0 -> Cat, 1 -> Dog, 카테고리별로 n개의 샘플 이미지를 수집하여 시각화하는 함수, 데이터셋을 순회하면서 각 카테고리별로 n_samples 개씩 수집 흐름이 주석과 함께 드러납니다.
+
+```python
+import torch
+import torchvision
+import torchvision.transforms as transforms
+import matplotlib.pyplot as plt
+from collections import defaultdict
+
+# 라벨 해석 함수: 0 -> Cat, 1 -> Dog
+def label_to_str(label):
+    return "Cat" if label == 0 else "Dog"
+
+# 카테고리별로 n개의 샘플 이미지를 수집하여 시각화하는 함수
+def visualize_by_category(dataset, n_samples=5, cmap=None):
+    samples = defaultdict(list)
+    # 데이터셋을 순회하면서 각 카테고리별로 n_samples 개씩 수집
+    for img, label in dataset:
+        if len(samples[label]) < n_samples:
+            samples[label].append(img)
+        # 두 카테고리 모두 n_samples가 모이면 종료
+        if len(samples) == 2 and all(len(imgs) >= n_samples for imgs in samples.values()):
+            break
+
+    # 수집된 각 카테고리별로 이미지 그리드 생성 및 시각화
+    for label, imgs in samples.items():
+        # make_grid를 사용하기 전에 각 이미지의 크기가 동일한지 확인합니다.
+        grid_img = torchvision.utils.make_grid(imgs, nrow=n_samples, padding=2)
+        plt.figure(figsize=(n_samples * 2, 4))
+        # (C, H, W) -> (H, W, C)
+        plt.imshow(grid_img.permute(1, 2, 0).numpy(), cmap=cmap)
+# ... trimmed ...
 ```
 
 ### 실습

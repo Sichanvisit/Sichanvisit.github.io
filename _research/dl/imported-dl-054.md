@@ -5,15 +5,15 @@ research_tab: "DL"
 research_kind: "Shared Note"
 source_title: "Segmentation_데이터다루기 - 공유"
 source_path: "12_Deep_Learning/Code_Snippets/Segmentation_데이터다루기 - 공유.md"
-excerpt: "PennFudanPed 데이터셋은 보행자 탐지 및 segmentation(분할) 작업을 위한 데이터셋입니다. 도심 환경 등 다양한 배경에서 촬영된 이미지들이 포함되어 있으며, 각 이미지에 대해 보행자 영역을 나타내는 마스크(ground truth)가 제공됩니다. xml.etree.ElementTre..."
-research_summary: "PennFudanPed 데이터셋은 보행자 탐지 및 segmentation(분할) 작업을 위한 데이터셋입니다. 도심 환경 등 다양한 배경에서 촬영된 이미지들이 포함되어 있으며, 각 이미지에 대해 보행자 영역을 나타내는 마스크(ground truth)가 제공됩니다. xml.etree.ElementTree는 Python 내장 XML 처리 라이브러리로, XML 파일을 파싱하고, 트리 형태로 데이터를 탐색하며 필요한 정보를 추출할 수 있도록 도와줍니다. 대략적인 사용 방법은 다음과 같습니다. XML 파싱: - ET.parse('파일경로.xml')를 사용하여 XML 파일을 파싱하고, XML 트리 객체를... `md` 원본과 76개 코드 블록, 52개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, json, torch, numpy입니다."
+excerpt: "Segmentation 데이터다루기 - 공유에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 PennFudanPed, VOC2012 다루기, COCO 순서로 핵심 장면을 먼저 훑고, 데이터셋과 데이터로더, 시각화, Instance Segmentatio..."
+research_summary: "Segmentation 데이터다루기 - 공유에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 PennFudanPed, VOC2012 다루기, COCO 순서로 핵심 장면을 먼저 훑고, 데이터셋과 데이터로더, 시각화, Instance Segmentation... 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 76개 코드 블록, 52개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, json, torch, numpy입니다."
 research_artifacts: "md · 코드 76개 · 실행 52개"
 code_block_count: 76
 execution_block_count: 52
 research_focus:
+  - "PennFudanPed"
   - "VOC2012 다루기"
-  - "이미지와 마스크"
-  - "xml.etree.ElementTree는 Python 내장 XML 처리 라이브러리로, XML 파일을 파..."
+  - "COCO"
 research_stack:
   - "os"
   - "json"
@@ -29,9 +29,9 @@ tags:
   - shared-note
 ---
 
-PennFudanPed 데이터셋은 보행자 탐지 및 segmentation(분할) 작업을 위한 데이터셋입니다. 도심 환경 등 다양한 배경에서 촬영된 이미지들이 포함되어 있으며, 각 이미지에 대해 보행자 영역을 나타내는 마스크(ground truth)가 제공됩니다. xml.etree.ElementTree는 Python 내장 XML 처리 라이브러리로, XML 파일을 파싱하고, 트리 형태로 데이터를 탐색하며 필요한 정보를 추출할 수 있도록 도와줍니다. 대략적인 사용 방법은 다음과 같습니다. XML 파싱: - ET.parse('파일경로.xml')를 사용하여 XML 파일을 파싱하고, XML 트리 객체를... `md` 원본과 76개 코드 블록, 52개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, json, torch, numpy입니다.
+Segmentation 데이터다루기 - 공유에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 PennFudanPed, VOC2012 다루기, COCO 순서로 핵심 장면을 먼저 훑고, 데이터셋과 데이터로더, 시각화, Instance Segmentation... 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 76개 코드 블록, 52개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, json, torch, numpy입니다.
 
-**빠르게 볼 수 있는 포인트**: VOC2012 다루기, 이미지와 마스크, xml.etree.ElementTree는 Python 내장 XML 처리....
+**빠르게 볼 수 있는 포인트**: PennFudanPed, VOC2012 다루기, COCO.
 
 **남겨둔 자료**: `md` 원본과 76개 코드 블록, 52개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, json, torch, numpy입니다.
 
@@ -51,29 +51,49 @@ PennFudanPed 데이터셋은 보행자 탐지 및 segmentation(분할) 작업을
 
 ## What This Note Covers
 
-### VOC2012 다루기 > Annotation
-
-xml.etree.ElementTree는 Python 내장 XML 처리 라이브러리로, XML 파일을 파싱하고, 트리 형태로 데이터를 탐색하며 필요한 정보를 추출할 수 있도록 도와줍니다. 대략적인 사용 방법은 다음과 같습니다. XML 파싱: - ET.parse('파일경로.xml')를 사용하여 XML 파일을 파싱하고, XML 트리 객체를 생성합니다. - tree.getroot()를 호출하여...
-
 ### PennFudanPed
 
 PennFudanPed 데이터셋은 보행자 탐지 및 segmentation(분할) 작업을 위한 데이터셋입니다. 도심 환경 등 다양한 배경에서 촬영된 이미지들이 포함되어 있으며, 각 이미지에 대해 보행자 영역을 나타내는 마스크(ground truth)가 제공됩니다.
 
-### COCO > 데이터 구조 이해
+- 읽을 포인트: PennFudanPed 아래 코드와 함께 읽으면 구현 포인트가 더 또렷해지는 구간입니다.
 
-하나의 JSON 파일 - 모든 이미지 메타데이터, 객체 Annotation, 카테고리, 라이선스 정보가 하나의 JSON 파일(예: instances_train2017.json 또는 instances_val2017.json)에 저장됨 주요 키 구성 - images: 각 이미지의 파일명, 고유 ID, 해상도 등의 메타데이터 - annotations: 각 이미지에 포함된 객체의 Annotat...
+### VOC2012 다루기
 
-### COCO > Annotation의 유형
+이미지와 마스크, Annotation, 데이터셋과 데이터로더 같은 코드를 직접 따라가며 VOC2012 다루기 흐름을 확인했습니다.
+
+- 읽을 포인트: 세부 흐름: 이미지와 마스크, Annotation, 데이터셋과 데이터로더
+
+#### 이미지와 마스크
+
+VOC2012 다루기 > 이미지와 마스크 아래 코드와 함께 읽으면 구현 포인트가 더 또렷해지는 구간입니다.
+
+#### Annotation
+
+xml.etree.ElementTree는 Python 내장 XML 처리 라이브러리로, XML 파일을 파싱하고, 트리 형태로 데이터를 탐색하며 필요한 정보를 추출할 수 있도록 도와줍니다. 대략적인 사용 방법은 다음과 같습니다. XML 파싱: - ET.parse('파일경로.xml')를...
+
+#### 데이터셋과 데이터로더
+
+VOC2012 다루기 > 데이터셋과 데이터로더 아래 코드와 함께 읽으면 구현 포인트가 더 또렷해지는 구간입니다.
+
+### COCO
+
+Annotation의 유형, COCO API를 활용하기 위해 a..., 마스크 생성하기 > cocotool... 같은 코드를 직접 따라가며 COCO 흐름을 확인했습니다.
+
+- 읽을 포인트: 세부 흐름: Annotation의 유형, COCO API를 활용하기 위해 annotaion 파일을 COCO 객체로 로드하기 > Instance Segmentation 시각화 - COCO API 활용한 시각화, 마스크 생성하기 > cocotools : coco.annToMask()
+
+#### Annotation의 유형
 
 바운딩 박스 (Bounding Box): - 객체의 위치와 크기를 나타내는 사각형 정보 Instance Segmentation: - 객체의 경계를 보다 세밀하게 표현하기 위해 polygon(다각형) 또는 마스크 형태의 정보 제공
 
+#### COCO API를 활용하기 위해 annotaion 파일을 COCO 객체로 로드하기 > Instance Segmentation 시각화 - COCO API 활용한 시각화
+
+getAnnIds()로 특정 image에 해당하는 annotation id를 가져온 후에 이 id를 loadAnns()로 입력하여 해당 이미지의 모든 annotation 정보를 가져옴. - segmentation 정보는 polygon 형태로 되어 있음. - annotation 정보...
+
+#### 마스크 생성하기 > cocotools : coco.annToMask()
+
+이 코드는 COCO API에서 제공하는 annToMask() 함수를 사용하여, 주어진 annotation의 polygon 정보를 이진 마스크(binary mask) 형태로 변환하는 과정을 보여줍니다. annToMask()를 사용하여 annotation의 polygon 정보를 이진...
+
 ## Why This Matters
-
-### 객체 탐지와 영역 단위 이해
-
-- 왜 필요한가: 이미지 안에서 무엇이 있는지만이 아니라 어디에 있는지까지 알아야 할 때는 박스 또는 마스크 단위 예측이 필요합니다.
-- 왜 이 방식을 쓰는가: Detection 계열 모델은 분류보다 한 단계 더 나아가 위치 정보를 함께 학습하므로 실제 비전 문제에 더 직접적으로 연결됩니다.
-- 원리: 모델은 후보 영역을 만들고, 각 영역의 클래스와 좌표 또는 마스크를 동시에 예측해 장면을 해석합니다.
 
 ### 데이터 파이프라인
 
@@ -89,10 +109,9 @@ PennFudanPed 데이터셋은 보행자 탐지 및 segmentation(분할) 작업을
 
 ## Implementation Flow
 
-1. VOC2012 다루기 > Annotation: xml.etree.ElementTree는 Python 내장 XML 처리 라이브러리로, XML 파일을 파싱하고, 트리 형태로 데이터를 탐색하며 필요한 정보를 추출할 수 있도록 도와줍니다. 대략적인 사용 방법은 다음과 같습니다. XML 파싱: - ET.pa...
-2. PennFudanPed: PennFudanPed 데이터셋은 보행자 탐지 및 segmentation(분할) 작업을 위한 데이터셋입니다. 도심 환경 등 다양한 배경에서 촬영된 이미지들이 포함되어 있으며, 각 이미지에 대해 보행자 영역을 나타내는 마스크(ground truth)가 제공됩니다.
-3. COCO > 데이터 구조 이해: 하나의 JSON 파일 - 모든 이미지 메타데이터, 객체 Annotation, 카테고리, 라이선스 정보가 하나의 JSON 파일(예: instances_train2017.json 또는 instances_val2017.json)에 저장됨 주요 키 구성 - images: 각...
-4. COCO > Annotation의 유형: 바운딩 박스 (Bounding Box): - 객체의 위치와 크기를 나타내는 사각형 정보 Instance Segmentation: - 객체의 경계를 보다 세밀하게 표현하기 위해 polygon(다각형) 또는 마스크 형태의 정보 제공
+1. PennFudanPed: PennFudanPed 데이터셋은 보행자 탐지 및 segmentation(분할) 작업을 위한 데이터셋입니다. 도심 환경 등 다양한 배경에서 촬영된 이미지들이 포함되어 있으며, 각 이미지에 대해 보행자 영역을 나타내는 마스크(ground t...
+2. VOC2012 다루기: 이미지와 마스크, Annotation
+3. COCO: Annotation의 유형, COCO API를 활용하기 위해 annotaion 파일을 COCO 객체로 로드하기 > Instance Segmentation 시각화 - COCO API 활용한 시각화
 
 ## Code Highlights
 
@@ -168,40 +187,32 @@ def draw_mask(images, masks, outputs=None, plot_size=4):
 # ... trimmed ...
 ```
 
-### COCO Annotation 정보 확인하기
+### Instance Segmentation 시각화 - COCO API 활용한 시각화
 
-`COCO Annotation 정보 확인하기`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 JSON 파일 확인하기 (파이썬 버전), 파일 정보 확인 (ls -lia와 유사하게 파일의 상세 정보를 출력), jq 설치는 파이썬에서는 필요없음 흐름이 주석과 함께 드러납니다.
+`Instance Segmentation 시각화 - COCO API 활용한 시각화`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 showAnns( )는 annotation 정보들을 입력 받아서 Visualization..., coco.showAnns(anns)는 불러온 annotation 정보(anns)를 기반으... 흐름이 주석과 함께 드러납니다.
 
 ```python
-# JSON 파일 확인하기 (파이썬 버전)
-import os
-import json
+# showAnns( )는 annotation 정보들을 입력 받아서 Visualization 시켜줌. 단 먼저 matplotlib 객체로 원본 이미지가 먼저 로드되어 있어야 함.
+plt.figure(figsize=(12, 14))
+plt.imshow(image_array)
+plt.axis('off')
 
-# 1. 파일 정보 확인 (ls -lia와 유사하게 파일의 상세 정보를 출력)
-file_path = '/content/data/annotations/instances_val2017.json'
-try:
-    stat_info = os.stat(file_path)
-    print("파일 경로:", file_path)
-    print("파일 크기 (바이트):", stat_info.st_size)
-    print("수정 시간 (timestamp):", stat_info.st_mtime)
-    print("생성 시간 (timestamp):", stat_info.st_ctime)
-    print("Inode 번호:", stat_info.st_ino)
-except FileNotFoundError:
-    print("파일이 존재하지 않습니다:", file_path)
+# coco.showAnns(anns)는 불러온 annotation 정보(anns)를 기반으로 segmentation 경계 등을 이미지 위에 그려줍니다.
+coco.showAnns(anns)
+```
 
-# 2. jq 설치는 파이썬에서는 필요없음
-#    파이썬의 내장 json 모듈을 사용하여 JSON을 다룰 수 있습니다.
+### cocotools 사용
 
-# 3. JSON 파일을 읽어 사람이 읽기 좋은 포맷으로 output.json 파일에 저장 (jq . ... > output.json 과 동일)
-with open(file_path, 'r', encoding='utf-8') as f:
-    data = json.load(f)
+`cocotools 사용`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 x,y 좌표값이 연이어 되어 있는 list형 polygon segmentation 정보를... 흐름이 주석과 함께 드러납니다.
 
-with open('output.json', 'w', encoding='utf-8') as f:
-    json.dump(data, f, ensure_ascii=False, indent=2)  # indent=2 옵션으로 예쁘게 출력
-
-print("\noutput.json 파일이 생성되었습니다.")
-
-# ... trimmed ...
+```python
+ # x,y 좌표값이 연이어 되어 있는 list형 polygon segmentation 정보를 x,y 쌍 형태로 변환.
+ polygon_x = [x for index, x in enumerate(ann_2_seg) if index % 2 == 0]
+ polygon_y = [x for index, x in enumerate(ann_2_seg) if index % 2 == 1]
+ print('polygon_x:', polygon_x)
+ print('polygon_y:', polygon_y)
+ polygon_xy = [[x, y] for x, y in zip(polygon_x, polygon_y)]
+ print('polygon_xy:', polygon_xy)
 ```
 
 ## Source Bundle

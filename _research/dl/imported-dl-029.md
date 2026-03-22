@@ -5,15 +5,13 @@ research_tab: "DL"
 research_kind: "Archive Note"
 source_title: "5-1.사전훈련된 모델 활용"
 source_path: "12_Deep_Learning/Code_Snippets/5-1.사전훈련된 모델 활용.md"
-excerpt: "CIFAR-100 사전학습: CIFAR-100 데이터셋을 사용해 SimpleCNN 모델을 5 에폭 동안 학습한 후, 가중치를 저장합니다. MNIST 데이터 전처리: MNIST 이미지를 32×32, 3채널로 변환하여 CIFAR-100 모델에 맞게 전처리합니다. 페이지 상단에서 문제 정의, 구현 범위,..."
-research_summary: "CIFAR-100 사전학습: CIFAR-100 데이터셋을 사용해 SimpleCNN 모델을 5 에폭 동안 학습한 후, 가중치를 저장합니다. MNIST 데이터 전처리: MNIST 이미지를 32×32, 3채널로 변환하여 CIFAR-100 모델에 맞게 전처리합니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 16개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, numpy입니다."
+excerpt: ".사전훈련된 모델 활용에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 코드 설명 순서로 핵심 장면을 먼저 훑고, 코드 설명 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 16개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐..."
+research_summary: ".사전훈련된 모델 활용에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 코드 설명 순서로 핵심 장면을 먼저 훑고, 코드 설명 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 16개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, numpy입니다."
 research_artifacts: "md · 코드 16개 · 실행 13개"
 code_block_count: 16
 execution_block_count: 13
 research_focus:
-  - "CIFAR-100 사전학습"
   - "코드 설명"
-  - "이미지 시각화를 위한 함수 (단일 이미지 표시용)"
 research_stack:
   - "torch"
   - "torchvision"
@@ -29,9 +27,9 @@ tags:
   - archive-note
 ---
 
-CIFAR-100 사전학습: CIFAR-100 데이터셋을 사용해 SimpleCNN 모델을 5 에폭 동안 학습한 후, 가중치를 저장합니다. MNIST 데이터 전처리: MNIST 이미지를 32×32, 3채널로 변환하여 CIFAR-100 모델에 맞게 전처리합니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 16개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, numpy입니다.
+.사전훈련된 모델 활용에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 코드 설명 순서로 핵심 장면을 먼저 훑고, 코드 설명 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 16개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, numpy입니다.
 
-**빠르게 볼 수 있는 포인트**: CIFAR-100 사전학습, 코드 설명, 이미지 시각화를 위한 함수 (단일 이미지 표시용).
+**빠르게 볼 수 있는 포인트**: 코드 설명.
 
 **남겨둔 자료**: `md` 원본과 16개 코드 블록, 13개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, torchvision, matplotlib, numpy입니다.
 
@@ -55,17 +53,7 @@ CIFAR-100 사전학습: CIFAR-100 데이터셋을 사용해 SimpleCNN 모델을 
 
 CIFAR-100 사전학습: CIFAR-100 데이터셋을 사용해 SimpleCNN 모델을 5 에폭 동안 학습한 후, 가중치를 저장합니다. MNIST 데이터 전처리: MNIST 이미지를 32×32, 3채널로 변환하여 CIFAR-100 모델에 맞게 전처리합니다.
 
-### Key Step
-
-이미지 시각화를 위한 함수 (단일 이미지 표시용)
-
-### Key Step
-
-CIFAR-100 데이터셋 (3채널 컬러 이미지, 32x32)
-
-### Key Step
-
-MNIST 데이터셋 (1채널 흑백 이미지, 28x28)
+- 읽을 포인트: 코드 설명 아래 코드와 함께 읽으면 구현 포인트가 더 또렷해지는 구간입니다.
 
 ## Why This Matters
 
@@ -83,84 +71,9 @@ MNIST 데이터셋 (1채널 흑백 이미지, 28x28)
 
 ## Implementation Flow
 
-1. 코드 설명: CIFAR-100 사전학습: CIFAR-100 데이터셋을 사용해 SimpleCNN 모델을 5 에폭 동안 학습한 후, 가중치를 저장합니다. MNIST 데이터 전처리: MNIST 이미지를 32×32, 3채널로 변환하여 CIFAR-100 모델에 맞게 전처리합니다.
-2. Key Step: 이미지 시각화를 위한 함수 (단일 이미지 표시용)
-3. Key Step: CIFAR-100 데이터셋 (3채널 컬러 이미지, 32x32)
-4. Key Step: MNIST 데이터셋 (1채널 흑백 이미지, 28x28)
+1. 코드 설명: CIFAR-100 사전학습: CIFAR-100 데이터셋을 사용해 SimpleCNN 모델을 5 에폭 동안 학습한 후, 가중치를 저장합니다. MNIST 데이터 전처리: MNIST 이미지를 32×32, 3채널로 변환하여 CIFAR-100 모델에 맞게 전처리...
 
 ## Code Highlights
-
-### 코드 설명
-
-`코드 설명`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 이미지 시각화를 위한 함수 (단일 이미지 표시용), dataset.targets (또는 train_labels)를 통해 클래스 정보를 확인, sample에 이미지 추가 흐름이 주석과 함께 드러납니다.
-
-```python
-import torch
-import torchvision
-import torchvision.transforms as transforms
-import matplotlib.pyplot as plt
-import numpy as np
-import math
-
-# 이미지 시각화를 위한 함수 (단일 이미지 표시용)
-def imshow(img, title=None, cmap=None):
-    npimg = img.numpy()
-    if npimg.shape[0] == 1:  # 흑백 이미지의 경우
-        npimg = npimg[0]
-    else:
-        npimg = np.transpose(npimg, (1, 2, 0))
-    plt.imshow(npimg, cmap=cmap)
-    if title:
-        plt.title(title)
-    plt.axis('off')
-
-def print_dataset_info(name, train_set, test_set):
-    sample_img, sample_label = train_set[0]
-    print(f"========== {name} ==========")
-    print("Train 샘플 개수:", len(train_set))
-    print("Test 샘플 개수:", len(test_set))
-    print("샘플 이미지 텐서 shape:", sample_img.shape)  # (채널, 높이, 너비)
-    if hasattr(train_set, 'classes'):
-        print("클래스 (카테고리) 개수:", len(train_set.classes))
-        print("클래스 이름:", train_set.classes)
-# ... trimmed ...
-```
-
-### 코드 설명
-
-`코드 설명`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 MNIST 데이터셋에서 첫 번째 이미지 로드 (그레이스케일), 3채널 데이터로 변환, 방법 1: transforms.Grayscale(num_output_channels=3) 사용 흐름이 주석과 함께 드러납니다.
-
-```python
-import torch
-import torchvision.transforms as transforms
-import torchvision.datasets as datasets
-import matplotlib.pyplot as plt
-from PIL import Image
-import numpy as np
-
-# MNIST 데이터셋에서 첫 번째 이미지 로드 (그레이스케일)
-mnist = datasets.MNIST(root='./data', train=True, download=True)
-gray_img_array = mnist.data[0].numpy()  # shape: [28, 28]
-gray_img_pil = Image.fromarray(gray_img_array, mode='L')  # PIL 이미지, 모드 'L' (그레이스케일)
-
-# 3채널 데이터로 변환
-# 방법 1: transforms.Grayscale(num_output_channels=3) 사용
-transform_to3 = transforms.Compose([
-    transforms.Grayscale(num_output_channels=3),
-    transforms.ToTensor()
-])
-img_method1 = transform_to3(gray_img_pil)  # 텐서 shape: [3, 28, 28]
-
-# 방법 2: PIL의 convert("RGB") 사용 후 ToTensor()
-img_method2 = transforms.ToTensor()(gray_img_pil.convert("RGB"))  # 텐서 shape: [3, 28, 28]
-
-# 두 결과의 차이 계산
-diff = torch.abs(img_method1 - img_method2)
-max_diff = diff.max().item()
-mean_diff = diff.mean().item()
-
-# ... trimmed ...
-```
 
 ### 코드 설명
 
@@ -195,6 +108,103 @@ class SimpleCNN(nn.Module):
             nn.Conv2d(32, 64, kernel_size=3, padding=1),  # 32 -> 64 채널
             nn.BatchNorm2d(64),
             nn.ReLU(),
+# ... trimmed ...
+```
+
+### 코드 설명
+
+`코드 설명`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 MNIST 데이터 전처리 (공통) 흐름이 주석과 함께 드러납니다.
+
+```python
+# --------------------------------------------------
+# MNIST 데이터 전처리 (공통)
+# --------------------------------------------------
+transform_mnist = transforms.Compose([
+    transforms.Resize(32),  # CIFAR-100 모델 입력 크기에 맞춤
+    transforms.Grayscale(num_output_channels=3),  # 3채널로 변환
+    transforms.ToTensor(),
+    transforms.Normalize(mean=[0.5, 0.5, 0.5],
+                         std=[0.5, 0.5, 0.5])
+])
+mnist_full = torchvision.datasets.MNIST(root='./data', train=True, transform=transform_mnist, download=True)
+
+mnist_train_size = int(0.9 * len(mnist_full))
+mnist_val_size = len(mnist_full) - mnist_train_size
+
+mnist_train, mnist_val = random_split(mnist_full, [mnist_train_size, mnist_val_size])
+mnist_train_loader = DataLoader(mnist_train, batch_size=128, shuffle=True, num_workers=2)
+mnist_val_loader = DataLoader(mnist_val, batch_size=128, shuffle=False, num_workers=2)
+```
+
+### 코드 설명
+
+`코드 설명`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 MNIST Full Fine-tuning (전체 레이어 업데이트), MNIST 모델 생성 (우선 CIFAR-100 구조로 생성), CIFAR-100 사전학습된 feature extractor 로드 (features 부분... 흐름이 주석과 함께 드러납니다.
+
+```python
+# --------------------------------------------------
+# 1. MNIST Full Fine-tuning (전체 레이어 업데이트)
+# --------------------------------------------------
+print("\n==== MNIST Full Fine-tuning (전체 레이어 업데이트) ====")
+# MNIST 모델 생성 (우선 CIFAR-100 구조로 생성)
+model_mnist_ft = SimpleCNN().to(device)
+
+# CIFAR-100 사전학습된 feature extractor 로드 (features 부분만 복사)
+model_cifar_dict = torch.load('./models/model_cifar100.pth', map_location=device)
+
+model_dict = model_mnist_ft.state_dict()
+
+pretrained_dict = {k: v for k, v in model_cifar_dict.items() if k.startswith("features")}
+
+model_dict.update(pretrained_dict)
+model_mnist_ft.load_state_dict(model_dict)
+
+
+# classifier 교체: 마지막 레이어를 MNIST 분류(10 클래스)에 맞게 변경
+model_mnist_ft.classifier[3] = nn.Linear(256, 10).to(device)
+print("MNIST Full Fine-tuning 모델:", model_mnist_ft)
+
+
+# 전체 파라미터 업데이트하므로 feature extractor 고정하지 않음.
+# 전체 모델에 대해 작은 학습률 적용 (예: 1e-4)
+optimizer_mnist_ft = optim.Adam(model_mnist_ft.parameters(), lr=1e-4)
+
+# metric 저장을 위한 리스트 초기화 (Full Fine-tuning)
+# ... trimmed ...
+```
+
+### 코드 설명
+
+`코드 설명`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 MNIST Feature Extraction (classifier만 업데이트), MNIST 모델 생성 (초기 CIFAR-100 구조로 생성), feature extractor 고정 흐름이 주석과 함께 드러납니다.
+
+```python
+# --------------------------------------------------
+# 2. MNIST Feature Extraction (classifier만 업데이트)
+# --------------------------------------------------
+print("\n==== MNIST Feature Extraction (Classifier 학습) ====")
+
+# MNIST 모델 생성 (초기 CIFAR-100 구조로 생성)
+model_mnist_fe = SimpleCNN().to(device)
+model_dict_fe = model_mnist_fe.state_dict()
+pretrained_dict_fe = {k: v for k, v in model_cifar_dict.items() if k.startswith("features")}
+model_dict_fe.update(pretrained_dict_fe)
+model_mnist_fe.load_state_dict(model_dict_fe)
+
+# feature extractor 고정
+for param in model_mnist_fe.features.parameters():
+    param.requires_grad = False
+
+# feature extractor 고정 확인
+for name, param in model_mnist_fe.named_parameters():
+    print(f"{name}: ", param.requires_grad)
+print("\n")
+
+# classifier 교체: 새 분류기로 재정의 (예: 중간층 축소)
+model_mnist_fe.classifier = nn.Sequential(
+    nn.Linear(128 * 4 * 4, 128),
+    nn.ReLU(),
+    nn.Linear(128, 10)
+).to(device)
+
 # ... trimmed ...
 ```
 

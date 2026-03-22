@@ -194,6 +194,201 @@ AUXILIARY_SECTION_TOKENS = (
     "라이브러리 준비",
 )
 
+TITLE_KEYWORD_STOPWORDS = {
+    "ai",
+    "archive",
+    "note",
+    "overview",
+    "practice",
+    "mission",
+    "sprint",
+    "guide",
+    "project",
+    "record",
+    "answer",
+    "answers",
+    "team",
+    "shared",
+    "study",
+    "실습",
+    "코드실습",
+    "코딩실습",
+    "연습",
+    "문제",
+    "미션",
+    "스프린트",
+    "강사",
+    "강사공유",
+    "공유",
+    "답안",
+    "기",
+    "팀",
+    "기초",
+    "심화",
+    "응용",
+    "정리",
+    "가이드",
+    "실전",
+    "과제",
+    "자료",
+    "eda",
+    "overview",
+    "데이터",
+    "데이터셋",
+    "확인",
+    "설명",
+    "지침",
+    "가이드라인",
+    "파일",
+    "결측치",
+    "이상치",
+    "중복값",
+    "분석",
+    "드릴다운",
+    "결과",
+    "포인트",
+    "살펴보기",
+    "system",
+    "시스템",
+    "이해",
+    "환경준비",
+    "import",
+    "from",
+    "as",
+    "numpy",
+    "pandas",
+    "matplotlib",
+    "seaborn",
+    "torch",
+    "sklearn",
+    "scikit",
+    "learn",
+    "dataset",
+    "data",
+    "gpu",
+    "setup",
+    "mount",
+    "download",
+    "install",
+    "head",
+    "info",
+    "describe",
+}
+
+LOW_SIGNAL_SECTION_TOKENS = (
+    "환경준비",
+    "import",
+    "gpu",
+    "폰트",
+    "마운트",
+    "저장경로",
+    "다운로드",
+    "설치",
+    "데이터셋 설명",
+    "지침",
+    "가이드라인",
+    "localhost",
+)
+
+EDA_SECTION_TOKENS = (
+    "eda",
+    "데이터 살펴보기",
+    "결측치",
+    "중복값",
+    "이상치",
+    "분포 확인",
+    "1차 데이터 확인",
+    "설명서 확인",
+    "속성 목록",
+    "파일 설명",
+)
+
+DL_PRIORITY_SECTION_TOKENS = (
+    "cnn",
+    "resnet",
+    "alexnet",
+    "mask r-cnn",
+    "fasterrcnn",
+    "yolo",
+    "segmentation",
+    "unet",
+    "diffusion",
+    "gan",
+    "생성",
+    "모델",
+    "학습",
+    "평가",
+    "추론",
+    "loss",
+    "optimizer",
+    "dataloader",
+    "augmentation",
+    "전이학습",
+)
+
+LLM_PRIORITY_SECTION_TOKENS = (
+    "rag",
+    "retriever",
+    "vectorstore",
+    "embedding",
+    "임베딩",
+    "학습준비",
+    "모델",
+    "전처리 비교 실험",
+    "3종 임베딩 실험",
+    "추가 실험",
+    "파인튜닝",
+    "lora",
+    "qlora",
+    "langgraph",
+    "agent",
+    "프롬프트",
+    "chain",
+    "평가",
+    "결과",
+    "lstm",
+    "gru",
+)
+
+DL_PRIORITY_CODE_TOKENS = (
+    "conv2d",
+    "maxpool",
+    "resnet",
+    "alexnet",
+    "maskrcnn",
+    "fasterrcnn",
+    "segmentation",
+    "unet",
+    "forward(",
+    "optimizer",
+    "loss",
+    "dataloader",
+    "transforms",
+    "backward(",
+)
+
+LLM_PRIORITY_CODE_TOKENS = (
+    "tokenizer",
+    "embedding",
+    "word2vec",
+    "fasttext",
+    "glove",
+    "lstm",
+    "gru",
+    "retriever",
+    "vectorstore",
+    "faiss",
+    "chroma",
+    "langgraph",
+    "agent",
+    "lora",
+    "qlora",
+    "trainer",
+    "optimizer",
+    "classification_report",
+    "f1_score",
+)
+
 
 def clean_section_label(text: str) -> str:
     normalized = normalize_display_text(text)
@@ -219,6 +414,214 @@ def is_auxiliary_section(text: str) -> bool:
     return any(token in normalized for token in AUXILIARY_SECTION_TOKENS)
 
 
+def contains_any(text: str, tokens: tuple[str, ...]) -> bool:
+    normalized = normalize_display_text(text).lower()
+    if not normalized:
+        return False
+    return any(token in normalized for token in tokens)
+
+
+def is_low_signal_code_block(body: str) -> bool:
+    lower = body.lower()
+    lines = get_code_lines(body)
+    if not lines:
+        return False
+    if is_import_heavy_block(body) and len(lines) <= 14:
+        return True
+    if any(token in lower for token in ("google.colab", "drive.mount", "apt-get", "fc-cache", "font_manager", "warnings.filterwarnings")) and len(lines) <= 16:
+        return True
+    inspection_hits = sum(
+        1
+        for token in (".head(", ".info(", ".describe(", ".shape", "print(data.keys(", "display(")
+        if token in lower
+    )
+    if inspection_hits >= 2 and len(lines) <= 14:
+        return True
+    return False
+
+
+def extract_title_keywords(text: str, max_terms: int = 8) -> list[str]:
+    normalized = clean_section_label(text)
+    if not normalized:
+        return []
+
+    tokens = re.findall(r"[A-Za-z][A-Za-z0-9\+\-]*|[가-힣]{2,}", normalized)
+    keywords: list[str] = []
+    seen: set[str] = set()
+    for token in tokens:
+        lowered = token.lower()
+        if lowered in TITLE_KEYWORD_STOPWORDS:
+            continue
+        if lowered.isdigit():
+            continue
+        if len(lowered) <= 1:
+            continue
+        if lowered not in seen:
+            seen.add(lowered)
+            keywords.append(lowered)
+        if len(keywords) >= max_terms:
+            break
+    return keywords
+
+
+def build_title_anchor_keywords(
+    title: str,
+    headings: list[str],
+    sections: list[dict[str, object]],
+    code_blocks: list[dict[str, object]] | None = None,
+    max_terms: int = 8,
+) -> list[str]:
+    keywords = extract_title_keywords(title, max_terms=max_terms)
+    seen = set(keywords)
+    code_blocks = code_blocks or []
+
+    def add_keywords(text: str) -> None:
+        nonlocal keywords
+        for token in extract_title_keywords(text, max_terms=max_terms):
+            if token in seen:
+                continue
+            seen.add(token)
+            keywords.append(token)
+            if len(keywords) >= max_terms:
+                return
+
+    ranked_code_blocks = sorted(
+        code_blocks,
+        key=lambda block: -score_code_block(block),
+    )
+
+    if len(keywords) < max_terms:
+        for block in ranked_code_blocks:
+            body = str(block.get("body", ""))
+            if is_import_heavy_block(body) or is_low_signal_code_block(body):
+                continue
+            candidates = [
+                normalize_display_text(get_code_label(block)),
+                normalize_display_text(str(block.get("heading", ""))),
+                normalize_display_text(str(block.get("path_text", ""))),
+                normalize_display_text("\n".join(body.splitlines()[:8])),
+            ]
+            for candidate in candidates:
+                if not candidate or is_auxiliary_section(candidate):
+                    continue
+                add_keywords(candidate)
+                if len(keywords) >= max_terms:
+                    break
+            if len(keywords) >= max_terms:
+                break
+
+    if len(keywords) < 2:
+        for heading in headings:
+            normalized = normalize_display_text(heading)
+            if (
+                not normalized
+                or is_generic_label(normalized)
+                or is_auxiliary_section(normalized)
+                or contains_any(normalized, LOW_SIGNAL_SECTION_TOKENS)
+            ):
+                continue
+            add_keywords(normalized)
+            if len(keywords) >= max_terms:
+                break
+
+    if len(keywords) < 3:
+        for section in sections:
+            label = format_section_path(section.get("path", []), max_depth=3)
+            summary = summarize_section_content(section, max_len=160)
+            for candidate in (label, summary):
+                normalized = normalize_display_text(candidate)
+                if (
+                    not normalized
+                    or is_auxiliary_section(normalized)
+                    or contains_any(normalized, LOW_SIGNAL_SECTION_TOKENS)
+                ):
+                    continue
+                add_keywords(normalized)
+                if len(keywords) >= max_terms:
+                    break
+            if len(keywords) >= max_terms:
+                break
+
+    return keywords[:max_terms]
+
+
+def score_text_against_keywords(text: str, keywords: list[str]) -> int:
+    normalized = normalize_display_text(text).lower()
+    if not normalized or not keywords:
+        return 0
+
+    score = 0
+    for keyword in keywords:
+        if keyword not in normalized:
+            continue
+        score += 10 if len(keyword) <= 3 else 18 if len(keyword) <= 5 else 26
+        if normalized.startswith(keyword):
+            score += 4
+        if f" {keyword} " in f" {normalized} ":
+            score += 2
+    return score
+
+
+def score_section_for_title(section: dict[str, object], title_keywords: list[str]) -> int:
+    label = format_section_path(section.get("path", []), max_depth=3) or clean_section_label(str(section.get("heading", "")))
+    summary = summarize_section_content(section, max_len=220)
+    level = int(section.get("level") or 9)
+    score = score_text_against_keywords(" ".join(part for part in (label, summary) if part), title_keywords)
+    score += {1: 16, 2: 12, 3: 7, 4: 3}.get(level, 0)
+    score += min(len(section.get("paragraphs", [])), 3) * 2
+    score += min(len(section.get("code_blocks", [])), 4) * 5
+    if is_generic_label(label):
+        score -= 10
+    if is_auxiliary_section(label):
+        score -= 120
+    return score
+
+
+def score_code_block_for_title(block: dict[str, object], title_keywords: list[str]) -> int:
+    if not title_keywords:
+        return 0
+    body = str(block["body"])
+    heading = normalize_display_text(str(block.get("heading", "")))
+    snippet = "\n".join(body.splitlines()[:40])
+    return score_text_against_keywords(" ".join(part for part in (heading, snippet) if part), title_keywords)
+
+
+def score_code_block_for_track(
+    block: dict[str, object],
+    research_tab: str,
+    title_keywords: list[str] | None = None,
+) -> int:
+    title_keywords = title_keywords or []
+    body = str(block["body"])
+    lower = body.lower()
+    heading = normalize_display_text(str(block.get("heading", ""))).lower()
+    combined = f"{heading}\n{lower}"
+    score = score_code_block(block) + score_code_block_for_title(block, title_keywords)
+
+    if research_tab == "ML":
+        stage = get_ml_stage(block)
+        if stage in {"modeling", "training", "evaluation"}:
+            score += 18
+        elif stage in {"preprocessing", "feature_engineering"}:
+            score += 12
+        elif stage == "data_load":
+            score += 4
+        elif stage == "setup":
+            score -= 28
+    elif research_tab == "DL":
+        if contains_any(combined, DL_PRIORITY_CODE_TOKENS):
+            score += 34
+        if contains_any(combined, LOW_SIGNAL_SECTION_TOKENS) or contains_any(combined, EDA_SECTION_TOKENS):
+            score -= 24
+    elif research_tab == "LLM":
+        if contains_any(combined, LLM_PRIORITY_CODE_TOKENS):
+            score += 38
+        if contains_any(combined, LOW_SIGNAL_SECTION_TOKENS) or contains_any(combined, EDA_SECTION_TOKENS):
+            score -= 28
+
+    return score
+
+
 def summarize_section_content(section: dict[str, object], max_len: int = 200) -> str:
     collected: list[str] = []
     for paragraph in section.get("paragraphs", []):
@@ -236,23 +639,26 @@ def summarize_section_content(section: dict[str, object], max_len: int = 200) ->
     return trim_text(compact_spaces(" ".join(collected)), max_len)
 
 
-def score_ml_source_section(section: dict[str, object]) -> int:
+def score_ml_source_section(section: dict[str, object], title_keywords: list[str] | None = None) -> int:
+    title_keywords = title_keywords or []
     label = format_section_path(section.get("path", []), max_depth=3).lower()
     level = int(section.get("level") or 9)
     score = {1: 40, 2: 30, 3: 18, 4: 10}.get(level, 0)
+    score += score_text_against_keywords(label, title_keywords)
+    score += score_text_against_keywords(summarize_section_content(section, max_len=160), title_keywords)
 
     if "미션 설명" in label:
-        score += 90
-    elif "데이터 설명" in label or label == "데이터":
-        score += 76
-    elif "강사 tip" in label or "1차 데이터 확인" in label:
-        score += 64
-    elif any(token in label for token in ("전처리", "결측치", "이상치", "파생변수", "범주형 변수")):
-        score += 56
-    elif any(token in label for token in ("모델", "학습", "평가", "튜닝")):
-        score += 50
-    elif any(token in label for token in ("해석", "가설", "컬럼", "데이터 확인")):
         score += 42
+    elif "데이터 설명" in label or label == "데이터":
+        score += 48
+    elif "강사 tip" in label or "1차 데이터 확인" in label:
+        score += 28
+    elif any(token in label for token in ("전처리", "결측치", "이상치", "파생변수", "범주형 변수")):
+        score += 86
+    elif any(token in label for token in ("모델", "학습", "평가", "튜닝")):
+        score += 94
+    elif any(token in label for token in ("해석", "가설", "컬럼", "데이터 확인")):
+        score += 22
 
     if "공식" in label:
         score -= 40
@@ -348,6 +754,13 @@ def build_ml_root_summary(
         combined = " ".join(child_summaries[:2])
         return trim_text(compact_spaces(combined), 190)
 
+    root_blocks = list(root_section.get("code_blocks", []))
+    if root_blocks:
+        block_labels = unique_preserve_order([get_code_label(block, "ML") for block in root_blocks])[:2]
+        if block_labels:
+            return f"{format_korean_list(block_labels, limit=2, max_item_len=24)} 코드를 직접 따라가며 {root_label} 구현 흐름을 확인했습니다."
+        return f"{root_label}에서는 {infer_ml_code_purpose(root_blocks[0])}"
+
     return f"{root_label}와 관련된 핵심 흐름을 원본 노트 기준으로 다시 읽을 수 있게 정리했습니다."
 
 
@@ -373,9 +786,140 @@ def build_ml_outline_labels(sections: list[dict[str, object]], limit: int = 5) -
     return unique_cleaned_items(fallback, limit=limit)
 
 
-def build_ml_source_notes(sections: list[dict[str, object]], limit: int = 6) -> list[dict[str, object]]:
+def is_topic_sparse_title(title: str) -> bool:
+    return len(extract_title_keywords(title, max_terms=4)) <= 1
+
+
+def score_section_for_track(
+    section: dict[str, object],
+    research_tab: str,
+    title_keywords: list[str] | None = None,
+) -> int:
+    title_keywords = title_keywords or []
+    if research_tab == "ML":
+        return score_ml_source_section(section, title_keywords=title_keywords)
+
+    label = format_section_path(section.get("path", []), max_depth=3)
+    summary = summarize_section_content(section, max_len=180)
+    combined = " ".join(part for part in (label, summary) if part)
+    score = score_section_for_title(section, title_keywords)
+
+    if research_tab == "DL" and contains_any(combined, DL_PRIORITY_SECTION_TOKENS):
+        score += 78
+    if research_tab == "LLM" and contains_any(combined, LLM_PRIORITY_SECTION_TOKENS):
+        score += 82
+    if contains_any(combined, EDA_SECTION_TOKENS):
+        score -= 48
+    if contains_any(combined, LOW_SIGNAL_SECTION_TOKENS):
+        score -= 130
+    if int(section.get("level") or 9) == 1 and len(section.get("code_blocks", [])) >= 2:
+        score += 12
+    return score
+
+
+def describe_track_source_section(section: dict[str, object], research_tab: str) -> str:
+    label = format_section_path(section.get("path", []), max_depth=3).lower()
+    readable_label = format_section_path(section.get("path", []), max_depth=2) or clean_section_label(str(section.get("heading", "")))
+
+    if research_tab == "LLM":
+        if contains_any(label, ("rag", "retriever", "vectorstore")):
+            return "검색과 컨텍스트 주입 단계를 실제 코드로 묶어 보는 구간입니다."
+        if contains_any(label, ("전처리", "token", "clean")):
+            return "텍스트 정제와 토큰 구성을 바꾸며 입력 품질을 비교하는 구간입니다."
+        if contains_any(label, ("임베딩", "lstm", "gru", "모델", "학습")):
+            return "임베딩, 모델 구조, 학습 루프를 실제 코드로 연결하는 구간입니다."
+        if contains_any(label, ("실험", "평가", "결과", "추가 실험")):
+            return "실험 조건을 바꾸고 지표를 비교하며 어떤 설정이 맞는지 확인하는 구간입니다."
+        if contains_any(label, EDA_SECTION_TOKENS):
+            return "데이터 상태를 점검한 뒤 다음 전처리와 학습 단계로 넘어가기 위한 구간입니다."
+
+    if research_tab == "DL":
+        if contains_any(label, ("segmentation", "unet", "mask r-cnn", "fasterrcnn", "yolo", "detection")):
+            return "비전 모델이 객체나 픽셀 단위를 어떻게 예측하는지 구현으로 따라가는 구간입니다."
+        if contains_any(label, ("모델", "학습", "loss", "optimizer", "전이학습")):
+            return "모델 정의, 손실, 최적화 흐름을 코드로 연결해 보는 구간입니다."
+        if contains_any(label, ("dataset", "dataloader", "augmentation", "전처리")):
+            return "이미지 입력을 배치로 묶고 증강하며 학습 가능한 형태로 만드는 구간입니다."
+        if contains_any(label, ("평가", "추론", "결과")):
+            return "예측 결과를 확인하고 어떤 부분이 잘 동작했는지 해석하는 구간입니다."
+
+    if section.get("code_blocks"):
+        return f"{readable_label} 아래 코드와 함께 읽으면 구현 포인트가 더 또렷해지는 구간입니다."
+    return f"{readable_label}에서 다룬 핵심 개념과 구현 흐름을 다시 읽을 수 있게 정리한 구간입니다."
+
+
+def build_track_code_focus_items(
+    section: dict[str, object],
+    research_tab: str,
+    limit: int = 3,
+) -> list[dict[str, str]]:
+    section_label = clean_section_label(str(section.get("heading", "")))
+    items: list[dict[str, str]] = []
+    seen: set[str] = set()
+
+    ranked_blocks = sorted(
+        section.get("code_blocks", []),
+        key=lambda block: -score_code_block_for_track(block, research_tab, []),
+    )
+
+    for block in ranked_blocks:
+        label = normalize_display_text(get_code_label(block, research_tab))
+        if not label or (section_label and label.lower() == section_label.lower()):
+            continue
+        label_key = label.lower()
+        if label_key in seen:
+            continue
+        seen.add(label_key)
+        summary = infer_ml_code_purpose(block) if research_tab == "ML" else describe_code_block(block, research_tab)
+        items.append(
+            {
+                "label": trim_text(label, 46),
+                "summary": trim_text(normalize_display_text(summary), 160),
+            }
+        )
+        if len(items) >= limit:
+            break
+
+    return items
+
+
+def build_track_root_summary(
+    *,
+    root_label: str,
+    root_section: dict[str, object],
+    child_items: list[dict[str, str]],
+    research_tab: str,
+) -> str:
+    direct_summary = summarize_section_content(root_section, max_len=190)
+    if direct_summary:
+        return direct_summary
+
+    code_labels = [item["label"] for item in child_items if item.get("label")]
+    if code_labels:
+        return f"{format_korean_list(code_labels, limit=3, max_item_len=22)} 같은 코드를 직접 따라가며 {root_label} 흐름을 확인했습니다."
+
+    child_summaries = [item["summary"] for item in child_items if item.get("summary")]
+    if child_summaries:
+        return trim_text(compact_spaces(" ".join(child_summaries[:2])), 190)
+
+    root_blocks = list(root_section.get("code_blocks", []))
+    if root_blocks:
+        block_labels = unique_preserve_order([get_code_label(block, research_tab) for block in root_blocks])[:2]
+        if block_labels:
+            return f"{format_korean_list(block_labels, limit=2, max_item_len=24)} 코드를 직접 따라가며 {root_label} 흐름을 확인했습니다."
+        return trim_text(normalize_display_text(describe_code_block(root_blocks[0], research_tab)), 190)
+
+    return describe_track_source_section(root_section, research_tab)
+
+
+def build_track_source_notes(
+    research_tab: str,
+    sections: list[dict[str, object]],
+    title_keywords: list[str] | None = None,
+    limit: int = 6,
+) -> list[dict[str, object]]:
+    title_keywords = title_keywords or []
     grouped: dict[str, dict[str, object]] = {}
-    order: list[str] = []
 
     for index, section in enumerate(sections):
         path = [clean_section_label(item) for item in section.get("path", []) if clean_section_label(item)]
@@ -398,12 +942,212 @@ def build_ml_source_notes(sections: list[dict[str, object]], limit: int = 6) -> 
                 "children": [],
             }
             grouped[root] = entry
-            order.append(root)
+
+        score = score_section_for_track(section, research_tab, title_keywords=title_keywords)
+        summary = summarize_section_content(section, max_len=190)
+        if not summary:
+            code_focus = build_track_code_focus_items(section, research_tab, limit=1)
+            if code_focus:
+                summary = code_focus[0]["summary"]
+
+        if len(path) == 1 and summary and score > int(entry["summary_score"]):
+            entry["summary"] = summary
+            entry["summary_score"] = score
+            entry["practice"] = describe_track_source_section(section, research_tab)
+
+        if len(path) >= 2:
+            child_label = format_section_path(path[1:], max_depth=2)
+            child_summary = summarize_section_content(section, max_len=160)
+            if not child_summary:
+                code_focus = build_track_code_focus_items(section, research_tab, limit=1)
+                if code_focus:
+                    child_summary = code_focus[0]["summary"]
+
+            existing_labels = {str(item["label"]).lower() for item in entry["children"]}
+            if child_label and child_label.lower() not in existing_labels and not is_auxiliary_section(child_label):
+                entry["children"].append(
+                    {
+                        "index": index,
+                        "label": child_label,
+                        "summary": child_summary or describe_track_source_section(section, research_tab),
+                        "score": score,
+                    }
+                )
+
+    notes: list[dict[str, object]] = []
+    ranked_entries = sorted(
+        grouped.values(),
+        key=lambda entry: (-int(entry["summary_score"]), int(entry["index"])),
+    )[:limit]
+
+    preferred_entries = [
+        entry
+        for entry in ranked_entries
+        if normalize_display_text(str(entry["root"])).lower() not in {"미션 설명", "데이터", "분석 드릴다운", "데이터 확인", "eda"}
+    ]
+    if len(preferred_entries) >= min(4, limit):
+        ranked_entries = preferred_entries[:limit]
+
+    for entry in ranked_entries:
+        root = str(entry["root"])
+        root_section = entry["root_section"]
+        child_items = list(entry["children"])
+
+        if not child_items:
+            child_items = build_track_code_focus_items(root_section, research_tab, limit=3)
+        else:
+            child_items.sort(key=lambda item: -int(item.get("score", 0)))
+            child_items = child_items[:3]
+            child_items.sort(key=lambda item: int(item.get("index", 0)))
+
+        summary = str(entry["summary"]).strip()
+        if not summary:
+            summary = build_track_root_summary(
+                root_label=root,
+                root_section=root_section,
+                child_items=child_items,
+                research_tab=research_tab,
+            )
+
+        if child_items:
+            child_labels = [str(item["label"]) for item in child_items if item.get("label")]
+            practice = f"세부 흐름: {', '.join(child_labels[:3])}"
+        else:
+            practice = str(entry["practice"]) or describe_track_source_section(root_section, research_tab)
+
+        notes.append(
+            {
+                "label": root,
+                "summary": summary,
+                "practice": practice,
+                "children": child_items,
+            }
+        )
+
+    return notes
+
+
+def build_track_source_section(
+    *,
+    study_notes: list[dict[str, object]],
+) -> str:
+    sections: list[str] = []
+    for note in study_notes:
+        sections.append(
+            "\n".join(
+                [
+                    f"### {note['label']}",
+                    "",
+                    note["summary"],
+                    "",
+                    f"- 읽을 포인트: {note['practice']}",
+                ]
+            )
+        )
+        for child in note.get("children", [])[:3]:
+            child_label = normalize_display_text(str(child.get("label", "")))
+            child_summary = normalize_display_text(str(child.get("summary", "")))
+            if not child_label or not child_summary:
+                continue
+            sections.append(
+                "\n".join(
+                    [
+                        f"#### {child_label}",
+                        "",
+                        child_summary,
+                    ]
+                )
+            )
+    return "\n\n".join(sections)
+
+
+def build_track_flow_items_from_source_notes(
+    study_notes: list[dict[str, object]],
+    limit: int = 6,
+) -> list[str]:
+    items: list[str] = []
+    for note in study_notes:
+        child_labels = [normalize_display_text(str(item.get("label", ""))) for item in note.get("children", []) if item.get("label")]
+        if child_labels:
+            items.append(trim_text(f"{note['label']}: {', '.join(child_labels[:2])}", 150))
+        elif note.get("summary"):
+            items.append(trim_text(f"{note['label']}: {note['summary']}", 150))
+        if len(items) >= limit:
+            break
+    return items[:limit]
+
+
+def build_track_research_summary(
+    *,
+    title: str,
+    track: str,
+    study_notes: list[dict[str, object]],
+    code_samples: list[dict[str, object]],
+    artifact_summary: str,
+) -> str:
+    cleaned_title = normalize_display_text(title)
+    section_labels = [normalize_display_text(str(note["label"])) for note in study_notes[:3] if note.get("label")]
+    code_labels = unique_preserve_order([get_code_label(block, track) for block in code_samples])[:3]
+
+    subject = cleaned_title
+    if is_topic_sparse_title(cleaned_title) and section_labels:
+        subject = f"{format_korean_list(section_labels[:2], limit=2, max_item_len=22)} 중심의 {track} 실험"
+
+    lead = f"{subject}에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 {track} 학습 기록입니다"
+    if section_labels:
+        detail = f"본문은 {format_korean_list(section_labels, limit=3, max_item_len=22)} 순서로 핵심 장면을 먼저 훑고"
+    else:
+        detail = "본문은 실험의 큰 흐름을 먼저 훑고"
+    if code_labels:
+        detail += f", {format_korean_list(code_labels, limit=3, max_item_len=24)} 같은 코드로 실제 구현을 이어서 확인할 수 있습니다"
+    else:
+        detail += ", 아래 코드 블록에서 실제 구현 장면을 바로 확인할 수 있습니다"
+
+    return " ".join(
+        part
+        for part in (
+            ensure_sentence(lead),
+            ensure_sentence(detail),
+            artifact_summary,
+        )
+        if part
+    )
+
+
+def build_ml_source_notes(
+    sections: list[dict[str, object]],
+    title_keywords: list[str] | None = None,
+    limit: int = 8,
+) -> list[dict[str, object]]:
+    title_keywords = title_keywords or []
+    grouped: dict[str, dict[str, object]] = {}
+
+    for index, section in enumerate(sections):
+        path = [clean_section_label(item) for item in section.get("path", []) if clean_section_label(item)]
+        if not path:
+            continue
+
+        root = path[0]
+        if not root or is_auxiliary_section(root) or is_generic_label(root):
+            continue
+
+        entry = grouped.get(root)
+        if entry is None:
+            entry = {
+                "root": root,
+                "index": index,
+                "root_section": section,
+                "summary": "",
+                "summary_score": -10_000,
+                "practice": "",
+                "children": [],
+            }
+            grouped[root] = entry
 
         level = int(section.get("level") or 9)
         summary = summarize_section_content(section, max_len=190)
-        score = score_ml_source_section(section) + (30 if level == 1 else 0)
-        if summary and score > int(entry["summary_score"]):
+        score = score_ml_source_section(section, title_keywords=title_keywords) + (30 if level == 1 else 0)
+        if len(path) == 1 and summary and score > int(entry["summary_score"]):
             entry["summary"] = summary
             entry["summary_score"] = score
             entry["practice"] = describe_ml_source_section(section)
@@ -423,13 +1167,26 @@ def build_ml_source_notes(sections: list[dict[str, object]], limit: int = 6) -> 
                         "index": index,
                         "label": child_label,
                         "summary": child_summary or describe_ml_source_section(section),
-                        "score": score_ml_source_section(section),
+                        "score": score_ml_source_section(section, title_keywords=title_keywords),
                     }
                 )
 
     notes: list[dict[str, object]] = []
-    for root in order:
-        entry = grouped[root]
+    ranked_entries = sorted(
+        grouped.values(),
+        key=lambda entry: (-int(entry["summary_score"]), int(entry["index"])),
+    )[:limit]
+
+    preferred_entries = [
+        entry
+        for entry in ranked_entries
+        if normalize_display_text(str(entry["root"])).lower() not in {"미션 설명", "데이터", "분석 드릴다운", "데이터 확인", "eda"}
+    ]
+    if len(preferred_entries) >= min(4, limit):
+        ranked_entries = preferred_entries[:limit]
+
+    for entry in ranked_entries:
+        root = str(entry["root"])
         root_section = entry["root_section"]
         child_items = list(entry["children"])
 
@@ -462,8 +1219,6 @@ def build_ml_source_notes(sections: list[dict[str, object]], limit: int = 6) -> 
                 "children": child_items,
             }
         )
-        if len(notes) >= limit:
-            break
 
     if notes:
         return notes
@@ -480,7 +1235,7 @@ def build_ml_source_notes(sections: list[dict[str, object]], limit: int = 6) -> 
                 "label": label,
                 "summary": summary,
                 "practice": describe_ml_source_section(section),
-                "score": score_ml_source_section(section),
+                "score": score_ml_source_section(section, title_keywords=title_keywords),
             }
         )
 
@@ -542,6 +1297,17 @@ def parse_front_matter(path: Path) -> tuple[dict[str, object], list[str]]:
         current_list_key = None
 
     return data, lines[body_start:]
+
+
+def collect_existing_title_overrides(output_dir: Path) -> dict[str, str]:
+    overrides: dict[str, str] = {}
+    for path in sorted(output_dir.glob("imported-*.md")):
+        metadata, _ = parse_front_matter(path)
+        source_path = normalize_display_text(str(metadata.get("source_path") or ""))
+        title = normalize_display_text(str(metadata.get("title") or ""))
+        if source_path and title:
+            overrides[source_path] = title
+    return overrides
 
 
 def get_research_kind(name: str) -> str:
@@ -773,8 +1539,10 @@ def select_intro_paragraphs(
     sections: list[dict[str, object]],
     paragraphs: list[str],
     limit: int,
+    title_keywords: list[str] | None = None,
 ) -> list[str]:
     ranked_sections: list[tuple[int, int, str]] = []
+    title_keywords = title_keywords or []
 
     for index, section in enumerate(sections):
         summary = summarize_section_content(section, max_len=190)
@@ -783,6 +1551,7 @@ def select_intro_paragraphs(
         label = format_section_path(section.get("path", []), max_depth=3)
         level = int(section.get("level") or 9)
         score = {1: 50, 2: 34, 3: 18, 4: 8}.get(level, 0)
+        score += score_section_for_title(section, title_keywords)
         if "미션 설명" in label:
             score += 40
         if "데이터 설명" in label or label == "데이터":
@@ -817,22 +1586,27 @@ def select_focus_items(
     headings: list[str],
     title: str,
     limit: int,
+    title_keywords: list[str] | None = None,
 ) -> list[str]:
     normalized_title = normalize_display_text(title).lower()
-    candidates: list[str] = []
+    title_keywords = title_keywords or []
+    candidates: list[tuple[int, int, str]] = []
 
-    for section in sections:
+    for index, section in enumerate(sections):
+        section_score = score_section_for_title(section, title_keywords)
         for paragraph in section.get("paragraphs", []):
             normalized = normalize_display_text(str(paragraph))
             if normalized and normalized.lower() != normalized_title and is_meaningful_sentence(normalized):
-                candidates.append(trim_text(normalized, 150))
+                score = section_score + score_text_against_keywords(normalized, title_keywords) + 8
+                candidates.append((score, index, trim_text(normalized, 150)))
                 break
 
         heading = condense_focus_item(str(section.get("heading", "")), max_len=42)
         if heading and heading.lower() != normalized_title and not is_generic_label(heading):
-            candidates.append(heading)
+            score = section_score + score_text_against_keywords(heading, title_keywords) + 6
+            candidates.append((score, index, heading))
 
-    for item in metadata_items + headings:
+    for offset, item in enumerate(metadata_items + headings, start=len(sections)):
         normalized = condense_focus_item(item, max_len=52)
         if not normalized or normalized.lower() == normalized_title:
             continue
@@ -840,20 +1614,25 @@ def select_focus_items(
             continue
         if should_skip_focus_item(normalized):
             continue
-        candidates.append(normalized)
+        score = score_text_against_keywords(normalized, title_keywords)
+        candidates.append((score, offset, normalized))
 
-    return unique_cleaned_items(candidates, limit=limit)
+    candidates.sort(key=lambda item: (-item[0], item[1]))
+    return unique_cleaned_items([item[2] for item in candidates], limit=limit)
 
 
 def build_section_summaries(
     sections: list[dict[str, object]],
     metadata_items: list[str],
     limit: int,
+    title_keywords: list[str] | None = None,
 ) -> list[dict[str, str]]:
     summaries: list[dict[str, str]] = []
     seen_titles: set[str] = set()
+    title_keywords = title_keywords or []
+    ranked_sections: list[tuple[int, int, str, str]] = []
 
-    for section in sections:
+    for index, section in enumerate(sections):
         title = format_section_path(section.get("path", []), max_depth=2)
         if not title:
             raw_title = str(section.get("heading", ""))
@@ -864,12 +1643,17 @@ def build_section_summaries(
             continue
         if not title:
             title = "Key Step"
+        score = score_section_for_title(section, title_keywords)
+        score += score_text_against_keywords(title, title_keywords)
+        ranked_sections.append((score, index, title, summary_text or trim_text(title, 180)))
 
+    ranked_sections.sort(key=lambda item: (-item[0], item[1]))
+    for _, _, title, summary_text in ranked_sections:
         title_key = title.lower()
         if title_key in seen_titles:
             continue
         seen_titles.add(title_key)
-        summaries.append({"title": title, "summary": summary_text or trim_text(title, 180)})
+        summaries.append({"title": title, "summary": summary_text})
         if len(summaries) >= limit:
             return summaries
 
@@ -1011,6 +1795,12 @@ def score_code_block(block: dict[str, object]) -> int:
 
     if str(block["lang"]) in {"python", "bash", "sh", "sql", "yaml"}:
         score += 2
+
+    if is_import_heavy_block(body):
+        score -= 18
+
+    if is_low_signal_code_block(body):
+        score -= 26
 
     return score
 
@@ -1364,17 +2154,17 @@ ML_STAGE_LABELS = {
 }
 
 ML_STAGE_PRIORITY = [
-    "data_load",
-    "preprocessing",
-    "feature_engineering",
     "modeling",
     "training",
     "evaluation",
+    "preprocessing",
+    "feature_engineering",
+    "data_load",
     "visualization",
     "class_design",
     "function_practice",
-    "setup",
     "other",
+    "setup",
 ]
 
 
@@ -1463,16 +2253,17 @@ def score_ml_block_for_stage(block: dict[str, object], stage: str) -> int:
     return score
 
 
-def select_ml_code_blocks(code_blocks: list[dict[str, object]], limit: int) -> list[dict[str, object]]:
+def select_ml_code_blocks(code_blocks: list[dict[str, object]], limit: int, title_keywords: list[str] | None = None) -> list[dict[str, object]]:
+    title_keywords = title_keywords or []
     stage_best: dict[str, tuple[int, dict[str, object], int]] = {}
     ranked = sorted(
         enumerate(code_blocks),
-        key=lambda item: (-score_code_block(item[1]), item[0]),
+        key=lambda item: (-score_code_block_for_track(item[1], "ML", title_keywords), item[0]),
     )
 
     for index, block in ranked:
         stage = get_ml_stage(block)
-        stage_score = score_ml_block_for_stage(block, stage)
+        stage_score = score_ml_block_for_stage(block, stage) + score_code_block_for_track(block, "ML", title_keywords)
         existing = stage_best.get(stage)
         if existing is None or stage_score > existing[2]:
             stage_best[stage] = (index, block, stage_score)
@@ -1511,13 +2302,19 @@ def select_ml_code_blocks(code_blocks: list[dict[str, object]], limit: int) -> l
     return [code_blocks[index] for index in ordered_unique_indexes]
 
 
-def select_code_blocks(code_blocks: list[dict[str, object]], research_tab: str, limit: int = 2) -> list[dict[str, object]]:
+def select_code_blocks(
+    code_blocks: list[dict[str, object]],
+    research_tab: str,
+    title_keywords: list[str] | None = None,
+    limit: int = 2,
+) -> list[dict[str, object]]:
+    title_keywords = title_keywords or []
     if research_tab == "ML":
-        return select_ml_code_blocks(code_blocks, limit=limit)
+        return select_ml_code_blocks(code_blocks, limit=limit, title_keywords=title_keywords)
 
     ranked = sorted(
         enumerate(code_blocks),
-        key=lambda item: (-score_code_block(item[1]), item[0]),
+        key=lambda item: (-score_code_block_for_track(item[1], research_tab, title_keywords), item[0]),
     )
 
     selected_indexes: list[int] = []
@@ -1963,7 +2760,9 @@ def build_ml_problem_summary(
     sections: list[dict[str, object]],
     intro_paragraphs: list[str],
     focus_items: list[str],
+    title_keywords: list[str] | None = None,
 ) -> str:
+    title_keywords = title_keywords or []
     outline_labels = build_ml_outline_labels(sections, limit=4)
     for section in sections:
         label = format_section_path(section.get("path", []), max_depth=3).lower()
@@ -1971,6 +2770,14 @@ def build_ml_problem_summary(
             summary = summarize_section_content(section, max_len=126)
             if summary:
                 return condense_ml_problem_text(summary, max_len=126)
+    ranked_sections = sorted(
+        sections,
+        key=lambda section: -score_section_for_title(section, title_keywords),
+    )
+    for section in ranked_sections:
+        summary = summarize_section_content(section, max_len=126)
+        if summary and score_section_for_title(section, title_keywords) > 0:
+            return condense_ml_problem_text(summary, max_len=126)
     if outline_labels:
         cleaned_title = clean_ml_title_for_summary(title)
         lead = cleaned_title or "이 ML 실습"
@@ -1987,7 +2794,9 @@ def build_ml_data_summary(
     section_summaries: list[dict[str, str]],
     intro_paragraphs: list[str],
     focus_items: list[str],
+    title_keywords: list[str] | None = None,
 ) -> str:
+    title_keywords = title_keywords or []
     outline_labels = build_ml_outline_labels(sections, limit=4)
     for section in sections:
         label = format_section_path(section.get("path", []), max_depth=3).lower()
@@ -2011,6 +2820,16 @@ def build_ml_data_summary(
         normalized = condense_ml_problem_text(candidate, max_len=126)
         if any(token in normalized.lower() for token in ("데이터", "csv", "dataset", "train", "test")):
             return trim_text(normalized, 126)
+    ranked_sections = sorted(
+        sections,
+        key=lambda section: -score_section_for_title(section, title_keywords),
+    )
+    for section in ranked_sections:
+        summary = summarize_section_content(section, max_len=126)
+        if not summary:
+            continue
+        if any(token in summary.lower() for token in ("데이터", "csv", "dataset", "train", "test")):
+            return trim_text(summary, 126)
     if outline_labels:
         return f"특정 데이터셋 설명보다 {format_korean_list(outline_labels, limit=3, max_item_len=18)} 같은 실습 흐름을 직접 익히는 데 초점을 둔 노트입니다."
     return ""
@@ -2393,6 +3212,7 @@ def build_content(
     ml_data_summary: str,
     ml_study_notes: list[dict[str, str]],
     ml_source_notes: list[dict[str, str]],
+    track_source_notes: list[dict[str, object]],
     ml_outline_labels: list[str],
     ml_implementation_steps: list[dict[str, object]],
     flow_items: list[str],
@@ -2430,6 +3250,8 @@ def build_content(
         coverage_section = build_ml_study_section(study_notes=ml_source_notes)
     elif research_tab == "ML" and ml_study_notes:
         coverage_section = build_ml_study_section(study_notes=ml_study_notes)
+    elif track_source_notes:
+        coverage_section = build_track_source_section(study_notes=track_source_notes)
     elif section_summaries and any(entry["title"] != "Key Step" for entry in section_summaries):
         coverage_section = "\n\n".join(
             f"### {entry['title']}\n\n{entry['summary']}"
@@ -2498,7 +3320,10 @@ def build_content(
         bundle_lines.append(f"- External references: {format_inline_code_list(external_refs)}")
 
     bundle_section = "\n".join(bundle_lines)
-    top_focus = focus_display_items[:3]
+    if research_tab != "ML" and track_source_notes:
+        top_focus = [normalize_display_text(str(note["label"])) for note in track_source_notes[:3] if note.get("label")]
+    else:
+        top_focus = focus_display_items[:3]
     top_libraries = libraries[:5]
     if research_tab == "ML":
         intro_block = build_ml_intro_html(
@@ -2629,7 +3454,7 @@ tags:
 """
 
 
-def build_note_payload(track: dict[str, str], file_path: Path) -> str:
+def build_note_payload(track: dict[str, str], file_path: Path, title_override: str | None = None) -> str:
     metadata, body_lines = parse_front_matter(file_path)
     structure = parse_note_structure(body_lines)
     code_blocks = list(structure["code_blocks"])
@@ -2638,29 +3463,30 @@ def build_note_payload(track: dict[str, str], file_path: Path) -> str:
     sections = list(structure["sections"])
 
     source_title = str(metadata.get("title") or file_path.stem)
-    clean_title = get_clean_title(source_title, file_path.stem)
+    clean_title = normalize_display_text(title_override or "") or get_clean_title(source_title, file_path.stem)
     research_kind = get_research_kind(clean_title)
+    title_keywords = build_title_anchor_keywords(clean_title, headings, sections, code_blocks)
 
     metadata_sections = metadata.get("section_keys", [])
     if not isinstance(metadata_sections, list):
         metadata_sections = []
 
     preview_lines = paragraphs[:2]
-    intro_paragraphs = select_intro_paragraphs(sections, paragraphs, limit=2)
-    focus_items = select_focus_items(sections, metadata_sections, headings, clean_title, limit=5)
-    section_summaries = build_section_summaries(sections, metadata_sections, limit=4)
+    intro_paragraphs = select_intro_paragraphs(sections, paragraphs, limit=2, title_keywords=title_keywords)
+    focus_items = select_focus_items(sections, metadata_sections, headings, clean_title, limit=5, title_keywords=title_keywords)
+    section_summaries = build_section_summaries(sections, metadata_sections, limit=4, title_keywords=title_keywords)
     flow_items = build_flow_items(section_summaries, focus_items, metadata_sections, limit=6)
     if track["tab"] == "ML":
         code_limit = min(max(len(code_blocks), 1), 6)
     else:
-        code_limit = min(max(len(code_blocks), 1), 3)
-    code_samples = select_code_blocks(code_blocks, research_tab=track["tab"], limit=code_limit)
+        code_limit = min(max(len(code_blocks), 1), 4)
+    code_samples = select_code_blocks(code_blocks, research_tab=track["tab"], title_keywords=title_keywords, limit=code_limit)
     if track["tab"] == "ML":
         flow_items = build_ml_flow_items_from_code_samples(code_samples)
     libraries = extract_libraries(code_blocks)
     if track["tab"] == "ML":
-        ml_problem_summary = build_ml_problem_summary(clean_title, sections, intro_paragraphs, focus_items)
-        ml_data_summary = build_ml_data_summary(sections, section_summaries, intro_paragraphs, focus_items)
+        ml_problem_summary = build_ml_problem_summary(clean_title, sections, intro_paragraphs, focus_items, title_keywords=title_keywords)
+        ml_data_summary = build_ml_data_summary(sections, section_summaries, intro_paragraphs, focus_items, title_keywords=title_keywords)
         ml_study_notes = build_ml_study_notes(
             title=clean_title,
             focus_items=focus_items,
@@ -2669,10 +3495,11 @@ def build_note_payload(track: dict[str, str], file_path: Path) -> str:
             code_blocks=code_blocks,
             libraries=libraries,
         )
-        ml_source_notes = build_ml_source_notes(sections)
+        ml_source_notes = build_ml_source_notes(sections, title_keywords=title_keywords)
         ml_outline_labels = build_ml_outline_labels(sections)
         ml_implementation_steps = build_ml_implementation_steps(code_samples)
         concept_notes = []
+        track_source_notes: list[dict[str, object]] = []
     else:
         ml_problem_summary = ""
         ml_data_summary = ""
@@ -2680,6 +3507,9 @@ def build_note_payload(track: dict[str, str], file_path: Path) -> str:
         ml_source_notes = []
         ml_outline_labels = []
         ml_implementation_steps = []
+        track_source_notes = build_track_source_notes(track["tab"], sections, title_keywords=title_keywords)
+        if track_source_notes:
+            flow_items = build_track_flow_items_from_source_notes(track_source_notes)
         concept_notes = build_concept_notes(
             research_tab=track["tab"],
             title=clean_title,
@@ -2720,13 +3550,12 @@ def build_note_payload(track: dict[str, str], file_path: Path) -> str:
             artifact_summary=artifact_summary,
         )
     else:
-        research_summary = build_research_summary(
-            clean_title,
-            track["tab"],
-            research_kind,
-            intro_paragraphs,
-            focus_items,
-            artifact_summary,
+        research_summary = build_track_research_summary(
+            title=clean_title,
+            track=track["tab"],
+            study_notes=track_source_notes,
+            code_samples=code_samples,
+            artifact_summary=artifact_summary,
         )
     excerpt = build_excerpt(research_summary, focus_items, clean_title)
     source_path = file_path.relative_to(KNOWLEDGE_ROOT).as_posix()
@@ -2754,6 +3583,7 @@ def build_note_payload(track: dict[str, str], file_path: Path) -> str:
         ml_data_summary=ml_data_summary,
         ml_study_notes=ml_study_notes,
         ml_source_notes=ml_source_notes,
+        track_source_notes=track_source_notes,
         ml_outline_labels=ml_outline_labels,
         ml_implementation_steps=ml_implementation_steps,
         flow_items=flow_items,
@@ -2773,13 +3603,15 @@ def main() -> None:
     for track in TRACKS:
         output_dir = RESEARCH_ROOT / track["folder"]
         output_dir.mkdir(parents=True, exist_ok=True)
+        title_overrides = collect_existing_title_overrides(output_dir)
 
         for old_file in output_dir.glob("imported-*.md"):
             old_file.unlink()
 
         files = sorted(track["source"].glob("*.md"))
         for index, file_path in enumerate(files, start=1):
-            content = build_note_payload(track, file_path)
+            source_path = file_path.relative_to(KNOWLEDGE_ROOT).as_posix()
+            content = build_note_payload(track, file_path, title_override=title_overrides.get(source_path))
             output_path = output_dir / f'imported-{track["tag"]}-{index:03d}.md'
             output_path.write_text(content, encoding="utf-8")
 

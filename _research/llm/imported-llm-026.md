@@ -5,15 +5,13 @@ research_tab: "LLM"
 research_kind: "Archive Note"
 source_title: "3-5 (실습)하이브리드검색_리랭킹"
 source_path: "13_LLM_GenAI/Code_Snippets/3-5 (실습)하이브리드검색_리랭킹.md"
-excerpt: "키워드 검색(Keyword Search)과 의미 기반 검색(Semantic Search)의 장점을 결합하여 검색 정확도를 높이는 기법 RAG(Retrieval-Augmented Generation) 시스템 구축 시, 단순히 벡터 검색만 사용할 경우 고유명사나 정확한 용어 매칭이 어려울 수 있는데,..."
-research_summary: "키워드 검색(Keyword Search)과 의미 기반 검색(Semantic Search)의 장점을 결합하여 검색 정확도를 높이는 기법 RAG(Retrieval-Augmented Generation) 시스템 구축 시, 단순히 벡터 검색만 사용할 경우 고유명사나 정확한 용어 매칭이 어려울 수 있는데, 하이브리드 서치는 이를 보완(BM25... Retrieval 단계 (Bi-Encoder) 우리가 지금까지 배운 Vector Search나 BM25입니다. - 특징: 미리 계산된 벡터를 비교하므로 속도가 엄청 빠릅니다. 하지만 질문과 문서의 디테일한 관계를 완벽히 파악하지는 못합니다. (대략적인 유사도) - 비유: 서류 전형 (수천 명의 지원자 중 스펙이 비슷한 50명을 빠르게... `ipynb/md` 원본과 10개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 getpass, os, langchain_community, langchain_openai입니다."
+excerpt: "하이브리드검색 리랭킹에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 LLM 학습 기록입니다. 본문은 하이브리드 검색과 리랭킹 순서로 핵심 장면을 먼저 훑고, 의미 검색(Dense Retriever), Re-ranking 단계 (Cross-... 같은 코드로 실제 구현을 이어서 확..."
+research_summary: "하이브리드검색 리랭킹에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 LLM 학습 기록입니다. 본문은 하이브리드 검색과 리랭킹 순서로 핵심 장면을 먼저 훑고, 의미 검색(Dense Retriever), Re-ranking 단계 (Cross-... 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 10개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 getpass, os, langchain_community, langchain_openai입니다."
 research_artifacts: "ipynb/md · 코드 10개 · 실행 7개"
 code_block_count: 10
 execution_block_count: 7
 research_focus:
   - "하이브리드 검색과 리랭킹"
-  - "키워드 검색(Keyword Search)과 의미 기반 검색(Semantic Search)의 장점을 결합..."
-  - "하이브리드 검색"
 research_stack:
   - "getpass"
   - "os"
@@ -30,9 +28,9 @@ tags:
   - archive-note
 ---
 
-키워드 검색(Keyword Search)과 의미 기반 검색(Semantic Search)의 장점을 결합하여 검색 정확도를 높이는 기법 RAG(Retrieval-Augmented Generation) 시스템 구축 시, 단순히 벡터 검색만 사용할 경우 고유명사나 정확한 용어 매칭이 어려울 수 있는데, 하이브리드 서치는 이를 보완(BM25... Retrieval 단계 (Bi-Encoder) 우리가 지금까지 배운 Vector Search나 BM25입니다. - 특징: 미리 계산된 벡터를 비교하므로 속도가 엄청 빠릅니다. 하지만 질문과 문서의 디테일한 관계를 완벽히 파악하지는 못합니다. (대략적인 유사도) - 비유: 서류 전형 (수천 명의 지원자 중 스펙이 비슷한 50명을 빠르게... `ipynb/md` 원본과 10개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 getpass, os, langchain_community, langchain_openai입니다.
+하이브리드검색 리랭킹에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 LLM 학습 기록입니다. 본문은 하이브리드 검색과 리랭킹 순서로 핵심 장면을 먼저 훑고, 의미 검색(Dense Retriever), Re-ranking 단계 (Cross-... 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 10개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 getpass, os, langchain_community, langchain_openai입니다.
 
-**빠르게 볼 수 있는 포인트**: 하이브리드 검색과 리랭킹, 키워드 검색(Keyword Search)과 의미 기반 검색(Semant..., 하이브리드 검색.
+**빠르게 볼 수 있는 포인트**: 하이브리드 검색과 리랭킹.
 
 **남겨둔 자료**: `ipynb/md` 원본과 10개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 getpass, os, langchain_community, langchain_openai입니다.
 
@@ -52,21 +50,23 @@ tags:
 
 ## What This Note Covers
 
-### 하이브리드 검색과 리랭킹 > 하이브리드 검색
+### 하이브리드 검색과 리랭킹
 
-키워드 검색(Keyword Search)과 의미 기반 검색(Semantic Search)의 장점을 결합하여 검색 정확도를 높이는 기법 RAG(Retrieval-Augmented Generation) 시스템 구축 시, 단순히 벡터 검색만 사용할 경우 고유명사나 정확한 용어 매칭이 어려울 수 있는데, 하이브리드 서치는 이를 보완(BM25 → 키워드 기반 정확한 검색, Vector Searc...
+하이브리드 검색 > 키워드 검색(S..., 하이브리드 검색 > 의미 검색(De..., 리랭킹(Re-ranking): "속... 같은 코드를 직접 따라가며 하이브리드 검색과 리랭킹 흐름을 확인했습니다.
 
-### 하이브리드 검색 > 키워드 검색(Sparse Retriever)
+- 읽을 포인트: 세부 흐름: 하이브리드 검색 > 키워드 검색(Sparse Retriever), 하이브리드 검색 > 의미 검색(Dense Retriever), 리랭킹(Re-ranking): "속도 vs 정확도"의 타협점 > Re-ranking 단계 (Cross-Encoder)
+
+#### 하이브리드 검색 > 키워드 검색(Sparse Retriever)
 
 BM25 알고리즘이 대표적: 단어의 빈도와 역문서 빈도를 기반으로 작동하며, 정확한 단어 매칭에 강합니다.
 
-### 하이브리드 검색 > 의미 검색(Dense Retriever)
+#### 하이브리드 검색 > 의미 검색(Dense Retriever)
 
-임베딩(Embedding) 벡터 유사도(Cosine Similarity 등)를 기반: 단어가 달라도 문맥적 의미가 유사한 문서를 찾는 데 강합니다. LangChain에서는 EnsembleRetriever 클래스를 사용하여 매우 쉽게 하이브리드 서치를 구현할 수 있습니다. 가장 일반적인 조합은 BM25(키워드)와 VectorStore(의미)의 결합입니다.
+임베딩(Embedding) 벡터 유사도(Cosine Similarity 등)를 기반: 단어가 달라도 문맥적 의미가 유사한 문서를 찾는 데 강합니다. LangChain에서는 EnsembleRetriever 클래스를 사용하여 매우 쉽게 하이브리드 서치를 구현할 수 있습니다. 가장 일반...
 
-### 하이브리드 검색과 리랭킹 > 리랭킹(Re-ranking): "속도 vs 정확도"의 타협점
+#### 리랭킹(Re-ranking): "속도 vs 정확도"의 타협점 > Re-ranking 단계 (Cross-Encoder)
 
-Retrieval 단계 (Bi-Encoder) 우리가 지금까지 배운 Vector Search나 BM25입니다. - 특징: 미리 계산된 벡터를 비교하므로 속도가 엄청 빠릅니다. 하지만 질문과 문서의 디테일한 관계를 완벽히 파악하지는 못합니다. (대략적인 유사도) - 비유: 서류 전형 (수천 명의 지원자 중 스펙이 비슷한 50명을 빠르게 추려냄)
+Retrieval이 뽑아온 상위 문서(예: 50개)와 질문을 하나의 쌍(Pair)으로 묶어서 AI 모델에 직접 넣습니다. - 특징: 두 문장의 관계를 깊이 있게 분석하므로 정확도가 매우 높습니다. 하지만 연산량이 많아 속도가 느립니다. (그래서 전체 문서가 아니라 상위 50개만 검...
 
 ## Why This Matters
 
@@ -90,10 +90,7 @@ Retrieval 단계 (Bi-Encoder) 우리가 지금까지 배운 Vector Search나 BM2
 
 ## Implementation Flow
 
-1. 하이브리드 검색과 리랭킹 > 하이브리드 검색: 키워드 검색(Keyword Search)과 의미 기반 검색(Semantic Search)의 장점을 결합하여 검색 정확도를 높이는 기법 RAG(Retrieval-Augmented Generation) 시스템 구축 시, 단순히 벡터 검색만 사용할 경우 고유...
-2. 하이브리드 검색 > 키워드 검색(Sparse Retriever): BM25 알고리즘이 대표적: 단어의 빈도와 역문서 빈도를 기반으로 작동하며, 정확한 단어 매칭에 강합니다.
-3. 하이브리드 검색 > 의미 검색(Dense Retriever): 임베딩(Embedding) 벡터 유사도(Cosine Similarity 등)를 기반: 단어가 달라도 문맥적 의미가 유사한 문서를 찾는 데 강합니다. LangChain에서는 EnsembleRetriever 클래스를 사용하여 매우 쉽게 하이...
-4. 하이브리드 검색과 리랭킹 > 리랭킹(Re-ranking): "속도 vs 정확도"의 타협점: Retrieval 단계 (Bi-Encoder) 우리가 지금까지 배운 Vector Search나 BM25입니다. - 특징: 미리 계산된 벡터를 비교하므로 속도가 엄청 빠릅니다. 하지만 질문과 문서의 디테일한 관...
+1. 하이브리드 검색과 리랭킹: 하이브리드 검색 > 키워드 검색(Sparse Retriever), 하이브리드 검색 > 의미 검색(Dense Retriever)
 
 ## Code Highlights
 
@@ -133,40 +130,33 @@ def hybrid_search(query):
 # ... trimmed ...
 ```
 
-### Re-ranking 단계 (Cross-Encoder)
+### 의미 검색(Dense Retriever)
 
-`Re-ranking 단계 (Cross-Encoder)`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 문서 준비, BM25 Retriever, Vector Retriever 흐름이 주석과 함께 드러납니다.
+`의미 검색(Dense Retriever)`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 검색 흐름이 주석과 함께 드러납니다.
 
 ```python
-from langchain_community.retrievers import BM25Retriever
-from langchain_community.vectorstores import FAISS
-from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_community.cross_encoders import HuggingFaceCrossEncoder
-from langchain_core.documents import Document
-from langchain_core.runnables import RunnableLambda
+# 6. 검색
+query = "스마트폰 배터리 성능"
+docs = hybrid_retriever.invoke(query)
 
-# ------------------------------
-# 1. 문서 준비
-# ------------------------------
-texts = [
-    "강남역에서 가까운 스테이크 맛집 추천 리스트입니다. 분위기 좋은 고기 레스토랑이 많습니다.",
-    "서울 강남역에서 파스타가 맛있는 이탈리안 레스토랑 리스트입니다. 크림, 토마토 파스타가 유명합니다.",   # 🎯 정답
-    "강남역 맛집 전체 가이드입니다. 파스타부터 고기, 한식까지 다양한 식당을 포함합니다.",
-    "서울 홍대 파스타 맛집 추천입니다. 강남역과는 거리가 꽤 있습니다.",
-    "부산 남천동 파스타 맛집 리스트입니다. 부산 지역 이탈리안 맛집 모음입니다.",
-    "서울 강남역 카페 추천 리스트입니다. 디저트와 커피로 유명한 곳이 많습니다."
-]
+for d in docs:
+    print("-", d.page_content)
+```
 
-# ------------------------------
-# 2. BM25 Retriever
-# ------------------------------
-bm25 = BM25Retriever.from_texts(texts)
-bm25.k = 3
+### Re-ranking 단계 (Cross-Encoder)
 
+`Re-ranking 단계 (Cross-Encoder)`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 리랭킹 테스트 흐름이 주석과 함께 드러납니다.
+
+```python
 # ------------------------------
-# 3. Vector Retriever
+# 6. 리랭킹 테스트
 # ------------------------------
-# ... trimmed ...
+query = "서울 강남역 파스타 맛집 추천"
+candidate_docs = hybrid_retriever.invoke(query)                         # 1단계: 하이브리드 검색
+final_docs = rerank_with_cross_encoder(query, candidate_docs, top_n=1)  # 2단계: re-rank
+
+for d in final_docs:
+    print("답변: ", d.page_content)
 ```
 
 ### Re-ranking 단계 (Cross-Encoder)

@@ -5,15 +5,14 @@ research_tab: "DL"
 research_kind: "Mission"
 source_title: "Mission_7_강사공유"
 source_path: "12_Deep_Learning/Code_Snippets/Mission_7_강사공유.md"
-excerpt: "이번 미션에서는 SSD 모델을 활용하여 개와 고양이의 얼굴(Face) 영역을 감지하는 Object Detection 작업을 수행해 봅시다. 데이터 링크 (The Oxford-IIIT Pet Dataset). * 1 = 고양이 * 2 = 개. `md` 원본과 41개 코드 블록, 40개 실행 셀을 함께..."
-research_summary: "이번 미션에서는 SSD 모델을 활용하여 개와 고양이의 얼굴(Face) 영역을 감지하는 Object Detection 작업을 수행해 봅시다. 데이터 링크 (The Oxford-IIIT Pet Dataset). * 1 = 고양이 * 2 = 개. `md` 원본과 41개 코드 블록, 40개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torchinfo, os, sys, math입니다."
+excerpt: "사전 설정, SSD 실험 중심의 DL 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 사전 설정, SSD 실험 순서로 핵심 장면을 먼저 훑고, 라이브러리 설치 및 import, 데이터셋으로 변환, Feature Extraction SS... 같은..."
+research_summary: "사전 설정, SSD 실험 중심의 DL 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 사전 설정, SSD 실험 순서로 핵심 장면을 먼저 훑고, 라이브러리 설치 및 import, 데이터셋으로 변환, Feature Extraction SS... 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 41개 코드 블록, 40개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torchinfo, os, sys, math입니다."
 research_artifacts: "md · 코드 41개 · 실행 40개"
 code_block_count: 41
 execution_block_count: 40
 research_focus:
   - "사전 설정"
-  - "이번 미션에서는 SSD 모델을 활용하여 개와 고양이의 얼굴(Face) 영역을 감지하는 Object De..."
-  - "과제 요약"
+  - "SSD 실험"
 research_stack:
   - "torchinfo"
   - "os"
@@ -29,9 +28,9 @@ tags:
   - mission
 ---
 
-이번 미션에서는 SSD 모델을 활용하여 개와 고양이의 얼굴(Face) 영역을 감지하는 Object Detection 작업을 수행해 봅시다. 데이터 링크 (The Oxford-IIIT Pet Dataset). * 1 = 고양이 * 2 = 개. `md` 원본과 41개 코드 블록, 40개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torchinfo, os, sys, math입니다.
+사전 설정, SSD 실험 중심의 DL 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 사전 설정, SSD 실험 순서로 핵심 장면을 먼저 훑고, 라이브러리 설치 및 import, 데이터셋으로 변환, Feature Extraction SS... 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 41개 코드 블록, 40개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torchinfo, os, sys, math입니다.
 
-**빠르게 볼 수 있는 포인트**: 사전 설정, 이번 미션에서는 SSD 모델을 활용하여 개와 고양이의 얼굴(Face)..., 과제 요약.
+**빠르게 볼 수 있는 포인트**: 사전 설정, SSD 실험.
 
 **남겨둔 자료**: `md` 원본과 41개 코드 블록, 40개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torchinfo, os, sys, math입니다.
 
@@ -51,21 +50,33 @@ tags:
 
 ## What This Note Covers
 
-### 사전 설정 > 과제 요약
+### 사전 설정
+
+과제 요약 같은 코드를 직접 따라가며 사전 설정 흐름을 확인했습니다.
+
+- 읽을 포인트: 세부 흐름: 과제 요약
+
+#### 과제 요약
 
 이번 미션에서는 SSD 모델을 활용하여 개와 고양이의 얼굴(Face) 영역을 감지하는 Object Detection 작업을 수행해 봅시다. 데이터 링크 (The Oxford-IIIT Pet Dataset)
 
-### SSD 실험 > 데이터 확인
+### SSD 실험
 
-* 1 = 고양이 * 2 = 개
+데이터셋 + 데이터로더 생성, Feature Extraction..., Fine Tuning SSD 모델 같은 코드를 직접 따라가며 SSD 실험 흐름을 확인했습니다.
 
-### 데이터 전처리 > 객체 Bounding Box 리스트화
+- 읽을 포인트: 세부 흐름: 데이터셋 + 데이터로더 생성, Feature Extraction SSD 모델, Fine Tuning SSD 모델
 
-모든 XML을 읽고, 이미지별 Bounding Box 정보를 하나의 리스트(annotations)에 저장했다. 지금까지 전처리가 잘 되었는지 예시 이미지를 시각화 해볼 것이다.
+#### 데이터셋 + 데이터로더 생성
 
-### Key Step
+SSD 실험 > 데이터셋 + 데이터로더 생성 아래 코드와 함께 읽으면 구현 포인트가 더 또렷해지는 구간입니다.
 
-라이브러리 설치 및 import
+#### Feature Extraction SSD 모델
+
+모델 정의, 손실, 최적화 흐름을 코드로 연결해 보는 구간입니다.
+
+#### Fine Tuning SSD 모델
+
+모델 정의, 손실, 최적화 흐름을 코드로 연결해 보는 구간입니다.
 
 ## Why This Matters
 
@@ -89,12 +100,46 @@ tags:
 
 ## Implementation Flow
 
-1. 사전 설정 > 과제 요약: 이번 미션에서는 SSD 모델을 활용하여 개와 고양이의 얼굴(Face) 영역을 감지하는 Object Detection 작업을 수행해 봅시다. 데이터 링크 (The Oxford-IIIT Pet Dataset)
-2. SSD 실험 > 데이터 확인: * 1 = 고양이 * 2 = 개
-3. 데이터 전처리 > 객체 Bounding Box 리스트화: 모든 XML을 읽고, 이미지별 Bounding Box 정보를 하나의 리스트(annotations)에 저장했다. 지금까지 전처리가 잘 되었는지 예시 이미지를 시각화 해볼 것이다.
-4. Key Step: 라이브러리 설치 및 import
+1. 사전 설정: 과제 요약
+2. SSD 실험: 데이터셋 + 데이터로더 생성, Feature Extraction SSD 모델
 
 ## Code Highlights
+
+### 라이브러리 설치 및 import
+
+`라이브러리 설치 및 import`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 기본 라이브러리 import 흐름이 주석과 함께 드러납니다.
+
+```python
+# @title 기본 라이브러리 import
+import os
+import sys
+import math
+import glob
+import random
+import shutil
+import xml.etree.ElementTree as ET
+
+import numpy as np
+import pandas as pd
+import cv2
+import matplotlib.pyplot as plt
+from PIL import Image, ImageEnhance, ImageFilter
+
+from tqdm import tqdm
+from sklearn.metrics import average_precision_score, classification_report
+
+import torch
+import torch.nn as nn
+import torch.optim as optim
+import torch.nn.functional as F
+from torch.utils.data import Dataset, DataLoader, random_split
+from torch.utils.data.sampler import WeightedRandomSampler
+
+import torchvision
+import torchvision.models as models
+import torchvision.transforms.functional as F2
+# ... trimmed ...
+```
 
 ### 데이터셋으로 변환
 

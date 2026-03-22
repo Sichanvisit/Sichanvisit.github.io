@@ -2,11 +2,11 @@
 title: "10.결정트리와 앙상블(보팅배깅부스팅스태킹)"
 date: 2026-03-08
 research_tab: "ML"
-research_kind: "Practice"
+research_kind: "Archive Note"
 source_title: "250827_코딩실습14_10.결정트리와 앙상블(보팅배깅부스팅스태킹)"
 source_path: "11_Machine_Learning/Code_Snippets/250827_코딩실습14_10.결정트리와 앙상블(보팅배깅부스팅스태킹).md"
-excerpt: "코딩실습14 10.결정트리와 앙상블(보팅배깅부스팅스태킹)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 분류 문제, 결정 트리와 앙상블, 전처리와 입력 정리 순서로 큰 장을 먼저 훑고, 파생 변수 추가, DecisionTree / Logist... 같은..."
-research_summary: "코딩실습14 10.결정트리와 앙상블(보팅배깅부스팅스태킹)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 분류 문제, 결정 트리와 앙상블, 전처리와 입력 정리 순서로 큰 장을 먼저 훑고, 파생 변수 추가, DecisionTree / Logist... 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 8개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, matplotlib, sklearn입니다."
+excerpt: "10.결정트리와 앙상블(보팅배깅부스팅스태킹)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 분류 문제, 결정 트리와 앙상블, 전처리와 입력 정리 순서로 큰 장을 먼저 훑고, DecisionTree / Logist..., 파생 변수 추가 같은 코드로 실제..."
+research_summary: "10.결정트리와 앙상블(보팅배깅부스팅스태킹)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 분류 문제, 결정 트리와 앙상블, 전처리와 입력 정리 순서로 큰 장을 먼저 훑고, DecisionTree / Logist..., 파생 변수 추가 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 8개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, matplotlib, sklearn입니다."
 research_artifacts: "ipynb/md · 코드 8개 · 실행 7개"
 code_block_count: 8
 execution_block_count: 7
@@ -25,7 +25,7 @@ tags:
   - research-archive
   - imported-note
   - ml
-  - practice
+  - archive-note
 ---
 
 ## 글 한눈에 보기
@@ -49,7 +49,7 @@ tags:
   </div>
   <div class="research-overview__row">
     <div class="research-overview__label">구현 흐름</div>
-    <div class="research-overview__value">파생 변수 추가 -&gt; DecisionTree / LogisticRegression 모델 구성 -&gt; import numpy as np</div>
+    <div class="research-overview__value">DecisionTree / LogisticRegression 모델 구성 -&gt; 파생 변수 추가 -&gt; 모델별 정확도 저장 딕셔너리</div>
   </div>
   <div class="research-overview__row">
     <div class="research-overview__label">자료</div>
@@ -89,33 +89,33 @@ tags:
 
 ## 구현 흐름
 
-### 1. 파생 변수 추가
-
-- 단계: 피처 가공
-- 구현 의도: 원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다.
-- 핵심 API: -
-- 코드 포인트: 시각화를 위한 헬퍼 함수 (이전 실습에서 사용한 것과 동일)
-
-### 2. DecisionTree / LogisticRegression 모델 구성
+### 1. DecisionTree / LogisticRegression 모델 구성
 
 - 단계: 모델 구성
 - 구현 의도: DecisionTree / LogisticRegression 같은 모델을 올려 두고 어떤 알고리즘이 문제에 더 잘 맞는지 비교해 보는 구간입니다.
 - 핵심 API: `DecisionTree`, `Bagging`, `Voting`, `Stacking`
 - 코드 포인트: 보팅 · 1-1. 기본 모델 세팅
 
-### 3. import numpy as np
+### 2. 파생 변수 추가
 
-- 단계: 환경 준비
-- 구현 의도: 넘파이 배열 생성, 인덱싱, 수치 연산을 손으로 익히는 기초 실습 코드입니다.
-- 핵심 API: `train_test_split`, `DecisionTree`, `RandomForest`, `Bagging`
-- 코드 포인트: -
+- 단계: 피처 가공
+- 구현 의도: 원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다.
+- 핵심 API: -
+- 코드 포인트: 시각화를 위한 헬퍼 함수 (이전 실습에서 사용한 것과 동일)
 
-### 4. 모델별 정확도 저장 딕셔너리
+### 3. 모델별 정확도 저장 딕셔너리
 
 - 단계: 구현 코드
 - 구현 의도: 모델별 정확도 저장 딕셔너리 코드를 직접 실행하며 이 장의 구현 흐름을 확인했습니다.
 - 핵심 API: -
 - 코드 포인트: 모델별 정확도 저장 딕셔너리
+
+### 4. import numpy as np
+
+- 단계: 환경 준비
+- 구현 의도: 넘파이 배열 생성, 인덱싱, 수치 연산을 손으로 익히는 기초 실습 코드입니다.
+- 핵심 API: `train_test_split`, `DecisionTree`, `RandomForest`, `Bagging`
+- 코드 포인트: -
 
 ### 5. for model_name, acc in accuracies.items():
 
@@ -132,36 +132,6 @@ tags:
 - 코드 포인트: -
 
 ## 코드로 확인한 내용
-
-### 파생 변수 추가
-
-**직접 해본 단계**: 피처 가공
-
-원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다.
-
-```python
-# 시각화를 위한 헬퍼 함수 (이전 실습에서 사용한 것과 동일)
-def plot_decision_boundary(clf, X, y, ax, title):
-    x_min, x_max = X[:, 0].min() - 0.5, X[:, 0].max() + 0.5
-    y_min, y_max = X[:, 1].min() - 0.5, X[:, 1].max() + 0.5
-    xx, yy = np.meshgrid(np.linspace(x_min, x_max, 100),
-                         np.linspace(y_min, y_max, 100))
-    Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
-    Z = Z.reshape(xx.shape)
-
-    cmap_light = ListedColormap(['#FFAAAA', '#AAFFAA'])
-    cmap_bold = ListedColormap(['#FF0000', '#00FF00'])
-
-
-    ax.contourf(xx, yy, Z, alpha=0.8, cmap=cmap_light)
-    ax.scatter(X[:, 0][y==0], X[:, 1][y==0], c='red', marker='o', label='Class 0')
-    ax.scatter(X[:, 0][y==1], X[:, 1][y==1], c='blue', marker='x', label='Class 1')
-    ax.set_title(title)
-    ax.set_xlabel('Feature 1')
-    ax.set_ylabel('Feature 2')
-    ax.legend()
-    ax.grid(True)
-```
 
 ### DecisionTree / LogisticRegression 모델 구성
 
@@ -211,6 +181,47 @@ gb_clf = GradientBoostingClassifier(
 # ... trimmed ...
 ```
 
+### 파생 변수 추가
+
+**직접 해본 단계**: 피처 가공
+
+원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다.
+
+```python
+# 시각화를 위한 헬퍼 함수 (이전 실습에서 사용한 것과 동일)
+def plot_decision_boundary(clf, X, y, ax, title):
+    x_min, x_max = X[:, 0].min() - 0.5, X[:, 0].max() + 0.5
+    y_min, y_max = X[:, 1].min() - 0.5, X[:, 1].max() + 0.5
+    xx, yy = np.meshgrid(np.linspace(x_min, x_max, 100),
+                         np.linspace(y_min, y_max, 100))
+    Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
+    Z = Z.reshape(xx.shape)
+
+    cmap_light = ListedColormap(['#FFAAAA', '#AAFFAA'])
+    cmap_bold = ListedColormap(['#FF0000', '#00FF00'])
+
+
+    ax.contourf(xx, yy, Z, alpha=0.8, cmap=cmap_light)
+    ax.scatter(X[:, 0][y==0], X[:, 1][y==0], c='red', marker='o', label='Class 0')
+    ax.scatter(X[:, 0][y==1], X[:, 1][y==1], c='blue', marker='x', label='Class 1')
+    ax.set_title(title)
+    ax.set_xlabel('Feature 1')
+    ax.set_ylabel('Feature 2')
+    ax.legend()
+    ax.grid(True)
+```
+
+### 모델별 정확도 저장 딕셔너리
+
+**직접 해본 단계**: 구현 코드
+
+모델별 정확도 저장 딕셔너리 코드를 직접 실행하며 이 장의 구현 흐름을 확인했습니다.
+
+```python
+# 모델별 정확도 저장 딕셔너리
+accuracies ={}
+```
+
 ### import numpy as np
 
 **직접 해본 단계**: 환경 준비
@@ -230,17 +241,6 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score
 from matplotlib.colors import ListedColormap
-```
-
-### 모델별 정확도 저장 딕셔너리
-
-**직접 해본 단계**: 구현 코드
-
-모델별 정확도 저장 딕셔너리 코드를 직접 실행하며 이 장의 구현 흐름을 확인했습니다.
-
-```python
-# 모델별 정확도 저장 딕셔너리
-accuracies ={}
 ```
 
 ### for model_name, acc in accuracies.items():

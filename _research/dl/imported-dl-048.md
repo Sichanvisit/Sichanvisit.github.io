@@ -5,15 +5,15 @@ research_tab: "DL"
 research_kind: "Mission"
 source_title: "Mission_5_강사공유"
 source_path: "12_Deep_Learning/Code_Snippets/Mission_5_강사공유.md"
-excerpt: "num_images_in_item = len(dataset[index]) fig, axes = plt.subplots(num_images_to_show, num_images_in_item, figsize=(num_images_in_item * 5, num_images_to_show * 3)). if..."
-research_summary: "num_images_in_item = len(dataset[index]) fig, axes = plt.subplots(num_images_to_show, num_images_in_item, figsize=(num_images_in_item * 5, num_images_to_show * 3)). if num_images_to_show == 1 and num_images_in_item == 1: axes = np.array([[axes]]) elif num_images_to_show == 1: axes = np.array([axes]) elif num_images_in_item == 1: axes = np.array(axes)... `md` 원본과 44개 코드 블록, 12개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, torch, numpy, cv2입니다."
+excerpt: "학습 손실 시각화, 모델 생성 중심의 DL 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 학습 손실 시각화, 모델 생성, model.load_state_di... 순서로 핵심 장면을 먼저 훑고, Image Size check 함수, Transf..."
+research_summary: "학습 손실 시각화, 모델 생성 중심의 DL 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 학습 손실 시각화, 모델 생성, model.load_state_di... 순서로 핵심 장면을 먼저 훑고, Image Size check 함수, Transform 설정, DataSet Class 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 44개 코드 블록, 12개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, torch, numpy, cv2입니다."
 research_artifacts: "md · 코드 44개 · 실행 12개"
 code_block_count: 44
 execution_block_count: 12
 research_focus:
-  - "사전처리"
-  - "파일 위치 주소 관련"
-  - "import 추가"
+  - "학습 손실 시각화"
+  - "모델 생성"
+  - "model.load_state_dict(torch.load(os.path.join(main_folder,\"model_unet.pth\")))"
 research_stack:
   - "os"
   - "torch"
@@ -29,9 +29,9 @@ tags:
   - mission
 ---
 
-num_images_in_item = len(dataset[index]) fig, axes = plt.subplots(num_images_to_show, num_images_in_item, figsize=(num_images_in_item * 5, num_images_to_show * 3)). if num_images_to_show == 1 and num_images_in_item == 1: axes = np.array([[axes]]) elif num_images_to_show == 1: axes = np.array([axes]) elif num_images_in_item == 1: axes = np.array(axes)... `md` 원본과 44개 코드 블록, 12개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, torch, numpy, cv2입니다.
+학습 손실 시각화, 모델 생성 중심의 DL 실험에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 학습 손실 시각화, 모델 생성, model.load_state_di... 순서로 핵심 장면을 먼저 훑고, Image Size check 함수, Transform 설정, DataSet Class 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 44개 코드 블록, 12개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, torch, numpy, cv2입니다.
 
-**빠르게 볼 수 있는 포인트**: 사전처리, 파일 위치 주소 관련, import 추가.
+**빠르게 볼 수 있는 포인트**: 학습 손실 시각화, 모델 생성, model.load_state_dict(torch.load(os.pat....
 
 **남겨둔 자료**: `md` 원본과 44개 코드 블록, 12개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, torch, numpy, cv2입니다.
 
@@ -51,21 +51,41 @@ num_images_in_item = len(dataset[index]) fig, axes = plt.subplots(num_images_to_
 
 ## What This Note Covers
 
-### 사전처리 > import 추가
+### 학습 손실 시각화
 
-파일 위치 주소 관련 : os - torch : torch, torch.nn, torch.optim. torch.nn.functional - torch.utils.data : Dataset, DataLoader, random_split - torchvision : torchvision.transform, v2
+plt.figure(figsize=(6,3)) plt.plot(train_losses, label="Train Loss", marker="o") plt.xlabel("Epochs") plt.ylabel("Loss") plt.title("Training Loss") plt.legend() plt.show() def model_test(...
 
-### 사전처리 > device 설정
+- 읽을 포인트: 모델 정의, 손실, 최적화 흐름을 코드로 연결해 보는 구간입니다.
 
-* CUDA gpu가 있는 경우 cuda로 디바이스 설정 * mac - Apple 실리콘의 gpu 사용을 위해 mps 설정추가
+### 모델 생성
 
-### 데이터 처리 > 데이터 설정
+model = Autoencoder().to(device) summary(model, input_size=(1, 1, 420, 540))
 
-* 데이터 매인 폴더와 데이터 파일 리스트 생성 * 데이터 길이와 내용 일부 확인 * Train dataset 크기와 Val dataset 크기 설정
+- 읽을 포인트: 모델 정의, 손실, 최적화 흐름을 코드로 연결해 보는 구간입니다.
 
-### 데이터 처리 > Image Size check 함수
+### model.load_state_dict(torch.load(os.path.join(main_folder,"model_unet.pth")))
 
-* 이미지 file 리스트를 입력해 이미지의 shape 리스트 확인 * unique를 통해 중복 제거 def check_image_shapes(image_paths): shapes = [] for path in image_paths: img = cv2.imread(path, cv2.IMREAD_GRAYSCALE) if img is not None: shapes.append(img.sha...
+train_losses = train(20, model_unet, loss_fn, opt, train_loader, device) preds, yy= model_test(model_unet, loss_fn, val_loader, device)
+
+- 읽을 포인트: 비전 모델이 객체나 픽셀 단위를 어떻게 예측하는지 구현으로 따라가는 구간입니다.
+
+### RMSE 와 PSNR 계산
+
+def calculate_rmse(original, restored): return torch.sqrt(F.mse_loss(original, restored)).item() def calculate_psnr(original, restored, max_pixel=1.0): mse = F.mse_loss(original, restored...
+
+- 읽을 포인트: RMSE 와 PSNR 계산 아래 코드와 함께 읽으면 구현 포인트가 더 또렷해지는 구간입니다.
+
+### 모델 학습
+
+train_losses = train(10, model, loss_fn, opt, train_loader, device)
+
+- 읽을 포인트: 모델 정의, 손실, 최적화 흐름을 코드로 연결해 보는 구간입니다.
+
+### 기존의 학습을 이어서 하기 위해 필요시 모델 load
+
+model.load_state_dict(torch.load(os.path.join(main_folder,"model.pth"))) train_losses = train(40, model, loss_fn, opt, train_loader, device)
+
+- 읽을 포인트: 모델 정의, 손실, 최적화 흐름을 코드로 연결해 보는 구간입니다.
 
 ## Why This Matters
 
@@ -77,34 +97,32 @@ num_images_in_item = len(dataset[index]) fig, axes = plt.subplots(num_images_to_
 
 ## Implementation Flow
 
-1. 사전처리 > import 추가: 파일 위치 주소 관련 : os - torch : torch, torch.nn, torch.optim. torch.nn.functional - torch.utils.data : Dataset, DataLoader, random_split - torchvision : t...
-2. 사전처리 > device 설정: * CUDA gpu가 있는 경우 cuda로 디바이스 설정 * mac - Apple 실리콘의 gpu 사용을 위해 mps 설정추가
-3. 데이터 처리 > 데이터 설정: * 데이터 매인 폴더와 데이터 파일 리스트 생성 * 데이터 길이와 내용 일부 확인 * Train dataset 크기와 Val dataset 크기 설정
-4. 데이터 처리 > Image Size check 함수: * 이미지 file 리스트를 입력해 이미지의 shape 리스트 확인 * unique를 통해 중복 제거 def check_image_shapes(image_paths): shapes = [] for path in image_paths: img =...
+1. 학습 손실 시각화: plt.figure(figsize=(6,3)) plt.plot(train_losses, label="Train Loss", marker="o") plt.xlabel("Epochs") plt.ylabel("Loss") plt.title("Trai...
+2. 모델 생성: model = Autoencoder().to(device) summary(model, input_size=(1, 1, 420, 540))
+3. model.load_state_dict(torch.load(os.path.join(main_folder,"model_unet.pth"))): train_losses = train(20, model_unet, loss_fn, opt, train_loader, dev...
+4. RMSE 와 PSNR 계산: def calculate_rmse(original, restored): return torch.sqrt(F.mse_loss(original, restored)).item() def calculate_psnr(original, resto...
+5. 모델 학습: train_losses = train(10, model, loss_fn, opt, train_loader, device)
+6. 기존의 학습을 이어서 하기 위해 필요시 모델 load: model.load_state_dict(torch.load(os.path.join(main_folder,"model.pth"))) train_losses = train(40, model, loss_fn, op...
 
 ## Code Highlights
 
-### import 추가
+### Image Size check 함수
 
-`import 추가`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 파일 위치 주소 관련 : os - torch : torch, torch.nn, torch.optim. torch.nn.functional - torch.utils.data : Dataset, DataLoader, random_split - torchvision : torchvision.transform, v2.
+`Image Size check 함수`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 그레이스케일 변환, Return a tuple if multiple images were passed, ot... 흐름이 주석과 함께 드러납니다.
 
 ```python
-import os
-import torch
-import torch.nn as nn
-import torch.optim as optim
-import numpy as np
-import cv2
-import matplotlib.pyplot as plt
-import math
-import torchvision.transforms.functional as TF
-import torch.nn.functional as F
-
-from PIL import Image, ImageEnhance, ImageFilter
-from torch.utils.data import Dataset, DataLoader, random_split
-from torchvision import transforms
-from torchvision.transforms import v2
-from glob import glob
+class Grayscale:
+    def __call__(self, *imgs):
+        outputs = []
+        for img in imgs:
+            # 그레이스케일 변환
+            grayscale_img = TF.rgb_to_grayscale(img)  # RGB -> Grayscale
+            outputs.append(grayscale_img)
+        # Return a tuple if multiple images were passed, otherwise return the single image
+        if len(outputs) == 1:
+            return outputs[0]
+        else:
+            return tuple(outputs)
 ```
 
 ### Transform 설정
@@ -159,6 +177,19 @@ class Dataset(Dataset):
         img, clean_img = self.transform(img, clean_img)
 
     return img.to(device), clean_img.to(device)
+```
+
+### Dataset 및 Dataloader 설정
+
+`Dataset 및 Dataloader 설정`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. * random_split을 이용해 데이터 분할 * 학습 batch_size : 32.
+
+```python
+train_file, val_file = random_split(datafiles, [train_size, val_size])
+train_dataset = Dataset(train_file, transform=transform_train)
+val_dataset = Dataset(val_file, transform=transform_test)
+test_dataset = TestDataset(testfiles, transform=transform_test)
+
+print(f"Train dataset length: {len(train_dataset)}, Test dataset length: {len(val_dataset)}")
 ```
 
 ## Source Bundle

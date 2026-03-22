@@ -5,15 +5,15 @@ research_tab: "DL"
 research_kind: "Sample Code"
 source_title: "RNN_samplecode"
 source_path: "12_Deep_Learning/Code_Snippets/RNN_samplecode.md"
-excerpt: "@title 하이퍼파라미터, 사인파 코사인파 주파수를 합성, 저주파 진폭 변조 중심으로 구현 과정을 정리한 RNN samplecode 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 14개..."
-research_summary: "@title 하이퍼파라미터, 사인파 코사인파 주파수를 합성, 저주파 진폭 변조 중심으로 구현 과정을 정리한 RNN samplecode 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 14개 코드 블록, 14개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, numpy, matplotlib입니다."
+excerpt: "RNN samplecode에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 실험의 큰 흐름을 먼저 훑고, @title RNN모델, loss_fn = nn.MSELoss(), @title LSTM모델 같은 코드로 실제 구현을 이어서 확인할 수 있습니다...."
+research_summary: "RNN samplecode에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 실험의 큰 흐름을 먼저 훑고, @title RNN모델, loss_fn = nn.MSELoss(), @title LSTM모델 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 14개 코드 블록, 14개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, numpy, matplotlib입니다."
 research_artifacts: "md · 코드 14개 · 실행 14개"
 code_block_count: 14
 execution_block_count: 14
 research_focus:
-  - "@title 하이퍼파라미터"
-  - "사인파 코사인파 주파수를 합성"
-  - "저주파 진폭 변조"
+  - "@title RNN모델"
+  - "@title 모델 학습"
+  - "@title LSTM모델"
 research_stack:
   - "torch"
   - "numpy"
@@ -27,9 +27,9 @@ tags:
   - sample-code
 ---
 
-@title 하이퍼파라미터, 사인파 코사인파 주파수를 합성, 저주파 진폭 변조 중심으로 구현 과정을 정리한 RNN samplecode 기록입니다. 페이지 상단에서 문제 정의, 구현 범위, 코드 하이라이트를 먼저 확인하고 바로 원본 실습 맥락으로 내려갈 수 있게 구성했습니다. `md` 원본과 14개 코드 블록, 14개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, numpy, matplotlib입니다.
+RNN samplecode에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 실험의 큰 흐름을 먼저 훑고, @title RNN모델, loss_fn = nn.MSELoss(), @title LSTM모델 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 14개 코드 블록, 14개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, numpy, matplotlib입니다.
 
-**빠르게 볼 수 있는 포인트**: @title 하이퍼파라미터, 사인파 코사인파 주파수를 합성, 저주파 진폭 변조.
+**빠르게 볼 수 있는 포인트**: @title RNN모델, @title 모델 학습, @title LSTM모델.
 
 **남겨둔 자료**: `md` 원본과 14개 코드 블록, 14개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 torch, numpy, matplotlib입니다.
 
@@ -49,11 +49,11 @@ tags:
 
 ## What This Note Covers
 
+- @title RNN모델
+- @title 모델 학습
+- @title LSTM모델
 - @title 하이퍼파라미터
-- 사인파 코사인파 주파수를 합성
-- 저주파 진폭 변조
-- 완만한 선형 추세
-- 가우시안 노이즈
+- @title numpy --> tensor --> dataload
 
 ## Why This Matters
 
@@ -93,6 +93,33 @@ class RNN(nn.Module):
         out = out[:, -1, :]
         out = self.fc(out)
         return out
+```
+
+### loss_fn = nn.MSELoss()
+
+`loss_fn = nn.MSELoss()`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 손실 계산, 역전파, optimizer 또는 scheduler 업데이트가 이어지는 학습 루프입니다.
+
+```python
+loss_fn = nn.MSELoss()
+opt = optim.Adam(model.parameters(), lr=LR)
+
+for epoch in range(NUM_EPOCHS):
+    model.train()
+    epoch_loss = 0
+    for batch_X, batch_y in dataloader:
+        batch_X.to(device)
+        batch_y.to(device)
+
+        opt.zero_grad()                 # 기울기를 초기화
+        pred = model(batch_X)           # 모델의 예측 (순전파)
+        loss = loss_fn(pred, batch_y)   # loss 계산
+        loss.backward()                 # 역전파
+        opt.step()                      # parameter 업데이트
+
+        epoch_loss += loss.item() * batch_X.size(0)
+
+    epoch_loss /= len(dataset)
+    print(f"Epoch : {epoch} / loss: {epoch_loss}")
 ```
 
 ### @title LSTM모델

@@ -5,8 +5,8 @@ research_tab: "DL"
 research_kind: "Archive Note"
 source_title: "(실습)UNet"
 source_path: "12_Deep_Learning/Code_Snippets/(실습)UNet.md"
-excerpt: "UNet에서 다룬 구현 흐름과 참고 소스를 다시 볼 수 있게 정리한 DL 아카이브 노트입니다. 문제 맥락과 구현 흔적을 한 화면에서 빠르게 파악할 수 있도록 핵심 정보부터 배치했습니다. `md` 원본과 11개 코드 블록, 8개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주..."
-research_summary: "UNet에서 다룬 구현 흐름과 참고 소스를 다시 볼 수 있게 정리한 DL 아카이브 노트입니다. 문제 맥락과 구현 흔적을 한 화면에서 빠르게 파악할 수 있도록 핵심 정보부터 배치했습니다. `md` 원본과 11개 코드 블록, 8개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, numpy, PIL, torch입니다."
+excerpt: "UNet에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 실험의 큰 흐름을 먼저 훑고, @title UNet 모델 정의, from pdb import run, @title 학습 루프 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과..."
+research_summary: "UNet에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 실험의 큰 흐름을 먼저 훑고, @title UNet 모델 정의, from pdb import run, @title 학습 루프 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 11개 코드 블록, 8개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, numpy, PIL, torch입니다."
 research_artifacts: "md · 코드 11개 · 실행 8개"
 code_block_count: 11
 execution_block_count: 8
@@ -26,7 +26,7 @@ tags:
   - archive-note
 ---
 
-UNet에서 다룬 구현 흐름과 참고 소스를 다시 볼 수 있게 정리한 DL 아카이브 노트입니다. 문제 맥락과 구현 흔적을 한 화면에서 빠르게 파악할 수 있도록 핵심 정보부터 배치했습니다. `md` 원본과 11개 코드 블록, 8개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, numpy, PIL, torch입니다.
+UNet에서 직접 따라간 구현 흐름과 코드 증거를 다시 볼 수 있게 정리한 DL 학습 기록입니다. 본문은 실험의 큰 흐름을 먼저 훑고, @title UNet 모델 정의, from pdb import run, @title 학습 루프 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `md` 원본과 11개 코드 블록, 8개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, numpy, PIL, torch입니다.
 
 **남겨둔 자료**: `md` 원본과 11개 코드 블록, 8개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 os, numpy, PIL, torch입니다.
 
@@ -181,6 +181,41 @@ for epoch in range(num_epochs):
     if val_loss < best_val_loss:
         best_val_loss = val_loss
         torch.save(model.state_dict(), 'best_unet.pt')
+```
+
+### import matplotlib.pyplot as plt
+
+`import matplotlib.pyplot as plt`는 이 노트에서 핵심 구현을 보여주는 코드 블록입니다. 코드 안에서는 예측: 각 픽셀에서 채널의 argmax (배경:0, 보행자:1) 흐름이 주석과 함께 드러납니다.
+
+```python
+import matplotlib.pyplot as plt
+
+def visualize_predictions(model, dataloader, device, num_images=4):
+    model.eval()
+    with torch.no_grad():
+        for imgs, masks in dataloader:
+            imgs = imgs.to(device)
+            outputs = model(imgs)  # 출력: [B, n_classes, H, W]
+            # 예측: 각 픽셀에서 채널의 argmax (배경:0, 보행자:1)
+            preds = torch.argmax(outputs, dim=1).cpu().numpy()
+            imgs = imgs.cpu().numpy().transpose(0, 2, 3, 1)  # [B, C, H, W] -> [B, H, W, C]로 변경
+            masks = masks.cpu().numpy()
+
+            for i in range(min(num_images, imgs.shape[0])):
+                fig, axs = plt.subplots(1, 3, figsize=(15, 5))
+                axs[0].imshow(imgs[i])
+                axs[0].set_title("Input Image")
+                axs[0].axis("off")
+                axs[1].imshow(masks[i], cmap="gray")
+                axs[1].set_title("Ground Truth")
+                axs[1].axis("off")
+                axs[2].imshow(preds[i], cmap="gray")
+                axs[2].set_title("Predicted Mask")
+                axs[2].axis("off")
+                plt.show()
+            break
+
+val_dataloader_shuffle = DataLoader(val_dataset, batch_size=4, shuffle=True)
 ```
 
 ## Source Bundle
