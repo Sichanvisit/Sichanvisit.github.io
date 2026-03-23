@@ -685,7 +685,7 @@ def countdown_timer(seconds):
 countdown_timer(3)
 ```
 
-## 객체와 클래스
+### 객체와 클래스
 
 ### 기초(2문제)
 
@@ -1301,7 +1301,7 @@ class ReservationSystem:
         return sum(len(branch.reservations) for branch in branches)
 ```
 
-## 심화 문제
+### 심화 문제
 
 심화 문제는 채점에 포함되지 않습니다. 편한 마음으로 도전해 보세요.
 

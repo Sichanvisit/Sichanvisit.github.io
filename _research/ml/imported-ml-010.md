@@ -146,7 +146,7 @@ plt.title("결정 트리 시각화")
 plt.show()
 ```
 
-## DT 분류 실습
+### DT 분류 실습
 
 ```python
 import pandas as pd

@@ -71,7 +71,7 @@ def clean_notebook_heading_text(text: str) -> str:
     return cleaned or normalize_display_text(text) or text.strip()
 
 
-def get_ml_heading_level(title: str, current_level: int) -> int:
+def get_ml_heading_level(title: str, current_level: int, has_major_section: bool = False) -> int:
     cleaned = clean_notebook_heading_text(title)
 
     major_section_pattern = re.compile(r"^\d+\.\s*")
@@ -90,6 +90,10 @@ def get_ml_heading_level(title: str, current_level: int) -> int:
             "특정 컬럼 데이터 확인",
             "그래프 결과 해석",
             "데이터 시각화 후 추가 파생변수 생성",
+            "데이터 다듬기",
+            "문자 데이터 가공",
+            "정규화/표준화",
+            "데이터 합치기",
         }
     ):
         return 3
@@ -104,6 +108,8 @@ def get_ml_heading_level(title: str, current_level: int) -> int:
         return 4
 
     if current_level <= 1:
+        if has_major_section:
+            return 3
         return 2
     if current_level == 2:
         return 3
@@ -120,6 +126,7 @@ def sanitize_raw_note_markdown(raw_text: str, research_tab: str) -> str:
     cleaned_lines: list[str] = []
     in_code_block = False
     previous_rule = False
+    ml_major_section_seen = False
 
     for raw_line in raw_text.splitlines():
         stripped = raw_line.strip()
@@ -157,7 +164,9 @@ def sanitize_raw_note_markdown(raw_text: str, research_tab: str) -> str:
             cleaned_title = clean_notebook_heading_text(title)
             level = len(hashes)
             if research_tab == "ML":
-                level = get_ml_heading_level(cleaned_title, level)
+                level = get_ml_heading_level(cleaned_title, level, has_major_section=ml_major_section_seen)
+                if level == 2:
+                    ml_major_section_seen = True
             cleaned_lines.append(f"{'#' * level} {cleaned_title}".rstrip())
             previous_rule = False
             continue

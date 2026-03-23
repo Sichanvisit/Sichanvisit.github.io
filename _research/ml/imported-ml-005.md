@@ -252,7 +252,7 @@ df.iloc[100:, :]
 df_2.to_csv("/content/drive/MyDrive/코드잇/AI 엔지니어 5기/공유폴더/Data/superstore_refined.csv", index=False)
 ```
 
-## 데이터 다듬기
+### 데이터 다듬기
 
 #### 데이터 전처리
 
@@ -386,7 +386,7 @@ df_no = df[~outliers] # ~: 제외한다
 df_no
 ```
 
-## 문자 데이터 가공
+### 문자 데이터 가공
 
 ```python
 # 대소문자 문자열 처리
@@ -443,7 +443,7 @@ df.columns = df.columns.str.lower().str.replace(' ', '_')
 df.head(1)
 ```
 
-## 정규화/표준화
+### 정규화/표준화
 
 ```python
 # 1. 정규화 - MinMax
@@ -531,7 +531,7 @@ df['order_year'] = df['order_date'].dt.year
 df[['order_date', 'order_year', 'order_month', 'order_weekday']].head(2)
 ```
 
-## 데이터 합치기
+### 데이터 합치기
 
 ```python
 data1 = pd.DataFrame({
