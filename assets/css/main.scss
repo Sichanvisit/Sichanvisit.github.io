@@ -1569,6 +1569,9 @@ a {
 .collection-doc-page--research .page__content table {
   font-size: 0.87rem;
   line-height: 1.56;
+  max-width: 100%;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .collection-doc-page--research .page__content ul,
@@ -1593,6 +1596,14 @@ a {
 
 .collection-doc-page--research .page__content code {
   font-size: 0.84em;
+}
+
+.collection-doc-page--research .page__content a,
+.collection-doc-page--research .page__content a:visited {
+  max-width: 100%;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: break-all;
 }
 
 .collection-doc-page--research .page__content .highlight,
