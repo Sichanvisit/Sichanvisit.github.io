@@ -73,7 +73,7 @@ from sklearn.metrics import accuracy_score
 from matplotlib.colors import ListedColormap              # 결정 경계 시각화위한 라이브러리
 ```
 
-# 1. 단일 디시전 트리 실습
+## 1. 단일 디시전 트리 실습
 
 ```python
 # make_moons 데이터 불러오기 - 암기 X
@@ -179,7 +179,7 @@ def plot_decision_boundary(model, X, y, title="Decision Boundary"):
 plot_decision_boundary(dt_clf, X, y, title="DT Decision Boundary")
 ```
 
-# 2. 랜덤 포레스트 실습
+## 2. 랜덤 포레스트 실습
 
 ```python
 rf_clf = RandomForestClassifier(n_estimators=100, max_depth=5, n_jobs=-1)

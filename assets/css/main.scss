@@ -1334,6 +1334,8 @@ a {
   max-width: 100%;
   min-width: 0;
   overflow-x: hidden;
+  overflow-y: auto;
+  max-height: calc(100vh - 7rem);
 }
 
 .collection-doc-page .toc .toc__menu ul,

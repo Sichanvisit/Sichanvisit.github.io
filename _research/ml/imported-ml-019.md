@@ -62,9 +62,9 @@ tags:
   </div>
 </div>
 
-# 파이썬 연습
+## 파이썬 연습
 
-## 기초(7문제)
+### 기초(7문제)
 
 ### 문제1. 3의 배수 출력
 
@@ -490,7 +490,7 @@ divide_numbers()
 divide_numbers()
 ```
 
-## 응용(3문제)
+### 응용(3문제)
 
 ### 문제1. 문자열 압축 게임
 
@@ -685,9 +685,9 @@ def countdown_timer(seconds):
 countdown_timer(3)
 ```
 
-# 객체와 클래스
+## 객체와 클래스
 
-## 기초(2문제)
+### 기초(2문제)
 
 ### 문제1. 시간 추적 클래스(TimeTracker)
 
@@ -829,7 +829,7 @@ friend = Contact("Jane Doe", "010-1234-5678", "jane@example.com")
 print(friend)
 ```
 
-## 응용(4문제)
+### 응용(4문제)
 
 ### 문제1. 투표 시스템 클래스
 
@@ -1301,11 +1301,11 @@ class ReservationSystem:
         return sum(len(branch.reservations) for branch in branches)
 ```
 
-# 심화 문제
+## 심화 문제
 
 심화 문제는 채점에 포함되지 않습니다. 편한 마음으로 도전해 보세요.
 
-## 심화(4문제)
+### 심화(4문제)
 
 ### 문제1. 시간 관리 프로그램
 

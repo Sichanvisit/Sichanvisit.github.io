@@ -63,7 +63,7 @@ tags:
   </div>
 </div>
 
-# 미션 설명
+## 미션 설명
 
 - 결정 트리와 앙상블 기법을 사용하여 분류 모델을 구축
 - 🎯마케팅 캠페인의 효율성을 높이는 전략을 도출
@@ -132,7 +132,7 @@ tags:
 
 ---
 
-## 참고 - 코랩(쥬피터 노트북) matplotlib 한글 오류 해결법
+### 참고 - 코랩(쥬피터 노트북) matplotlib 한글 오류 해결법
 
 김명환님 제공
 git: https://github.com/c0z0c/jupyter_hangul
@@ -147,7 +147,7 @@ import helper_c0z0c_dev as helper
 !pip install catboost
 ```
 
-# 1. 데이터 확인
+## 1. 데이터 확인
 
 ```python
 import time
@@ -376,7 +376,7 @@ df.groupby(by='poutcome')['y'].value_counts(normalize=True)*100
 
 => 이전에 성공한 마케팅 캠페인은 이번 정기 예금 가입 전환이 높음. 이전에 성공한 마케팅의 요인을 상세하게 분석하여 추후 적절한 마케팅 방안을 제안하는 방식도 중요할 것으로 판단.
 
-# 2. 데이터 전처리
+## 2. 데이터 전처리
 
 ### 1) 중복값 처리
 
@@ -587,7 +587,7 @@ df['pdays_na'] = df['pdays'].replace(999, np.nan)
 df.columns
 ```
 
-# 3. 데이터 시각화
+## 3. 데이터 시각화
 
 ```python
 # 수치형, 범주형 구분
@@ -724,7 +724,7 @@ df["low_cons_conf"] = (df["cons.conf.idx"] < df["cons.conf.idx"].median()).astyp
 df["few_contacts"] = (df["campaign"] <= 2).astype(int)
 ```
 
-# 4. 모델링
+## 4. 모델링
 
 ### 1) 1차 모델링
 
@@ -902,7 +902,7 @@ print(classification_report(y_test, preds))
 
 => XGBoost 모델과 이 모델을 베이스로 쓰는 경우 Recall과  F1 score가 일부 상승하는 결과를 얻었으나, 아직 점수가 괜찮은 것은 아님. 불균형 데이터 자체를 바꿔주는게 필요함
 
-## 3) 3차 모델링
+### 3) 3차 모델링
 
 예금 가입이 높은 구간대를 따로 구별한 파생변수를 추가하여 모델링
 
@@ -992,7 +992,7 @@ for name, model in models.items():
     print(classification_report(y_test, preds))
 ```
 
-## 4) 4차 모델링
+### 4) 4차 모델링
 
 SMOTE사용
 
@@ -1015,7 +1015,7 @@ smote = SMOTE(random_state=42)
 X_resampled, y_resampled = smote.fit_resample(X_train, y_train)
 ```
 
-##### SMOTE 적용시 주의사항
+#### SMOTE 적용시 주의사항
 
 => 반드시 훈련 데이터에만 적용할 것!
 
@@ -1107,7 +1107,7 @@ for name, model in models.items():
 2. AdaBoost 모델의 Recall 점수가 눈에 띄게 상승
     - 현재 데이터 기준 베이스라인이 10% 내외인것에 비해서는 의미있는 성과
 
-## 5) 5차 모델링
+### 5) 5차 모델링
 
 독립변수 분할하여 모델링
 
@@ -1148,7 +1148,7 @@ Xe_train, Xe_test, ye_train, ye_test = train_test_split(X_economic, y, test_size
 Xe_resampled, ye_resampled = smote.fit_resample(Xe_train, ye_train)
 ```
 
-##### stratify=y의미
+#### stratify=y의미
 
 불균형 데이터에서 종속변수를 나누면, 운이 안 좋을경우 테스트셋에 positive 클래스가 거의 없을 수 있음
 
@@ -1219,7 +1219,7 @@ print(classification_report(y_test, stacking_preds))
 
 전체적으로 성능 하락의 결과
 
-## 6) 6차 모델링
+### 6) 6차 모델링
 
 결측치 지정한 컬럼들로 XGBoost, LGBM, Catboost 사용
 
@@ -1300,7 +1300,7 @@ for name, model in models.items():
     print(classification_report(y2_test, preds))
 ```
 
-# 4. 결론
+## 4. 결론
 
 범주형 변수 라벨링 적용한 LightGBM의 Recall이 0.65로 가장 높음
 
@@ -1315,7 +1315,7 @@ for name, model in models.items():
 
 ---
 
-# 5. 추가할 사항
+## 5. 추가할 사항
 현업에선 어떤 가설을 설정하고 그에 맞춰 '비즈니스 지표 (KPI)'를 생성함
 
 **[예시]**

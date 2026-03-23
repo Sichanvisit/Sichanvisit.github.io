@@ -63,9 +63,9 @@ tags:
   </div>
 </div>
 
-# 1. 마크다운 실습
+## 1. 마크다운 실습
 
-## 자기소개 마크다운 미션
+### 자기소개 마크다운 미션
 
 ### 이름
 
@@ -108,7 +108,7 @@ arr[1, 0:2]
 arr[0:0,:]
 ```
 
-# 2. Numpy 실습
+## 2. Numpy 실습
 
 ### 기본 함수들
 
@@ -302,7 +302,7 @@ print("상품별 매출액: ", sales)
 print("전체 매출액: ", sales.sum())
 ```
 
-# 3. 판다스 실습
+## 3. 판다스 실습
 
 #### csv파일 불러오는 실습
 
@@ -325,7 +325,7 @@ df
 df.head()
 ```
 
-# 4. matplotlib 실습
+## 4. matplotlib 실습
 
 ```python
 import matplotlib.pyplot as plt

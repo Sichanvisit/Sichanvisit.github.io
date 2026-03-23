@@ -64,7 +64,7 @@ tags:
 
 ## 1. 모듈 기본 3가지
 
-#### 1) time
+### 1) time
 
 ```python
 import time
@@ -102,7 +102,7 @@ print(time.strftime('%Y-%m-%d %H:%M:%S'))
 print(time.strftime('%Y-%m-%d %H:%M:%S') - formatted)
 ```
 
-#### 2) datetime
+### 2) datetime
 
 ```python
 import datetime
@@ -147,7 +147,7 @@ now = datetime.now()
 print(now - past_time)
 ```
 
-#### 3) random
+### 3) random
 
 ```python
 import random
@@ -187,7 +187,7 @@ value = random.uniform(1.0, 5.0)
 print(value)
 ```
 
-# 2. 파일 입력과 문자 수정
+## 2. 파일 입력과 문자 수정
 
 ```python
 # 파일 업로드해서 불러오기 - 코랩용

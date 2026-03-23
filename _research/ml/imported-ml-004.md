@@ -318,7 +318,7 @@ plt.xlabel("값")
 plt.show()
 ```
 
-# Seaborn 실습
+## Seaborn 실습
 
 ```python
 # 산점도
@@ -420,7 +420,7 @@ titanic_data = sns.load_dataset('titanic')
 titanic_data
 ```
 
-## 씨본 스타일
+### 씨본 스타일
 
 팔레트
 
@@ -447,7 +447,7 @@ sns.violinplot(data=titanic_data, x='age')
 plt.show()
 ```
 
-## 상관관계
+### 상관관계
 
 ```python
 corr = titanic_data.select_dtypes(include="number").corr()        # 수치형 변수만 선택해서 상관관계

@@ -71,6 +71,45 @@ def clean_notebook_heading_text(text: str) -> str:
     return cleaned or normalize_display_text(text) or text.strip()
 
 
+def get_ml_heading_level(title: str, current_level: int) -> int:
+    cleaned = clean_notebook_heading_text(title)
+
+    major_section_pattern = re.compile(r"^\d+\.\s*")
+    numbered_subsection_pattern = re.compile(r"^\d+\)\s*")
+
+    if cleaned == "미션 설명" or major_section_pattern.match(cleaned):
+        return 2
+
+    if (
+        numbered_subsection_pattern.match(cleaned)
+        or cleaned.startswith("참고 -")
+        or cleaned in {
+            "데이터 설명",
+            "강사 Tip",
+            "1차 데이터 확인",
+            "특정 컬럼 데이터 확인",
+            "그래프 결과 해석",
+            "데이터 시각화 후 추가 파생변수 생성",
+        }
+    ):
+        return 3
+
+    if cleaned in {
+        "고객 특성 관련 변수",
+        "이전 캠페인 관련 변수",
+        "경제/거시 지표 관련 변수",
+        "SMOTE 적용시 주의사항",
+        "stratify=y의미",
+    }:
+        return 4
+
+    if current_level <= 1:
+        return 2
+    if current_level == 2:
+        return 3
+    return min(current_level, 4)
+
+
 def sanitize_raw_note_markdown(raw_text: str, research_tab: str) -> str:
     if not raw_text.strip():
         return ""
@@ -116,7 +155,10 @@ def sanitize_raw_note_markdown(raw_text: str, research_tab: str) -> str:
         if heading_match:
             hashes, title = heading_match.groups()
             cleaned_title = clean_notebook_heading_text(title)
-            cleaned_lines.append(f"{hashes} {cleaned_title}".rstrip())
+            level = len(hashes)
+            if research_tab == "ML":
+                level = get_ml_heading_level(cleaned_title, level)
+            cleaned_lines.append(f"{'#' * level} {cleaned_title}".rstrip())
             previous_rule = False
             continue
 

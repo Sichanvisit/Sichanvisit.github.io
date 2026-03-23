@@ -61,7 +61,7 @@ tags:
   </div>
 </div>
 
-# 1. Iris 데이터로 이진 분류
+## 1. Iris 데이터로 이진 분류
 
 ```python
 from sklearn.datasets import load_iris
@@ -109,7 +109,7 @@ plt.grid(True)
 plt.show()
 ```
 
-# 2. Iris 데이터로 다중 분류
+## 2. Iris 데이터로 다중 분류
 
 ```python
 from sklearn.datasets import load_iris
@@ -162,7 +162,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-# 3. Softmax 이용한 다중 분류
+## 3. Softmax 이용한 다중 분류
 
 ```python
 from sklearn.datasets import load_iris

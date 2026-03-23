@@ -82,7 +82,7 @@ plt.rc('font', family=font_name)
 fm.fontManager.addfont(path)
 ```
 
-# 1. DT 회귀 실습
+## 1. DT 회귀 실습
 
 ```python
 from sklearn.datasets import fetch_california_housing
@@ -146,7 +146,7 @@ plt.title("결정 트리 시각화")
 plt.show()
 ```
 
-# DT 분류 실습
+## DT 분류 실습
 
 ```python
 import pandas as pd
@@ -197,7 +197,7 @@ plt.show()
 dt_clf.get_depth()
 ```
 
-# 3. 속성 중요도 실습
+## 3. 속성 중요도 실습
 
 ```python
 # 특성 이름 가져오기
@@ -222,7 +222,7 @@ importance_df = importance_df.sort_values(by='Importance', ascending=False)
 importance_df
 ```
 
-# 4. 사전 가지치기 실습
+## 4. 사전 가지치기 실습
 
 ```python
 from sklearn.datasets import load_iris

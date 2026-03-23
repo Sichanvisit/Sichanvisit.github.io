@@ -64,7 +64,7 @@ tags:
 </div>
 
 +
-# 1. 선형회귀
+## 1. 선형회귀
 
 ```python
 !sudo apt-get install -y fonts-nanum
@@ -259,7 +259,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-# 2. Salary 데이터로 선형회귀 기본 코딩 (사이킷런 사용 X)
+## 2. Salary 데이터로 선형회귀 기본 코딩 (사이킷런 사용 X)
 
 ```python
 from google.colab import drive
@@ -307,7 +307,7 @@ X
 y
 ```
 
-## 1) 첫번째 모델 - 절편 없음
+### 1) 첫번째 모델 - 절편 없음
 
 ```python
 b = np.dot(np.linalg.inv(X.T @ X), X.T@y)
@@ -325,7 +325,7 @@ b
 2. 성별 1->2 바뀌면 소득이 8.71 증가
 3. 경력이 1년 늘어나면 소득은 2.83 하락
 
-## 2) 두번째 모델링 - 절편 추가
+### 2) 두번째 모델링 - 절편 추가
 
 ```python
 X2 = np.c_[np.ones(100), X]
@@ -340,7 +340,7 @@ b_new = np.dot(np.linalg.inv(X2.T @ X2), X2.T@y)
 b_new
 ```
 
-# 3. Salary 데이터로 선형회귀 - 사이킷런 이용 코딩
+## 3. Salary 데이터로 선형회귀 - 사이킷런 이용 코딩
 
 ```python
 data.head()

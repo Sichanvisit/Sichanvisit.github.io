@@ -58,7 +58,7 @@ tags:
   </div>
 </div>
 
-# 1. 클래스 코드 연습
+## 1. 클래스 코드 연습
 
 ```python
 # Person 클래스 연습
@@ -91,7 +91,7 @@ p1.greet()
 p2.greet()
 ```
 
-# 2. 은행 클래스
+## 2. 은행 클래스
 
 ```python
 class BankAccount:
@@ -242,7 +242,7 @@ p2 = Person('Bob', 50)
 print(p2.greet())
 ```
 
-# 3. 다양한 메소드
+## 3. 다양한 메소드
 
 ```python
 # __str__메소드

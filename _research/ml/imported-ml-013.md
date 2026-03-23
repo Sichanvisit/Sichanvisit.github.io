@@ -60,7 +60,7 @@ tags:
   </div>
 </div>
 
-# 1. XGBoost 회귀
+## 1. XGBoost 회귀
 
 ```python
 from sklearn.datasets import fetch_california_housing
@@ -95,7 +95,7 @@ rmse = np.sqrt(mean_squared_error(y_test, y_pred))
 rmse
 ```
 
-# 2. XGBoost 분류
+## 2. XGBoost 분류
 
 ```python
 import xgboost as xgb

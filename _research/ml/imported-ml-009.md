@@ -68,7 +68,7 @@ from sklearn.metrics import mean_squared_error, make_scorer
 import numpy as np
 ```
 
-# 1990년 캘리포니아 주택 데이터
+## 1990년 캘리포니아 주택 데이터
 
 https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_california_housing.html
 
