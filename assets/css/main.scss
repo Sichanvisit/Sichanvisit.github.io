@@ -1331,20 +1331,44 @@ a {
 
 .collection-doc-page .toc .toc__menu {
   border-top: 0 !important;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
 }
 
 .collection-doc-page .toc .toc__menu ul,
 .collection-doc-page .toc .toc__menu ol {
-  margin: 0.2rem 0 0.14rem 0.32rem;
-  padding-inline-start: 0.28rem;
+  margin: 0.2rem 0 0.14rem;
+  padding-inline-start: 0.82rem;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
 }
 
 .collection-doc-page .toc .toc__menu a,
 #toc-right-drawer-mobile .toc__menu a {
+  display: block;
+  box-sizing: border-box;
+  max-width: 100%;
+  min-width: 0;
   white-space: normal;
   overflow-wrap: anywhere;
   word-break: break-word;
   text-overflow: clip;
+}
+
+.collection-doc-page .sidebar__right,
+.collection-doc-page .sidebar__right .toc,
+.collection-doc-page .sidebar__right .toc__menu,
+.collection-doc-page .sidebar__right .toc__menu li,
+#toc-right-drawer-mobile,
+#toc-right-drawer-mobile .toc,
+#toc-right-drawer-mobile .toc__menu,
+#toc-right-drawer-mobile .toc__menu li {
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 .collection-doc-page .toc .toc__menu li.toc-has-children {
@@ -2026,8 +2050,8 @@ a {
 
   #toc-right-drawer-mobile .toc__menu ul,
   #toc-right-drawer-mobile .toc__menu ol {
-    margin: 0.18rem 0 0.14rem 0.3rem;
-    padding-inline-start: 0.26rem;
+    margin: 0.18rem 0 0.14rem;
+    padding-inline-start: 0.78rem;
   }
 
   #toc-right-drawer-mobile .toc__menu li {
