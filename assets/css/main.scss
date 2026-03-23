@@ -1341,10 +1341,9 @@ a {
 .collection-doc-page .toc .toc__menu ul,
 .collection-doc-page .toc .toc__menu ol {
   margin: 0.2rem 0 0.14rem;
-  padding-inline-start: 0.82rem;
+  padding-inline-start: 0.68rem;
   max-width: 100%;
   min-width: 0;
-  overflow-x: hidden;
 }
 
 .collection-doc-page .toc .toc__menu a,
@@ -1371,6 +1370,15 @@ a {
   min-width: 0;
   overflow-x: hidden;
   box-sizing: border-box;
+}
+
+.collection-doc-page .toc .toc__menu li,
+.collection-doc-page .toc .toc__menu ul,
+.collection-doc-page .toc .toc__menu ol,
+#toc-right-drawer-mobile .toc__menu li,
+#toc-right-drawer-mobile .toc__menu ul,
+#toc-right-drawer-mobile .toc__menu ol {
+  overflow: visible;
 }
 
 .collection-doc-page .toc .toc__menu li.toc-has-children {
