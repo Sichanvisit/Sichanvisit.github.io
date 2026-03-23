@@ -1499,6 +1499,25 @@ a {
     width: calc(100% - 550px) !important;
     max-width: none;
   }
+
+  .collection-doc-page .sidebar__right,
+  .collection-doc-page .sidebar__right.sticky {
+    position: sticky !important;
+    top: 4.8rem !important;
+    inset-inline-end: auto !important;
+    margin-inline-end: 0 !important;
+    margin-inline-start: 0.9rem;
+    padding-inline-start: 0 !important;
+    float: inline-end;
+    clear: inline-end;
+    width: 272px;
+    max-width: 272px;
+  }
+
+  .collection-doc-page .sidebar__right .toc {
+    width: 100%;
+    max-width: 100%;
+  }
 }
 
 /* Collection detail page: tighten top spacing of center content */
