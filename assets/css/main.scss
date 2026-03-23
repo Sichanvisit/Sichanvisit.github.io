@@ -1336,6 +1336,9 @@ a {
   overflow-x: hidden;
   overflow-y: auto;
   max-height: calc(100vh - 7rem);
+  box-sizing: border-box;
+  padding-inline-end: 0.18rem;
+  scrollbar-gutter: stable;
 }
 
 .collection-doc-page .toc .toc__menu ul,
