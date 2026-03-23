@@ -1339,6 +1339,14 @@ a {
   padding-inline-start: 0.28rem;
 }
 
+.collection-doc-page .toc .toc__menu a,
+#toc-right-drawer-mobile .toc__menu a {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  text-overflow: clip;
+}
+
 .collection-doc-page .toc .toc__menu li.toc-has-children {
   position: relative;
 }
@@ -1410,10 +1418,12 @@ a {
 
 .collection-doc-page .toc .toc__menu li li > a {
   font-size: 0.68rem;
+  line-height: 1.42;
 }
 
 .collection-doc-page .toc .toc__menu > li > a {
   font-size: 0.74rem;
+  line-height: 1.44;
 }
 
 #toc-right-drawer-mobile .toc__menu li.toc-has-children.is-collapsed > .toc-fold-toggle > span {
