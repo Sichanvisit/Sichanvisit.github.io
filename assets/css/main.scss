@@ -1551,10 +1551,37 @@ a {
 .collection-doc-page--research .page__content pre {
   font-size: 0.76rem;
   line-height: 1.4;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  overflow-x: hidden;
 }
 
 .collection-doc-page--research .page__content code {
   font-size: 0.84em;
+}
+
+.collection-doc-page--research .page__content .highlight,
+.collection-doc-page--research .page__content div.highlighter-rouge {
+  overflow-x: hidden;
+}
+
+.collection-doc-page--research .page__content table {
+  width: 100%;
+  display: table;
+  table-layout: fixed;
+  overflow-x: visible;
+}
+
+.collection-doc-page--research .page__content th,
+.collection-doc-page--research .page__content td,
+.collection-doc-page--research .page__content p code,
+.collection-doc-page--research .page__content li code,
+.collection-doc-page--research .page__content td code,
+.collection-doc-page--research .page__content th code {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .collection-doc-page .page__content {
