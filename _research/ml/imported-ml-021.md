@@ -63,25 +63,24 @@ tags:
   </div>
 </div>
 
-<!-- #region id="8iaimvhYPuda" -->
-# 🚲 미션 설명
+# 미션 설명
 
 - 자전거 대여 시스템의 운영 담당자
 - 🎯자전거 대여 패턴을 분석하여 자전거 배치 및 운영 전략을 최적화하고, 대여 수요를 정확하게 예측하는 것
 - 🎯최종 목표: **RMSLE(Root Mean Squared Logarithmic Error)를 최대한 낮추는 것**
 
---------------------------------------------
+---
 
-#### **RMSLE 공식**
+#### RMSLE 공식
 $$
 RMSLE = \sqrt{\frac{1}{n} \sum_{i=1}^{n} \left( \log(p_i + 1) - \log(a_i + 1) \right)^2}
 $$
 - n: 데이터 포인트의 수
 - pi: 예측 값
 - ai: 실제 값
---------------------------------------------
+---
 
-# 📑 데이터
+# 데이터
 
 #### 파일 설명
 - train.csv
@@ -108,10 +107,7 @@ $$
 | registered | int      | 등록된 사용자의 대여 수                                  |
 | count      | int      | 총 대여 수 (종속 변수)                                 |
 
-<!-- #endregion -->
-
-<!-- #region id="ZQTVaJx8R9Wa" -->
-# 🪛 분석 드릴다운
+# 분석 드릴다운
 
 ### 공유 시스템 이해
 
@@ -132,9 +128,7 @@ $$
     - 환경적 관점: 방치된 자전거가 오히려 도시 미관 해치거나, 내것이 아니라 함부러 쓰면 짧은 수명
     - 정책적 관점: 지자체/업체 간 역할이 불명확하거나 책임 소재 불명확
 
-<!-- #endregion -->
-
-```python colab={"base_uri": "https://localhost:8080/"} id="nj8rFDRyNFCj" executionInfo={"status": "ok", "timestamp": 1756191360640, "user_tz": -540, "elapsed": 35991, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="27e3d88e-dd6e-4d4d-9918-51776035ab95"
+```python
 # 한글 오류 제거 코드
 !sudo apt-get install -y fonts-nanum
 !sudo fc-cache -fv
@@ -155,7 +149,7 @@ plt.rc('font', family=font_name)
 fm.fontManager.addfont(path)
 ```
 
-```python id="RKpcWWlMN4oz" executionInfo={"status": "ok", "timestamp": 1756192208537, "user_tz": -540, "elapsed": 19, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -168,34 +162,33 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score, m
 from sklearn.preprocessing import StandardScaler
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="jOtb_H3HOZir" executionInfo={"status": "ok", "timestamp": 1756191555514, "user_tz": -540, "elapsed": 9628, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="c7061309-a071-4878-e28e-b06c30c18b23"
+```python
 from google.colab import drive
 drive.mount('/content/drive')
 ```
 
-```python id="UFNpjMyhObjm" executionInfo={"status": "ok", "timestamp": 1756191566465, "user_tz": -540, "elapsed": 2449, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 train = pd.read_csv('/content/drive/MyDrive/코드잇/AI 엔지니어 5기/공유폴더/Data/bike_train.csv')
 test = pd.read_csv('/content/drive/MyDrive/코드잇/AI 엔지니어 5기/공유폴더/Data/bike_test.csv')
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 267} id="4cylnvsmvin9" executionInfo={"status": "ok", "timestamp": 1756191566609, "user_tz": -540, "elapsed": 147, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="18f8a77b-e866-4cf0-de97-5a1fa9aa777c"
+```python
 train.head(3)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="V5cXK3KNPr2A" executionInfo={"status": "ok", "timestamp": 1756191566674, "user_tz": -540, "elapsed": 68, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="e9cad736-031c-4621-ad5a-90cd4a6c14cd"
+```python
 train.info()
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="z0-HKuEBPrzO" executionInfo={"status": "ok", "timestamp": 1756191566779, "user_tz": -540, "elapsed": 104, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="93b22ffa-ce29-42aa-f3dd-5cfb75aba05d"
+```python
 test.info()
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 320} id="W7dD92COPrwd" executionInfo={"status": "ok", "timestamp": 1756191566911, "user_tz": -540, "elapsed": 135, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="8c332c58-62df-4734-fd51-82a8aa901aac"
+```python
 train.describe()
 ```
 
-<!-- #region id="zRZarwohg81D" -->
-#### **1차 데이터 확인 결과**
+#### 1차 데이터 확인 결과
 
 **독립 변수**로 볼 수 있는 값 중에 큰 치우침이 있는 데이터는 없는 것으로 확인
 
@@ -224,7 +217,7 @@ train.describe()
 
 - 종속변수의 값 레인지를 EDA하고 그에 따른 스케일링 방법을 사용
 
-#### **EDA 포인트**
+#### EDA 포인트
 - holiday와 weekday의 대여 분포도 확인
 - 날씨별 대여 확인
 - 시간대별 대여 확인
@@ -240,17 +233,11 @@ train.describe()
     - 추운 계절보다는 따뜻한 계절에 자전거를 더 많이 대여할 것이다.
 
 그 외 EDA 후 최종 가설을 선정할 것임
-<!-- #endregion -->
 
-<!-- #region id="hs6qRvLF478V" -->
----------------------------
----------------------------
+---
 # 1. 데이터 확인
 
-
-<!-- #endregion -->
-
-```python colab={"base_uri": "https://localhost:8080/", "height": 307} id="4iOgx8mk47sa" executionInfo={"status": "ok", "timestamp": 1756191567941, "user_tz": -540, "elapsed": 1029, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="24c791c2-6bce-4149-f3ee-31c7031b33f0"
+```python
 # 시각화: count의 분포 확인
 
 plt.figure(figsize=(5, 3))
@@ -262,36 +249,27 @@ plt.tight_layout()
 plt.show()
 ```
 
-<!-- #region id="Eahxc0SL7B6I" -->
 RMSLE 점수를 안정적으로 계산하기 위해 count 변수 모두 로그 변환 필요
 
 - 모델이 큰 수에 맞춰 학습을 하면 RMSLE기준 불균형성이 확인될 수 있기 때문
 - 모델이 로그 공간 안에서 예측하면 같은 스케일이 보장되기 때문에 안정적 학습 가능
-<!-- #endregion -->
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 399} id="CCtSgQ8uCxIG" executionInfo={"status": "ok", "timestamp": 1756191567944, "user_tz": -540, "elapsed": 25, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="fe296a44-b08c-4896-f3ea-9b9794337dbd"
+```python
 # season 데이터 확인
 
 train[train['season']==1].head()
 ```
 
-<!-- #region id="bmW_lSQgC6f_" -->
 - Season 설명에 1: 봄, 2: 여름, 3: 가을, 4: 겨울 이지만 실제 데이터는 2011-01-01에 봄으로 마킹되어 있음
 
 - month데이터 참조하여 3,4,5월을 봄:1, 6,7,8월을 여름:2, 9,10,11월을 가을:3, 12,1,2월을 겨울:4로 바꾸는 것이 필요함
-<!-- #endregion -->
 
-<!-- #region id="6N1QLHRhnXnU" -->
-------------------------------------
-------------------------------------
+---
 # 2. 데이터 전처리
-<!-- #endregion -->
 
-<!-- #region id="14GUCcMbSpDS" -->
-### (1) 결측치 확인
-<!-- #endregion -->
+### 1) 결측치 확인
 
-```python colab={"base_uri": "https://localhost:8080/"} id="FhuPw030eF9i" executionInfo={"status": "ok", "timestamp": 1756191567992, "user_tz": -540, "elapsed": 47, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="e53c9c2e-5940-4f3c-d117-902f8fdfcd77"
+```python
 # 결측치 개수 확인
 print("------train------")
 print(train.isnull().sum())
@@ -299,20 +277,16 @@ print("------test------")
 print(test.isnull().sum())
 ```
 
-<!-- #region id="Kg1-xOQ4pHbo" -->
-### (2) 중복값 확인
-<!-- #endregion -->
+### 2) 중복값 확인
 
-```python colab={"base_uri": "https://localhost:8080/"} id="zysC5zBuoQeR" executionInfo={"status": "ok", "timestamp": 1756191568008, "user_tz": -540, "elapsed": 14, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="88152743-d41d-4a71-ed3d-b949fa8effee"
+```python
 print('train 중복값: ', train.duplicated().sum())
 print('test 중복값: ', test.duplicated().sum())
 ```
 
-<!-- #region id="Wle1wCyH7O-i" -->
-### (3) datetime 데이터 타입 변환
-<!-- #endregion -->
+### 3) datetime 데이터 타입 변환
 
-```python id="YfcPoEGY7OZW" executionInfo={"status": "ok", "timestamp": 1756191568011, "user_tz": -540, "elapsed": 5, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # datetime 파싱 및 hour, month, year 생성
 def preprocess_custom_datetime(df):
     df["datetime"] = pd.to_datetime(df["datetime"])
@@ -324,34 +298,30 @@ def preprocess_custom_datetime(df):
     return df
 ```
 
-```python id="xIest3hT7X7i" executionInfo={"status": "ok", "timestamp": 1756191568135, "user_tz": -540, "elapsed": 125, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # 파생 변수 적용
 train = preprocess_custom_datetime(train)
 test = preprocess_custom_datetime(test)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 399} id="zCQpiFcj7Zxi" executionInfo={"status": "ok", "timestamp": 1756191568271, "user_tz": -540, "elapsed": 132, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="b8e78168-5d98-41f1-c4c5-7afe29f59364"
+```python
 train.head()
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 399} id="h9HtLc9o8IcS" executionInfo={"status": "ok", "timestamp": 1756191568427, "user_tz": -540, "elapsed": 150, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="5b668ae5-b98a-43ea-eb9c-b12f3dac98f2"
+```python
 test.head()
 ```
 
-<!-- #region id="0zBYPH94B1Wq" -->
-### (4) 종속변수 로그 변환
-<!-- #endregion -->
+### 4) 종속변수 로그 변환
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 399} id="77J_nZeJCHrg" executionInfo={"status": "ok", "timestamp": 1756191568533, "user_tz": -540, "elapsed": 110, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="29e44259-a1f3-4287-aa29-b320ffb628f5"
+```python
 train["log_count"] = np.log1p(train["count"])                 # log1p: 0이나 작은 값에서의 수치 안정성을 위해 log(1 + x)를 더 정확히 계산해주는 함수. count==0일때 좋음.
 train.head()
 ```
 
-<!-- #region id="MvZTtwpGDD25" -->
-### (5) 계절 변화 - season 컬럼 정리
-<!-- #endregion -->
+### 5) 계절 변화 - season 컬럼 정리
 
-```python id="adiXedc1CtKj" executionInfo={"status": "ok", "timestamp": 1756191568589, "user_tz": -540, "elapsed": 4, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 def redefine_season(month):
     if month in [3, 4, 5]:
         return 1                  # 봄
@@ -366,15 +336,13 @@ train['season'] = train['month'].apply(redefine_season)
 test['season'] = test['month'].apply(redefine_season)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 399} id="r6UfuKAjDLIY" executionInfo={"status": "ok", "timestamp": 1756191568729, "user_tz": -540, "elapsed": 137, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="6844eccc-4c2e-4ada-f65a-a24e6ea7b749"
+```python
 train.head()
 ```
 
-<!-- #region id="rXQPtzpjriXI" -->
-### (6) 이상치 제거
-<!-- #endregion -->
+### 6) 이상치 제거
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 272} id="WS3UTNbSpOd-" executionInfo={"status": "ok", "timestamp": 1756191569175, "user_tz": -540, "elapsed": 443, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="dd886fde-351a-402a-c7a7-34b232905819"
+```python
 # windspeed 시각화
 
 plt.figure(figsize = (4,3))
@@ -382,12 +350,11 @@ sns.boxplot(train['windspeed'])
 plt.show()
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="OG5MvB2VDbwN" executionInfo={"status": "ok", "timestamp": 1756191569178, "user_tz": -540, "elapsed": 19, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="946ae351-9ed8-475e-fb1b-25d86116753c"
+```python
 np.sort(train['windspeed'].unique())
 ```
 
-<!-- #region id="uwGVAi0f1IlE" -->
-#### **Windspeed 조사**
+#### Windspeed 조사
  보퍼트 풍력 계급 (위키피디아: https://ko.wikipedia.org/wiki/%EB%B3%B4%ED%8D%BC%ED%8A%B8_%ED%92%8D%EB%A0%A5_%EA%B3%84%EA%B8%89)
 
  - <0.3 (m/s): 연기가 수직으로 올라가는 고요한 상태
@@ -397,50 +364,45 @@ np.sort(train['windspeed'].unique())
 
  ==> 바람 속도가 극도로 높은 수치는 의심해 봐야함
 
-
-<!-- #endregion -->
-
-```python colab={"base_uri": "https://localhost:8080/", "height": 790} id="QlAn24zoDwr_" executionInfo={"status": "ok", "timestamp": 1756191569333, "user_tz": -540, "elapsed": 159, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="ee70b96e-d6b5-46c6-afae-630e38bf6c7f"
+```python
 train[train['windspeed']>=20]
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="_tH7bhfUD0sA" executionInfo={"status": "ok", "timestamp": 1756191569353, "user_tz": -540, "elapsed": 16, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="7a6d20ce-3dde-45eb-d7b5-d2484779149e"
+```python
 1495 /len(train)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="hl2piuHpD6my" executionInfo={"status": "ok", "timestamp": 1756191569375, "user_tz": -540, "elapsed": 18, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="4dd18636-2b89-4c42-cc09-4b96603fde11"
+```python
 # windspeed 20보다 큰 train데이터 중, count 컬럼의 합계
 print(train[train['windspeed']>=20]['count'].sum())
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="DLvIg9pxEkOF" executionInfo={"status": "ok", "timestamp": 1756191569449, "user_tz": -540, "elapsed": 71, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="ea5a9962-cfb5-4767-e5e5-a50874d91f2d"
+```python
 # windspeed 20보다 큰 train데이터 중, count 컬럼의 합계의 비율 확인
 train[train['windspeed']>=20]['count'].sum()/train['count'].sum()
 ```
 
-<!-- #region id="OApZXSXCEV96" -->
 - 20m/s 이상의 데이터는 **약 14%** 의 비율
 - windspeed가 20m/s 이상인 데이터의 count합의 비율은 **약 15%**
 
-#####**[결론]**
+##### 결론]
 1. 0.0의 값은 계측기로 인한 두번째 소수점 소실로 보고 이상치로 취급하지 않음
 2. windspeed가 20을 넘는 값에서 자전거를 탄다는 것은 현실적으로 어렵다고 판단(보퍼트 기준), 20 넘는 수치를 그 외 수치의 평균으로 환산
 
      - AI 4기의 도메인 지식 기반한 결정
-<!-- #endregion -->
 
-```python id="rpSLbBIqGDzc" executionInfo={"status": "ok", "timestamp": 1756191569560, "user_tz": -540, "elapsed": 108, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # windspeed 이상치 평균으로 대체
 
 windspeed_mean = round(train[train['windspeed'] <= 20]['windspeed'].mean(), 4)
 train.loc[train['windspeed'] >= 20, 'windspeed'] = windspeed_mean
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="hEDspIiHKCNM" executionInfo={"status": "ok", "timestamp": 1756191569592, "user_tz": -540, "elapsed": 13, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="320add32-b92a-49d2-8ba6-b3b19907f7fc"
+```python
 np.sort(train['windspeed'].unique())
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 307} id="GZ0R1UA8CGwE" executionInfo={"status": "ok", "timestamp": 1756191570651, "user_tz": -540, "elapsed": 1062, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="1b1347a4-ea18-429c-d407-eafeaacf9736"
+```python
 plt.figure(figsize=(5, 3))
 sns.histplot(train["windspeed"], bins=50, kde=True)
 plt.title("바람 시각화")
@@ -449,20 +411,15 @@ plt.tight_layout()
 plt.show()
 ```
 
-<!-- #region id="9W5BFUOvJQay" -->
 **windspeed**
 
 이상치 바뀐 뒤 데이터 정규성은 보이지 않음
 - 선형 회귀는 데이터가 정규성이 보장될 때 성능이 좋은 모델
 - 바람의 세기가 0이라는 건 계측기의 측정 방식으로 발생할 수 있는 일이라 판단하고 그대로 진행
-<!-- #endregion -->
 
-<!-- #region id="D7XXcAWQKZr6" -->
-----------------------------------
-----------------------------------
-<!-- #endregion -->
+---
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 272} id="4ibriHKxKZYi" executionInfo={"status": "ok", "timestamp": 1756191570911, "user_tz": -540, "elapsed": 262, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="71e496a1-f996-43ec-c95d-f18be2380503"
+```python
 # humidity 시각화
 
 plt.figure(figsize = (4,3))
@@ -470,7 +427,7 @@ sns.boxplot(train['humidity'])
 plt.show()
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 307} id="_e57sm3BlC02" executionInfo={"status": "ok", "timestamp": 1756191571433, "user_tz": -540, "elapsed": 472, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="b38a9a51-3266-46e2-a5eb-54b8f619e817"
+```python
 plt.figure(figsize=(5, 3))
 sns.histplot(train["humidity"], bins=50, kde=True)
 plt.title("습도 시각화")
@@ -479,8 +436,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-<!-- #region id="jMEL1Lb5r1-p" -->
-#### **Humidity 조사**
+#### Humidity 조사
 
 > 보퍼트 풍력계처럼 명확한 단계별 명칭 체계는 존재하지 않음.
 단, 여러 단체에서 권장하는 습도 기준은 이정도
@@ -493,7 +449,7 @@ plt.show()
 | **KS B ISO 9241-6** (한국표준) | **40\~60% RH**                        | 사무환경 인체공학 기준       |
 | **ASHRAE Standard 55**     | 사람의 쾌적함을 위한 환경 조건 → 습도는 **60% 이하 권장** |                    |
 
-------------------------------------
+---
 
 **낮은 습도**
 1. 건조한 사막 습도 10~20% 언급 뉴스기사 - https://weekly.chosun.com/news/articleView.html?idxno=28844
@@ -517,9 +473,7 @@ plt.show()
 
 => 습도의 경우 적은 경우가 이상치
 
-<!-- #endregion -->
-
-```python id="hz3PcRsJKr9l" executionInfo={"status": "ok", "timestamp": 1756191571441, "user_tz": -540, "elapsed": 5, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # humidity 이상치 처리
 Q1 = train['humidity'].quantile(0.25)
 Q3 = train['humidity'].quantile(0.75)
@@ -529,47 +483,42 @@ lower_bound = Q1 - 1.5 * IQR
 upper_bound = Q3 + 1.5 * IQR
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="bVSygvfNK0VZ" executionInfo={"status": "ok", "timestamp": 1756191571460, "user_tz": -540, "elapsed": 16, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="3d645dea-69f9-49dd-917f-2b2b0f006b3c"
+```python
 upper_bound
 ```
 
-<!-- #region id="zMPlkLKYK7WE" -->
 - IQR로 진행하면 상단 122값이 upper bound의 기준
 - 습도 100이 기준. 100 초과 나올 수 없음
 
     > IQR 말고 다른 이상치 제거방식으로 진행
 
-<!-- #endregion -->
-
-```python colab={"base_uri": "https://localhost:8080/"} id="UpGhYhQCLq6M" executionInfo={"status": "ok", "timestamp": 1756191571507, "user_tz": -540, "elapsed": 10, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="b52485ef-2fe6-41f4-b792-4241aac5911d"
+```python
 np.sort(train['humidity'].unique())
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="ItL_5Gj7K62K" executionInfo={"status": "ok", "timestamp": 1756191571571, "user_tz": -540, "elapsed": 62, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="b97135c3-64d4-42e5-c016-7eb564efff49"
+```python
 len(train[train['humidity']==0])
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="zT4L3QBMLjYo" executionInfo={"status": "ok", "timestamp": 1756191571585, "user_tz": -540, "elapsed": 12, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="a7f86628-5109-4c67-d6a7-1c1d450f9b7c"
+```python
 # humidity 최소값의 비율 확인
 22/len(train) * 100
 ```
 
-<!-- #region id="2oAgxlBQL1m0" -->
 - List of weather records를 통해 3~100% 내외의 값은 충분히 가능한 것으로 판단
 - humidity는 최소값인 0만 삭제
-<!-- #endregion -->
 
-```python id="vYDH4LJusHtN" executionInfo={"status": "ok", "timestamp": 1756191571605, "user_tz": -540, "elapsed": 18, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # humidity 값이 0인 데이터 제거
 train = train[(train['humidity'] != 0)]
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="JHMu18vIMgvi" executionInfo={"status": "ok", "timestamp": 1756191571607, "user_tz": -540, "elapsed": 17, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="9a8e46e2-0405-4691-c0f0-39a92b71a405"
+```python
 # 잘 제거되었나 확인
 np.sort(train['humidity'].unique())
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 307} id="Zl_hn4RPkWaO" executionInfo={"status": "ok", "timestamp": 1756191572041, "user_tz": -540, "elapsed": 439, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="db099e30-63ff-4d79-ef49-445268e06da4"
+```python
 plt.figure(figsize=(5, 3))
 sns.histplot(train["humidity"], bins=50, kde=True)
 plt.title("이상치 제거 후 습도 시각화")
@@ -578,17 +527,12 @@ plt.tight_layout()
 plt.show()
 ```
 
-<!-- #region id="Td32QxOyNFs7" -->
-------------------------------------
-------------------------------------
+---
 # 3. 데이터 시각화
-<!-- #endregion -->
 
-<!-- #region id="mY3A-ANUSmSa" -->
-### (1) 변수별 대여량 다각도 시각화
-<!-- #endregion -->
+### 1) 변수별 대여량 다각도 시각화
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 409} id="ufdmbBT9MiaO" executionInfo={"status": "ok", "timestamp": 1756191572169, "user_tz": -540, "elapsed": 127, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="1b33a8aa-f65f-4608-e52a-b4d4c8beeb25"
+```python
 # 시간대별 자전거 대여량 - 평균
 
 plt.figure(figsize=(7,4))
@@ -605,7 +549,7 @@ plt.ylabel("count 평균")
 plt.show()
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 409} id="7jZYesJpAw7Y" executionInfo={"status": "ok", "timestamp": 1756191572424, "user_tz": -540, "elapsed": 251, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="cba584a4-3a53-4700-d216-849920cfec09"
+```python
 # 시간대별 자전거 대여량 - 합계
 
 plt.figure(figsize=(7,4))
@@ -622,13 +566,11 @@ plt.ylabel("count 합계")
 plt.show()
 ```
 
-<!-- #region id="XAryHabHN6De" -->
 새벽 시간과 저녁시간 대여량 급감
 
 **=> 출퇴근 시간 대여 급증**
-<!-- #endregion -->
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 332} id="KE7MBRyCNYx-" executionInfo={"status": "ok", "timestamp": 1756191572693, "user_tz": -540, "elapsed": 266, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="dcff8429-2521-4630-bc11-2aa280f9c4e9"
+```python
 # 월별 자전거 대여량 - 평균 기준
 
 plt.figure(figsize=(5,3))
@@ -639,7 +581,7 @@ plt.ylabel("평균 대여 건수")
 plt.show()
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 332} id="8_WGMaJ2OKjW" executionInfo={"status": "ok", "timestamp": 1756191572839, "user_tz": -540, "elapsed": 142, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="ddf60bab-4ef6-45a7-a4a4-be25acb55d1d"
+```python
 # 월별 자전거 대여량 - sum기준
 
 plt.figure(figsize=(5,3))
@@ -650,11 +592,9 @@ plt.ylabel("총 대여량")
 plt.show()
 ```
 
-<!-- #region id="mhieJzAHOSaW" -->
 => 6-10월에 대여가 높은 트렌드가 있으며, 12-2월은 대여가 매우 적다
-<!-- #endregion -->
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 332} id="bEPCiNpFT7gu" executionInfo={"status": "ok", "timestamp": 1756191572956, "user_tz": -540, "elapsed": 122, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="127ea2fb-4b8b-4fe5-d095-e712a2d51843"
+```python
 # 계절별 자전거 대여량 - 평균 기준
 
 plt.figure(figsize=(5,3))
@@ -665,7 +605,7 @@ plt.ylabel("평균 대여 건수")
 plt.show()
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 332} id="HPgdimCKTxgI" executionInfo={"status": "ok", "timestamp": 1756191573277, "user_tz": -540, "elapsed": 325, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="7ebaee80-3bba-4fd1-a4be-af957e53d630"
+```python
 # 계절별 자전거 대여량 - sum기준
 
 plt.figure(figsize=(5,3))
@@ -676,11 +616,9 @@ plt.ylabel("총 대여량")
 plt.show()
 ```
 
-<!-- #region id="9dQ710dwUDZZ" -->
 => 여름에 특히 대여랑이 가장 많고, 겨울엔 대여량이 감소하는 경향이 있다
-<!-- #endregion -->
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 332} id="ErDRC-OcOGa5" executionInfo={"status": "ok", "timestamp": 1756191573282, "user_tz": -540, "elapsed": 8, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="c2050202-a53b-4ff3-e34a-ca4e86406303"
+```python
 # 요일별 대여 (workingday로 그룹핑)
 
 plt.figure(figsize=(4,3))
@@ -691,11 +629,9 @@ plt.ylabel("평균 자전거 대여량")
 plt.show()
 ```
 
-<!-- #region id="Ax5jM4KtOZAT" -->
 => 평일의 대여 건수가 좀더 많으나, 휴일과 큰 차이는 없음
-<!-- #endregion -->
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 442} id="MNZv9L5pOUcH" executionInfo={"status": "ok", "timestamp": 1756191573387, "user_tz": -540, "elapsed": 104, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="92e7ddb6-1368-4fa5-8fac-03ca32a476b1"
+```python
 # 풍속별 대여 현황 - 평균
 
 plt.figure(figsize=(8, 4))
@@ -706,7 +642,7 @@ plt.xticks(rotation=45)
 plt.show()
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 442} id="YIcsEawKnPgY" executionInfo={"status": "ok", "timestamp": 1756191573693, "user_tz": -540, "elapsed": 302, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="5ad5942f-f68a-4700-d8a9-3df2b9f0d177"
+```python
 # 풍속별 대여 현황 - 합계
 
 plt.figure(figsize=(8, 4))
@@ -717,14 +653,12 @@ plt.xticks(rotation=45)
 plt.show()
 ```
 
-<!-- #region id="Dxpml4Ibpc7n" -->
 평균만으로 볼 수 없던 자전거 대여량 추이를 합계를 통해 확인 할 수 있음
 
 1. 이상치 처리를 평균으로 하면서 평균값인 10.5241에 집중 분포된 것 확인
 2. 바람의 세기가 세면 대여량 총합이 급감
-<!-- #endregion -->
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 332} id="BWKhelYYPmfq" executionInfo={"status": "ok", "timestamp": 1756191573799, "user_tz": -540, "elapsed": 102, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="38f0f6cd-6d9f-44f8-93f2-fe46e4021aa5"
+```python
 # 날씨별 대여
 
 plt.figure(figsize=(5,3))
@@ -735,23 +669,21 @@ plt.ylabel("평균 자전거 대여량")
 plt.show()
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 135} id="iQXVlkINPvXQ" executionInfo={"status": "ok", "timestamp": 1756191573801, "user_tz": -540, "elapsed": 9, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="04f9d15e-263e-4cc4-c811-e22e41effccf"
+```python
 train[train["weather"]==4]
 ```
 
-<!-- #region id="u4_RkHyLP5j9" -->
 => weather==4인 데이터는 1건
 
  - 위 그래프만으론 데이터의 추이를 파악하기엔 무리가 있음
-<!-- #endregion -->
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 174} id="jIPlXNxePxhn" executionInfo={"status": "ok", "timestamp": 1756191573851, "user_tz": -540, "elapsed": 47, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="5b825782-3888-4048-98af-d1a08e1358b0"
+```python
 # weather별 그루핑해서 데이터 보기
 weather_grouped  = train.groupby("weather")["count"].agg(["sum", "count", "mean"]).reset_index()
 weather_grouped
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 563} id="zMZQpXWxQl8h" executionInfo={"status": "ok", "timestamp": 1756191574088, "user_tz": -540, "elapsed": 234, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="bc6e6557-9729-4fee-fa1f-8b70203781b2"
+```python
 # 날씨별 대여수 총합 시각화
 
 plt.figure(figsize=(5,6))
@@ -766,16 +698,14 @@ plt.ylabel("자전거 총 대여량")
 plt.show()
 ```
 
-<!-- #region id="9zIix5i7QsqD" -->
 => 날씨가 좋을때 자전거 대여가 가장 많으며, 비나 눈이 올 경우 대여량이 급감한다
-<!-- #endregion -->
 
-```python id="H8PoAYuHQpOp" executionInfo={"status": "ok", "timestamp": 1756191574099, "user_tz": -540, "elapsed": 8, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # 온도(temp)에 따른 대여 건수(행 개수) 계산
 temp_bins = train.groupby('temp').size().reset_index(name='count')
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 332} id="GQ8ipPP1Qwac" executionInfo={"status": "ok", "timestamp": 1756191574208, "user_tz": -540, "elapsed": 114, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="a507af83-781a-47da-f05c-1c1e697545b5"
+```python
 # 온도와 대여량 관계
 
 plt.figure(figsize=(8,3))
@@ -785,19 +715,17 @@ plt.xlabel("온도")
 plt.show()
 ```
 
-<!-- #region id="Q5metcjgQ4e0" -->
 => 각 온도에 대한 대여량 시각화
 
 count를 세서 나타내는 것이 아닌 단순 빈도수 설정
 
 따라서 온도에 대한 값으로 표현하기는 좀 애매함
 
--------------------------------------------------
+---
 
 온도에서 count수 자체가 어떻게 변하는지를 보기 위해, 온도별 count변수의 평균을 보는 방향으로 진행하기로 함
-<!-- #endregion -->
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 332} id="gn7V2Sg7QxYd" executionInfo={"status": "ok", "timestamp": 1756191574567, "user_tz": -540, "elapsed": 373, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="61eb1fc1-4103-4aa5-9f59-afc0704d33b2"
+```python
 # 온도별 평균 대여량 계산
 temp_avg = train.groupby("temp")["count"].mean().reset_index()
 
@@ -811,11 +739,9 @@ plt.grid(True)
 plt.show()
 ```
 
-<!-- #region id="bmAZvtaMRBAs" -->
 => 36도까진 온도가 올라갈 수록 자전거 대여량이 높아지는 경향이 있음
-<!-- #endregion -->
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 332} id="Qi8Ws1Ee0RZ9" executionInfo={"status": "ok", "timestamp": 1756191574615, "user_tz": -540, "elapsed": 50, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="034aed6e-ea8f-4fb9-a529-0942e1d08c33"
+```python
 # 요일별 자전거 대여량 - 평균
 
 plt.figure(figsize=(8,3))
@@ -826,7 +752,7 @@ plt.ylabel("평균 자전거 대여량")
 plt.show()
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 332} id="yu6QqpzH4R2d" executionInfo={"status": "ok", "timestamp": 1756191574882, "user_tz": -540, "elapsed": 263, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="eff57dbc-a737-4b1f-9ee0-1ad19dd89bbd"
+```python
 # 요일별 자전거 대여량 - 총합
 
 plt.figure(figsize=(8,3))
@@ -837,17 +763,13 @@ plt.ylabel("평균 자전거 대여량")
 plt.show()
 ```
 
-<!-- #region id="J541_k2j5bFW" -->
 => 요일별 대여 현황엔 큰 차이는 없음
-<!-- #endregion -->
 
-<!-- #region id="vhAijtWFRV6s" -->
-### (2) 상관관계 시각화
+### 2) 상관관계 시각화
 
 모델링 전에 변수들 파악하기 위해 진행
-<!-- #endregion -->
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 783} id="--SqoSzYQ7d9" executionInfo={"status": "ok", "timestamp": 1756191575815, "user_tz": -540, "elapsed": 928, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="502e7bab-f257-4520-aee7-8f91e028c492"
+```python
 # 수치형 변수만 추출해서 전체 상관관계 히트맵 생성
 numeric_df = train.select_dtypes(include="number")
 
@@ -862,24 +784,22 @@ plt.tight_layout()
 plt.show()
 ```
 
-<!-- #region id="nmE7la2CSel7" -->
-### (3) 습도와 풍속 구간별 대여량
-<!-- #endregion -->
+### 3) 습도와 풍속 구간별 대여량
 
-```python id="wkoUecyrRxcT" executionInfo={"status": "ok", "timestamp": 1756191575822, "user_tz": -540, "elapsed": 4, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # 습도 구간화
 bins = [0, 30, 60, train['humidity'].max()]                                                         # 저습도, 중간 습도, 고습도
 labels = ['Low', 'Medium', 'High']
 train['humidity_bin'] = pd.cut(train['humidity'], bins=bins, labels=labels, include_lowest=True)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 143} id="aj9w0x-4UdAG" executionInfo={"status": "ok", "timestamp": 1756191575871, "user_tz": -540, "elapsed": 45, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="d3483b11-aae8-43ab-fc4b-d48807f4c616"
+```python
 # 구간별 대여량 평균
 humidity_analysis = train.groupby('humidity_bin')['count'].mean().reset_index()
 humidity_analysis
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 332} id="i52x-R3QU3u9" executionInfo={"status": "ok", "timestamp": 1756191575876, "user_tz": -540, "elapsed": 9, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="a732a5ba-b588-4644-fd34-fb11e54dd584"
+```python
 # 습도 구간별 대여량 시각화 - 평균 기준
 
 plt.figure(figsize=(4,3))
@@ -890,13 +810,13 @@ plt.ylabel('대여량 평균')
 plt.show()
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 143} id="MwJhnFUwWs1J" executionInfo={"status": "ok", "timestamp": 1756191575883, "user_tz": -540, "elapsed": 6, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="c64d667e-44d8-4758-d8ee-fe21e5fceab0"
+```python
 # 구간별 대여량 총합
 humidity_analysis = train.groupby('humidity_bin')['count'].sum().reset_index()
 humidity_analysis
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 332} id="_A4ltANOWwUd" executionInfo={"status": "ok", "timestamp": 1756191575893, "user_tz": -540, "elapsed": 6, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="86e529f3-9505-4bc1-c508-faccca977cd6"
+```python
 # 습도 구간별 대여량 시각화 - 총합 기준
 
 plt.figure(figsize=(4,3))
@@ -907,16 +827,14 @@ plt.ylabel('대여량 총합')
 plt.show()
 ```
 
-<!-- #region id="5vzGS-dxW-Xa" -->
 => 습도가 너무 낮을땐 자전거 대여 총합이 작고, 중간과 높을 때 대여량이 많다
  - 일반적으로 육지는 겨울의 경우 매우 낮아지는 경우가 대부분
     - 해양성 기후 혹은 상대적 우리나라 가을날씨를 겨울로 부르는 곳은 겨울에 습도가 높아지기도 함. 하지만 대개는 겨울에 습도가 낮아짐
     - 해양성 기후 습도 높아지는 것에 대한 정보: https://geo.libretexts.org/Bookshelves/Geography_%28Physical%29/The_Physical_Environment_%28Ritter%29/09%3A_Climate_Systems/9.05%3A_Midlatitude_and_Subtropical_Climates/9.5.06%3A_Marine_%28Humid%29_West_Coast_Climate
         - Not only is the **marine west coast** noted for its **mild temperatures** but also for its heavy cloud cover and **high humidity** through much of the year.
  - 해당 데이터가 육지에 위치한 도시로 예상
-<!-- #endregion -->
 
-```python id="D4JOxQ3YUTMF" executionInfo={"status": "ok", "timestamp": 1756191575899, "user_tz": -540, "elapsed": 3, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # 풍속 구간화
 
 bins = [0, 5, 10, 15, train['windspeed'].max()]
@@ -925,13 +843,13 @@ labels = ['Very Low', 'Low', 'Medium', 'High']
 train['windspeed_bin'] = pd.cut(train['windspeed'], bins=bins, labels=labels, include_lowest=True)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 174} id="KukoZDyKVk4x" executionInfo={"status": "ok", "timestamp": 1756191575911, "user_tz": -540, "elapsed": 8, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="d241c820-dae7-4847-8973-e1a5a7ea966d"
+```python
 # 구간별 대여량 평균
 windspeed_analysis = train.groupby('windspeed_bin')['count'].mean().reset_index()
 windspeed_analysis
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 332} id="KR3UVt6kVp5X" executionInfo={"status": "ok", "timestamp": 1756191575990, "user_tz": -540, "elapsed": 76, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="dba5604d-47d2-41a6-d38b-5f4465e6ce6e"
+```python
 # 풍속 구간별 대여량 시각화 - 평균 기준
 plt.figure(figsize=(4,3))
 sns.barplot(data=windspeed_analysis, x='windspeed_bin', y='count')
@@ -941,13 +859,13 @@ plt.ylabel('대여량 평균')
 plt.show()
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 174} id="wFZlKbnuVzvc" executionInfo={"status": "ok", "timestamp": 1756191575998, "user_tz": -540, "elapsed": 5, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="f5e6eea3-f19e-4e79-c664-ddcfe669cee9"
+```python
 # 구간별 대여량 총합
 windspeed_analysis = train.groupby('windspeed_bin')['count'].sum().reset_index()
 windspeed_analysis
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 332} id="PtD-NQZoXzMQ" executionInfo={"status": "ok", "timestamp": 1756191576124, "user_tz": -540, "elapsed": 123, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="e44165a7-6486-4b3f-9a9f-bd76a8b01b4d"
+```python
 # 풍속 구간별 대여량 시각화 - 총합 기준
 plt.figure(figsize=(4,3))
 sns.barplot(data=windspeed_analysis, x='windspeed_bin', y='count', estimator=np.sum)
@@ -957,33 +875,26 @@ plt.ylabel('대여량 총합')
 plt.show()
 ```
 
-<!-- #region id="YAPootzKYBZQ" -->
 => 바람은 어떤 트렌드를 발견하긴 어려우나, 바람이 세면 대여량 총합이 떨어지는 것은 확인
 - 여기서 풍속은 고민해 볼 필요가 있음
 - 해당 지역이 바람부는 날이 워낙 적은가? 혹은 정말 바람이 적은 때 자전거를 잘 안 빌리는가?
 
     => 바람이 강할수록 자전거를 잘 빌린다는 것은 상식에 어긋남
-<!-- #endregion -->
 
-<!-- #region id="KlJNCcmwYyg6" -->
--------------------------
--------------------------
+---
 # 4. 모델링
-<!-- #endregion -->
 
-<!-- #region id="mRmz1ZTqY3jP" -->
-### (1) 1차 모델링
+### 1) 1차 모델링
 
 현재까지 전처리한 데이터 기반, 회귀 모델링 실시
-<!-- #endregion -->
 
-```python id="JWSWocCBaGbD" executionInfo={"status": "ok", "timestamp": 1756191576131, "user_tz": -540, "elapsed": 4, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # 모델링 타겟 변수 지정
 features_1 = ['season', 'holiday', 'workingday', 'weather', 'temp',
        'atemp', 'humidity', 'windspeed', 'weekday_num', 'hour', 'month', 'year']
 ```
 
-```python id="wQ0xbMELaINa" executionInfo={"status": "ok", "timestamp": 1756191576138, "user_tz": -540, "elapsed": 4, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # 데이터 지정
 X1_train = train[features_1]
 y1_train = train["log_count"]
@@ -992,12 +903,12 @@ y1_train = train["log_count"]
 X_test = test[features_1]
 ```
 
-```python id="EDu7JAOWawFZ" executionInfo={"status": "ok", "timestamp": 1756191576144, "user_tz": -540, "elapsed": 2, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # 학습/검증 분할
 X1_train, X1_val, y1_train, y1_val = train_test_split(X1_train, y1_train, test_size=0.3, random_state=42)
 ```
 
-```python id="BXO-Oe_pboQV" executionInfo={"status": "ok", "timestamp": 1756191576154, "user_tz": -540, "elapsed": 6, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # 회귀 모델 정의
 
 models = {
@@ -1010,7 +921,7 @@ models = {
 }
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 80} id="1p3WJn0LbxCx" executionInfo={"status": "ok", "timestamp": 1756191576205, "user_tz": -540, "elapsed": 55, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="6c47eea7-a936-4d71-b417-0b6e5ff630b0"
+```python
 # 모델 훈련 - 할 필요없으나 예시로 붙
 model_lr = LinearRegression()
 model_lr.fit(X1_train, y1_train)
@@ -1031,7 +942,7 @@ model_3poly = PolynomialFeatures()
 model_3poly.fit(X1_train, y1_train)
 ```
 
-```python id="yppPCXb_bxT_" executionInfo={"status": "ok", "timestamp": 1756191576760, "user_tz": -540, "elapsed": 554, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # 모델 학습 및 평가
 results_1 = []
 
@@ -1057,29 +968,25 @@ for name, model in models.items():
     })
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 237} id="5-tmpYdjTpV9" executionInfo={"status": "ok", "timestamp": 1756191576809, "user_tz": -540, "elapsed": 46, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="c62db5ba-a8ac-4fba-d7e7-07d4dfdd7eed"
+```python
 # 모델 결과 확인
 results_1 = pd.DataFrame(results_1)
 results_1
 ```
 
-<!-- #region id="ZLICR4m0WeZ7" -->
 => 3차 다항 회귀의 결과가 가장 좋음
 
 - 변수가 늘어나면 결국 점수가 나아지는 걸까?!?
 
 기본 모델링이었기 때문에 이후로 점수 올릴 방법론 강구
-<!-- #endregion -->
 
-<!-- #region id="S9_I0ik1UdGY" -->
-### (2) 2차 모델링
+### 2) 2차 모델링
 
 Ridge, Lasso와 Elasticnet의 하이퍼 파라미터 조정
 
 다항 회귀는 2차만 진행하기로 결정
-<!-- #endregion -->
 
-```python id="7uksTj5ATt3s" executionInfo={"status": "ok", "timestamp": 1756191576861, "user_tz": -540, "elapsed": 46, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # 파라미터 그리드 정의
 param_grids = {
     "Ridge": {"alpha": [0.001, 0.01, 0.1, 1, 10, 100, 1000]},
@@ -1092,7 +999,7 @@ param_grids = {
 }
 ```
 
-```python id="pRsLn2zbHhqG" executionInfo={"status": "ok", "timestamp": 1756191576866, "user_tz": -540, "elapsed": 2, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # 회귀 모델 재정의
 
 models_2 = {
@@ -1104,7 +1011,7 @@ models_2 = {
 }
 ```
 
-```python id="GUZreRuHXYqL" executionInfo={"status": "ok", "timestamp": 1756191580241, "user_tz": -540, "elapsed": 3372, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # 최종 모델 결과 저장 리스트
 results_2 = []
 
@@ -1140,23 +1047,19 @@ for name, base_model in models_2.items():
 
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 223} id="gqI3cuHeXYnh" executionInfo={"status": "ok", "timestamp": 1756191580286, "user_tz": -540, "elapsed": 46, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="661a3a35-86e3-4c37-d665-a7d08565ead1"
+```python
 # 모델 결과 확인
 results_2 = pd.DataFrame(results_2)
 results_2
 ```
 
-<!-- #region id="JNXGtcKlYcGx" -->
 => 결과의 큰 차이 없음
-<!-- #endregion -->
 
-<!-- #region id="GM6aCQEuYita" -->
-### (3) 3차 모델링
+### 3) 3차 모델링
 
 파생 변수 추가하고 바람 변수만 빼고 모델링하기
-<!-- #endregion -->
 
-```python id="JTJ3G3BiXYkt" executionInfo={"status": "ok", "timestamp": 1756191580317, "user_tz": -540, "elapsed": 33, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # 시간대별 정보를 담은 여러 파생변수 추가
 
 def add_feature_engineering(df):
@@ -1168,21 +1071,21 @@ def add_feature_engineering(df):
     return df
 ```
 
-```python id="29OzzEV_Y1dy" executionInfo={"status": "ok", "timestamp": 1756191580340, "user_tz": -540, "elapsed": 18, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # 위 함수 적용
 train = add_feature_engineering(train)
 test = add_feature_engineering(test)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 297} id="9fw4-vq5Y-ka" executionInfo={"status": "ok", "timestamp": 1756191580397, "user_tz": -540, "elapsed": 6, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="11c9c239-ac75-43d5-e8ad-0e8f00ee2dd1"
+```python
 train.head(3)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 267} id="uw7dKk5oY_ew" executionInfo={"status": "ok", "timestamp": 1756191580443, "user_tz": -540, "elapsed": 43, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="b3177572-ab55-4627-dcbe-918fa25129af"
+```python
 test.head(3)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 307} id="Q0cGXAHiZB-x" executionInfo={"status": "ok", "timestamp": 1756191580771, "user_tz": -540, "elapsed": 325, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="315a23e0-d082-4ded-da32-226590769a2a"
+```python
 # 시간대별 정보로 다시 시각화
 
 plt.figure(figsize=(8, 3))
@@ -1215,11 +1118,9 @@ plt.tight_layout()
 plt.show()
 ```
 
-<!-- #region id="mD-NqqcUZNNb" -->
 => 오전과 낮에 평균 대여량이 높고, 러시아워에 특히 대여량이 많음
-<!-- #endregion -->
 
-```python id="mSlG_2o1ZUDE" executionInfo={"status": "ok", "timestamp": 1756191886158, "user_tz": -540, "elapsed": 40, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # 모델링 타깃 변수 지정
 features_2 = ['season', 'holiday', 'workingday', 'weather', 'temp',
               'atemp', 'humidity', 'hour', 'month','year','week_day',
@@ -1227,7 +1128,7 @@ features_2 = ['season', 'holiday', 'workingday', 'weather', 'temp',
               'is_workhour']
 ```
 
-```python id="c0SvbfKNZY2f" executionInfo={"status": "ok", "timestamp": 1756191886869, "user_tz": -540, "elapsed": 63, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # 독립변수 종속변수 지정
 
 X3_train = train[features_2]
@@ -1237,13 +1138,13 @@ y3_train = train["log_count"]
 X3_test = test[features_2]
 ```
 
-```python id="_b2X6cqiZ6_f" executionInfo={"status": "ok", "timestamp": 1756191887865, "user_tz": -540, "elapsed": 44, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # 학습/검증 분할
 
 X3_train, X3_val, y3_train, y3_val = train_test_split(X3_train, y3_train, test_size=0.3, random_state=42)
 ```
 
-```python id="MIuyoApoaEJh" executionInfo={"status": "ok", "timestamp": 1756191889537, "user_tz": -540, "elapsed": 681, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # 모델 학습 및 평가
 results_3 = []
 
@@ -1269,31 +1170,27 @@ for name, model in models_2.items():
     })
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 206} id="13wyhHila-rf" executionInfo={"status": "ok", "timestamp": 1756191890123, "user_tz": -540, "elapsed": 86, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="eed20afa-984c-4581-ba1b-af583c9458c0"
+```python
 # 모델 결과 확인
 results_3 = pd.DataFrame(results_3)
 results_3
 ```
 
-<!-- #region id="dU16gw5skDG1" -->
 ==> 풍속을 제거하기 전과 제거한 후, RMSLE점수가 하락하는 현상 확인
 
 - 제거 전
-   
+
     - Polynomial_2nd: 0.497600
 
 - 제거 후
-   
-    - Polynomial_2nd: 0.497436
-<!-- #endregion -->
 
-<!-- #region id="BUfCE2_fYoWN" -->
-###(4) 4차 모델링
+    - Polynomial_2nd: 0.497436
+
+### 4) 4차 모델링
 
 이상적인 날씨에 대해 파생변수 만든 뒤 풍속 제거 후 모델링
-<!-- #endregion -->
 
-```python id="ZtRx7v3pa93W" executionInfo={"status": "ok", "timestamp": 1756191581130, "user_tz": -540, "elapsed": 4, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # 함수 정의
 def add_ideal_weather(df):
     # 습도 구간화 및 매핑
@@ -1308,13 +1205,13 @@ def add_ideal_weather(df):
     return df
 ```
 
-```python id="TB6-cXQVbMyI" executionInfo={"status": "ok", "timestamp": 1756191581209, "user_tz": -540, "elapsed": 73, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # 함수 적용
 train = add_ideal_weather(train)
 test = add_ideal_weather(test)
 ```
 
-```python id="Ai31SK5_bCby" executionInfo={"status": "ok", "timestamp": 1756191581210, "user_tz": -540, "elapsed": 42, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # 모델링 타깃 변수 지정
 features_3 = ['season', 'holiday', 'workingday', 'weather', 'temp',
               'atemp', 'humidity', 'hour', 'month','year','weekday',
@@ -1322,7 +1219,7 @@ features_3 = ['season', 'holiday', 'workingday', 'weather', 'temp',
               'is_workhour', 'humidity_ideal','weather_ideal']
 ```
 
-```python id="vx0aFKiqZby9" executionInfo={"status": "ok", "timestamp": 1756191581212, "user_tz": -540, "elapsed": 23, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # 독립변수 종속변수 지정
 
 X4_train = train[features_3]
@@ -1332,13 +1229,13 @@ y4_train = train["log_count"]
 X4_test = test[features_3]
 ```
 
-```python id="CvKe04xBZkrw" executionInfo={"status": "ok", "timestamp": 1756191581213, "user_tz": -540, "elapsed": 18, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # 학습/검증 분할
 
 X4_train, X4_val, y4_train, y4_val = train_test_split(X4_train, y4_train, test_size=0.3, random_state=42)
 ```
 
-```python executionInfo={"status": "ok", "timestamp": 1756191581214, "user_tz": -540, "elapsed": 15, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} id="pLqK7DjPHy0p"
+```python
 # 회귀 모델 재정의 - Best Param사용
 
 models_3 = {
@@ -1350,7 +1247,7 @@ models_3 = {
 }
 ```
 
-```python id="GJEiKq2oZkrx" executionInfo={"status": "ok", "timestamp": 1756191581437, "user_tz": -540, "elapsed": 233, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # 모델 학습 및 평가
 results_4 = []
 
@@ -1376,19 +1273,17 @@ for name, model in models_3.items():
     })
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 206} executionInfo={"status": "ok", "timestamp": 1756191581546, "user_tz": -540, "elapsed": 85, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="813d6860-d59f-4b6f-bcbb-d6393c6ace13" id="zm1K672MZkry"
+```python
 # 모델 결과 확인
 results_4 = pd.DataFrame(results_4)
 results_4
 ```
 
-<!-- #region id="6O2LPNstM7f1" -->
-### (5) 5차 모델링
+### 5) 5차 모델링
 
 풍속을 표준화 한 다음 타킷 변수에 지정하여 활용
-<!-- #endregion -->
 
-```python id="RhCOL9aNM7MW" executionInfo={"status": "ok", "timestamp": 1756192374105, "user_tz": -540, "elapsed": 41, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # 표준화 - from sklearn.preprocessing import StandardScaler
 scaler = StandardScaler()
 
@@ -1396,7 +1291,7 @@ train["windspeed_z"] = scaler.fit_transform(train[["windspeed"]]).ravel()      #
 test["windspeed_z"] = scaler.fit_transform(test[["windspeed"]]).ravel()
 ```
 
-```python executionInfo={"status": "ok", "timestamp": 1756192715310, "user_tz": -540, "elapsed": 2, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} id="JfFTIg06M71p"
+```python
 # 모델링 타깃 변수 지정
 features_4 = ['season', 'holiday', 'workingday', 'weather', 'temp',
               'atemp', 'humidity', 'weekday_num', 'hour', 'month', 'year',
@@ -1404,7 +1299,7 @@ features_4 = ['season', 'holiday', 'workingday', 'weather', 'temp',
               'is_workhour', 'windspeed_z']
 ```
 
-```python executionInfo={"status": "ok", "timestamp": 1756192716103, "user_tz": -540, "elapsed": 20, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} id="DHwAGrd1M71p"
+```python
 # 독립변수 종속변수 지정
 
 X5_train = train[features_4]
@@ -1414,13 +1309,13 @@ y5_train = train["log_count"]
 X5_test = test[features_4]
 ```
 
-```python executionInfo={"status": "ok", "timestamp": 1756192740454, "user_tz": -540, "elapsed": 20, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} id="jR2NS4zEM71p"
+```python
 # 학습/검증 분할
 
 X5_train, X5_val, y5_train, y5_val = train_test_split(X5_train, y5_train, test_size=0.3, random_state=42)
 ```
 
-```python executionInfo={"status": "ok", "timestamp": 1756192785740, "user_tz": -540, "elapsed": 1007, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} id="WbWNlz0KM71q"
+```python
 # 모델 학습 및 평가
 results_5 = []
 
@@ -1446,19 +1341,17 @@ for name, model in models_2.items():
     })
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 206} executionInfo={"status": "ok", "timestamp": 1756192794555, "user_tz": -540, "elapsed": 39, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="98282acf-ccb9-477d-cdc7-b0ea1021d32f" id="QQUlN_66M71q"
+```python
 # 모델 결과 확인
 results_5 = pd.DataFrame(results_5)
 results_5
 ```
 
-<!-- #region id="74EfXfOakX3v" -->
-### (6) 6차 모델링
+### 6) 6차 모델링
 
 XGBoost로 위의 변수들 모델링
-<!-- #endregion -->
 
-```python id="70ZBVcsnkAlR" executionInfo={"status": "ok", "timestamp": 1756192888604, "user_tz": -540, "elapsed": 497, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 from xgboost import XGBRegressor
 
 model_xg = XGBRegressor()
@@ -1468,7 +1361,7 @@ y5_pred = np.expm1(y5_pred_log)
 y5_true = np.expm1(y5_val)
 ```
 
-```python id="UBBPSv4rksZ7" executionInfo={"status": "ok", "timestamp": 1756192889395, "user_tz": -540, "elapsed": 31, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 mae = mean_absolute_error(y5_true, y5_pred)
 mse = mean_squared_error(y5_true, y5_pred)
 rmse = np.sqrt(mean_squared_error(y5_true, y5_pred))
@@ -1476,7 +1369,7 @@ rmsle = np.sqrt(mean_squared_log_error(y5_true, y5_pred))
 r2 = r2_score(y5_true, y5_pred)
 ```
 
-```python id="a3lqrIuak5o6" executionInfo={"status": "ok", "timestamp": 1756192891032, "user_tz": -540, "elapsed": 3, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 results_6 = []
 
 results_6.append({
@@ -1489,21 +1382,17 @@ results_6.append({
     })
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 89} id="WGvX7IgUlBmV" executionInfo={"status": "ok", "timestamp": 1756192892385, "user_tz": -540, "elapsed": 31, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="48f12201-5155-4faf-8b51-118ad9e658a2"
+```python
 # 모델 결과 확인
 results_6 = pd.DataFrame(results_6)
 results_6
 ```
 
-<!-- #region id="Jt1cPo9hmf92" -->
 ==> XGBoost를 이용했을때 성능이 가장 좋음
-<!-- #endregion -->
 
-<!-- #region id="Tc56L3okmlOp" -->
 # 5. 결과 저장
-<!-- #endregion -->
 
-```python id="f1oAZkt3PxKU" executionInfo={"status": "ok", "timestamp": 1756193254534, "user_tz": -540, "elapsed": 100, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # X_test 전처리
 X_final_test = test.loc[:, ~test.columns.isin(["datetime", "windspeed", "humidity_bin", "weekday_name", "humidity_ideal", "weather_ideal"])]
 
@@ -1523,6 +1412,6 @@ submission = pd.DataFrame({
 submission.to_csv('/content/drive/MyDrive/코드잇/AI 엔지니어 5기/공유폴더/Data/bike_submission.csv', index=False)
 ```
 
-```python id="Giz4gJ-BRmoR"
+```python
 
 ```

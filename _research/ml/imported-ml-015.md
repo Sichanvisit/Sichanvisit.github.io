@@ -59,7 +59,6 @@ tags:
   </div>
 </div>
 
-<!-- #region id="LUKfOGlUH4Oj" -->
 사이킷런 링크: https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_wine.html
 
 - 클래스 수: 3개
@@ -83,9 +82,7 @@ tags:
 | od280/od315\_of\_diluted\_wines | 희석 와인의 OD280/OD315 |
 | proline                         | 프롤린                |
 
-<!-- #endregion -->
-
-```python id="dw6Ln0CXHrp9" executionInfo={"status": "ok", "timestamp": 1756341843831, "user_tz": -540, "elapsed": 578, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 from sklearn.datasets import load_wine
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
@@ -93,17 +90,17 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score, classification_report
 ```
 
-```python id="6Il9pCpEIbPw" executionInfo={"status": "ok", "timestamp": 1756341945936, "user_tz": -540, "elapsed": 28, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 wine = load_wine()
 X, y = wine.data, wine.target
 target_names = wine.target_names
 ```
 
-```python id="eMxJJj3cI0Tx" executionInfo={"status": "ok", "timestamp": 1756341976919, "user_tz": -540, "elapsed": 12, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 ```
 
-```python id="AgyJmATtI74h" executionInfo={"status": "ok", "timestamp": 1756342075245, "user_tz": -540, "elapsed": 27, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # 표준화
 
 scaler = StandardScaler()
@@ -111,45 +108,45 @@ X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.fit_transform(X_test)
 ```
 
-```python id="YXBdie3lJT44" executionInfo={"status": "ok", "timestamp": 1756343389337, "user_tz": -540, "elapsed": 15, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 knn = KNeighborsClassifier(n_neighbors=1)
 knn.fit(X_train_scaled, y_train)
 y_pred = knn.predict(X_test_scaled)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="Uw-tOkzzJk2p" executionInfo={"status": "ok", "timestamp": 1756343389809, "user_tz": -540, "elapsed": 40, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="cd3ddde4-2ab6-4335-8a04-b1f7982d1110"
+```python
 accuracy_score(y_test, y_pred)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="wUfsvpqFJo1d" executionInfo={"status": "ok", "timestamp": 1756343390587, "user_tz": -540, "elapsed": 13, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="db55e702-4e17-467c-89de-187523fa7106"
+```python
 print(classification_report(y_test, y_pred, target_names=target_names))
 ```
 
-```python id="glM5oidxJ132" executionInfo={"status": "ok", "timestamp": 1756343023064, "user_tz": -540, "elapsed": 12, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 from sklearn.model_selection import GridSearchCV
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 164} id="mvTeofIhM7Sw" executionInfo={"status": "ok", "timestamp": 1756343160510, "user_tz": -540, "elapsed": 942, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="306d4f5d-42b6-48d0-8887-0bd606ac1932"
+```python
 param_grid = {'n_neighbors': range(1, 31)}
 grid = GridSearchCV(KNeighborsClassifier(), param_grid, cv=5)
 grid.fit(X_train_scaled, y_train)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="4l7V8r35Ncnl" executionInfo={"status": "ok", "timestamp": 1756343198814, "user_tz": -540, "elapsed": 35, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="5818c69f-464c-40b4-d263-0a286ff586c5"
+```python
 best_k = grid.best_params_['n_neighbors']
 best_k
 ```
 
-```python id="c6yfxvuyNmMp" executionInfo={"status": "ok", "timestamp": 1756343312765, "user_tz": -540, "elapsed": 25, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # 최적의 K값으로 학습 및 평가
 best_model = grid.best_estimator_
 y_pred_best = best_model.predict(X_test_scaled)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} executionInfo={"status": "ok", "timestamp": 1756343340250, "user_tz": -540, "elapsed": 32, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="2a7c78e4-a189-4714-d24b-0512476e8220" id="Yqe3DuAqOFaG"
+```python
 accuracy_score(y_test, y_pred_best)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} executionInfo={"status": "ok", "timestamp": 1756343351398, "user_tz": -540, "elapsed": 28, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="075b7611-5ebe-48c1-f74d-771ff62849a2" id="BnkOnJXyOFaJ"
+```python
 print(classification_report(y_test, y_pred_best, target_names=target_names))
 ```

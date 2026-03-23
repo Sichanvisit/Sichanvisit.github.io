@@ -58,7 +58,7 @@ tags:
   </div>
 </div>
 
-```python id="Zduh3MdSc0qk" executionInfo={"status": "ok", "timestamp": 1756280202134, "user_tz": -540, "elapsed": 9, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.datasets import make_moons
 from sklearn.model_selection import train_test_split
@@ -69,15 +69,15 @@ import numpy as np
 from matplotlib.colors import ListedColormap           # 결정 경계 시각화 하기 위한 라이브러리
 ```
 
-```python id="dY7Mke0bdAfi" executionInfo={"status": "ok", "timestamp": 1756280247686, "user_tz": -540, "elapsed": 19, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 X, y = make_moons(n_samples=1000, noise=0.3, random_state=42)
 ```
 
-```python id="H7s7T1P9ddRt" executionInfo={"status": "ok", "timestamp": 1756280361857, "user_tz": -540, "elapsed": 12, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 164} id="f8m7eMsZdluu" executionInfo={"status": "ok", "timestamp": 1756280866975, "user_tz": -540, "elapsed": 2529, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="12a50a7d-ea4b-4325-a000-93a7ec229b43"
+```python
 base_estimator = DecisionTreeClassifier(max_depth=1)      # Stump생성
 ada_clf = AdaBoostClassifier(
     estimator=base_estimator,
@@ -87,13 +87,13 @@ ada_clf = AdaBoostClassifier(
 ada_clf.fit(X_train, y_train)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="d-0qp6XVeYCo" executionInfo={"status": "ok", "timestamp": 1756280868615, "user_tz": -540, "elapsed": 325, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="42194c2d-a94b-44c5-f7ed-0f791d4c29f8"
+```python
 y_pred = ada_clf.predict(X_test)
 acc = accuracy_score(y_test, y_pred)
 acc
 ```
 
-```python id="Sl42ov1jeiMr" executionInfo={"status": "ok", "timestamp": 1756280869584, "user_tz": -540, "elapsed": 17, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 def plot_decision_boundary(model, X, y, title="Decision Boundary"):
     cmap_light = ListedColormap(['#FFAAAA', '#AAAAFF'])
     cmap_bold = ListedColormap(['#FF0000', '#0000FF'])
@@ -115,10 +115,10 @@ def plot_decision_boundary(model, X, y, title="Decision Boundary"):
     plt.show()
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 564} id="6JbW8uNSenEq" executionInfo={"status": "ok", "timestamp": 1756280873966, "user_tz": -540, "elapsed": 3142, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="46167329-2d15-4583-8ed7-8554b91e52c6"
+```python
 plot_decision_boundary(ada_clf, X, y, title="AdaBoost Decision Boundary")
 ```
 
-```python id="swszcYkIeu-L"
+```python
 
 ```

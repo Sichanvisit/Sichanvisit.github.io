@@ -61,7 +61,7 @@ tags:
   </div>
 </div>
 
-```python id="d6zf4oyt_dAf" executionInfo={"status": "ok", "timestamp": 1756708657867, "user_tz": -540, "elapsed": 5762, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 from sklearn.datasets import load_wine
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
@@ -71,25 +71,25 @@ import pandas as pd
 from sklearn.metrics import silhouette_score
 ```
 
-```python id="Y3oisx2Q_sYs" executionInfo={"status": "ok", "timestamp": 1756708721892, "user_tz": -540, "elapsed": 32, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 wine = load_wine()
 X, y = wine.data, wine.target
 ```
 
-```python id="w010CgkG_sOq" executionInfo={"status": "ok", "timestamp": 1756708766735, "user_tz": -540, "elapsed": 7, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # 표준화
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)
 ```
 
-```python id="YahPoN74AIOW" executionInfo={"status": "ok", "timestamp": 1756708808319, "user_tz": -540, "elapsed": 27, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # PCA 적용
 
 pca = PCA()
 X_pca_all = pca.fit_transform(X_scaled)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 391} id="1fQcYu3GASWi" executionInfo={"status": "ok", "timestamp": 1756709081535, "user_tz": -540, "elapsed": 483, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="93325ddf-f80b-41b1-f35b-50af050f98db"
+```python
 # 스크리플롯
 
 plt.figure(figsize=(6,4))
@@ -104,20 +104,20 @@ plt.grid(True)
 plt.show()
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="k5BgOv4NA8CN" executionInfo={"status": "ok", "timestamp": 1756709301075, "user_tz": -540, "elapsed": 10, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="e8bad4ab-6c8f-4aea-eb14-d78350fc36da"
+```python
 # 설명 비율 출력
 for i, ratio in enumerate(pca.explained_variance_ratio_):
     print(f'PC{i+1}: {ratio:.2f}')
 ```
 
-```python id="eml-HnQ-CJMe" executionInfo={"status": "ok", "timestamp": 1756710197383, "user_tz": -540, "elapsed": 5, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # PCA 적용 - 2차원 축소
 
 pca = PCA(n_components=2)
 X_pca_2d = pca.fit_transform(X_scaled)
 ```
 
-```python id="nkkEuCeLCYbN" executionInfo={"status": "ok", "timestamp": 1756711412520, "user_tz": -540, "elapsed": 6, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # Kmeans
 
 k = 3
@@ -126,13 +126,13 @@ kmeans = KMeans(n_clusters=k)
 clusters = kmeans.fit_predict(X_pca_2d)          # fit_predict(): 학습과 동시에 클러스터 라벨 예측을 한번에 해주는 함수
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="JdLLetxbFoq1" executionInfo={"status": "ok", "timestamp": 1756711413301, "user_tz": -540, "elapsed": 20, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="e5b8470a-6c67-4c91-ee40-6a140f00d2f3"
+```python
 # 클러스터링 평가 (실루엣 스코어)
 sil_score = silhouette_score(X_pca_2d, clusters)
 print(sil_score)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 391} id="nPdZgCNYF7zT" executionInfo={"status": "ok", "timestamp": 1756711271936, "user_tz": -540, "elapsed": 307, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="b5412681-26f9-4a70-a7cc-5abcc529f10c"
+```python
 # 스크리 플랏
 
 sse = []                                            # SSE 저장용 빈 리스트
@@ -151,11 +151,9 @@ plt.xticks(k_range)
 plt.show()
 ```
 
-<!-- #region id="ZSzgQ0DuIquA" -->
 => K=3일때 실루엣 스코어가 가장 높다!
-<!-- #endregion -->
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 718} id="TW1PAGoeHhUf" executionInfo={"status": "ok", "timestamp": 1756711418674, "user_tz": -540, "elapsed": 295, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="45f0a6ce-87d5-4482-c13b-43ec0287723a"
+```python
 # 데이터 시각화
 
 plt.figure(figsize=(10,8))
@@ -168,6 +166,6 @@ plt.colorbar(scatter, label='Cluster Label')
 plt.show()
 ```
 
-```python id="AU2ptnIkJemy"
+```python
 
 ```

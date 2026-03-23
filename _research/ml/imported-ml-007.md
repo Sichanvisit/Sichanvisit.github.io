@@ -59,90 +59,90 @@ tags:
   </div>
 </div>
 
-```python id="5GpSfffr1Nxi" executionInfo={"status": "ok", "timestamp": 1755767117413, "user_tz": -540, "elapsed": 14008, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 from sklearn.datasets import fetch_california_housing
 ```
 
-```python id="vgE0ur4_38EG" executionInfo={"status": "ok", "timestamp": 1755767217317, "user_tz": -540, "elapsed": 1793, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # 데이터 불러오기
 X, y = fetch_california_housing(return_X_y = True)
 ```
 
-```python id="16NpzKFb4YNk"
+```python
 # 위와 같은 코드
 data = fetch_california_housing()
 X, y = data.data, data.target
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="dK1gTKwi4lpN" executionInfo={"status": "ok", "timestamp": 1755767298304, "user_tz": -540, "elapsed": 38, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="4b04aa9a-cfe9-4a23-859e-7c38232b8413"
+```python
 X.shape
 ```
 
-```python id="HQCWt3ZS4lm3" executionInfo={"status": "ok", "timestamp": 1755767503153, "user_tz": -540, "elapsed": 59, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # 테스트 데이터 트레이닝 데이터 분할
 from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3, random_state=42)
 ```
 
-```python id="AUfOhYkE4lkN" executionInfo={"status": "ok", "timestamp": 1755767533906, "user_tz": -540, "elapsed": 3, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 from sklearn.linear_model import LinearRegression
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 79} id="QBn3kT9r5nB7" executionInfo={"status": "ok", "timestamp": 1755767568887, "user_tz": -540, "elapsed": 152, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="e02262c9-df3f-41e2-bae1-2c1a18b056e9"
+```python
 # 모델링
 model_lr = LinearRegression()
 model_lr.fit(X_train, y_train)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="Pphmj_ff5viE" executionInfo={"status": "ok", "timestamp": 1755767584081, "user_tz": -540, "elapsed": 17, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="41a0aa1b-0cc8-4fa3-f320-1da44cabe833"
+```python
 model_lr.score(X_test, y_test)
 ```
 
-```python id="rOXQJAHy5zRj" executionInfo={"status": "ok", "timestamp": 1755767617837, "user_tz": -540, "elapsed": 7, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 from sklearn.linear_model import Ridge
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 79} id="gGGbhyZx57hB" executionInfo={"status": "ok", "timestamp": 1755768402089, "user_tz": -540, "elapsed": 54, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="9fbc109b-4fdd-405c-d22f-90140996e609"
+```python
 # 릿지 회귀 모델링
 model_ridge = Ridge(alpha=0.9)
 model_ridge.fit(X_train, y_train)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="jHR5hUTt6KQ2" executionInfo={"status": "ok", "timestamp": 1755768402595, "user_tz": -540, "elapsed": 47, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="5b0d07c7-0bbf-4ae3-9b13-afdde19903b8"
+```python
 model_ridge.score(X_test, y_test)
 ```
 
-```python id="4HV0YNor6Umt" executionInfo={"status": "ok", "timestamp": 1755767735354, "user_tz": -540, "elapsed": 22, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 from sklearn.linear_model import Lasso
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 79} id="vtcsWfQF6UkO" executionInfo={"status": "ok", "timestamp": 1755767765024, "user_tz": -540, "elapsed": 83, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="dfce5ed2-228b-45f1-f252-602d3bd0a9db"
+```python
 model_lasso = Lasso(alpha=0.5)
 model_lasso.fit(X_train, y_train)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="B_WXfo4m6Uhk" executionInfo={"status": "ok", "timestamp": 1755767799469, "user_tz": -540, "elapsed": 25, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="06264d7f-8ec5-4a22-9bb4-61a79ba332ff"
+```python
 model_lasso.score(X_test, y_test)
 ```
 
-```python id="RG7xtxKs6jQH" executionInfo={"status": "ok", "timestamp": 1755767842862, "user_tz": -540, "elapsed": 38, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 from sklearn.linear_model import ElasticNet
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 79} id="8_CIgkkr6ydE" executionInfo={"status": "ok", "timestamp": 1755767881087, "user_tz": -540, "elapsed": 323, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="10f4f270-7996-40df-aa88-15f59c017876"
+```python
 model_elastic = ElasticNet(alpha=0.1, l1_ratio=0.5)
 model_elastic.fit(X_train, y_train)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="WeqMYaAP67tV" executionInfo={"status": "ok", "timestamp": 1755767888926, "user_tz": -540, "elapsed": 28, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="b02971f1-5bd9-4c99-f412-c3b3e593a70b"
+```python
 model_elastic.score(X_test, y_test)
 ```
 
-```python id="81yZcw-J7qPL" executionInfo={"status": "ok", "timestamp": 1755768099049, "user_tz": -540, "elapsed": 19, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 from sklearn.metrics import mean_squared_error
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="G0s7xANn7vWH" executionInfo={"status": "ok", "timestamp": 1755768245948, "user_tz": -540, "elapsed": 30, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="3ba8fb79-8106-41e1-db27-71b942b0bfb7"
+```python
 print("LR MSE: ", mean_squared_error(y_test, model_lr.predict(X_test)))
 print("Ridge MSE: ", mean_squared_error(y_test, model_ridge.predict(X_test)))
 print("Lasso MSE: ", mean_squared_error(y_test, model_lasso.predict(X_test)))

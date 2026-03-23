@@ -63,8 +63,7 @@ tags:
   </div>
 </div>
 
-<!-- #region id="Bj_VPIjzvKHQ" -->
-# 🏦 미션 설명
+# 미션 설명
 
 - 결정 트리와 앙상블 기법을 사용하여 분류 모델을 구축
 - 🎯마케팅 캠페인의 효율성을 높이는 전략을 도출
@@ -72,12 +71,11 @@ tags:
     - 마케팅 캠페인의 효율성을 높이는 것
 - **최종 목표** : 가장 정확한 분류 모델을 개발하여 고객이 정기 예금을 가입할지 여부를 예측하고, 그 모델을 통해 도출한 인사이트를 바탕으로 비즈니스 전략을 제시하는 것
 
-### **데이터 설명**
+### 데이터 설명
 
 1. 2008년부터 2010년까지 포르투갈 은행 마케팅 캠페인 데이터
 2. 데이터 설명 txt에 따르면, duration은 종속변수와 연관이 큰 데이터
 3. 결측치는 unknown으로 표기
-
 
 | 컬럼명              | 설명                              |
 | ---------------- | ------------------------------- |
@@ -103,8 +101,7 @@ tags:
 | `nr.employed`    | 고용자 수 (숫자)                      |
 | `y`              | 정기 예금 가입 여부 (`'yes'` 또는 `'no'`) |
 
-
-### **📌 강사 Tip**
+### 강사 Tip
 
 > 데이터 설명을 읽었을 때, 해당 데이터는 크게 3가지가 독특함
 
@@ -127,39 +124,32 @@ tags:
 
  괜히 "가입할 거야!"라고 예측된 수십만 명에게 연락했는데, 실제 가입자는 몇 명 안 되면 인건비 낭비가 큼
 
-
  2. 모든 잠재 고객을 놓치지 않고 잡고 싶다
 
     => **Recall**을 높이자
 
  고객을 많이 확보하는 게 중요하고, 인건비보다 고객 전환율이 더 중요할 경우
 
-----------------------------------
-----------------------------------
-<!-- #endregion -->
+---
 
-<!-- #region id="BLI3CUDY-RSD" -->
 ## 참고 - 코랩(쥬피터 노트북) matplotlib 한글 오류 해결법
 
 김명환님 제공
 git: https://github.com/c0z0c/jupyter_hangul
-<!-- #endregion -->
 
-```python id="-4FyIuMI-frw" executionInfo={"status": "ok", "timestamp": 1756640614291, "user_tz": -540, "elapsed": 55615, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} colab={"base_uri": "https://localhost:8080/"} outputId="4b2e99cb-370c-4ac1-f6eb-f400284429ce"
+```python
 # 한줄 설치
 from urllib.request import urlretrieve; urlretrieve("https://raw.githubusercontent.com/c0z0c/jupyter_hangul/refs/heads/beta/helper_c0z0c_dev.py", "helper_c0z0c_dev.py")
 import helper_c0z0c_dev as helper
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="gtyhpt2-M2S4" executionInfo={"status": "ok", "timestamp": 1756640631622, "user_tz": -540, "elapsed": 17328, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="73ffd62b-78aa-468a-e253-ccf5cbcfa43f"
+```python
 !pip install catboost
 ```
 
-<!-- #region id="CXhleKkLCseM" -->
 # 1. 데이터 확인
-<!-- #endregion -->
 
-```python id="NsIt4eoqCumB"
+```python
 import time
 import pandas as pd
 import numpy as np
@@ -182,25 +172,24 @@ from sklearn.metrics import roc_curve
 #from sklearn.model_selection import GridSearchCV
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 226} id="FFK6S34kQLq9" executionInfo={"status": "ok", "timestamp": 1756645075873, "user_tz": -540, "elapsed": 36, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="432b83be-dfa9-49dd-b7d6-cb40b172989f"
+```python
 df = pd.read_csv("/content/drive/MyDrive/코드잇/AI 엔지니어 5기/공유폴더/Data/bank-additional-full.csv", sep=';')
 df.head()
 ```
 
-```python id="vcNd8NhsQb3i" colab={"base_uri": "https://localhost:8080/"} executionInfo={"status": "ok", "timestamp": 1756645075875, "user_tz": -540, "elapsed": 13, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="e05ac53a-8d78-4c6d-a2e6-f979db1056e9"
+```python
 df.info()
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="G3oxVJOkGvVE" executionInfo={"status": "ok", "timestamp": 1756645075910, "user_tz": -540, "elapsed": 38, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="29b3cb4f-0616-4012-f731-a7be0575611a"
+```python
 df.shape
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 320} id="EoN61zxXId2w" executionInfo={"status": "ok", "timestamp": 1756645076037, "user_tz": -540, "elapsed": 125, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="4a35fdca-cdfb-426c-d3cb-390fa6a1fe39"
+```python
 df.describe()
 ```
 
-<!-- #region id="xtPbhHl6Igs0" -->
-### **1차 데이터 확인**
+### 1차 데이터 확인
 
 1. 종속변수 y의 이진화 필요
 
@@ -224,9 +213,7 @@ df.describe()
 
 6. 데이터는 전체적으로 세 분류로 나눠짐
     - 고객 정보, 캠페인 정보, 경제지표
-<!-- #endregion -->
 
-<!-- #region id="V87zOBbfZqcH" -->
 ### 특정 컬럼 데이터 확인
 
 **1. Duration**
@@ -251,22 +238,19 @@ df.describe()
 
 - 은행 마케팅 캠페인에 연락을 자주 받는게 흔할까?
 - 이전 캠페인 연락받아서 가입하고 또 가입할 수 있을까?
-<!-- #endregion -->
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 178} id="xUOamWaCLqZQ" executionInfo={"status": "ok", "timestamp": 1756645076038, "user_tz": -540, "elapsed": 40, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="d318d748-2709-4835-be87-15e091601527"
+```python
 # 종속변수 y값 비율 확인
 df['y'].value_counts(normalize=True)
 ```
 
-<!-- #region id="QIY2RiODLwJt" -->
 => 정기 예금 가입 결과 비율이 낮은 데이터
 
 - 현실적으로 마케팅을 통해 가입하는 것의 비율이 낮을 것으로 판단
 - 단, 모델이 학습하는데 데이터 불균형이 좋지 않음
     - 비율에 대해 추후 고민해 볼 필요있음
-<!-- #endregion -->
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 390} id="07ZPs3qdVvQg" executionInfo={"status": "ok", "timestamp": 1756645076123, "user_tz": -540, "elapsed": 88, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="5adec84a-f2ad-4e55-ccb9-19a222ab1d36"
+```python
 # campaign - 이상치 확인
 
 plt.figure(figsize=(4,4))
@@ -276,7 +260,7 @@ plt.grid(True, alpha=0.4)
 plt.show()
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 332} id="Q_hhRyuLjW9V" executionInfo={"status": "ok", "timestamp": 1756645076259, "user_tz": -540, "elapsed": 137, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="6c328a7b-70e8-49c0-8088-fa1a870b44bf"
+```python
 # campaign - 막대그래프
 
 plt.figure(figsize=(8,3))
@@ -288,14 +272,12 @@ plt.grid(True, alpha=0.4)
 plt.show()
 ```
 
-<!-- #region id="6m9XHOajjMf4" -->
 - 대부분의 고객은 1~3회 내외의 연락만 받음
     - right-skewed(오른쪽으로 치우친) 분포
 - 로그 변환 없이 보면 값이 너무 안 나와서 로그로 바꾸고 확인 필요
 - 이상치 존재
-<!-- #endregion -->
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 332} id="f58CQvuVe9_U" executionInfo={"status": "ok", "timestamp": 1756645076661, "user_tz": -540, "elapsed": 402, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="9d4cbb66-1e0c-44f3-a94a-a3ffa9eccf8d"
+```python
 # campaign
 
 plt.figure(figsize=(8,3))
@@ -308,19 +290,18 @@ plt.grid(True, alpha=0.4)
 plt.show()
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="vE_sytcGjOWu" executionInfo={"status": "ok", "timestamp": 1756645076693, "user_tz": -540, "elapsed": 30, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="a5782b48-dc97-4135-f447-aba61de66c1a"
+```python
 # pdays 딥다이브
 
 np.sort(df['pdays'].unique())
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="Chd9KrVCjpZx" executionInfo={"status": "ok", "timestamp": 1756645076758, "user_tz": -540, "elapsed": 48, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="60625c4b-4e8c-4282-8e42-f76d4382c272"
+```python
 # pdays==999 비율 확인
 
 len(df[df['pdays']==999])/len(df) * 100
 ```
 
-<!-- #region id="sI6ATmJTkjEJ" -->
 pdays의 값 중 999는 고객이 이전에 연락을 한번도 받지 않았을 때
 
 - 이 값은 모델링에 굉장히 중요한 영향을 미칠 것으로 판단됨
@@ -330,15 +311,14 @@ pdays의 값 중 999는 고객이 이전에 연락을 한번도 받지 않았을
 1. 파생변수 추가해 모델링 할까
     - 변수 실험 필요
 2. XGboost나 LightGBM같은 Nan처리 기능있는 모델을 쓸 것인가
-<!-- #endregion -->
 
-```python colab={"base_uri": "https://localhost:8080/"} id="Kc4dacTIkfnv" executionInfo={"status": "ok", "timestamp": 1756645076767, "user_tz": -540, "elapsed": 7, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="b779239d-1b80-45a3-cc61-2a7a8bb008a7"
+```python
 # previous 딥다이브
 
 np.sort(df['previous'].unique())
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 332} id="QlmbReIQkmTF" executionInfo={"status": "ok", "timestamp": 1756645076872, "user_tz": -540, "elapsed": 104, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="a9461c16-cce9-49bf-81a3-79595a559578"
+```python
 # previous 시각화
 
 plt.figure(figsize=(5,3))
@@ -350,18 +330,15 @@ plt.grid(True)
 plt.show()
 ```
 
-<!-- #region id="hf9a3tw8k6Rm" -->
 대부분의 고객이 거의 연락을 받은 적이 없음
 
 => 연락 유무에 대한 파생변수 필요
 
---------------------
---------------------
+---
 
 경제 지표 관련 변수들은 그래프를 그려봤으나 딱히 의미가 있진 않아 모두 삭제
-<!-- #endregion -->
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 237} id="GdbyjJALkqHk" executionInfo={"status": "ok", "timestamp": 1756645077039, "user_tz": -540, "elapsed": 165, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="2d174764-df2c-4b50-f566-7d82d8d2ccf0"
+```python
 # 전체 컬럼 unknown 카운트 정리
 
 unknown_summary = {}
@@ -379,7 +356,7 @@ unknown_df = unknown_df.sort_values(by='ratio', ascending=False)
 unknown_df
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 409} id="yst4rg1DYAz8" executionInfo={"status": "ok", "timestamp": 1756645077500, "user_tz": -540, "elapsed": 463, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="57569e34-060c-4d3f-bf45-38608dace35a"
+```python
 # poutcome (이전 캠페인 결과) 시각화
 
 plt.figure(figsize=(6,4))
@@ -391,61 +368,47 @@ plt.ylabel('count')
 plt.show()
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 303} id="nDg5o5qhZQ4z" executionInfo={"status": "ok", "timestamp": 1756645077527, "user_tz": -540, "elapsed": 26, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="854461ea-63da-429e-8a5c-5a369e360d6d"
+```python
 # poutcome 비율 확인
 
 df.groupby(by='poutcome')['y'].value_counts(normalize=True)*100
 ```
 
-<!-- #region id="e5nfB4T0aUuk" -->
 => 이전에 성공한 마케팅 캠페인은 이번 정기 예금 가입 전환이 높음. 이전에 성공한 마케팅의 요인을 상세하게 분석하여 추후 적절한 마케팅 방안을 제안하는 방식도 중요할 것으로 판단.
-<!-- #endregion -->
 
-<!-- #region id="GdLbWnbfpqHZ" -->
 # 2. 데이터 전처리
-<!-- #endregion -->
 
-<!-- #region id="h8nRsKa1skRq" -->
-### (1) 중복값 처리
-<!-- #endregion -->
+### 1) 중복값 처리
 
-```python colab={"base_uri": "https://localhost:8080/"} id="v6OYscg8lGM6" executionInfo={"status": "ok", "timestamp": 1756645077613, "user_tz": -540, "elapsed": 84, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="60aee454-b756-445a-fa11-a0301a765feb"
+```python
 # 중복행 확인
 
 df.duplicated().sum()
 ```
 
-```python id="vsh3v-qypvza"
+```python
 # 중복행 제거
 
 df = df.drop_duplicates()
 ```
 
-<!-- #region id="8zQL3paCtCYU" -->
-### (2) 결측치 처리
-<!-- #endregion -->
+### 2) 결측치 처리
 
-<!-- #region id="2Y3YVOU5tVsS" -->
 데이터 설명대로라면 결측치가 없어야 하나, 확인차 코딩해봄
-<!-- #endregion -->
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 742} id="5JUnxlEztGFq" executionInfo={"status": "ok", "timestamp": 1756645077760, "user_tz": -540, "elapsed": 79, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="2ac21174-6ebf-4e99-b2db-360fd27b3189"
+```python
 # 결측치 확인
 
 df.isnull().sum()
 ```
 
-<!-- #region id="xm0c4m9Wtpx-" -->
 => 진짜 없는 것 확인
 
 - unknown 처리 중요
-<!-- #endregion -->
 
-<!-- #region id="x_wbiCpfs5DP" -->
-### (3) 이상치 처리
-<!-- #endregion -->
+### 3) 이상치 처리
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 332} id="q2zhwSZyt-6p" executionInfo={"status": "ok", "timestamp": 1756645077907, "user_tz": -540, "elapsed": 149, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="aea04cec-ec24-46a4-857a-b7759f530596"
+```python
 # 이상치 확인 - age
 
 plt.figure(figsize=(3, 3))
@@ -455,7 +418,7 @@ plt.xlabel('age')
 plt.show()
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 318} id="uw1ANXzWufUo" executionInfo={"status": "ok", "timestamp": 1756645078511, "user_tz": -540, "elapsed": 603, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="b996bfa9-54d6-44e4-e8a8-2035ef700c6b"
+```python
 # 나이 비율보고 싶어서 바이올린 플롯으로 다시 그림
 
 plt.figure(figsize=(3, 3))
@@ -465,7 +428,6 @@ plt.xlabel('age')
 plt.show()
 ```
 
-<!-- #region id="GWA7vo3ajfd6" -->
 **age**
 
 - 최소 17, 최대 98
@@ -473,9 +435,8 @@ plt.show()
     - 두 값이 불가능하다는 완벽한 증거는 없음
 
 => 이상치라고 판단하지 않음
-<!-- #endregion -->
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 390} id="TCrxZdwsjyAB" executionInfo={"status": "ok", "timestamp": 1756645078612, "user_tz": -540, "elapsed": 120, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="edf39b28-cba4-4463-9fc9-e724c9ce5e13"
+```python
 # campaign - 이상치 확인 (데이터 확인 파트와 동일)
 
 plt.figure(figsize=(4,4))
@@ -485,7 +446,7 @@ plt.grid(True, alpha=0.4)
 plt.show()
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 395} id="J4k7VV7ej_QA" executionInfo={"status": "ok", "timestamp": 1756645079195, "user_tz": -540, "elapsed": 582, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="3b326054-2887-49c8-bf6e-a7dda15274db"
+```python
 # 비율보고 싶어서 바이올린 플롯으로 다시 그림
 
 plt.figure(figsize=(4, 4))
@@ -495,12 +456,11 @@ plt.xlabel('campaign')
 plt.show()
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="apjjvPf5iz_N" executionInfo={"status": "ok", "timestamp": 1756645079205, "user_tz": -540, "elapsed": 38, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="f4473988-d0e4-4067-fbc6-38487af02239"
+```python
 # campaign 비율 확인
 len(df[df['campaign']>16])/len(df) * 100
 ```
 
-<!-- #region id="QkKHwHUB9m5E" -->
 **campaign**
 
 - campaign값이 작은 것은 현실적으로 충분히 납득되는 상황
@@ -511,14 +471,12 @@ len(df[df['campaign']>16])/len(df) * 100
     - **Winsorizing**
         - 위키피디아: https://en.wikipedia.org/wiki/Winsorizing
         - 극단적인 값을 다른 값으로 대체하는 것
-<!-- #endregion -->
 
-```python id="sIAr852Vu_NN"
+```python
 # campaign 이상치 제거 - 윈저라이징
 df['campaign'] = df['campaign'].clip(upper=15)
 ```
 
-<!-- #region id="MAJv4_F9cU1Q" -->
 그 외 여러 컬럼에 대해 이상치 제거가 필요한지 고민하였으나, 최종적으로 진행하지 않기도 판단
 
 **이유**
@@ -526,54 +484,43 @@ df['campaign'] = df['campaign'].clip(upper=15)
 머신러닝 모델링은 결국 많은 데이터를 컴퓨터가 스스로 학습하게 하는 방식.
 
 특별하게 잘못 입력되었거나, 명백한 자료에 기반한 오류를 발견한 상황이 아니기 때문에 다른 컬럼의 이상치 제거는 하지 않음.
-<!-- #endregion -->
 
-<!-- #region id="jt3yu6l_sn5-" -->
-### (4) duration 컬럼
-<!-- #endregion -->
+### 4) duration 컬럼
 
-```python id="YxIpGMf_p7rY"
+```python
 # duration 컬럼 삭제
 
 df.drop(columns = ['duration'], inplace=True)
 ```
 
-<!-- #region id="ki0iBAlisqws" -->
-### (5) 종속변수 이진 변환
-<!-- #endregion -->
+### 5) 종속변수 이진 변환
 
-```python id="FD1_9DUEqEAB"
+```python
 # 종속변수 y 이진 변환
 
 df['y'] = df['y'].map({'yes': 1, 'no': 0})
 ```
 
-<!-- #region id="nIeKg-aoc9iB" -->
-### (6) 파생변수 추가
-<!-- #endregion -->
+### 6) 파생변수 추가
 
-```python id="V5bW0dJ-s0xZ"
+```python
 # pdays - 이전에 연락받은 적 있는지 여부
 df['was_contacted_before'] = (df['pdays'] != 999).astype(int)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 163} id="s2B9vVAgGWTW" executionInfo={"status": "ok", "timestamp": 1756645079249, "user_tz": -540, "elapsed": 3, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="b24785d2-44e4-46a7-94a3-73ad29724944"
+```python
 df.head(3)
 ```
 
-<!-- #region id="w2MqMAcSGfN0" -->
-###(7) 범주형 변수 처리
-<!-- #endregion -->
+### 7) 범주형 변수 처리
 
-<!-- #region id="7sdFok5kdToT" -->
 범주형 변수 라벨 전에 인코딩 전에 unknown값은 라벨 인코딩에서 제외하고
 
 나머지 값으로 라벨 인코딩을 한 뒤,
 
 unknown은 각각 컬럼의 최대 라벨값 +1로 지정
-<!-- #endregion -->
 
-```python id="JDN5NkS8dF0S"
+```python
 # unknown을 제외하고 라벨 인코딩 후 unknown은 max+1 값 부여하는 함수 생성
 
 def custom_label_encode(df, column):
@@ -590,12 +537,12 @@ def custom_label_encode(df, column):
     return encoded_col, le, max_label
 ```
 
-```python id="y1cO9aI1dXVS"
+```python
 # 라벨 인코딩위한 변수 설정
 categorical_cols = df.select_dtypes(include='object').columns
 ```
 
-```python id="tcH9k0T1dau1"
+```python
 # 범주형 변수 라벨 인코딩 진행 => 시간 걸림
 
 for col in categorical_cols:
@@ -603,26 +550,24 @@ for col in categorical_cols:
     df[col + '_encoded'] = encoded_col
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="dDcyGIqrGq0m" executionInfo={"status": "ok", "timestamp": 1756645118838, "user_tz": -540, "elapsed": 8, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="4cb4038e-bc1e-44cb-d722-3f65e696671b"
+```python
 df.columns
 ```
 
-<!-- #region id="WSXHDpHHIxuA" -->
-###(8) unknown 및 pdays=999 추가 처리
+### 8) unknown 및 pdays=999 추가 처리
 
 - 일반 트리모델(결정 트리)와 일반 앙상블(랜덤 포레스트 & 그레디언트 부스팅)은 결측치 자체를 모델링 할 수 없음
 
 - 그러나 XGBoost는 missing 파라미터로 자동 처리 가능한 반면, LightGBM과 Catboost는 NaN을 자동 처리해주는 기능이 존재
 
 > XGBoost 계열 모델링을 위해 unknown과 pdays의 999를 결측치로 자동 지정할 컬럼 생성
-<!-- #endregion -->
 
-```python id="XdZkRrDFK9b8"
+```python
 # object 타입 중 'unknown'을 포함한 컬럼만 선택
 target_cols = [col for col in df.select_dtypes(include='object').columns if 'unknown' in df[col].unique()]
 ```
 
-```python id="A6snbL-gXg4-"
+```python
 # unknown을 결측치로 처리하고, 그 뒤 나머지 값 라벨 인코딩하여 파생변수 지정
 for col in target_cols:
     new_col = f"{col}_na"
@@ -633,33 +578,30 @@ for col in target_cols:
     df[new_col] = pd.to_numeric(df[new_col], errors='coerce')
 ```
 
-```python id="M36k0OBHK9ZY"
+```python
 # pdays==999 값 NaN으로 변환하며 파생 변수 생성
 df['pdays_na'] = df['pdays'].replace(999, np.nan)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="YlLjwGpLLUGV" executionInfo={"status": "ok", "timestamp": 1756645119043, "user_tz": -540, "elapsed": 17, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="1f67ede5-0e11-4da6-baf4-b91410ed34ed"
+```python
 df.columns
 ```
 
-<!-- #region id="rUOUlEJaA5Fv" -->
 # 3. 데이터 시각화
-<!-- #endregion -->
 
-```python id="LPBQQZz0A6xy"
+```python
 # 수치형, 범주형 구분
 num_cols = df.select_dtypes(include=[np.number]).drop(columns=['y']).columns
 cat_cols = df.select_dtypes(exclude=[np.number]).columns
 ```
 
-```python id="HDgDF6GWA6uw"
+```python
 # 수치형 변수 5구간으로 나누기
 df_binned = df.copy()
 for col in num_cols:
     df_binned[col] = pd.qcut(df_binned[col], q=5, duplicates='drop')
 ```
 
-<!-- #region id="B75SnjQsCLXZ" -->
 **qcut함수**
 
 데이터를 분위수 기준으로 구간화하는 함수
@@ -668,9 +610,8 @@ for col in num_cols:
 
 - cut함수와 비교
     - cut은 단순히 값의 범위로 나눌때, qcut은 예를 들어 최상위 25%, 상위 25%, 중간 25%, 하위 25%로 나눌때 사용
-<!-- #endregion -->
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 1000} id="EAJ2gNLVBjLt" executionInfo={"status": "ok", "timestamp": 1756645126221, "user_tz": -540, "elapsed": 7066, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="accf8daa-8651-435b-bbe4-b5aa7783e264"
+```python
 # 시각화
 ncols = 3
 nrows = int(np.ceil((len(num_cols) + len(cat_cols)) / ncols))       # ceil(): 위쪽 정수로 올림하는 함수
@@ -696,19 +637,14 @@ plt.tight_layout()
 plt.show()
 ```
 
-<!-- #region id="ilG72pFCGIVy" -->
 - 수치형 변수의 경우 5분할을 했지만, 고유값이 적은 emp.var.rate같은 컬럼은 두 구간을 합쳐 총 4구간 생성
 - 그 외 다른 수치형 변수 역시 데이터가 특정 값에 몰려있거나 고유값이 적을때는 5분할 되지 않음
 
 - 범주형은 범주에 따른 비율로 표현
-<!-- #endregion -->
 
-<!-- #region id="VBRYI_3SGpTL" -->
-### **그래프 결과 해석**
-<!-- #endregion -->
+### 그래프 결과 해석
 
-<!-- #region id="7IPwBFxUGtsh" -->
-#### **고객 특성 관련 변수**
+#### 고객 특성 관련 변수
 
 - age
     - 중년층(30~40대)과 고연령층(60대 이상)에서 Yes 비율이 다소 높음
@@ -721,9 +657,9 @@ plt.show()
 
 👉 즉, 학생·고학력자·특정 직업군이 금융상품 가입에 긍정적으로 반응
 
------------------------------------
+---
 
-#### **이전 캠페인 관련 변수**
+#### 이전 캠페인 관련 변수
 
 - campaign
     - 연락 횟수가 적을수록 Yes 비율이 높음 => 과도한 반복 접촉은 효과 낮음
@@ -739,8 +675,8 @@ plt.show()
 
 👉 반복 접촉보다, 이전 캠페인 성과가 있었던 고객이 가장 중요한 타깃이며, 특정 월에 캠페인이 집중적으로 진행된 것이라 예상
 
------------------------------------
-#### **경제/거시 지표 관련 변수**
+---
+#### 경제/거시 지표 관련 변수
 
 - euribor3m (3개월 대출 금리)
     - Euribo: 유럽은행협회(EBF : 브뤼셀 소재)와 국제딜러협회(ACI : 파리 소재)가 지정한 57개 은행들의 대출금리를 집계, 발표하는 유러화 금리
@@ -756,16 +692,11 @@ plt.show()
         - 참조 사이트: 기획재정부 시사경제 용어사전
         https://www.moef.go.kr/sisa/dictionary/detail?idx=1501#:~:text=%EC%86%8C%EB%B9%84%EC%9E%90%EA%B0%80%20%EC%B2%B4%EA%B0%90%ED%95%98%EB%8A%94%20%EA%B2%BD%EC%A0%9C,%EC%A0%80%EC%B6%95%ED%95%98%EA%B3%A0%20%EC%A0%81%EA%B2%8C%20%EC%86%8C%EB%B9%84%ED%95%9C%EB%8B%A4.
 
-
 👉 종합하면, 경기 침체 상황일수록 고객이 상품에 더 많이 가입하는 경향이 뚜렷함
 
-<!-- #endregion -->
-
-<!-- #region id="fZVyf7_nJnXL" -->
 ### 데이터 시각화 후 추가 파생변수 생성
-<!-- #endregion -->
 
-```python id="vrmkJRGvJtja"
+```python
 # 나이 관련
 df["is_target_age"] = ((df["age"].between(30, 45)) | (df["age"] >= 60)).astype(int)
 
@@ -793,37 +724,33 @@ df["low_cons_conf"] = (df["cons.conf.idx"] < df["cons.conf.idx"].median()).astyp
 df["few_contacts"] = (df["campaign"] <= 2).astype(int)
 ```
 
-<!-- #region id="gDep-eqeNBN9" -->
 # 4. 모델링
-<!-- #endregion -->
 
-<!-- #region id="AsEMAV3ITHNm" -->
-###(1) 1차 모델링
+### 1) 1차 모델링
 
 범주형 변수 인코딩 한 값 + was_contacted_before로 가장 기본 모델링 진행
 
 - 적용 모델: 결정 트리, 보팅, 배깅, 랜덤 포레스트, Adaboost, XGBoost, 스택킹
-<!-- #endregion -->
 
-```python id="uUfNWqkHK9UM"
+```python
 feature_names =['age', 'job_encoded', 'marital_encoded', 'education_encoded', 'default_encoded',
                 'housing_encoded', 'loan_encoded', 'contact_encoded', 'month_encoded', 'pdays',
                 'day_of_week_encoded','campaign', 'was_contacted_before', 'previous', 'poutcome_encoded',
                 'emp.var.rate', 'cons.price.idx', 'cons.conf.idx','euribor3m', 'nr.employed']
 ```
 
-```python id="9TjR-JkiK9RZ"
+```python
 target_name = 'y'
 ```
 
-```python id="nvBtaEiGNzx6"
+```python
 # 데이터 분할
 X = df[feature_names]
 y = df[target_name]
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 ```
 
-```python id="3or3-_qSN1v3"
+```python
 # 모델 정의
 dt = DecisionTreeClassifier()
 rf = RandomForestClassifier()
@@ -834,7 +761,7 @@ voting = VotingClassifier(estimators=[('dt', dt), ('rf', rf), ('xgb', xgb)])
 stacking = StackingClassifier(estimators=[('rf', rf), ('xgb', xgb)], final_estimator=LogisticRegression())
 ```
 
-```python id="wmrW1BLXOf_H"
+```python
 # 모델 평가
 models = {
     'Decision Tree': dt,
@@ -865,13 +792,13 @@ for name, model in models.items():
     })
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 269} id="wlreYHFePRCu" executionInfo={"status": "ok", "timestamp": 1756645158563, "user_tz": -540, "elapsed": 11, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="1c001748-1b9c-41ad-9e08-ec48cdfdb52d"
+```python
 # 결과 확인
 results_df = pd.DataFrame(results)
 results_df
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="d40t99ZaPQ_7" executionInfo={"status": "ok", "timestamp": 1756645159663, "user_tz": -540, "elapsed": 1105, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="87a3650a-56e3-4945-fefe-a0a2ef52108b"
+```python
 # classification report 확인 위해 추가
 
 for name, model in models.items():
@@ -880,13 +807,12 @@ for name, model in models.items():
     print(classification_report(y_test, preds))
 ```
 
-<!-- #region id="59H3BhDxPgn9" -->
 - Adaboost의 Precision 점수는 좋은편
 - 데이터의 불균형이 매우 심각함
 - 이 경우 accuracy점수 자체는 의미가 없음
     - 대다수 클래스(0)를 모두 '0'으로만 예측해도 90%의 정확도를 얻을 수 있기 때문
 - 알고리즘별 accuracy나 precision 점수는 높으나 1일때 예측도는 굉장히 낮음
-    
+
     => 이는 결국 가입할 고객을 잘 찾지 못하는 것!
 
 > ### **👉 class가 1일 때 점수가 높은 방향으로 모델링!**
@@ -901,13 +827,9 @@ for name, model in models.items():
 2. 언더샘플링 - 다수 클래스 감소
     - Random Under-sampling
 
+---
 
---------------------------------
---------------------------------
-<!-- #endregion -->
-
-<!-- #region id="IwwfC6zfPpH-" -->
-###(2) 2차 모델링
+### 2) 2차 모델링
 
 XGBoost의 scale_pos_weight 파라미터 사용
 
@@ -925,15 +847,14 @@ scale_pos_weight = (Negative 클래스 개수) / (Positive 클래스 개수)
 - scale_pos_weight = 88 / 12 ≈ 7.33
 
 => XGBoost가 Yes(Positive 클래스)를 학습할 때, 가중치를 약 7배 더 줘서 불균형 문제를 완화시켜 준다는 의미
-<!-- #endregion -->
 
-```python id="WklTWdaePIOq"
+```python
 # 클래스 비율 계산
 neg, pos = y_train.value_counts()
 scale = neg / pos
 ```
 
-```python id="nUDHfM3_QKPK" executionInfo={"status": "ok", "timestamp": 1756645160007, "user_tz": -540, "elapsed": 313, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} colab={"base_uri": "https://localhost:8080/", "height": 257} outputId="3930509a-9617-4a5c-c043-57f36744fc45"
+```python
 # 모델 정의 및 학습 - XGBoost
 xgb = XGBClassifier(
     use_label_encoder=False,
@@ -944,7 +865,7 @@ xgb = XGBClassifier(
 xgb.fit(X_train, y_train)
 ```
 
-```python id="-ZspX9whQFzs"
+```python
 # 모델 평가
 preds = xgb.predict(X_test)
 probs = xgb.predict_proba(X_test)[:, 1]                        # ROC-AUC 스코어를 위해 준비. [:, 1]: y=1일 확률만 가져오겠다는 뜻
@@ -966,34 +887,28 @@ results = [{
 }]
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 89} id="INXD6ceJQHaf" executionInfo={"status": "ok", "timestamp": 1756645160132, "user_tz": -540, "elapsed": 19, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="2b9f46f9-7539-40fe-84a1-5f1dde826620"
+```python
 # 결과 확인
 results_df = pd.DataFrame(results)
 results_df
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="dEfvQtDbQIgy" executionInfo={"status": "ok", "timestamp": 1756645160158, "user_tz": -540, "elapsed": 13, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="81d9704a-43b1-4b01-c8f0-ad6e904835a2"
+```python
 # classification report 확인 위해 추가
 
 print("--------- XGBoost  classification report ---------")
 print(classification_report(y_test, preds))
 ```
 
-<!-- #region id="o1-AT-7jSqp1" -->
 => XGBoost 모델과 이 모델을 베이스로 쓰는 경우 Recall과  F1 score가 일부 상승하는 결과를 얻었으나, 아직 점수가 괜찮은 것은 아님. 불균형 데이터 자체를 바꿔주는게 필요함
-<!-- #endregion -->
 
-<!-- #region id="Lhfv6mNOLNfn" -->
-## (3) 3차 모델링
-<!-- #endregion -->
+## 3) 3차 모델링
 
-<!-- #region id="Vlnq1uQULuKH" -->
 예금 가입이 높은 구간대를 따로 구별한 파생변수를 추가하여 모델링
 
 - XGBoost는 scale_pos_weight 파라미터 사용
-<!-- #endregion -->
 
-```python id="n8M7V9U3LKtL"
+```python
 feature_names =['age', 'job_encoded', 'marital_encoded', 'education_encoded', 'default_encoded',
                 'housing_encoded', 'loan_encoded', 'contact_encoded', 'month_encoded', 'pdays',
                 'day_of_week_encoded','campaign', 'was_contacted_before', 'previous', 'poutcome_encoded',
@@ -1002,18 +917,18 @@ feature_names =['age', 'job_encoded', 'marital_encoded', 'education_encoded', 'd
                 'low_euribor3m', 'neg_emp_var_rate','low_cons_conf', 'few_contacts', 'is_target_age']
 ```
 
-```python id="EBIoM4GALKtM"
+```python
 target_name = 'y'
 ```
 
-```python id="ffeg1D5sLKtM"
+```python
 # 데이터 분할
 X = df[feature_names]
 y = df[target_name]
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 ```
 
-```python id="gl5iliiFLKtM"
+```python
 # 모델 정의
 dt = DecisionTreeClassifier()
 rf = RandomForestClassifier()
@@ -1029,7 +944,7 @@ voting = VotingClassifier(estimators=[('dt', dt), ('rf', rf), ('xgb', xgb)])
 stacking = StackingClassifier(estimators=[('rf', rf), ('xgb', xgb)], final_estimator=LogisticRegression())
 ```
 
-```python id="BpgvFfDALKtN"
+```python
 # 모델 평가
 models = {
     'Decision Tree': dt,
@@ -1060,17 +975,15 @@ for name, model in models.items():
     })
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 269} executionInfo={"status": "ok", "timestamp": 1756645196446, "user_tz": -540, "elapsed": 32, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="565f1174-1bfe-4475-f872-37c2fb0c2d51" id="daEBF-RpLKtN"
+```python
 # 결과 확인
 results_df = pd.DataFrame(results)
 results_df
 ```
 
-<!-- #region id="EdCufi2sOJEU" -->
 => 모델별 점수의 등락은 있으나, 모든 모델의 Recall점수가 상승했고, F1 score가 처음으로 0.4대 점수가 나옴
-<!-- #endregion -->
 
-```python colab={"base_uri": "https://localhost:8080/"} executionInfo={"status": "ok", "timestamp": 1756645197640, "user_tz": -540, "elapsed": 1192, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="f657b968-93c3-4bbc-bad0-a011ce46f609" id="eMk4FVdOLKtN"
+```python
 # classification report 확인 위해 추가
 
 for name, model in models.items():
@@ -1079,15 +992,11 @@ for name, model in models.items():
     print(classification_report(y_test, preds))
 ```
 
-<!-- #region id="pv3vC4irLZtH" -->
-## (4) 4차 모델링
-<!-- #endregion -->
+## 4) 4차 모델링
 
-<!-- #region id="6f0pzWCMMWrb" -->
 SMOTE사용
-<!-- #endregion -->
 
-```python id="HG3jry5TfY3I"
+```python
 feature_names =['age', 'job_encoded', 'marital_encoded', 'education_encoded', 'default_encoded',
                 'housing_encoded', 'loan_encoded', 'contact_encoded', 'month_encoded', 'pdays',
                 'day_of_week_encoded','campaign', 'was_contacted_before', 'previous', 'poutcome_encoded',
@@ -1096,7 +1005,7 @@ feature_names =['age', 'job_encoded', 'marital_encoded', 'education_encoded', 'd
                 'low_euribor3m', 'neg_emp_var_rate','low_cons_conf', 'few_contacts', 'is_target_age']
 ```
 
-```python id="evS0EP77QSm5"
+```python
 # 데이터 분할 및 SMOTE 적용
 X = df[feature_names]
 y = df[target_name]
@@ -1106,20 +1015,18 @@ smote = SMOTE(random_state=42)
 X_resampled, y_resampled = smote.fit_resample(X_train, y_train)
 ```
 
-<!-- #region id="3XOL_UsmTgHl" -->
-##### **🚨 SMOTE 적용시 주의사항**
+##### SMOTE 적용시 주의사항
 
 => 반드시 훈련 데이터에만 적용할 것!
 
 전체 데이터를 통해 나온 결과는 데이터 누수(정보 교환)이 일어난 뒤 결과이기 때문에 점수가 높을 수 밖에 없음
-<!-- #endregion -->
 
-```python colab={"base_uri": "https://localhost:8080/"} id="USsrk1rYTbQI" executionInfo={"status": "ok", "timestamp": 1756645197829, "user_tz": -540, "elapsed": 16, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="ca2ec45d-a5ed-499a-de23-211e712ca589"
+```python
 # SMOTE 적용후 데이터 비율 확인
 len(y_resampled[y_resampled==0])/len(y_resampled)
 ```
 
-```python id="jDXC2RYCTiIe"
+```python
 # 모델 정의
 dt = DecisionTreeClassifier()
 rf = RandomForestClassifier()
@@ -1134,7 +1041,7 @@ voting = VotingClassifier(estimators=[('dt', dt), ('rf', rf), ('xgb', xgb)], vot
 stacking = StackingClassifier(estimators=[('rf', rf), ('xgb', xgb)], final_estimator=LogisticRegression(), passthrough=True)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="qB0jCib4Tkhg" executionInfo={"status": "ok", "timestamp": 1756645268715, "user_tz": -540, "elapsed": 70881, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="31836444-d38f-4067-a0b2-ffdcfb9a2ff7"
+```python
 # 모델 평가 - 시간이 오래 걸려 시간 테스트
 
 start_time = time.time()
@@ -1172,20 +1079,18 @@ end_time = time.time()
 print(f"-------- total processing -------- \n {end_time-start_time} seconds")
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 269} id="FWPkaOufTsJP" executionInfo={"status": "ok", "timestamp": 1756645268730, "user_tz": -540, "elapsed": 18, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="f44e7624-e882-4ce3-d11b-51440ba89b85"
+```python
 results_df = pd.DataFrame(results)
 results_df
 ```
 
-<!-- #region id="O-eGs9OPOlq9" -->
 -  3차 모델링 대비 Precision의 점수는 대부분의 모델에서 떨어졌지만 XGBoost에선 상승
 
 - Recall점수는 Stacking과 XGBoost 제외 다른 모델에선 큰 폭으로 상승하는 경향
 
 => F1 score가 전체적으로 안정적이 되며 최고점 0.45기록
-<!-- #endregion -->
 
-```python colab={"base_uri": "https://localhost:8080/"} id="6RftntF-TuSV" executionInfo={"status": "ok", "timestamp": 1756645270101, "user_tz": -540, "elapsed": 1337, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="b488aad0-d403-419a-da8c-10f8c619af9b"
+```python
 # classification report 확인 위해 추가
 
 for name, model in models.items():
@@ -1194,7 +1099,6 @@ for name, model in models.items():
     print(classification_report(y_test, preds))
 ```
 
-<!-- #region id="LY6cx18pTxD0" -->
 **모델링 결과 정리**
 
 1. SMOTE 적용 뒤, 점수는 좋으나 처리에 시간이 걸림
@@ -1202,15 +1106,12 @@ for name, model in models.items():
 
 2. AdaBoost 모델의 Recall 점수가 눈에 띄게 상승
     - 현재 데이터 기준 베이스라인이 10% 내외인것에 비해서는 의미있는 성과
-<!-- #endregion -->
 
-<!-- #region id="upY-i8alT9KQ" -->
-##(5) 5차 모델링
+## 5) 5차 모델링
 
 독립변수 분할하여 모델링
-<!-- #endregion -->
 
-```python id="O0-P1W-VTw1m"
+```python
 # 독립변수를 고객정보 feature_customer와 경제지표 feature_economic로 나누어 모델링
 
 feature_customer = ['age', 'job_encoded', 'marital_encoded', 'education_encoded',
@@ -1222,16 +1123,14 @@ feature_economic = ['emp.var.rate', 'cons.price.idx', 'cons.conf.idx',
                     'euribor3m', 'nr.employed','low_euribor3m', 'neg_emp_var_rate']
 ```
 
-<!-- #region id="1Mp7UthhURIc" -->
 위 모델링 과정에서 시간이 오래 걸려 데이터 넘파이로 변환하며 모델링 진행
-<!-- #endregion -->
 
-```python id="Ni1OGtyNTwyO"
+```python
 # 종속변수 넘파이 변환
 y = df[target_name].values
 ```
 
-```python id="NoG0p3gWUV7d"
+```python
 # 고객 정보 독립변수 넘파이 변환 및 데이터 나누기
 X_customer = df[feature_customer].values.astype("float32")                      # 메모리 절약 위해 float32 지정
 
@@ -1241,7 +1140,7 @@ smote = SMOTE(random_state=42)
 Xc_resampled, yc_resampled = smote.fit_resample(Xc_train, yc_train)
 ```
 
-```python id="D1OXAHNJUXP4"
+```python
 # 경제 지표 독립변수 넘파이 변환 및 데이터 나누기
 X_economic = df[feature_economic].values.astype("float32")                      # 메모리 절약 위해 float32 지정
 Xe_train, Xe_test, ye_train, ye_test = train_test_split(X_economic, y, test_size=0.3, stratify=y, random_state=42)
@@ -1249,16 +1148,13 @@ Xe_train, Xe_test, ye_train, ye_test = train_test_split(X_economic, y, test_size
 Xe_resampled, ye_resampled = smote.fit_resample(Xe_train, ye_train)
 ```
 
-<!-- #region id="oNWBaCR-UxWi" -->
 ##### stratify=y의미
 
 불균형 데이터에서 종속변수를 나누면, 운이 안 좋을경우 테스트셋에 positive 클래스가 거의 없을 수 있음
 
 이를 방지하기 위해 y(정답 레이블)의 클래스 비율을 기준으로 나누라는 문법
 
-<!-- #endregion -->
-
-```python colab={"base_uri": "https://localhost:8080/", "height": 80} id="ZeqeN97UU4k6" executionInfo={"status": "ok", "timestamp": 1756645272540, "user_tz": -540, "elapsed": 2195, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="410ac9cb-2d62-4c6f-c3a3-66027427649b"
+```python
 # 모델 정의
 dt_customer = DecisionTreeClassifier()
 rf_economic = RandomForestClassifier()
@@ -1268,14 +1164,14 @@ dt_customer.fit(Xc_resampled, yc_resampled)
 rf_economic.fit(Xe_resampled, ye_resampled)
 ```
 
-```python id="CK5IPnx5U8nY"
+```python
 # 개별 예측
 
 dt_preds = dt_customer.predict_proba(Xc_test)[:, 1]
 rf_preds = rf_economic.predict_proba(Xe_test)[:, 1]
 ```
 
-```python id="Gns-TlpHU99N"
+```python
 # 보팅 (두 함수 평균)
 voting_probs = (dt_preds + rf_preds) / 2
 voting_labels = (voting_probs >= 0.5).astype(int)
@@ -1287,7 +1183,7 @@ meta_model.fit(stacking_X, yc_test)
 stacking_preds = meta_model.predict(stacking_X)
 ```
 
-```python id="wMka79vgU_XB"
+```python
 # 결과 정리
 def evaluate_model(name, y_true, y_pred):
     return {
@@ -1299,39 +1195,35 @@ def evaluate_model(name, y_true, y_pred):
     }
 ```
 
-```python id="N9OkuhslVA_q"
+```python
 # 평가 결과를 DataFrame으로 정리
 results = []
 results.append(evaluate_model("Voting (Soft Avg)", yc_test, voting_labels))
 results.append(evaluate_model("Stacking (LogReg)", yc_test, stacking_preds))
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 125} id="9CJXF6DDVCjv" executionInfo={"status": "ok", "timestamp": 1756645272770, "user_tz": -540, "elapsed": 28, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="453d689d-f5b3-4fbb-d947-39d300cc8974"
+```python
 # 결과 확인
 results_df = pd.DataFrame(results)
 results_df
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="HCIwtXdOVEmY" executionInfo={"status": "ok", "timestamp": 1756645272795, "user_tz": -540, "elapsed": 27, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="3ea7c44c-8c91-46aa-f8ba-a0f6ecd962c8"
+```python
 # classification report 확인 위해 추가
 
 print(classification_report(y_test, voting_labels))
 print(classification_report(y_test, stacking_preds))
 ```
 
-<!-- #region id="rPwN6-VeP8Jz" -->
 **모델링 결과 정리**
 
 전체적으로 성능 하락의 결과
-<!-- #endregion -->
 
-<!-- #region id="jRXRxL2tVNK_" -->
-## (6) 6차 모델링
+## 6) 6차 모델링
 
 결측치 지정한 컬럼들로 XGBoost, LGBM, Catboost 사용
-<!-- #endregion -->
 
-```python id="ZnJ_SgdqVGi5"
+```python
 feature_2 = ['age', 'job_na', 'marital_na', 'education_na', 'default_na', 'housing_na',
              'loan_na','contact_encoded', 'month_encoded','day_of_week_encoded', 'campaign',
              'pdays_na', 'previous','poutcome_encoded', 'emp.var.rate', 'cons.price.idx',
@@ -1341,7 +1233,7 @@ feature_2 = ['age', 'job_na', 'marital_na', 'education_na', 'default_na', 'housi
 target_2 = 'y'
 ```
 
-```python id="q3_dEWpKVu95"
+```python
 # 데이터 분할
 
 X_2 = df[feature_2]
@@ -1350,12 +1242,12 @@ y_2 = df[target_2]
 X2_train, X2_test, y2_train, y2_test = train_test_split(X_2, y_2, test_size=0.3, stratify=y_2, random_state=42)
 ```
 
-```python id="q8dUj_hZaVeF"
+```python
 # 불균형 비율
 pos_ratio = (y2_train == 0).sum() / (y2_train == 1).sum()
 ```
 
-```python id="CM-gVnpWYSwy"
+```python
 # 모델 정의
 
 xgb = XGBClassifier(use_label_encoder=False, eval_metric='logloss', random_state=42, scale_pos_weight=pos_ratio)
@@ -1369,7 +1261,7 @@ models = {
 }
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="FLF1BVgDYT8E" executionInfo={"status": "ok", "timestamp": 1756646447010, "user_tz": -540, "elapsed": 21653, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="fb092ec7-9150-45b9-86ec-21537e3a604c"
+```python
 # 모델 평가
 
 results = []
@@ -1391,17 +1283,15 @@ for name, model in models.items():
     })
 ```
 
-<!-- #region id="RORpNwMOa-Qr" -->
 => LightGBM은 모델링할 때 내부적으로 어떤 일이 벌어지고 있는지 메세지를 줌
-<!-- #endregion -->
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 143} id="4ay9kHLmYT5V" executionInfo={"status": "ok", "timestamp": 1756646447013, "user_tz": -540, "elapsed": 7, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="9532dcab-555b-4aea-baa2-d5a07385592a"
+```python
 # 결과 확인
 results_df = pd.DataFrame(results)
 results_df
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="6ZPWsaLMRT1_" executionInfo={"status": "ok", "timestamp": 1756646447237, "user_tz": -540, "elapsed": 197, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="dd772451-f4ae-4ad0-ae85-55186ec4606a"
+```python
 # classification report 확인 위해 추가
 
 for name, model in models.items():
@@ -1410,11 +1300,8 @@ for name, model in models.items():
     print(classification_report(y2_test, preds))
 ```
 
-<!-- #region id="jLdfxUBtbKpC" -->
 # 4. 결론
-<!-- #endregion -->
 
-<!-- #region id="itRoJuq9bMHh" -->
 범주형 변수 라벨링 적용한 LightGBM의 Recall이 0.65로 가장 높음
 
 => 결측치를 결측치 자체로 봤을때 점수가 가장 높음
@@ -1426,12 +1313,9 @@ for name, model in models.items():
 2. 교차검증을 추가하면 모델링 성능 늘어날 것으로 판단
  - 특히, 데이터의 클래스 불균형을 고려한 StratifiedKFold를 사용하면 성능 향상 가능성 높음
 
---------------------------------
---------------------------------
-<!-- #endregion -->
+---
 
-<!-- #region id="FT5gE9recaZl" -->
-# ➕ 5. 추가할 사항
+# 5. 추가할 사항
 현업에선 어떤 가설을 설정하고 그에 맞춰 '비즈니스 지표 (KPI)'를 생성함
 
 **[예시]**
@@ -1452,12 +1336,9 @@ for name, model in models.items():
 **3. 캠페인 효율성에 대한 KPI**
 - 모델이 추천한 상위 N% 고객에게만 연락했을 때, 실제 “가입(yes)” 비율이 전체 평균 대비 얼마나 높은지를 나타냄
     - KPI 수식 예: 상위 20% 예측 고객군에서의 가입률 ÷ 전체 평균 가입률
-<!-- #endregion -->
 
-<!-- #region id="Zhsoy0jMcmEd" -->
 => 이렇게 지정한 뒤 매핑하여 회사 내부에서 사용할 수 있으며, 그에 따른 인사이트 전략 도출가능
-<!-- #endregion -->
 
-```python id="doTiQz1qcnqd"
+```python
 
 ```

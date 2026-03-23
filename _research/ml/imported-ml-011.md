@@ -62,7 +62,7 @@ tags:
   </div>
 </div>
 
-```python id="NSjhgYTnCGPE" executionInfo={"status": "ok", "timestamp": 1756281516348, "user_tz": -540, "elapsed": 14, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.datasets import make_moons
@@ -73,16 +73,14 @@ from sklearn.metrics import accuracy_score
 from matplotlib.colors import ListedColormap              # 결정 경계 시각화위한 라이브러리
 ```
 
-<!-- #region id="H1d4vTMwC2ny" -->
 # 1. 단일 디시전 트리 실습
-<!-- #endregion -->
 
-```python id="7XHY7DDQCgtK" executionInfo={"status": "ok", "timestamp": 1756281516375, "user_tz": -540, "elapsed": 17, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # make_moons 데이터 불러오기 - 암기 X
 X, y = make_moons(n_samples=1000, noise=0.3, random_state=42)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 333} id="hdCrLIH9Cggw" executionInfo={"status": "ok", "timestamp": 1756281517017, "user_tz": -540, "elapsed": 644, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="3328eb97-39c5-4533-e45e-a8a266c10c07"
+```python
 # 데이터셋 시각화 (어떻게 생겼는지 눈으로 확인)
 plt.figure(figsize=(4, 3))
 plt.scatter(X[:, 0][y==0], X[:, 1][y==0], c='red', marker='o', label='Class 0')
@@ -95,26 +93,26 @@ plt.grid(True)
 plt.show()
 ```
 
-```python id="EtGRaBpwDvku" executionInfo={"status": "ok", "timestamp": 1756281517017, "user_tz": -540, "elapsed": 4, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 79} id="CHHyYMBEDv5A" executionInfo={"status": "ok", "timestamp": 1756281517101, "user_tz": -540, "elapsed": 86, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="69f0ae43-cfc9-48ca-ae56-eed6a6603137"
+```python
 dt_clf = DecisionTreeClassifier(max_depth=5)
 dt_clf.fit(X_train, y_train)
 ```
 
-```python id="3-B44ymNEDU_" executionInfo={"status": "ok", "timestamp": 1756281517104, "user_tz": -540, "elapsed": 4, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 y_pred_dt = dt_clf.predict(X_test)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="ABxu3w0qEN7B" executionInfo={"status": "ok", "timestamp": 1756281517122, "user_tz": -540, "elapsed": 16, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="ae5ce4a4-e0fa-4d97-9a3b-540ca0486b50"
+```python
 # 정확도 계산
 accuracy_dt = accuracy_score(y_test, y_pred_dt)
 accuracy_dt
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 645} id="RD7odJSgEWf_" executionInfo={"status": "ok", "timestamp": 1756281518075, "user_tz": -540, "elapsed": 955, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="f280532d-d066-4ced-aa07-3d4d6c73b6b5"
+```python
 from sklearn.tree import plot_tree
 
 plt.figure(figsize=(16,10))
@@ -129,7 +127,7 @@ plt.title("DT")
 plt.show()
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 935} id="Pv1ejQpeEo-s" executionInfo={"status": "ok", "timestamp": 1756281518116, "user_tz": -540, "elapsed": 39, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="674bb6f0-79e0-49a4-8289-81192ea0da03"
+```python
 # 추가 - 보기 좋은 시각화
 
 from sklearn.tree import export_graphviz
@@ -148,7 +146,7 @@ graph = graphviz.Source(dot_data)
 graph
 ```
 
-```python id="gMlIaRD0IG1n" executionInfo={"status": "ok", "timestamp": 1756281518132, "user_tz": -540, "elapsed": 14, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # 산점도 시각화할 함수 정의
 
 def plot_decision_boundary(model, X, y, title="Decision Boundary"):
@@ -177,33 +175,31 @@ def plot_decision_boundary(model, X, y, title="Decision Boundary"):
     plt.show()
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 564} id="VE_ngBJBIjd3" executionInfo={"status": "ok", "timestamp": 1756281518296, "user_tz": -540, "elapsed": 161, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="9d8fc96a-b934-42fe-93b4-861d7b17eeac"
+```python
 plot_decision_boundary(dt_clf, X, y, title="DT Decision Boundary")
 ```
 
-<!-- #region id="RHFBaG5EJn_O" -->
 # 2. 랜덤 포레스트 실습
-<!-- #endregion -->
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 79} id="y1DY5Kr1Iwtx" executionInfo={"status": "ok", "timestamp": 1756281518321, "user_tz": -540, "elapsed": 23, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="28fc4260-d129-4806-abcf-db3d78ac550d"
+```python
 rf_clf = RandomForestClassifier(n_estimators=100, max_depth=5, n_jobs=-1)
 # n_estimators 중요!
 rf_clf.fit(X_train, y_train)
 ```
 
-```python id="P8ciw042KRer" executionInfo={"status": "ok", "timestamp": 1756281518338, "user_tz": -540, "elapsed": 15, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 y_pred_rf = rf_clf.predict(X_test)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="sF89RNQlKXVC" executionInfo={"status": "ok", "timestamp": 1756281518340, "user_tz": -540, "elapsed": 14, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="74844f7a-fc66-4a1a-e30a-011340d8ea37"
+```python
 accuracy_rf = accuracy_score(y_test, y_pred_rf)
 accuracy_rf
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 564} id="o7_MvHdKKdk7" executionInfo={"status": "ok", "timestamp": 1756281518631, "user_tz": -540, "elapsed": 298, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="f9e36fd5-c075-4351-fa61-82e680c47582"
+```python
 plot_decision_boundary(rf_clf, X, y, title="RF Decision Boundary")
 ```
 
-```python id="ok8P_haJKlk3" executionInfo={"status": "ok", "timestamp": 1756281518633, "user_tz": -540, "elapsed": 1, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 
 ```

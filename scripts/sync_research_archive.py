@@ -63,6 +63,80 @@ def clean_markdown_text(text: str) -> str:
     return compact_spaces(cleaned)
 
 
+def clean_notebook_heading_text(text: str) -> str:
+    cleaned = text.strip()
+    cleaned = cleaned.replace("**", "").replace("__", "")
+    cleaned = re.sub(r"^[^\w가-힣A-Za-z0-9]+", "", cleaned)
+    cleaned = re.sub(r"\s+", " ", cleaned).strip(":- ")
+    return cleaned or normalize_display_text(text) or text.strip()
+
+
+def sanitize_raw_note_markdown(raw_text: str, research_tab: str) -> str:
+    if not raw_text.strip():
+        return ""
+
+    if research_tab != "ML":
+        return raw_text.strip()
+
+    cleaned_lines: list[str] = []
+    in_code_block = False
+    previous_rule = False
+
+    for raw_line in raw_text.splitlines():
+        stripped = raw_line.strip()
+
+        if stripped.startswith("<!--") and ("#region" in stripped or "#endregion" in stripped):
+            continue
+
+        fence_match = CODE_FENCE_RE.match(stripped)
+        if fence_match:
+            if not in_code_block:
+                info = fence_match.group("info").strip()
+                lang = get_code_language(info)
+                cleaned_lines.append(f"```{lang}" if lang else "```")
+                in_code_block = True
+            else:
+                cleaned_lines.append("```")
+                in_code_block = False
+            previous_rule = False
+            continue
+
+        if in_code_block:
+            cleaned_lines.append(raw_line.rstrip())
+            previous_rule = False
+            continue
+
+        if re.fullmatch(r"[-=]{20,}", stripped):
+            if not previous_rule:
+                cleaned_lines.append("---")
+                previous_rule = True
+            continue
+
+        heading_match = HEADING_RE.match(stripped)
+        if heading_match:
+            hashes, title = heading_match.groups()
+            cleaned_title = clean_notebook_heading_text(title)
+            cleaned_lines.append(f"{hashes} {cleaned_title}".rstrip())
+            previous_rule = False
+            continue
+
+        if not stripped:
+            if cleaned_lines and cleaned_lines[-1] != "":
+                cleaned_lines.append("")
+            previous_rule = False
+            continue
+
+        cleaned_lines.append(raw_line.rstrip())
+        previous_rule = False
+
+    while cleaned_lines and cleaned_lines[0] == "":
+        cleaned_lines.pop(0)
+    while cleaned_lines and cleaned_lines[-1] == "":
+        cleaned_lines.pop()
+
+    return "\n".join(cleaned_lines)
+
+
 def normalize_display_text(text: str) -> str:
     cleaned = clean_markdown_text(text)
     cleaned = cleaned.replace("**", "").replace("__", "")
@@ -3919,7 +3993,7 @@ tags:
 def build_note_payload(track: dict[str, str], file_path: Path, title_override: str | None = None) -> str:
     metadata, body_lines = parse_front_matter(file_path)
     structure = parse_note_structure(body_lines)
-    raw_note_markdown = "\n".join(body_lines).strip()
+    raw_note_markdown = sanitize_raw_note_markdown("\n".join(body_lines).strip(), track["tab"])
     code_blocks = list(structure["code_blocks"])
     headings = list(structure["headings"])
     paragraphs = list(structure["paragraphs"])

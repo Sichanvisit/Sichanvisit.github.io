@@ -58,11 +58,9 @@ tags:
   </div>
 </div>
 
-<!-- #region id="OxonTeN0q4QC" -->
 # 1. 클래스 코드 연습
-<!-- #endregion -->
 
-```python id="UdH_yuIFqxAF"
+```python
 # Person 클래스 연습
 
 class Person:
@@ -74,30 +72,28 @@ class Person:
         print(f'Hello {self.name}')
 ```
 
-```python id="eNggF_tjrjKC"
+```python
 human1 = Person('Jonh', 25)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="bvx2fZsfrrVZ" executionInfo={"status": "ok", "timestamp": 1754555942633, "user_tz": -540, "elapsed": 14, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="3f393cb3-b9ff-4abf-97dc-0763c5c747bb"
+```python
 human1.greet()
 ```
 
-```python id="WddATN2Jru-y"
+```python
 # 두 명 추가하기
 p1 = Person('Alice', 30)
 p2 = Person('Bob', 40)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="f8Krby3osSrq" executionInfo={"status": "ok", "timestamp": 1754556097618, "user_tz": -540, "elapsed": 75, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="2f95fe06-ac9d-4f4a-a6db-1fd43e5bfb7a"
+```python
 p1.greet()
 p2.greet()
 ```
 
-<!-- #region id="pNDBiPazsaOy" -->
 # 2. 은행 클래스
-<!-- #endregion -->
 
-```python id="oTDsq6EfsWL8"
+```python
 class BankAccount:
     def __init__(self, owner, balance=0):
         self.owner = owner
@@ -125,29 +121,29 @@ class BankAccount:
                 f'내 잔액: {self.balance}원')
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="ecJq5jQlyGIq" executionInfo={"status": "ok", "timestamp": 1754557795668, "user_tz": -540, "elapsed": 26, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="2fc13536-6c22-4754-ac20-4a51a1b3afb7"
+```python
 a1 = BankAccount('홍길동')
 print(a1.deposit(10000))
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 35} id="zr2jZ-YdyQMc" executionInfo={"status": "ok", "timestamp": 1754557796645, "user_tz": -540, "elapsed": 30, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="e916569e-5dc9-438a-ff1b-4d702148f83c"
+```python
 a1.withdraw(3000)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="p_tKOGu3yW3R" executionInfo={"status": "ok", "timestamp": 1754557798089, "user_tz": -540, "elapsed": 25, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="a09d28eb-68ee-4755-f704-a7ff34e45bb9"
+```python
 a2 = BankAccount('이순신')
 print(a2.deposit(5000))
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 35} id="o6O7xbLhygsh" executionInfo={"status": "ok", "timestamp": 1754557799646, "user_tz": -540, "elapsed": 8, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="ac759f01-b334-4d40-b76d-0112edbd2733"
+```python
 a2.withdraw(30000)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 35} id="_SJO6Vdeyj4O" executionInfo={"status": "ok", "timestamp": 1754557800411, "user_tz": -540, "elapsed": 26, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="a6898bdd-ffc6-47f6-e652-2bc7deb2f12b"
+```python
 a1.transfer(a2, 3000)
 ```
 
-```python id="qB_nsm74yvfH"
+```python
 # 위의 은행 클래스 init없이 구현
 class BankAccount:
 
@@ -173,12 +169,12 @@ class BankAccount:
                 f'내 잔액: {self.balance}원')
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 163} id="8wRFisimzGMV" executionInfo={"status": "error", "timestamp": 1754557887951, "user_tz": -540, "elapsed": 127, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="897cf9a8-837d-4cf2-b9d4-c4c8f5a59805"
+```python
 a1 = BankAccount('홍길동', 10000)
 print(a1.deposit(10000))
 ```
 
-```python id="8WN21LeizVO_"
+```python
 a1 = BankAccount()
 a1.owner = "장보고"
 a1.balance = 10000
@@ -188,11 +184,11 @@ a2.owner = "이순신"
 a2.balance = 5000
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 35} id="Qjl-4mK3zczm" executionInfo={"status": "ok", "timestamp": 1754557978758, "user_tz": -540, "elapsed": 19, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="7b1f9474-2faa-43cb-882d-cf60fda72bbc"
+```python
 a1.deposit(3000)
 ```
 
-```python id="YKwxkinqzgdF"
+```python
 # 실습문제1 상품 클래스 구현하기 문제
 class Product:
     def __init__(self, name, price, stock=0):
@@ -214,16 +210,16 @@ class Product:
         return f'{quantity}개 판매되었습니다. 남은 재고: {self.stock}'
 ```
 
-```python id="SM0I5oCG2n_7"
+```python
 x = Product('사과', 800)
 y = Product('바나나', 2000)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 35} id="qBbuSZVT2wf-" executionInfo={"status": "ok", "timestamp": 1754558837905, "user_tz": -540, "elapsed": 28, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="22754e6a-a17d-46fe-8617-28c0e3fd8f92"
+```python
 y.restock(20)
 ```
 
-```python id="Kk904hNu2zMw"
+```python
 # 실습2 문제 - 인스턴스 변수 초기화 예외 처리
 class Person:
     def __init__(self, name, age, email=None):
@@ -237,20 +233,18 @@ class Person:
         print(f"{self.name} ({self.age}세) - {self.email} 님, 안녕하세요!")
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 270} id="R8YAaP1_6Kvg" executionInfo={"status": "error", "timestamp": 1754559824206, "user_tz": -540, "elapsed": 33, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="59ea5195-ffab-48e5-90be-39468fb06d45"
+```python
 p1 = Person('Alice', 1000)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="2DUxnONl6Qq1" executionInfo={"status": "ok", "timestamp": 1754559825226, "user_tz": -540, "elapsed": 43, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="5ba95d20-ebd5-41ce-aac3-109b6695311f"
+```python
 p2 = Person('Bob', 50)
 print(p2.greet())
 ```
 
-<!-- #region id="h7CUb6GmCX7s" -->
 # 3. 다양한 메소드
-<!-- #endregion -->
 
-```python id="igPgxHpp6cCz" executionInfo={"status": "ok", "timestamp": 1754612498270, "user_tz": -540, "elapsed": 25, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # __str__메소드
 
 class Book:
@@ -266,29 +260,29 @@ class Book:
         return f'{self.title} by {self.author} ({self.year})'
 ```
 
-```python id="l1bLwBM7Df3n" executionInfo={"status": "ok", "timestamp": 1754612544472, "user_tz": -540, "elapsed": 6, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 book1 = Book("노인과 바다", "헤밍웨이", "1952")
 book2 = Book("소년이 온다", "한강", "2014")
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="oRvNqtk3DrKw" executionInfo={"status": "ok", "timestamp": 1754612567839, "user_tz": -540, "elapsed": 45, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="bef447a7-6294-4971-cac3-32dbd534d6be"
+```python
 print(repr(book1))
 print(str(book2))
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="ED0VFiAbDw31" executionInfo={"status": "ok", "timestamp": 1754612583757, "user_tz": -540, "elapsed": 174, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="bfa8d046-625d-44ff-dd5a-042676a10b8d"
+```python
 print(book1)
 print(book2)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="DJXDKAo2D0sy" executionInfo={"status": "ok", "timestamp": 1754612601484, "user_tz": -540, "elapsed": 48, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="13ca3a28-0cf7-4e9c-81dd-71ec9bd06209"
+```python
 book1
 ```
 
-```python id="a2wgIntCD5Er" executionInfo={"status": "ok", "timestamp": 1754612608516, "user_tz": -540, "elapsed": 16, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="1f153e10-7029-415d-e401-e4141c57c5eb" colab={"base_uri": "https://localhost:8080/"}
+```python
 book2
 ```
 
-```python id="f9wH3bwPD6zd"
+```python
 
 ```

@@ -490,6 +490,16 @@ layout: default
         if (!menu || menu.dataset.foldReady === "1") return;
         menu.dataset.foldReady = "1";
 
+        function getTocDepth(item) {
+          var depth = 0;
+          var parent = item.parentElement;
+          while (parent && !parent.classList.contains("toc__menu")) {
+            if (parent.tagName === "UL" || parent.tagName === "OL") depth += 1;
+            parent = parent.parentElement;
+          }
+          return depth;
+        }
+
         menu.querySelectorAll("li").forEach(function (item) {
           var directLink = item.querySelector(":scope > a");
           var childList = item.querySelector(":scope > ul, :scope > ol");
@@ -502,8 +512,18 @@ layout: default
           toggle.className = "toc-fold-toggle";
           toggle.setAttribute("aria-expanded", "true");
           toggle.setAttribute("aria-label", "Toggle subheadings");
-          toggle.innerHTML = "<span aria-hidden=\"true\">+</span>";
+          toggle.innerHTML = "<span aria-hidden=\"true\">▾</span>";
           directLink.parentNode.insertBefore(toggle, directLink.nextSibling);
+
+          var isActivePath = item.classList.contains("active") || !!item.querySelector(".active");
+          var depth = getTocDepth(item);
+          var shouldCollapse = depth > 0 && !isActivePath;
+
+          if (shouldCollapse) {
+            item.classList.add("is-collapsed");
+            childList.hidden = true;
+            toggle.setAttribute("aria-expanded", "false");
+          }
 
           toggle.addEventListener("click", function () {
             var collapsed = item.classList.toggle("is-collapsed");

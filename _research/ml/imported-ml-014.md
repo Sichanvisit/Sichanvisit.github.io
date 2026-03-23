@@ -61,7 +61,7 @@ tags:
   </div>
 </div>
 
-```python id="Uy1gma0Nz5VE" executionInfo={"status": "ok", "timestamp": 1756286203283, "user_tz": -540, "elapsed": 4439, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.datasets import make_moons
@@ -74,7 +74,7 @@ from sklearn.metrics import accuracy_score
 from matplotlib.colors import ListedColormap
 ```
 
-```python id="WH2660aa0E3w" executionInfo={"status": "ok", "timestamp": 1756286213226, "user_tz": -540, "elapsed": 6, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # 시각화를 위한 헬퍼 함수 (이전 실습에서 사용한 것과 동일)
 def plot_decision_boundary(clf, X, y, ax, title):
     x_min, x_max = X[:, 0].min() - 0.5, X[:, 0].max() + 0.5
@@ -98,20 +98,20 @@ def plot_decision_boundary(clf, X, y, ax, title):
     ax.grid(True)
 ```
 
-```python id="nvwdV7_J0NtR" executionInfo={"status": "ok", "timestamp": 1756286240251, "user_tz": -540, "elapsed": 45, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 X, y = make_moons(n_samples=1000, noise=0.3, random_state=42)
 ```
 
-```python id="HOFwFw-z2NqO" executionInfo={"status": "ok", "timestamp": 1756286769690, "user_tz": -540, "elapsed": 78, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 ```
 
-```python id="8JMt-MiZ0VBa" executionInfo={"status": "ok", "timestamp": 1756286317066, "user_tz": -540, "elapsed": 23, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # 모델별 정확도 저장 딕셔너리
 accuracies ={}
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 914} id="BpDu2Osf0U-R" executionInfo={"status": "ok", "timestamp": 1756287816927, "user_tz": -540, "elapsed": 2744, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="839a37fd-8ee8-4bbd-e669-d5ec2a77018a"
+```python
 fig, axes = plt.subplots(2, 2, figsize=(12,11))
 axes = axes.flatten()
 
@@ -177,11 +177,11 @@ accuracies['Stacking'] = accuracy_stacking
 plot_decision_boundary(stacking_clf, X_test, y_test, axes[3], f'Stacking (Acc:{accuracy_stacking:.4f})')
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="uW7QKCif0Uzf" executionInfo={"status": "ok", "timestamp": 1756287985064, "user_tz": -540, "elapsed": 22, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="25b39e74-d4e2-4199-ed01-0f552c268864"
+```python
 for model_name, acc in accuracies.items():
     print(f'{model_name}: {acc:.4f}')
 ```
 
-```python id="y_LxFRm_67Uu"
+```python
 
 ```

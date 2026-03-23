@@ -60,7 +60,7 @@ tags:
   </div>
 </div>
 
-```python id="HhGdqQykQZBZ" executionInfo={"status": "ok", "timestamp": 1756718627791, "user_tz": -540, "elapsed": 3554, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.datasets import make_blobs
@@ -68,28 +68,28 @@ from sklearn.svm import SVC
 from matplotlib.colors import ListedColormap
 ```
 
-```python id="GFZ-aVcMQfBQ" executionInfo={"status": "ok", "timestamp": 1756718627798, "user_tz": -540, "elapsed": 21, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 X_blob, y_blob = make_blobs(n_samples=50, centers=2, random_state=6)
 # centers=2: 2차원으로 만들기 위한 것. centers=3이면 시각화 어려움
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 80} id="Ja0lLQTkQkAg" executionInfo={"status": "ok", "timestamp": 1756718878486, "user_tz": -540, "elapsed": 46, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="fa741fea-3036-430c-c875-7b7775f7e6c3"
+```python
 model_svc = SVC(kernel='rbf', C=10, gamma=0.001)          # C와 gamma설정 중요!
 # C: cost (오분류에 대한 패널티 강도), gamma: 커널 곡률 조절
 model_svc.fit(X_blob, y_blob)
 ```
 
-```python id="K3255CKGQpx2" executionInfo={"status": "ok", "timestamp": 1756718879134, "user_tz": -540, "elapsed": 29, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 xx, yy = np.meshgrid(np.linspace(X_blob[:, 0].min()-1, X_blob[:, 0].max()+1, 500),
                      np.linspace(X_blob[:, 1].min()-1, X_blob[:, 1].max()+1, 500))
 ```
 
-```python id="2qj7xbwlQtvm" executionInfo={"status": "ok", "timestamp": 1756718880078, "user_tz": -540, "elapsed": 182, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 Z = model_svc.decision_function(np.c_[xx.ravel(), yy.ravel()])
 Z = Z.reshape(xx.shape)
 ```
 
-```python id="e4s5MJTKQy6j" executionInfo={"status": "ok", "timestamp": 1756718882306, "user_tz": -540, "elapsed": 4, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 def plot_decision_boundary(clf, X, y, ax, title):
     x_min, x_max = X[:, 0].min() - 0.5, X[:, 0].max() + 0.5
     y_min, y_max = X[:, 1].min() - 0.5, X[:, 1].max() + 0.5
@@ -116,12 +116,12 @@ def plot_decision_boundary(clf, X, y, ax, title):
 
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 585} id="ynYMkkjCR9KC" executionInfo={"status": "ok", "timestamp": 1756718889856, "user_tz": -540, "elapsed": 402, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="b15a6a0b-6875-464c-d4ea-fda27a6d8d91"
+```python
 fig, ax = plt.subplots(figsize=(7, 6))
 plot_decision_boundary(model_svc, X_blob, y_blob, ax, "SVM \nC=10, gamma=0.01")
 plt.show()
 ```
 
-```python id="XM-h7uT_QcOu" executionInfo={"status": "ok", "timestamp": 1756718628803, "user_tz": -540, "elapsed": 5, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 
 ```

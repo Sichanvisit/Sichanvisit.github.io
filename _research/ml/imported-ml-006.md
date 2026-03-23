@@ -64,11 +64,9 @@ tags:
 </div>
 
 +
-<!-- #region id="oHJav8HsUnEp" -->
 # 1. 선형회귀
-<!-- #endregion -->
 
-```python colab={"base_uri": "https://localhost:8080/"} id="jJy7TvDS70x0" executionInfo={"status": "ok", "timestamp": 1755856768662, "user_tz": -540, "elapsed": 38122, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="9a1c8906-3745-4512-c199-93f3e6913114"
+```python
 !sudo apt-get install -y fonts-nanum
 !sudo fc-cache -fv
 !rm ~/.cache/matplotlib -rf
@@ -88,7 +86,7 @@ plt.rc('font', family=font_name)
 fm.fontManager.addfont(path)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 561} id="K2jSb51q7cNP" executionInfo={"status": "ok", "timestamp": 1755856769142, "user_tz": -540, "elapsed": 468, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="fc33c902-771a-4ef9-905e-033e848a3d73"
+```python
 # 실습1 문제 코드 - 선형 회귀 + MSE
 import numpy as np
 # import matplotlib.pyplot as plt # 한글파일 문제없는 분들은 맨 앞 주석 빼고 진행
@@ -124,7 +122,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 933} id="sZZPU0jl9b-g" executionInfo={"status": "ok", "timestamp": 1755856769391, "user_tz": -540, "elapsed": 244, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="1f8b0b01-9030-49a1-eea6-113b1a8f608b"
+```python
 # 실습2 문제 코드 - 기울기 하강법으로 선형 회귀 실습
 # 초기 파라미터
 w = 0.0
@@ -180,7 +178,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 507} id="R9V6_OACA4FC" executionInfo={"status": "ok", "timestamp": 1755856769616, "user_tz": -540, "elapsed": 216, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="237cab9a-a439-4ba5-bc5e-f25b97a055b8"
+```python
 #실습3 문제 코드 - 다중 선형 회귀
 
 # 1. 입력 변수
@@ -219,7 +217,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 561} id="d7ukF8f0GvBE" executionInfo={"status": "ok", "timestamp": 1755856771775, "user_tz": -540, "elapsed": 2151, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="5325b770-5bc5-4056-c6e1-38e4a5e8fd10"
+```python
 # 추가 -  다중 선형 회귀 실습 코드 예시 (Python - scikit-learn)
 
 from sklearn.linear_model import LinearRegression
@@ -261,159 +259,149 @@ plt.tight_layout()
 plt.show()
 ```
 
-<!-- #region id="YSF_Pau-Uraq" -->
 # 2. Salary 데이터로 선형회귀 기본 코딩 (사이킷런 사용 X)
-<!-- #endregion -->
 
-```python colab={"base_uri": "https://localhost:8080/"} id="cYnB58RyUlhu" executionInfo={"status": "ok", "timestamp": 1755856791639, "user_tz": -540, "elapsed": 19859, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="9ff6458b-654d-462f-f778-877b7944de22"
+```python
 from google.colab import drive
 drive.mount('/content/drive')
 ```
 
-```python id="3dzdOzvhuL7Y" executionInfo={"status": "ok", "timestamp": 1755856791640, "user_tz": -540, "elapsed": 13, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 import pandas as pd
 import numpy as np
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 423} id="KAioqv3jukYw" executionInfo={"status": "ok", "timestamp": 1755856793249, "user_tz": -540, "elapsed": 1617, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="9d5fbd67-b75d-4559-9e07-5119c52b62fc"
+```python
 data = pd.read_csv("/content/drive/MyDrive/코드잇/AI 엔지니어 5기/공유폴더/Data/training_test_data.csv")
 data
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="DtgiYdE_uvVI" executionInfo={"status": "ok", "timestamp": 1755856793315, "user_tz": -540, "elapsed": 74, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="b9f0437b-327c-4ebf-eeec-53a827451cb0"
+```python
 data.info()
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 300} id="Jb8-CDISvBrJ" executionInfo={"status": "ok", "timestamp": 1755856793330, "user_tz": -540, "elapsed": 11, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="cbbe27dc-8100-4226-a8d7-fe80bd12d9fa"
+```python
 data.describe()
 ```
 
-```python id="3WzBP3NbvGMX" executionInfo={"status": "ok", "timestamp": 1755856793365, "user_tz": -540, "elapsed": 31, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # 판다스의 데이터에서 넘파이로 변환 => 머신러닝 모델 학습 위해!
 data_np = data.values
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="Ujn3qtpMvaCV" executionInfo={"status": "ok", "timestamp": 1755856793378, "user_tz": -540, "elapsed": 11, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="d5f1b1dc-c585-4649-9c36-82bbeb5064c1"
+```python
 data_np
 ```
 
-```python id="ZeonlWVyvbsX" executionInfo={"status": "ok", "timestamp": 1755856793380, "user_tz": -540, "elapsed": 1, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # 독립변수 종속변수 구분
 X = data_np[:,:-1]
 y = data_np[:,-1]
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="7-hKIX2ev1CU" executionInfo={"status": "ok", "timestamp": 1755856793389, "user_tz": -540, "elapsed": 8, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="a30ae280-92b6-4dcd-8bff-5d98f2ed4398"
+```python
 X
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="9KsVJsCOv0_b" executionInfo={"status": "ok", "timestamp": 1755856793395, "user_tz": -540, "elapsed": 5, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="f43d358a-ff01-429b-cef7-70f894aeae17"
+```python
 y
 ```
 
-<!-- #region id="ScyMx3p-wBIc" -->
-## (1) 첫번째 모델 - 절편 없음
-<!-- #endregion -->
+## 1) 첫번째 모델 - 절편 없음
 
-```python id="veF2FQRqv073" executionInfo={"status": "ok", "timestamp": 1755856793407, "user_tz": -540, "elapsed": 9, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 b = np.dot(np.linalg.inv(X.T @ X), X.T@y)
 
 # np.linalg.inv(X.T @ X) => (X^T*X)^-1
 # X.T@y   =>X^T*y
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="bzeA3jqVwlge" executionInfo={"status": "ok", "timestamp": 1755856793414, "user_tz": -540, "elapsed": 6, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="2ac781c1-037b-4145-a79b-be1824b18f58"
+```python
 b
 ```
 
-<!-- #region id="qCEW8bxDxFIP" -->
 **해석**
 1. 나이가 1살 많을 수록 소득은 4.41 증가
 2. 성별 1->2 바뀌면 소득이 8.71 증가
 3. 경력이 1년 늘어나면 소득은 2.83 하락
-<!-- #endregion -->
 
-<!-- #region id="4T_J5DpYxU_T" -->
-## (2) 두번째 모델링 - 절편 추가
-<!-- #endregion -->
+## 2) 두번째 모델링 - 절편 추가
 
-```python colab={"base_uri": "https://localhost:8080/"} id="EURPztcZwmjM" executionInfo={"status": "ok", "timestamp": 1755856793424, "user_tz": -540, "elapsed": 9, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="51d15831-14f8-40c6-8b6f-ec63e6f593ea"
+```python
 X2 = np.c_[np.ones(100), X]
 X2
 ```
 
-```python id="mwBdIh5txn6S" executionInfo={"status": "ok", "timestamp": 1755856793426, "user_tz": -540, "elapsed": 1, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 b_new = np.dot(np.linalg.inv(X2.T @ X2), X2.T@y)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="QR1mUvQXx092" executionInfo={"status": "ok", "timestamp": 1755856793433, "user_tz": -540, "elapsed": 6, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="7fe4c6f2-4904-42ed-dfbb-40f481e4ee58"
+```python
 b_new
 ```
 
-<!-- #region id="DW0N51ZuyTRw" -->
 # 3. Salary 데이터로 선형회귀 - 사이킷런 이용 코딩
-<!-- #endregion -->
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 206} id="Lm7PE2aUx1mS" executionInfo={"status": "ok", "timestamp": 1755856793447, "user_tz": -540, "elapsed": 13, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="d4dfc7ee-f2c2-48c3-8b59-293ab08b7209"
+```python
 data.head()
 ```
 
-```python id="hOt3slcdycPs" executionInfo={"status": "ok", "timestamp": 1755856793451, "user_tz": -540, "elapsed": 3, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 data_np = data.values
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="8qtcdpKAyg2i" executionInfo={"status": "ok", "timestamp": 1755856793482, "user_tz": -540, "elapsed": 11, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="fa983e9e-8b09-47cd-d0c6-069c05bf50e9"
+```python
 data_np
 ```
 
-```python id="qD1i9V08ykMX" executionInfo={"status": "ok", "timestamp": 1755856793485, "user_tz": -540, "elapsed": 2, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 X = data_np[:,:-1]
 y = data_np[:,-1]
 ```
 
-```python id="VG3uiXG2ytlh" executionInfo={"status": "ok", "timestamp": 1755856793489, "user_tz": -540, "elapsed": 1, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 from sklearn.model_selection import train_test_split
 ```
 
-```python id="H1aPUxfyy3eo" executionInfo={"status": "ok", "timestamp": 1755856793492, "user_tz": -540, "elapsed": 2, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="qWdrbPcqzOcz" executionInfo={"status": "ok", "timestamp": 1755856793537, "user_tz": -540, "elapsed": 6, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="6e0931bf-55ef-44c0-ee0d-53426e9e0969"
+```python
 X_train.shape
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="c43c892uzROF" executionInfo={"status": "ok", "timestamp": 1755856793549, "user_tz": -540, "elapsed": 6, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="3918fd89-8ed1-46e5-e107-fb72324b2e39"
+```python
 X_test.shape
 ```
 
-```python id="7SipGrbdzTj1" executionInfo={"status": "ok", "timestamp": 1755856793555, "user_tz": -540, "elapsed": 5, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 from sklearn.linear_model import LinearRegression
 ```
 
-```python id="fcruawMrzcS1" executionInfo={"status": "ok", "timestamp": 1755856793556, "user_tz": -540, "elapsed": 4, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # 모델링
 model = LinearRegression()
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 79} id="Da7GUGxJzhm_" executionInfo={"status": "ok", "timestamp": 1755856793584, "user_tz": -540, "elapsed": 31, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="d7925e40-7243-41bb-b073-9fac566a9552"
+```python
 # 모델 학습
 model.fit(X_train, y_train)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="JmvtVQpLzqW5" executionInfo={"status": "ok", "timestamp": 1755856793588, "user_tz": -540, "elapsed": 10, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="242b0da1-5a3a-4f2f-e977-470133be66c7"
+```python
 # 모델 평가 - 기본 평가 점수 - R^2
 model.score(X_test, y_test)
 ```
 
-```python id="Ig29lJ0Iz3oV" executionInfo={"status": "ok", "timestamp": 1755856793595, "user_tz": -540, "elapsed": 4, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 from sklearn.metrics import r2_score
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="NAaB9YM_0c6g" executionInfo={"status": "ok", "timestamp": 1755856793606, "user_tz": -540, "elapsed": 9, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="6c31a337-c096-4e75-9011-4a76d9dbcc8a"
+```python
 r2_score(y_test, model.predict(X_test))
 ```
 
-```python id="L50S_IAD0iLk" executionInfo={"status": "ok", "timestamp": 1755856793614, "user_tz": -540, "elapsed": 2, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 
 ```

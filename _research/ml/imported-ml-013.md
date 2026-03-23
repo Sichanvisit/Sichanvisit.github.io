@@ -60,11 +60,9 @@ tags:
   </div>
 </div>
 
-<!-- #region id="w7lXs50WprHE" -->
 # 1. XGBoost 회귀
-<!-- #endregion -->
 
-```python id="h8E-a7w_n041" executionInfo={"status": "ok", "timestamp": 1756283002687, "user_tz": -540, "elapsed": 5149, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 from sklearn.datasets import fetch_california_housing
 from sklearn.model_selection import train_test_split
 import xgboost as xgb
@@ -72,17 +70,17 @@ from sklearn.metrics import mean_squared_error
 import numpy as np
 ```
 
-```python id="NieuCxpKn7CW" executionInfo={"status": "ok", "timestamp": 1756283122076, "user_tz": -540, "elapsed": 1252, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 data = fetch_california_housing()
 X = data.data
 y = data.target
 ```
 
-```python id="YdVo_JFMoauG" executionInfo={"status": "ok", "timestamp": 1756283191555, "user_tz": -540, "elapsed": 13, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 253} id="cC8o0-ZDor_l" executionInfo={"status": "ok", "timestamp": 1756283364286, "user_tz": -540, "elapsed": 582, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="8899c667-0d70-4d4e-b8ee-4bbefe3cd920"
+```python
 model = xgb.XGBRegressor(
     n_estimators=100,
     learning_rate=0.1,
@@ -91,34 +89,32 @@ model = xgb.XGBRegressor(
 model.fit(X_train, y_train)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="2Ri0jf9HpWBQ" executionInfo={"status": "ok", "timestamp": 1756283429037, "user_tz": -540, "elapsed": 81, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="6b66b2cf-4407-45d5-ed98-b52d12f13c49"
+```python
 y_pred = model.predict(X_test)
 rmse = np.sqrt(mean_squared_error(y_test, y_pred))
 rmse
 ```
 
-<!-- #region id="ckyvpbGmpxY4" -->
 # 2. XGBoost 분류
-<!-- #endregion -->
 
-```python id="9_-pbmv1pkQm" executionInfo={"status": "ok", "timestamp": 1756284519828, "user_tz": -540, "elapsed": 24, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 import xgboost as xgb
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 ```
 
-```python id="krCxkymYszTj" executionInfo={"status": "ok", "timestamp": 1756284520472, "user_tz": -540, "elapsed": 14, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 iris = load_iris()
 X = iris.data
 y = iris.target
 ```
 
-```python id="sBC-ctezs8Nd" executionInfo={"status": "ok", "timestamp": 1756284521800, "user_tz": -540, "elapsed": 18, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 253} id="3iGXVncxs-6W" executionInfo={"status": "ok", "timestamp": 1756284522404, "user_tz": -540, "elapsed": 135, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="6da108fd-7a94-4424-9081-b9fe3c441f08"
+```python
 model = xgb.XGBClassifier(
     objective='multi:softmax',                  # 다중 클래스 분류
     num_class=3                                 # objective='multi:softmax'와 num_class는 같이 써야함
@@ -126,15 +122,15 @@ model = xgb.XGBClassifier(
 model.fit(X_train, y_train)
 ```
 
-```python id="85_WfauktbHX" executionInfo={"status": "ok", "timestamp": 1756284524169, "user_tz": -540, "elapsed": 5, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 y_pred = model.predict(X_test)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="08JFRZoGtejL" executionInfo={"status": "ok", "timestamp": 1756284524794, "user_tz": -540, "elapsed": 19, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="d023a360-1c76-4f5c-f6a4-1d79337e9f42"
+```python
 acc = accuracy_score(y_test, y_pred)
 acc
 ```
 
-```python id="fFipj8qYtqXW"
+```python
 
 ```

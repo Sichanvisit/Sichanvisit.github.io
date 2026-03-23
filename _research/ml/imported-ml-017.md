@@ -60,45 +60,43 @@ tags:
   </div>
 </div>
 
-<!-- #region id="FuAfhLtylZic" -->
 # 데이터 설명
 
 64차원의 손글씨 데이터
 
 사이킷런: https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_digits.html
-<!-- #endregion -->
 
-```python id="L7UPuGyjkjij" executionInfo={"status": "ok", "timestamp": 1756703954733, "user_tz": -540, "elapsed": 47, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 from sklearn.datasets import load_digits                      # 손글씨 이미지 (64차원)
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
 ```
 
-```python id="Oq65G6wclhwf" executionInfo={"status": "ok", "timestamp": 1756703955546, "user_tz": -540, "elapsed": 42, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # 데이터 불러오기
 X, y = load_digits(return_X_y=True)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="jTJ1rnY5lpJw" executionInfo={"status": "ok", "timestamp": 1756701843019, "user_tz": -540, "elapsed": 21, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="bed374be-6d96-4979-90fa-b52f40f411a8"
+```python
 X
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="MhjIEDkVlt1J" executionInfo={"status": "ok", "timestamp": 1756701860317, "user_tz": -540, "elapsed": 28, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="299d63d2-06e7-43fc-bcb2-e870d480e629"
+```python
 y
 ```
 
-```python id="38rQCl7vlyDB" executionInfo={"status": "ok", "timestamp": 1756703959619, "user_tz": -540, "elapsed": 5, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # 데이터 표준화
 
 X_scaled = StandardScaler().fit_transform(X)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/"} id="E96safzVmYlZ" executionInfo={"status": "ok", "timestamp": 1756702029582, "user_tz": -540, "elapsed": 19, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="fe8fb103-3a35-421d-a2c9-a1ea32c5ed74"
+```python
 X_scaled
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 393} id="ShKHw1q8mbYX" executionInfo={"status": "ok", "timestamp": 1756702213407, "user_tz": -540, "elapsed": 246, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="79256e29-3a2c-4db5-c6a5-f9bcf9b06ade"
+```python
 # PCA전 시각화
 
 plt.figure(figsize=(6,4))
@@ -109,13 +107,13 @@ plt.colorbar(scatter, label="Digit Label")
 plt.show()
 ```
 
-```python id="ltGk_u6sm8YB" executionInfo={"status": "ok", "timestamp": 1756703566307, "user_tz": -540, "elapsed": 30, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+```python
 # 차원 축소
 pca = PCA(n_components=2)
 X_pca = pca.fit_transform(X_scaled)
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 393} id="aJFOCfFCsSjK" executionInfo={"status": "ok", "timestamp": 1756703619909, "user_tz": -540, "elapsed": 554, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="cb6302f3-6954-4d95-ea45-bb6384c04307"
+```python
 # PCA 후 시각화
 
 plt.figure(figsize=(6,4))
@@ -126,7 +124,7 @@ plt.colorbar(scatter, label="Digit Label")
 plt.show()
 ```
 
-```python colab={"base_uri": "https://localhost:8080/", "height": 388} id="eIscz2g3snE1" executionInfo={"status": "ok", "timestamp": 1756703967000, "user_tz": -540, "elapsed": 175, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="4a028e81-e4e2-4438-c394-f66540347e51"
+```python
 # 스크리플롯
 
 plt.figure(figsize=(12,4))
@@ -140,6 +138,6 @@ plt.grid(True)
 plt.show()
 ```
 
-```python id="SgWQ7Rc_tnI3"
+```python
 
 ```
