@@ -639,13 +639,172 @@ def summarize_section_content(section: dict[str, object], max_len: int = 200) ->
     return trim_text(compact_spaces(" ".join(collected)), max_len)
 
 
+ML_LOW_PRIORITY_ROOT_TOKENS = (
+    "추가할 사항",
+    "결론",
+    "강사 tip",
+    "1차 데이터 확인",
+    "데이터 설명",
+    "공식",
+)
+
+
+def build_ml_section_corpus(section: dict[str, object]) -> str:
+    paragraphs = [normalize_display_text(str(paragraph)) for paragraph in section.get("paragraphs", [])[:4]]
+    code_bodies = [str(block["body"]) for block in section.get("code_blocks", [])[:4]]
+    return "\n".join(part for part in paragraphs + code_bodies if part)
+
+
+def is_low_signal_ml_summary(text: str) -> bool:
+    normalized = normalize_display_text(text)
+    if len(normalized) < 18:
+        return True
+    low_signal_phrases = (
+        "같은 코드를 직접 따라가며",
+        "흐름을 확인했습니다",
+        "아래 코드와 함께 읽으면",
+        "이 장의 설명을 먼저 읽고",
+        "구현 의도가 더 잘 보이는 구간",
+    )
+    return any(phrase in normalized for phrase in low_signal_phrases)
+
+
+def build_ml_rule_summary(section: dict[str, object]) -> str:
+    label = format_section_path(section.get("path", []), max_depth=3)
+    normalized_label = normalize_display_text(label).lower()
+    corpus = build_ml_section_corpus(section)
+    lower = corpus.lower()
+
+    if "미션 설명" in normalized_label:
+        return "문제 목표, 예측 대상, 평가 기준을 먼저 잡고 이번 실습의 방향을 정리하는 도입부입니다."
+    if "데이터 설명" in normalized_label or "파일 설명" in normalized_label or normalized_label == "데이터":
+        return "사용할 데이터셋의 컬럼 의미와 타깃 변수를 정리해 이후 전처리와 모델링 판단 기준을 세우는 구간입니다."
+    if "강사 tip" in normalized_label:
+        return "비즈니스 상황에 따라 Precision, Recall 같은 어떤 평가 기준을 우선할지 정리하는 해설 구간입니다."
+    if "추가할 사항" in normalized_label:
+        return "모델 결과를 KPI와 마케팅 전략으로 연결할 때 어떤 비즈니스 지표를 설계할지 정리한 보충 메모입니다."
+    if "결론" in normalized_label:
+        return "실험 결과를 비교해 어떤 전처리와 모델 조합이 가장 적합했는지 정리하는 마무리 구간입니다."
+    if "1차 데이터 확인" in normalized_label and any(token in lower for token in ("campaign", "pdays", "previous", "value_counts", "describe", "unknown")):
+        return "타깃 불균형, campaign 이상치, pdays=999 같은 주의 지점을 먼저 확인해 이후 전처리 방향을 정하는 단계입니다."
+    if "특정 컬럼 데이터 확인" in normalized_label and any(token in lower for token in ("duration", "pdays", "previous")):
+        return "duration, pdays, previous처럼 예측력은 크지만 해석상 주의가 필요한 컬럼을 따로 점검하는 단계입니다."
+    if "데이터 확인" in normalized_label and any(token in lower for token in (".head(", ".info(", ".describe(", ".shape", "value_counts", "histplot", "boxplot")):
+        return "컬럼 구조와 분포를 먼저 점검해 어떤 변수와 이상치를 주의해서 볼지 정리하는 단계입니다."
+    if "데이터 시각화" in normalized_label and any(token in lower for token in ("plt.", "sns.", "histplot", "boxplot", "barplot", "heatmap", "countplot")):
+        return "주요 변수와 타깃 분포를 그래프로 확인해 어떤 가설과 파생 변수를 세울지 판단하는 단계입니다."
+    if "결측치 확인" in normalized_label and "isnull" in lower:
+        return "결측치가 실제로 존재하는지 먼저 확인하고 이후 처리 방식을 정하는 점검 단계입니다."
+    if "종속변수 이진 변환" in normalized_label and any(token in lower for token in ("yes", "no", "lambda", "map(", "labelencoder", "astype")):
+        return "yes/no 타깃 값을 0/1로 바꿔 분류 모델이 바로 학습할 수 있는 형태로 맞추는 단계입니다."
+    if "datetime" in normalized_label or ("pd.to_datetime" in lower and ".dt." in lower):
+        return "datetime 컬럼을 파싱하고 hour, month, year, weekday 같은 시간 파생 변수를 만드는 단계입니다."
+    if "로그 변환" in normalized_label or "log_count" in lower or "np.log1p" in lower:
+        return "타깃 값을 로그 스케일로 바꿔 RMSLE 기준에 맞는 회귀 목표로 정리하는 단계입니다."
+    if "season" in normalized_label and ("month" in lower or "redefine_season" in lower):
+        return "month 값을 기준으로 season을 다시 매핑해 실제 계절 정보와 맞추는 전처리입니다."
+    if "duration 컬럼" in normalized_label and "duration" in lower:
+        return "duration이 타깃을 과하게 설명할 수 있는 변수인지 확인하고, 모델 입력에서 제외할지 판단하는 단계입니다."
+    if "windspeed 조사" in normalized_label and "windspeed" in lower:
+        return "windspeed 극단값이 실제 가능한 범위인지 확인하고 제거 또는 변환 기준을 세우는 조사 단계입니다."
+    if "humidity 조사" in normalized_label and "humidity" in lower:
+        return "humidity 0/100 구간과 대여량 관계를 확인해 이상치로 볼지 유지할지 판단하는 조사 단계입니다."
+    if "이상치" in normalized_label and "windspeed" in lower:
+        return "windspeed 분포와 극단값을 확인해 제거 또는 변환 여부를 판단하는 단계입니다."
+    if "이상치" in normalized_label and "campaign" in lower:
+        return "campaign 분포를 확인해 극단값을 바로 제거할지, 로그 스케일로 볼지 판단하는 단계입니다."
+    if "중복값" in normalized_label and "duplicated" in lower:
+        return "중복 행을 확인하고 제거해 학습 데이터 품질을 먼저 정리하는 단계입니다."
+    if "범주형 변수 처리" in normalized_label and "labelencoder" in lower:
+        if "unknown" in lower:
+            return "unknown 값을 따로 두고 나머지 범주형 컬럼을 라벨 인코딩하는 전처리 단계입니다."
+        return "범주형 컬럼을 숫자로 바꿔 트리 기반 모델이 학습할 수 있도록 입력 형식을 정리하는 단계입니다."
+    if "파생변수 추가" in normalized_label and any(token in lower for token in ("is_rush_hour", "is_morning", "is_night", "is_workhour", "is_weekend")):
+        return "시간대와 운영 패턴을 반영한 파생 변수를 추가해 자전거 수요나 행동 패턴을 더 잘 설명하도록 만드는 단계입니다."
+    if "파생변수 추가" in normalized_label and any(token in lower for token in ("was_contacted_before", "had_prev_success", "is_target_", "few_contacts", "low_euribor3m", "neg_emp_var_rate")):
+        return "고객/캠페인/경제지표 정보를 묶은 파생 변수를 추가해 가입 가능성이 높은 구간을 더 잘 구분하려는 단계입니다."
+    if "파생변수 추가" in normalized_label and any(token in lower for token in ("humidity_ideal", "weather_ideal", "humidity_bin")):
+        return "날씨와 습도 조건을 구간화해 대여량 또는 가입 패턴을 더 잘 설명하는 파생 변수를 만드는 단계입니다."
+    if "파생변수 추가" in normalized_label and any(token in lower for token in ("is_", "map(", "pd.cut(", "between(", "isin(")):
+        return "도메인 규칙을 반영한 새 컬럼을 추가해 모델이 중요한 패턴을 더 잘 잡도록 만드는 단계입니다."
+    if any(token in normalized_label for token in ("unknown", "pdays")) and any(token in lower for token in ("unknown", "pdays", "999")):
+        return "unknown과 pdays=999를 결측 또는 미접촉 신호로 보고 별도 처리 전략을 세우는 단계입니다."
+    if "smote" in normalized_label or "smote(" in lower:
+        return "훈련 데이터에만 SMOTE를 적용해 클래스 불균형을 완화하고 데이터 누수를 피하는 모델링 단계입니다."
+    if "stratify" in normalized_label and "train_test_split" in lower:
+        return "불균형 데이터에서 train/test를 나눌 때 타깃 비율이 유지되도록 stratify를 적용하는 단계입니다."
+    if any(token in normalized_label for token in ("1차 모델링", "2차 모델링", "3차 모델링", "4차 모델링", "5차 모델링", "6차 모델링")):
+        if any(token in lower for token in ("xgbregressor", "xgbclassifier", "xgboost")):
+            return "XGBoost를 최종 후보로 올려 기존 모델 대비 성능 개선 여부를 확인하는 모델링 단계입니다."
+        if "smote(" in lower:
+            return "SMOTE로 불균형 데이터를 보정한 뒤 모델별 Precision, Recall, F1 변화를 비교하는 단계입니다."
+        if "gridsearchcv" in lower or "param_grids" in lower:
+            return "하이퍼파라미터를 조정하며 여러 회귀 모델의 성능 차이를 비교하는 모델링 단계입니다."
+        if any(token in lower for token in ("humidity_ideal", "weather_ideal", "humidity_bin", "windspeed_z")):
+            return "새 파생 변수나 변환된 입력을 추가해 이전 모델보다 성능이 나아지는지 다시 확인하는 단계입니다."
+        if any(token in lower for token in ("scale_pos_weight", "had_prev_success", "is_target_age", "few_contacts")):
+            return "불균형 비율과 도메인 파생 변수를 반영해 정기 예금 가입 분류 성능을 끌어올리는 모델링 단계입니다."
+        if any(token in lower for token in ("polynomialfeatures", "linearregression", "ridge", "lasso", "elasticnet")):
+            return "기본 회귀 모델과 다항 회귀를 비교해 첫 베이스라인을 만들고 이후 개선 방향을 찾는 단계입니다."
+    if "결과 저장" in normalized_label or "submission" in lower or "to_csv(" in lower:
+        return "최종 모델로 test 데이터를 예측하고 제출용 CSV를 저장하는 마무리 단계입니다."
+    if "데이터 전처리" in normalized_label:
+        return "결측치, 인코딩, 이상치, 파생 변수처럼 모델 입력을 정리하는 전처리 과정을 모아 둔 장입니다."
+    if "xgboost 회귀" in normalized_label:
+        dataset = "California Housing 데이터를" if "fetch_california_housing" in lower else "회귀 데이터를"
+        metric = "RMSE" if "mean_squared_error" in lower or "rmse" in lower else "회귀 지표"
+        return f"{dataset} train/test로 나누고 XGBRegressor를 학습한 뒤 {metric}로 성능을 확인하는 실습입니다."
+    if "xgboost 분류" in normalized_label:
+        dataset = "Iris 데이터를" if "load_iris" in lower else "분류 데이터를"
+        metric = "Accuracy" if "accuracy_score" in lower else "분류 지표"
+        return f"{dataset} train/test로 나누고 XGBClassifier를 학습한 뒤 {metric}로 성능을 확인하는 실습입니다."
+    if "모델링" in normalized_label and "gridsearchcv" in lower:
+        return "여러 모델과 하이퍼파라미터를 바꿔가며 성능이 가장 좋은 조합을 찾는 모델링 단계입니다."
+    if "모델링" in normalized_label and any(token in lower for token in ("decisiontree", "randomforest", "xgb", "lightgbm", "catboost")):
+        return "Decision Tree, RandomForest, XGBoost 같은 후보를 비교하며 성능과 지표 변화를 확인하는 모델링 단계입니다."
+    if "모델링" in normalized_label:
+        return "여러 모델과 파라미터를 바꿔가며 가장 성능이 좋은 조합을 찾는 단계입니다."
+    return ""
+
+
+def get_ml_section_summary(section: dict[str, object], max_len: int = 190) -> str:
+    direct_summary = summarize_section_content(section, max_len=max_len)
+    rule_summary = build_ml_rule_summary(section)
+    label = format_section_path(section.get("path", []), max_depth=3).lower()
+    rule_priority_tokens = (
+        "결측치 확인",
+        "datetime",
+        "season",
+        "이상치",
+        "duration 컬럼",
+        "범주형 변수 처리",
+        "파생변수 추가",
+        "unknown",
+        "pdays",
+        "smote",
+        "결과 저장",
+    )
+
+    if rule_summary and (
+        not direct_summary
+        or is_low_signal_ml_summary(direct_summary)
+        or any(token in label for token in rule_priority_tokens)
+    ):
+        return trim_text(rule_summary, max_len)
+    if direct_summary:
+        return direct_summary
+    if rule_summary:
+        return trim_text(rule_summary, max_len)
+    return ""
+
+
 def score_ml_source_section(section: dict[str, object], title_keywords: list[str] | None = None) -> int:
     title_keywords = title_keywords or []
     label = format_section_path(section.get("path", []), max_depth=3).lower()
     level = int(section.get("level") or 9)
     score = {1: 40, 2: 30, 3: 18, 4: 10}.get(level, 0)
     score += score_text_against_keywords(label, title_keywords)
-    score += score_text_against_keywords(summarize_section_content(section, max_len=160), title_keywords)
+    score += score_text_against_keywords(get_ml_section_summary(section, max_len=160), title_keywords)
 
     if "미션 설명" in label:
         score += 42
@@ -659,6 +818,11 @@ def score_ml_source_section(section: dict[str, object], title_keywords: list[str
         score += 94
     elif any(token in label for token in ("해석", "가설", "컬럼", "데이터 확인")):
         score += 22
+
+    if any(token in label for token in ML_LOW_PRIORITY_ROOT_TOKENS):
+        score -= 110
+    if "결론" in label and len(section.get("code_blocks", [])) == 0:
+        score -= 35
 
     if "공식" in label:
         score -= 40
@@ -674,6 +838,9 @@ def score_ml_source_section(section: dict[str, object], title_keywords: list[str
 def describe_ml_source_section(section: dict[str, object]) -> str:
     label = format_section_path(section.get("path", []), max_depth=3).lower()
     readable_label = format_section_path(section.get("path", []), max_depth=2) or clean_section_label(str(section.get("heading", "")))
+    rule_summary = build_ml_rule_summary(section)
+    if rule_summary:
+        return rule_summary
     if "데이터 설명" in label or (("데이터" in label or "컬럼" in label) and "전처리" not in label):
         return "데이터 구조와 주의할 변수부터 읽고 실험 방향을 정리하는 구간입니다."
     if "강사 tip" in label or "1차 데이터 확인" in label or "해석" in label or "가설" in label:
@@ -693,12 +860,23 @@ def describe_ml_source_section(section: dict[str, object]) -> str:
     return f"{readable_label} 아래에 이어질 세부 설명과 코드를 읽기 전 흐름을 잡는 구간입니다."
 
 
-def build_ml_code_focus_items(section: dict[str, object], limit: int = 3) -> list[dict[str, str]]:
+def build_ml_code_focus_items(section: dict[str, object], limit: int = 3) -> list[dict[str, object]]:
     section_label = clean_section_label(str(section.get("heading", "")))
-    items: list[dict[str, str]] = []
+    items: list[dict[str, object]] = []
     seen: set[str] = set()
+    ranked_blocks = sorted(
+        [
+            block
+            for block in section.get("code_blocks", [])
+            if get_code_lines(str(block["body"]))
+        ],
+        key=lambda block: (
+            1 if get_ml_stage(block) in {"setup", "other"} else 0,
+            -score_ml_block_for_stage(block, get_ml_stage(block)),
+        ),
+    )
 
-    for block in section.get("code_blocks", []):
+    for block in ranked_blocks:
         comment_clues = extract_comment_clues(str(block["body"]), limit=2)
         label = ""
         for clue in comment_clues:
@@ -727,6 +905,7 @@ def build_ml_code_focus_items(section: dict[str, object], limit: int = 3) -> lis
             {
                 "label": trim_text(label, 46),
                 "summary": summary,
+                "code_blocks": [block],
             }
         )
         if len(items) >= limit:
@@ -741,7 +920,7 @@ def build_ml_root_summary(
     root_section: dict[str, object],
     child_items: list[dict[str, str]],
 ) -> str:
-    direct_summary = summarize_section_content(root_section, max_len=190)
+    direct_summary = get_ml_section_summary(root_section, max_len=190)
     if direct_summary:
         return direct_summary
 
@@ -784,6 +963,39 @@ def build_ml_outline_labels(sections: list[dict[str, object]], limit: int = 5) -
             continue
         fallback.append(label)
     return unique_cleaned_items(fallback, limit=limit)
+
+
+def score_ml_summary_label(label: str) -> int:
+    normalized = normalize_display_text(label).lower()
+    score = 0
+    if any(token in normalized for token in ("모델링", "학습", "평가")):
+        score += 120
+    if any(token in normalized for token in ("전처리", "파생변수", "결과 저장")):
+        score += 100
+    if "시각화" in normalized:
+        score += 70
+    if any(token in normalized for token in ("데이터 확인", "데이터")):
+        score += 45
+    if "미션 설명" in normalized:
+        score += 28
+    if "분석 드릴다운" in normalized:
+        score -= 25
+    if any(token in normalized for token in ML_LOW_PRIORITY_ROOT_TOKENS):
+        score -= 90
+    return score
+
+
+def choose_ml_summary_labels(study_notes: list[dict[str, object]], limit: int = 3) -> list[str]:
+    ranked = sorted(
+        (
+            (score_ml_summary_label(str(note.get("label", ""))), index, str(note.get("label", "")))
+            for index, note in enumerate(study_notes)
+            if normalize_display_text(str(note.get("label", "")))
+        ),
+        key=lambda item: (-item[0], item[1]),
+    )
+    labels = [label for _, _, label in ranked]
+    return unique_cleaned_items(labels, limit=limit)
 
 
 def is_topic_sparse_title(title: str) -> bool:
@@ -1145,7 +1357,7 @@ def build_ml_source_notes(
             grouped[root] = entry
 
         level = int(section.get("level") or 9)
-        summary = summarize_section_content(section, max_len=190)
+        summary = get_ml_section_summary(section, max_len=190)
         score = score_ml_source_section(section, title_keywords=title_keywords) + (30 if level == 1 else 0)
         if len(path) == 1 and summary and score > int(entry["summary_score"]):
             entry["summary"] = summary
@@ -1154,7 +1366,7 @@ def build_ml_source_notes(
 
         if len(path) >= 2:
             child_label = format_section_path(path[1:], max_depth=2)
-            child_summary = summarize_section_content(section, max_len=160)
+            child_summary = get_ml_section_summary(section, max_len=160)
             if not child_summary:
                 code_focus = build_ml_code_focus_items(section, limit=1)
                 if code_focus:
@@ -1162,12 +1374,18 @@ def build_ml_source_notes(
 
             existing_labels = {str(item["label"]).lower() for item in entry["children"]}
             if child_label and child_label.lower() not in existing_labels and not is_auxiliary_section(child_label):
+                selected_child_blocks = select_ml_code_blocks(
+                    list(section.get("code_blocks", [])),
+                    limit=1,
+                    title_keywords=title_keywords,
+                )
                 entry["children"].append(
                     {
                         "index": index,
                         "label": child_label,
                         "summary": child_summary or describe_ml_source_section(section),
                         "score": score_ml_source_section(section, title_keywords=title_keywords),
+                        "code_blocks": selected_child_blocks,
                     }
                 )
 
@@ -1180,10 +1398,11 @@ def build_ml_source_notes(
     preferred_entries = [
         entry
         for entry in ranked_entries
-        if normalize_display_text(str(entry["root"])).lower() not in {"미션 설명", "데이터", "분석 드릴다운", "데이터 확인", "eda"}
+        if not any(token in normalize_display_text(str(entry["root"])).lower() for token in ML_LOW_PRIORITY_ROOT_TOKENS)
     ]
-    if len(preferred_entries) >= min(4, limit):
+    if preferred_entries:
         ranked_entries = preferred_entries[:limit]
+    ranked_entries = sorted(ranked_entries, key=lambda entry: int(entry["index"]))
 
     for entry in ranked_entries:
         root = str(entry["root"])
@@ -1194,7 +1413,7 @@ def build_ml_source_notes(
             child_items = build_ml_code_focus_items(root_section, limit=3)
         else:
             child_items.sort(key=lambda item: -int(item.get("score", 0)))
-            child_items = child_items[:3]
+            child_items = child_items[:4]
             child_items.sort(key=lambda item: int(item.get("index", 0)))
 
         summary = str(entry["summary"]).strip()
@@ -1217,6 +1436,11 @@ def build_ml_source_notes(
                 "summary": summary,
                 "practice": practice,
                 "children": child_items,
+                "code_blocks": select_ml_code_blocks(
+                    list(root_section.get("code_blocks", [])),
+                    limit=1,
+                    title_keywords=title_keywords,
+                ) if not child_items else [],
             }
         )
 
@@ -1846,6 +2070,8 @@ def is_generic_ml_heading(heading: str) -> bool:
         return True
     if normalized in GENERIC_ML_HEADINGS:
         return True
+    if any(token in normalized for token in ("주의사항", "tip", "추가할 사항", "결론")):
+        return True
     if re.fullmatch(r"\(?\d+\)?\s*\d+차 모델링", normalized):
         return True
     if re.fullmatch(r"\(?\d+\)?\s*차 모델링", normalized):
@@ -1918,6 +2144,12 @@ def infer_ml_code_label(block: dict[str, object]) -> str:
     if stage == "data_load":
         if "train" in lower and "test" in lower and "read_csv" in lower:
             return "train/test CSV 불러오기"
+        if "fetch_california_housing" in lower:
+            return "California Housing 불러오기"
+        if "load_iris" in lower:
+            return "Iris 데이터 불러오기"
+        if "fetch_" in lower or "load_" in lower:
+            return "데이터셋 불러오기"
         if "read_csv" in lower:
             return "CSV 데이터 불러오기"
         if "read_excel" in lower:
@@ -1934,10 +2166,20 @@ def infer_ml_code_label(block: dict[str, object]) -> str:
         if "fillna" in lower or "dropna" in lower:
             return "결측치 정리"
     if stage == "feature_engineering":
+        if is_ml_feature_list_block(body):
+            return "모델 입력 컬럼 선택"
         if "pd.to_datetime" in lower or ".dt." in lower:
             return "datetime 파생 변수 생성"
+        if any(token in lower for token in ("is_rush_hour", "is_morning", "is_night", "is_workhour", "is_weekend")):
+            return "시간대 파생 변수 생성"
+        if any(token in lower for token in ("humidity_ideal", "weather_ideal", "humidity_bin")):
+            return "날씨 파생 변수 생성"
+        if any(token in lower for token in ("was_contacted_before", "had_prev_success", "is_target_", "few_contacts", "low_euribor3m", "neg_emp_var_rate")):
+            return "고객/캠페인 파생 변수 생성"
         if "get_dummies" in lower:
             return "범주형 원-핫 인코딩"
+        if "smote(" in lower:
+            return "SMOTE 데이터 재구성"
         return "파생 변수 추가"
     if stage == "modeling":
         if models:
@@ -1950,6 +2192,10 @@ def infer_ml_code_label(block: dict[str, object]) -> str:
             return f"{models[0]} 모델 학습"
         return "모델 학습 루프"
     if stage == "evaluation":
+        if "classification_report" in lower:
+            return "분류 리포트 점검"
+        if "results.append" in lower or "pd.dataframe(results" in lower:
+            return "모델 성능 비교표 정리"
         if "rmsle" in lower:
             return "RMSLE 기준 성능 평가"
         if any(token in lower for token in ("accuracy_score", "f1_score", "roc_auc", "classification_report", "confusion_matrix")):
@@ -1957,6 +2203,10 @@ def infer_ml_code_label(block: dict[str, object]) -> str:
         if any(token in lower for token in ("mean_squared_error", "rmse", "mae")):
             return "회귀 성능 평가"
         return "예측 결과 점검"
+    if stage == "result_save":
+        if "submission" in lower and "to_csv" in lower:
+            return "submission 저장"
+        return "예측 결과 저장"
     if stage == "visualization":
         return "데이터 분포 시각화"
     if stage == "class_design" and class_name:
@@ -1974,7 +2224,10 @@ def get_code_label(block: dict[str, object], research_tab: str = "") -> str:
     heading = normalize_display_text(str(block["heading"]))
     if research_tab == "ML":
         inferred_label = infer_ml_code_label(block)
+        stage = get_ml_stage(block)
         if heading and heading.lower() not in {"overview", "archive note"} and not is_generic_ml_heading(heading):
+            if inferred_label and stage not in {"modeling", "class_design", "function_practice"}:
+                return trim_text(inferred_label, 80)
             return trim_text(heading, 80)
         if inferred_label:
             return trim_text(inferred_label, 80)
@@ -2060,6 +2313,10 @@ def infer_ml_code_purpose(block: dict[str, object]) -> str:
     if stage == "preprocessing":
         return "결측치 처리, 인코딩, 스케일링처럼 모델이 바로 사용할 수 있도록 입력 형태를 다듬는 단계입니다."
     if stage == "feature_engineering":
+        if "smote(" in lower:
+            return "클래스 불균형을 완화하기 위해 학습 데이터를 재구성하는 단계입니다. 특히 훈련셋에만 적용해야 누수를 막을 수 있습니다."
+        if is_ml_feature_list_block(body):
+            return "앞에서 만든 파생 변수와 원본 컬럼 중 어떤 조합을 실제 모델 입력으로 사용할지 확정하는 코드입니다."
         return "원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다."
     if stage == "modeling":
         if models:
@@ -2070,7 +2327,11 @@ def infer_ml_code_purpose(block: dict[str, object]) -> str:
             return "하이퍼파라미터 탐색이나 교차검증을 통해 단순 실행이 아니라 성능 비교까지 해본 학습 코드입니다."
         return "훈련 데이터를 기준으로 모델을 실제로 fitting 하며 성능을 끌어올리는 학습 단계입니다."
     if stage == "evaluation":
+        if "results.append" in lower or "pd.dataframe(results" in lower:
+            return "모델별 지표를 한 표로 모아 어떤 조합이 가장 나은지 비교하는 단계입니다."
         return "예측 결과를 지표로 계산해 어떤 모델과 전처리가 더 잘 맞았는지 확인하는 평가 코드입니다."
+    if stage == "result_save":
+        return "최종 모델로 test 데이터를 예측하고 제출용 파일 형태로 저장하는 마무리 코드입니다."
     if stage == "visualization":
         return "데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다."
     if stage == "class_design":
@@ -2147,6 +2408,7 @@ ML_STAGE_LABELS = {
     "modeling": "모델 구성",
     "training": "학습",
     "evaluation": "평가",
+    "result_save": "결과 저장",
     "visualization": "시각화",
     "class_design": "클래스 설계",
     "function_practice": "함수 실습",
@@ -2154,13 +2416,29 @@ ML_STAGE_LABELS = {
 }
 
 ML_STAGE_PRIORITY = [
+    "data_load",
+    "preprocessing",
+    "feature_engineering",
     "modeling",
     "training",
     "evaluation",
+    "result_save",
+    "class_design",
+    "function_practice",
+    "visualization",
+    "other",
+    "setup",
+]
+
+ML_STAGE_DISPLAY_PRIORITY = [
+    "data_load",
     "preprocessing",
     "feature_engineering",
-    "data_load",
     "visualization",
+    "modeling",
+    "training",
+    "evaluation",
+    "result_save",
     "class_design",
     "function_practice",
     "other",
@@ -2185,37 +2463,101 @@ def is_import_heavy_block(body: str) -> bool:
     return import_like / max(len(lines), 1) >= 0.6
 
 
+def is_ml_feature_list_block(body: str) -> bool:
+    lower = body.lower()
+    lines = get_code_lines(body)
+    if not lines:
+        return False
+    if "def " in lower or "class " in lower:
+        return False
+    if "feature_names" not in lower and "features_" not in lower:
+        return False
+    if "[" not in body or "]" not in body:
+        return False
+    signal_tokens = (
+        "train_test_split",
+        ".fit(",
+        ".predict(",
+        "pd.cut(",
+        ".map(",
+        ".isin(",
+        ".between(",
+        "get_dummies",
+        "labelencoder",
+        "standardscaler",
+        "smote(",
+    )
+    return not any(token in lower for token in signal_tokens)
+
+
+def is_ml_prediction_only_block(body: str) -> bool:
+    lower = body.lower()
+    lines = get_code_lines(body)
+    if not lines:
+        return False
+    if len(lines) > 3:
+        return False
+    return ".predict(" in lower and not any(
+        token in lower
+        for token in (
+            "accuracy_score",
+            "f1_score",
+            "classification_report",
+            "confusion_matrix",
+            "roc_auc",
+            "mean_squared_error",
+            "rmse",
+            "rmsle",
+            "results.append",
+            "pd.dataframe(results",
+        )
+    )
+
+
 def get_ml_stage(block: dict[str, object]) -> str:
     body = str(block["body"]).lower()
     heading = normalize_display_text(str(block["heading"])).lower()
-    combined = f"{heading}\n{body}"
 
+    if not body.strip():
+        return "other"
     if is_import_heavy_block(str(block["body"])):
         return "setup"
-    if any(token in combined for token in ("strftime", "datetime.now", "timedelta", "random.randint", "random.choice", "random.shuffle", "uniform(", "time.sleep", "time.time")):
+    if is_ml_feature_list_block(str(block["body"])):
+        return "other"
+    if any(token in body for token in ("strftime", "datetime.now", "timedelta", "random.randint", "random.choice", "random.shuffle", "uniform(", "time.sleep", "time.time")):
         return "other"
     if "class " in body and is_basic_python_practice_block(str(block["body"])):
         return "class_design"
     if "def " in body and is_basic_python_practice_block(str(block["body"])):
         return "function_practice"
-    if any(token in combined for token in ("pd.read_csv", "read_csv(", "fetch_", "load_", "dataset_path", "train.csv", "test.csv")):
+    if "submission" in body or "to_csv(" in body:
+        return "result_save"
+    if any(token in body for token in ("pd.read_csv", "read_csv(", "fetch_", "load_", "dataset_path", "train.csv", "test.csv")):
         return "data_load"
-    if any(token in combined for token in ("fillna", "dropna", "labelencoder", "standardscaler", "minmaxscaler", "clean_text", "stopwords", "tokenize")):
+    if any(token in body for token in ("fillna", "dropna", "labelencoder", "standardscaler", "minmaxscaler", "clean_text", "stopwords", "tokenize", "train_test_split")):
         return "preprocessing"
-    if any(token in combined for token in ("get_dummies", "feature", ".dt.", "pd.to_datetime", "hour", "month", "dayofweek", "engineer")):
+    if "smote(" in body:
         return "feature_engineering"
-    if any(token in combined for token in ("randomforest", "xgb", "lightgbm", "catboost", "linearregression", "logisticregression", "decisiontree", "classifier(", "regressor(", "pipeline(")):
-        return "modeling"
-    if any(token in combined for token in (".fit(", "gridsearchcv", "cross_val_score", "train_model", "optimizer", "epoch")):
+    if any(token in body for token in ("get_dummies", ".dt.", "pd.to_datetime", "engineer", "pd.cut(", ".map(", "isin(", "between(", "weekday_name", "weekday_num", "humidity_bin", "weather_ideal")):
+        return "feature_engineering"
+    if any(token in body for token in (".fit(", "gridsearchcv", "cross_val_score", "train_model", "optimizer", "epoch")):
         return "training"
-    if any(token in combined for token in (".predict(", "accuracy_score", "f1_score", "roc_auc", "classification_report", "confusion_matrix", "rmsle", "mean_squared_error", "rmse")):
+    if any(token in body for token in (".predict(", "accuracy_score", "f1_score", "roc_auc", "classification_report", "confusion_matrix", "rmsle", "mean_squared_error", "rmse", "results.append", "pd.dataframe(results")):
         return "evaluation"
-    if any(token in combined for token in ("plt.", "sns.", "heatmap", "histplot", "boxplot", "scatterplot", "barplot")):
+    if any(token in body for token in ("randomforest", "xgb", "lightgbm", "catboost", "linearregression", "logisticregression", "decisiontree", "classifier(", "regressor(", "pipeline(")):
+        return "modeling"
+    if any(token in body for token in ("plt.", "sns.", "heatmap", "histplot", "boxplot", "scatterplot", "barplot")):
         return "visualization"
     if "class " in body and "__init__" in body:
         return "class_design"
     if "def " in body:
         return "function_practice"
+    if any(token in heading for token in ("모델링", "회귀", "분류")):
+        return "modeling"
+    if any(token in heading for token in ("전처리", "결측치", "이상치")):
+        return "preprocessing"
+    if "시각화" in heading:
+        return "visualization"
     return "other"
 
 
@@ -2226,8 +2568,10 @@ def get_code_stage_label(block: dict[str, object], research_tab: str) -> str:
 
 
 def score_ml_block_for_stage(block: dict[str, object], stage: str) -> int:
-    body = str(block["body"]).lower()
+    raw_body = str(block["body"])
+    body = raw_body.lower()
     score = score_code_block(block)
+    lines = get_code_lines(raw_body)
 
     bonus_map = {
         "setup": ("import ", "from ", "!pip install", "warnings.filterwarnings"),
@@ -2237,6 +2581,7 @@ def score_ml_block_for_stage(block: dict[str, object], stage: str) -> int:
         "modeling": ("randomforest", "xgb", "lightgbm", "catboost", "linearregression", "logisticregression", "decisiontree", "classifier(", "regressor("),
         "training": (".fit(", "gridsearchcv", "cross_val_score", "train_", "cv="),
         "evaluation": (".predict(", "accuracy_score", "f1_score", "roc_auc", "classification_report", "confusion_matrix", "rmsle", "mean_squared_error", "rmse"),
+        "result_save": ("submission", "to_csv(", "savefig(", "pickle.dump(", "joblib.dump("),
         "visualization": ("plt.", "sns.", "heatmap", "histplot", "boxplot", "scatterplot", "barplot"),
         "class_design": ("class ", "__init__", "self."),
         "function_practice": ("def ", "return "),
@@ -2245,23 +2590,63 @@ def score_ml_block_for_stage(block: dict[str, object], stage: str) -> int:
         if token in body:
             score += 10
 
+    if not lines:
+        score -= 200
+    if stage == "other":
+        score -= 24
     if stage == "preprocessing" and "import " in body and is_import_heavy_block(str(block["body"])):
         score -= 20
+    if stage == "preprocessing" and "train_test_split" in body and "smote(" in body:
+        score += 12
     if stage == "feature_engineering" and "datetime" in body and "pd.to_datetime" not in body and ".dt." not in body:
         score -= 10
+    if stage == "feature_engineering" and any(token in body for token in ("plt.", "sns.", "barplot", "histplot", "boxplot")) and "smote(" not in body:
+        score -= 30
+    if stage == "feature_engineering" and is_ml_feature_list_block(raw_body):
+        score -= 65
+    if stage == "feature_engineering" and "def " in body:
+        score += 18
+    if stage == "feature_engineering" and len(lines) <= 3 and "def " not in body and "df[\"" not in body and "df['" not in body and ".map(" not in body and ".isin(" not in body and ".between(" not in body and "pd.cut(" not in body:
+        score -= 28
+    if stage == "feature_engineering" and any(token in body for token in ("def add_", "df[\"", "df['", "pd.cut(", ".map(", ".isin(", ".between(")):
+        score += 22
+    if stage == "modeling" and "results.append" in body:
+        score -= 40
+    if stage == "modeling" and is_ml_feature_list_block(raw_body):
+        score -= 40
+    if stage == "evaluation" and "classification_report" not in body and "results.append" not in body and "mean_squared_error" not in body and "accuracy_score" not in body and ".predict(" in body:
+        score -= 10
+    if stage == "evaluation" and is_ml_prediction_only_block(raw_body):
+        score -= 28
+    if stage == "result_save" and "to_csv(" in body:
+        score += 18
 
     return score
 
 
 def select_ml_code_blocks(code_blocks: list[dict[str, object]], limit: int, title_keywords: list[str] | None = None) -> list[dict[str, object]]:
     title_keywords = title_keywords or []
+    candidate_items = [
+        (index, block)
+        for index, block in enumerate(code_blocks)
+        if get_code_lines(str(block["body"]))
+    ]
+    if not candidate_items:
+        return []
+
     stage_best: dict[str, tuple[int, dict[str, object], int]] = {}
     ranked = sorted(
-        enumerate(code_blocks),
+        candidate_items,
         key=lambda item: (-score_code_block_for_track(item[1], "ML", title_keywords), item[0]),
     )
+    preferred_ranked = [
+        (index, block)
+        for index, block in ranked
+        if get_ml_stage(block) not in {"setup", "other"}
+    ]
+    stage_ranked = preferred_ranked or ranked
 
-    for index, block in ranked:
+    for index, block in stage_ranked:
         stage = get_ml_stage(block)
         stage_score = score_ml_block_for_stage(block, stage) + score_code_block_for_track(block, "ML", title_keywords)
         existing = stage_best.get(stage)
@@ -2283,8 +2668,25 @@ def select_ml_code_blocks(code_blocks: list[dict[str, object]], limit: int, titl
             break
 
     if len(selected_indexes) < limit:
+        for index, block in stage_ranked:
+            if index in selected_indexes:
+                continue
+            if is_ml_prediction_only_block(str(block["body"])):
+                continue
+            label_key = normalize_display_text(get_code_label(block, "ML")).lower()
+            if label_key and label_key in used_labels:
+                continue
+            selected_indexes.append(index)
+            if label_key:
+                used_labels.add(label_key)
+            if len(selected_indexes) >= limit:
+                break
+
+    if not preferred_ranked and len(selected_indexes) < min(limit, len(ranked)):
         for index, block in ranked:
             if index in selected_indexes:
+                continue
+            if is_ml_prediction_only_block(str(block["body"])):
                 continue
             label_key = normalize_display_text(get_code_label(block, "ML")).lower()
             if label_key and label_key in used_labels:
@@ -2299,6 +2701,13 @@ def select_ml_code_blocks(code_blocks: list[dict[str, object]], limit: int, titl
     for index in selected_indexes:
         if index not in ordered_unique_indexes:
             ordered_unique_indexes.append(index)
+    display_order = {stage: index for index, stage in enumerate(ML_STAGE_DISPLAY_PRIORITY)}
+    ordered_unique_indexes.sort(
+        key=lambda index: (
+            display_order.get(get_ml_stage(code_blocks[index]), 999),
+            index,
+        )
+    )
     return [code_blocks[index] for index in ordered_unique_indexes]
 
 
@@ -2904,8 +3313,27 @@ def build_ml_research_summary(
     artifact_summary: str,
 ) -> str:
     cleaned_title = clean_ml_title_for_summary(title) or title
-    section_labels = [note["label"] for note in study_notes[:3]]
-    code_labels = unique_preserve_order([get_code_label(block, "ML") for block in code_samples])[:2]
+    section_labels = choose_ml_summary_labels(study_notes, limit=3)
+    summary_stage_priority = (
+        "training",
+        "modeling",
+        "evaluation",
+        "result_save",
+        "feature_engineering",
+        "preprocessing",
+        "data_load",
+        "visualization",
+    )
+    prioritized_blocks = sorted(
+        code_samples,
+        key=lambda block: (
+            summary_stage_priority.index(get_ml_stage(block))
+            if get_ml_stage(block) in summary_stage_priority
+            else len(summary_stage_priority),
+            code_samples.index(block),
+        ),
+    )
+    code_labels = unique_preserve_order([get_code_label(block, "ML") for block in prioritized_blocks])[:2]
 
     if section_labels:
         lead = f"{cleaned_title}의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다"
@@ -2979,10 +3407,37 @@ def build_ml_intro_html(
     execution_block_count: int,
     libraries: list[str],
 ) -> str:
-    concept_labels = unique_preserve_order([str(note["label"]) for note in study_notes])[:4]
-    implementation_focus = []
+    concept_labels = choose_ml_summary_labels(study_notes, limit=4)
+    parsed_flow_items: list[tuple[str, str]] = []
     for item in flow_items:
-        implementation_focus.append(item.split(": ", 1)[1] if ": " in item else item)
+        if ": " in item:
+            stage, label = item.split(": ", 1)
+            parsed_flow_items.append((stage.strip(), label.strip()))
+        else:
+            parsed_flow_items.append(("", item))
+
+    implementation_focus: list[str] = []
+    preferred_stage_groups = [
+        {"데이터 불러오기", "전처리", "피처 가공"},
+        {"모델 구성", "학습"},
+        {"평가", "결과 저장"},
+    ]
+    used_labels: set[str] = set()
+    for stage_group in preferred_stage_groups:
+        for stage, label in parsed_flow_items:
+            if not label or label in used_labels:
+                continue
+            if stage in stage_group:
+                implementation_focus.append(label)
+                used_labels.add(label)
+                break
+    for _, label in parsed_flow_items:
+        if not label or label in used_labels:
+            continue
+        implementation_focus.append(label)
+        used_labels.add(label)
+        if len(implementation_focus) >= 3:
+            break
     implementation_focus = unique_preserve_order(implementation_focus)[:3]
     library_summary = ", ".join(libraries[:4]) if libraries else "미확인"
     if len(libraries) > 4:
@@ -3018,6 +3473,25 @@ def build_ml_intro_html(
     )
 
 
+def render_ml_inline_code_block(block: dict[str, object]) -> str:
+    lang = str(block["lang"])
+    label = get_code_label(block, "ML")
+    stage_label = get_code_stage_label(block, "ML")
+    explanation = infer_ml_code_purpose(block)
+    apis = extract_ml_api_terms(str(block["body"]))
+    body = trim_code_block(str(block["body"]), lang, max_lines=24)
+    intro_parts = [part for part in (stage_label, label) if part]
+    lines = [f"**코드로 확인한 부분**: {' · '.join(intro_parts)}" if intro_parts else "**코드로 확인한 부분**"]
+    if apis:
+        lines.append(f"**핵심 API**: {format_inline_code_list(apis)}")
+    lines.append(explanation)
+    lines.append("")
+    lines.append(f"```{lang}")
+    lines.append(body)
+    lines.append("```")
+    return "\n".join(lines)
+
+
 def build_ml_study_section(
     *,
     study_notes: list[dict[str, object]],
@@ -3036,7 +3510,10 @@ def build_ml_study_section(
                 ]
             )
         )
-        for child in children[:3]:
+        if not children:
+            for block in note.get("code_blocks", [])[:1]:
+                sections.append(render_ml_inline_code_block(block))
+        for child in children[:4]:
             child_label = normalize_display_text(str(child.get("label", "")))
             child_summary = normalize_display_text(str(child.get("summary", "")))
             if not child_label or not child_summary:
@@ -3050,6 +3527,8 @@ def build_ml_study_section(
                     ]
                 )
             )
+            for block in child.get("code_blocks", [])[:1]:
+                sections.append(render_ml_inline_code_block(block))
     return "\n\n".join(sections)
 
 
@@ -3218,6 +3697,7 @@ def build_content(
     flow_items: list[str],
     code_samples: list[dict[str, object]],
     libraries: list[str],
+    raw_note_markdown: str,
     preview_lines: list[str],
     related_notes: list[str],
     external_refs: list[str],
@@ -3225,7 +3705,7 @@ def build_content(
     updated_at: str,
 ) -> str:
     focus_display_items = unique_cleaned_items([condense_focus_item(item, max_len=60) for item in focus_items], limit=5)
-    coverage_title = "원본 노트 흐름" if research_tab == "ML" else "What This Note Covers"
+    coverage_title = "원문 흐름대로 보기" if research_tab == "ML" else "What This Note Covers"
     flow_title = "구현 흐름" if research_tab == "ML" else "Implementation Flow"
     code_title = "코드로 확인한 내용" if research_tab == "ML" else "Code Highlights"
     concept_title = "Why These Steps Matter" if research_tab == "ML" else "Why This Matters"
@@ -3348,17 +3828,7 @@ def build_content(
     artifact_line = "/".join(source_formats) if source_formats else "source"
     artifact_line = f"{artifact_line} · 코드 {code_block_count}개 · 실행 {execution_block_count}개"
     if research_tab == "ML":
-        body_sections = f"""## {coverage_title}
-
-{coverage_section}
-
-## {flow_title}
-
-{flow_section}
-
-## {code_title}
-
-{code_section}"""
+        body_sections = raw_note_markdown.strip() or coverage_section
     else:
         body_sections = f"""## {coverage_title}
 
@@ -3402,14 +3872,6 @@ tags:
 {intro_block}
 
 {body_sections}
-
-## 참고 자료
-
-{bundle_section}
-
-## 원문 미리보기
-
-{preview_block}
 """
 
     return f"""---
@@ -3457,6 +3919,7 @@ tags:
 def build_note_payload(track: dict[str, str], file_path: Path, title_override: str | None = None) -> str:
     metadata, body_lines = parse_front_matter(file_path)
     structure = parse_note_structure(body_lines)
+    raw_note_markdown = "\n".join(body_lines).strip()
     code_blocks = list(structure["code_blocks"])
     headings = list(structure["headings"])
     paragraphs = list(structure["paragraphs"])
@@ -3477,7 +3940,7 @@ def build_note_payload(track: dict[str, str], file_path: Path, title_override: s
     section_summaries = build_section_summaries(sections, metadata_sections, limit=4, title_keywords=title_keywords)
     flow_items = build_flow_items(section_summaries, focus_items, metadata_sections, limit=6)
     if track["tab"] == "ML":
-        code_limit = min(max(len(code_blocks), 1), 6)
+        code_limit = min(max(len(code_blocks), 1), 7)
     else:
         code_limit = min(max(len(code_blocks), 1), 4)
     code_samples = select_code_blocks(code_blocks, research_tab=track["tab"], title_keywords=title_keywords, limit=code_limit)
@@ -3589,6 +4052,7 @@ def build_note_payload(track: dict[str, str], file_path: Path, title_override: s
         flow_items=flow_items,
         code_samples=code_samples,
         libraries=libraries,
+        raw_note_markdown=raw_note_markdown,
         preview_lines=preview_lines,
         related_notes=related_notes,
         external_refs=external_refs,

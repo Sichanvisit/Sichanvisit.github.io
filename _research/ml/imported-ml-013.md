@@ -5,8 +5,8 @@ research_tab: "ML"
 research_kind: "Archive Note"
 source_title: "250827_코딩실습13_10.결정트리와 앙상블(XGBoost)"
 source_path: "11_Machine_Learning/Code_Snippets/250827_코딩실습13_10.결정트리와 앙상블(XGBoost).md"
-excerpt: "10.결정트리와 앙상블(XGBoost)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 XGBoost 회귀, XGBoost 분류 순서로 큰 장을 먼저 훑고, XGBoost 회귀, XGBoost 분류 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `i..."
-research_summary: "10.결정트리와 앙상블(XGBoost)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 XGBoost 회귀, XGBoost 분류 순서로 큰 장을 먼저 훑고, XGBoost 회귀, XGBoost 분류 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 12개 코드 블록, 11개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 sklearn, xgboost, numpy입니다."
+excerpt: "10.결정트리와 앙상블(XGBoost)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 XGBoost 회귀, XGBoost 분류 순서로 큰 장을 먼저 훑고, XGBoost 모델 학습, 회귀 성능 평가 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `..."
+research_summary: "10.결정트리와 앙상블(XGBoost)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 XGBoost 회귀, XGBoost 분류 순서로 큰 장을 먼저 훑고, XGBoost 모델 학습, 회귀 성능 평가 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 12개 코드 블록, 11개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 sklearn, xgboost, numpy입니다."
 research_artifacts: "ipynb/md · 코드 12개 · 실행 11개"
 code_block_count: 12
 execution_block_count: 11
@@ -48,7 +48,7 @@ tags:
   </div>
   <div class="research-overview__row">
     <div class="research-overview__label">구현 흐름</div>
-    <div class="research-overview__value">XGBoost 회귀 -&gt; XGBoost 분류</div>
+    <div class="research-overview__value">California Housing 불러오기 -&gt; XGBoost 모델 학습 -&gt; 회귀 성능 평가</div>
   </div>
   <div class="research-overview__row">
     <div class="research-overview__label">자료</div>
@@ -60,47 +60,29 @@ tags:
   </div>
 </div>
 
-## 원본 노트 흐름
+<!-- #region id="w7lXs50WprHE" -->
+# 1. XGBoost 회귀
+<!-- #endregion -->
 
-### XGBoost 회귀
+```python id="h8E-a7w_n041" executionInfo={"status": "ok", "timestamp": 1756283002687, "user_tz": -540, "elapsed": 5149, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+from sklearn.datasets import fetch_california_housing
+from sklearn.model_selection import train_test_split
+import xgboost as xgb
+from sklearn.metrics import mean_squared_error
+import numpy as np
+```
 
-XGBoost 회귀 코드를 직접 따라가며 XGBoost 회귀 구현 흐름을 확인했습니다.
+```python id="NieuCxpKn7CW" executionInfo={"status": "ok", "timestamp": 1756283122076, "user_tz": -540, "elapsed": 1252, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+data = fetch_california_housing()
+X = data.data
+y = data.target
+```
 
-- 읽을 포인트: 이 장의 설명을 먼저 읽고 아래 코드 섹션으로 내려가면 흐름이 더 자연스럽습니다.
+```python id="YdVo_JFMoauG" executionInfo={"status": "ok", "timestamp": 1756283191555, "user_tz": -540, "elapsed": 13, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+```
 
-### XGBoost 분류
-
-XGBoost 분류 코드를 직접 따라가며 XGBoost 분류 구현 흐름을 확인했습니다.
-
-- 읽을 포인트: 이 장의 설명을 먼저 읽고 아래 코드 섹션으로 내려가면 흐름이 더 자연스럽습니다.
-
-## 구현 흐름
-
-### 1. XGBoost 회귀
-
-- 단계: 모델 구성
-- 구현 의도: XGBoost 같은 모델을 올려 두고 어떤 알고리즘이 문제에 더 잘 맞는지 비교해 보는 구간입니다.
-- 핵심 API: `XGBoost`
-- 코드 포인트: -
-
-### 2. XGBoost 분류
-
-- 단계: 모델 구성
-- 구현 의도: XGBoost 같은 모델을 올려 두고 어떤 알고리즘이 문제에 더 잘 맞는지 비교해 보는 구간입니다.
-- 핵심 API: `XGBoost`
-- 코드 포인트: -
-
-## 코드로 확인한 내용
-
-### XGBoost 회귀
-
-**직접 해본 단계**: 모델 구성
-
-**핵심 API**: `XGBoost`
-
-XGBoost 같은 모델을 올려 두고 어떤 알고리즘이 문제에 더 잘 맞는지 비교해 보는 구간입니다.
-
-```python
+```python colab={"base_uri": "https://localhost:8080/", "height": 253} id="cC8o0-ZDor_l" executionInfo={"status": "ok", "timestamp": 1756283364286, "user_tz": -540, "elapsed": 582, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="8899c667-0d70-4d4e-b8ee-4bbefe3cd920"
 model = xgb.XGBRegressor(
     n_estimators=100,
     learning_rate=0.1,
@@ -109,15 +91,34 @@ model = xgb.XGBRegressor(
 model.fit(X_train, y_train)
 ```
 
-### XGBoost 분류
+```python colab={"base_uri": "https://localhost:8080/"} id="2Ri0jf9HpWBQ" executionInfo={"status": "ok", "timestamp": 1756283429037, "user_tz": -540, "elapsed": 81, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="6b66b2cf-4407-45d5-ed98-b52d12f13c49"
+y_pred = model.predict(X_test)
+rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+rmse
+```
 
-**직접 해본 단계**: 모델 구성
+<!-- #region id="ckyvpbGmpxY4" -->
+# 2. XGBoost 분류
+<!-- #endregion -->
 
-**핵심 API**: `XGBoost`
+```python id="9_-pbmv1pkQm" executionInfo={"status": "ok", "timestamp": 1756284519828, "user_tz": -540, "elapsed": 24, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+import xgboost as xgb
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+```
 
-XGBoost 같은 모델을 올려 두고 어떤 알고리즘이 문제에 더 잘 맞는지 비교해 보는 구간입니다.
+```python id="krCxkymYszTj" executionInfo={"status": "ok", "timestamp": 1756284520472, "user_tz": -540, "elapsed": 14, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+iris = load_iris()
+X = iris.data
+y = iris.target
+```
 
-```python
+```python id="sBC-ctezs8Nd" executionInfo={"status": "ok", "timestamp": 1756284521800, "user_tz": -540, "elapsed": 18, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+```
+
+```python colab={"base_uri": "https://localhost:8080/", "height": 253} id="3iGXVncxs-6W" executionInfo={"status": "ok", "timestamp": 1756284522404, "user_tz": -540, "elapsed": 135, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="6da108fd-7a94-4424-9081-b9fe3c441f08"
 model = xgb.XGBClassifier(
     objective='multi:softmax',                  # 다중 클래스 분류
     num_class=3                                 # objective='multi:softmax'와 num_class는 같이 써야함
@@ -125,16 +126,15 @@ model = xgb.XGBClassifier(
 model.fit(X_train, y_train)
 ```
 
-## 참고 자료
+```python id="85_WfauktbHX" executionInfo={"status": "ok", "timestamp": 1756284524169, "user_tz": -540, "elapsed": 5, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+y_pred = model.predict(X_test)
+```
 
-- Source path: `11_Machine_Learning/Code_Snippets/250827_코딩실습13_10.결정트리와 앙상블(XGBoost).md`
-- Source formats: `ipynb`, `md`
-- Companion files: `250827_코딩실습13_10.결정트리와 앙상블(XGBoost).ipynb`, `250827_코딩실습13_10.결정트리와 앙상블(XGBoost).md`
-- Note type: `code-note`
-- Last updated in the source vault: `2026-03-08T03:33:14`
-- Related notes: `11_Machine_Learning_Code_Summary.md`
-- External references: `localhost`
+```python colab={"base_uri": "https://localhost:8080/"} id="08JFRZoGtejL" executionInfo={"status": "ok", "timestamp": 1756284524794, "user_tz": -540, "elapsed": 19, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="d023a360-1c76-4f5c-f6a4-1d79337e9f42"
+acc = accuracy_score(y_test, y_pred)
+acc
+```
 
-## 원문 미리보기
+```python id="fFipj8qYtqXW"
 
-> 원본 노트에 별도 설명 문단이 많지 않아 코드 중심으로 보존했습니다.
+```

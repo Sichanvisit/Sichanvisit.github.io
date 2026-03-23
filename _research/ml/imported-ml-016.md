@@ -5,8 +5,8 @@ research_tab: "ML"
 research_kind: "Archive Note"
 source_title: "250901_SVM"
 source_path: "11_Machine_Learning/Code_Snippets/250901_SVM.md"
-excerpt: "SVM의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 객체지향 설계, 함수 분해와 로직 구성 순서로 큰 장을 먼저 훑고, SVM 모델 학습, 파생 변수 추가 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 8개 코드 블록,..."
-research_summary: "SVM의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 객체지향 설계, 함수 분해와 로직 구성 순서로 큰 장을 먼저 훑고, SVM 모델 학습, 파생 변수 추가 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 8개 코드 블록, 8개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, matplotlib, sklearn입니다."
+excerpt: "SVM의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 객체지향 설계, 함수 분해와 로직 구성 순서로 큰 장을 먼저 훑고, SVM 모델 학습, 예측 결과 점검 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 8개 코드 블록,..."
+research_summary: "SVM의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 객체지향 설계, 함수 분해와 로직 구성 순서로 큰 장을 먼저 훑고, SVM 모델 학습, 예측 결과 점검 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 8개 코드 블록, 8개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 numpy, matplotlib, sklearn입니다."
 research_artifacts: "ipynb/md · 코드 8개 · 실행 8개"
 code_block_count: 8
 execution_block_count: 8
@@ -48,7 +48,7 @@ tags:
   </div>
   <div class="research-overview__row">
     <div class="research-overview__label">구현 흐름</div>
-    <div class="research-overview__value">SVM 모델 학습 -&gt; 파생 변수 추가 -&gt; 데이터 분포 시각화</div>
+    <div class="research-overview__value">SVM 모델 학습 -&gt; 예측 결과 점검 -&gt; 데이터 분포 시각화</div>
   </div>
   <div class="research-overview__row">
     <div class="research-overview__label">자료</div>
@@ -60,85 +60,36 @@ tags:
   </div>
 </div>
 
-## 원본 노트 흐름
+```python id="HhGdqQykQZBZ" executionInfo={"status": "ok", "timestamp": 1756718627791, "user_tz": -540, "elapsed": 3554, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.datasets import make_blobs
+from sklearn.svm import SVC
+from matplotlib.colors import ListedColormap
+```
 
-### 객체지향 설계
+```python id="GFZ-aVcMQfBQ" executionInfo={"status": "ok", "timestamp": 1756718627798, "user_tz": -540, "elapsed": 21, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+X_blob, y_blob = make_blobs(n_samples=50, centers=2, random_state=6)
+# centers=2: 2차원으로 만들기 위한 것. centers=3이면 시각화 어려움
+```
 
-객체지향은 관련 데이터와 동작을 하나의 객체로 묶어 문제를 구조적으로 표현하는 방식입니다.
-
-- 읽을 포인트: 이 글에서는 클래스, 메서드, 상태 관리 같은 코드가 핵심 학습 포인트로 드러납니다.
-
-### 함수 분해와 로직 구성
-
-함수는 입력, 처리, 반환을 분리해 로직을 재사용하기 쉽게 만들고, 문제를 작은 단위로 나누는 기본 도구입니다.
-
-- 읽을 포인트: 이 글에서는 문제 풀이를 함수 단위로 쪼개고 입출력을 나눠 보는 실습과 연결됩니다.
-
-## 구현 흐름
-
-### 1. SVM 모델 학습
-
-- 단계: 학습
-- 구현 의도: 훈련 데이터를 기준으로 모델을 실제로 fitting 하며 성능을 끌어올리는 학습 단계입니다.
-- 핵심 API: -
-- 코드 포인트: C: cost (오분류에 대한 패널티 강도), gamma...
-
-### 2. 파생 변수 추가
-
-- 단계: 피처 가공
-- 구현 의도: 원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다.
-- 핵심 API: -
-- 코드 포인트: -
-
-### 3. 데이터 분포 시각화
-
-- 단계: 시각화
-- 구현 의도: 데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.
-- 핵심 API: `matplotlib`
-- 코드 포인트: -
-
-### 4. Z = model_svc.decision_function(np.c_[xx.ravel(), yy.ravel()])
-
-- 단계: 구현 코드
-- 구현 의도: Z = model_svc.decision_function(n... 코드를 직접 실행하며 이 장의 구현 흐름을 확인했습니다.
-- 핵심 API: -
-- 코드 포인트: -
-
-### 5. import numpy as np
-
-- 단계: 환경 준비
-- 구현 의도: 넘파이 배열 생성, 인덱싱, 수치 연산을 손으로 익히는 기초 실습 코드입니다.
-- 핵심 API: -
-- 코드 포인트: -
-
-### 6. xx, yy = np.meshgrid(np.linspace(X_blob[:, 0].min()-1, X_blob[:, 0].max()+1,...
-
-- 단계: 구현 코드
-- 구현 의도: xx, yy = np.meshgrid(np.linspace(... 코드를 직접 실행하며 이 장의 구현 흐름을 확인했습니다.
-- 핵심 API: -
-- 코드 포인트: -
-
-## 코드로 확인한 내용
-
-### SVM 모델 학습
-
-**직접 해본 단계**: 학습
-
-훈련 데이터를 기준으로 모델을 실제로 fitting 하며 성능을 끌어올리는 학습 단계입니다.
-
-```python
+```python colab={"base_uri": "https://localhost:8080/", "height": 80} id="Ja0lLQTkQkAg" executionInfo={"status": "ok", "timestamp": 1756718878486, "user_tz": -540, "elapsed": 46, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="fa741fea-3036-430c-c875-7b7775f7e6c3"
 model_svc = SVC(kernel='rbf', C=10, gamma=0.001)          # C와 gamma설정 중요!
 # C: cost (오분류에 대한 패널티 강도), gamma: 커널 곡률 조절
 model_svc.fit(X_blob, y_blob)
 ```
 
-### 파생 변수 추가
+```python id="K3255CKGQpx2" executionInfo={"status": "ok", "timestamp": 1756718879134, "user_tz": -540, "elapsed": 29, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+xx, yy = np.meshgrid(np.linspace(X_blob[:, 0].min()-1, X_blob[:, 0].max()+1, 500),
+                     np.linspace(X_blob[:, 1].min()-1, X_blob[:, 1].max()+1, 500))
+```
 
-**직접 해본 단계**: 피처 가공
+```python id="2qj7xbwlQtvm" executionInfo={"status": "ok", "timestamp": 1756718880078, "user_tz": -540, "elapsed": 182, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+Z = model_svc.decision_function(np.c_[xx.ravel(), yy.ravel()])
+Z = Z.reshape(xx.shape)
+```
 
-원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다.
-
-```python
+```python id="e4s5MJTKQy6j" executionInfo={"status": "ok", "timestamp": 1756718882306, "user_tz": -540, "elapsed": 4, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
 def plot_decision_boundary(clf, X, y, ax, title):
     x_min, x_max = X[:, 0].min() - 0.5, X[:, 0].max() + 0.5
     y_min, y_max = X[:, 1].min() - 0.5, X[:, 1].max() + 0.5
@@ -162,68 +113,15 @@ def plot_decision_boundary(clf, X, y, ax, title):
     ax.set_ylabel('Feature 2')
     ax.legend()
     ax.grid(True)
+
 ```
 
-### 데이터 분포 시각화
-
-**직접 해본 단계**: 시각화
-
-**핵심 API**: `matplotlib`
-
-데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.
-
-```python
+```python colab={"base_uri": "https://localhost:8080/", "height": 585} id="ynYMkkjCR9KC" executionInfo={"status": "ok", "timestamp": 1756718889856, "user_tz": -540, "elapsed": 402, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="b15a6a0b-6875-464c-d4ea-fda27a6d8d91"
 fig, ax = plt.subplots(figsize=(7, 6))
 plot_decision_boundary(model_svc, X_blob, y_blob, ax, "SVM \nC=10, gamma=0.01")
 plt.show()
 ```
 
-### Z = model_svc.decision_function(np.c_[xx.ravel(), yy.ravel()])
+```python id="XM-h7uT_QcOu" executionInfo={"status": "ok", "timestamp": 1756718628803, "user_tz": -540, "elapsed": 5, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
 
-**직접 해본 단계**: 구현 코드
-
-Z = model_svc.decision_function(n... 코드를 직접 실행하며 이 장의 구현 흐름을 확인했습니다.
-
-```python
-Z = model_svc.decision_function(np.c_[xx.ravel(), yy.ravel()])
-Z = Z.reshape(xx.shape)
 ```
-
-### import numpy as np
-
-**직접 해본 단계**: 환경 준비
-
-넘파이 배열 생성, 인덱싱, 수치 연산을 손으로 익히는 기초 실습 코드입니다.
-
-```python
-import numpy as np
-import matplotlib.pyplot as plt
-from sklearn.datasets import make_blobs
-from sklearn.svm import SVC
-from matplotlib.colors import ListedColormap
-```
-
-### xx, yy = np.meshgrid(np.linspace(X_blob[:, 0].min()-1, X_blob[:, 0].max()+1,...
-
-**직접 해본 단계**: 구현 코드
-
-xx, yy = np.meshgrid(np.linspace(... 코드를 직접 실행하며 이 장의 구현 흐름을 확인했습니다.
-
-```python
-xx, yy = np.meshgrid(np.linspace(X_blob[:, 0].min()-1, X_blob[:, 0].max()+1, 500),
-                     np.linspace(X_blob[:, 1].min()-1, X_blob[:, 1].max()+1, 500))
-```
-
-## 참고 자료
-
-- Source path: `11_Machine_Learning/Code_Snippets/250901_SVM.md`
-- Source formats: `ipynb`, `md`
-- Companion files: `250901_SVM.ipynb`, `250901_SVM.md`
-- Note type: `code-note`
-- Last updated in the source vault: `2026-03-08T03:33:14`
-- Related notes: `11_Machine_Learning_Code_Summary.md`
-- External references: `localhost`
-
-## 원문 미리보기
-
-> 원본 노트에 별도 설명 문단이 많지 않아 코드 중심으로 보존했습니다.

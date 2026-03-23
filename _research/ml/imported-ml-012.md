@@ -5,8 +5,8 @@ research_tab: "ML"
 research_kind: "Archive Note"
 source_title: "250827_코딩실습12_10.결정트리와 앙상블(AdaBoost)"
 source_path: "11_Machine_Learning/Code_Snippets/250827_코딩실습12_10.결정트리와 앙상블(AdaBoost).md"
-excerpt: "10.결정트리와 앙상블(AdaBoost)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 분류 문제, 결정 트리와 앙상블, 전처리와 입력 정리 순서로 큰 장을 먼저 훑고, DecisionTree / AdaBoo..., 분류 성능 평가 같은 코드로 실제 구현..."
-research_summary: "10.결정트리와 앙상블(AdaBoost)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 분류 문제, 결정 트리와 앙상블, 전처리와 입력 정리 순서로 큰 장을 먼저 훑고, DecisionTree / AdaBoo..., 분류 성능 평가 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 8개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 sklearn, matplotlib, numpy입니다."
+excerpt: "10.결정트리와 앙상블(AdaBoost)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 전처리와 입력 정리, 분류 문제, 결정 트리와 앙상블 순서로 큰 장을 먼저 훑고, DecisionTree 모델 학습, 분류 성능 평가 같은 코드로 실제 구현을 이어서..."
+research_summary: "10.결정트리와 앙상블(AdaBoost)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 전처리와 입력 정리, 분류 문제, 결정 트리와 앙상블 순서로 큰 장을 먼저 훑고, DecisionTree 모델 학습, 분류 성능 평가 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 8개 코드 블록, 7개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 sklearn, matplotlib, numpy입니다."
 research_artifacts: "ipynb/md · 코드 8개 · 실행 7개"
 code_block_count: 8
 execution_block_count: 7
@@ -42,11 +42,11 @@ tags:
   </div>
   <div class="research-overview__row">
     <div class="research-overview__label">주요 장</div>
-    <div class="research-overview__value">분류 문제 · 결정 트리와 앙상블 · 전처리와 입력 정리 · 피처 엔지니어링</div>
+    <div class="research-overview__value">전처리와 입력 정리 · 분류 문제 · 결정 트리와 앙상블 · 피처 엔지니어링</div>
   </div>
   <div class="research-overview__row">
     <div class="research-overview__label">구현 흐름</div>
-    <div class="research-overview__value">DecisionTree / AdaBoost 모델 구성 -&gt; 분류 성능 평가 -&gt; 파생 변수 추가</div>
+    <div class="research-overview__value">학습/검증 데이터 분리 -&gt; DecisionTree 모델 학습 -&gt; 분류 성능 평가</div>
   </div>
   <div class="research-overview__row">
     <div class="research-overview__label">자료</div>
@@ -58,87 +58,26 @@ tags:
   </div>
 </div>
 
-## 원본 노트 흐름
+```python id="Zduh3MdSc0qk" executionInfo={"status": "ok", "timestamp": 1756280202134, "user_tz": -540, "elapsed": 9, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+from sklearn.ensemble import AdaBoostClassifier
+from sklearn.datasets import make_moons
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import accuracy_score
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.colors import ListedColormap           # 결정 경계 시각화 하기 위한 라이브러리
+```
 
-### 분류 문제
+```python id="dY7Mke0bdAfi" executionInfo={"status": "ok", "timestamp": 1756280247686, "user_tz": -540, "elapsed": 19, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+X, y = make_moons(n_samples=1000, noise=0.3, random_state=42)
+```
 
-분류는 입력 특성으로 클래스나 반응 여부를 예측하는 문제입니다. 모델은 각 샘플이 어떤 범주에 속하는지 확률 또는 라벨로 출력합니다.
+```python id="H7s7T1P9ddRt" executionInfo={"status": "ok", "timestamp": 1756280361857, "user_tz": -540, "elapsed": 12, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+```
 
-- 읽을 포인트: 이 글에서는 가입 여부, 품종, 레이블 예측처럼 범주형 타깃을 다루는 실습 맥락으로 연결됩니다.
-
-### 결정 트리와 앙상블
-
-결정 트리는 조건 분기로 예측 규칙을 만들고, 앙상블은 여러 모델의 예측을 묶어 편향과 분산을 함께 줄이는 접근입니다.
-
-- 읽을 포인트: 이 글에서는 Decision Tree, RandomForest, XGBoost, Voting, Stacking 코드를 통해 여러 모델을 비교해 볼 수 있습니다.
-
-### 전처리와 입력 정리
-
-머신러닝 모델은 입력 형식에 민감하기 때문에 결측치 처리, 인코딩, 스케일링 같은 전처리 단계가 성능을 크게 좌우합니다.
-
-- 읽을 포인트: 이 글에서는 범주형 값을 숫자로 바꾸거나 학습/검증을 분리하는 코드가 이 개념에 해당합니다.
-
-### 피처 엔지니어링
-
-피처 엔지니어링은 원본 컬럼을 그대로 쓰지 않고 문제에 맞는 새 특징을 설계해 모델이 더 유용한 패턴을 학습하도록 돕는 과정입니다.
-
-- 읽을 포인트: 이 글에서는 시간 파생 변수, 조건식 기반 플래그, 도메인 규칙을 반영한 새 컬럼 생성 코드가 여기에 해당합니다.
-
-## 구현 흐름
-
-### 1. DecisionTree / AdaBoost 모델 구성
-
-- 단계: 모델 구성
-- 구현 의도: DecisionTree / AdaBoost 같은 모델을 올려 두고 어떤 알고리즘이 문제에 더 잘 맞는지 비교해 보는 구간입니다.
-- 핵심 API: `DecisionTree`, `AdaBoost`
-- 코드 포인트: -
-
-### 2. 분류 성능 평가
-
-- 단계: 평가
-- 구현 의도: 예측 결과를 지표로 계산해 어떤 모델과 전처리가 더 잘 맞았는지 확인하는 평가 코드입니다.
-- 핵심 API: `accuracy_score`
-- 코드 포인트: -
-
-### 3. 파생 변수 추가
-
-- 단계: 피처 가공
-- 구현 의도: 원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다.
-- 핵심 API: `matplotlib`
-- 코드 포인트: -
-
-### 4. plot_decision_boundary(ada_clf, X, y, title="AdaBoost Decision Boundary")
-
-- 단계: 구현 코드
-- 구현 의도: plot_decision_boundary(ada_clf, X... 코드를 직접 실행하며 이 장의 구현 흐름을 확인했습니다.
-- 핵심 API: `AdaBoost`
-- 코드 포인트: -
-
-### 5. from sklearn.ensemble import AdaBoostClassifier
-
-- 단계: 환경 준비
-- 구현 의도: 넘파이 배열 생성, 인덱싱, 수치 연산을 손으로 익히는 기초 실습 코드입니다.
-- 핵심 API: `train_test_split`, `DecisionTree`, `AdaBoost`, `accuracy_score`
-- 코드 포인트: -
-
-### 6. X, y = make_moons(n_samples=1000, noise=0.3, random_state=42)
-
-- 단계: 구현 코드
-- 구현 의도: X, y = make_moons(n_samples=1000,... 코드를 직접 실행하며 이 장의 구현 흐름을 확인했습니다.
-- 핵심 API: -
-- 코드 포인트: -
-
-## 코드로 확인한 내용
-
-### DecisionTree / AdaBoost 모델 구성
-
-**직접 해본 단계**: 모델 구성
-
-**핵심 API**: `DecisionTree`, `AdaBoost`
-
-DecisionTree / AdaBoost 같은 모델을 올려 두고 어떤 알고리즘이 문제에 더 잘 맞는지 비교해 보는 구간입니다.
-
-```python
+```python colab={"base_uri": "https://localhost:8080/", "height": 164} id="f8m7eMsZdluu" executionInfo={"status": "ok", "timestamp": 1756280866975, "user_tz": -540, "elapsed": 2529, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="12a50a7d-ea4b-4325-a000-93a7ec229b43"
 base_estimator = DecisionTreeClassifier(max_depth=1)      # Stump생성
 ada_clf = AdaBoostClassifier(
     estimator=base_estimator,
@@ -148,29 +87,13 @@ ada_clf = AdaBoostClassifier(
 ada_clf.fit(X_train, y_train)
 ```
 
-### 분류 성능 평가
-
-**직접 해본 단계**: 평가
-
-**핵심 API**: `accuracy_score`
-
-예측 결과를 지표로 계산해 어떤 모델과 전처리가 더 잘 맞았는지 확인하는 평가 코드입니다.
-
-```python
+```python colab={"base_uri": "https://localhost:8080/"} id="d-0qp6XVeYCo" executionInfo={"status": "ok", "timestamp": 1756280868615, "user_tz": -540, "elapsed": 325, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="42194c2d-a94b-44c5-f7ed-0f791d4c29f8"
 y_pred = ada_clf.predict(X_test)
 acc = accuracy_score(y_test, y_pred)
 acc
 ```
 
-### 파생 변수 추가
-
-**직접 해본 단계**: 피처 가공
-
-**핵심 API**: `matplotlib`
-
-원본 컬럼을 그대로 쓰지 않고 시간 정보나 도메인 규칙을 반영한 파생 변수를 만드는 실습 코드입니다.
-
-```python
+```python id="Sl42ov1jeiMr" executionInfo={"status": "ok", "timestamp": 1756280869584, "user_tz": -540, "elapsed": 17, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
 def plot_decision_boundary(model, X, y, title="Decision Boundary"):
     cmap_light = ListedColormap(['#FFAAAA', '#AAAAFF'])
     cmap_bold = ListedColormap(['#FF0000', '#0000FF'])
@@ -192,57 +115,10 @@ def plot_decision_boundary(model, X, y, title="Decision Boundary"):
     plt.show()
 ```
 
-### plot_decision_boundary(ada_clf, X, y, title="AdaBoost Decision Boundary")
-
-**직접 해본 단계**: 구현 코드
-
-**핵심 API**: `AdaBoost`
-
-plot_decision_boundary(ada_clf, X... 코드를 직접 실행하며 이 장의 구현 흐름을 확인했습니다.
-
-```python
+```python colab={"base_uri": "https://localhost:8080/", "height": 564} id="6JbW8uNSenEq" executionInfo={"status": "ok", "timestamp": 1756280873966, "user_tz": -540, "elapsed": 3142, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="46167329-2d15-4583-8ed7-8554b91e52c6"
 plot_decision_boundary(ada_clf, X, y, title="AdaBoost Decision Boundary")
 ```
 
-### from sklearn.ensemble import AdaBoostClassifier
+```python id="swszcYkIeu-L"
 
-**직접 해본 단계**: 환경 준비
-
-**핵심 API**: `train_test_split`, `DecisionTree`, `AdaBoost`, `accuracy_score`
-
-넘파이 배열 생성, 인덱싱, 수치 연산을 손으로 익히는 기초 실습 코드입니다.
-
-```python
-from sklearn.ensemble import AdaBoostClassifier
-from sklearn.datasets import make_moons
-from sklearn.model_selection import train_test_split
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.metrics import accuracy_score
-import matplotlib.pyplot as plt
-import numpy as np
-from matplotlib.colors import ListedColormap           # 결정 경계 시각화 하기 위한 라이브러리
 ```
-
-### X, y = make_moons(n_samples=1000, noise=0.3, random_state=42)
-
-**직접 해본 단계**: 구현 코드
-
-X, y = make_moons(n_samples=1000,... 코드를 직접 실행하며 이 장의 구현 흐름을 확인했습니다.
-
-```python
-X, y = make_moons(n_samples=1000, noise=0.3, random_state=42)
-```
-
-## 참고 자료
-
-- Source path: `11_Machine_Learning/Code_Snippets/250827_코딩실습12_10.결정트리와 앙상블(AdaBoost).md`
-- Source formats: `ipynb`, `md`
-- Companion files: `250827_코딩실습12_10.결정트리와 앙상블(AdaBoost).ipynb`, `250827_코딩실습12_10.결정트리와 앙상블(AdaBoost).md`
-- Note type: `code-note`
-- Last updated in the source vault: `2026-03-08T03:33:14`
-- Related notes: `11_Machine_Learning_Code_Summary.md`
-- External references: `localhost`
-
-## 원문 미리보기
-
-> 원본 노트에 별도 설명 문단이 많지 않아 코드 중심으로 보존했습니다.

@@ -5,8 +5,8 @@ research_tab: "ML"
 research_kind: "Archive Note"
 source_title: "250821_코딩실습7_9.기본 지도학습 알고리즘들 (Lasso, Ridge)"
 source_path: "11_Machine_Learning/Code_Snippets/250821_코딩실습7_9.기본 지도학습 알고리즘들 (Lasso, Ridge).md"
-excerpt: "9.기본 지도학습 알고리즘들 (Lasso, Ridge)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 선형 모델과 정규화, 전처리와 입력 정리 순서로 큰 장을 먼저 훑고, LinearRegression 모델 구성, Ridge 모델 학습 같은 코드로 실제..."
-research_summary: "9.기본 지도학습 알고리즘들 (Lasso, Ridge)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 선형 모델과 정규화, 전처리와 입력 정리 순서로 큰 장을 먼저 훑고, LinearRegression 모델 구성, Ridge 모델 학습 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 19개 코드 블록, 18개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 sklearn입니다."
+excerpt: "9.기본 지도학습 알고리즘들 (Lasso, Ridge)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 전처리와 입력 정리, 선형 모델과 정규화 순서로 큰 장을 먼저 훑고, LinearRegression 모델 학습, Ridge 모델 학습 같은 코드로 실제..."
+research_summary: "9.기본 지도학습 알고리즘들 (Lasso, Ridge)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 전처리와 입력 정리, 선형 모델과 정규화 순서로 큰 장을 먼저 훑고, LinearRegression 모델 학습, Ridge 모델 학습 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 19개 코드 블록, 18개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 sklearn입니다."
 research_artifacts: "ipynb/md · 코드 19개 · 실행 18개"
 code_block_count: 19
 execution_block_count: 18
@@ -43,11 +43,11 @@ tags:
   </div>
   <div class="research-overview__row">
     <div class="research-overview__label">주요 장</div>
-    <div class="research-overview__value">선형 모델과 정규화 · 전처리와 입력 정리</div>
+    <div class="research-overview__value">전처리와 입력 정리 · 선형 모델과 정규화</div>
   </div>
   <div class="research-overview__row">
     <div class="research-overview__label">구현 흐름</div>
-    <div class="research-overview__value">LinearRegression 모델 구성 -&gt; Ridge 모델 학습 -&gt; 회귀 성능 평가</div>
+    <div class="research-overview__value">California Housing 불러오기 -&gt; LinearRegression 모델 학습 -&gt; 학습/검증 데이터 분리</div>
   </div>
   <div class="research-overview__row">
     <div class="research-overview__label">자료</div>
@@ -59,154 +59,92 @@ tags:
   </div>
 </div>
 
-## 원본 노트 흐름
-
-### 선형 모델과 정규화
-
-선형 모델은 입력 특성의 선형 결합으로 예측을 만들고, 정규화는 가중치 크기를 제어해 과적합을 줄이는 역할을 합니다.
-
-- 읽을 포인트: 이 글에서는 LinearRegression, LogisticRegression, Ridge, Lasso 실습과 연결해 해석할 수 있습니다.
-
-### 전처리와 입력 정리
-
-머신러닝 모델은 입력 형식에 민감하기 때문에 결측치 처리, 인코딩, 스케일링 같은 전처리 단계가 성능을 크게 좌우합니다.
-
-- 읽을 포인트: 이 글에서는 범주형 값을 숫자로 바꾸거나 학습/검증을 분리하는 코드가 이 개념에 해당합니다.
-
-## 구현 흐름
-
-### 1. LinearRegression 모델 구성
-
-- 단계: 모델 구성
-- 구현 의도: LinearRegression 같은 모델을 올려 두고 어떤 알고리즘이 문제에 더 잘 맞는지 비교해 보는 구간입니다.
-- 핵심 API: `LinearRegression`
-- 코드 포인트: 모델링
-
-### 2. Ridge 모델 학습
-
-- 단계: 학습
-- 구현 의도: 훈련 데이터를 기준으로 모델을 실제로 fitting 하며 성능을 끌어올리는 학습 단계입니다.
-- 핵심 API: `Ridge`
-- 코드 포인트: 릿지 회귀 모델링
-
-### 3. 회귀 성능 평가
-
-- 단계: 평가
-- 구현 의도: 예측 결과를 지표로 계산해 어떤 모델과 전처리가 더 잘 맞았는지 확인하는 평가 코드입니다.
-- 핵심 API: `RMSE`
-- 코드 포인트: -
-
-### 4. 데이터 불러오기
-
-- 단계: 데이터 불러오기
-- 구현 의도: 실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.
-- 핵심 API: -
-- 코드 포인트: 데이터 불러오기
-
-### 5. 테스트 데이터 트레이닝 데이터 분할
-
-- 단계: 구현 코드
-- 구현 의도: 전처리와 학습/검증 분리를 담당해 전체 파이프라인의 출발점을 정리하는 코드입니다.
-- 핵심 API: `train_test_split`
-- 코드 포인트: 테스트 데이터 트레이닝 데이터 분할
-
-### 6. from sklearn.linear_model import Ridge
-
-- 단계: 환경 준비
-- 구현 의도: from sklearn.linear_model import... 코드를 직접 실행하며 이 장의 구현 흐름을 확인했습니다.
-- 핵심 API: -
-- 코드 포인트: -
-
-## 코드로 확인한 내용
-
-### LinearRegression 모델 구성
-
-**직접 해본 단계**: 모델 구성
-
-**핵심 API**: `LinearRegression`
-
-LinearRegression 같은 모델을 올려 두고 어떤 알고리즘이 문제에 더 잘 맞는지 비교해 보는 구간입니다.
-
-```python
-# 모델링
-model_lr = LinearRegression()
-model_lr.fit(X_train, y_train)
+```python id="5GpSfffr1Nxi" executionInfo={"status": "ok", "timestamp": 1755767117413, "user_tz": -540, "elapsed": 14008, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+from sklearn.datasets import fetch_california_housing
 ```
 
-### Ridge 모델 학습
-
-**직접 해본 단계**: 학습
-
-**핵심 API**: `Ridge`
-
-훈련 데이터를 기준으로 모델을 실제로 fitting 하며 성능을 끌어올리는 학습 단계입니다.
-
-```python
-# 릿지 회귀 모델링
-model_ridge = Ridge(alpha=0.9)
-model_ridge.fit(X_train, y_train)
-```
-
-### 회귀 성능 평가
-
-**직접 해본 단계**: 평가
-
-**핵심 API**: `RMSE`
-
-예측 결과를 지표로 계산해 어떤 모델과 전처리가 더 잘 맞았는지 확인하는 평가 코드입니다.
-
-```python
-print("LR MSE: ", mean_squared_error(y_test, model_lr.predict(X_test)))
-print("Ridge MSE: ", mean_squared_error(y_test, model_ridge.predict(X_test)))
-print("Lasso MSE: ", mean_squared_error(y_test, model_lasso.predict(X_test)))
-print("Elastic MSE: ", mean_squared_error(y_test, model_elastic.predict(X_test)))
-```
-
-### 데이터 불러오기
-
-**직접 해본 단계**: 데이터 불러오기
-
-실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.
-
-```python
+```python id="vgE0ur4_38EG" executionInfo={"status": "ok", "timestamp": 1755767217317, "user_tz": -540, "elapsed": 1793, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
 # 데이터 불러오기
 X, y = fetch_california_housing(return_X_y = True)
 ```
 
-### 테스트 데이터 트레이닝 데이터 분할
+```python id="16NpzKFb4YNk"
+# 위와 같은 코드
+data = fetch_california_housing()
+X, y = data.data, data.target
+```
 
-**직접 해본 단계**: 구현 코드
+```python colab={"base_uri": "https://localhost:8080/"} id="dK1gTKwi4lpN" executionInfo={"status": "ok", "timestamp": 1755767298304, "user_tz": -540, "elapsed": 38, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="4b04aa9a-cfe9-4a23-859e-7c38232b8413"
+X.shape
+```
 
-**핵심 API**: `train_test_split`
-
-전처리와 학습/검증 분리를 담당해 전체 파이프라인의 출발점을 정리하는 코드입니다.
-
-```python
+```python id="HQCWt3ZS4lm3" executionInfo={"status": "ok", "timestamp": 1755767503153, "user_tz": -540, "elapsed": 59, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
 # 테스트 데이터 트레이닝 데이터 분할
 from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3, random_state=42)
 ```
 
-### from sklearn.linear_model import Ridge
+```python id="AUfOhYkE4lkN" executionInfo={"status": "ok", "timestamp": 1755767533906, "user_tz": -540, "elapsed": 3, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+from sklearn.linear_model import LinearRegression
+```
 
-**직접 해본 단계**: 환경 준비
+```python colab={"base_uri": "https://localhost:8080/", "height": 79} id="QBn3kT9r5nB7" executionInfo={"status": "ok", "timestamp": 1755767568887, "user_tz": -540, "elapsed": 152, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="e02262c9-df3f-41e2-bae1-2c1a18b056e9"
+# 모델링
+model_lr = LinearRegression()
+model_lr.fit(X_train, y_train)
+```
 
-from sklearn.linear_model import... 코드를 직접 실행하며 이 장의 구현 흐름을 확인했습니다.
+```python colab={"base_uri": "https://localhost:8080/"} id="Pphmj_ff5viE" executionInfo={"status": "ok", "timestamp": 1755767584081, "user_tz": -540, "elapsed": 17, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="41a0aa1b-0cc8-4fa3-f320-1da44cabe833"
+model_lr.score(X_test, y_test)
+```
 
-```python
+```python id="rOXQJAHy5zRj" executionInfo={"status": "ok", "timestamp": 1755767617837, "user_tz": -540, "elapsed": 7, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
 from sklearn.linear_model import Ridge
 ```
 
-## 참고 자료
+```python colab={"base_uri": "https://localhost:8080/", "height": 79} id="gGGbhyZx57hB" executionInfo={"status": "ok", "timestamp": 1755768402089, "user_tz": -540, "elapsed": 54, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="9fbc109b-4fdd-405c-d22f-90140996e609"
+# 릿지 회귀 모델링
+model_ridge = Ridge(alpha=0.9)
+model_ridge.fit(X_train, y_train)
+```
 
-- Source path: `11_Machine_Learning/Code_Snippets/250821_코딩실습7_9.기본 지도학습 알고리즘들 (Lasso, Ridge).md`
-- Source formats: `ipynb`, `md`
-- Companion files: `250821_코딩실습7_9.기본 지도학습 알고리즘들 (Lasso, Ridge).ipynb`, `250821_코딩실습7_9.기본 지도학습 알고리즘들 (Lasso, Ridge).md`
-- Note type: `code-note`
-- Last updated in the source vault: `2026-03-08T03:33:14`
-- Related notes: `11_Machine_Learning_Code_Summary.md`
-- External references: `localhost`
+```python colab={"base_uri": "https://localhost:8080/"} id="jHR5hUTt6KQ2" executionInfo={"status": "ok", "timestamp": 1755768402595, "user_tz": -540, "elapsed": 47, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="5b0d07c7-0bbf-4ae3-9b13-afdde19903b8"
+model_ridge.score(X_test, y_test)
+```
 
-## 원문 미리보기
+```python id="4HV0YNor6Umt" executionInfo={"status": "ok", "timestamp": 1755767735354, "user_tz": -540, "elapsed": 22, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+from sklearn.linear_model import Lasso
+```
 
-> 원본 노트에 별도 설명 문단이 많지 않아 코드 중심으로 보존했습니다.
+```python colab={"base_uri": "https://localhost:8080/", "height": 79} id="vtcsWfQF6UkO" executionInfo={"status": "ok", "timestamp": 1755767765024, "user_tz": -540, "elapsed": 83, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="dfce5ed2-228b-45f1-f252-602d3bd0a9db"
+model_lasso = Lasso(alpha=0.5)
+model_lasso.fit(X_train, y_train)
+```
+
+```python colab={"base_uri": "https://localhost:8080/"} id="B_WXfo4m6Uhk" executionInfo={"status": "ok", "timestamp": 1755767799469, "user_tz": -540, "elapsed": 25, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="06264d7f-8ec5-4a22-9bb4-61a79ba332ff"
+model_lasso.score(X_test, y_test)
+```
+
+```python id="RG7xtxKs6jQH" executionInfo={"status": "ok", "timestamp": 1755767842862, "user_tz": -540, "elapsed": 38, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+from sklearn.linear_model import ElasticNet
+```
+
+```python colab={"base_uri": "https://localhost:8080/", "height": 79} id="8_CIgkkr6ydE" executionInfo={"status": "ok", "timestamp": 1755767881087, "user_tz": -540, "elapsed": 323, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="10f4f270-7996-40df-aa88-15f59c017876"
+model_elastic = ElasticNet(alpha=0.1, l1_ratio=0.5)
+model_elastic.fit(X_train, y_train)
+```
+
+```python colab={"base_uri": "https://localhost:8080/"} id="WeqMYaAP67tV" executionInfo={"status": "ok", "timestamp": 1755767888926, "user_tz": -540, "elapsed": 28, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="b02971f1-5bd9-4c99-f412-c3b3e593a70b"
+model_elastic.score(X_test, y_test)
+```
+
+```python id="81yZcw-J7qPL" executionInfo={"status": "ok", "timestamp": 1755768099049, "user_tz": -540, "elapsed": 19, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+from sklearn.metrics import mean_squared_error
+```
+
+```python colab={"base_uri": "https://localhost:8080/"} id="G0s7xANn7vWH" executionInfo={"status": "ok", "timestamp": 1755768245948, "user_tz": -540, "elapsed": 30, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="3ba8fb79-8106-41e1-db27-71b942b0bfb7"
+print("LR MSE: ", mean_squared_error(y_test, model_lr.predict(X_test)))
+print("Ridge MSE: ", mean_squared_error(y_test, model_ridge.predict(X_test)))
+print("Lasso MSE: ", mean_squared_error(y_test, model_lasso.predict(X_test)))
+print("Elastic MSE: ", mean_squared_error(y_test, model_elastic.predict(X_test)))
+```

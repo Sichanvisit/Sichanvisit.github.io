@@ -5,8 +5,8 @@ research_tab: "ML"
 research_kind: "Archive Note"
 source_title: "250901_코딩실습17_11.차원축소(KMeans+PCA)"
 source_path: "11_Machine_Learning/Code_Snippets/250901_코딩실습17_11.차원축소(KMeans+PCA).md"
-excerpt: "11.차원축소(KMeans+PCA)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 군집화, 차원 축소, 전처리와 입력 정리 순서로 큰 장을 먼저 훑고, KMeans 모델 학습, StandardScaler 스케일링 같은 코드로 실제 구현을 이어서 확인할 수..."
-research_summary: "11.차원축소(KMeans+PCA)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 군집화, 차원 축소, 전처리와 입력 정리 순서로 큰 장을 먼저 훑고, KMeans 모델 학습, StandardScaler 스케일링 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 12개 코드 블록, 11개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 sklearn, matplotlib, pandas입니다."
+excerpt: "11.차원축소(KMeans+PCA)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 전처리와 입력 정리, 군집화, 차원 축소 순서로 큰 장을 먼저 훑고, KMeans 모델 학습, StandardScaler 스케일링 같은 코드로 실제 구현을 이어서 확인할 수..."
+research_summary: "11.차원축소(KMeans+PCA)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 전처리와 입력 정리, 군집화, 차원 축소 순서로 큰 장을 먼저 훑고, KMeans 모델 학습, StandardScaler 스케일링 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 12개 코드 블록, 11개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 sklearn, matplotlib, pandas입니다."
 research_artifacts: "ipynb/md · 코드 12개 · 실행 11개"
 code_block_count: 12
 execution_block_count: 11
@@ -45,11 +45,11 @@ tags:
   </div>
   <div class="research-overview__row">
     <div class="research-overview__label">주요 장</div>
-    <div class="research-overview__value">군집화 · 차원 축소 · 전처리와 입력 정리</div>
+    <div class="research-overview__value">전처리와 입력 정리 · 군집화 · 차원 축소</div>
   </div>
   <div class="research-overview__row">
     <div class="research-overview__label">구현 흐름</div>
-    <div class="research-overview__value">KMeans 모델 학습 -&gt; StandardScaler 스케일링 -&gt; wine = load_wine()</div>
+    <div class="research-overview__value">데이터셋 불러오기 -&gt; KMeans 모델 학습 -&gt; StandardScaler 스케일링</div>
   </div>
   <div class="research-overview__row">
     <div class="research-overview__label">자료</div>
@@ -61,81 +61,78 @@ tags:
   </div>
 </div>
 
-## 원본 노트 흐름
+```python id="d6zf4oyt_dAf" executionInfo={"status": "ok", "timestamp": 1756708657867, "user_tz": -540, "elapsed": 5762, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+from sklearn.datasets import load_wine
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
+from sklearn.cluster import KMeans
+import matplotlib.pyplot as plt
+import pandas as pd
+from sklearn.metrics import silhouette_score
+```
 
-### 군집화
+```python id="Y3oisx2Q_sYs" executionInfo={"status": "ok", "timestamp": 1756708721892, "user_tz": -540, "elapsed": 32, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+wine = load_wine()
+X, y = wine.data, wine.target
+```
 
-군집화는 정답 라벨 없이 비슷한 샘플끼리 묶어 데이터 구조를 탐색하는 비지도 학습 방법입니다.
+```python id="w010CgkG_sOq" executionInfo={"status": "ok", "timestamp": 1756708766735, "user_tz": -540, "elapsed": 7, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+# 표준화
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+```
 
-- 읽을 포인트: 이 글에서는 KMeans, 군집 시각화, 클러스터 품질 점검 같은 흐름과 연결됩니다.
+```python id="YahPoN74AIOW" executionInfo={"status": "ok", "timestamp": 1756708808319, "user_tz": -540, "elapsed": 27, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+# PCA 적용
 
-### 차원 축소
+pca = PCA()
+X_pca_all = pca.fit_transform(X_scaled)
+```
 
-차원 축소는 많은 변수의 정보를 더 적은 축으로 압축해 시각화, 노이즈 감소, 계산 효율 개선에 활용하는 기법입니다.
+```python colab={"base_uri": "https://localhost:8080/", "height": 391} id="1fQcYu3GASWi" executionInfo={"status": "ok", "timestamp": 1756709081535, "user_tz": -540, "elapsed": 483, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="93325ddf-f80b-41b1-f35b-50af050f98db"
+# 스크리플롯
 
-- 읽을 포인트: 이 글에서는 PCA처럼 분산을 최대한 보존하는 축을 찾아 데이터를 다시 표현하는 실습과 이어집니다.
+plt.figure(figsize=(6,4))
+plt.plot(
+    range(1, len(pca.explained_variance_ratio_)+1),           # X축
+    pca.explained_variance_ratio_,                            # y축
+    marker='o', linestyle='--'
+)
+plt.title('Scree Plot')
+plt.xticks(range(1, len(pca.explained_variance_ratio_)+1))
+plt.grid(True)
+plt.show()
+```
 
-### 전처리와 입력 정리
+```python colab={"base_uri": "https://localhost:8080/"} id="k5BgOv4NA8CN" executionInfo={"status": "ok", "timestamp": 1756709301075, "user_tz": -540, "elapsed": 10, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="e8bad4ab-6c8f-4aea-eb14-d78350fc36da"
+# 설명 비율 출력
+for i, ratio in enumerate(pca.explained_variance_ratio_):
+    print(f'PC{i+1}: {ratio:.2f}')
+```
 
-머신러닝 모델은 입력 형식에 민감하기 때문에 결측치 처리, 인코딩, 스케일링 같은 전처리 단계가 성능을 크게 좌우합니다.
+```python id="eml-HnQ-CJMe" executionInfo={"status": "ok", "timestamp": 1756710197383, "user_tz": -540, "elapsed": 5, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+# PCA 적용 - 2차원 축소
 
-- 읽을 포인트: 이 글에서는 범주형 값을 숫자로 바꾸거나 학습/검증을 분리하는 코드가 이 개념에 해당합니다.
+pca = PCA(n_components=2)
+X_pca_2d = pca.fit_transform(X_scaled)
+```
 
-## 구현 흐름
+```python id="nkkEuCeLCYbN" executionInfo={"status": "ok", "timestamp": 1756711412520, "user_tz": -540, "elapsed": 6, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+# Kmeans
 
-### 1. KMeans 모델 학습
+k = 3
 
-- 단계: 학습
-- 구현 의도: 훈련 데이터를 기준으로 모델을 실제로 fitting 하며 성능을 끌어올리는 학습 단계입니다.
-- 핵심 API: `KMeans`, `matplotlib`
-- 코드 포인트: 스크리 플랏
+kmeans = KMeans(n_clusters=k)
+clusters = kmeans.fit_predict(X_pca_2d)          # fit_predict(): 학습과 동시에 클러스터 라벨 예측을 한번에 해주는 함수
+```
 
-### 2. StandardScaler 스케일링
+```python colab={"base_uri": "https://localhost:8080/"} id="JdLLetxbFoq1" executionInfo={"status": "ok", "timestamp": 1756711413301, "user_tz": -540, "elapsed": 20, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="e5b8470a-6c67-4c91-ee40-6a140f00d2f3"
+# 클러스터링 평가 (실루엣 스코어)
+sil_score = silhouette_score(X_pca_2d, clusters)
+print(sil_score)
+```
 
-- 단계: 전처리
-- 구현 의도: 결측치 처리, 인코딩, 스케일링처럼 모델이 바로 사용할 수 있도록 입력 형태를 다듬는 단계입니다.
-- 핵심 API: `StandardScaler`
-- 코드 포인트: 표준화
-
-### 3. wine = load_wine()
-
-- 단계: 데이터 불러오기
-- 구현 의도: 실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.
-- 핵심 API: -
-- 코드 포인트: -
-
-### 4. 데이터 분포 시각화
-
-- 단계: 시각화
-- 구현 의도: 데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.
-- 핵심 API: `matplotlib`
-- 코드 포인트: 스크리플롯
-
-### 5. Kmeans
-
-- 단계: 구현 코드
-- 구현 의도: 학습된 모델로 추론을 수행하고 예측 결과를 점검하는 코드입니다.
-- 핵심 API: `KMeans`
-- 코드 포인트: Kmeans
-
-### 6. from sklearn.datasets import load_wine
-
-- 단계: 환경 준비
-- 구현 의도: 판다스 DataFrame을 불러오고 열과 행을 다루는 기본 조작을 익히는 실습 코드입니다.
-- 핵심 API: `StandardScaler`
-- 코드 포인트: -
-
-## 코드로 확인한 내용
-
-### KMeans 모델 학습
-
-**직접 해본 단계**: 학습
-
-**핵심 API**: `KMeans`, `matplotlib`
-
-훈련 데이터를 기준으로 모델을 실제로 fitting 하며 성능을 끌어올리는 학습 단계입니다.
-
-```python
+```python colab={"base_uri": "https://localhost:8080/", "height": 391} id="nPdZgCNYF7zT" executionInfo={"status": "ok", "timestamp": 1756711271936, "user_tz": -540, "elapsed": 307, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="b5412681-26f9-4a70-a7cc-5abcc529f10c"
 # 스크리 플랏
 
 sse = []                                            # SSE 저장용 빈 리스트
@@ -154,99 +151,23 @@ plt.xticks(k_range)
 plt.show()
 ```
 
-### StandardScaler 스케일링
+<!-- #region id="ZSzgQ0DuIquA" -->
+=> K=3일때 실루엣 스코어가 가장 높다!
+<!-- #endregion -->
 
-**직접 해본 단계**: 전처리
+```python colab={"base_uri": "https://localhost:8080/", "height": 718} id="TW1PAGoeHhUf" executionInfo={"status": "ok", "timestamp": 1756711418674, "user_tz": -540, "elapsed": 295, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="45f0a6ce-87d5-4482-c13b-43ec0287723a"
+# 데이터 시각화
 
-**핵심 API**: `StandardScaler`
-
-결측치 처리, 인코딩, 스케일링처럼 모델이 바로 사용할 수 있도록 입력 형태를 다듬는 단계입니다.
-
-```python
-# 표준화
-scaler = StandardScaler()
-X_scaled = scaler.fit_transform(X)
-```
-
-### wine = load_wine()
-
-**직접 해본 단계**: 데이터 불러오기
-
-실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.
-
-```python
-wine = load_wine()
-X, y = wine.data, wine.target
-```
-
-### 데이터 분포 시각화
-
-**직접 해본 단계**: 시각화
-
-**핵심 API**: `matplotlib`
-
-데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.
-
-```python
-# 스크리플롯
-
-plt.figure(figsize=(6,4))
-plt.plot(
-    range(1, len(pca.explained_variance_ratio_)+1),           # X축
-    pca.explained_variance_ratio_,                            # y축
-    marker='o', linestyle='--'
-)
-plt.title('Scree Plot')
-plt.xticks(range(1, len(pca.explained_variance_ratio_)+1))
-plt.grid(True)
+plt.figure(figsize=(10,8))
+scatter = plt.scatter(X_pca_2d[:,0], X_pca_2d[:,1], c=clusters, cmap='Set1', alpha=0.7)
+plt.xlabel('PC1')
+plt.ylabel('PC2')
+plt.title('KMeans + PCA')
+plt.grid(True, alpha=0.4)
+plt.colorbar(scatter, label='Cluster Label')
 plt.show()
 ```
 
-### Kmeans
+```python id="AU2ptnIkJemy"
 
-**직접 해본 단계**: 구현 코드
-
-**핵심 API**: `KMeans`
-
-학습된 모델로 추론을 수행하고 예측 결과를 점검하는 코드입니다.
-
-```python
-# Kmeans
-
-k = 3
-
-kmeans = KMeans(n_clusters=k)
-clusters = kmeans.fit_predict(X_pca_2d)          # fit_predict(): 학습과 동시에 클러스터 라벨 예측을 한번에 해주는 함수
 ```
-
-### from sklearn.datasets import load_wine
-
-**직접 해본 단계**: 환경 준비
-
-**핵심 API**: `StandardScaler`
-
-판다스 DataFrame을 불러오고 열과 행을 다루는 기본 조작을 익히는 실습 코드입니다.
-
-```python
-from sklearn.datasets import load_wine
-from sklearn.preprocessing import StandardScaler
-from sklearn.decomposition import PCA
-from sklearn.cluster import KMeans
-import matplotlib.pyplot as plt
-import pandas as pd
-from sklearn.metrics import silhouette_score
-```
-
-## 참고 자료
-
-- Source path: `11_Machine_Learning/Code_Snippets/250901_코딩실습17_11.차원축소(KMeans+PCA).md`
-- Source formats: `ipynb`, `md`
-- Companion files: `250901_코딩실습17_11.차원축소(KMeans+PCA).ipynb`, `250901_코딩실습17_11.차원축소(KMeans+PCA).md`
-- Note type: `code-note`
-- Last updated in the source vault: `2026-03-08T03:33:14`
-- Related notes: `11_Machine_Learning_Code_Summary.md`
-- External references: `localhost`
-
-## 원문 미리보기
-
-> => K=3일때 실루엣 스코어가 가장 높다!

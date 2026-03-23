@@ -5,8 +5,8 @@ research_tab: "ML"
 research_kind: "Archive Note"
 source_title: "250901_코딩실습16_11.차원축소(PCA)"
 source_path: "11_Machine_Learning/Code_Snippets/250901_코딩실습16_11.차원축소(PCA).md"
-excerpt: "11.차원축소(PCA)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 데이터 설명 순서로 큰 장을 먼저 훑고, StandardScaler 스케일링, 데이터 설명 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 11개 코드..."
-research_summary: "11.차원축소(PCA)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 데이터 설명 순서로 큰 장을 먼저 훑고, StandardScaler 스케일링, 데이터 설명 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 11개 코드 블록, 10개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 sklearn, matplotlib입니다."
+excerpt: "11.차원축소(PCA)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 데이터 설명 순서로 큰 장을 먼저 훑고, StandardScaler 스케일링, 데이터셋 불러오기 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 11개..."
+research_summary: "11.차원축소(PCA)의 원본 노트 흐름과 핵심 코드를 다시 따라갈 수 있게 정리한 ML 학습 기록입니다. 본문은 데이터 설명 순서로 큰 장을 먼저 훑고, StandardScaler 스케일링, 데이터셋 불러오기 같은 코드로 실제 구현을 이어서 확인할 수 있습니다. `ipynb/md` 원본과 11개 코드 블록, 10개 실행 셀을 함께 남겨 구현 흐름을 다시 따라갈 수 있게 정리했습니다. 주요 스택은 sklearn, matplotlib입니다."
 research_artifacts: "ipynb/md · 코드 11개 · 실행 10개"
 code_block_count: 11
 execution_block_count: 10
@@ -48,7 +48,7 @@ tags:
   </div>
   <div class="research-overview__row">
     <div class="research-overview__label">구현 흐름</div>
-    <div class="research-overview__value">StandardScaler 스케일링 -&gt; 데이터 설명 -&gt; 데이터 분포 시각화</div>
+    <div class="research-overview__value">데이터셋 불러오기 -&gt; StandardScaler 스케일링 -&gt; 데이터 분포 시각화</div>
   </div>
   <div class="research-overview__row">
     <div class="research-overview__label">자료</div>
@@ -60,85 +60,73 @@ tags:
   </div>
 </div>
 
-## 원본 노트 흐름
+<!-- #region id="FuAfhLtylZic" -->
+# 데이터 설명
 
-### 데이터 설명
+64차원의 손글씨 데이터
 
-64차원의 손글씨 데이터 사이킷런: https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_digits.html
+사이킷런: https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_digits.html
+<!-- #endregion -->
 
-- 읽을 포인트: 세부 흐름: 데이터 불러오기, 데이터 표준화, PCA전 시각화
+```python id="L7UPuGyjkjij" executionInfo={"status": "ok", "timestamp": 1756703954733, "user_tz": -540, "elapsed": 47, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+from sklearn.datasets import load_digits                      # 손글씨 이미지 (64차원)
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
+import matplotlib.pyplot as plt
+```
 
-#### 데이터 불러오기
+```python id="Oq65G6wclhwf" executionInfo={"status": "ok", "timestamp": 1756703955546, "user_tz": -540, "elapsed": 42, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+# 데이터 불러오기
+X, y = load_digits(return_X_y=True)
+```
 
-실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.
+```python colab={"base_uri": "https://localhost:8080/"} id="jTJ1rnY5lpJw" executionInfo={"status": "ok", "timestamp": 1756701843019, "user_tz": -540, "elapsed": 21, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="bed374be-6d96-4979-90fa-b52f40f411a8"
+X
+```
 
-#### 데이터 표준화
+```python colab={"base_uri": "https://localhost:8080/"} id="MhjIEDkVlt1J" executionInfo={"status": "ok", "timestamp": 1756701860317, "user_tz": -540, "elapsed": 28, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="299d63d2-06e7-43fc-bcb2-e870d480e629"
+y
+```
 
-결측치 처리, 인코딩, 스케일링처럼 모델이 바로 사용할 수 있도록 입력 형태를 다듬는 단계입니다.
-
-#### PCA전 시각화
-
-데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.
-
-## 구현 흐름
-
-### 1. StandardScaler 스케일링
-
-- 단계: 전처리
-- 구현 의도: 결측치 처리, 인코딩, 스케일링처럼 모델이 바로 사용할 수 있도록 입력 형태를 다듬는 단계입니다.
-- 핵심 API: `StandardScaler`
-- 코드 포인트: 데이터 표준화
-
-### 2. 데이터 설명
-
-- 단계: 데이터 불러오기
-- 구현 의도: 실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.
-- 핵심 API: -
-- 코드 포인트: 데이터 불러오기
-
-### 3. 데이터 분포 시각화
-
-- 단계: 시각화
-- 구현 의도: 데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.
-- 핵심 API: `matplotlib`
-- 코드 포인트: 스크리플롯
-
-## 코드로 확인한 내용
-
-### StandardScaler 스케일링
-
-**직접 해본 단계**: 전처리
-
-**핵심 API**: `StandardScaler`
-
-결측치 처리, 인코딩, 스케일링처럼 모델이 바로 사용할 수 있도록 입력 형태를 다듬는 단계입니다.
-
-```python
+```python id="38rQCl7vlyDB" executionInfo={"status": "ok", "timestamp": 1756703959619, "user_tz": -540, "elapsed": 5, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
 # 데이터 표준화
 
 X_scaled = StandardScaler().fit_transform(X)
 ```
 
-### 데이터 설명
-
-**직접 해본 단계**: 데이터 불러오기
-
-실습에 사용한 원본 데이터를 불러와 이후 전처리, 피처 가공, 모델 실험이 어디서 시작되는지 보여주는 코드입니다.
-
-```python
-# 데이터 불러오기
-X, y = load_digits(return_X_y=True)
+```python colab={"base_uri": "https://localhost:8080/"} id="E96safzVmYlZ" executionInfo={"status": "ok", "timestamp": 1756702029582, "user_tz": -540, "elapsed": 19, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="fe8fb103-3a35-421d-a2c9-a1ea32c5ed74"
+X_scaled
 ```
 
-### 데이터 분포 시각화
+```python colab={"base_uri": "https://localhost:8080/", "height": 393} id="ShKHw1q8mbYX" executionInfo={"status": "ok", "timestamp": 1756702213407, "user_tz": -540, "elapsed": 246, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="79256e29-3a2c-4db5-c6a5-f9bcf9b06ade"
+# PCA전 시각화
 
-**직접 해본 단계**: 시각화
+plt.figure(figsize=(6,4))
+scatter = plt.scatter(X[:,0], X[:,1], c=y, cmap='tab10', alpha=0.7)
+plt.xlabel('X1')
+plt.ylabel('X2')
+plt.colorbar(scatter, label="Digit Label")
+plt.show()
+```
 
-**핵심 API**: `matplotlib`
+```python id="ltGk_u6sm8YB" executionInfo={"status": "ok", "timestamp": 1756703566307, "user_tz": -540, "elapsed": 30, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}}
+# 차원 축소
+pca = PCA(n_components=2)
+X_pca = pca.fit_transform(X_scaled)
+```
 
-데이터 분포나 결과를 눈으로 확인해 가설을 세우고 다음 피처 엔지니어링으로 이어가기 위한 시각화 코드입니다.
+```python colab={"base_uri": "https://localhost:8080/", "height": 393} id="aJFOCfFCsSjK" executionInfo={"status": "ok", "timestamp": 1756703619909, "user_tz": -540, "elapsed": 554, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="cb6302f3-6954-4d95-ea45-bb6384c04307"
+# PCA 후 시각화
 
-```python
+plt.figure(figsize=(6,4))
+scatter = plt.scatter(X_pca[:,0], X_pca[:,1], c=y, cmap='tab10', alpha=0.7)
+plt.xlabel('X1')
+plt.ylabel('X2')
+plt.colorbar(scatter, label="Digit Label")
+plt.show()
+```
+
+```python colab={"base_uri": "https://localhost:8080/", "height": 388} id="eIscz2g3snE1" executionInfo={"status": "ok", "timestamp": 1756703967000, "user_tz": -540, "elapsed": 175, "user": {"displayName": "Hana Cho", "userId": "08103705611627615689"}} outputId="4a028e81-e4e2-4438-c394-f66540347e51"
 # 스크리플롯
 
 plt.figure(figsize=(12,4))
@@ -152,17 +140,6 @@ plt.grid(True)
 plt.show()
 ```
 
-## 참고 자료
+```python id="SgWQ7Rc_tnI3"
 
-- Source path: `11_Machine_Learning/Code_Snippets/250901_코딩실습16_11.차원축소(PCA).md`
-- Source formats: `ipynb`, `md`
-- Companion files: `250901_코딩실습16_11.차원축소(PCA).ipynb`, `250901_코딩실습16_11.차원축소(PCA).md`
-- Note type: `code-note`
-- Last updated in the source vault: `2026-03-08T03:33:14`
-- Related notes: `11_Machine_Learning_Code_Summary.md`
-- External references: `scikit-learn.org`, `localhost`
-
-## 원문 미리보기
-
-> 64차원의 손글씨 데이터
-> 사이킷런: https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_digits.html
+```
