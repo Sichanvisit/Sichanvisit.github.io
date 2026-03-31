@@ -1963,7 +1963,7 @@ a {
 .overview-project-grid {
   display: grid;
   flex: 1;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
   align-content: stretch;
 }
@@ -2009,6 +2009,16 @@ a {
 
 .overview-project-card--rag::before {
   background: linear-gradient(90deg, rgba(52, 109, 208, 0.88), rgba(98, 144, 255, 0.24));
+}
+
+.overview-project-card--workspace {
+  background:
+    radial-gradient(circle at top right, rgba(39, 146, 118, 0.16), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(246, 250, 248, 1));
+}
+
+.overview-project-card--workspace::before {
+  background: linear-gradient(90deg, rgba(35, 141, 114, 0.9), rgba(90, 200, 170, 0.24));
 }
 
 .overview-project-card--ops {

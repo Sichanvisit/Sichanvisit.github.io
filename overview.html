@@ -9,7 +9,8 @@ permalink: /
 ---
 
 {% assign advanced = site.portfolio | where: "title", "Advanced Project" | first %}
-{% assign obsidian = site.portfolio | where: "title", "Obsidian RAG" | first %}
+{% assign obsidian_v1 = site.portfolio | where: "title", "Obsidian RAG V1" | first %}
+{% assign obsidian_v2 = site.portfolio | where: "title", "Obsidian RAG V2" | first %}
 {% assign cfd = site.portfolio | where: "title", "CFD" | first %}
 
 <div class="overview-page">
@@ -107,21 +108,43 @@ permalink: /
       <article class="overview-project-card overview-project-card--hero">
         <div class="overview-project-topline">
           <span>Personal Project</span>
-          <span>Document AI · RAG</span>
+          <span>Local RAG · Streamlit</span>
         </div>
-        <h3>Obsidian RAG</h3>
-        <p>개인 지식베이스를 문서처리형 AI로 연결한 RAG 프로젝트입니다.</p>
+        <h3>Obsidian RAG V1</h3>
+        <p>Obsidian 문서를 질문 응답과 운영 작업으로 연결한 Streamlit 중심 로컬 RAG 1차 버전입니다.</p>
         <ul>
-          <li>Summary + Raw 이중 저장소</li>
-          <li>BM25 + Embedding + RRF 기반 하이브리드 검색</li>
-          <li>재작성 루프와 NDJSON 스트리밍 응답 구성</li>
+          <li>FastAPI 스트리밍 백엔드 + Streamlit 메인 UI</li>
+          <li>summary / raw 이중 저장소와 하이브리드 검색</li>
+          <li>Generator, Tagger, Ingest를 묶은 운영 콘솔</li>
         </ul>
         <div class="overview-project-links">
-          {% if obsidian %}
-          <a href="{{ obsidian.url | relative_url }}">Case Study</a>
+          {% if obsidian_v1 %}
+          <a href="{{ obsidian_v1.url | relative_url }}">Case Study</a>
           {% endif %}
-          {% if obsidian and obsidian.github_url %}
-          <a href="{{ obsidian.github_url }}">GitHub</a>
+          {% if obsidian_v1 and obsidian_v1.github_url %}
+          <a href="{{ obsidian_v1.github_url }}">GitHub</a>
+          {% endif %}
+        </div>
+      </article>
+
+      <article class="overview-project-card overview-project-card--workspace">
+        <div class="overview-project-topline">
+          <span>Personal Project</span>
+          <span>Obsidian Plugin · Knowledge Workspace</span>
+        </div>
+        <h3>Obsidian RAG V2</h3>
+        <p>현재 노트 문맥과 relation-aware retrieval, recommendation workflow를 묶은 Obsidian 중심 2차 버전입니다.</p>
+        <ul>
+          <li>Obsidian Plugin 메인 클라이언트</li>
+          <li>typed relation과 1-hop / 2-hop 확장 검색</li>
+          <li>recommendation / action / graph-like UI 연결</li>
+        </ul>
+        <div class="overview-project-links">
+          {% if obsidian_v2 %}
+          <a href="{{ obsidian_v2.url | relative_url }}">Case Study</a>
+          {% endif %}
+          {% if obsidian_v2 and obsidian_v2.github_url %}
+          <a href="{{ obsidian_v2.github_url }}">GitHub</a>
           {% endif %}
         </div>
       </article>

@@ -1,184 +1,140 @@
 ---
-title: "Obsidian RAG"
+title: "Obsidian RAG V1"
 date: 2026-03-31
-priority: 2
-excerpt: "Obsidian 노트를 FastAPI, Streamlit, Obsidian Plugin으로 연결하고 relation-aware retrieval까지 확장한 로컬 RAG 워크스페이스"
+priority: 3
+excerpt: "Streamlit을 메인 화면으로 두고 Obsidian 문서를 근거 기반 질의응답과 운영 작업으로 연결한 1차 로컬 RAG 버전"
 header:
-  teaser: /assets/images/portfolio/obsidian-rag-thumb.svg
+  teaser: /assets/images/portfolio/obsidian-rag/v1/chat-overview.jpg
 github_url: "https://github.com/Sichanvisit/Obsidian_RAG"
 project_dir: "C:/Users/bhs33/Desktop/project/Obsidian_RAG"
+status: "V1 archive"
 tech_stack:
-  - Python
+  - Python 3.12
   - FastAPI
   - Streamlit
-  - Obsidian Plugin
   - ChromaDB
   - RAG
   - BM25
-  - TypeScript
+  - Ollama / OpenAI
 ---
 
 ## Project Snapshot
 
 | Item | Summary |
 |------|---------|
-| Problem | Obsidian 안에서 실제로 쓰기 좋은 로컬 RAG를 만들고 싶었지만, 1차 버전은 Streamlit 중심 실험형 UI에 가까워 실제 노트 작업 흐름과는 거리가 있었습니다. |
-| Role | FastAPI 백엔드, AgenticFlow 기반 검색/생성 흐름, relation-aware retrieval, Streamlit 운영 콘솔, Obsidian 플러그인 통합까지 직접 설계하고 구현했습니다. |
-| Stack | Python, FastAPI, Streamlit, TypeScript, Obsidian Plugin API, ChromaDB, BM25, Ollama, OpenAI |
-| Flow | Obsidian Plugin 또는 Streamlit -> FastAPI -> AgenticFlow -> RagEngine(hybrid retrieval + relation expansion + rerank) -> LLM -> NDJSON Streaming |
-| Outcome | Streamlit 단일 UI에서 Obsidian 플러그인 중심 워크플로우로 확장했고, 현재 노트 문맥과 relation graph를 활용하는 2차 버전으로 고도화했습니다. |
+| Problem | Obsidian 개인 문서를 검색 가능한 지식 자산으로 바꾸고, 근거 기반 응답과 운영 작업을 하나의 로컬 UI에서 다루는 흐름이 필요했습니다. |
+| Role | FastAPI 스트리밍 백엔드, Streamlit 메인 채팅 UI, summary/raw 이중 저장소, 하이브리드 검색, 인덱싱/태깅 운영 흐름, 테스트와 문서화를 직접 구현했습니다. |
+| Stack | Python 3.12, FastAPI, Streamlit, ChromaDB, BM25, RRF, LangChain, Ollama, OpenAI |
+| Flow | User Query + Project Context -> FastAPI `/api/chat/stream` -> AgenticFlow -> RagEngine(summary/raw + hybrid retrieval) -> LLM -> NDJSON Streaming -> Streamlit UI |
+| Outcome | Streamlit 하나로 질문 응답, 인덱싱, 태깅, 품질 점검까지 다룰 수 있는 end-to-end 로컬 RAG 프로토타입을 정리했습니다. |
 
 ## Architecture
 
 ```mermaid
 flowchart LR
-    User["Obsidian Plugin / Streamlit"] --> API["FastAPI Backend"]
+    User["User Query"] --> UI["Streamlit Main UI"]
+    UI --> API["FastAPI Backend"]
     API --> Flow["AgenticFlow"]
     Flow --> Search["RagEngine"]
-    Search --> Hybrid["Embedding + BM25 + RRF"]
-    Search --> Relation["Relation Expansion"]
     Search --> Stores["Summary / Raw Stores"]
-    Search --> Rerank["Retrieval Rerank"]
-    Rerank --> LLM["Ollama / OpenAI"]
+    Search --> Hybrid["Embedding + BM25 + RRF"]
+    Hybrid --> LLM["Ollama / OpenAI"]
     LLM --> Stream["NDJSON Streaming"]
-    Stream --> Client["Plugin UI / Ops Console"]
+    Stream --> Client["Chat / Generator / Tagger / Ingest"]
 ```
 
 ## 1. 프로젝트 개요
 
-이 프로젝트는 Obsidian에 쌓인 개인 문서와 학습 노트를 대상으로 질문, 근거, 답변 흐름을 만드는 로컬 RAG 시스템입니다.
+`Obsidian RAG V1`은 Obsidian 문서를 단순 보관 대상이 아니라, 검색과 질의응답이 가능한 로컬 지식 기반으로 바꾸는 데서 출발한 1차 버전입니다.
 
-1차 버전에서는 FastAPI와 Streamlit을 중심으로 검색과 답변 생성 파이프라인을 만들었고, summary/raw 이중 저장소와 하이브리드 검색 구조를 정리하는 데 집중했습니다. 하지만 실제 사용 맥락은 Streamlit보다 Obsidian 안에서 노트를 읽고 질문을 던지고, 연결된 문서를 확인하고, 답변을 다시 노트로 저장하는 쪽에 더 가까웠습니다.
+이 단계의 핵심은 "개인 노트 저장소를 실제로 질의 가능한 시스템으로 만들 수 있는가"였습니다. 그래서 FastAPI 백엔드, Streamlit 메인 UI, 하이브리드 검색 파이프라인, 인덱싱과 태깅 흐름을 한 번에 묶어 end-to-end 흐름을 직접 구현했습니다.
 
-그래서 2차 업데이트에서는 단순히 검색 품질만 높이는 것이 아니라, 사용 흐름 자체를 Obsidian 중심으로 옮기는 방향으로 구조를 다시 잡았습니다.
+현재 저장소의 `main` 브랜치 기준 구현은 [Obsidian RAG V2]({{ '/portfolio/obsidian-rag2/' | relative_url }}) 쪽이지만, V1은 검색과 스트리밍 응답, 운영 UI를 처음 서비스 형태로 정리한 버전이라는 점에서 별도 아카이브 가치가 있다고 판단해 분리했습니다.
 
-## 2. 왜 2차 업데이트가 필요했는가
+## 2. 해결하려고 한 문제
 
-1차 버전은 기술 실험과 파이프라인 정리에 의미가 있었지만 실제 사용에서는 몇 가지 한계가 분명했습니다.
+Obsidian에 문서가 쌓여도, 실제로 질문 가능한 지식 자산이 되려면 몇 가지 문제가 먼저 풀려야 했습니다.
 
-- 현재 작업 중인 노트 문맥을 자연스럽게 붙이기 어렵고, 질문과 노트 사이 연결이 느슨했습니다.
-- 검색 결과가 왜 선택되었는지 UI에서 빠르게 확인하기 어려웠습니다.
-- Generator, Tagger, Ingest 같은 운영 작업이 Streamlit 안에 묶여 있어 클라이언트가 바뀌면 재사용이 어려웠습니다.
-- 노트 사이 관계 정보가 있어도 검색 단계에서는 충분히 활용하지 못했습니다.
+- 문서를 검색해서 답변하는 흐름이 로컬 환경에서 안정적으로 돌아야 했습니다.
+- 벡터 검색 하나만으로는 짧은 질의나 키워드 중심 질문에서 누락이 잦았습니다.
+- 채팅만 있는 데모가 아니라 인덱싱, 태깅, 점검 작업까지 한 화면에서 관리할 필요가 있었습니다.
+- 답변 생성이 길어질수록 반복 응답, 출처 누락, 검색 품질 저하 같은 문제가 더 크게 드러났습니다.
 
-이 문제를 해결하려면 단순히 모델을 바꾸는 것이 아니라, 클라이언트 구조, 검색 로직, 운영 인터페이스를 함께 손봐야 했습니다.
+이 버전은 이 문제들을 줄이기 위해, 검색과 생성뿐 아니라 운영 흐름까지 함께 설계한 로컬 RAG 워크스페이스에 가깝습니다.
 
-## 3. 이번에 바뀐 핵심
+## 3. 핵심 설계 포인트
 
-### 3-1. Obsidian 플러그인을 메인 클라이언트로 추가
+### 3-1. FastAPI 기반 스트리밍 RAG 백엔드
+질문은 `/api/chat/stream` 으로 들어오고, 단계 로그와 답변을 NDJSON 형태로 스트리밍합니다.
 
-이번 버전에서 가장 큰 변화는 Obsidian 플러그인을 별도 클라이언트로 붙인 점입니다.
+백엔드에서는 `Think -> Search -> Grade -> Rewrite -> Generate -> Review` 흐름을 분리해, 검색 품질이 낮으면 재작성과 재검색이 가능하도록 구조를 잡았습니다.
 
-- 현재 노트를 읽고 질문 내용에 따라 필요한 경우에만 첨부하는 question-first 흐름을 넣었습니다.
-- 링크, 같은 폴더, 태그, 백링크를 문맥 후보로 수집할 수 있게 했습니다.
-- 답변 패널에서 검색된 소스와 전송된 문맥 노트를 카드 형태로 보고 바로 열 수 있습니다.
-- 답변을 새 노트로 저장하거나 현재 노트에 이어붙일 수 있습니다.
+### 3-2. summary/raw 이중 저장소와 하이브리드 검색
+문서를 요약 저장소와 원문 저장소로 분리해 역할을 나눴습니다.
 
-이 변화 덕분에 RAG가 별도 데모 화면이 아니라 실제 Obsidian 작업 흐름 안으로 들어오게 됐습니다.
+- summary 저장소는 빠른 회수와 질의 확장 대응에 집중합니다.
+- raw 저장소는 실제 근거 문장과 세부 내용을 보강하는 데 사용합니다.
+- dense retrieval, BM25, RRF를 함께 써서 의미 기반 질의와 키워드 기반 질의를 모두 받도록 했습니다.
 
-### 3-2. relation-aware retrieval 도입
+이 선택 덕분에 "짧은 질문인데 의도는 긴 경우"와 "파일명/개념 키워드가 중요한 질문"을 더 안정적으로 처리할 수 있었습니다.
 
-검색 쪽에서는 typed relation과 related files 메타데이터를 활용하는 relation-aware retrieval을 추가했습니다.
+### 3-3. Streamlit을 메인 사용 화면이자 운영 콘솔로 사용
+V1에서는 Streamlit이 실제 채팅 화면이면서, 동시에 운영 작업을 다루는 메인 콘솔 역할도 담당했습니다.
 
-- 노트 메타데이터에서 relation adjacency를 구성합니다.
-- direct match뿐 아니라 1-hop, 2-hop 관계 체인도 확장 후보로 봅니다.
-- relation type, confidence, direction을 반영해 체인 점수를 계산합니다.
-- 검색 결과에는 `retrieval_reason`, `source_type`, relation chain 설명을 함께 내려서 UI에서 왜 선택됐는지 확인할 수 있게 했습니다.
+- 채팅과 검색 결과 확인
+- Generator 실행
+- Tagger 실행
+- Ingest 실행
+- 품질 점검과 설정 조정
 
-기존 하이브리드 검색이 문서 후보를 잘 모으는 역할이었다면, 이번 relation-aware 흐름은 직접 매칭되지 않는 구현 문서나 후속 노트를 더 안정적으로 끌어오는 역할을 담당합니다.
+즉, 이 버전은 단순한 "챗봇 탭 하나"가 아니라, 로컬 지식 저장소를 운영하는 도구 세트를 한 화면에 정리한 구조였습니다.
 
-### 3-3. Generator / Tagger / Ingest를 공통 API로 재구성
+### 3-4. 응답 안정화 장치
+응답 품질을 높이기 위해 검색 품질 게이트, 반복 응답 절단, 출처 태그 보강 같은 후처리 로직을 넣었습니다.
 
-운영 작업도 구조를 바꿨습니다.
+이 부분은 "질문에 답한다"에서 끝나는 것이 아니라, 실제로 매일 써도 덜 흔들리는 로컬 도구를 만들기 위한 장치였습니다.
 
-- `/api/tools/config`
-- `/api/tools/files`
-- `/api/tools/generator/stream`
-- `/api/tools/tagger/stream`
-- `/api/tools/ingest/stream`
+## 4. 화면 예시
 
-이렇게 API 계층을 분리해 Streamlit 운영 콘솔과 Obsidian 플러그인이 같은 백엔드 도구를 공유하도록 만들었습니다. 덕분에 클라이언트가 달라도 핵심 워크플로우는 한 번만 구현하면 되는 구조가 됐습니다.
+### 4-1. Streamlit 운영 화면
 
-### 3-4. 로컬 실행 안정성 보강
+V1은 Streamlit이 메인 사용 화면이자 운영 콘솔 역할을 함께 맡았습니다.
 
-실행 경험도 함께 손봤습니다.
+![Obsidian RAG V1 Streamlit overview](/assets/images/portfolio/obsidian-rag/v1/chat-overview.jpg)
 
-- `.env`와 경로 로더를 정리해 Vault 위치를 자동 탐지하도록 보강했습니다.
-- 기본 로컬 모델을 `qwen3.5:4b` 기준으로 정리했습니다.
-- `start_rag.bat`가 백엔드 헬스체크 후 기존 프로세스를 재사용하거나 재기동합니다.
+### 4-2. Streamlit 단독 UI 화면
 
-이런 부분은 겉으로는 작아 보여도, 로컬 프로젝트를 매일 쓰는 관점에서는 꽤 큰 생산성 차이를 만듭니다.
+백엔드를 붙이지 않고 프론트 UI만 단독으로 띄워 레이아웃과 탭 구성을 먼저 확인하던 화면입니다.
 
-## 4. UI 화면 구성
+![Obsidian RAG V1 standalone UI](/assets/images/portfolio/obsidian-rag-streamlit-ui-standalone.png)
 
-이번 글에서는 먼저 화면 단위 구성을 정리해 두고, 실제 타이핑 흐름을 보여주는 MP4는 다음 업데이트에서 추가할 예정입니다.
+### 4-3. Generator
 
-### 4-1. Obsidian 메인 화면 + 로컬 에이전트 패널
+소스 폴더와 주제를 선택하고 구조화 노트를 생성하는 워크플로우 화면입니다.
 
-릴리즈 노트 같은 실제 문서를 읽는 상태에서 오른쪽 사이드바에 로컬 에이전트 패널이 붙는 구조입니다. 사용자는 문서를 읽다가 바로 질문을 던지고, 필요한 경우 현재 노트 문맥을 기준으로 답변을 받아볼 수 있습니다.
+![Obsidian RAG V1 generator](/assets/images/portfolio/obsidian-rag/v1/generator-main.jpg)
 
-### 4-2. Chat 탭
+### 4-4. Tagger
 
-Chat 탭은 질문 중심 모드로 동작합니다. 현재 노트는 질문이 그 노트를 참조할 때만 함께 전달되고, 아래에는 전송한 컨텍스트, 검색된 소스, 이어볼 노트가 구조적으로 정리됩니다. 단순 채팅창이 아니라 근거 확인과 후속 탐색을 함께 염두에 둔 UI입니다.
+요약/원문 노트의 frontmatter 태그를 자동 갱신하는 운영 화면입니다.
 
-### 4-3. Generator 탭 상단
+![Obsidian RAG V1 tagger](/assets/images/portfolio/obsidian-rag/v1/tagger-main.jpg)
 
-Generator는 로컬 파일을 기준으로 구조화된 노트를 생성하는 화면입니다. 입력 폴더, 모드, 주제를 정하고, 파일 단위로 선택한 뒤 어떤 워크플로우를 태울지 결정할 수 있습니다.
+### 4-5. Ingest
 
-### 4-4. Generator 탭 하단
+프로젝트 단위로 인덱스를 재구성하고 청킹 옵션을 제어하던 화면입니다.
 
-프롬프트와 출력 설정 영역에서는 모델, 온도, 타깃 세트, 패턴 묶음을 제어할 수 있습니다. 기존에는 Streamlit 내부 작업에 가까웠다면, 이번에는 플러그인 안에서 같은 흐름을 바로 실행할 수 있도록 옮긴 점이 핵심입니다.
+![Obsidian RAG V1 ingest](/assets/images/portfolio/obsidian-rag/v1/ingest-main.jpg)
 
-### 4-5. Tagger 탭
+## 5. 이 버전에서 보여주고 싶은 역량
 
-Tagger는 frontmatter를 갱신하고 텍스트, 메타데이터, 링크 그래프 인덱스를 다시 구성하는 작업 화면입니다. relation-aware retrieval의 기반이 되는 메타데이터 품질을 관리하는 쪽에 가깝습니다.
+- 로컬 문서 도메인에 맞춘 RAG 파이프라인 설계 능력
+- 스트리밍 API와 프론트 UI를 연결한 end-to-end 구현 능력
+- 검색 품질 제어와 출처 보강 로직을 포함한 응답 안정화 설계
+- 프로토타입을 실제 작업 가능한 로컬 도구로 정리하는 능력
 
-### 4-6. Ingest 탭
+## 6. 이후 확장과 버전 관계
 
-Ingest는 선택된 프로젝트 또는 입력 경로 기준으로 인덱스를 갱신하거나 재구축하는 화면입니다. 레이어, 모드, 분할 정책, 청크 크기, 헤딩 레벨 같은 실제 운영 옵션을 플러그인에서 바로 조정할 수 있습니다.
+V1은 Streamlit 중심의 로컬 RAG 챗봇과 운영 콘솔을 정리한 단계였습니다. 이후 실제 사용 흐름을 Obsidian 안으로 끌어오기 위해, 현재 노트 문맥과 relation-aware retrieval, recommendation/action 계층을 추가한 [Obsidian RAG V2]({{ '/portfolio/obsidian-rag2/' | relative_url }}) 로 확장했습니다.
 
-### 4-7. Logs 탭
-
-Logs는 Generator, Tagger, Ingest 작업 상태를 한곳에서 확인하는 운영 로그 화면입니다. 플러그인 안에 채팅 클라이언트만 둔 것이 아니라, 실질적인 운영 콘솔 일부를 함께 붙였다는 점을 보여줍니다.
-
-## 5. MP4 자리
-
-여기에는 실제로 질문을 입력하고 답변이 스트리밍으로 생성되는 장면, 또는 Generator 실행 흐름을 보여주는 짧은 MP4를 넣을 예정입니다.
-
-현재는 화면 구성부터 먼저 정리했고, 다음 업데이트에서 타이핑/생성 흐름 데모를 추가할 계획입니다.
-
-## 6. 구현 포인트
-
-### 6-1. 질문 우선 문맥 결합
-
-현재 노트를 무조건 붙이면 잡음이 늘어납니다. 그래서 질문이 현재 노트를 참조하는 경우에만 우선 첨부하고, 나머지 문맥은 링크, 폴더, 태그, 백링크 기준으로 선택적으로 확장하는 구조를 택했습니다.
-
-### 6-2. 검색 결과를 설명 가능한 형태로 반환
-
-좋은 검색만큼 중요한 것이 "왜 이 문서가 선택됐는지" 보여주는 UX라고 판단했습니다. 그래서 단순 문서 목록 대신 source layer, score, snippet, retrieval reason을 구조화해 내려주고, 플러그인과 Streamlit에서 이를 바로 보여주도록 했습니다.
-
-### 6-3. 제품 클라이언트와 운영 콘솔의 역할 분리
-
-이번 버전에서는 Streamlit을 버린 것이 아니라 역할을 재정의했습니다.
-
-- Obsidian Plugin: 실제 사용 흐름
-- Streamlit: 운영 콘솔, 디버깅, 수동 워크플로우 실행
-
-이 분리는 개인 프로젝트에서도 꽤 중요했습니다. 기능이 늘어날수록 사용 화면과 운영 화면이 분리되어야 구조가 덜 흔들리기 때문입니다.
-
-## 7. 결과와 배운 점
-
-이번 업데이트를 통해 Obsidian RAG는 단순한 로컬 검색 데모에서, 실제 노트 작업 흐름 안으로 들어가는 워크스페이스에 가까워졌습니다.
-
-특히 크게 배운 점은 세 가지였습니다.
-
-- 검색 품질 개선만으로는 충분하지 않고, 사용 맥락에 맞는 클라이언트 구조가 함께 필요합니다.
-- RAG에서는 "정답을 잘 찾는 것"만큼 "왜 찾았는지 설명하는 것"이 중요합니다.
-- 로컬 프로젝트일수록 경로 설정, 기동 안정성, 운영 도구 인터페이스 같은 비기능 요소가 체감 완성도를 크게 좌우합니다.
-
-## 8. 다음 단계
-
-- relation scoring과 retrieval 평가셋을 더 정교하게 다듬기
-- 플러그인 대화 히스토리와 추천 액션 UX 개선
-- 질문 입력부터 답변 생성까지 이어지는 MP4 데모 추가
-- Generator, Tagger, Ingest 결과를 더 명확하게 시각화하는 운영 대시보드 보강
+즉, V1은 검색과 응답 파이프라인을 서비스 형태로 정리한 시작점이고, V2는 그 구조를 실제 지식 워크스페이스로 확장한 현재 기준 버전입니다.
