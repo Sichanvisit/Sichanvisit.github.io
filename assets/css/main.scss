@@ -2149,6 +2149,43 @@ a {
   }
 }
 
+@media (prefers-color-scheme: dark) {
+  .overview-slide:not(.overview-hero) {
+    background:
+      radial-gradient(circle at top right, rgba(88, 165, 182, 0.1), transparent 24%),
+      linear-gradient(180deg, rgba(24, 29, 36, 0.98), rgba(19, 24, 31, 1));
+    border-color: rgba(88, 115, 148, 0.18);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.24);
+  }
+
+  .overview-capability-card,
+  .overview-project-card,
+  .overview-bridge-card,
+  .overview-link-card {
+    border-color: rgba(115, 141, 176, 0.12);
+    background:
+      linear-gradient(180deg, rgba(28, 34, 43, 0.96), rgba(22, 28, 36, 1)),
+      var(--photo-card);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.18);
+  }
+
+  .overview-bridge-card--result {
+    border-color: rgba(96, 155, 176, 0.18);
+    background:
+      radial-gradient(circle at top right, rgba(64, 168, 187, 0.12), transparent 30%),
+      linear-gradient(180deg, rgba(18, 31, 45, 0.98), rgba(13, 24, 37, 1));
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.22);
+  }
+
+  .overview-bridge-card--result p {
+    color: #d1dfec;
+  }
+
+  .overview-bridge-card--result .overview-bridge-label {
+    color: #8fd0d9;
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .overview-slide {
     animation: overview-rise 620ms ease both;
