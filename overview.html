@@ -107,7 +107,7 @@ permalink: /
       <article class="overview-project-card overview-project-card--hero">
         <div class="overview-project-topline">
           <span>Personal Project</span>
-          <span>Obsidian Plugin · Knowledge Workspace</span>
+          <span>Plugin · Workspace</span>
         </div>
         {% if obsidian_v2 and obsidian_v2.header.teaser %}
         <a class="overview-project-media" href="{{ obsidian_v2.url | relative_url }}">
@@ -115,11 +115,10 @@ permalink: /
         </a>
         {% endif %}
         <h3>Obsidian RAG</h3>
-        <p>현재 노트 문맥과 relation-aware retrieval, recommendation/action workflow를 묶은 Obsidian 중심 로컬 지식 워크스페이스입니다.</p>
+        <p>현재 노트 문맥과 relation-aware retrieval를 Obsidian 안으로 옮긴 로컬 지식 워크스페이스입니다.</p>
         <ul>
-          <li>Obsidian Plugin 메인 클라이언트와 Streamlit 운영 콘솔 분리</li>
-          <li>typed relation runtime과 1-hop / 2-hop 확장 검색</li>
-          <li>추천, 액션, graph-like UI를 하나의 흐름으로 연결</li>
+          <li>Plugin 메인 클라이언트 + Streamlit Ops</li>
+          <li>relation runtime 기반 확장 검색과 추천·액션 흐름</li>
         </ul>
         <div class="overview-project-links">
           {% if obsidian_v2 %}
@@ -142,11 +141,10 @@ permalink: /
         </a>
         {% endif %}
         <h3>상세페이지 자동 기획·생성 시스템</h3>
-        <p>입력 정보로 기획, 생성, 수정 흐름을 잇는 생성형 AI 응용 서비스입니다.</p>
+        <p>입력 정보로 기획, 생성, 수정 흐름을 잇는 생성형 AI 파이프라인입니다.</p>
         <ul>
-          <li>AIDA 기반 5단계 생성 흐름 설계</li>
-          <li>OpenAI 장애 시 Gemini로 전환되는 failover 구조</li>
-          <li>manifest 기반 수정·재생성 경로 정리</li>
+          <li>AIDA 기반 생성 파이프라인과 단계별 재실행 구조</li>
+          <li>OpenAI·Gemini failover와 페이지 단위 재생성 흐름</li>
         </ul>
         <div class="overview-project-links">
           {% if advanced %}
@@ -161,7 +159,7 @@ permalink: /
       <article class="overview-project-card overview-project-card--ops">
         <div class="overview-project-topline">
           <span>Personal Project</span>
-          <span>Trading Data · Monitoring</span>
+          <span>Trading Data · Ops</span>
         </div>
         {% if cfd and cfd.header.teaser %}
         <a class="overview-project-media" href="{{ cfd.url | relative_url }}">
@@ -169,11 +167,10 @@ permalink: /
         </a>
         {% endif %}
         <h3>CFD 데이터 기반 트레이딩 시스템</h3>
-        <p>실시간 시장 데이터를 정규화하고 상태 해석, ML 보조 예측, 운영 대시보드까지 연결한 트레이딩 분석 프로젝트입니다.</p>
+        <p>시장 데이터를 정규화하고 상태 해석, 운영 대시보드까지 연결한 트레이딩 분석 프로젝트입니다.</p>
         <ul>
-          <li>시장 / MT5 데이터 정규화와 상태·신호 해석 파이프라인</li>
-          <li>규칙 기반 판단 위에 ML 보조 레이어를 결합한 구조</li>
-          <li>FastAPI 운영 API와 Next.js 모니터링 대시보드 연결</li>
+          <li>시장 / MT5 데이터 정규화와 상태·신호 해석</li>
+          <li>FastAPI 운영 API + Next.js 모니터링 대시보드</li>
         </ul>
         <div class="overview-project-links">
           {% if cfd %}
