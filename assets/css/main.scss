@@ -1822,6 +1822,7 @@ a {
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.98)),
     var(--photo-card);
+  box-shadow: 0 14px 28px rgba(11, 20, 35, 0.05);
 }
 
 .overview-capability-card h3,
@@ -1864,21 +1865,32 @@ a {
 .overview-project-grid {
   display: grid;
   flex: 1;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.9rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
   align-content: stretch;
 }
 
 .overview-project-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 1.12rem;
+  overflow: hidden;
+  padding: 1.08rem 1rem 1rem;
   border-radius: 22px;
   border: 1px solid rgba(16, 26, 38, 0.08);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(247, 249, 251, 0.98)),
     var(--photo-card);
+  box-shadow: 0 16px 30px rgba(11, 20, 35, 0.06);
+}
+
+.overview-project-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 4px;
+  background: linear-gradient(90deg, rgba(14, 124, 134, 0.85), rgba(14, 124, 134, 0.15));
 }
 
 .overview-project-card--hero {
@@ -1887,23 +1899,35 @@ a {
     linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(247, 250, 251, 1));
 }
 
+.overview-project-card--hero::before {
+  background: linear-gradient(90deg, rgba(14, 124, 134, 0.9), rgba(67, 190, 189, 0.24));
+}
+
 .overview-project-card--rag {
   background:
     radial-gradient(circle at top right, rgba(52, 109, 208, 0.14), transparent 34%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(247, 250, 251, 1));
 }
 
+.overview-project-card--rag::before {
+  background: linear-gradient(90deg, rgba(52, 109, 208, 0.88), rgba(98, 144, 255, 0.24));
+}
+
 .overview-project-card--ops {
-  grid-column: 1 / -1;
   background:
     radial-gradient(circle at top right, rgba(203, 149, 63, 0.16), transparent 34%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(248, 249, 247, 1));
+}
+
+.overview-project-card--ops::before {
+  background: linear-gradient(90deg, rgba(196, 133, 34, 0.9), rgba(226, 177, 91, 0.24));
 }
 
 .overview-project-topline {
   display: flex;
   flex-wrap: wrap;
   gap: 0.42rem;
+  margin-bottom: 0.78rem;
 }
 
 .overview-project-topline span {
@@ -1920,6 +1944,30 @@ a {
   gap: 0.5rem;
   margin-top: auto;
   padding-top: 1rem;
+}
+
+.overview-project-card h3 {
+  font-size: 1.02rem;
+  line-height: 1.38;
+  letter-spacing: -0.02em;
+}
+
+.overview-project-card p {
+  font-size: 0.85rem;
+  line-height: 1.66;
+}
+
+.overview-project-card ul {
+  margin-top: 0.72rem;
+}
+
+.overview-project-card li {
+  font-size: 0.8rem;
+  line-height: 1.55;
+}
+
+.overview-project-card li + li {
+  margin-top: 0.38rem;
 }
 
 .overview-project-card .overview-project-links a {
@@ -1994,6 +2042,12 @@ a {
   transform: translateY(-2px);
   border-color: rgba(14, 124, 134, 0.22);
   box-shadow: 0 18px 34px rgba(11, 20, 35, 0.08);
+}
+
+.overview-capability-card:hover,
+.overview-project-card:hover,
+.overview-link-card:hover {
+  border-color: rgba(14, 124, 134, 0.18);
 }
 
 @media (prefers-reduced-motion: no-preference) {
