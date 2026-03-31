@@ -1526,6 +1526,8 @@ a {
   --overview-teal: #0e7c86;
   --overview-sand: #efe5cf;
   --overview-shadow: rgba(11, 20, 35, 0.12);
+  position: relative;
+  overflow: visible;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1549,6 +1551,10 @@ a {
     linear-gradient(145deg, rgba(255, 255, 255, 0.86), rgba(243, 246, 250, 0.94)),
     var(--photo-card);
   box-shadow: 0 20px 46px var(--overview-shadow);
+}
+
+.overview-slide[id] {
+  scroll-margin-top: 6.1rem;
 }
 
 .overview-slide::before {
@@ -1758,6 +1764,30 @@ a {
   display: flex;
   flex-wrap: wrap;
   gap: 0.48rem;
+}
+
+.overview-side-nav {
+  position: relative;
+  z-index: 5;
+  align-self: stretch;
+  justify-content: flex-end;
+  margin-top: -0.12rem;
+}
+
+.overview-side-nav a {
+  border-color: var(--photo-line);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02)),
+    var(--photo-card);
+  color: var(--photo-text);
+  box-shadow: 0 12px 28px rgba(11, 20, 35, 0.12);
+}
+
+.overview-side-nav a:hover {
+  border-color: rgba(14, 124, 134, 0.36);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03)),
+    var(--photo-card);
 }
 
 .overview-anchor-links a,
@@ -2184,6 +2214,11 @@ a {
   .overview-bridge-card--result .overview-bridge-label {
     color: #8fd0d9;
   }
+
+  .overview-side-nav a {
+    border-color: rgba(115, 141, 176, 0.16);
+    box-shadow: 0 14px 26px rgba(0, 0, 0, 0.2);
+  }
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -2224,6 +2259,31 @@ a {
   .collection-doc-page .sidebar__right.sticky {
     position: sticky !important;
     top: 4.8rem !important;
+  }
+}
+
+@media (min-width: 1760px) {
+  .overview-side-nav {
+    position: absolute;
+    top: clamp(11.4rem, 15vw, 16.8rem);
+    right: -8.6rem;
+    width: 8rem;
+    margin-top: 0;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 0.68rem;
+  }
+
+  .overview-side-nav a {
+    width: 100%;
+    min-height: 2.45rem;
+    justify-content: flex-start;
+    padding-inline: 0.92rem;
+    font-size: 0.82rem;
+    border-radius: 18px;
   }
 }
 
@@ -3313,6 +3373,11 @@ a {
   .overview-link-card {
     min-height: auto;
   }
+
+  .overview-side-nav {
+    justify-content: flex-start;
+    margin-top: -0.18rem;
+  }
 }
 
 @media (max-width: 700px) {
@@ -3350,6 +3415,11 @@ a {
   .overview-anchor-links a,
   .overview-project-links a {
     width: 100%;
+  }
+
+  .overview-side-nav {
+    justify-content: stretch;
+    margin-top: -0.04rem;
   }
 
   .overview-chip-row {
