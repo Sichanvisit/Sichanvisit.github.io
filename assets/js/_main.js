@@ -60,28 +60,41 @@ $(document).ready(function () {
     });
   }
 
+  const keepElementInVerticalView = function (container, target, padding) {
+    if (!container || !target) return;
+
+    var containerRect = container.getBoundingClientRect();
+    var targetRect = target.getBoundingClientRect();
+    var currentTop = container.scrollTop;
+    var nextTop = currentTop;
+
+    if (targetRect.top < containerRect.top + padding) {
+      nextTop += targetRect.top - containerRect.top - padding;
+    } else if (targetRect.bottom > containerRect.bottom - padding) {
+      nextTop += targetRect.bottom - containerRect.bottom + padding;
+    }
+
+    if (nextTop !== currentTop) {
+      container.scrollTop = Math.max(0, nextTop);
+    }
+  };
+
   // Auto scroll sticky ToC with content
   const scrollTocToContent = function (event) {
     var target = event.target;
     var tocElement = document.querySelector("aside.sidebar__right.sticky");
     var tocMenu = tocElement && tocElement.querySelector(".toc__menu");
-    var scrollOptions = { behavior: "auto", block: "nearest", inline: "nearest" };
-    var scrollTarget =
-      target.parentElement &&
-      target.parentElement.classList.contains("toc__menu") &&
-      target == target.parentElement.firstElementChild
-        ? document.querySelector("nav.toc header")
-        : target;
 
     if (!tocElement) return;
+    if (!tocMenu) return;
+    if (!target) return;
     if (window.getComputedStyle(tocElement).position !== "sticky") return;
-    if (!scrollTarget) return;
 
-    scrollTarget.scrollIntoView(scrollOptions);
-    if (tocMenu) {
+    window.requestAnimationFrame(function () {
+      keepElementInVerticalView(tocMenu, target, 18);
       tocMenu.scrollLeft = 0;
-    }
-    tocElement.scrollLeft = 0;
+      tocElement.scrollLeft = 0;
+    });
   };
 
   // Has issues on Firefox, whitelist Chrome for now

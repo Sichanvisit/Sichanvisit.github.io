@@ -4,38 +4,6 @@
   {% endfor %}
 {% else %}
   <script src="{{ '/assets/js/main.min.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>
-  <script>
-    document.addEventListener("gumshoeActivate", function (event) {
-      if (!window.chrome) return;
-
-      var tocElement = document.querySelector("aside.sidebar__right.sticky");
-      if (!tocElement) return;
-      if (window.getComputedStyle(tocElement).position !== "sticky") return;
-
-      var tocMenu = tocElement.querySelector(".toc__menu");
-      var target = event.target;
-      if (!target) return;
-
-      var scrollTarget =
-        target.parentElement &&
-        target.parentElement.classList.contains("toc__menu") &&
-        target == target.parentElement.firstElementChild
-          ? document.querySelector("nav.toc header")
-          : target;
-
-      window.requestAnimationFrame(function () {
-        if (scrollTarget) {
-          scrollTarget.scrollIntoView({
-            behavior: "auto",
-            block: "nearest",
-            inline: "nearest"
-          });
-        }
-        if (tocMenu) tocMenu.scrollLeft = 0;
-        tocElement.scrollLeft = 0;
-      });
-    });
-  </script>
 {% endif %}
 
 {% if site.search == true or page.layout == "search" %}

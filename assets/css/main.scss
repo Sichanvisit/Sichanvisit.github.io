@@ -1369,6 +1369,11 @@ a {
   box-sizing: border-box;
   padding-inline-end: 0.18rem;
   scrollbar-gutter: stable;
+  overflow-anchor: none;
+}
+
+.collection-doc-page .sidebar__right.toc-desktop {
+  padding-inline-start: 0 !important;
 }
 
 .collection-doc-page .toc .toc__menu ul,
