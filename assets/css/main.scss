@@ -2109,6 +2109,11 @@ a {
   align-items: start;
 }
 
+.overview-link-column--sources {
+  display: grid;
+  gap: 1rem;
+}
+
 .overview-link-column,
 .overview-link-panel {
   min-width: 0;
@@ -2171,11 +2176,21 @@ a {
     var(--photo-card);
 }
 
+.overview-link-panel--summary {
+  padding-bottom: 0.95rem;
+}
+
+.overview-link-panel--catalog {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(246, 249, 252, 0.98)),
+    var(--photo-card);
+}
+
 .overview-source-groups {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.9rem;
-  margin-top: 1rem;
+  margin-top: 0.9rem;
 }
 
 .overview-source-card {
