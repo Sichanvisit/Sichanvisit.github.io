@@ -2,6 +2,8 @@
 main:
   - title: "Home"
     url: /
+  - title: "Overview"
+    url: /overview/
   - title: "Portfolio"
     url: /portfolio/
   - title: "Research"
@@ -12,6 +14,8 @@ main:
 en:
   - title: "Home"
     url: /
+  - title: "Overview"
+    url: /overview/
   - title: "Portfolio"
     url: /portfolio/
   - title: "Research"
@@ -22,6 +26,8 @@ en:
 ko:
   - title: "Home"
     url: /
+  - title: "Overview"
+    url: /overview/
   - title: "Portfolio"
     url: /portfolio/
   - title: "Research"

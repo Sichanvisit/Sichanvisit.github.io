@@ -1,0 +1,233 @@
+---
+layout: single
+author_profile: false
+classes: wide
+title: ""
+permalink: /overview/
+---
+
+{% assign advanced = site.portfolio | where: "title", "Advanced Project" | first %}
+{% assign obsidian = site.portfolio | where: "title", "Obsidian RAG" | first %}
+{% assign cfd = site.portfolio | where: "title", "CFD" | first %}
+
+<div class="overview-page">
+  <section class="overview-slide overview-hero">
+    <div class="overview-hero-copy">
+      <p class="overview-eyebrow">Portfolio Overview</p>
+      <h1>박시찬</h1>
+      <p class="overview-tagline">현장 이해를 바탕으로 RAG·LLM·자동화 시스템을 설계하는 AI 엔지니어</p>
+      <p class="overview-lead">
+        건축·시공 관리와 개인 화물 운영 경험을 통해 문제를 업무 흐름과 병목 기준으로 보는 습관이 있습니다.
+        지금은 FastAPI, RAG, 생성형 파이프라인 설계를 중심으로 운영 가능한 AI 구조를 만드는 데 집중하고 있습니다.
+      </p>
+      <div class="overview-chip-row" aria-label="Core strengths">
+        <span>RAG / Hybrid Search</span>
+        <span>FastAPI</span>
+        <span>LLM Failover</span>
+        <span>Workflow Design</span>
+        <span>Generative Pipelines</span>
+      </div>
+    </div>
+
+    <aside class="overview-hero-panel" aria-label="Quick summary">
+      <p class="overview-panel-label">3분 요약</p>
+      <ul class="overview-panel-list">
+        <li>현장 문제를 기술 설계 언어로 번역합니다.</li>
+        <li>복잡한 흐름을 단계 분리와 상태 관리로 정리합니다.</li>
+        <li>실험용 결과물이 아니라 운영 가능한 구조를 지향합니다.</li>
+      </ul>
+
+      <nav class="overview-anchor-links" aria-label="Jump links">
+        <a href="#what-i-can-do">맡길 수 있는 일</a>
+        <a href="#featured-projects">대표 프로젝트</a>
+        <a href="#experience-bridge">경험 연결</a>
+        <a href="#contact-links">링크</a>
+      </nav>
+    </aside>
+  </section>
+
+  <section class="overview-slide" id="what-i-can-do">
+    <div class="overview-section-heading">
+      <span class="overview-section-number">01</span>
+      <div>
+        <p class="overview-kicker">What I Can Do</p>
+        <h2>이런 일을 맡길 수 있습니다</h2>
+      </div>
+    </div>
+
+    <div class="overview-capability-grid">
+      <article class="overview-capability-card">
+        <h3>실무형 RAG 설계</h3>
+        <p>검색 정확도와 응답 품질 사이 균형을 맞추는 구조를 설계합니다.</p>
+        <ul>
+          <li>Summary + Raw 이중 저장소</li>
+          <li>BM25 + Vector + RRF 하이브리드 검색</li>
+          <li>검색 재시도와 품질 게이트 흐름</li>
+        </ul>
+      </article>
+
+      <article class="overview-capability-card">
+        <h3>생성 파이프라인 구조화</h3>
+        <p>한 번에 끝나는 데모보다 수정 가능하고 반복 가능한 생성 흐름을 만듭니다.</p>
+        <ul>
+          <li>상태 기반 오케스트레이션</li>
+          <li>단계 분리형 image pipeline</li>
+          <li>failover와 재생성 경로 설계</li>
+        </ul>
+      </article>
+
+      <article class="overview-capability-card">
+        <h3>운영 관점 API 설계</h3>
+        <p>기능 구현뿐 아니라 관측성과 운영 흐름까지 같이 봅니다.</p>
+        <ul>
+          <li>runtime / trades / ops API 분리</li>
+          <li>로그·메트릭·상태 파일 구조 정리</li>
+          <li>실행 이후 수정과 추적을 고려한 설계</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="overview-slide" id="featured-projects">
+    <div class="overview-section-heading">
+      <span class="overview-section-number">02</span>
+      <div>
+        <p class="overview-kicker">Featured Work</p>
+        <h2>대표 프로젝트</h2>
+      </div>
+    </div>
+
+    <div class="overview-project-grid">
+      <article class="overview-project-card overview-project-card--hero">
+        <div class="overview-project-topline">
+          <span>Team Project</span>
+          <span>Generative AI</span>
+        </div>
+        <h3>상세페이지 자동 기획·생성 시스템</h3>
+        <p>
+          제품 이미지와 입력 텍스트만으로 기획, 생성, 수정까지 이어지는 End-to-End 광고 크리에이티브 파이프라인을 설계한 프로젝트입니다.
+        </p>
+        <ul>
+          <li>AIDA 기반 5-stage 생성 흐름 구조화</li>
+          <li>OpenAI 실패 시 Gemini로 전환되는 LLM failover 설계</li>
+          <li>페이지 단위 재생성과 레이어 수정이 가능한 manifest 흐름 정리</li>
+        </ul>
+        <div class="overview-project-links">
+          {% if advanced %}
+          <a href="{{ advanced.url | relative_url }}">Case Study</a>
+          {% endif %}
+          {% if advanced and advanced.github_url %}
+          <a href="{{ advanced.github_url }}">GitHub</a>
+          {% endif %}
+        </div>
+      </article>
+
+      <article class="overview-project-card overview-project-card--rag">
+        <div class="overview-project-topline">
+          <span>Personal Project</span>
+          <span>RAG System</span>
+        </div>
+        <h3>Obsidian RAG</h3>
+        <p>개인 지식베이스를 대상으로 검색, 재작성, 생성, 검토 루프를 갖춘 Agentic RAG 구조를 구현한 프로젝트입니다.</p>
+        <ul>
+          <li>Summary + Raw 2계층 저장소 설계</li>
+          <li>BM25 + Embedding + RRF 하이브리드 검색</li>
+          <li>NDJSON 스트리밍 응답과 품질 게이트 구성</li>
+        </ul>
+        <div class="overview-project-links">
+          {% if obsidian %}
+          <a href="{{ obsidian.url | relative_url }}">Case Study</a>
+          {% endif %}
+          {% if obsidian and obsidian.github_url %}
+          <a href="{{ obsidian.github_url }}">GitHub</a>
+          {% endif %}
+        </div>
+      </article>
+
+      <article class="overview-project-card overview-project-card--ops">
+        <div class="overview-project-topline">
+          <span>Experimental Build</span>
+          <span>Observability</span>
+        </div>
+        <h3>CFD 운영·관측성 구조화</h3>
+        <p>자동매매 실험 환경에서 실행 흐름과 운영 API를 분리하고, 상태 추적이 가능한 구조로 정리한 프로젝트입니다.</p>
+        <ul>
+          <li>runtime / trades / ops API 계층 분리</li>
+          <li>CSV, metrics, runtime status 기반 관측성 구조</li>
+          <li>운영 가능한 서비스 형태로 확장하기 위한 기반 정리</li>
+        </ul>
+        <div class="overview-project-links">
+          {% if cfd %}
+          <a href="{{ cfd.url | relative_url }}">Case Study</a>
+          {% endif %}
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="overview-slide" id="experience-bridge">
+    <div class="overview-section-heading">
+      <span class="overview-section-number">03</span>
+      <div>
+        <p class="overview-kicker">Why This Background Matters</p>
+        <h2>이전 경험이 지금의 설계 방식으로 이어집니다</h2>
+      </div>
+    </div>
+
+    <div class="overview-bridge-grid">
+      <article class="overview-bridge-card">
+        <p class="overview-bridge-label">현장 경험</p>
+        <h3>건축·시공 관리</h3>
+        <p>도면, 일정, 커뮤니케이션, 변경 대응처럼 한 요소만 잘한다고 끝나지 않는 문제를 다뤘습니다.</p>
+      </article>
+
+      <article class="overview-bridge-card">
+        <p class="overview-bridge-label">운영 경험</p>
+        <h3>개인 화물 운영</h3>
+        <p>예외 상황, 시간 관리, 우선순위 조정 같은 운영 감각을 익혔습니다.</p>
+      </article>
+
+      <article class="overview-bridge-card overview-bridge-card--result">
+        <p class="overview-bridge-label">AI 프로젝트에서의 적용</p>
+        <h3>구조와 흐름을 먼저 봅니다</h3>
+        <ul>
+          <li>문제를 모델 성능이 아니라 전체 흐름 기준으로 봅니다.</li>
+          <li>수정 가능성, 재실행 경로, 병목 추적을 중요하게 둡니다.</li>
+          <li>읽기 쉬운 결과물과 설명 가능한 구조를 함께 만듭니다.</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="overview-slide" id="contact-links">
+    <div class="overview-section-heading">
+      <span class="overview-section-number">04</span>
+      <div>
+        <p class="overview-kicker">Links</p>
+        <h2>바로 확인할 수 있는 링크</h2>
+      </div>
+    </div>
+
+    <div class="overview-link-grid">
+      <a class="overview-link-card" href="{{ '/' | relative_url }}">
+        <strong>Home</strong>
+        <span>대표 작업과 최근 아카이브를 한 번에 볼 수 있습니다.</span>
+      </a>
+
+      <a class="overview-link-card" href="{{ '/portfolio/' | relative_url }}">
+        <strong>Portfolio</strong>
+        <span>대표 프로젝트를 조금 더 자세히 읽을 수 있습니다.</span>
+      </a>
+
+      <a class="overview-link-card" href="https://github.com/Sichanvisit">
+        <strong>GitHub</strong>
+        <span>코드와 저장소를 직접 확인할 수 있습니다.</span>
+      </a>
+
+      <a class="overview-link-card" href="mailto:{{ site.author.email }}">
+        <strong>Email</strong>
+        <span>{{ site.author.email }}</span>
+      </a>
+    </div>
+  </section>
+</div>
