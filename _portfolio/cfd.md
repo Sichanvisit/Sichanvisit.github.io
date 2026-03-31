@@ -4,7 +4,7 @@ date: 2026-02-26
 priority: 2
 excerpt: "실시간 시장 데이터를 가공하고 상태 기반 해석, ML 보조 예측, FastAPI 운영 API, Next.js 대시보드를 하나의 트레이딩 분석 시스템으로 연결한 개인 프로젝트"
 header:
-  teaser: /assets/images/portfolio/cfd-thumb.svg
+  teaser: /assets/images/portfolio/cfd/mt5-multi-chart.png
 github_url: "https://github.com/Sichanvisit/cfd"
 project_dir: "C:/Users/bhs33/Desktop/project/cfd"
 status: "정리중"
