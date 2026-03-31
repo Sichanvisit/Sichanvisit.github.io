@@ -110,12 +110,17 @@ permalink: /
           <span>Personal Project</span>
           <span>Local RAG · Streamlit</span>
         </div>
+        {% if obsidian_v1 and obsidian_v1.header.teaser %}
+        <a class="overview-project-media" href="{{ obsidian_v1.url | relative_url }}">
+          <img src="{{ obsidian_v1.header.teaser | relative_url }}" alt="Obsidian RAG V1 preview" loading="lazy">
+        </a>
+        {% endif %}
         <h3>Obsidian RAG V1</h3>
-        <p>Obsidian 문서를 질문 응답과 운영 작업으로 연결한 Streamlit 중심 로컬 RAG 1차 버전입니다.</p>
+        <p>Obsidian 문서를 근거 기반 질의응답과 운영 작업으로 연결한 Streamlit 중심 로컬 RAG 1차 버전입니다.</p>
         <ul>
-          <li>FastAPI 스트리밍 백엔드 + Streamlit 메인 UI</li>
-          <li>summary / raw 이중 저장소와 하이브리드 검색</li>
-          <li>Generator, Tagger, Ingest를 묶은 운영 콘솔</li>
+          <li>FastAPI NDJSON 스트리밍 백엔드와 Streamlit 메인 UI</li>
+          <li>summary / raw 이중 저장소와 BM25 + RRF 하이브리드 검색</li>
+          <li>Generator, Tagger, Ingest를 묶은 운영 콘솔형 워크플로우</li>
         </ul>
         <div class="overview-project-links">
           {% if obsidian_v1 %}
@@ -132,12 +137,17 @@ permalink: /
           <span>Personal Project</span>
           <span>Obsidian Plugin · Knowledge Workspace</span>
         </div>
+        {% if obsidian_v2 and obsidian_v2.header.teaser %}
+        <a class="overview-project-media" href="{{ obsidian_v2.url | relative_url }}">
+          <img src="{{ obsidian_v2.header.teaser | relative_url }}" alt="Obsidian RAG V2 preview" loading="lazy">
+        </a>
+        {% endif %}
         <h3>Obsidian RAG V2</h3>
-        <p>현재 노트 문맥과 relation-aware retrieval, recommendation workflow를 묶은 Obsidian 중심 2차 버전입니다.</p>
+        <p>현재 노트 문맥과 relation-aware retrieval, recommendation/action workflow를 묶은 Obsidian 중심 2차 버전입니다.</p>
         <ul>
-          <li>Obsidian Plugin 메인 클라이언트</li>
-          <li>typed relation과 1-hop / 2-hop 확장 검색</li>
-          <li>recommendation / action / graph-like UI 연결</li>
+          <li>Obsidian Plugin 메인 클라이언트와 Streamlit 운영 콘솔 분리</li>
+          <li>typed relation runtime과 1-hop / 2-hop 확장 검색</li>
+          <li>추천, 액션, graph-like UI를 하나의 흐름으로 연결</li>
         </ul>
         <div class="overview-project-links">
           {% if obsidian_v2 %}
@@ -154,6 +164,11 @@ permalink: /
           <span>Team Project</span>
           <span>Generative AI</span>
         </div>
+        {% if advanced and advanced.header.teaser %}
+        <a class="overview-project-media" href="{{ advanced.url | relative_url }}">
+          <img src="{{ advanced.header.teaser | relative_url }}" alt="Advanced project preview" loading="lazy">
+        </a>
+        {% endif %}
         <h3>상세페이지 자동 기획·생성 시스템</h3>
         <p>입력 정보로 기획, 생성, 수정 흐름을 잇는 생성형 AI 응용 서비스입니다.</p>
         <ul>
@@ -176,12 +191,17 @@ permalink: /
           <span>Personal Project</span>
           <span>Trading Data · Monitoring</span>
         </div>
+        {% if cfd and cfd.header.teaser %}
+        <a class="overview-project-media" href="{{ cfd.url | relative_url }}">
+          <img src="{{ cfd.header.teaser | relative_url }}" alt="CFD project preview" loading="lazy">
+        </a>
+        {% endif %}
         <h3>CFD 데이터 기반 트레이딩 시스템</h3>
-        <p>실시간 시장 데이터를 상태 기반으로 해석하고, ML 보조 예측과 운영 대시보드까지 연결한 개인 프로젝트입니다.</p>
+        <p>실시간 시장 데이터를 정규화하고 상태 해석, ML 보조 예측, 운영 대시보드까지 연결한 트레이딩 분석 프로젝트입니다.</p>
         <ul>
-          <li>데이터 정규화와 상태/신호 해석 파이프라인</li>
-          <li>규칙 기반 판단 + ML 보조 예측 구조</li>
-          <li>FastAPI 운영 API와 Next.js 모니터링 대시보드</li>
+          <li>시장 / MT5 데이터 정규화와 상태·신호 해석 파이프라인</li>
+          <li>규칙 기반 판단 위에 ML 보조 레이어를 결합한 구조</li>
+          <li>FastAPI 운영 API와 Next.js 모니터링 대시보드 연결</li>
         </ul>
         <div class="overview-project-links">
           {% if cfd %}

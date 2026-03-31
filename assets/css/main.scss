@@ -1983,6 +1983,29 @@ a {
   box-shadow: 0 16px 30px rgba(11, 20, 35, 0.06);
 }
 
+.overview-project-media {
+  display: block;
+  margin-bottom: 0.92rem;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid rgba(16, 26, 38, 0.08);
+  background: rgba(255, 255, 255, 0.72);
+  aspect-ratio: 16 / 9;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.overview-project-media img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform 180ms ease;
+}
+
+.overview-project-card:hover .overview-project-media img {
+  transform: scale(1.02);
+}
+
 .overview-project-card::before {
   content: "";
   position: absolute;
