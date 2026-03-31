@@ -47,7 +47,7 @@ body {
 
 .layout--single.overview-landing #main {
   width: 100%;
-  max-width: 1660px;
+  max-width: 1600px;
   margin-inline: auto;
   padding-inline: 0.5rem;
 }
@@ -109,7 +109,7 @@ a {
 
 .layout--single.overview-landing .page__content {
   width: 100%;
-  max-width: 1560px;
+  max-width: 1500px;
   margin-inline: auto;
   padding-inline: 0.45rem;
 }
@@ -1770,11 +1770,17 @@ a {
 .overview-side-rail {
   grid-column: 1;
   width: 100%;
+  min-height: 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
 }
 
 .overview-side-nav {
   position: relative;
   z-index: 5;
+  display: flex;
   justify-content: flex-start;
   margin-top: -0.1rem;
 }
@@ -2225,13 +2231,6 @@ a {
     box-shadow: 0 14px 26px rgba(0, 0, 0, 0.2);
   }
 
-  .overview-side-rail {
-    border-color: rgba(88, 115, 148, 0.18);
-    background:
-      linear-gradient(180deg, rgba(18, 24, 31, 0.96), rgba(14, 19, 27, 1)),
-      var(--photo-card);
-    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.22);
-  }
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -2275,32 +2274,24 @@ a {
   }
 }
 
-@media (min-width: 1760px) {
+@media (min-width: 1500px) {
   .overview-page {
-    grid-template-columns: minmax(0, 1fr) 8.6rem;
-    width: min(100%, 1536px);
-    column-gap: 0.84rem;
+    grid-template-columns: minmax(0, 1fr) 7.4rem;
+    width: min(100%, 1500px);
+    column-gap: 0.88rem;
   }
 
   .overview-side-rail {
     grid-column: 2;
     grid-row: 1 / span 5;
-    position: sticky;
-    top: 5.8rem;
     align-self: start;
-    width: 8.6rem;
-    min-height: min(calc(100vh - 7rem), 46rem);
-    padding: 0.68rem;
+    width: 7.4rem;
     margin-top: 0.08rem;
-    border: 1px solid var(--photo-line);
-    border-radius: 28px;
-    background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015)),
-      var(--photo-card);
-    box-shadow: 0 18px 38px rgba(11, 20, 35, 0.14);
   }
 
   .overview-side-nav {
+    position: sticky;
+    top: 5.8rem;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -2313,11 +2304,11 @@ a {
 
   .overview-side-nav a {
     width: 100%;
-    min-height: 2.4rem;
+    min-height: 2.34rem;
     justify-content: flex-start;
-    padding-inline: 0.86rem;
-    font-size: 0.79rem;
-    border-radius: 17px;
+    padding-inline: 0.82rem;
+    font-size: 0.78rem;
+    border-radius: 16px;
   }
 }
 
