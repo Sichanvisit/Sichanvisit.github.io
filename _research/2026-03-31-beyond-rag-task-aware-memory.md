@@ -3,9 +3,9 @@ title: "Beyond RAG에서 본 다음 단계"
 date: 2026-03-31
 research_tab: "RAG"
 research_kind: "Research Note"
-research_summary: "RAG를 더 잘 검색하는 문제를 넘어서, 태스크 단위 메모리와 압축 KV 캐시 관점으로 확장되는 흐름을 정리한 글입니다. 검색 중심 구조의 한계와 언제 이런 관점이 더 유효한지, 제 RAG 설계 관점에 어떤 영향을 줬는지 함께 담았습니다."
+research_summary: "Beyond RAG 논문과 보조 해설을 함께 보며, 검색 중심 RAG가 언제 불리해지고 왜 task-aware memory 관점이 중요해지는지 정리한 글입니다. 주장만 적지 않고, 중간중간 근거 출처를 함께 배치해 제 해석이 어디에서 출발했는지 드러내는 방식으로 다시 썼습니다."
 research_artifacts: "Beyond RAG · Task-aware Memory · KV Cache"
-excerpt: "매 질의마다 문서를 다시 찾는 구조를 넘어서, 태스크 단위 메모리를 미리 준비하는 관점에서 Beyond RAG를 정리했습니다."
+excerpt: "RAG의 한계를 말할 때 검색 품질만 볼 것이 아니라, 반복 질의와 넓게 흩어진 지식을 어떤 구조로 다룰지까지 함께 봐야 한다고 느꼈습니다."
 tags:
   - rag
   - llm
@@ -16,101 +16,121 @@ header:
   teaser: /assets/images/research/beyond-rag.svg
 ---
 
-## Research Snapshot
+## 한눈에 보기
 
-| Item | Summary |
-|------|---------|
-| Topic | Beyond RAG, task-aware memory, query-agnostic compressed KV cache |
-| Why I Read It | RAG를 더 튜닝하는 방향만으로는 한계가 있다고 느껴, 검색 이후의 구조를 이해하고 싶었습니다. |
-| Core Question | 매 질의마다 검색하는 구조 대신, 태스크 단위 메모리를 미리 준비해두는 방식은 언제 더 유리한가? |
-| Portfolio Angle | Obsidian RAG를 설계할 때 검색 품질뿐 아니라 “반복 질의에 강한 구조”를 함께 고민하게 만든 메모입니다. |
+제가 이 글을 남긴 이유는 단순히 “최신 논문을 읽었다”를 보여주기 위해서가 아닙니다.  
+Obsidian RAG를 계속 다듬으면서, 검색 품질을 높이는 것만으로는 설명되지 않는 병목이 있다고 느꼈고, 그 지점을 `Beyond RAG`가 꽤 명확하게 짚어준다고 봤기 때문입니다.
 
-## Why This Paper Caught My Attention
+- 논문 원문: [Beyond RAG: Task-Aware KV Cache Compression for Comprehensive Knowledge Reasoning](https://arxiv.org/abs/2503.04973)
+- 빠르게 구조를 파악할 때 함께 본 자료: [Hugging Face Papers 페이지](https://huggingface.co/papers/2503.04973), [Moonlight 리뷰](https://www.themoonlight.io/en/review/beyond-rag-task-aware-kv-cache-compression-for-comprehensive-knowledge-reasoning)
 
-제가 RAG를 계속 보면서 느낀 가장 큰 한계는 `검색 정확도`만의 문제가 아니었습니다.  
-문서가 넓게 흩어져 있거나, 비슷한 질문이 여러 번 반복되거나, 한 번에 조합해야 할 근거가 많아질수록 RAG는 매번 같은 일을 다시 하게 됩니다.
+## 1. 왜 이 논문이 눈에 들어왔는가
 
-이 글에서 다룬 Beyond RAG는 그런 상황에서 관점을 바꿉니다.
+RAG를 실제로 다뤄보면, 문제는 늘 “검색 정확도” 한 줄로 끝나지 않습니다.
 
-- 질문이 들어올 때마다 문서를 다시 찾는 대신
-- 태스크 단위로 미리 압축된 메모리를 준비해두고
-- 그 메모리를 바탕으로 여러 질문을 처리하는 방식입니다.
+- 문서가 여러 군데 넓게 흩어져 있을 때는 top-k 검색만으로 필요한 근거를 다 회수하기 어렵고
+- 같은 코퍼스에 대해 비슷한 질문이 반복되면 retrieval, filtering, prompt reconstruction이 계속 다시 일어나며
+- 멀티홉 질문에서는 부분적으로 맞는 조각만 붙어서 답변 품질이 흔들리기 쉽습니다.
 
-이 지점이 흥미로웠던 이유는, 단순히 “더 잘 검색하는 법”이 아니라 “아예 다른 비용 구조를 만드는 법”으로 읽혔기 때문입니다.
+이 포인트는 논문 초록과 문제 정의에서 직접 확인할 수 있습니다.  
+논문은 기존 방법의 trade-off를 `RAG는 top-ranked evidence 바깥의 정보를 놓칠 수 있고, long-context는 비싸다`는 식으로 정리합니다.
 
-## What I Took Away
+- 근거: [arXiv 초록](https://arxiv.org/abs/2503.04973)
+- 보조 설명: [Moonlight 리뷰](https://www.themoonlight.io/en/review/beyond-rag-task-aware-kv-cache-compression-for-comprehensive-knowledge-reasoning)
 
-### 1. RAG의 병목은 검색 정확도만이 아니다
+제가 여기서 얻은 핵심은 이겁니다.  
+`RAG를 더 잘 검색하게 만드는 것`과 `매번 다시 검색해야 하는 구조 자체를 다시 보는 것`은 다른 문제라는 점입니다.
 
-RAG는 필요한 근거를 잘 찾는 것이 중요하지만, 반복 사용 시에는 검색과 재조립 자체가 비용이 됩니다.
+## 2. 이 논문이 실제로 바꾸는 관점
 
-- 같은 문서군에 대해 비슷한 질문이 여러 번 들어오면 같은 retrieval 과정이 반복됩니다.
-- 멀티홉 질문에서는 부분적으로 맞는 chunk가 섞여 들어오며 품질이 흔들릴 수 있습니다.
-- 답에 필요한 정보가 코퍼스 전체에 넓게 퍼져 있으면 top-k 검색만으로는 회수 자체가 불안정해집니다.
+이 논문이 흥미로운 이유는 “검색을 더 잘하는 법”보다 “태스크 단위로 메모리를 먼저 만들어두는 법”을 말한다는 데 있습니다.
 
-이 글은 RAG를 부정하기보다, `언제 RAG가 구조적으로 불리해지는가`를 더 선명하게 보여줬습니다.
+논문이 제안하는 방향은 대략 이렇게 읽힙니다.
 
-### 2. “문서 검색”이 아니라 “태스크 메모리”로 보는 관점이 필요하다
+1. 질문마다 문서를 다시 찾지 않습니다.
+2. 먼저 태스크 설명과 코퍼스 전체를 바탕으로 압축된 KV 캐시를 만듭니다.
+3. 이후 질문은 그 압축된 캐시를 재사용하면서 처리합니다.
 
-Beyond RAG에서 인상적이었던 핵심은 query-aware가 아니라 task-aware라는 점이었습니다.
+논문에서는 이걸 `task-aware`, `query-agnostic` KV cache compression이라고 부릅니다.  
+즉, 특정 질문 하나에 맞춘 임시 요약이 아니라, 같은 태스크 안의 여러 질문을 커버할 수 있는 공통 메모리를 만드는 쪽에 가깝습니다.
 
-- 질문마다 증거를 새로 찾는 대신
-- 태스크 설명과 코퍼스 전체를 바탕으로
-- 압축된 KV 캐시를 먼저 만들고
-- 이후 질문은 그 캐시를 참조하며 처리합니다.
+- 근거: [arXiv 원문](https://arxiv.org/abs/2503.04973)
+- 구조 요약 참고: [Hugging Face Papers](https://huggingface.co/papers/2503.04973)
+- 메커니즘 해설 참고: [Moonlight 리뷰](https://www.themoonlight.io/en/review/beyond-rag-task-aware-kv-cache-compression-for-comprehensive-knowledge-reasoning)
 
-비유하자면 시험 문제를 받을 때마다 교과서를 다시 뒤지는 것이 아니라, 과목 전체 요약 노트를 먼저 만든 뒤 그 노트로 여러 문제를 푸는 방식에 가깝습니다.
+이걸 제 식으로 다시 표현하면 이렇습니다.
 
-### 3. 결국 중요한 건 “언제 어떤 구조를 택할지”다
+- RAG는 시험 문제를 받을 때마다 교과서를 다시 뒤지는 방식
+- Beyond RAG는 과목 전체 요약 노트를 먼저 만들고, 그 노트로 여러 문제를 푸는 방식
 
-이 글을 읽고 난 뒤에는 RAG와 메모리형 구조를 경쟁 관계보다 선택지로 보게 됐습니다.
+이 비유가 마음에 들었던 이유는, retrieval과 memory를 전혀 다른 층위의 선택지로 보게 해주기 때문입니다.
 
-- 문서가 자주 바뀌고 질문이 산발적이면 여전히 RAG가 유리합니다.
-- 같은 태스크 위에서 반복 질의가 많고, 넓게 퍼진 지식을 종합해야 한다면 메모리형 구조가 더 설득력 있습니다.
-- 실제 서비스에서는 두 방식을 섞어, 최신성은 retrieval로 보완하고 반복성은 memory/cache로 흡수하는 하이브리드 설계가 현실적입니다.
+## 3. 숫자로 보면 왜 설득력이 있었는가
 
-## How It Changed My Design Thinking
+논문이 주장만 하고 끝났다면 저는 여기까지 관심을 두지 않았을 겁니다.  
+그런데 초록에 실린 결과가 꽤 분명했습니다.
 
-이 글은 제 RAG 프로젝트를 당장 완전히 바꾼 것은 아니지만, 설계 기준을 분명히 바꿨습니다.
+- LongBench v2에서 RAG 대비 정확도 최대 7 absolute points 향상
+- 30x compression 조건에서 latency를 0.43s에서 0.16s로 감소
 
-이전에는 주로 이런 질문을 했습니다.
+이 수치는 “조금 더 나아졌다”가 아니라,  
+`반복 질의와 넓은 문맥을 다뤄야 하는 태스크라면 구조를 바꿀 이유가 있다`는 쪽에 가깝게 읽혔습니다.
 
-- 검색 품질을 어떻게 높일까?
-- chunking과 reranking을 어떻게 조정할까?
-- query rewriting을 어디에 둘까?
+- 근거: [arXiv 초록](https://arxiv.org/abs/2503.04973)
+- 결과 요약 확인: [Hugging Face Papers](https://huggingface.co/papers/2503.04973)
 
-이 글 이후에는 이런 질문도 같이 보기 시작했습니다.
+물론 이걸 곧바로 “RAG는 끝났다”로 읽지는 않았습니다.  
+오히려 논문은 어떤 상황에서 task-aware compression이 더 유리한지를 보여준다고 보는 게 맞습니다.
 
-- 같은 코퍼스에 대한 반복 질의를 어떻게 더 싸게 처리할까?
-- retrieval과 memory를 어떤 기준으로 나눌까?
-- 매번 문서를 다시 읽는 흐름이 정말 최선일까?
+- sparse evidence만 잘 찾으면 되는 태스크는 RAG가 여전히 강할 수 있고
+- 넓게 퍼진 지식을 반복적으로 활용해야 하는 태스크는 memory/cache 관점이 더 낫습니다.
+
+이 구분선이 분명해진 것 자체가 제게는 큰 수확이었습니다.
+
+## 4. 이 글이 제 프로젝트 설계에 준 영향
+
+이 메모를 남긴 이유는 paper summary를 만들기 위해서가 아니라, 제 설계 기준이 어떻게 바뀌었는지 기록하기 위해서입니다.
+
+예전에는 주로 이런 질문을 했습니다.
+
+- chunking을 어떻게 조정할까
+- reranking을 어디에 둘까
+- query rewriting을 어떤 조건에서 쓸까
+
+지금은 이런 질문도 같이 보게 됐습니다.
+
+- 같은 코퍼스에 대한 반복 질의를 어떻게 더 싸게 처리할까
+- retrieval layer와 memory layer를 어떤 기준으로 나눌까
+- 매번 문서를 다시 읽는 흐름이 정말 최선일까
 
 즉, 검색 파이프라인만 보는 시선에서 `지식 접근 구조 전체`를 보는 쪽으로 이동했습니다.
 
-## Where I Would Apply This
+이건 특히 제가 Obsidian RAG에서 `Summary + Raw` 이중 저장소를 중요하게 보는 이유와도 연결됩니다.  
+raw 원문을 그대로 두는 것과 별개로, 반복 질의를 버틸 수 있는 정리된 표현층이 필요하다는 생각이 점점 강해졌기 때문입니다.
 
-제가 만든 Obsidian RAG 같은 구조에 바로 적용한다면, 우선 이런 식으로 연결해볼 수 있다고 생각합니다.
+## 5. 왜 이 글을 포트폴리오에 남기는가
 
-- 자주 반복되는 주제별 질의군을 추적해 세션/태스크 단위 요약 메모리로 별도 관리
-- raw note 검색과 summary memory를 분리해 서로 다른 역할을 맡기기
-- 장기적으로는 검색 결과를 매번 재조합하는 대신, 누적된 작업 맥락을 memory layer로 다루기
+이 글은 “논문 읽었습니다”가 아니라 아래 세 가지를 보여주는 용도로 남깁니다.
 
-아직 직접 구현까지 이어진 것은 아니지만, 단순한 paper review가 아니라 다음 실험 방향을 정해준 글에 가깝습니다.
+- RAG를 고정된 정답처럼 보지 않고 한계와 적용 구간을 구분해서 본다는 점
+- retrieval, latency, token cost, 반복 질의 구조를 함께 본다는 점
+- 프로젝트 밖에서도 설계 기준을 계속 업데이트하고 있다는 점
 
-## Why This Note Belongs in My Portfolio
+특히 Bytesize 같은 공고를 생각하면, 저는 이 부분이 더 중요하다고 봅니다.  
+문서처리형 AI나 RAG 시스템을 만든다는 건 단순 구현보다 `어떤 구조가 언제 유리한가`를 판단하는 일에 더 가깝기 때문입니다.
 
-이 글을 포트폴리오에 남기는 이유는 “최신 논문을 읽었다”를 보여주기 위해서가 아닙니다.
+## 6. 다음에 해보고 싶은 실험
 
-- RAG를 고정된 정답처럼 보지 않고 한계를 구분해서 바라본 점
-- retrieval, memory, cost structure를 함께 보는 시각
-- 프로젝트 바깥에서도 설계 기준을 계속 업데이트하고 있다는 점
+이 관점은 메모로 끝내기보다 실제 구조 실험으로 연결하고 싶습니다.
 
-이 세 가지가 제가 지향하는 AI 엔지니어링 방식과 더 맞닿아 있다고 생각했습니다.
-
-## Next Step
-
-다음 단계에서는 이 관점을 실제 구조 실험으로 연결해보고 싶습니다.
-
-- 반복 질의 패턴을 수집해 task-aware memory가 유효한 구간 찾기
+- 반복 질의 패턴을 모아 task-aware memory가 유효한 구간 찾기
 - retrieval layer와 memory layer를 분리한 작은 프로토타입 만들기
-- “정답률”만이 아니라 latency, token cost, 반복 질의 안정성까지 함께 비교하기
+- 정답률뿐 아니라 latency, token cost, 반복 질의 안정성까지 함께 비교하기
+
+이 글은 그래서 paper review라기보다, 다음 실험을 정하는 기준점에 더 가깝습니다.
+
+## Sources
+
+- [Beyond RAG: Task-Aware KV Cache Compression for Comprehensive Knowledge Reasoning, arXiv](https://arxiv.org/abs/2503.04973)
+- [Hugging Face Papers: Beyond RAG](https://huggingface.co/papers/2503.04973)
+- [Moonlight Review: Beyond RAG](https://www.themoonlight.io/en/review/beyond-rag-task-aware-kv-cache-compression-for-comprehensive-knowledge-reasoning)
