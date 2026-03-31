@@ -150,19 +150,22 @@ permalink: /
 
       <article class="overview-project-card overview-project-card--ops">
         <div class="overview-project-topline">
-          <span>Experimental Build</span>
-          <span>Automation · Ops</span>
+          <span>Personal Project</span>
+          <span>Trading Data · Monitoring</span>
         </div>
-        <h3>CFD 운영·관측성 구조화</h3>
-        <p>자동화 서비스의 실행 흐름과 상태 추적을 운영 가능한 구조로 정리한 실험 프로젝트입니다.</p>
+        <h3>CFD 데이터 기반 트레이딩 시스템</h3>
+        <p>실시간 시장 데이터를 상태 기반으로 해석하고, ML 보조 예측과 운영 대시보드까지 연결한 개인 프로젝트입니다.</p>
         <ul>
-          <li>runtime / trades / ops API 분리</li>
-          <li>로그, 메트릭, 상태 파일 기반 관측성 구조</li>
-          <li>재실행과 추적이 가능한 운영 흐름 정리</li>
+          <li>데이터 정규화와 상태/신호 해석 파이프라인</li>
+          <li>규칙 기반 판단 + ML 보조 예측 구조</li>
+          <li>FastAPI 운영 API와 Next.js 모니터링 대시보드</li>
         </ul>
         <div class="overview-project-links">
           {% if cfd %}
           <a href="{{ cfd.url | relative_url }}">Case Study</a>
+          {% endif %}
+          {% if cfd and cfd.github_url %}
+          <a href="{{ cfd.github_url }}">GitHub</a>
           {% endif %}
         </div>
       </article>
