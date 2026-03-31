@@ -1,8 +1,8 @@
 ---
 title: "Obsidian RAG"
-date: 2026-02-28
-priority: 3
-excerpt: "Obsidian 노트를 Summary+Raw 2계층 RAG와 하이브리드 검색으로 연결해, 질문-근거-답변 흐름을 만든 개인 지식 검색 프로젝트"
+date: 2026-03-31
+priority: 2
+excerpt: "Obsidian 노트를 FastAPI, Streamlit, Obsidian Plugin으로 연결하고 relation-aware retrieval까지 확장한 로컬 RAG 워크스페이스"
 header:
   teaser: /assets/images/portfolio/obsidian-rag-thumb.svg
 github_url: "https://github.com/Sichanvisit/Obsidian_RAG"
@@ -11,145 +11,135 @@ tech_stack:
   - Python
   - FastAPI
   - Streamlit
+  - Obsidian Plugin
   - ChromaDB
   - RAG
   - BM25
+  - TypeScript
 ---
 
 ## Project Snapshot
 
 | Item | Summary |
 |------|---------|
-| Problem | 로컬 Obsidian 지식베이스를 대상으로, 근거가 추적되고 재검색/재작성 루프를 제어할 수 있는 실무형 RAG 시스템이 필요했습니다. |
-| Role | FastAPI + Streamlit 구조, AgenticFlow 검색/재작성 흐름, summary/raw 이중 저장소, BM25 + 벡터 + RRF 하이브리드 검색 구조를 기준으로 파이프라인을 설계하고 정리했습니다. |
-| Stack | Python, FastAPI, Streamlit, ChromaDB, sentence-transformers, BM25, RRF, Ollama, OpenAI |
-| Flow | User Query -> FastAPI /api/chat/stream -> AgenticFlow(Think/Search/Grade/Rewrite/Generate/Review) -> RagEngine(summary/raw 검색) -> LLM -> NDJSON Streaming -> Streamlit UI |
-| Outcome | 다중 질의 검색, 품질 게이트, 반복 응답 차단, 출처 보강, 로컬 실행 스택까지 포함한 Agentic RAG 구조를 일관된 서비스 형태로 정리했습니다. |
+| Problem | Obsidian 안에서 실제로 쓰기 좋은 로컬 RAG를 만들고 싶었지만, 1차 버전은 Streamlit 중심 실험형 UI에 가까워 실제 노트 작업 흐름과는 거리가 있었습니다. |
+| Role | FastAPI 백엔드, AgenticFlow 기반 검색/생성 흐름, relation-aware retrieval, Streamlit 운영 콘솔, Obsidian 플러그인 통합까지 직접 설계하고 구현했습니다. |
+| Stack | Python, FastAPI, Streamlit, TypeScript, Obsidian Plugin API, ChromaDB, BM25, Ollama, OpenAI |
+| Flow | Obsidian Plugin 또는 Streamlit -> FastAPI -> AgenticFlow -> RagEngine(hybrid retrieval + relation expansion + rerank) -> LLM -> NDJSON Streaming |
+| Outcome | Streamlit 단일 UI에서 Obsidian 플러그인 중심 워크플로우로 확장했고, 현재 노트 문맥과 relation graph를 활용하는 2차 버전으로 고도화했습니다. |
 
 ## Architecture
 
 ```mermaid
 flowchart LR
-    User["User Query"] --> API["FastAPI Backend"]
+    User["Obsidian Plugin / Streamlit"] --> API["FastAPI Backend"]
     API --> Flow["AgenticFlow"]
-    Flow --> MQ["Multi Query Rewrite"]
-    MQ --> Search["RagEngine<br/>Embedding + BM25 + RRF"]
-    Search --> Summary["Summary Vector Store"]
-    Search --> Raw["Raw Vector Store"]
-    Search --> Grade["Retrieval Grade / Rewrite Gate"]
-    Grade --> LLM["Ollama / OpenAI"]
-    LLM --> Stream["NDJSON Streaming Response"]
-    Stream --> UI["Streamlit UI"]
+    Flow --> Search["RagEngine"]
+    Search --> Hybrid["Embedding + BM25 + RRF"]
+    Search --> Relation["Relation Expansion"]
+    Search --> Stores["Summary / Raw Stores"]
+    Search --> Rerank["Retrieval Rerank"]
+    Rerank --> LLM["Ollama / OpenAI"]
+    LLM --> Stream["NDJSON Streaming"]
+    Stream --> Client["Plugin UI / Ops Console"]
 ```
 
 ## 1. 프로젝트 개요
-Obsidian에 쌓아 둔 개인 문서와 학습 노트를 대상으로, 근거 기반 답변을 제공하는 로컬 RAG 시스템입니다.
 
-이 프로젝트는 단순한 "벡터 검색 + 답변 생성" 조합이 아니라, 검색 품질이 낮을 때 재작성과 재검색을 다시 수행하는 Agentic RAG 흐름을 목표로 설계했습니다. 실제 구현은 FastAPI 백엔드와 Streamlit 프론트엔드로 나뉘며, `/api/chat/stream`을 통해 NDJSON 스트리밍 응답을 제공합니다.
+이 프로젝트는 Obsidian에 쌓인 개인 문서와 학습 노트를 대상으로 질문, 근거, 답변 흐름을 만드는 로컬 RAG 시스템입니다.
 
-## 2. 해결하려고 한 문제
-Obsidian 기반 개인 지식 저장소는 양이 많아질수록 검색 품질 문제가 빠르게 드러납니다.
+1차 버전에서는 FastAPI와 Streamlit을 중심으로 검색과 답변 생성 파이프라인을 만들었고, summary/raw 이중 저장소와 하이브리드 검색 구조를 정리하는 데 집중했습니다. 하지만 실제 사용 맥락은 Streamlit보다 Obsidian 안에서 노트를 읽고 질문을 던지고, 연결된 문서를 확인하고, 답변을 다시 노트로 저장하는 쪽에 더 가까웠습니다.
 
-- 짧은 질의는 의도가 약해 필요한 문서를 놓치기 쉽습니다
-- 벡터 검색만 쓰면 키워드 힌트가 강한 질문에서 흔들립니다
-- BM25만 쓰면 의미 기반 질의를 잘 못 잡습니다
-- 검색 품질이 낮은데도 생성 단계가 그대로 진행되면, 근거 약한 장문 응답이 나옵니다
-- 스트리밍 생성 중 반복 루프가 생기면 응답 품질이 급격히 떨어집니다
+그래서 2차 업데이트에서는 단순히 검색 품질만 높이는 것이 아니라, 사용 흐름 자체를 Obsidian 중심으로 옮기는 방향으로 구조를 다시 잡았습니다.
 
-이 프로젝트는 이 다섯 가지를 줄이는 방향으로 구성됐습니다.
+## 2. 왜 2차 업데이트가 필요했는가
 
-## 3. 핵심 설계 포인트
+1차 버전은 기술 실험과 파이프라인 정리에 의미가 있었지만 실제 사용에서는 몇 가지 한계가 분명했습니다.
 
-### 3-1. Multi Query 기반 질의 확장
-질문 하나만으로 검색하지 않고, 재작성 질의와 분해 질의를 함께 생성한 뒤 상위 몇 개 질의를 실제 검색에 사용합니다.
+- 현재 작업 중인 노트 문맥을 자연스럽게 붙이기 어렵고, 질문과 노트 사이 연결이 느슨했습니다.
+- 검색 결과가 왜 선택되었는지 UI에서 빠르게 확인하기 어려웠습니다.
+- Generator, Tagger, Ingest 같은 운영 작업이 Streamlit 안에 묶여 있어 클라이언트가 바뀌면 재사용이 어려웠습니다.
+- 노트 사이 관계 정보가 있어도 검색 단계에서는 충분히 활용하지 못했습니다.
 
-이 접근은 "질문은 짧은데 실제 의도는 긴 경우"에 특히 유리합니다. 예를 들어 프로젝트명, 개념어, 구현 관점이 섞여 있는 질문은 질의 확장을 하지 않으면 검색 누락이 자주 발생합니다.
+이 문제를 해결하려면 단순히 모델을 바꾸는 것이 아니라, 클라이언트 구조, 검색 로직, 운영 인터페이스를 함께 손봐야 했습니다.
 
-### 3-2. Summary + Raw 이중 저장소
-저장소를 요약 컬렉션과 원문 컬렉션으로 나눠 관리합니다.
+## 3. 이번에 바뀐 핵심
 
-- summary 저장소: 빠른 회수와 질의 확장 대응
-- raw 저장소: 실제 근거 문장 확인과 세부 인용 보강
+### 3-1. Obsidian 플러그인을 메인 클라이언트로 추가
 
-이 구조는 회수율과 근거 추적성 사이의 균형을 잡기 위한 선택입니다. 요약만 쓰면 근거가 빈약해지고, 원문만 쓰면 검색 비용과 잡음이 커집니다.
+이번 버전에서 가장 큰 변화는 Obsidian 플러그인을 별도 클라이언트로 붙인 점입니다.
 
-### 3-3. 하이브리드 검색과 RRF 결합
-검색 단계에서는 임베딩 검색과 BM25 검색을 함께 수행하고, 결과를 RRF로 합칩니다.
+- 현재 노트를 읽고 질문 내용에 따라 필요한 경우에만 첨부하는 question-first 흐름을 넣었습니다.
+- 링크, 같은 폴더, 태그, 백링크를 문맥 후보로 수집할 수 있게 했습니다.
+- 답변 패널에서 검색된 소스와 전송된 문맥 노트를 카드 형태로 보고 바로 열 수 있습니다.
+- 답변을 새 노트로 저장하거나 현재 노트에 이어붙일 수 있습니다.
 
-이렇게 하면:
+이 변화 덕분에 RAG가 별도 데모 화면이 아니라 실제 Obsidian 작업 흐름 안으로 들어오게 됐습니다.
 
-- 의미 기반 질의는 벡터 검색이 받고
-- 파일명/키워드 힌트가 강한 질의는 BM25가 보완하며
-- 최종 후보는 두 신호를 합친 순위로 정리됩니다
+### 3-2. relation-aware retrieval 도입
 
-개인 지식베이스처럼 문서 스타일이 균일하지 않은 환경에서는 이 혼합 구조가 단일 검색기보다 훨씬 안정적입니다.
+검색 쪽에서는 typed relation과 related files 메타데이터를 활용하는 relation-aware retrieval을 추가했습니다.
 
-### 3-4. 검색 품질 게이트
-검색 결과가 좋지 않으면 바로 답변을 생성하지 않고, 재작성 또는 재검색으로 분기합니다.
+- 노트 메타데이터에서 relation adjacency를 구성합니다.
+- direct match뿐 아니라 1-hop, 2-hop 관계 체인도 확장 후보로 봅니다.
+- relation type, confidence, direction을 반영해 체인 점수를 계산합니다.
+- 검색 결과에는 `retrieval_reason`, `source_type`, relation chain 설명을 함께 내려서 UI에서 왜 선택됐는지 확인할 수 있게 했습니다.
 
-이 게이트는 RAG 시스템에서 중요합니다. 검색이 약한 상태에서 생성만 잘하게 만들면, 결국 답변 품질보다 환각이 먼저 늘어납니다. 이 프로젝트는 검색 단계에서 품질 기준을 두고, 실패 시 다시 검색하도록 설계했습니다.
+기존 하이브리드 검색이 문서 후보를 잘 모으는 역할이었다면, 이번 relation-aware 흐름은 직접 매칭되지 않는 구현 문서나 후속 노트를 더 안정적으로 끌어오는 역할을 담당합니다.
 
-### 3-5. 반복 응답 차단과 출처 보강
-스트리밍 응답이 길어질 때는 반복 패턴을 감지해 임계치를 넘기면 절단합니다. 또한 답변에 출처 태그가 누락되면 후처리 단계에서 출처 보강을 시도합니다.
+### 3-3. Generator / Tagger / Ingest를 공통 API로 재구성
 
-즉, 생성은 끝난 뒤에도 그대로 방치하지 않고, 최소한의 품질 방어 장치를 추가한 구조입니다.
+운영 작업도 구조를 바꿨습니다.
 
-## 4. 실제 코드 구조 기준 시스템 흐름
+- `/api/tools/config`
+- `/api/tools/files`
+- `/api/tools/generator/stream`
+- `/api/tools/tagger/stream`
+- `/api/tools/ingest/stream`
 
-```text
-User Query
-  -> FastAPI /api/chat/stream
-  -> AgenticFlow
-     -> Think
-     -> Search
-     -> Grade
-     -> Rewrite
-     -> Generate
-     -> Review
-  -> RagEngine
-     -> Summary Search
-     -> Raw Expansion
-     -> BM25 + Embedding + RRF
-  -> LLM
-  -> NDJSON Streaming
-  -> Streamlit UI
-```
+이렇게 API 계층을 분리해 Streamlit 운영 콘솔과 Obsidian 플러그인이 같은 백엔드 도구를 공유하도록 만들었습니다. 덕분에 클라이언트가 달라도 핵심 워크플로우는 한 번만 구현하면 되는 구조가 됐습니다.
 
-소스 기준 주요 위치는 다음과 같습니다.
+### 3-4. 로컬 실행 안정성 보강
 
-- 백엔드 진입점: `backend/main.py`
-- 파이프라인 코어: `backend/src/graph`, `backend/src/rag`
-- 프론트엔드: `frontend/app.py`
-- 실행/배포: `start_rag.bat`, `docker-compose.yml`
+실행 경험도 함께 손봤습니다.
 
-즉, 이 프로젝트는 실험 코드가 아니라 로컬에서 직접 실행 가능한 작은 서비스 구조로 정리돼 있습니다.
+- `.env`와 경로 로더를 정리해 Vault 위치를 자동 탐지하도록 보강했습니다.
+- 기본 로컬 모델을 `qwen3.5:4b` 기준으로 정리했습니다.
+- `start_rag.bat`가 백엔드 헬스체크 후 기존 프로세스를 재사용하거나 재기동합니다.
 
-## 5. 이 프로젝트에서 보여주고 싶은 역량
-이 프로젝트는 제가 RAG를 "검색 한 번 + LLM 호출 한 번"으로 보지 않는다는 점을 보여줍니다.
+이런 부분은 겉으로는 작아 보여도, 로컬 프로젝트를 매일 쓰는 관점에서는 꽤 큰 생산성 차이를 만듭니다.
 
-제가 여기서 중요하게 본 것은:
+## 4. 구현 포인트
 
-- 검색 품질을 먼저 제어하는 구조
-- 재작성/재검색 루프가 있는 에이전틱 흐름
-- 근거와 출처를 끝까지 유지하려는 설계
-- 로컬 환경에서도 실행 가능한 운영 형태
+### 4-1. 질문 우선 문맥 결합
 
-즉, 모델 하나보다 파이프라인 전체를 설계하는 관점을 드러내는 프로젝트입니다.
+현재 노트를 무조건 붙이면 잡음이 늘어납니다. 그래서 질문이 현재 노트를 참조하는 경우에만 우선 첨부하고, 나머지 문맥은 링크, 폴더, 태그, 백링크 기준으로 선택적으로 확장하는 구조를 택했습니다.
 
-## 6. 결과와 의미
-결과적으로 이 프로젝트는 다음을 갖춘 개인 지식 검색 시스템으로 정리됐습니다.
+### 4-2. 검색 결과를 설명 가능한 형태로 반환
 
-- 하이브리드 검색
-- 이중 저장소
-- 품질 게이트
-- 반복 차단
-- NDJSON 스트리밍 응답
-- FastAPI + Streamlit 실행 구조
+좋은 검색만큼 중요한 것이 "왜 이 문서가 선택됐는지" 보여주는 UX라고 판단했습니다. 그래서 단순 문서 목록 대신 source layer, score, snippet, retrieval reason을 구조화해 내려주고, 플러그인과 Streamlit에서 이를 바로 보여주도록 했습니다.
 
-포트폴리오 관점에서는 "RAG를 실제 서비스 구조로 끌고 간 경험"을 보여주는 대표 프로젝트입니다.
+### 4-3. 제품 클라이언트와 운영 콘솔의 역할 분리
 
-## 7. 다음 보완 방향
-- 평가셋 기반 RAGAS 정량 검증
-- 재검색 루프 정책 세분화
-- 문서 태그 기반 검색 필터링 강화
-- 프로젝트별 검색 성능 비교 대시보드 추가
+이번 버전에서는 Streamlit을 버린 것이 아니라 역할을 재정의했습니다.
+
+- Obsidian Plugin: 실제 사용 흐름
+- Streamlit: 운영 콘솔, 디버깅, 수동 워크플로우 실행
+
+이 분리는 개인 프로젝트에서도 꽤 중요했습니다. 기능이 늘어날수록 사용 화면과 운영 화면이 분리되어야 구조가 덜 흔들리기 때문입니다.
+
+## 5. 결과와 배운 점
+
+이번 업데이트를 통해 Obsidian RAG는 단순한 로컬 검색 데모에서, 실제 노트 작업 흐름 안으로 들어가는 워크스페이스에 가까워졌습니다.
+
+특히 크게 배운 점은 세 가지였습니다.
+
+- 검색 품질 개선만으로는 충분하지 않고, 사용 맥락에 맞는 클라이언트 구조가 함께 필요합니다.
+- RAG에서는 "정답을 잘 찾는 것"만큼 "왜 찾았는지 설명하는 것"이 중요합니다.
+- 로컬 프로젝트일수록 경로 설정, 기동 안정성, 운영 도구 인터페이스 같은 비기능 요소가 체감 완성도를 크게 좌우합니다.
+
+## 6. 다음 단계
+
+- relation scoring과 retrieval 평가셋을 더 정교하게 다듬기
+- 플러그인 대화 히스토리와 추천 액션 UX 개선
+- Generator, Tagger, Ingest 결과를 더 명확하게 시각화하는 운영 대시보드 보강
