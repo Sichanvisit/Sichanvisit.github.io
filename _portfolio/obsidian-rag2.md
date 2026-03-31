@@ -8,6 +8,8 @@ header:
 github_url: "https://github.com/Sichanvisit/Obsidian_RAG"
 project_dir: "C:/Users/bhs33/Desktop/project/Obsidian_RAG"
 status: "Current main branch"
+demo_video_path:
+demo_video_poster: /assets/images/portfolio/obsidian-rag/v2/plugin-chat-overview.jpg
 tech_stack:
   - Python 3.12
   - FastAPI
@@ -140,6 +142,23 @@ Graph Layer는 full canvas graph보다, 실제 질문에서 사용된 relation p
 Obsidian 안에서 현재 노트 문맥과 함께 질문하고, 우측 패널에서 로컬 에이전트 흐름을 바로 다루는 구조입니다.
 
 ![Obsidian RAG V2 plugin chat](/assets/images/portfolio/obsidian-rag/v2/plugin-chat-overview.jpg)
+
+## Demo Preview
+
+{% if page.demo_video_path %}
+<div class="project-media-grid">
+  <video controls autoplay loop muted playsinline preload="metadata" poster="{{ page.demo_video_poster | relative_url }}" style="width:100%; border-radius:12px;">
+    <source src="{{ page.demo_video_path | relative_url }}" type="video/mp4">
+  </video>
+</div>
+{% else %}
+> MP4 자리입니다. 데모 영상을 `assets/videos/obsidian-rag-v2-chat-demo.mp4` 로 넣고, 이 문서 front matter의 `demo_video_path` 값만 채우면 바로 노출됩니다.
+
+질문 예시:
+- 현재 문서를 기준으로 지금 바로 진행할 다음 액션 3개만 우선순위 순서로 정리해줘.
+- 왜 이 문서들이 같이 검색됐는지 relation path와 함께 설명해줘.
+- 이 주제와 직접 연결된 구현 문서, 리뷰 문서, 다음 액션 문서를 묶어서 보여줘.
+{% endif %}
 
 ### 5-2. Generator
 
