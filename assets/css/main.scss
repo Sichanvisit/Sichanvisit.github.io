@@ -47,7 +47,7 @@ body {
 
 .layout--single.overview-landing #main {
   width: 100%;
-  max-width: 1500px;
+  max-width: 1600px;
   margin-inline: auto;
   padding-inline: 0.5rem;
 }
@@ -109,7 +109,7 @@ a {
 
 .layout--single.overview-landing .page__content {
   width: 100%;
-  max-width: 1400px;
+  max-width: 1500px;
   margin-inline: auto;
   padding-inline: 0.45rem;
 }
@@ -1531,7 +1531,7 @@ a {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   align-items: start;
-  width: min(100%, 1400px);
+  width: min(100%, 1500px);
   gap: 1.2rem;
   margin-inline: auto;
   padding: 0.25rem 0 2.2rem;
@@ -2276,16 +2276,17 @@ a {
 
 @media (min-width: 1400px) {
   .overview-page {
-    grid-template-columns: minmax(0, 1fr) 7.1rem;
-    width: min(100%, 1400px);
-    column-gap: 0.82rem;
+    grid-template-columns: minmax(0, 1fr) 7.4rem;
+    width: min(100%, 1500px);
+    column-gap: 0.88rem;
+    transform: translateX(clamp(18px, 1.7vw, 34px));
   }
 
   .overview-side-rail {
     grid-column: 2;
     grid-row: 1 / span 5;
     align-self: start;
-    width: 7.1rem;
+    width: 7.4rem;
     margin-top: 0.08rem;
   }
 
@@ -2306,7 +2307,7 @@ a {
     width: 100%;
     min-height: 2.34rem;
     justify-content: flex-start;
-    padding-inline: 0.78rem;
+    padding-inline: 0.82rem;
     font-size: 0.78rem;
     border-radius: 16px;
   }
