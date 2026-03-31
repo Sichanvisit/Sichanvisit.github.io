@@ -47,7 +47,7 @@ body {
 
 .layout--single.overview-landing #main {
   width: 100%;
-  max-width: 1620px;
+  max-width: 1740px;
   margin-inline: auto;
   padding-inline: 0.5rem;
 }
@@ -109,7 +109,7 @@ a {
 
 .layout--single.overview-landing .page__content {
   width: 100%;
-  max-width: 1500px;
+  max-width: 1636px;
   margin-inline: auto;
   padding-inline: 0.45rem;
 }
@@ -1528,9 +1528,9 @@ a {
   --overview-shadow: rgba(11, 20, 35, 0.12);
   position: relative;
   overflow: visible;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
   width: min(100%, 1500px);
   gap: 1.2rem;
   margin-inline: auto;
@@ -1538,6 +1538,7 @@ a {
 }
 
 .overview-slide {
+  grid-column: 1;
   position: relative;
   overflow: hidden;
   display: flex;
@@ -1613,7 +1614,7 @@ a {
 .overview-hero-copy {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   min-width: 0;
 }
 
@@ -1709,7 +1710,7 @@ a {
   align-self: stretch;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 1.2rem;
   padding: 1.25rem;
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -1769,9 +1770,10 @@ a {
 .overview-side-nav {
   position: relative;
   z-index: 5;
-  align-self: stretch;
-  justify-content: flex-end;
-  margin-top: -0.12rem;
+  grid-column: 1;
+  align-self: start;
+  justify-content: flex-start;
+  margin-top: -0.1rem;
 }
 
 .overview-side-nav a {
@@ -2263,11 +2265,18 @@ a {
 }
 
 @media (min-width: 1760px) {
+  .overview-page {
+    grid-template-columns: minmax(0, 1fr) 8.25rem;
+    width: min(100%, 1636px);
+    column-gap: 1rem;
+  }
+
   .overview-side-nav {
-    position: absolute;
-    top: clamp(11.4rem, 15vw, 16.8rem);
-    right: -8.6rem;
-    width: 8rem;
+    position: sticky;
+    top: 5.8rem;
+    grid-column: 2;
+    grid-row: 1 / span 5;
+    width: 8.25rem;
     margin-top: 0;
     display: flex;
     flex-direction: column;
@@ -2275,6 +2284,7 @@ a {
     align-items: stretch;
     justify-content: flex-start;
     gap: 0.68rem;
+    max-height: calc(100vh - 7rem);
   }
 
   .overview-side-nav a {
@@ -3376,7 +3386,7 @@ a {
 
   .overview-side-nav {
     justify-content: flex-start;
-    margin-top: -0.18rem;
+    margin-top: -0.04rem;
   }
 }
 
@@ -3419,7 +3429,7 @@ a {
 
   .overview-side-nav {
     justify-content: stretch;
-    margin-top: -0.04rem;
+    margin-top: 0;
   }
 
   .overview-chip-row {
