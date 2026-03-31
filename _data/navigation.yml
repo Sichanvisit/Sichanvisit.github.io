@@ -1,9 +1,9 @@
 # main links
 main:
-  - title: "Home"
-    url: /
   - title: "Overview"
-    url: /overview/
+    url: /
+  - title: "Home"
+    url: /home/
   - title: "Portfolio"
     url: /portfolio/
   - title: "Research"
@@ -12,10 +12,10 @@ main:
     url: /study/
 
 en:
-  - title: "Home"
-    url: /
   - title: "Overview"
-    url: /overview/
+    url: /
+  - title: "Home"
+    url: /home/
   - title: "Portfolio"
     url: /portfolio/
   - title: "Research"
@@ -24,10 +24,10 @@ en:
     url: /study/
 
 ko:
-  - title: "Home"
-    url: /
   - title: "Overview"
-    url: /overview/
+    url: /
+  - title: "Home"
+    url: /home/
   - title: "Portfolio"
     url: /portfolio/
   - title: "Research"

@@ -3,7 +3,7 @@ layout: single
 author_profile: false
 classes: wide
 title: ""
-permalink: /overview/
+permalink: /
 ---
 
 {% assign advanced = site.portfolio | where: "title", "Advanced Project" | first %}
@@ -209,9 +209,9 @@ permalink: /overview/
     </div>
 
     <div class="overview-link-grid">
-      <a class="overview-link-card" href="{{ '/' | relative_url }}">
+      <a class="overview-link-card" href="{{ '/home/' | relative_url }}">
         <strong>Home</strong>
-        <span>대표 작업과 최근 아카이브를 한 번에 볼 수 있습니다.</span>
+        <span>기존 대표 작업 허브와 최근 아카이브를 그대로 볼 수 있습니다.</span>
       </a>
 
       <a class="overview-link-card" href="{{ '/portfolio/' | relative_url }}">
