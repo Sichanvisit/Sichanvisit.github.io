@@ -1526,6 +1526,8 @@ a {
   --overview-teal: #0e7c86;
   --overview-sand: #efe5cf;
   --overview-shadow: rgba(11, 20, 35, 0.12);
+  --overview-rail-width: 7.4rem;
+  --overview-rail-gap: 0.88rem;
   position: relative;
   overflow: visible;
   display: grid;
@@ -2276,17 +2278,17 @@ a {
 
 @media (min-width: 1400px) {
   .overview-page {
-    grid-template-columns: minmax(0, 1fr) 7.4rem;
+    grid-template-columns: minmax(0, 1fr) var(--overview-rail-width);
     width: min(100%, 1500px);
-    column-gap: 0.88rem;
-    transform: translateX(clamp(18px, 1.7vw, 34px));
+    column-gap: var(--overview-rail-gap);
+    transform: translateX(calc((var(--overview-rail-width) + var(--overview-rail-gap)) / 2));
   }
 
   .overview-side-rail {
     grid-column: 2;
     grid-row: 1 / span 5;
     align-self: start;
-    width: 7.4rem;
+    width: var(--overview-rail-width);
     margin-top: 0.08rem;
   }
 
