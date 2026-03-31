@@ -44,6 +44,11 @@ body {
   background-color: var(--page-bg);
 }
 
+.layout--single.overview-landing #main {
+  max-width: 1620px;
+  padding-inline: 0.5rem;
+}
+
 a {
   color: var(--photo-link);
 }
@@ -85,14 +90,17 @@ a {
 }
 
 .layout--single.overview-landing .page {
+  width: 100%;
   max-width: 1500px;
 }
 
 .layout--single.overview-landing .page__inner-wrap {
+  width: 100%;
   max-width: 1500px;
 }
 
 .layout--single.overview-landing .page__content {
+  width: 100%;
   max-width: 1420px;
   padding-inline: 0.35rem;
 }
