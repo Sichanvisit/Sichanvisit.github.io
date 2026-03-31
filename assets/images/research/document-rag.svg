@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Document RAG</title>
+  <desc id="desc">Teaser image for the document and table RAG note.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="52%" stop-color="#1f3f63" />
+      <stop offset="100%" stop-color="#d8a95c" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <rect x="76" y="76" width="1048" height="478" rx="34" fill="#0b1220" fill-opacity="0.24" stroke="#f7fafc" stroke-opacity="0.16" />
+  <g opacity="0.22">
+    <rect x="740" y="146" width="276" height="220" rx="18" fill="#ffffff" />
+    <path d="M740 202 H1016" stroke="#0f172a" stroke-opacity="0.25" stroke-width="3" />
+    <path d="M740 258 H1016" stroke="#0f172a" stroke-opacity="0.25" stroke-width="3" />
+    <path d="M740 314 H1016" stroke="#0f172a" stroke-opacity="0.25" stroke-width="3" />
+    <path d="M832 146 V366" stroke="#0f172a" stroke-opacity="0.25" stroke-width="3" />
+    <path d="M924 146 V366" stroke="#0f172a" stroke-opacity="0.25" stroke-width="3" />
+    <rect x="740" y="400" width="320" height="48" rx="16" fill="#ffffff" />
+    <rect x="740" y="470" width="240" height="48" rx="16" fill="#ffffff" />
+  </g>
+  <text x="112" y="172" fill="#fde6b8" font-family="'Segoe UI', Arial, sans-serif" font-size="28" letter-spacing="3">PRACTICAL NOTE</text>
+  <text x="112" y="258" fill="#f8fafc" font-family="'Segoe UI Semibold', Arial, sans-serif" font-size="76">Document RAG</text>
+  <text x="112" y="332" fill="#dde7f2" font-family="'Segoe UI', Arial, sans-serif" font-size="34">Handling HWP files, tables and retrieval-friendly preprocessing</text>
+  <rect x="112" y="394" width="390" height="96" rx="24" fill="#0d1523" fill-opacity="0.72" />
+  <text x="148" y="432" fill="#fde6b8" font-family="'Segoe UI', Arial, sans-serif" font-size="22">Focus</text>
+  <text x="148" y="470" fill="#f8fafc" font-family="'Segoe UI Semibold', Arial, sans-serif" font-size="28">Table parsing, HTML to Markdown, document AI</text>
+</svg>
