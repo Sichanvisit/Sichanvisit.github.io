@@ -2072,6 +2072,26 @@ a {
 }
 
 @media (prefers-color-scheme: light) {
+  .overview-hero {
+    background:
+      radial-gradient(circle at top left, rgba(99, 196, 208, 0.16), transparent 30%),
+      linear-gradient(135deg, #173243 0%, #21384b 54%, #2a4258 100%);
+    box-shadow: 0 22px 48px rgba(20, 31, 49, 0.16);
+  }
+
+  .overview-hero::before {
+    background: radial-gradient(circle, rgba(125, 224, 220, 0.16), transparent 68%);
+  }
+
+  .overview-hero::after {
+    background: radial-gradient(circle, rgba(240, 224, 184, 0.12), transparent 72%);
+  }
+
+  .overview-hero-panel {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04));
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+
   .overview-slide:not(.overview-hero) {
     background:
       radial-gradient(circle at top right, rgba(130, 179, 255, 0.08), transparent 26%),
