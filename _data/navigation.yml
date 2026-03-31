@@ -8,8 +8,6 @@ main:
     url: /portfolio/
   - title: "Research"
     url: /research/
-  - title: "Sources"
-    url: /sources/
   - title: "Study"
     url: /study/
 
@@ -22,8 +20,6 @@ en:
     url: /portfolio/
   - title: "Research"
     url: /research/
-  - title: "Sources"
-    url: /sources/
   - title: "Study"
     url: /study/
 
@@ -36,7 +32,5 @@ ko:
     url: /portfolio/
   - title: "Research"
     url: /research/
-  - title: "Sources"
-    url: /sources/
   - title: "Study"
     url: /study/

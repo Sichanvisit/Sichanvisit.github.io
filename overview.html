@@ -202,7 +202,7 @@ permalink: /
     </div>
   </section>
 
-  <section class="overview-slide" id="contact-links">
+  <section class="overview-slide overview-slide--links" id="contact-links">
     <div class="overview-section-heading">
       <span class="overview-section-number">04</span>
       <div>
@@ -217,24 +217,32 @@ permalink: /
           <p class="overview-bridge-label">Profile & Contact</p>
           <h3>바로 확인하는 링크</h3>
           <p>프로젝트, 저장소, 연락처처럼 바로 열어보게 될 링크를 먼저 모아두었습니다.</p>
+          <div class="overview-link-meta">
+            <span>대표 링크 4개</span>
+            <span>빠른 확인용</span>
+          </div>
 
           <div class="overview-link-grid">
             <a class="overview-link-card" href="{{ '/home/' | relative_url }}">
+              <small>Archive</small>
               <strong>Home</strong>
               <span>기존 작업 허브와 최근 아카이브를 그대로 볼 수 있습니다.</span>
             </a>
 
             <a class="overview-link-card" href="{{ '/portfolio/' | relative_url }}">
+              <small>Projects</small>
               <strong>Portfolio</strong>
               <span>대표 프로젝트를 조금 더 자세하게 확인할 수 있습니다.</span>
             </a>
 
             <a class="overview-link-card" href="https://github.com/Sichanvisit">
+              <small>Code</small>
               <strong>GitHub</strong>
               <span>코드, 저장소, 커밋 흐름을 직접 확인할 수 있습니다.</span>
             </a>
 
             <a class="overview-link-card" href="mailto:{{ site.author.email }}">
+              <small>Contact</small>
               <strong>Email</strong>
               <span>{{ site.author.email }}</span>
             </a>
@@ -243,17 +251,57 @@ permalink: /
       </div>
 
       <div class="overview-link-column overview-link-column--sources">
-        <a class="overview-link-panel overview-link-panel--featured" href="{{ '/sources/' | relative_url }}">
+        <div class="overview-link-panel overview-link-panel--sources">
           <p class="overview-bridge-label">Research Sources</p>
           <h3>계속 추적하는 자료</h3>
-          <p>논문, 에이전트 구조, 프레임워크 업데이트, 커뮤니티 글은 따로 `Sources` 탭에 정리해두었습니다.</p>
-          <ul class="overview-source-preview">
-            <li>Agent architecture 패턴과 multi-agent 자료</li>
-            <li>Meta AI, Hugging Face, GeekNews 같은 업데이트 채널</li>
-            <li>PyTorch Korea, LinkedIn 그룹, 블로그와 책 아카이브</li>
-          </ul>
-          <span class="overview-link-cta">Sources 탭 보기</span>
-        </a>
+          <p>자주 보는 자료를 공식 문서, 업데이트 채널, 커뮤니티, 기초서 기준으로 나눠 정리했습니다.</p>
+          <div class="overview-link-meta">
+            <span>4개 카테고리</span>
+            <span>16개 자료</span>
+          </div>
+          <div class="overview-source-groups overview-source-groups--compact">
+            <article class="overview-source-card">
+              <strong>Agent Architecture</strong>
+              <p class="overview-source-summary">single-agent와 multi-agent 구조, 협업 패턴, 보안 이슈를 볼 때 참고합니다.</p>
+              <div class="overview-source-links">
+                <a href="https://docs.databricks.com/aws/en/generative-ai/guide/agent-system-design-patterns#-multi-agent-system">Databricks</a>
+                <a href="https://galileo.ai/blog/choosing-the-right-ai-agent-architecture-single-vs-multi-agent-systems">Galileo</a>
+                <a href="https://docs.langchain.com/oss/python/langchain/multi-agent">LangChain</a>
+                <a href="https://aws.amazon.com/ko/blogs/machine-learning/multi-agent-collaboration-patterns-with-strands-agents-and-amazon-nova/">AWS</a>
+                <a href="https://ai.meta.com/blog/practical-ai-agent-security/">Meta Security</a>
+              </div>
+            </article>
+            <article class="overview-source-card">
+              <strong>Research Updates</strong>
+              <p class="overview-source-summary">새로운 연구, 프레임워크 업데이트, 국내 기술 이슈를 빠르게 훑어볼 때 봅니다.</p>
+              <div class="overview-source-links">
+                <a href="https://news.hada.io/new">GeekNews</a>
+                <a href="https://ai.meta.com/research/">Meta AI Research</a>
+                <a href="https://discuss.pytorch.kr/latest">PyTorch Korea</a>
+                <a href="https://huggingface.co/blog">Hugging Face</a>
+              </div>
+            </article>
+            <article class="overview-source-card">
+              <strong>Communities</strong>
+              <p class="overview-source-summary">실무자들이 어떤 문제를 자주 공유하는지, 국내외 글 흐름을 볼 때 참고합니다.</p>
+              <div class="overview-source-links">
+                <a href="https://www.linkedin.com/groups/961087/">LinkedIn 961087</a>
+                <a href="https://www.linkedin.com/groups/14520707/">LinkedIn 14520707</a>
+                <a href="https://digitalbourgeois.tistory.com/m/category/%EC%9D%B8%EA%B3%B5%EC%A7%80%EB%8A%A5">Tistory AI</a>
+              </div>
+            </article>
+            <article class="overview-source-card">
+              <strong>Fundamentals</strong>
+              <p class="overview-source-summary">수학, 비전, 컴퓨터 구조처럼 기초를 다시 잡고 싶을 때 보는 참고서입니다.</p>
+              <div class="overview-source-links">
+                <a href="https://www.gilbut.co.kr/book/view?bookcode=BN002833">인공지능 기초 수학</a>
+                <a href="https://www.yes24.com/product/goods/111086874">딥러닝을 위한 수학</a>
+                <a href="https://www.gilbut.co.kr/book/view?bookcode=BN004084">이미지 처리 바이블</a>
+                <a href="https://www.yes24.com/product/goods/98997716">컴퓨터 구조와 프로그래밍</a>
+              </div>
+            </article>
+          </div>
+        </div>
       </div>
     </div>
   </section>
