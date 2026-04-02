@@ -2294,15 +2294,13 @@ a {
   margin-top: 0;
 }
 
-.overview-project-card .overview-project-links a,
-.overview-project-card .overview-project-toggle {
+.overview-project-card .overview-project-links a {
   border-color: rgba(16, 26, 38, 0.08);
   background: rgba(16, 26, 38, 0.04);
   color: var(--overview-deep);
 }
 
-.overview-project-card .overview-project-links a:hover,
-.overview-project-card .overview-project-toggle:hover {
+.overview-project-card .overview-project-links a:hover {
   border-color: rgba(14, 124, 134, 0.28);
   background: rgba(14, 124, 134, 0.1);
 }
@@ -2311,6 +2309,13 @@ a {
   gap: 0.38rem;
   cursor: pointer;
   font: inherit;
+}
+
+.overview-project-toggle--deck {
+  min-width: 13rem;
+  border-color: rgba(16, 26, 38, 0.08);
+  background: rgba(16, 26, 38, 0.04);
+  color: var(--overview-deep);
 }
 
 .overview-project-toggle::after {
@@ -2333,8 +2338,14 @@ a {
   transform: rotate(45deg);
 }
 
+.overview-project-story-trigger-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.82rem;
+}
+
 .overview-project-story-stage {
-  margin-top: 0.94rem;
+  margin-top: 0.82rem;
 }
 
 .overview-project-story-panel {
@@ -2355,14 +2366,6 @@ a {
   height: 4px;
   border-radius: 22px 22px 0 0;
   background: linear-gradient(90deg, rgba(14, 124, 134, 0.9), rgba(67, 190, 189, 0.24));
-}
-
-.overview-project-story-panel--rag::before {
-  background: linear-gradient(90deg, rgba(52, 109, 208, 0.88), rgba(98, 144, 255, 0.24));
-}
-
-.overview-project-story-panel--ops::before {
-  background: linear-gradient(90deg, rgba(196, 133, 34, 0.9), rgba(226, 177, 91, 0.24));
 }
 
 .overview-project-story-intro {
@@ -2422,22 +2425,77 @@ a {
   background: rgba(14, 124, 134, 0.1);
 }
 
-.overview-project-story-deck {
+.overview-project-story-board {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.82rem;
+}
+
+.overview-project-story-cluster {
+  min-width: 0;
+  border: 1px solid rgba(16, 26, 38, 0.08);
+  border-radius: 18px;
+  padding: 0.8rem;
+  background: rgba(255, 255, 255, 0.52);
+}
+
+.overview-project-story-cluster--hero {
+  background:
+    radial-gradient(circle at top right, rgba(14, 124, 134, 0.11), transparent 38%),
+    rgba(255, 255, 255, 0.62);
+}
+
+.overview-project-story-cluster--rag {
+  background:
+    radial-gradient(circle at top right, rgba(52, 109, 208, 0.1), transparent 38%),
+    rgba(255, 255, 255, 0.62);
+}
+
+.overview-project-story-cluster--ops {
+  background:
+    radial-gradient(circle at top right, rgba(196, 133, 34, 0.12), transparent 38%),
+    rgba(255, 255, 255, 0.62);
+}
+
+.overview-project-story-heading {
+  min-width: 0;
+  margin-bottom: 0.62rem;
+}
+
+.overview-project-story-group {
+  margin: 0;
+  color: #0d7a85;
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.overview-project-story-heading strong {
+  display: block;
+  margin-top: 0.3rem;
+  color: var(--photo-text);
+  font-size: 0.9rem;
+  line-height: 1.38;
+  letter-spacing: -0.01em;
+  word-break: keep-all;
+}
+
+.overview-project-story-stack {
+  display: grid;
+  gap: 0.58rem;
 }
 
 .overview-project-story-card {
   min-width: 0;
   border: 1px solid rgba(16, 26, 38, 0.08);
   border-radius: 18px;
-  padding: 0.92rem 0.94rem;
-  background: rgba(255, 255, 255, 0.62);
+  padding: 0.76rem 0.8rem;
+  background: rgba(255, 255, 255, 0.72);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.32);
 }
 
-.overview-project-story-label {
+.overview-project-story-card .overview-project-story-label {
   margin: 0;
   color: #0d7a85;
   font-size: 0.62rem;
@@ -2456,39 +2514,11 @@ a {
   word-break: keep-all;
 }
 
-.overview-project-story-card p {
-  margin: 0.46rem 0 0;
+.overview-project-story-card p:not(.overview-project-story-label) {
+  margin: 0.34rem 0 0;
   color: var(--photo-muted);
-  font-size: 0.78rem;
-  line-height: 1.58;
-}
-
-.overview-project-story-card ul {
-  margin: 0.7rem 0 0;
-  padding: 0;
-  list-style: none;
-  display: grid;
-  gap: 0.38rem;
-}
-
-.overview-project-story-card li {
-  position: relative;
-  padding-left: 0.96rem;
-  color: var(--photo-text);
   font-size: 0.74rem;
-  line-height: 1.54;
-}
-
-.overview-project-story-card li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.48rem;
-  width: 0.4rem;
-  height: 0.4rem;
-  border-radius: 50%;
-  background: currentColor;
-  opacity: 0.42;
+  line-height: 1.5;
 }
 
 .overview-bridge-grid {
@@ -3029,9 +3059,39 @@ a {
     color: #9dd6de;
   }
 
+  .overview-project-toggle--deck {
+    border-color: rgba(115, 141, 176, 0.16);
+    background: rgba(255, 255, 255, 0.05);
+    color: #edf5ff;
+  }
+
   .overview-project-story-kicker,
-  .overview-project-story-label {
+  .overview-project-story-group,
+  .overview-project-story-card .overview-project-story-label {
     color: #9dd6de;
+  }
+
+  .overview-project-story-cluster {
+    border-color: rgba(115, 141, 176, 0.12);
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .overview-project-story-cluster--hero {
+    background:
+      radial-gradient(circle at top right, rgba(64, 168, 187, 0.14), transparent 38%),
+      rgba(255, 255, 255, 0.04);
+  }
+
+  .overview-project-story-cluster--rag {
+    background:
+      radial-gradient(circle at top right, rgba(98, 144, 255, 0.14), transparent 38%),
+      rgba(255, 255, 255, 0.04);
+  }
+
+  .overview-project-story-cluster--ops {
+    background:
+      radial-gradient(circle at top right, rgba(226, 177, 91, 0.14), transparent 38%),
+      rgba(255, 255, 255, 0.04);
   }
 
   .overview-project-story-close {
@@ -4482,6 +4542,10 @@ a {
     font-size: 0.54rem;
   }
 
+  .overview-project-story-trigger-wrap {
+    margin-top: 0.68rem;
+  }
+
   .overview-project-story-stage {
     margin-top: 0.74rem;
   }
@@ -4516,16 +4580,34 @@ a {
     font-size: 0.56rem;
   }
 
-  .overview-project-story-deck {
+  .overview-project-story-board {
     gap: 0.56rem;
   }
 
-  .overview-project-story-card {
-    padding: 0.72rem;
+  .overview-project-story-cluster {
+    padding: 0.62rem;
     border-radius: 16px;
   }
 
-  .overview-project-story-label {
+  .overview-project-story-group {
+    font-size: 0.54rem;
+  }
+
+  .overview-project-story-heading strong {
+    font-size: 0.72rem;
+    line-height: 1.28;
+  }
+
+  .overview-project-story-stack {
+    gap: 0.46rem;
+  }
+
+  .overview-project-story-card {
+    padding: 0.62rem;
+    border-radius: 16px;
+  }
+
+  .overview-project-story-card .overview-project-story-label {
     font-size: 0.54rem;
   }
 
@@ -4534,20 +4616,9 @@ a {
     line-height: 1.3;
   }
 
-  .overview-project-story-card p,
-  .overview-project-story-card li {
+  .overview-project-story-card p:not(.overview-project-story-label) {
     font-size: 0.6rem;
     line-height: 1.4;
-  }
-
-  .overview-project-story-card li {
-    padding-left: 0.76rem;
-  }
-
-  .overview-project-story-card li::before {
-    top: 0.38rem;
-    width: 0.32rem;
-    height: 0.32rem;
   }
 }
 
@@ -4743,6 +4814,10 @@ a {
     font-size: 0.46rem;
   }
 
+  .overview-project-story-trigger-wrap {
+    margin-top: 0.54rem;
+  }
+
   .overview-project-story-stage {
     margin-top: 0.58rem;
   }
@@ -4778,16 +4853,34 @@ a {
     font-size: 0.5rem;
   }
 
-  .overview-project-story-deck {
+  .overview-project-story-board {
     gap: 0.42rem;
   }
 
-  .overview-project-story-card {
-    padding: 0.58rem;
+  .overview-project-story-cluster {
+    padding: 0.5rem;
     border-radius: 14px;
   }
 
-  .overview-project-story-label {
+  .overview-project-story-group {
+    font-size: 0.48rem;
+  }
+
+  .overview-project-story-heading strong {
+    font-size: 0.62rem;
+    line-height: 1.22;
+  }
+
+  .overview-project-story-stack {
+    gap: 0.36rem;
+  }
+
+  .overview-project-story-card {
+    padding: 0.52rem;
+    border-radius: 14px;
+  }
+
+  .overview-project-story-card .overview-project-story-label {
     font-size: 0.48rem;
   }
 
@@ -4796,20 +4889,9 @@ a {
     line-height: 1.22;
   }
 
-  .overview-project-story-card p,
-  .overview-project-story-card li {
+  .overview-project-story-card p:not(.overview-project-story-label) {
     font-size: 0.52rem;
     line-height: 1.28;
-  }
-
-  .overview-project-story-card li {
-    padding-left: 0.68rem;
-  }
-
-  .overview-project-story-card li::before {
-    top: 0.34rem;
-    width: 0.28rem;
-    height: 0.28rem;
   }
 }
 
