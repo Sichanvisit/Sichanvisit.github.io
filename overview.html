@@ -273,85 +273,121 @@ permalink: /
 
     <div class="overview-project-story-stage" id="overview-project-story-stage" hidden>
       <div class="overview-project-story-board">
-        <article class="overview-project-story-card overview-project-story-card--hero">
+        <article class="overview-project-story-card overview-project-story-card--hero overview-project-story-card--problem">
           <div class="overview-project-story-meta">
             <span>Obsidian RAG</span>
             <span>01 Problem</span>
           </div>
           <h3 class="overview-project-story-title">검색은 되지만 지금 문맥에 맞는 다음 행동이 보이지 않았습니다</h3>
           <p>현재 문서를 기준으로 관련 노트, 근거, 다음 액션을 한 번에 보여주는 구조가 필요했습니다.</p>
+          <ul class="overview-project-story-points">
+            <li>현재 노트와 연결된 관련 문서를 함께 읽을 수 있어야 했습니다.</li>
+            <li>답변 뒤에 바로 열어볼 노트와 다음 액션이 같이 보여야 했습니다.</li>
+          </ul>
         </article>
 
-        <article class="overview-project-story-card overview-project-story-card--hero">
+        <article class="overview-project-story-card overview-project-story-card--hero overview-project-story-card--approach">
           <div class="overview-project-story-meta">
             <span>Obsidian RAG</span>
             <span>02 Approach</span>
           </div>
           <h3 class="overview-project-story-title">현재 노트 문맥과 relation-aware retrieval를 같은 인터페이스로 묶었습니다</h3>
           <p>플러그인 클라이언트와 Ops를 분리하고, relation runtime으로 연결 노트를 함께 가져오도록 설계했습니다.</p>
+          <ul class="overview-project-story-points">
+            <li>note, linked note, relation schema를 retrieval 기준으로 함께 다뤘습니다.</li>
+            <li>답변과 source, recommendation, next action이 같은 흐름에 놓이게 했습니다.</li>
+          </ul>
         </article>
 
-        <article class="overview-project-story-card overview-project-story-card--hero">
+        <article class="overview-project-story-card overview-project-story-card--hero overview-project-story-card--outcome">
           <div class="overview-project-story-meta">
             <span>Obsidian RAG</span>
             <span>03 Outcome</span>
           </div>
           <h3 class="overview-project-story-title">답변형 도구가 아니라 작업형 지식 워크스페이스로 정리했습니다</h3>
           <p>답변, 근거 문서, 추천 문서, 다음 액션이 같은 작업 흐름 안에서 이어지도록 만들었습니다.</p>
+          <ul class="overview-project-story-points">
+            <li>검색 결과를 읽고 끝나는 구조가 아니라 후속 작업까지 이어지게 됐습니다.</li>
+            <li>Obsidian 안에서 실제로 쓰는 로컬 지식 워크플로로 설명할 수 있게 됐습니다.</li>
+          </ul>
         </article>
 
-        <article class="overview-project-story-card overview-project-story-card--rag">
+        <article class="overview-project-story-card overview-project-story-card--rag overview-project-story-card--problem">
           <div class="overview-project-story-meta">
             <span>Generative Pipeline</span>
             <span>01 Problem</span>
           </div>
           <h3 class="overview-project-story-title">부분 수정이 생겨도 전체를 다시 돌려야 하는 구조였습니다</h3>
           <p>상세페이지 제작은 한 장만 고치는 경우가 많아 단계별 재실행이 가능한 흐름이 필요했습니다.</p>
+          <ul class="overview-project-story-points">
+            <li>생성 단계 하나가 실패하면 전체 작업이 다시 커지는 비용 문제가 있었습니다.</li>
+            <li>병목과 실패 지점을 단계별로 설명하기 어려운 구조였습니다.</li>
+          </ul>
         </article>
 
-        <article class="overview-project-story-card overview-project-story-card--rag">
+        <article class="overview-project-story-card overview-project-story-card--rag overview-project-story-card--approach">
           <div class="overview-project-story-meta">
             <span>Generative Pipeline</span>
             <span>02 Approach</span>
           </div>
           <h3 class="overview-project-story-title">Director와 5-stage 파이프라인으로 책임을 분리했습니다</h3>
           <p>기획, 배경 생성, 업스케일, 보정, 광고 조합을 나누고 failover와 페이지 단위 regenerate를 넣었습니다.</p>
+          <ul class="overview-project-story-points">
+            <li>기획과 생성 단계를 분리해 수정 지점을 더 명확하게 만들었습니다.</li>
+            <li>failover와 page regenerate 경로를 두어 복구 가능성을 높였습니다.</li>
+          </ul>
         </article>
 
-        <article class="overview-project-story-card overview-project-story-card--rag">
+        <article class="overview-project-story-card overview-project-story-card--rag overview-project-story-card--outcome">
           <div class="overview-project-story-meta">
             <span>Generative Pipeline</span>
             <span>03 Outcome</span>
           </div>
           <h3 class="overview-project-story-title">결과물보다 운영 가능한 생성 시스템 설계 경험으로 정리했습니다</h3>
           <p>단일 모델 성능보다 생성 이후 수정과 재시도를 다루는 구조 자체가 핵심 결과가 됐습니다.</p>
+          <ul class="overview-project-story-points">
+            <li>부분 수정과 재생성이 가능한 실무형 제작 흐름으로 설명할 수 있게 됐습니다.</li>
+            <li>결과 이미지보다 서비스형 파이프라인 설계 역량이 더 잘 드러나게 됐습니다.</li>
+          </ul>
         </article>
 
-        <article class="overview-project-story-card overview-project-story-card--ops">
+        <article class="overview-project-story-card overview-project-story-card--ops overview-project-story-card--problem">
           <div class="overview-project-story-meta">
             <span>CFD Trading</span>
             <span>01 Problem</span>
           </div>
           <h3 class="overview-project-story-title">데이터와 판단 근거, 운영 화면이 분리되면 설명과 검증이 어려웠습니다</h3>
           <p>수집, 해석, 확인 화면이 따로 움직이면 실제 의사결정 근거를 추적하기가 어려웠습니다.</p>
+          <ul class="overview-project-story-points">
+            <li>규칙 기반 판단과 ML 보조 판단이 따로 놀면 해석이 약해집니다.</li>
+            <li>운영 화면에서 상태와 근거를 같이 보지 못하면 설명 가능성이 떨어집니다.</li>
+          </ul>
         </article>
 
-        <article class="overview-project-story-card overview-project-story-card--ops">
+        <article class="overview-project-story-card overview-project-story-card--ops overview-project-story-card--approach">
           <div class="overview-project-story-meta">
             <span>CFD Trading</span>
             <span>02 Approach</span>
           </div>
           <h3 class="overview-project-story-title">정규화 파이프라인과 상태 해석 레이어를 중심으로 다시 묶었습니다</h3>
           <p>Market·MT5 데이터를 정규화하고 상태 해석을 기준으로 규칙 판단, ML 보조, 운영 API를 연결했습니다.</p>
+          <ul class="overview-project-story-points">
+            <li>정규화된 데이터와 state interpretation을 중심으로 흐름을 재구성했습니다.</li>
+            <li>FastAPI 운영 API와 대시보드가 같은 상태 정보를 보도록 맞췄습니다.</li>
+          </ul>
         </article>
 
-        <article class="overview-project-story-card overview-project-story-card--ops">
+        <article class="overview-project-story-card overview-project-story-card--ops overview-project-story-card--outcome">
           <div class="overview-project-story-meta">
             <span>CFD Trading</span>
             <span>03 Outcome</span>
           </div>
           <h3 class="overview-project-story-title">예측 모델보다 설명 가능한 트레이딩 분석 시스템으로 정리했습니다</h3>
           <p>같은 데이터를 분석, 판단, API, 대시보드에서 재사용하며 운영 화면에서 근거를 함께 보여줄 수 있게 됐습니다.</p>
+          <ul class="overview-project-story-points">
+            <li>분석, 판단, API, 대시보드가 같은 데이터 기준으로 이어지게 됐습니다.</li>
+            <li>트레이딩 모델보다 운영 가능한 분석 시스템 설계 경험으로 정리할 수 있게 됐습니다.</li>
+          </ul>
         </article>
       </div>
     </div>
