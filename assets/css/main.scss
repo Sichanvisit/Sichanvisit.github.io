@@ -1780,6 +1780,10 @@ a {
   gap: 0.48rem;
 }
 
+.overview-mobile-nav {
+  display: none;
+}
+
 .overview-side-rail {
   grid-column: 1;
   width: 100%;
@@ -3899,28 +3903,104 @@ a {
 }
 
 @media (max-width: 900px) {
+  .overview-page {
+    gap: 0.82rem;
+  }
+
+  .overview-mobile-nav {
+    position: sticky;
+    top: 4.25rem;
+    z-index: 24;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.4rem;
+    overflow-x: auto;
+    margin: -0.06rem 0 0.02rem;
+    padding: 0.08rem 0.02rem 0.18rem;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .overview-mobile-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .overview-mobile-nav a {
+    flex: 0 0 auto;
+    min-height: 1.9rem;
+    padding: 0.32rem 0.62rem;
+    border-radius: 999px;
+    border: 1px solid rgba(16, 26, 38, 0.08);
+    background: rgba(255, 255, 255, 0.88);
+    color: var(--photo-text);
+    font-size: 0.66rem;
+    font-weight: 700;
+    line-height: 1.2;
+    white-space: nowrap;
+    box-shadow: 0 10px 20px rgba(11, 20, 35, 0.08);
+  }
+
+  .overview-side-rail {
+    display: none;
+  }
+
   .overview-slide {
     width: 100%;
-    min-height: auto;
+    min-height: clamp(18rem, 56vw, 24rem);
+    padding: 1rem 1.02rem;
+    border-radius: 22px;
   }
 
   .sources-grid,
-  .overview-link-layout,
-  .overview-hero,
-  .overview-capability-grid,
-  .overview-project-grid,
-  .overview-bridge-grid,
-  .overview-link-grid,
-  .overview-source-groups {
+  .overview-link-layout {
     grid-template-columns: 1fr;
   }
 
-  .overview-project-card--ops {
-    grid-column: auto;
+  .overview-hero {
+    grid-template-columns: minmax(0, 1.45fr) minmax(0, 0.9fr);
+    gap: 0.78rem;
+    min-height: clamp(16rem, 44vw, 21rem);
+  }
+
+  .overview-capability-grid,
+  .overview-project-grid,
+  .overview-bridge-grid,
+  .overview-source-groups--three {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.58rem;
+  }
+
+  .overview-link-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.56rem;
   }
 
   .sources-shell {
     gap: 0.9rem;
+  }
+
+  .overview-section-heading {
+    gap: 0.62rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .overview-section-number {
+    width: 2.4rem;
+    height: 2.4rem;
+    font-size: 0.94rem;
+  }
+
+  .overview-section-heading h2 {
+    font-size: 1.08rem;
+  }
+
+  .overview-kicker,
+  .overview-bridge-label,
+  .overview-project-topline span,
+  .overview-eyebrow,
+  .overview-panel-label {
+    font-size: 0.56rem;
+    letter-spacing: 0.08em;
   }
 
   .overview-link-card,
@@ -3929,79 +4009,247 @@ a {
     min-height: auto;
   }
 
-  .overview-side-nav {
-    justify-content: flex-start;
-    margin-top: -0.04rem;
+  .overview-hero h1 {
+    font-size: clamp(1.55rem, 5vw, 2.1rem);
+  }
+
+  .overview-tagline {
+    margin-top: 0.54rem;
+    font-size: 0.78rem;
+    line-height: 1.34;
+  }
+
+  .overview-lead {
+    margin-top: 0.7rem;
+    font-size: 0.66rem;
+    line-height: 1.5;
+  }
+
+  .overview-chip-row {
+    gap: 0.34rem;
+    margin-top: 0.82rem;
+  }
+
+  .overview-chip-row span {
+    min-height: 1.54rem;
+    padding: 0.24rem 0.5rem;
+    font-size: 0.58rem;
+  }
+
+  .overview-hero-panel,
+  .overview-capability-card,
+  .overview-project-card,
+  .overview-bridge-card,
+  .overview-link-card,
+  .overview-link-panel,
+  .overview-source-card {
+    padding: 0.72rem;
+    border-radius: 16px;
+  }
+
+  .overview-panel-list li,
+  .overview-capability-card p,
+  .overview-project-card p,
+  .overview-bridge-card p,
+  .overview-source-summary,
+  .overview-link-card span,
+  .overview-link-panel p {
+    font-size: 0.66rem;
+    line-height: 1.44;
+  }
+
+  .overview-capability-card h3,
+  .overview-project-card h3,
+  .overview-bridge-card h3,
+  .overview-link-card strong,
+  .overview-link-panel h3,
+  .overview-source-card strong {
+    font-size: 0.76rem;
+    line-height: 1.24;
+  }
+
+  .overview-capability-card li,
+  .overview-project-card li,
+  .overview-bridge-card li {
+    font-size: 0.62rem;
+    line-height: 1.34;
+  }
+
+  .overview-project-topline {
+    min-height: 2.26rem;
+    margin-bottom: 0.46rem;
+  }
+
+  .overview-project-topline span {
+    min-height: 1.42rem;
+    padding: 0.2rem 0.42rem;
+  }
+
+  .overview-project-media {
+    margin-bottom: 0.56rem;
+  }
+
+  .overview-link-meta span,
+  .overview-source-links a,
+  .overview-project-links a {
+    min-height: 1.55rem;
+    padding: 0.24rem 0.5rem;
+    font-size: 0.58rem;
   }
 }
 
 @media (max-width: 700px) {
   .overview-page {
-    gap: 0.9rem;
+    gap: 0.74rem;
   }
 
   .sources-shell {
-    gap: 0.9rem;
+    gap: 0.74rem;
   }
 
   .overview-slide {
     width: 100%;
-    min-height: auto;
-    padding: 1.08rem;
-    border-radius: 22px;
+    min-height: clamp(15rem, 68vw, 20rem);
+    padding: 0.82rem 0.84rem;
+    border-radius: 18px;
   }
 
   .sources-hero,
   .sources-panel {
-    padding: 1.08rem;
-    border-radius: 22px;
+    padding: 0.9rem;
+    border-radius: 18px;
+  }
+
+  .overview-hero {
+    grid-template-columns: minmax(0, 1.38fr) minmax(0, 0.92fr);
+    gap: 0.62rem;
+    min-height: clamp(14rem, 74vw, 18rem);
+  }
+
+  .overview-mobile-nav {
+    top: 3.92rem;
+    gap: 0.34rem;
+  }
+
+  .overview-mobile-nav a {
+    min-height: 1.72rem;
+    padding: 0.28rem 0.52rem;
+    font-size: 0.6rem;
   }
 
   .overview-hero h1 {
-    font-size: clamp(2rem, 12vw, 2.7rem);
+    font-size: clamp(1.26rem, 7vw, 1.72rem);
   }
 
   .overview-tagline {
-    font-size: 1rem;
+    margin-top: 0.42rem;
+    font-size: 0.68rem;
+    line-height: 1.28;
   }
 
-  .overview-lead,
-  .overview-panel-list li,
-  .overview-capability-card p,
-  .overview-project-card p,
-  .overview-bridge-card p {
-    font-size: 0.88rem;
-  }
-
-  .overview-section-heading {
-    align-items: flex-start;
-  }
-
-  .overview-anchor-links a,
-  .overview-project-links a {
-    width: 100%;
-  }
-
-  .overview-side-nav {
-    justify-content: stretch;
-    margin-top: 0;
+  .overview-lead {
+    margin-top: 0.56rem;
+    font-size: 0.58rem;
+    line-height: 1.42;
   }
 
   .overview-chip-row {
-    gap: 0.42rem;
+    gap: 0.28rem;
   }
 
   .overview-chip-row span {
-    font-size: 0.72rem;
+    min-height: 1.34rem;
+    padding: 0.18rem 0.38rem;
+    font-size: 0.5rem;
   }
 
+  .overview-section-heading {
+    gap: 0.48rem;
+    margin-bottom: 0.72rem;
+  }
+
+  .overview-section-number {
+    width: 2.02rem;
+    height: 2.02rem;
+    font-size: 0.78rem;
+  }
+
+  .overview-section-heading h2 {
+    font-size: 0.92rem;
+  }
+
+  .overview-capability-grid,
+  .overview-project-grid,
+  .overview-bridge-grid,
+  .overview-source-groups--three {
+    gap: 0.42rem;
+  }
+
+  .overview-link-grid {
+    gap: 0.42rem;
+  }
+
+  .overview-hero-panel,
   .overview-capability-card,
   .overview-project-card,
   .overview-bridge-card,
   .overview-link-card,
-  .overview-hero-panel {
-    padding: 0.92rem;
-    border-radius: 18px;
+  .overview-link-panel,
+  .overview-source-card {
+    padding: 0.58rem;
+    border-radius: 14px;
+  }
+
+  .overview-panel-list li,
+  .overview-capability-card p,
+  .overview-project-card p,
+  .overview-bridge-card p,
+  .overview-source-summary,
+  .overview-link-card span,
+  .overview-link-panel p {
+    font-size: 0.58rem;
+    line-height: 1.34;
+  }
+
+  .overview-capability-card h3,
+  .overview-project-card h3,
+  .overview-bridge-card h3,
+  .overview-link-card strong,
+  .overview-link-panel h3,
+  .overview-source-card strong {
+    font-size: 0.66rem;
+    line-height: 1.18;
+  }
+
+  .overview-capability-card li,
+  .overview-project-card li,
+  .overview-bridge-card li {
+    font-size: 0.54rem;
+    line-height: 1.24;
+  }
+
+  .overview-project-topline {
+    min-height: 1.92rem;
+    margin-bottom: 0.38rem;
+  }
+
+  .overview-project-topline span {
+    min-height: 1.2rem;
+    padding: 0.14rem 0.34rem;
+    font-size: 0.5rem;
+  }
+
+  .overview-project-media {
+    margin-bottom: 0.42rem;
+    border-radius: 12px;
+  }
+
+  .overview-link-meta span,
+  .overview-source-links a,
+  .overview-project-links a {
+    min-height: 1.34rem;
+    padding: 0.18rem 0.34rem;
+    font-size: 0.5rem;
   }
 }
 
