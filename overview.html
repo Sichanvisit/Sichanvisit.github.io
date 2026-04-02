@@ -13,6 +13,39 @@ permalink: /
 {% assign cfd = site.portfolio | where: "title", "CFD" | first %}
 
 <div class="overview-page">
+  <div class="overview-mobile-controls" aria-label="Mobile overview navigation">
+    <button
+      type="button"
+      class="drawer-toggle-btn overview-drawer-toggle"
+      id="overview-drawer-toggle"
+      aria-controls="overview-contents-drawer-mobile"
+      aria-expanded="false"
+    >
+      Contents
+    </button>
+  </div>
+
+  <button
+    type="button"
+    id="overview-drawer-backdrop"
+    class="drawer-backdrop overview-drawer-backdrop"
+    aria-label="Close contents"
+  ></button>
+
+  <aside id="overview-contents-drawer-mobile" class="overview-mobile-drawer" aria-label="Overview contents">
+    <div class="drawer-header">
+      <p class="overview-mobile-drawer-title">Contents</p>
+      <button type="button" class="drawer-close" id="overview-drawer-close" aria-label="Close contents">Close</button>
+    </div>
+    <nav class="overview-anchor-links overview-mobile-drawer-nav" aria-label="Overview jump links">
+      <a href="#what-i-can-do">What I Can Do</a>
+      <a href="#featured-projects">Featured Work</a>
+      <a href="#experience-bridge">Experience Bridge</a>
+      <a href="#contact-links">Links</a>
+      <a href="#research-sources">Research Sources</a>
+    </nav>
+  </aside>
+
   <nav class="overview-mobile-nav overview-anchor-links" aria-label="Mobile section tabs">
     <a href="#what-i-can-do">할 수 있는 일</a>
     <a href="#featured-projects">대표 프로젝트</a>
@@ -331,3 +364,54 @@ permalink: /
     </div>
   </section>
 </div>
+
+<script>
+  (function () {
+    var toggle = document.getElementById("overview-drawer-toggle");
+    var close = document.getElementById("overview-drawer-close");
+    var drawer = document.getElementById("overview-contents-drawer-mobile");
+    var backdrop = document.getElementById("overview-drawer-backdrop");
+    var body = document.body;
+
+    if (!toggle || !close || !drawer || !backdrop) return;
+
+    function setExpanded(isOpen) {
+      toggle.setAttribute("aria-expanded", String(isOpen));
+    }
+
+    function closeDrawer() {
+      drawer.classList.remove("is-open");
+      backdrop.classList.remove("is-open");
+      body.classList.remove("drawer-open");
+      setExpanded(false);
+    }
+
+    function openDrawer() {
+      drawer.classList.add("is-open");
+      backdrop.classList.add("is-open");
+      body.classList.add("drawer-open");
+      setExpanded(true);
+    }
+
+    toggle.addEventListener("click", function () {
+      if (drawer.classList.contains("is-open")) {
+        closeDrawer();
+        return;
+      }
+      openDrawer();
+    });
+
+    close.addEventListener("click", closeDrawer);
+    backdrop.addEventListener("click", closeDrawer);
+
+    drawer.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", closeDrawer);
+    });
+
+    window.addEventListener("resize", function () {
+      if (window.innerWidth > 900) {
+        closeDrawer();
+      }
+    });
+  })();
+</script>
