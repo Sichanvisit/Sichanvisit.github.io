@@ -42,7 +42,24 @@ permalink: /
     </div>
     <nav class="overview-anchor-links overview-mobile-drawer-nav" aria-label="Overview jump links">
       <a href="#what-i-can-do">What I Can Do</a>
-      <a href="#featured-projects">Featured Work</a>
+      <div class="overview-nav-group overview-nav-group--featured">
+        <div class="overview-nav-group-row">
+          <a class="overview-nav-group-link" href="#featured-projects">Featured Work</a>
+          <button
+            type="button"
+            class="overview-nav-group-toggle"
+            data-overview-subnav-toggle
+            aria-expanded="false"
+            aria-controls="overview-mobile-project-sublinks"
+            aria-label="Toggle featured project links"
+          ></button>
+        </div>
+        <div class="overview-nav-sublinks" id="overview-mobile-project-sublinks" hidden>
+          <a href="#featured-project-obsidian">Obsidian RAG</a>
+          <a href="#featured-project-advanced">Generative Pipeline</a>
+          <a href="#featured-project-cfd">CFD Trading</a>
+        </div>
+      </div>
       <a href="#experience-bridge">Experience Bridge</a>
       <a href="#data-analysis">Research Basis</a>
       <a href="#contact-links">Links</a>
@@ -90,7 +107,24 @@ permalink: /
     <p class="overview-side-label">Contents</p>
     <nav class="overview-anchor-links overview-side-nav" aria-label="Jump links">
       <a href="#what-i-can-do">할 수 있는 일</a>
-      <a href="#featured-projects">대표 프로젝트</a>
+      <div class="overview-nav-group overview-nav-group--featured">
+        <div class="overview-nav-group-row">
+          <a class="overview-nav-group-link" href="#featured-projects">대표 프로젝트</a>
+          <button
+            type="button"
+            class="overview-nav-group-toggle"
+            data-overview-subnav-toggle
+            aria-expanded="false"
+            aria-controls="overview-side-project-sublinks"
+            aria-label="대표 프로젝트 하위 링크 토글"
+          ></button>
+        </div>
+        <div class="overview-nav-sublinks" id="overview-side-project-sublinks" hidden>
+          <a href="#featured-project-obsidian">Obsidian RAG</a>
+          <a href="#featured-project-advanced">생성 시스템</a>
+          <a href="#featured-project-cfd">CFD Trading</a>
+        </div>
+      </div>
       <a href="#experience-bridge">경험 연결</a>
       <a href="#contact-links">링크</a>
       <a href="#research-sources">자료 추적</a>
@@ -150,7 +184,7 @@ permalink: /
     </div>
 
     <div class="overview-project-grid">
-      <article class="overview-project-card overview-project-card--hero">
+      <article class="overview-project-card overview-project-card--hero" id="featured-project-obsidian">
         <div class="overview-project-topline">
           <span>Personal Project</span>
           <span>Plugin · Workspace</span>
@@ -168,7 +202,7 @@ permalink: /
         </ul>
         <div class="overview-project-links">
           {% if obsidian_v2 %}
-          <a href="{{ obsidian_v2.url | relative_url }}">Case Study</a>
+          <a href="{{ obsidian_v2.url | relative_url }}">프로젝트 보기</a>
           {% endif %}
           {% if obsidian_v2 and obsidian_v2.github_url %}
           <a href="{{ obsidian_v2.github_url }}">GitHub</a>
@@ -176,7 +210,7 @@ permalink: /
         </div>
       </article>
 
-      <article class="overview-project-card overview-project-card--rag">
+      <article class="overview-project-card overview-project-card--rag" id="featured-project-advanced">
         <div class="overview-project-topline">
           <span>Team Project</span>
           <span>Generative AI</span>
@@ -194,7 +228,7 @@ permalink: /
         </ul>
         <div class="overview-project-links">
           {% if advanced %}
-          <a href="{{ advanced.url | relative_url }}">Case Study</a>
+          <a href="{{ advanced.url | relative_url }}">프로젝트 보기</a>
           {% endif %}
           {% if advanced and advanced.github_url %}
           <a href="{{ advanced.github_url }}">GitHub</a>
@@ -202,7 +236,7 @@ permalink: /
         </div>
       </article>
 
-      <article class="overview-project-card overview-project-card--ops">
+      <article class="overview-project-card overview-project-card--ops" id="featured-project-cfd">
         <div class="overview-project-topline">
           <span>Personal Project</span>
           <span>Trading Data · Ops</span>
@@ -220,7 +254,7 @@ permalink: /
         </ul>
         <div class="overview-project-links">
           {% if cfd %}
-          <a href="{{ cfd.url | relative_url }}">Case Study</a>
+          <a href="{{ cfd.url | relative_url }}">프로젝트 보기</a>
           {% endif %}
           {% if cfd and cfd.github_url %}
           <a href="{{ cfd.github_url }}">GitHub</a>
@@ -228,7 +262,9 @@ permalink: /
         </div>
       </article>
     </div>
+  </section>
 
+  <div class="overview-project-story-shell">
     <div class="overview-project-story-trigger-wrap">
       <button class="overview-project-toggle overview-project-toggle--deck" type="button" id="overview-project-story-toggle" aria-expanded="false" aria-controls="overview-project-story-stage">
         9장 스토리 펼치기
@@ -327,7 +363,7 @@ permalink: /
         </div>
       </section>
     </div>
-  </section>
+  </div>
 
   <section class="overview-slide" id="experience-bridge">
     <div class="overview-section-heading">
@@ -664,6 +700,22 @@ permalink: /
         }
       });
     }
+
+    var subnavToggles = Array.prototype.slice.call(document.querySelectorAll("[data-overview-subnav-toggle]"));
+
+    subnavToggles.forEach(function (button) {
+      var targetId = button.getAttribute("aria-controls");
+      var target = targetId ? document.getElementById(targetId) : null;
+
+      if (!target) return;
+
+      button.addEventListener("click", function () {
+        var isExpanded = button.getAttribute("aria-expanded") === "true";
+        button.setAttribute("aria-expanded", String(!isExpanded));
+        button.classList.toggle("is-open", !isExpanded);
+        target.hidden = isExpanded;
+      });
+    });
 
     var storyStage = document.getElementById("overview-project-story-stage");
     var storyToggle = document.getElementById("overview-project-story-toggle");
