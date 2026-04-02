@@ -1864,6 +1864,87 @@ a {
   display: none;
 }
 
+.overview-slide--analysis .overview-section-heading {
+  align-items: flex-start;
+}
+
+.overview-slide--analysis .overview-section-heading h2 {
+  margin-top: 0.08rem;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: clamp(1.34rem, 1.92vw, 1.82rem);
+  font-weight: 700;
+  line-height: 1.24;
+  letter-spacing: -0.025em;
+  max-width: 22ch;
+}
+
+.overview-slide--analysis .overview-kicker,
+.overview-slide--analysis .overview-bridge-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.09em;
+}
+
+.overview-slide--analysis .overview-link-panel {
+  padding: 0.94rem 1rem 0.98rem;
+}
+
+.overview-slide--analysis .overview-link-panel h3 {
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.48;
+  letter-spacing: -0.015em;
+  max-width: 44rem;
+}
+
+.overview-slide--analysis .overview-link-panel p {
+  font-size: 0.86rem;
+  line-height: 1.66;
+  max-width: 56rem;
+}
+
+.overview-slide--analysis .overview-link-meta {
+  gap: 0.4rem;
+  margin-top: 0.76rem;
+}
+
+.overview-slide--analysis .overview-link-meta span {
+  min-height: 1.68rem;
+  padding: 0.24rem 0.58rem;
+  font-size: 0.7rem;
+}
+
+.overview-slide--analysis .overview-source-card {
+  padding: 0.86rem 0.88rem;
+}
+
+.overview-slide--analysis .overview-source-card strong {
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 0.92rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.015em;
+  word-break: keep-all;
+}
+
+.overview-slide--analysis .overview-source-summary {
+  font-size: 0.79rem;
+  line-height: 1.62;
+  min-height: 0;
+}
+
+.overview-slide--analysis .overview-source-links {
+  gap: 0.38rem;
+  padding-top: 0.72rem;
+}
+
+.overview-slide--analysis .overview-source-links a {
+  min-height: 1.72rem;
+  padding: 0.26rem 0.52rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
 .overview-side-rail {
   grid-column: 1;
   width: 100%;
@@ -4064,6 +4145,11 @@ a {
     font-size: 1.08rem;
   }
 
+  .overview-slide--analysis .overview-section-heading h2 {
+    font-size: 1rem;
+    line-height: 1.22;
+  }
+
   .overview-kicker,
   .overview-bridge-label,
   .overview-project-topline span,
@@ -4128,6 +4214,12 @@ a {
     line-height: 1.44;
   }
 
+  .overview-slide--analysis .overview-link-panel p,
+  .overview-slide--analysis .overview-source-summary {
+    font-size: 0.63rem;
+    line-height: 1.42;
+  }
+
   .overview-capability-card h3,
   .overview-project-card h3,
   .overview-bridge-card h3,
@@ -4135,6 +4227,12 @@ a {
   .overview-link-panel h3,
   .overview-source-card strong {
     font-size: 0.76rem;
+    line-height: 1.24;
+  }
+
+  .overview-slide--analysis .overview-link-panel h3,
+  .overview-slide--analysis .overview-source-card strong {
+    font-size: 0.72rem;
     line-height: 1.24;
   }
 
@@ -4165,6 +4263,13 @@ a {
     min-height: 1.55rem;
     padding: 0.24rem 0.5rem;
     font-size: 0.58rem;
+  }
+
+  .overview-slide--analysis .overview-link-meta span,
+  .overview-slide--analysis .overview-source-links a {
+    min-height: 1.42rem;
+    padding: 0.2rem 0.42rem;
+    font-size: 0.54rem;
   }
 }
 
@@ -4261,6 +4366,11 @@ a {
     font-size: 0.92rem;
   }
 
+  .overview-slide--analysis .overview-section-heading h2 {
+    font-size: 0.84rem;
+    line-height: 1.2;
+  }
+
   .overview-capability-grid,
   .overview-project-grid,
   .overview-bridge-grid,
@@ -4294,6 +4404,12 @@ a {
     line-height: 1.34;
   }
 
+  .overview-slide--analysis .overview-link-panel p,
+  .overview-slide--analysis .overview-source-summary {
+    font-size: 0.55rem;
+    line-height: 1.34;
+  }
+
   .overview-capability-card h3,
   .overview-project-card h3,
   .overview-bridge-card h3,
@@ -4301,6 +4417,12 @@ a {
   .overview-link-panel h3,
   .overview-source-card strong {
     font-size: 0.66rem;
+    line-height: 1.18;
+  }
+
+  .overview-slide--analysis .overview-link-panel h3,
+  .overview-slide--analysis .overview-source-card strong {
+    font-size: 0.62rem;
     line-height: 1.18;
   }
 
@@ -4333,6 +4455,13 @@ a {
     min-height: 1.34rem;
     padding: 0.18rem 0.34rem;
     font-size: 0.5rem;
+  }
+
+  .overview-slide--analysis .overview-link-meta span,
+  .overview-slide--analysis .overview-source-links a {
+    min-height: 1.24rem;
+    padding: 0.14rem 0.3rem;
+    font-size: 0.46rem;
   }
 }
 
