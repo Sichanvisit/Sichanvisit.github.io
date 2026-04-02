@@ -267,101 +267,90 @@ permalink: /
   <div class="overview-project-story-shell">
     <div class="overview-project-story-trigger-wrap">
       <button class="overview-project-toggle overview-project-toggle--deck" type="button" id="overview-project-story-toggle" aria-expanded="false" aria-controls="overview-project-story-stage">
-        9장 스토리 펼치기
+        펼치기
       </button>
     </div>
 
     <div class="overview-project-story-stage" id="overview-project-story-stage" hidden>
-      <section class="overview-project-story-panel">
-        <div class="overview-project-story-intro">
-          <div>
-            <p class="overview-project-story-kicker">Featured Work Storyboard</p>
-            <h3>대표 프로젝트 아래에 문제, 접근, 결과를 3개씩 붙여서 보는 9장짜리 하위 콘텐츠입니다</h3>
-            <p>위쪽 카드는 프로젝트 요약이고, 아래쪽은 발표 자료처럼 각 프로젝트의 핵심 흐름을 3단계로 바로 이어서 보게 한 구조입니다.</p>
+      <div class="overview-project-story-board">
+        <section class="overview-project-story-cluster overview-project-story-cluster--hero">
+          <div class="overview-project-story-heading">
+            <p class="overview-project-story-group">Obsidian RAG</p>
+            <strong>현재 문서 중심으로 읽기와 실행이 이어지는 로컬 지식 워크스페이스</strong>
           </div>
-          <button class="overview-project-story-close" type="button" id="overview-project-story-close" aria-label="Close project story">접기</button>
-        </div>
+          <div class="overview-project-story-stack">
+            <article class="overview-project-story-card">
+              <p class="overview-project-story-label">01 Problem</p>
+              <strong>검색은 되지만 지금 문맥에 맞는 다음 행동이 보이지 않았습니다</strong>
+              <p>현재 문서를 기준으로 관련 노트, 근거, 다음 액션을 한 번에 보여주는 구조가 필요했습니다.</p>
+            </article>
 
-        <div class="overview-project-story-board">
-          <section class="overview-project-story-cluster overview-project-story-cluster--hero">
-            <div class="overview-project-story-heading">
-              <p class="overview-project-story-group">Obsidian RAG</p>
-              <strong>문서형 RAG를 현재 작업 맥락 중심의 지식 워크스페이스로 확장</strong>
-            </div>
-            <div class="overview-project-story-stack">
-              <article class="overview-project-story-card">
-                <p class="overview-project-story-label">01 Problem</p>
-                <strong>검색 결과는 나오지만 지금 읽는 노트와 다음 액션까지 이어지지 않았습니다</strong>
-                <p>현재 문서 기준으로 무엇을 더 읽고 무엇을 바로 실행할지 한 흐름으로 보여주는 구조가 필요했습니다.</p>
-              </article>
+            <article class="overview-project-story-card">
+              <p class="overview-project-story-label">02 Approach</p>
+              <strong>현재 노트 문맥과 relation-aware retrieval를 같은 인터페이스로 묶었습니다</strong>
+              <p>플러그인 클라이언트와 Ops를 분리하고, relation runtime으로 연결 노트를 함께 가져오도록 설계했습니다.</p>
+            </article>
 
-              <article class="overview-project-story-card">
-                <p class="overview-project-story-label">02 Approach</p>
-                <strong>현재 노트 문맥과 relation-aware retrieval, 추천 액션을 한 화면으로 묶었습니다</strong>
-                <p>플러그인 메인 클라이언트와 Streamlit Ops를 나누고, relation runtime으로 현재 문서 주변의 연결 노트를 함께 가져오도록 설계했습니다.</p>
-              </article>
+            <article class="overview-project-story-card">
+              <p class="overview-project-story-label">03 Outcome</p>
+              <strong>답변형 도구가 아니라 작업형 지식 워크스페이스로 정리했습니다</strong>
+              <p>답변, 근거 문서, 추천 문서, 다음 액션이 같은 작업 흐름 안에서 이어지도록 만들었습니다.</p>
+            </article>
+          </div>
+        </section>
 
-              <article class="overview-project-story-card">
-                <p class="overview-project-story-label">03 Outcome</p>
-                <strong>검색 도구보다 작업형 지식 워크스페이스에 가까운 구조로 정리했습니다</strong>
-                <p>답변, 근거 문서, 추천 문서, 다음 액션이 같은 작업 맥락 안에서 이어지도록 설명할 수 있게 됐습니다.</p>
-              </article>
-            </div>
-          </section>
+        <section class="overview-project-story-cluster overview-project-story-cluster--rag">
+          <div class="overview-project-story-heading">
+            <p class="overview-project-story-group">Generative Pipeline</p>
+            <strong>생성 이후 수정과 재실행까지 고려한 제작 파이프라인</strong>
+          </div>
+          <div class="overview-project-story-stack">
+            <article class="overview-project-story-card">
+              <p class="overview-project-story-label">01 Problem</p>
+              <strong>부분 수정이 생겨도 전체를 다시 돌려야 하는 구조였습니다</strong>
+              <p>상세페이지 제작은 한 장만 고치는 경우가 많아 단계별 재실행이 가능한 흐름이 필요했습니다.</p>
+            </article>
 
-          <section class="overview-project-story-cluster overview-project-story-cluster--rag">
-            <div class="overview-project-story-heading">
-              <p class="overview-project-story-group">Generative Pipeline</p>
-              <strong>원샷 생성이 아니라 수정 가능하고 운영 가능한 제작 파이프라인으로 재설계</strong>
-            </div>
-            <div class="overview-project-story-stack">
-              <article class="overview-project-story-card">
-                <p class="overview-project-story-label">01 Problem</p>
-                <strong>부분 수정이 생겨도 전체를 다시 돌려야 해서 생성 비용과 실패 리스크가 컸습니다</strong>
-                <p>상세페이지 제작은 한 장만 바꾸고 싶은 경우가 많아 단계별 책임 분리와 재실행 구조가 중요했습니다.</p>
-              </article>
+            <article class="overview-project-story-card">
+              <p class="overview-project-story-label">02 Approach</p>
+              <strong>Director와 5-stage 파이프라인으로 책임을 분리했습니다</strong>
+              <p>기획, 배경 생성, 업스케일, 보정, 광고 조합을 나누고 failover와 페이지 단위 regenerate를 넣었습니다.</p>
+            </article>
 
-              <article class="overview-project-story-card">
-                <p class="overview-project-story-label">02 Approach</p>
-                <strong>Director 중심 오케스트레이션과 5-stage 파이프라인으로 책임을 나눴습니다</strong>
-                <p>기획, 배경 생성, 업스케일, 보정, 광고 조합을 분리하고 failover와 페이지 단위 regenerate 경로를 넣었습니다.</p>
-              </article>
+            <article class="overview-project-story-card">
+              <p class="overview-project-story-label">03 Outcome</p>
+              <strong>결과물보다 운영 가능한 생성 시스템 설계 경험으로 정리했습니다</strong>
+              <p>단일 모델 성능보다 생성 이후 수정과 재시도를 다루는 구조 자체가 핵심 결과가 됐습니다.</p>
+            </article>
+          </div>
+        </section>
 
-              <article class="overview-project-story-card">
-                <p class="overview-project-story-label">03 Outcome</p>
-                <strong>결과물보다도 수정 가능하고 운영 가능한 생성 시스템이라는 점이 핵심이 됐습니다</strong>
-                <p>단일 모델 성능보다, 생성 이후의 수정과 재시도를 포함한 실제 제작 파이프라인 설계 경험으로 정리됩니다.</p>
-              </article>
-            </div>
-          </section>
+        <section class="overview-project-story-cluster overview-project-story-cluster--ops">
+          <div class="overview-project-story-heading">
+            <p class="overview-project-story-group">CFD Trading System</p>
+            <strong>데이터, 판단, 운영 화면을 하나의 분석 흐름으로 연결</strong>
+          </div>
+          <div class="overview-project-story-stack">
+            <article class="overview-project-story-card">
+              <p class="overview-project-story-label">01 Problem</p>
+              <strong>데이터와 판단 근거, 운영 화면이 분리되면 설명과 검증이 어려웠습니다</strong>
+              <p>수집, 해석, 확인 화면이 따로 움직이면 실제 의사결정 근거를 추적하기가 어려웠습니다.</p>
+            </article>
 
-          <section class="overview-project-story-cluster overview-project-story-cluster--ops">
-            <div class="overview-project-story-heading">
-              <p class="overview-project-story-group">CFD Trading System</p>
-              <strong>데이터, 판단 로직, 운영 화면을 하나의 설명 가능한 분석 흐름으로 묶음</strong>
-            </div>
-            <div class="overview-project-story-stack">
-              <article class="overview-project-story-card">
-                <p class="overview-project-story-label">01 Problem</p>
-                <strong>시장 데이터와 판단 근거, 운영 화면이 분리되면 검증과 설명이 어려워집니다</strong>
-                <p>데이터 수집, 판단 로직, 운영 확인이 따로 움직이면 실제 의사결정 근거를 추적하기가 힘들어집니다.</p>
-              </article>
+            <article class="overview-project-story-card">
+              <p class="overview-project-story-label">02 Approach</p>
+              <strong>정규화 파이프라인과 상태 해석 레이어를 중심으로 다시 묶었습니다</strong>
+              <p>Market·MT5 데이터를 정규화하고 상태 해석을 기준으로 규칙 판단, ML 보조, 운영 API를 연결했습니다.</p>
+            </article>
 
-              <article class="overview-project-story-card">
-                <p class="overview-project-story-label">02 Approach</p>
-                <strong>정규화 파이프라인과 상태 해석 레이어를 기준으로 전체 시스템을 다시 묶었습니다</strong>
-                <p>Market, MT5 데이터를 정규화하고 상태 해석을 중심으로 규칙 기반 판단, ML 보조, 운영 API를 연결했습니다.</p>
-              </article>
-
-              <article class="overview-project-story-card">
-                <p class="overview-project-story-label">03 Outcome</p>
-                <strong>예측 모델 하나보다 데이터부터 운영 화면까지 이어지는 분석 시스템으로 설명할 수 있게 됐습니다</strong>
-                <p>같은 데이터를 분석, 판단, API, 대시보드에서 재사용하며 실제 운영 화면에서 근거를 함께 보여줄 수 있게 됐습니다.</p>
-              </article>
-            </div>
-          </section>
-        </div>
-      </section>
+            <article class="overview-project-story-card">
+              <p class="overview-project-story-label">03 Outcome</p>
+              <strong>예측 모델보다 설명 가능한 트레이딩 분석 시스템으로 정리했습니다</strong>
+              <p>같은 데이터를 분석, 판단, API, 대시보드에서 재사용하며 운영 화면에서 근거를 함께 보여줄 수 있게 됐습니다.</p>
+            </article>
+          </div>
+        </section>
+      </div>
     </div>
   </div>
 
@@ -719,20 +708,21 @@ permalink: /
 
     var storyStage = document.getElementById("overview-project-story-stage");
     var storyToggle = document.getElementById("overview-project-story-toggle");
-    var storyClose = document.getElementById("overview-project-story-close");
 
-    if (!storyStage || !storyToggle || !storyClose) return;
+    if (!storyStage || !storyToggle) return;
 
     function closeStoryStage() {
       storyStage.hidden = true;
       storyToggle.classList.remove("is-active");
       storyToggle.setAttribute("aria-expanded", "false");
+      storyToggle.textContent = "펼치기";
     }
 
     function openStoryStage() {
       storyStage.hidden = false;
       storyToggle.classList.add("is-active");
       storyToggle.setAttribute("aria-expanded", "true");
+      storyToggle.textContent = "접기";
 
       if (typeof storyStage.scrollIntoView === "function") {
         storyStage.scrollIntoView({ behavior: "smooth", block: "nearest" });
@@ -747,7 +737,5 @@ permalink: /
 
       closeStoryStage();
     });
-
-    storyClose.addEventListener("click", closeStoryStage);
   })();
 </script>
