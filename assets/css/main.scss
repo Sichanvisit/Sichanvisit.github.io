@@ -1860,6 +1860,10 @@ a {
   font-size: 0.78rem;
 }
 
+.overview-slide--analysis-legacy {
+  display: none;
+}
+
 .overview-side-rail {
   grid-column: 1;
   width: 100%;
@@ -1888,6 +1892,13 @@ a {
   justify-content: flex-start;
   margin-top: -0.1rem;
 }
+
+.overview-side-nav a[href="#what-i-can-do"] { order: 1; }
+.overview-side-nav a[href="#featured-projects"] { order: 2; }
+.overview-side-nav a[href="#experience-bridge"] { order: 3; }
+.overview-side-nav a[href="#data-analysis"] { order: 4; }
+.overview-side-nav a[href="#contact-links"] { order: 5; }
+.overview-side-nav a[href="#research-sources"] { order: 6; }
 
 .overview-anchor-links a,
 .overview-project-links a {

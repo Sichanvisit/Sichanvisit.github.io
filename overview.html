@@ -11,6 +11,9 @@ permalink: /
 {% assign advanced = site.portfolio | where: "title", "Advanced Project" | first %}
 {% assign obsidian_v2 = site.portfolio | where: "title", "Obsidian RAG V2" | first %}
 {% assign cfd = site.portfolio | where: "title", "CFD" | first %}
+{% assign ml_archive = site.research | where: "title", "Machine Learning Sprint Archive" | first %}
+{% assign research_map = site.research | where: "title", "AI Engineering Research Map" | first %}
+{% assign vision_track = site.research | where: "title", "Deep Learning Vision Track" | first %}
 
 <div class="overview-page">
   <div class="overview-mobile-controls" aria-label="Mobile overview navigation">
@@ -41,6 +44,7 @@ permalink: /
       <a href="#what-i-can-do">What I Can Do</a>
       <a href="#featured-projects">Featured Work</a>
       <a href="#experience-bridge">Experience Bridge</a>
+      <a href="#data-analysis">Research Basis</a>
       <a href="#contact-links">Links</a>
       <a href="#research-sources">Research Sources</a>
     </nav>
@@ -90,6 +94,7 @@ permalink: /
       <a href="#experience-bridge">경험 연결</a>
       <a href="#contact-links">링크</a>
       <a href="#research-sources">자료 추적</a>
+      <a href="#data-analysis">Research Basis</a>
     </nav>
   </aside>
 
@@ -259,9 +264,156 @@ permalink: /
     </div>
   </section>
 
-  <section class="overview-slide overview-slide--links" id="contact-links">
+  <section class="overview-slide overview-slide--analysis" id="data-analysis">
     <div class="overview-section-heading">
       <span class="overview-section-number">04</span>
+      <div>
+        <p class="overview-kicker">Research-Based Analysis</p>
+        <h2>Research에 쌓아둔 기준으로 데이터를 분석합니다</h2>
+      </div>
+    </div>
+
+    <div class="overview-link-panel overview-link-panel--sources">
+      <p class="overview-bridge-label">Research Foundation</p>
+      <h3>이 설명은 research 섹션에 쌓인 노트를 바탕으로 다시 묶은 분석 흐름입니다</h3>
+      <p>
+        여기서 말하는 데이터 분석 방식은 새로 덧붙인 소개 문장이 아니라, 네가 이미 정리해 둔 research 아카이브에서
+        반복적으로 드러난 기준을 다시 꺼내어 보이게 한 것입니다. 문제를 정의하고, 데이터 표현을 정하고, 지표를 고르고,
+        실패 케이스를 기록한 뒤, 그 결과를 다시 읽히는 자료로 정리하는 흐름이 portfolio 프로젝트에도 그대로 이어집니다.
+      </p>
+      <div class="overview-link-meta">
+        <span>Research Note -&gt; Project</span>
+        <span>Metric -&gt; Error Pattern</span>
+        <span>Archive -&gt; Design Decision</span>
+      </div>
+    </div>
+
+    <div class="overview-source-groups overview-source-groups--three">
+      <article class="overview-source-card">
+        <strong>ML Sprint Archive에서 지표 중심 분석 기준을 만들었습니다</strong>
+        <p class="overview-source-summary">
+          Machine Learning Sprint Archive에 쌓인 회귀, 분류 실험은 어떤 모델을 썼는지보다 어떤 지표를 먼저 볼지 정하는
+          기준을 남깁니다. RMSLE, Recall, F1, ROC-AUC처럼 문제마다 실패를 읽는 기준이 다르다는 점이 이후 프로젝트의
+          baseline 판단 방식으로 이어졌습니다.
+        </p>
+        <div class="overview-source-links">
+          {% if ml_archive %}
+          <a href="{{ ml_archive.url | relative_url }}">ML Sprint</a>
+          {% endif %}
+          {% if research_map %}
+          <a href="{{ research_map.url | relative_url }}">Research Map</a>
+          {% endif %}
+        </div>
+      </article>
+
+      <article class="overview-source-card">
+        <strong>문서형 데이터는 research note 기준으로 표현을 다시 설계합니다</strong>
+        <p class="overview-source-summary">
+          Korean Document Table RAG와 Beyond RAG 노트에서는 raw text를 그대로 넣기보다 table, summary, metadata를
+          나눠 retrieval-friendly representation으로 바꾸는 관점이 반복됩니다. 그래서 문서형 프로젝트도 수집보다
+          표현 재구성과 근거 보존을 먼저 생각하는 구조로 연결됩니다.
+        </p>
+        <div class="overview-source-links">
+          <a href="{{ '/research/2026-03-31-korean-document-table-rag/' | relative_url }}">Document RAG</a>
+          <a href="{{ '/research/2026-03-31-beyond-rag-task-aware-memory/' | relative_url }}">Beyond RAG</a>
+        </div>
+      </article>
+
+      <article class="overview-source-card">
+        <strong>Research Map과 Track Archive가 정리 방식의 기준이 됩니다</strong>
+        <p class="overview-source-summary">
+          실험 로그를 단순히 쌓지 않고 Research Map, Deep Learning Vision Track처럼 주제, 실패 포인트, 다음 실험으로
+          다시 묶는 방식이 분석 정리의 뼈대가 됩니다. 그래서 research는 기록 보관함이 아니라 다음 프로젝트 설계 자료로
+          바로 이어지는 기반이 됩니다.
+        </p>
+        <div class="overview-source-links">
+          {% if research_map %}
+          <a href="{{ research_map.url | relative_url }}">Research Map</a>
+          {% endif %}
+          {% if vision_track %}
+          <a href="{{ vision_track.url | relative_url }}">DL Track</a>
+          {% endif %}
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="overview-slide overview-slide--analysis overview-slide--analysis-legacy" id="data-analysis-legacy">
+    <div class="overview-section-heading">
+      <span class="overview-section-number">04</span>
+      <div>
+        <p class="overview-kicker">How I Analyze Data</p>
+        <h2>데이터를 이렇게 분석하고 정리합니다</h2>
+      </div>
+    </div>
+
+    <div class="overview-link-panel overview-link-panel--sources">
+      <p class="overview-bridge-label">ML Workflow</p>
+      <h3>모델보다 먼저 데이터 단위, 지표, 실패 케이스를 정리합니다</h3>
+      <p>
+        회귀, 분류, 문서형 RAG를 같은 방식으로 다루지 않습니다. 먼저 예측 대상과 입력 표현을 정의하고, EDA로 변수와
+        구조를 확인한 뒤, 문제에 맞는 지표와 오류 패턴을 기준으로 다음 실험을 설계합니다. 그 과정은 노트와 포트폴리오에
+        다시 정리해 다음 프로젝트의 판단 근거로 이어갑니다.
+      </p>
+      <div class="overview-link-meta">
+        <span>EDA -&gt; Feature -&gt; Metric</span>
+        <span>Raw + Summary + Metadata</span>
+        <span>Error Note -&gt; Next Experiment</span>
+      </div>
+    </div>
+
+    <div class="overview-source-groups overview-source-groups--three">
+      <article class="overview-source-card">
+        <strong>질문과 지표를 먼저 정의합니다</strong>
+        <p class="overview-source-summary">
+          문제 유형에 맞는 기준이 먼저 정해져야 실험이 흔들리지 않습니다. 회귀에서는 RMSLE 같은 오차 기준을, 불균형
+          분류에서는 Recall, F1, ROC-AUC처럼 놓치면 안 되는 실패 패턴을 먼저 보고 baseline과 feature를 조정합니다.
+        </p>
+        <div class="overview-source-links">
+          {% if ml_archive %}
+          <a href="{{ ml_archive.url | relative_url }}">ML Sprint</a>
+          {% endif %}
+          {% if cfd %}
+          <a href="{{ cfd.url | relative_url }}">CFD Case</a>
+          {% endif %}
+        </div>
+      </article>
+
+      <article class="overview-source-card">
+        <strong>데이터 표현을 다시 설계합니다</strong>
+        <p class="overview-source-summary">
+          문서형 데이터는 수집보다 표현 방식이 더 중요합니다. 원문, 요약, 표, 메타데이터를 분리하고 retrieval-friendly
+          representation으로 재구성해 검색 품질과 응답 근거를 함께 잡습니다.
+        </p>
+        <div class="overview-source-links">
+          <a href="{{ '/research/2026-03-31-korean-document-table-rag/' | relative_url }}">Document RAG</a>
+          {% if obsidian_v2 %}
+          <a href="{{ obsidian_v2.url | relative_url }}">Obsidian RAG</a>
+          {% endif %}
+        </div>
+      </article>
+
+      <article class="overview-source-card">
+        <strong>실험 로그를 다시 읽히는 자료로 정리합니다</strong>
+        <p class="overview-source-summary">
+          결과만 남기지 않고, 어떤 데이터와 지표를 썼는지, 무엇이 실패했고 왜 다음 실험으로 넘어갔는지를 research map과
+          track archive로 다시 묶습니다. 그래서 학습 기록이 바로 다음 프로젝트의 설계 자료가 됩니다.
+        </p>
+        <div class="overview-source-links">
+          {% if research_map %}
+          <a href="{{ research_map.url | relative_url }}">Research Map</a>
+          {% endif %}
+          {% if vision_track %}
+          <a href="{{ vision_track.url | relative_url }}">DL Track</a>
+          {% endif %}
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="overview-slide overview-slide--links" id="contact-links">
+    <div class="overview-section-heading">
+      <span class="overview-section-number">05</span>
       <div>
         <p class="overview-kicker">Links</p>
         <h2>바로 확인할 수 있는 링크</h2>
@@ -311,7 +463,7 @@ permalink: /
 
   <section class="overview-slide overview-slide--sources" id="research-sources">
     <div class="overview-section-heading">
-      <span class="overview-section-number">05</span>
+      <span class="overview-section-number">06</span>
       <div>
         <p class="overview-kicker">Research Sources</p>
         <h2>계속 추적하는 자료</h2>
