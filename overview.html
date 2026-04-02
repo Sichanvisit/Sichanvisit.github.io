@@ -173,6 +173,9 @@ permalink: /
           {% if obsidian_v2 and obsidian_v2.github_url %}
           <a href="{{ obsidian_v2.github_url }}">GitHub</a>
           {% endif %}
+          <button class="overview-project-toggle" type="button" data-story-target="obsidian" aria-expanded="false" aria-controls="overview-project-story-obsidian">
+            3장 보기
+          </button>
         </div>
       </article>
 
@@ -199,6 +202,9 @@ permalink: /
           {% if advanced and advanced.github_url %}
           <a href="{{ advanced.github_url }}">GitHub</a>
           {% endif %}
+          <button class="overview-project-toggle" type="button" data-story-target="advanced" aria-expanded="false" aria-controls="overview-project-story-advanced">
+            3장 보기
+          </button>
         </div>
       </article>
 
@@ -225,8 +231,142 @@ permalink: /
           {% if cfd and cfd.github_url %}
           <a href="{{ cfd.github_url }}">GitHub</a>
           {% endif %}
+          <button class="overview-project-toggle" type="button" data-story-target="cfd" aria-expanded="false" aria-controls="overview-project-story-cfd">
+            3장 보기
+          </button>
         </div>
       </article>
+    </div>
+
+    <div class="overview-project-story-stage" id="overview-project-story-stage" hidden>
+      <section class="overview-project-story-panel overview-project-story-panel--hero" id="overview-project-story-obsidian" data-story-panel="obsidian" hidden>
+        <div class="overview-project-story-intro">
+          <div>
+            <p class="overview-project-story-kicker">Obsidian RAG Story</p>
+            <h3>현재 노트 문맥 안에서 바로 답을 찾고 다음 액션까지 이어지게 만들고 싶었습니다</h3>
+            <p>검색 결과만 보여주는 RAG가 아니라, 현재 문서와 연결된 관계와 후속 행동까지 Obsidian 안에서 이어지는 워크스페이스를 목표로 했습니다.</p>
+          </div>
+          <button class="overview-project-story-close" type="button" data-story-close aria-label="Close project story">닫기</button>
+        </div>
+
+        <div class="overview-project-story-deck">
+          <article class="overview-project-story-card">
+            <p class="overview-project-story-label">01 Problem</p>
+            <strong>노트는 쌓였는데 현재 문서 기준으로 무엇을 읽고 무엇을 할지 바로 보이지 않았습니다</strong>
+            <p>단순 검색은 조각난 결과를 잘 찾지만, 지금 보고 있는 노트와 연결된 맥락과 우선순위를 한 번에 보여주기에는 부족했습니다.</p>
+            <ul>
+              <li>현재 노트와 관련 노트 사이의 관계를 같이 읽어야 했습니다.</li>
+              <li>답변 뒤에 바로 열어볼 문서와 실행 액션 제안이 필요했습니다.</li>
+            </ul>
+          </article>
+
+          <article class="overview-project-story-card">
+            <p class="overview-project-story-label">02 Approach</p>
+            <strong>현재 노트 문맥, relation-aware retrieval, 추천 액션 흐름을 한 화면으로 묶었습니다</strong>
+            <p>플러그인 메인 클라이언트와 Streamlit Ops를 분리하고, relation runtime으로 현재 문서 주변의 연결 노트를 함께 가져오도록 설계했습니다.</p>
+            <ul>
+              <li>현재 note, linked note, relation schema를 retrieval 기준으로 결합했습니다.</li>
+              <li>답변, source, recommendation, next action을 같은 흐름으로 보여주게 했습니다.</li>
+            </ul>
+          </article>
+
+          <article class="overview-project-story-card">
+            <p class="overview-project-story-label">03 Outcome</p>
+            <strong>검색형 도구보다 작업형 지식 워크스페이스에 가까운 구조로 정리했습니다</strong>
+            <p>결과적으로 이 프로젝트는 질의응답 성능만이 아니라, 문서 탐색과 후속 행동을 같은 작업 맥락 안에 두는 설계 경험을 보여줍니다.</p>
+            <ul>
+              <li>답변과 근거 문서, 추천 문서, 액션 흐름이 함께 보입니다.</li>
+              <li>Obsidian 안에서 바로 쓰는 로컬 지식 워크플로 형태로 설명할 수 있습니다.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="overview-project-story-panel overview-project-story-panel--rag" id="overview-project-story-advanced" data-story-panel="advanced" hidden>
+        <div class="overview-project-story-intro">
+          <div>
+            <p class="overview-project-story-kicker">Generative Pipeline Story</p>
+            <h3>한 번 실패하면 전체를 다시 돌려야 하는 원샷 생성 흐름을 서비스형 파이프라인으로 바꾸고 싶었습니다</h3>
+            <p>상세페이지 제작은 부분 수정이 잦기 때문에, 기획과 생성을 분리하고 단계별 실패를 다룰 수 있는 구조가 더 중요했습니다.</p>
+          </div>
+          <button class="overview-project-story-close" type="button" data-story-close aria-label="Close project story">닫기</button>
+        </div>
+
+        <div class="overview-project-story-deck">
+          <article class="overview-project-story-card">
+            <p class="overview-project-story-label">01 Problem</p>
+            <strong>기획, 생성, 편집이 분리되어 있어 수정이 생기면 전체 파이프라인 비용이 너무 컸습니다</strong>
+            <p>광고 상세페이지는 한 장만 바꾸고 싶은 경우가 많지만, 기존 흐름은 일부 수정에도 전체 생성을 다시 돌려야 했습니다.</p>
+            <ul>
+              <li>단계 하나가 실패하면 전체 작업이 멈추는 구조였습니다.</li>
+              <li>부분 수정과 재생성이 어려워 실무형 제작 흐름과 거리가 있었습니다.</li>
+            </ul>
+          </article>
+
+          <article class="overview-project-story-card">
+            <p class="overview-project-story-label">02 Approach</p>
+            <strong>Director 중심 오케스트레이션과 5-stage 파이프라인으로 단계별 책임을 나눴습니다</strong>
+            <p>입력 정보로부터 기획, 배경 생성, 업스케일, 보정, 광고 조합까지를 분리하고 상태 추적과 failover 경로를 설계했습니다.</p>
+            <ul>
+              <li>AIDA 기반 기획 흐름과 stage별 재실행 포인트를 만들었습니다.</li>
+              <li>OpenAI, Gemini failover와 페이지 단위 regenerate 경로를 넣었습니다.</li>
+            </ul>
+          </article>
+
+          <article class="overview-project-story-card">
+            <p class="overview-project-story-label">03 Outcome</p>
+            <strong>결과물 몇 장보다도 수정 가능하고 운영 가능한 생성 시스템이라는 점이 핵심이 됐습니다</strong>
+            <p>이 프로젝트는 단일 모델 결과보다, 생성 이후의 수정과 재시도를 포함한 실제 제작 파이프라인을 설계한 경험으로 정리됩니다.</p>
+            <ul>
+              <li>병목과 실패 지점을 단계별로 기록하고 설명할 수 있습니다.</li>
+              <li>부분 수정과 재생성이 가능해 실무형 생성 워크플로에 더 가까워졌습니다.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="overview-project-story-panel overview-project-story-panel--ops" id="overview-project-story-cfd" data-story-panel="cfd" hidden>
+        <div class="overview-project-story-intro">
+          <div>
+            <p class="overview-project-story-kicker">CFD Trading Story</p>
+            <h3>데이터, 판단 로직, 운영 화면이 따로 노는 문제를 설명 가능한 분석 흐름으로 묶고 싶었습니다</h3>
+            <p>시장 데이터를 봤다는 사실보다, 그 데이터를 어떻게 해석하고 어떤 상태로 API와 대시보드까지 연결했는지가 더 중요하다고 봤습니다.</p>
+          </div>
+          <button class="overview-project-story-close" type="button" data-story-close aria-label="Close project story">닫기</button>
+        </div>
+
+        <div class="overview-project-story-deck">
+          <article class="overview-project-story-card">
+            <p class="overview-project-story-label">01 Problem</p>
+            <strong>시장 데이터와 판단 근거, 운영 화면이 분리되면 검증과 설명이 어려워집니다</strong>
+            <p>데이터 수집은 따로, 판단 로직은 따로, 운영 확인은 따로 움직이면 실제로 무엇을 근거로 의사결정했는지 추적하기가 힘들어집니다.</p>
+            <ul>
+              <li>규칙 기반 판단과 ML 결과가 분리되면 해석이 어렵습니다.</li>
+              <li>API, 대시보드, 문서가 연결되지 않으면 유지보수도 약해집니다.</li>
+            </ul>
+          </article>
+
+          <article class="overview-project-story-card">
+            <p class="overview-project-story-label">02 Approach</p>
+            <strong>정규화 파이프라인과 상태 해석 레이어를 기준으로 전체 시스템을 다시 묶었습니다</strong>
+            <p>Market, MT5 데이터를 정규화하고 상태와 신호 해석 레이어를 둔 뒤, 규칙 기반 판단과 ML 보조 판단을 운영 API로 연결했습니다.</p>
+            <ul>
+              <li>state interpretation을 중심으로 feature pipeline과 runtime API를 묶었습니다.</li>
+              <li>FastAPI 운영 API와 Next.js 대시보드가 같은 상태 정보를 보도록 구성했습니다.</li>
+            </ul>
+          </article>
+
+          <article class="overview-project-story-card">
+            <p class="overview-project-story-label">03 Outcome</p>
+            <strong>예측 모델 하나보다 데이터부터 운영 화면까지 이어지는 분석 시스템으로 설명할 수 있게 됐습니다</strong>
+            <p>포트폴리오 관점에서도 이 프로젝트는 트레이딩 모델보다, 데이터 처리와 상태 해석을 운영 가능한 시스템으로 연결한 경험을 보여줍니다.</p>
+            <ul>
+              <li>같은 데이터를 분석, 판단, API, 대시보드에서 재사용할 수 있습니다.</li>
+              <li>시장 상태와 판단 근거를 실제 운영 화면에서 함께 확인할 수 있습니다.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
     </div>
   </section>
 
@@ -519,51 +659,109 @@ permalink: /
 
 <script>
   (function () {
+    var body = document.body;
     var toggle = document.getElementById("overview-drawer-toggle");
     var close = document.getElementById("overview-drawer-close");
     var drawer = document.getElementById("overview-contents-drawer-mobile");
     var backdrop = document.getElementById("overview-drawer-backdrop");
-    var body = document.body;
 
-    if (!toggle || !close || !drawer || !backdrop) return;
-
-    function setExpanded(isOpen) {
-      toggle.setAttribute("aria-expanded", String(isOpen));
-    }
-
-    function closeDrawer() {
-      drawer.classList.remove("is-open");
-      backdrop.classList.remove("is-open");
-      body.classList.remove("drawer-open");
-      setExpanded(false);
-    }
-
-    function openDrawer() {
-      drawer.classList.add("is-open");
-      backdrop.classList.add("is-open");
-      body.classList.add("drawer-open");
-      setExpanded(true);
-    }
-
-    toggle.addEventListener("click", function () {
-      if (drawer.classList.contains("is-open")) {
-        closeDrawer();
-        return;
+    if (toggle && close && drawer && backdrop) {
+      function setExpanded(isOpen) {
+        toggle.setAttribute("aria-expanded", String(isOpen));
       }
-      openDrawer();
+
+      function closeDrawer() {
+        drawer.classList.remove("is-open");
+        backdrop.classList.remove("is-open");
+        body.classList.remove("drawer-open");
+        setExpanded(false);
+      }
+
+      function openDrawer() {
+        drawer.classList.add("is-open");
+        backdrop.classList.add("is-open");
+        body.classList.add("drawer-open");
+        setExpanded(true);
+      }
+
+      toggle.addEventListener("click", function () {
+        if (drawer.classList.contains("is-open")) {
+          closeDrawer();
+          return;
+        }
+        openDrawer();
+      });
+
+      close.addEventListener("click", closeDrawer);
+      backdrop.addEventListener("click", closeDrawer);
+
+      drawer.querySelectorAll("a").forEach(function (link) {
+        link.addEventListener("click", closeDrawer);
+      });
+
+      window.addEventListener("resize", function () {
+        if (window.innerWidth > 900) {
+          closeDrawer();
+        }
+      });
+    }
+
+    var storyStage = document.getElementById("overview-project-story-stage");
+    var storyButtons = Array.prototype.slice.call(document.querySelectorAll("[data-story-target]"));
+    var storyPanels = Array.prototype.slice.call(document.querySelectorAll("[data-story-panel]"));
+    var storyCloseButtons = Array.prototype.slice.call(document.querySelectorAll("[data-story-close]"));
+
+    if (!storyStage || !storyButtons.length || !storyPanels.length) return;
+
+    function resetStoryButtons() {
+      storyButtons.forEach(function (button) {
+        button.classList.remove("is-active");
+        button.setAttribute("aria-expanded", "false");
+      });
+    }
+
+    function hideStoryPanels() {
+      storyPanels.forEach(function (panel) {
+        panel.hidden = true;
+        panel.classList.remove("is-active");
+      });
+    }
+
+    function closeStoryStage() {
+      hideStoryPanels();
+      resetStoryButtons();
+      storyStage.hidden = true;
+    }
+
+    storyButtons.forEach(function (button) {
+      button.addEventListener("click", function () {
+        var target = button.getAttribute("data-story-target");
+        var panel = document.querySelector('[data-story-panel="' + target + '"]');
+        var isOpen = button.classList.contains("is-active");
+
+        if (!panel) return;
+
+        if (isOpen) {
+          closeStoryStage();
+          return;
+        }
+
+        hideStoryPanels();
+        resetStoryButtons();
+        storyStage.hidden = false;
+        panel.hidden = false;
+        panel.classList.add("is-active");
+        button.classList.add("is-active");
+        button.setAttribute("aria-expanded", "true");
+
+        if (typeof storyStage.scrollIntoView === "function") {
+          storyStage.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }
+      });
     });
 
-    close.addEventListener("click", closeDrawer);
-    backdrop.addEventListener("click", closeDrawer);
-
-    drawer.querySelectorAll("a").forEach(function (link) {
-      link.addEventListener("click", closeDrawer);
-    });
-
-    window.addEventListener("resize", function () {
-      if (window.innerWidth > 900) {
-        closeDrawer();
-      }
+    storyCloseButtons.forEach(function (button) {
+      button.addEventListener("click", closeStoryStage);
     });
   })();
 </script>
