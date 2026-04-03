@@ -2730,7 +2730,14 @@ a {
 
 .overview-project-story-visual--diagram {
   width: 100%;
+  min-height: 16rem;
+  display: flex;
+  flex-direction: column;
   padding: 0.58rem 0.62rem;
+}
+
+.overview-project-story-visual--diagram .overview-project-story-caption {
+  margin-top: auto;
 }
 
 .overview-project-story-flow {
@@ -2777,7 +2784,7 @@ a {
   grid-column: 2;
   margin-top: 0;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0.46rem;
   align-self: start;
 }
@@ -5013,6 +5020,7 @@ a {
 
   .overview-project-story-visual--diagram {
     width: 100%;
+    min-height: 14.6rem;
     padding: 0.54rem 0.58rem;
   }
 
@@ -5376,6 +5384,7 @@ a {
 
   .overview-project-story-visual--diagram {
     width: 100%;
+    min-height: 0;
     padding: 0.4rem 0.42rem;
   }
 
