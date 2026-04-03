@@ -2875,6 +2875,16 @@ a {
   line-height: 1.42;
 }
 
+.overview-project-story-card--outcome .overview-project-story-metrics {
+  grid-column: 2;
+}
+
+.overview-project-story-card--outcome .overview-project-story-blocks {
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 0.08rem;
+}
+
 .overview-bridge-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
@@ -5088,6 +5098,10 @@ a {
     font-size: 0.66rem;
     line-height: 1.46;
   }
+
+  .overview-project-story-card--outcome .overview-project-story-blocks {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 700px) {
@@ -5469,6 +5483,10 @@ a {
     margin-top: 0.22rem;
     font-size: 0.54rem;
     line-height: 1.28;
+  }
+
+  .overview-project-story-card--outcome .overview-project-story-blocks {
+    grid-template-columns: 1fr;
   }
 }
 
