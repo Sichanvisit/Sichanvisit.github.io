@@ -2492,9 +2492,11 @@ a {
 
 .overview-project-story-board {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   grid-auto-flow: row;
-  gap: 1rem;
+  gap: 1.08rem;
+  max-width: min(100%, 72rem);
+  margin: 0 auto;
   align-items: stretch;
 }
 
