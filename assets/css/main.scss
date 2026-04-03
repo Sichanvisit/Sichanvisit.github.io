@@ -1569,6 +1569,11 @@ a {
   scroll-margin-top: 6.1rem;
 }
 
+.overview-project-card[id],
+.overview-project-story-shell[id] {
+  scroll-margin-top: 6.6rem;
+}
+
 .overview-slide::before {
   content: "";
   position: absolute;
@@ -2473,13 +2478,12 @@ a {
 }
 
 .overview-project-story-shell {
-  grid-column: 1;
   position: relative;
-  z-index: 4;
   display: grid;
   gap: 0.6rem;
-  width: min(100%, 1480px);
-  margin: -1.8rem auto 0.18rem;
+  width: 100%;
+  margin-top: 1rem;
+  z-index: 1;
 }
 
 .overview-project-story-stage {
@@ -4666,7 +4670,7 @@ a {
 
   .overview-project-story-shell {
     gap: 0.62rem;
-    margin-top: -1.46rem;
+    margin-top: 0.72rem;
   }
 
   .overview-project-story-stage {
@@ -4969,7 +4973,7 @@ a {
 
   .overview-project-story-shell {
     gap: 0.48rem;
-    margin-top: -1.18rem;
+    margin-top: 0.58rem;
   }
 
   .overview-project-story-stage {

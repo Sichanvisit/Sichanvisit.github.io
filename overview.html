@@ -262,17 +262,23 @@ permalink: /
         </div>
       </article>
     </div>
-  </section>
-
-  <div class="overview-project-story-shell">
-    <div class="overview-project-story-trigger-wrap">
-      <button class="overview-project-toggle overview-project-toggle--deck" type="button" id="overview-project-story-toggle" aria-expanded="false" aria-controls="overview-project-story-stage">
+    <div class="overview-project-story-shell" id="featured-project-storyboard">
+      <div class="overview-project-story-trigger-wrap">
+        <button
+          class="overview-project-toggle overview-project-toggle--deck"
+          type="button"
+          id="overview-project-story-toggle"
+          aria-expanded="false"
+          aria-controls="overview-project-story-stage"
+          data-open-label="펼치기"
+          data-close-label="접기"
+        >
         펼치기
-      </button>
-    </div>
+        </button>
+      </div>
 
-    <div class="overview-project-story-stage" id="overview-project-story-stage" hidden>
-      <div class="overview-project-story-board">
+      <div class="overview-project-story-stage" id="overview-project-story-stage" hidden>
+        <div class="overview-project-story-board">
         <article class="overview-project-story-card overview-project-story-card--hero">
           <div class="overview-project-story-meta">
             <span>Obsidian RAG</span>
@@ -515,9 +521,10 @@ permalink: /
             <p>데이터 분석과 모델링을 넘어서, 판단 근거를 설명 가능한 운영 구조로 만드는 역량을 보여주는 사례가 됩니다.</p>
           </div>
         </article>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 
   <section class="overview-slide" id="experience-bridge">
     <div class="overview-section-heading">
@@ -871,26 +878,52 @@ permalink: /
       });
     });
 
+    var anchorLinks = Array.prototype.slice.call(document.querySelectorAll('.overview-anchor-links a[href^="#"]'));
+
+    anchorLinks.forEach(function (link) {
+      link.addEventListener("click", function (event) {
+        var href = link.getAttribute("href");
+        var target = href ? document.querySelector(href) : null;
+
+        if (!target) return;
+
+        event.preventDefault();
+
+        if (typeof target.scrollIntoView === "function") {
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+        if (window.history && typeof window.history.pushState === "function") {
+          window.history.pushState(null, "", href);
+        } else {
+          window.location.hash = href;
+        }
+      });
+    });
+
     var storyStage = document.getElementById("overview-project-story-stage");
     var storyToggle = document.getElementById("overview-project-story-toggle");
 
     if (!storyStage || !storyToggle) return;
 
+    var storyOpenLabel = storyToggle.getAttribute("data-open-label") || "Open";
+    var storyCloseLabel = storyToggle.getAttribute("data-close-label") || "Close";
+
     function closeStoryStage() {
       storyStage.hidden = true;
       storyToggle.classList.remove("is-active");
       storyToggle.setAttribute("aria-expanded", "false");
-      storyToggle.textContent = "펼치기";
+      storyToggle.textContent = storyOpenLabel;
     }
 
     function openStoryStage() {
       storyStage.hidden = false;
       storyToggle.classList.add("is-active");
       storyToggle.setAttribute("aria-expanded", "true");
-      storyToggle.textContent = "접기";
+      storyToggle.textContent = storyCloseLabel;
 
       if (typeof storyStage.scrollIntoView === "function") {
-        storyStage.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        storyStage.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     }
 
