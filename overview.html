@@ -55,9 +55,9 @@ permalink: /
           ></button>
         </div>
         <div class="overview-nav-sublinks" id="overview-mobile-project-sublinks" hidden>
-          <a href="#featured-project-obsidian">Obsidian RAG</a>
-          <a href="#featured-project-advanced">Generative Pipeline</a>
-          <a href="#featured-project-cfd">CFD Trading</a>
+          <a href="#featured-project-obsidian-problem">Obsidian RAG</a>
+          <a href="#featured-project-advanced-problem">Generative Pipeline</a>
+          <a href="#featured-project-cfd-problem">CFD Trading</a>
         </div>
       </div>
       <a href="#experience-bridge">Experience Bridge</a>
@@ -120,9 +120,9 @@ permalink: /
           ></button>
         </div>
         <div class="overview-nav-sublinks" id="overview-side-project-sublinks" hidden>
-          <a href="#featured-project-obsidian">Obsidian RAG</a>
-          <a href="#featured-project-advanced">생성 시스템</a>
-          <a href="#featured-project-cfd">CFD Trading</a>
+          <a href="#featured-project-obsidian-problem">Obsidian RAG</a>
+          <a href="#featured-project-advanced-problem">생성 시스템</a>
+          <a href="#featured-project-cfd-problem">CFD Trading</a>
         </div>
       </div>
       <a href="#experience-bridge">경험 연결</a>
@@ -282,7 +282,7 @@ permalink: /
 
       <div class="overview-project-story-stage" id="overview-project-story-stage" hidden>
         <div class="overview-project-story-board">
-          <article class="overview-project-story-card overview-project-story-card--hero">
+          <article class="overview-project-story-card overview-project-story-card--hero" id="featured-project-obsidian-problem">
             <div class="overview-project-story-meta">
               <span>Obsidian RAG</span>
               <span>01 Problem</span>
@@ -422,7 +422,7 @@ permalink: /
             </div>
           </article>
 
-          <article class="overview-project-story-card overview-project-story-card--rag">
+          <article class="overview-project-story-card overview-project-story-card--rag" id="featured-project-advanced-problem">
             <div class="overview-project-story-meta">
               <span>Generative Pipeline</span>
               <span>01 Problem</span>
@@ -562,7 +562,7 @@ permalink: /
             </div>
           </article>
 
-          <article class="overview-project-story-card overview-project-story-card--ops">
+          <article class="overview-project-story-card overview-project-story-card--ops" id="featured-project-cfd-problem">
             <div class="overview-project-story-meta">
               <span>CFD Trading</span>
               <span>01 Problem</span>
@@ -1069,7 +1069,11 @@ permalink: /
 
         event.preventDefault();
 
-        if (typeof target.scrollIntoView === "function") {
+        var targetInsideStoryStage = storyStage && storyStage.contains(target);
+
+        if (targetInsideStoryStage && storyStage.hidden) {
+          openStoryStage({ focusTarget: target, behavior: "smooth" });
+        } else if (typeof target.scrollIntoView === "function") {
           target.scrollIntoView({ behavior: "smooth", block: "start" });
         }
 
@@ -1090,21 +1094,25 @@ permalink: /
     var storyOpenLabel = storyToggle.getAttribute("data-open-label") || "Open";
     var storyCloseLabel = storyToggle.getAttribute("data-close-label") || "Close";
 
-    function closeStoryStage() {
-      storyStage.hidden = true;
-      storyToggle.classList.remove("is-active");
-      storyToggle.setAttribute("aria-expanded", "false");
-      storyToggle.textContent = storyOpenLabel;
+    function syncStoryStageState(isOpen) {
+      storyStage.hidden = !isOpen;
+      storyToggle.classList.toggle("is-active", isOpen);
+      storyToggle.setAttribute("aria-expanded", String(isOpen));
+      storyToggle.textContent = isOpen ? storyCloseLabel : storyOpenLabel;
     }
 
-    function openStoryStage() {
-      storyStage.hidden = false;
-      storyToggle.classList.add("is-active");
-      storyToggle.setAttribute("aria-expanded", "true");
-      storyToggle.textContent = storyCloseLabel;
+    function closeStoryStage() {
+      syncStoryStageState(false);
+    }
 
-      if (typeof storyShell.scrollIntoView === "function") {
-        storyShell.scrollIntoView({ behavior: "smooth", block: "start" });
+    function openStoryStage(options) {
+      var focusTarget = options && options.focusTarget ? options.focusTarget : storyShell;
+      var behavior = options && options.behavior ? options.behavior : "smooth";
+
+      syncStoryStageState(true);
+
+      if (focusTarget && typeof focusTarget.scrollIntoView === "function") {
+        focusTarget.scrollIntoView({ behavior: behavior, block: "start" });
       }
     }
 
@@ -1116,5 +1124,12 @@ permalink: /
 
       closeStoryStage();
     });
+
+    var initialHash = window.location.hash;
+    var initialTarget = initialHash ? document.querySelector(initialHash) : null;
+
+    if (initialTarget && storyStage.contains(initialTarget)) {
+      openStoryStage({ focusTarget: initialTarget, behavior: "auto" });
+    }
   })();
 </script>
