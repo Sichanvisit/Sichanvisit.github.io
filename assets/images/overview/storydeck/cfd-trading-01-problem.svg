@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1110" height="868" viewBox="0 0 1110 868" role="img" aria-labelledby="title desc">
+  <title id="title">CFD Trading 01 Problem placeholder slide</title>
+  <desc id="desc">Placeholder slide sized 1110 by 868 for the overview story deck.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fbfaf6"/>
+      <stop offset="100%" stop-color="#f2eadc"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#c48522"/>
+      <stop offset="100%" stop-color="#e0b467"/>
+    </linearGradient>
+  </defs>
+  <rect width="1110" height="868" rx="30" fill="url(#bg)"/>
+  <rect width="1110" height="6" rx="30" fill="url(#accent)"/>
+  <rect x="44" y="38" width="136" height="32" rx="16" fill="#ffffff" fill-opacity=".96"/>
+  <rect x="190" y="38" width="126" height="32" rx="16" fill="#ffffff" fill-opacity=".88"/>
+  <text x="66" y="59" fill="#493213" font-family="Arial, sans-serif" font-size="15" font-weight="700">CFD Trading</text>
+  <text x="225" y="59" fill="#7c6040" font-family="Arial, sans-serif" font-size="15" font-weight="700">01 Problem</text>
+  <text x="44" y="130" fill="#402b12" font-family="Arial, sans-serif" font-size="44" font-weight="700">Replace this slot with your exported slide</text>
+  <text x="44" y="170" fill="#7a6143" font-family="Arial, sans-serif" font-size="22">Recommended canvas: 1110 x 868 px</text>
+  <rect x="44" y="214" width="676" height="424" rx="28" fill="#3c2a11" fill-opacity=".08"/>
+  <text x="82" y="432" fill="#5a3f1d" font-family="Arial, sans-serif" font-size="26" font-weight="700">Hero chart / market context / pain point</text>
+  <rect x="748" y="214" width="318" height="156" rx="24" fill="#ffffff" fill-opacity=".9"/>
+  <rect x="748" y="388" width="152" height="120" rx="22" fill="#ffffff" fill-opacity=".86"/>
+  <rect x="914" y="388" width="152" height="120" rx="22" fill="#ffffff" fill-opacity=".86"/>
+  <rect x="748" y="522" width="152" height="116" rx="22" fill="#ffffff" fill-opacity=".82"/>
+  <rect x="914" y="522" width="152" height="116" rx="22" fill="#ffffff" fill-opacity=".82"/>
+  <text x="778" y="266" fill="#624725" font-family="Arial, sans-serif" font-size="16" font-weight="700">Build the whole story</text>
+  <text x="778" y="291" fill="#856a4a" font-family="Arial, sans-serif" font-size="15">inside the slide asset.</text>
+  <text x="778" y="316" fill="#856a4a" font-family="Arial, sans-serif" font-size="15">This wrapper keeps the size stable.</text>
+  <text x="778" y="438" fill="#6a5132" font-family="Arial, sans-serif" font-size="15" font-weight="700">Context</text>
+  <text x="944" y="438" fill="#6a5132" font-family="Arial, sans-serif" font-size="15" font-weight="700">Gap</text>
+  <text x="778" y="572" fill="#6a5132" font-family="Arial, sans-serif" font-size="15" font-weight="700">Constraint</text>
+  <text x="944" y="572" fill="#6a5132" font-family="Arial, sans-serif" font-size="15" font-weight="700">Pitch</text>
+  <rect x="44" y="666" width="1022" height="158" rx="24" fill="#ffffff" fill-opacity=".84"/>
+  <text x="74" y="720" fill="#624725" font-family="Arial, sans-serif" font-size="18" font-weight="700">File to replace</text>
+  <text x="74" y="754" fill="#856a4a" font-family="Arial, sans-serif" font-size="24">cfd-trading-01-problem.svg</text>
+  <text x="74" y="792" fill="#856a4a" font-family="Arial, sans-serif" font-size="18">Export a full-width slide image and overwrite this file.</text>
+</svg>
